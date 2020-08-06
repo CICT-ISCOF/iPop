@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('links', 'LinkController');
+Route::apiResource('link', 'LinkController');
 Route::get('file/{file}', 'FileController@stream');
 Route::get('download/{file}', 'FileController@download');
