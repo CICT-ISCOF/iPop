@@ -37,9 +37,11 @@ class Link extends Model
                 if (isset($data[$key . 'file'])) {
                     $file = File::process($data[$key . 'file']);
                     $child->file_id = $file->id;
+                    $child->save();
                     $child->file = $file;
+                } else {
+                    $child->save();
                 }
-                $child->save();
                 $output[$key] = $child;
             }
         }
