@@ -27,7 +27,10 @@ class CreateUsersTable extends Migration
                 ->string('provider_id')
                 ->unique()
                 ->nullable();
-            $table->foreignId('profile_picture_id');
+            $table
+                ->foreignId('profile_picture_id')
+                ->nullable()
+                ->default(null);
             $table
                 ->foreign('profile_picture_id')
                 ->references('id')

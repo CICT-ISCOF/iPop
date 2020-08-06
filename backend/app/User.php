@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['email'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -31,5 +32,11 @@ class User extends Authenticatable
      */
     public function createToken($name, $abilities)
     {
+        // use Str::slug()
+    }
+
+    public function detail()
+    {
+        return $this->hasOne(Detail::class);
     }
 }
