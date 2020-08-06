@@ -65,9 +65,10 @@ class FileController extends Controller
 
     public function stream(File $file)
     {
-        $stream = base64_encode(Storage::get($file->url));
-        $source = "data:{$file->type};base64,{$stream}";
-        return $source;
+        return response(Storage::get($file->url), 200, [
+            'Content-Type' => $file->type,
+            'Content-Length' => $file->size,
+        ]);
     }
 
     public function download(File $file)

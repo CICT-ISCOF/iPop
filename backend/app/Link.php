@@ -19,20 +19,31 @@ class Link extends Model
             'slider' => 'Slider',
             'text' => 'Text',
             'mediafile' => 'SingleMedia',
-            'sliderfile' => 'Slider',
+            'sliderfiles' => 'Slider',
         ];
 
         foreach ($childKeys as $key => $class) {
-            if (
-                in_array($key, ['mediafile', 'sliderfile']) &&
-                isset($data[$key])
-            ) {
+            if ($key === 'mediafile' && isset($data[$key])) {
                 $child = self::_instantiate($data[$key], $class);
                 $child->link_id = $link->id;
                 $file = File::process($data[$key]);
-                $child->file_id = $file->id;
                 $child->save();
                 $child->file = $file;
+                $output[$key] = $child;
+            } elseif ($key === 'sliderfiles' && isset($data[$key])) {
+                $child = self::_instantiate($data[$key], $class);
+                $files = [];
+                foreach ($data[$key] as $sliderfile) {
+                    $files[] = File::process($sliderfile);
+                }
+                $ids = [];
+                foreach ($files as $file) {
+                    $ids[] = $file->id;
+                }
+                $child->file_ids = $ids;
+                $child->link_id = $link->id;
+                $child->save();
+                $child->files = $files;
                 $output[$key] = $child;
             } elseif (isset($data[$key])) {
                 $child = self::_instantiate($data[$key], $class);
