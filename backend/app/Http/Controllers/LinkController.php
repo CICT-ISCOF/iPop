@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Link;
+use App\Card;
+use App\Grid;
+use App\SingleMedia;
+use App\Slider;
+use App\Text;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class LinkController extends Controller
 {
@@ -14,7 +20,12 @@ class LinkController extends Controller
      */
     public function index()
     {
-        return Link::all();
+        return Link::with('cards.file')
+            ->with('grids.file')
+            ->with('medias.file')
+            ->with('sliders.file')
+            ->with('texts')
+            ->all();
     }
 
     /**
@@ -26,11 +37,18 @@ class LinkController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $link = new Link($data);
-        $hasChildren = isset($data['children']);
-        $link->has_children = $hasChildren;
-        $link->children = $hasChildren ? $data['children'] : null;
+        foreach (['link', 'card', 'grid', 'media', 'slider', 'text'] as $key) {
+            $data[$key] = isset($data[$key])
+                ? (array) json_decode($data[$key])
+                : null;
+        }
+        $link = new Link($data['link']);
+        $link->slug = Str::slug($link->title);
         $link->save();
+        $children = Link::searchChildren($data, $link);
+        foreach ($children as $key => $value) {
+            $link->{$key} = $value;
+        }
         return $link;
     }
 
@@ -40,9 +58,14 @@ class LinkController extends Controller
      * @param  \App\Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function show(Link $link)
+    public function show($id)
     {
-        return $link;
+        return Link::with('cards.file')
+            ->with('grids.file')
+            ->with('medias.file')
+            ->with('sliders.file')
+            ->with('texts')
+            ->findOrFail($id);
     }
 
     /**
@@ -54,13 +77,7 @@ class LinkController extends Controller
      */
     public function update(Request $request, Link $link)
     {
-        $data = $request->all();
-        $hasChildren = isset($data['children']);
-        $link->fill($data);
-        $link->has_children = $hasChildren;
-        $link->children = $hasChildren ? $data['children'] : null;
-        $link->save();
-        return $link;
+        //
     }
 
     /**
@@ -71,7 +88,6 @@ class LinkController extends Controller
      */
     public function destroy(Link $link)
     {
-        $link->delete();
-        return response('', 204);
+        //
     }
 }

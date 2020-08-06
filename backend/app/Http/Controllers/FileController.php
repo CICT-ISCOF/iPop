@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
@@ -59,5 +61,17 @@ class FileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function stream(File $file)
+    {
+        $stream = base64_encode(Storage::get($file->url));
+        $source = "data:{$file->type};base64,{$stream}";
+        return $source;
+    }
+
+    public function download(File $file)
+    {
+        return Storage::download($file->url);
     }
 }

@@ -3,25 +3,58 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Casts\LinkJSON;
 
 class Link extends Model
 {
-    protected $fillable = ['title', 'url'];
+    protected $fillable = ['title', 'subcategory', 'slug'];
 
-    protected $casts = [
-        'has_children' => 'boolean',
-    ];
-
-    public function getChildrenAttribute()
+    public static function searchChildren($data, Link $link)
     {
-        return $this->attributes['children']
-            ? json_decode($this->attributes['children'])
-            : null;
+        $output = [];
+
+        $childKeys = [
+            'card' => 'Card',
+            'grid' => 'Grid',
+            'media' => 'SingleMedia',
+            'slider' => 'Slider',
+            'text' => 'Text',
+        ];
+
+        foreach ($childKeys as $key => $class) {
+            if (isset($data[$key])) {
+                $child = self::_instantiate($data[$key], $class);
+                $child->link_id = $link->id;
+                if (isset($data[$key . 'file'])) {
+                    $file = File::process($data[$key . 'file']);
+                    $child->file_id = $file->id;
+                    $child->save();
+                    $child->file = $file;
+                    $output[$key] = $child;
+                }
+            }
+        }
+
+        return $output;
     }
 
-    public function setChildrenAttribute($value)
+    private static function _instantiate($data, $class)
     {
-        $this->attributes['children'] = json_encode($value);
+        switch ($class) {
+            case 'Card':
+                return new Card($data);
+                break;
+            case 'Grid':
+                return new Grid($data);
+                break;
+            case 'SingleMedia':
+                return new SingleMedia($data);
+                break;
+            case 'Slider':
+                return new Slider($data);
+                break;
+            case 'Text':
+                return new Text($data);
+                break;
+        }
     }
 }
