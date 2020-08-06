@@ -23,7 +23,10 @@ class Link extends Model
         ];
 
         foreach ($childKeys as $key => $class) {
-            if (in_array($key, ['mediafile', 'sliderfile'])) {
+            if (
+                in_array($key, ['mediafile', 'sliderfile']) &&
+                isset($data[$key])
+            ) {
                 $child = self::_instantiate($data[$key], $class);
                 $child->link_id = $link->id;
                 $file = File::process($data[$key]);
