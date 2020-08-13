@@ -18,6 +18,12 @@ class CreateFilesTable extends Migration
             $table->string('type');
             $table->string('name');
             $table->string('url');
+            $table->boolean('public')->default(false);
+            $table->foreignId('user_id')->nullable();
+            $table
+                ->foreign('user_id')
+                ->references('id')
+                ->on('users');
             $table->unsignedBigInteger('size');
             $table->timestamps();
         });

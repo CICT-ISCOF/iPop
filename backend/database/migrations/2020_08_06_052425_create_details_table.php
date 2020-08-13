@@ -26,6 +26,14 @@ class CreateDetailsTable extends Migration
                 ->foreign('user_id')
                 ->references('id')
                 ->on('users');
+            $table
+                ->foreignId('profile_picture_id')
+                ->nullable()
+                ->default(null);
+            $table
+                ->foreign('profile_picture_id')
+                ->references('id')
+                ->on('files');
             $table->timestamps();
         });
     }

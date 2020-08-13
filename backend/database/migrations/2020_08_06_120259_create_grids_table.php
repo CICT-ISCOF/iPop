@@ -21,11 +21,7 @@ class CreateGridsTable extends Migration
                 ->foreign('link_id')
                 ->references('id')
                 ->on('links');
-            $table->foreignId('file_id');
-            $table
-                ->foreign('file_id')
-                ->references('id')
-                ->on('files');
+            $table->json('file_ids');
             $table->timestamps();
         });
     }
