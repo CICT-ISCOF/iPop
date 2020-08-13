@@ -15,21 +15,31 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->enum('provider_type', [
-                'Facebook',
-                'Google',
-                'Twitter',
-                'Instagram',
-                'N/A',
-            ]);
-            $table
-                ->string('provider_id')
-                ->unique()
-                ->nullable();
+            // $table->string('email')->unique();
+            $table->string('username')->unique();
+            $table->string('fullname');
+            $table->string('district');
+            $table->string('municipality');
+            $table->string('barangay');
             $table->string('password');
-            $table->enum('access_level', ['Super', 'PPO', 'PPO1', 'BSPO']);
-            $table->rememberToken();
+            $table->string('question');
+            $table->string('answer');
+            $table->string('pin');
+            $table->enum('role', ['Super', 'PPO', 'PPO1', 'BSPO']);
+            // $table->rememberToken();
+            // $table
+            //     ->enum('provider_type', [
+            //         'Facebook',
+            //         'Google',
+            //         'Twitter',
+            //         'Instagram',
+            //         'N/A',
+            //     ])
+            //     ->default('N/A');
+            // $table
+            //     ->string('provider_id')
+            //     ->unique()
+            //     ->nullable();
             $table->timestamps();
         });
     }
