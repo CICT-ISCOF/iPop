@@ -15,12 +15,16 @@ class CreateSlidersTable extends Migration
     {
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('link_id');
+            $table->foreignId('slider_table_id');
             $table
-                ->foreign('link_id')
+                ->foreign('slider_table_id')
                 ->references('id')
-                ->on('links');
-            $table->json('file_ids');
+                ->on('slider_tables');
+            $table->foreignId('file_id');
+            $table
+                ->foreign('file_id')
+                ->references('id')
+                ->on('files');
             $table->timestamps();
         });
     }

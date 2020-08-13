@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGridsTable extends Migration
+class CreateSliderTablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateGridsTable extends Migration
      */
     public function up()
     {
-        Schema::create('grids', function (Blueprint $table) {
+        Schema::create('slider_tables', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
             $table->foreignId('link_id');
             $table
                 ->foreign('link_id')
                 ->references('id')
                 ->on('links');
-            $table->json('file_ids');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class CreateGridsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grids');
+        Schema::dropIfExists('slider_tables');
     }
 }
