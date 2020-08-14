@@ -32,13 +32,13 @@ class RegisterRequest extends FormRequest
             'municipality' => 'required|string|max:255',
             'barangay' => 'required|string|max:255',
             'password' => 'required|string|max:255',
-            'question' => 'required|string|max:255',
-            'answer' => 'required|string|max:255',
-            'pin' => 'required',
+            'question' => 'nullable|max:255',
+            'answer' => 'nullable|max:255',
+            'pin' => 'nullable|unique:App\User|max:255',
             'role' => [
                 'required',
                 'string',
-                Rule::in(['Super', 'PPO', 'PPO1', 'BSPO']),
+                Rule::in(['Super Admin', 'PPO', 'PPO1', 'BSPO']),
             ],
         ];
     }

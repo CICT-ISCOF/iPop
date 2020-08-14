@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use App\Http\Requests\RegisterRequest as Request;
 
 class RegisterController extends Controller
@@ -25,9 +26,9 @@ class RegisterController extends Controller
             'barangay' => $data['barangay'],
             'municipality' => $data['municipality'],
             'role' => $data['role'],
-            'pin' => Hash::make($data['pin']),
-            'question' => $data['question'],
-            'answer' => $data['answer'],
+            'pin' => isset($data['pin']) ? $data['pin'] : null,
+            'question' => isset($data['question']) ? $data['question'] : null,
+            'answer' => isset($data['answer']) ? $data['answer'] : null,
             'district' => $data['district'],
         ]);
     }

@@ -22,10 +22,19 @@ class CreateUsersTable extends Migration
             $table->string('municipality');
             $table->string('barangay');
             $table->string('password');
-            $table->string('question');
-            $table->string('answer');
-            $table->string('pin');
-            $table->enum('role', ['Super', 'PPO', 'PPO1', 'BSPO']);
+            $table
+                ->string('question')
+                ->unique()
+                ->nullable();
+            $table
+                ->string('answer')
+                ->unique()
+                ->nullable();
+            $table
+                ->string('pin')
+                ->unique()
+                ->nullable();
+            $table->enum('role', ['Super Admin', 'PPO', 'PPO1', 'BSPO']);
             // $table->rememberToken();
             // $table
             //     ->enum('provider_type', [
