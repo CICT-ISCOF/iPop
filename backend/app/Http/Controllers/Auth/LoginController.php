@@ -11,7 +11,7 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $mode = $request->header('X-Auth-Mode');
-        switch ($mode) {
+         switch ($mode) {
             case 'Pin':
                 return $this->checkPin($request);
                 break;

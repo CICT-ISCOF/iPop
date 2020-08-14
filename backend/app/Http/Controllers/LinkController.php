@@ -13,11 +13,7 @@ use Illuminate\Support\Str;
 
 class LinkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function index()
     {
         return Link::with('cards.file')
@@ -28,12 +24,7 @@ class LinkController extends Controller
             ->all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  
     public function store(Request $request)
     {
         $data = $request->all();
@@ -52,12 +43,7 @@ class LinkController extends Controller
         return $link;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Link  $link
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show($id)
     {
         return Link::with('cards.file')
@@ -68,24 +54,12 @@ class LinkController extends Controller
             ->findOrFail($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Link  $link
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, Link $link)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Link  $link
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Link $link)
     {
         //
