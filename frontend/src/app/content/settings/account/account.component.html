@@ -1,0 +1,163 @@
+<div class="account-component">
+    <img src="../../../../assets/login/account-settings.svg" alt="">
+
+
+    <div id="accordion" class="container">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                 Change Security Question
+              </button>
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <br>
+                    <p>Whats your favorite movie?</p>
+
+
+                    <div class="col-md-12 mb-3 input-container">
+                        <label for="name">Old Answer</label>
+
+                        <div class="input-wrapper">
+                            <input class="form-control w-50" id="name" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-3 input-container">
+                        <label for="name">New Answer</label>
+
+                        <div class="input-wrapper">
+                            <input class="form-control w-50" id="name" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <br>
+                    <button class="button">Change My Security Question</button>
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Change Pin
+              </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="col-md-12 mb-3 input-container">
+                        <br>
+                        <label for="name">Input your 6 digit pin</label>
+
+                        <div class="dots-container" [class.animate]="isValid==false">
+                            <div class="dot" [class.is-colored]="account.pin.length>=1" [class.is-invalid]="isValid==false"></div>
+                            <div class="dot" [class.is-colored]="account.pin.length>=2" [class.is-invalid]="isValid==false"></div>
+                            <div class="dot" [class.is-colored]="account.pin.length>=3" [class.is-invalid]="isValid==false"></div>
+                            <div class="dot" [class.is-colored]="account.pin.length>=4" [class.is-invalid]="isValid==false"></div>
+                            <div class="dot" [class.is-colored]="account.pin.length>=5" [class.is-invalid]="isValid==false"></div>
+                            <div class="dot" [class.is-colored]="account.pin.length>=6" [class.is-invalid]="isValid==false"></div>
+                        </div>
+                        <div class="input-wrapper">
+                            <input [class.is-invalid]="isValid==false" class="form-control w-50" type="password" style="-webkit-text-security: disc;font-size: 1em;">
+                        </div>
+                        <div *ngIf="isValid==false" id="pin" class="invalid">
+                            Invalid Pin {{tries}} tries left
+                        </div>
+
+                        <br>
+                        <label for="name">Input your new 6 digit pin</label>
+
+                        <div class="dots-container">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="input-wrapper">
+                            <input class="form-control w-50" type="password" style="-webkit-text-security: disc;font-size: 1em;">
+                        </div>
+                        <br>
+                        <label for="name">Confirm Pin</label>
+
+                        <div class="dots-container">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="input-wrapper">
+                            <input class="form-control w-50" type="password" style="-webkit-text-security: disc;font-size: 1em;">
+                        </div>
+                        <br>
+                        <button class="button">Change My Pin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Change Password
+              </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <br>
+                    <div class="col-md-12 mb-3 input-container">
+                        <label for="name">Old Password</label>
+
+                        <div class="input-wrapper">
+                            <input class="form-control w-50" id="name" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-3 input-container">
+                        <label for="name">New Password</label>
+
+                        <div class="input-wrapper">
+                            <input class="form-control w-50" id="name" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-3 input-container">
+                        <label for="name">Confirm Password</label>
+
+                        <div class="input-wrapper">
+                            <input class="form-control w-50" id="name" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <br>
+                        <button class="button">Change My Password</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br><br><br><br><br>
+
+</div>

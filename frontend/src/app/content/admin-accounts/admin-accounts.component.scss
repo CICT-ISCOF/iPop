@@ -1,0 +1,35 @@
+.admin-accounts {
+    width: 100%;
+    height: auto;
+    padding: 10px 30px;
+    background: var(--bg);
+    height: 100%;
+}
+
+td img {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    margin-top: -6px;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+tr * {
+    border-bottom: 1px solid rgba(150, 150, 150, .3);
+}
+
+i {
+    font-size: 1em;
+    cursor: pointer;
+    margin-right: 15px;
+    border-bottom: none !important;
+}
+
+i:hover {
+    opacity: .8;
+}
+
+i:active {
+    opacity: .4;
+}

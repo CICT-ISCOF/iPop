@@ -1,0 +1,150 @@
+<div class="container deaths-component">
+
+    <br>
+    <div class="inputs">
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="sorting-number">Sorting Number</label>
+                <input type="number" class="form-control" id="sorting-number" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="municipality">Municipality</label>
+                <select class="custom-select" id="municipality" required>
+                    <option selected disabled >Choose...</option>
+                    <option>...</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="barangay">Barangay</label>
+                <select class="custom-select" id="barangay" required>
+                    <option selected disabled >Choose...</option>
+                    <option>...</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="household-number">Household Number</label>
+                <input type="number" class="form-control" id="household-number" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="total-cases">Total Cases</label>
+                <input type="number" class="form-control" id="total-cases" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="case-number">Case Number</label>
+                <input type="number" class="form-control" id="case-number" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="month-of-death">Month of  Deceased Died</label>
+                <select class="custom-select" id="month-of-death" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let month of months">{{ month }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="case-number">Name of the  Deceased</label>
+                <input type="text" class="form-control" id="deaceased-name" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="sex">Sex of the Deceased</label>
+                <select class="custom-select" id="sex" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let sex of sexs">{{ sex }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="age-at-death">Age at Death</label>
+                <input type="text" class="form-control" id="age-at-death" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="age-bracket">Age Bracket</label>
+                <select class="custom-select" id="age-bracket" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let ageBracket of ageBrackets">{{ ageBracket }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="place-of-death">Place of Death</label>
+                <select class="custom-select" id="place-of-death" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let placeOfDeath of placeOfDeaths">{{ placeOfDeath }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="registered-lcr">Registered LCR</label>
+                <select class="custom-select" id="registered-lcr" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let registeredLCR of registeredLCRs">{{ registeredLCR }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <div class="button-container">
+            <button class="button">Submit Record</button>
+        </div>
+        <br> <br>
+
+    </div>
+
+</div>

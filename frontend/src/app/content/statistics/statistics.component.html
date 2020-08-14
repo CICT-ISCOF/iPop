@@ -1,0 +1,156 @@
+<div class="statistics-component">
+
+
+
+
+    <div class="row row1">
+        <div class="col-md-3 container box">
+            <div class="icon mr-auto">
+                <i style="font-size: 30px !important;color:#57B894" class="fas fa-users"></i>
+            </div>
+            <div class="texts">
+                <p>Total Population</p>
+                <h2>16,000</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3 container box">
+            <div class="icon mr-auto">
+                <i style="font-size: 30px !important;color:orange" class="fas fa-university"></i>
+            </div>
+            <div class="texts">
+                <p>Number of Municipalities</p>
+                <h2>16,000</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3 container box">
+            <div class="icon mr-auto">
+                <i style="font-size: 30px !important;color:#2659D8" class="fas fa-ship"></i>
+            </div>
+            <div class="texts">
+                <p>Number of Barangays</p>
+                <h2>16,000</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row container">
+        <div class="form-group col-md-6">
+            <h3>Top Populated Municipalities</h3>
+            <p>All over Iloilo</p>
+            <ul class="list-group">
+                <li *ngFor="let item of [0,1,1,1,1]" class="list-group-item barangays">
+                    <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
+                    <p>Barotac Nuevo</p>
+                    <p>290</p>
+                    <p>15%</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="form-group col-md-6">
+            <!-- <h5 class="heading">Total Population {{ 'of ' + location }} 11, 400 </h5> -->
+            <div class="map w-100 col-md-12" #map id="map" style="height: 100%; ">
+            </div>
+        </div>
+    </div>
+
+    <div class="row container">
+        <div class="form-group col-md-6">
+            <label for="municipality">Municipality</label>
+            <select (change)="changeMunicipality($event)" class="form-control" id="municipality">
+                    <option selected disabled>Choose Municipality</option>
+                    <option>Barotac Nuevo</option>
+                </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="barangay">Barangay</label>
+            <select (change)="changeMap($event)" class="form-control" id="barangay">
+                    <option selected disabled>Choose Barangay</option>
+                    <option>Cruz</option>
+                </select>
+        </div>
+        <hr>
+        <div class="form-group col-md-6">
+            <label for="year">Year</label>
+            <select class="form-control " id="year">
+                <option selected disabled>Choose Year</option>
+                <option>2020</option>
+                </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="month">Month</label>
+            <select class="form-control" id="month">
+                    <option selected disabled>Choose Month</option>
+                    <option>January</option>
+                </select>
+        </div>
+    </div>
+
+
+
+    <!-- <div class="row container">
+            <h4 class="heading">Total Population {{ 'of ' + location }} 11, 400 </h4>
+            <google-chart class="container1 w-100 " type='GeoChart' [data]="data" [options]="opts">
+            </google-chart>
+        </div> -->
+
+    <div class="row" style="margin-left:-15px">
+        <div class="col-md-4 container">
+            <h4>Age group</h4>
+            <google-chart class="w-100 " type='PieChart' [data]="charts.ageGroup " [options]="chartOptions ">
+            </google-chart>
+        </div>
+
+        <div class="col-md-4 container ">
+            <h4>Sex Data</h4>
+            <google-chart class="w-100 " type='PieChart' [data]="charts.sexData " [options]="chartOptions ">
+            </google-chart>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row container">
+        <h4>Age Distribution</h4>
+        <google-chart class="container1 w-100 " type='ColumnChart' [data]="charts.ageDistribution " [options]="chartOptions">
+        </google-chart>
+    </div>
+    <br>
+    <div class="row container">
+        <h4>1,400 Deaths - 14%</h4>
+        <google-chart class="container1 w-100 " type='AreaChart' [data]="charts.deaths " [options]="deathOptions">
+        </google-chart>
+    </div>
+    <br>
+    <div class="row container">
+        <h4>7,400 Births - 18%</h4>
+        <google-chart class="container1 w-100 " type='AreaChart' [data]="charts.deaths " [options]="birthOptions">
+        </google-chart>
+    </div>
+    <br>
+    <div class="row container">
+        <h4>7,400 In-Migartants - 24%</h4>
+        <google-chart class="container1 w-100 " type='ColumnChart' [data]="charts.deaths " [options]="chartOptions">
+        </google-chart>
+    </div>
+    <br>
+    <div class="row container">
+        <h4>7,400 Out-Migartants - 30%</h4>
+        <google-chart class="container1 w-100 " type='LineChart' [data]="charts.deaths " [options]="outMigrantsOptions">
+        </google-chart>
+    </div>
+    <br>
+    <div class="row container">
+        <h4> 1200 Married - 30%</h4>
+        <google-chart class="container1 w-100 " type='AreaChart' [data]="charts.deaths " [options]="marriedOptions">
+        </google-chart>
+    </div>
+
+
+
+
+</div>

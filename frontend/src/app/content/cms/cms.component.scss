@@ -1,0 +1,272 @@
+.cms-component {
+    width: 100%;
+    height: 110%;
+    padding: 10px 30px;
+    background: var(--bg1);
+}
+
+.action-buttons {
+    display: flex;
+    padding-right: 20px;
+}
+
+.button {
+    float: right;
+    margin-right: 50px;
+}
+
+.preview,
+.reset {
+    height: 50px;
+    width: 50px;
+    margin-right: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.preview {
+    margin-left: auto;
+}
+
+.preview:hover,
+.reset:hover {
+    background: var(--inputBg);
+}
+
+.tabs {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selector-slide {
+    position: relative;
+}
+
+.tab {
+    margin-right: 20px;
+    position: relative;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.tab:hover {
+    opacity: .5;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+}
+
+.button-container button {
+    margin: auto;
+}
+
+.selector {
+    background: var(--contrast);
+    height: 40px;
+    width: 120px;
+    position: absolute;
+    border-radius: 5px;
+    margin-top: -20px;
+    margin-left: -12px;
+}
+
+.active {
+    color: white
+}
+
+label {
+    display: flex;
+    align-items: center;
+}
+
+.options {
+    margin-left: auto;
+}
+
+.options1 {
+    margin-left: 10px;
+}
+
+.options svg,
+.options1 svg {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.options svg:hover,
+.options1 svg:hover {
+    background: var(--inputBg);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.form-check {
+    margin-right: 20px;
+}
+
+.form-check label {
+    cursor: pointer;
+}
+
+.form-check label:hover {
+    text-decoration: underline;
+}
+
+.row2 {
+    padding-left: 20px;
+}
+
+button:hover {
+    opacity: .8;
+}
+
+button:active {
+    opacity: .5;
+}
+
+owl-carousel-o,
+img {
+    height: 40vh;
+    min-width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.owl-carousel .owl-item img,
+.row5 img {
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
+    max-width: initial;
+}
+
+.title {
+    text-align: center;
+    width: 100%;
+}
+
+.row4 {
+    width: 100%;
+}
+
+.row4 h4,
+p {
+    width: 100%;
+    padding: 5px 5vw;
+    text-align: center;
+}
+
+.grid,
+.Cards .card {
+    margin: 35px;
+    width: 150px;
+    height: 350px;
+    float: left;
+}
+
+.Cards .card {
+    width: 270px;
+}
+
+.Cards .card p {
+    word-break: break-all;
+    width: 100%;
+    text-align: left !important;
+}
+
+.row6,
+.row7 {
+    padding: 20px
+}
+
+.row4[_ngcontent-pfp-c26] h4[_ngcontent-pfp-c26],
+p {
+    padding: 0;
+}
+
+.card img {
+    height: 40%;
+}
+
+.grid {
+    text-align: center;
+}
+
+.card {
+    background: inherit;
+}
+
+.grid img {
+    height: 70%;
+}
+
+.title {
+    border-bottom: 1px solid rgba(150, 150, 150, 0.4);
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    text-align: left !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    display: flex;
+}
+
+span {
+    margin-left: auto;
+    display: flex;
+}
+
+span select {
+    background: none !important;
+    border: none !important;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+span svg {
+    cursor: pointer;
+    border-radius: 50%;
+    margin-left: 20px;
+}
+
+span svg:hover {
+    opacity: .5;
+}
+
+.Big-Image iframe,
+object {
+    height: auto;
+    width: 100%;
+}
+
+.card {
+    box-shadow: 1px 1px 2px rgba(150, 150, 150, .5);
+}
+
+.card:hover {
+    box-shadow: 1px 1px 10px rgba(150, 150, 150, .5);
+}
+
+.clickable {
+    border-radius: 10px;
+}
+
+.clickable:hover {
+    background: var(--inputBg);
+}

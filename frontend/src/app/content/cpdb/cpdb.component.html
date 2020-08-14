@@ -1,0 +1,662 @@
+<div class="container cpdb-component">
+
+    <br>
+    <div class="inputs">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="sorting-number">Sorting Number</label>
+                <input type="number" [(ngModel)]="fields.sortingNumber" class="form-control" id="sorting-number" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="municipality">Municipality</label>
+                <select class="custom-select" [(ngModel)]="fields.municipality" id="municipality" required>
+                    <option selected disabled >Choose...</option>                   
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="barangay">Barangay</label>
+                <select class="custom-select" id="barangay" [(ngModel)]="fields.barangay" required>
+                    <option selected disabled >Choose...</option>
+                    <option>...</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="purok">Purok or Zone</label>
+                <input [(ngModel)]="fields.purok" class="custom-select" id="purok" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="Householdnum">Household Number</label>
+                <input [(ngModel)]="fields.Householdnum" class="custom-select" id="Householdnum" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="Characterisitcs">Household Characterisitcs</label>
+                <input [(ngModel)]="fields.Characterisitcs" class="custom-select" id="Characterisitcs" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="houseHoldSizeBracket">Household Size Bracket</label>
+                <select [(ngModel)]="fields.houseHoldSizeBracket" class="custom-select" id="houseHoldSizeBracket" required>
+                    <option value="" selected disabled>Choose..</option>
+                    <option *ngFor="let houseHoldSizeBracket of select.houseHoldSizeBrackets">{{ houseHoldSizeBracket }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Number of Families</label>
+                <input [(ngModel)]="fields.numofFamilies" class="custom-select" id="numofFamilies" type="number" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="numofFamiliesBracket">Number of Families Bracket</label>
+                <select [(ngModel)]="fields.numofFamiliesBracket" class="custom-select" id="numofFamiliesBracket" required>
+                    <option value="" selected disabled>Choose..</option>
+                    <option *ngFor="let houseHoldSizeBracket of select.houseHoldSizeBrackets">{{ houseHoldSizeBracket }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="lineNumber">Line number of Household Member</label>
+                <input [(ngModel)]="fields.lineNumber" class="custom-select" id="lineNumber" type="text" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="numOfHosehold">Name of Household Members</label>
+                <input [(ngModel)]="fields.numOfHosehold" class="custom-select" id="numOfHosehold " type="text" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="relationshipToHH">Relationship to Household Head</label>
+                <select [(ngModel)]="fields.relationshipToHH" class="custom-select" id="relationshipToHH " required>
+                    <option value="" selected disabled>Choose..</option>
+                    <option *ngFor="let RelationshiptoHouseholdHead of select.RelationshiptoHouseholdHeads">{{ RelationshiptoHouseholdHead }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="sex">Sex</label>
+                <select [(ngModel)]="fields.sex" class="custom-select" id="sex" required>
+                    <option value="" selected disabled>Choose..</option>
+                    <option *ngFor="let Sex of select.Sexes">{{ Sex }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input [(ngModel)]="fields.dateOfBirth" class="custom-select" id="dateOfBirth" type="date" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="ageAsLastBirthDay">Age as of Last Birthday</label>
+                <input [(ngModel)]="fields.ageAsLastBirthDay" class="custom-select" id="ageAsLastBirthDay" type="number" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="AgeBracket">Age Bracket</label>
+                <select class="custom-select" id="AgeBracket" required>
+                    <option value="" selected disabled>Choose..</option>
+                    <option *ngFor="let AgeBrackets of select.AgeBrackets">{{ AgeBrackets }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="civilStatus">Civil Status</label>
+                <select [(ngModel)]="fields.civilStatus" class="custom-select" id="civilStatus" required>
+                    <option value="" selected disabled>Choose..</option>
+                    <option *ngFor="let CivilStatuses of select.CivilStatuses">{{ CivilStatuses }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="educationalAttainment">Highest Educational Attainment</label>
+                <select [(ngModel)]="fields.educationalAttainment" class="custom-select" id="educationalAttainment " required>
+                    <option value="" selected disabled>Choose..</option>
+                    <option *ngFor="let HighestEducationalAttainments of select.HighestEducationalAttainments">{{ HighestEducationalAttainments }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">School Attendance</label>
+                <select class="custom-select" id="numofFamilies " required>
+                        <option value="" selected disabled>Choose..</option>
+                    </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Grade/Year Level of School Attendance</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Reason for Not Attending School</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Specify Reasons for Not Attending School</label>
+                <input class="custom-select" id="numofFamilies " type="text" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Religious Affiliation</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">SpecifyReligion)</label>
+                <input class="custom-select" id="numofFamilies " type="text" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Have special skills</label>
+                <input class="custom-select" id="numofFamilies " type="text" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Type of Special Skills</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Skills Specify</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Presence of Disability</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Type of Disability</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Indigenous group or tribe</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Name of Indigenous or Tribe</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">IP Specify Tribe</label>
+                <input class="custom-select" id="numofFamilies " required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Active PhilHealth Member (18 years old & above)</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">PhilHealth Membership-Specify</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Usual Occupation of Working HH Member</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Specify Usual Occupation</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Gross Monthly Income</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Place of Work/Employment  of the Earning HH Member</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">No. of Years Stay (in Current Address)</label>
+                <input type="number" class="custom-select" id="numofFamilies " required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">No. of Years Stay Bracket</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">FP Currently Used (By Women 10-50 yrs old)</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Total Household Monthly Income</label>
+                <input type="number" class="custom-select" id="numofFamilies " required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Household Income Bracket</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-3 mb-3">
+                <label for="numofFamilies">House Ownership</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="numofFamilies">How many stories/level is the house?</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+
+            <div class="col-md-3 mb-3">
+                <label for="numofFamilies">House Construction Material</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="numofFamilies">Homelot Ownership/Tenure Status</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="numofFamilies">HH Usual Source of Water for Drinking</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="numofFamilies">HH Usual Source of Water for Drinking</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="numofFamilies">Type of Toilet the Household Owns</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="numofFamilies">Household's Garbage Disposal</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Type of Fuel Use for Lighting</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Type of Fuel for Cooking</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="numofFamilies">Specify Fuel for Cooking</label>
+                <input class="custom-select" id="numofFamilies " required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Specify Fuel for Cooking</label>
+                <input class="custom-select" id="numofFamilies " required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Water Level in flood prone area</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">Access to Information Technology</label>
+                <input class="custom-select" id="numofFamilies " required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numofFamilies">4Ps Beneficiary Household</label>
+                <select class="custom-select" id="numofFamilies " required>
+                    <option value="" selected disabled>Choose..</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="button-container">
+            <button (click)="submit()" class="button">Submit Record</button>
+        </div>
+
+        <br><br>
+
+    </div>
+
+</div>

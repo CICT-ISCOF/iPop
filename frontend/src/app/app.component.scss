@@ -1,0 +1,25 @@
+.app-component {
+    width: 100%;
+    height: 100vh;
+    background: var(--bg1);
+    overflow: hidden;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.content {
+    float: right;
+    width: 100%;
+    height: 100%;
+    background: var(--bg1);
+    overflow-x: hidden;
+}
+
+.removePadding {
+    padding: 0px 5px;
+}
+
+.addPadding {
+    padding: 70px 5px;
+    padding-left: 280px;
+}

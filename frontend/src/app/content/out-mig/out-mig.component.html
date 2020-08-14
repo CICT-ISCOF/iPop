@@ -1,0 +1,228 @@
+<div class="container out-migs-component">
+
+    <br>
+    <div class="inputs">
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="sorting-number">Sorting Number</label>
+                <input type="number" class="form-control" id="sorting-number" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="municipality">Municipality</label>
+                <select class="custom-select" id="municipality" required>
+                    <option selected disabled >Choose...</option>
+                    <option>...</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="barangay">Barangay</label>
+                <select class="custom-select" id="barangay" required>
+                    <option selected disabled >Choose...</option>
+                    <option>...</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="household-number">Household Number</label>
+                <input type="number" class="form-control" id="household-number" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="total-cases">Total Cases</label>
+                <input type="number" class="form-control" id="total-cases" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="case-number">Case Number</label>
+                <input type="number" class="form-control" id="case-number" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="month-of-death">Month of  Migration</label>
+                <select class="custom-select" id="month-of-death" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let monthOfMigration of monthOfMigrations">{{ monthOfMigration }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="case-number">Name of Household Members</label>
+                <input type="text" class="form-control" id="deaceased-name" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="sex">Sex of Outmigrant</label>
+                <select class="custom-select" id="sex" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let sex of sexs">{{ sex }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="age-at-death">Date of Birth</label>
+                <input type="date" class="form-control" id="age-at-death" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="age-at-death">Age of HH member</label>
+                <input type="number" class="form-control" id="age-at-death" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="age-at-death">Age in  Months</label>
+                <input type="number" class="form-control" id="age-at-death" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="age-bracket">Age Bracket</label>
+                <select class="custom-select" id="age-bracket" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let ageBracket of ageBrackets">{{ ageBracket }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-7 mb-3">
+                <label for="place-of-death">Completed Educational Attainment</label>
+                <select class="custom-select" id="place-of-death" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let educationalAttainment of educationalAttainment">{{ educationalAttainment }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-5 mb-3">
+                <label for="registered-lcr">Actual Occupation</label>
+                <select class="custom-select" id="registered-lcr" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let occupation of occupations">{{ occupation }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="age-at-death">Major Occupation of Outmigrant</label>
+                <input type="text" class="form-control" id="age-at-death" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="registered-lcr">Monthly Income</label>
+                <select class="custom-select" id="registered-lcr" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let monthlyIncome of monthlyIncome">{{ monthlyIncome }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="skills-aquired">Skills Acquired</label>
+                <input type="text" class="form-control" id="skills-aquired" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="skills-aquired">Actual Place of origin</label>
+                <input type="text" class="form-control" id="skills-aquired" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="registered-lcr">Place of Origin</label>
+                <select class="custom-select" id="registered-lcr" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let placeOfOrigin of placeOfOrigin">{{ placeOfOrigin }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="registered-lcr">Reasons for Out-Migrating</label>
+                <select class="custom-select" id="registered-lcr" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let reasonForInMagrating of reasonForInMagrating">{{ reasonForInMagrating }}</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+
+
+        <br>
+        <div class="button-container">
+            <button class="button">Submit Record</button>
+        </div>
+        <br> <br>
+
+    </div>
+
+</div>

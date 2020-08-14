@@ -1,0 +1,25 @@
+.in-migs-component {
+    width: 100%;
+    height: auto;
+    padding: 10px 30px;
+    background: var(--bg);
+}
+
+.button-container {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.button {
+    margin: auto;
+}
+
+.button:hover {
+    opacity: .6;
+}
+
+.button:active {
+    opacity: .4;
+}

@@ -1,0 +1,25 @@
+.icons-component-nav {
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.wrapper {
+    border-radius: 50%;
+    background: var(--sidebar);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+}
+
+i,
+svg {
+    fill: white;
+    color: white;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+}

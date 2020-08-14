@@ -1,0 +1,44 @@
+<div class=" profiling-component">
+    <br>
+    <ul class="nav nav-pills nav-fill">
+        <li (click)="maekActive('CPDB')" class="nav-item">
+            <a [class.active]="tabs.CPDB == true" class="nav-link">CPDB
+                <span class="badge badge-danger">21</span>
+            </a>
+        </li>
+        <li (click)="maekActive('Deaths')" class="nav-item">
+            <a [class.active]="tabs.Deaths == true" class="nav-link">Deaths
+                <span class="badge badge-danger">5</span>
+            </a>
+        </li>
+        <li (click)="maekActive('Births')" class="nav-item">
+            <a [class.active]="tabs.Births == true" class="nav-link">Births
+              <span class="badge badge-danger">12</span>
+            </a>
+        </li>
+        <li (click)="maekActive('InMigs')" class="nav-item">
+            <a [class.active]="tabs.InMigs == true" class="nav-link">In-Migration
+                <span class="badge badge-danger">42</span>
+            </a>
+        </li>
+        <li (click)="maekActive('OutmiGS')" class="nav-item">
+            <a [class.active]="tabs.OutmiGS == true" class="nav-link">Out-Migration
+                <span class="badge badge-danger">21</span>
+            </a>
+        </li>
+        <li (click)="maekActive('Marraige')" class="nav-item">
+            <a [class.active]="tabs.Marraige == true" class="nav-link">Marriage
+                <span class="badge badge-danger">65</span>
+            </a>
+        </li>
+    </ul>
+    <br><br>
+
+
+    <app-deaths-table *ngIf="tabs.Deaths == true"></app-deaths-table>
+    <app-births-table *ngIf="tabs.Births == true"></app-births-table>
+    <app-in-migs-table *ngIf="tabs.InMigs == true"></app-in-migs-table>
+    <app-out-migs-table *ngIf="tabs.OutmiGS == true"></app-out-migs-table>
+    <app-marriage-table *ngIf="tabs.Marraige == true"></app-marriage-table>
+
+</div>
