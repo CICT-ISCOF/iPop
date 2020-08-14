@@ -34,7 +34,7 @@ class LoginController extends Controller
     protected function checkPin(Request $request)
     {
         $errors = [];
-        foreach (['pin', 'answer', 'username'] as $key) {
+        foreach (['pin', 'answer', 'question'] as $key) {
             if (!$request->has($key)) {
                 $errors[$key] = [ucfirst($key) . ' is required.'];
             }
@@ -48,12 +48,16 @@ class LoginController extends Controller
             );
         }
         $data = $request->all();
-        $user = User::where('username', $data['username'])->first();
+        $user = User::where('pin', $data['pin'])
+            ->where('question', $data['question'])
+            ->first();
         if (!$user) {
             return response(
                 [
                     'errors' => [
-                        'username' => ['Username does not exist.'],
+                        'pin' => [
+                            'Pin or question is not associated to any user.',
+                        ],
                     ],
                 ],
                 404

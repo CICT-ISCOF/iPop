@@ -48,23 +48,35 @@ class User extends Authenticatable
      *
      * @return \Laravel\Sanctum\NewAccessToken
      */
-    public function createToken()
+    public function createToken($name = null, $abilities = ['*'])
     {
-        return $this->sanctumCreateToken(request()->ip());
+        $ip = request()->ip();
+        return $this->sanctumCreateToken(
+            $name ? "{$name}|{$ip}" : "null|{$ip}",
+            $abilities
+        );
     }
 
     public function authenticate($data, $mode)
     {
         $mode = strtolower($mode);
-        if ($mode === 'pin' && $data['answer'] !== $this->answer) {
-            return response(
-                [
-                    'errors' => [
-                        'answer' => ['Answer incorrect.'],
+        if ($mode === 'pin') {
+            if ($data['answer'] !== $this->answer) {
+                return response(
+                    [
+                        'errors' => [
+                            'answer' => ['Answer incorrect.'],
+                        ],
                     ],
-                ],
-                403
-            );
+                    401
+                );
+            } else {
+                $token = $this->createToken();
+                return response([
+                    'user' => $this,
+                    'token' => $token->plainTextToken,
+                ]);
+            }
         }
         if (Hash::check($data[$mode], $this->{$mode})) {
             $token = $this->createToken();
@@ -73,10 +85,13 @@ class User extends Authenticatable
                 'token' => $token->plainTextToken,
             ]);
         }
-        return response([
-            'errors' => [
-                $mode => ['Invalid ' . $mode],
+        return response(
+            [
+                'errors' => [
+                    $mode => ['Invalid ' . $mode],
+                ],
             ],
-        ]);
+            401
+        );
     }
 }
