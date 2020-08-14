@@ -11,7 +11,7 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $mode = $request->header('X-Auth-Mode');
-         switch ($mode) {
+        switch ($mode) {
             case 'Pin':
                 return $this->checkPin($request);
                 break;
@@ -63,6 +63,18 @@ class LoginController extends Controller
                 404
             );
         }
+        if ($user->iterations === 5) {
+            return response(
+                [
+                    'errors' => [
+                        'account' => [
+                            'This account is blocked. Please contact an Administrator or the developers of this app.',
+                        ],
+                    ],
+                ],
+                403
+            );
+        }
         return $user->authenticate($data, 'pin');
     }
 
@@ -92,6 +104,18 @@ class LoginController extends Controller
                     ],
                 ],
                 404
+            );
+        }
+        if ($user->iterations === 5) {
+            return response(
+                [
+                    'errors' => [
+                        'account' => [
+                            'This account is blocked. Please contact an Administrator or the developers of this app.',
+                        ],
+                    ],
+                ],
+                403
             );
         }
         return $user->authenticate($data, 'password');

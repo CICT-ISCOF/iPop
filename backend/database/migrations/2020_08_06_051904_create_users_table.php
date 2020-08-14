@@ -35,6 +35,7 @@ class CreateUsersTable extends Migration
                 ->unique()
                 ->nullable();
             $table->enum('role', ['Super Admin', 'PPO', 'PPO1', 'BSPO']);
+            $table->unsignedTinyInteger('iterations')->default(0);
             // $table->rememberToken();
             // $table
             //     ->enum('provider_type', [

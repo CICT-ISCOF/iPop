@@ -13,7 +13,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasApiTokens {
-        createToken as sanctumCreateToken;
+        createToken as _sanctumCreateToken;
     }
 
     /**
@@ -33,6 +33,7 @@ class User extends Authenticatable
         'question',
         'answer',
         'district',
+        'iterations',
     ];
 
     /**
@@ -42,6 +43,13 @@ class User extends Authenticatable
      */
     protected $hidden = ['password', 'pin', 'answer'];
 
+    protected $appends = ['blocked'];
+
+    public function getBlockedAttribute()
+    {
+        return $this->iterations === 5;
+    }
+
     /**
      * Override from HasApiTokens trait.
      * Predefine user abilities according to access level.
@@ -50,8 +58,10 @@ class User extends Authenticatable
      */
     public function createToken($name = null, $abilities = ['*'])
     {
+        $this->iterations = 0;
+        $this->save();
         $ip = request()->ip();
-        return $this->sanctumCreateToken(
+        return $this->_sanctumCreateToken(
             $name ? "{$name}|{$ip}" : "null|{$ip}",
             $abilities
         );
@@ -62,7 +72,7 @@ class User extends Authenticatable
         $mode = strtolower($mode);
         if ($mode === 'pin') {
             if ($data['answer'] !== $this->answer) {
-                return response(
+                return $this->_interate(
                     [
                         'errors' => [
                             'answer' => ['Answer incorrect.'],
@@ -85,7 +95,7 @@ class User extends Authenticatable
                 'token' => $token->plainTextToken,
             ]);
         }
-        return response(
+        return $this->_iterate(
             [
                 'errors' => [
                     $mode => ['Invalid ' . $mode],
@@ -93,5 +103,35 @@ class User extends Authenticatable
             ],
             401
         );
+    }
+
+    /**
+     * Increment the amount of times a user has attempted to log in.
+     *
+     * @param array $data
+     * @param int $status
+     */
+    private function _iterate(array $data = [], int $status = 401)
+    {
+        $iterations = $this->iterations;
+        if ($iterations === 5 || $iterations + 1 === 5) {
+            $this->iterations = 5;
+            $this->save();
+            return response(
+                [
+                    'errors' => [
+                        'account' => [
+                            'The account associated with the credentials provided is blocked.',
+                        ],
+                    ],
+                ],
+                403
+            );
+        } else {
+            $this->iterations++;
+            $this->save();
+            $data['tries'] = $this->iterations;
+            return response($data, $status);
+        }
     }
 }
