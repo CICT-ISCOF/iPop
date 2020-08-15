@@ -28,7 +28,7 @@ class CardRequest extends FormRequest
             'body' => ['required', 'string'],
             'link_id' => ['required', 'exist:App\Link,id'],
             'position' => ['required', 'numeric'],
-            'media' => ['file'],
+            'media' => ['required', 'file'],
         ];
     }
 }

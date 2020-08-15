@@ -25,7 +25,7 @@ class MediaRequest extends FormRequest
     {
         return [
             'link_id' => ['required', 'exists:App\Link,id'],
-            'media' => ['file'],
+            'media' => ['required', 'file'],
         ];
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Birth;
+use App\Http\BirthRequest;
+use App\Http\BirthUpdateRequest;
 use Illuminate\Http\Request;
 
 class BirthController extends Controller
@@ -14,18 +16,18 @@ class BirthController extends Controller
      */
     public function index()
     {
-        //
+        return Birth::all();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\BirthRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BirthRequest $request)
     {
-        //
+        return Birth::create($request->validate());
     }
 
     /**
@@ -36,19 +38,20 @@ class BirthController extends Controller
      */
     public function show(Birth $birth)
     {
-        //
+        return $birth;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\BirthUpdateRequest  $request
      * @param  \App\Birth  $birth
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Birth $birth)
+    public function update(BirthUpdateRequest $request, Birth $birth)
     {
-        //
+        $birth->update($request->validated());
+        return $birth;
     }
 
     /**
@@ -59,6 +62,7 @@ class BirthController extends Controller
      */
     public function destroy(Birth $birth)
     {
-        //
+        $birth->delete();
+        return response('', 204);
     }
 }

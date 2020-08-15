@@ -52,6 +52,12 @@ class CreateOutMigrationsTable extends Migration
                 '40-44',
                 '45-49',
                 '50-54',
+                '55-59',
+                '60-64',
+                '65-69',
+                '70-74',
+                '75-79',
+                '80 and above',
             ]);
             $table->string('completed_educational_attainment');
             $table->string('actual_occupation');
@@ -60,7 +66,7 @@ class CreateOutMigrationsTable extends Migration
             $table->text('skills_acquired');
             $table->string('actual_place_of_origin');
             $table->string('place_of_origin');
-            $table->string('reasons_for_in_migrating');
+            $table->string('reasons_for_out_migrating');
             $table->timestamps();
         });
     }

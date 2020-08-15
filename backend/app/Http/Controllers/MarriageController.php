@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Marriage;
+use App\Http\Requests\MarriageRequest;
+use App\Http\Requests\MarriageUpdateRequest;
 use Illuminate\Http\Request;
 
 class MarriageController extends Controller
@@ -14,18 +16,18 @@ class MarriageController extends Controller
      */
     public function index()
     {
-        //
+        return Marriage::paginate(10);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\MarriageRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MarriageRequest $request)
     {
-        //
+        return Marriage::create($request->validate());
     }
 
     /**
@@ -36,19 +38,20 @@ class MarriageController extends Controller
      */
     public function show(Marriage $marriage)
     {
-        //
+        return $marriage;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\MarriageUpdateRequest  $request
      * @param  \App\Marriage  $marriage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Marriage $marriage)
+    public function update(MarriageUpdateRequest $request, Marriage $marriage)
     {
-        //
+        $marriage->update($request->validated());
+        return $marriage;
     }
 
     /**
@@ -59,6 +62,7 @@ class MarriageController extends Controller
      */
     public function destroy(Marriage $marriage)
     {
-        //
+        $marriage->delete();
+        return response('', 204);
     }
 }

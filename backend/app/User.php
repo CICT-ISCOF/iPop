@@ -51,12 +51,62 @@ class User extends Authenticatable
         });
     }
 
+    /**
+     * Checks if the user is a Super Admin.
+     *
+     * @return boolean $isAdministrator
+     */
+    public function isAdministrator()
+    {
+        return $this->role === 'Super Admin';
+    }
+
+    /**
+     * Checks if the user is a PPO employee.
+     *
+     * @return boolean $isPPO
+     */
+    public function isPPO()
+    {
+        return $this->role === 'PPO';
+    }
+
+    /**
+     * Checks if the user is a PPO1 employee.
+     *
+     * @return boolean $isPPO1
+     */
+    public function isPPOOne()
+    {
+        return $this->role === 'PPO1';
+    }
+
+    /**
+     * Checks if the user is a BSPO employee.
+     *
+     * @return boolean $isBSPO
+     */
+    public function isBSPO()
+    {
+        return $this->role === 'BSPO';
+    }
+
     public function profilePicture()
     {
         return $this->belongsTo(File::class, 'profile_picture_id');
     }
 
     public function getBlockedAttribute()
+    {
+        return $this->isBlocked();
+    }
+
+    /**
+     * Checks if the user's account is blocked.
+     *
+     * @return boolean $blocked
+     */
+    public function isBlocked()
     {
         return $this->iterations === 5;
     }

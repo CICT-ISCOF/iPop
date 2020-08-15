@@ -7,7 +7,7 @@ Route::prefix('/auth')->group(function () {
     Route::post('/register', 'Auth\RegisterController@register');
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'restrict:blocked'])->group(function () {
     Route::apiResource('users', 'UserController');
 
     // CMS
@@ -25,6 +25,16 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{file}', 'FileController@streamPrivate');
         Route::get('/download/{file}', 'FileController@downloadPrivate');
     });
+
+    // User Logs
+    Route::get('/logs', 'LogController@index');
+
+    // Statistics
+    Route::apiResource('births', 'BirthController');
+    Route::apiResource('deaths', 'DeathController');
+    Route::apiResource('in-migrations', 'InMigrationController');
+    Route::apiResource('out-migrations', 'OutMigrationController');
+    Route::apiResource('marriages', 'MarriageController');
 });
 
 Route::prefix('/file/public')->group(function () {

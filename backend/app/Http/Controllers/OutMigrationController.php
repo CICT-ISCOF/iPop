@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\OutMigration;
+use App\Http\Requests\OutMigrationRequest;
+use App\Http\Requests\OutMigrationUpdateRequest;
 use Illuminate\Http\Request;
 
 class OutMigrationController extends Controller
@@ -14,18 +16,18 @@ class OutMigrationController extends Controller
      */
     public function index()
     {
-        //
+        return OutMigration::paginate(10);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\OutMigrationRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OutMigrationRequest $request)
     {
-        //
+        return OutMigration::create($request->validated());
     }
 
     /**
@@ -36,19 +38,22 @@ class OutMigrationController extends Controller
      */
     public function show(OutMigration $outMigration)
     {
-        //
+        return $outMigration;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\OutMigrationUpdateRequest  $request
      * @param  \App\OutMigration  $outMigration
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, OutMigration $outMigration)
-    {
-        //
+    public function update(
+        OutMigrationUpdateRequest $request,
+        OutMigration $outMigration
+    ) {
+        $outMigration->update($request->validated());
+        return $outMigration;
     }
 
     /**
@@ -59,6 +64,7 @@ class OutMigrationController extends Controller
      */
     public function destroy(OutMigration $outMigration)
     {
-        //
+        $outMigration->delete();
+        return response('', 204);
     }
 }
