@@ -25,14 +25,14 @@ class DeathUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'sorting_number' => ['required', 'string', 'max:255'],
-            'municipality' => ['required', 'string', 'max:255'],
-            'barangay' => ['required', 'string', 'max:255'],
-            'total_cases' => ['required', 'numeric'],
-            'number_of_cases' => ['required', 'numeric'],
-            'household_number' => ['required', 'string', 'max:255'],
+            'sorting_number' => ['nullable', 'string', 'max:255'],
+            'municipality' => ['nullable', 'string', 'max:255'],
+            'barangay' => ['nullable', 'string', 'max:255'],
+            'total_cases' => ['nullable', 'numeric'],
+            'number_of_cases' => ['nullable', 'numeric'],
+            'household_number' => ['nullable', 'string', 'max:255'],
             'month' => [
-                'required',
+                'nullable',
                 Rule::in([
                     'January',
                     'February',
@@ -48,11 +48,11 @@ class DeathUpdateRequest extends FormRequest
                     'December',
                 ]),
             ],
-            'name' => ['required', 'string', 'max:255'],
-            'sex' => ['required', Rule::in(['Male', 'Female'])],
-            'age_at_death' => ['required', 'numeric', 'max:255'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'sex' => ['nullable', Rule::in(['Male', 'Female'])],
+            'age_at_death' => ['nullable', 'numeric', 'max:255'],
             'age_bracket' => [
-                'required',
+                'nullable',
                 Rule::in([
                     'Below 1 year old',
                     '01-04',
@@ -74,8 +74,8 @@ class DeathUpdateRequest extends FormRequest
                     '80 and above',
                 ]),
             ],
-            'place_of_death' => ['required', 'string', 'max:255'],
-            'registered_lcr' => ['required', 'boolean'],
+            'place_of_death' => ['nullable', 'string', 'max:255'],
+            'registered_lcr' => ['nullable', 'boolean'],
         ];
     }
 }
