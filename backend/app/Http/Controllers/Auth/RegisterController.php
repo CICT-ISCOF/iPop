@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\File;
+use App\Log;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -22,6 +23,7 @@ class RegisterController extends Controller
             $user->profile_picture_id = $file->id;
             $user->save();
         }
+        Log::record('Created a new ' . $user->role . ' user.');
         return $user;
     }
 

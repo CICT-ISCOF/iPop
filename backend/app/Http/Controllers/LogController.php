@@ -9,6 +9,28 @@ class LogController extends Controller
 {
     public function index()
     {
-        return Log::orderBy('created_at', 'DESC')->paginate(10);
+        return Log::with('user')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
+    }
+
+    public function destroy(Log $log)
+    {
+        $log->delete();
+        Log::record('User cleared a log.');
+        return response('', 204);
+    }
+
+    public function clear()
+    {
+        Log::truncate();
+        Log::record('User cleared all logs.');
+        return response('', 204);
+    }
+
+    public function visit()
+    {
+        Log::record('A user visited the website.');
+        return response('', 204);
     }
 }

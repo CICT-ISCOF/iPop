@@ -20,32 +20,32 @@ class CreateCPDBSTable extends Migration
             $table->string('barangay');
             $table->string('zone');
             $table->string('household_number');
-            $table->text('household_characteristics');
-            $table->unsignedTinyInteger('number_of_persons_living');
+            $table->string('household_characteristics');
+            $table->string('number_of_persons_living');
             $table->string('household_size_bracket');
             $table->string('number_of_families');
             $table->string('line_number_of_household_member');
-            $table->text('name_of_household_members');
+            $table->string('name_of_household_member');
             $table->string('relationship_to_household_head');
             $table->string('sex');
-            $table->date('date_of_birth');
-            $table->unsignedTinyInteger('age');
+            $table->string('date_of_birth');
+            $table->string('age');
             $table->string('age_bracket');
             $table->string('civil_status');
             $table->string('highest_educational_attainment');
-            $table->boolean('school_attendance');
+            $table->string('school_attendance');
             $table->string('level_of_school_attendance');
             $table->string('reason_for_not_attending_school');
             $table->string('religious_affiliation');
-            $table->boolean('have_special_skills');
+            $table->string('have_special_skills');
             $table->string('type_of_special_skill');
             $table->string('skills_specify');
-            $table->boolean('presence_of_disability');
+            $table->string('presence_of_disability');
             $table->string('type_of_disability');
-            $table->boolean('indigenous_group_or_tribe');
+            $table->string('indigenous_group_or_tribe');
             $table->string('name_of_group_or_tribe');
             $table->string('specify_tribe');
-            $table->boolean('active_philhealth_member');
+            $table->string('active_philhealth_member');
             $table->string('philhealth_membership_specify');
             $table->string('usual_occupation_of_working_household_member');
             $table->string('specify_usual_occupation');
@@ -53,7 +53,7 @@ class CreateCPDBSTable extends Migration
             $table->string('income_bracket');
             // Place of Work/Employment  of the Earning HH Member
             $table->string('place_of_work');
-            $table->unsignedTinyInteger('number_of_years_stay');
+            $table->string('number_of_years_stay');
             $table->string('number_of_years_bracket');
             $table->string('fp_currently_used');
             $table->string('total_household_monthly_income');
@@ -72,12 +72,12 @@ class CreateCPDBSTable extends Migration
             $table->string('type_of_cooking_fuel');
             $table->string('specify_cooking_fuel');
             // House Location Geo-Hazard Area
-            $table->boolean('geohazard_area');
+            $table->string('geohazard_area');
             $table->string('household_location');
             // Water Level in flood prone area
             $table->string('flood_prone_area_water_level');
             $table->string('access_to_infotech');
-            $table->boolean('4ps_beneficiary_household');
+            $table->string('4ps_beneficiary_household');
             $table->timestamps();
         });
     }

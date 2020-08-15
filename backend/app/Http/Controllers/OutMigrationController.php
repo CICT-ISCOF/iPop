@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\OutMigration;
+use App\Log;
 use App\Http\Requests\OutMigrationRequest;
 use App\Http\Requests\OutMigrationUpdateRequest;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class OutMigrationController extends Controller
      */
     public function store(OutMigrationRequest $request)
     {
+        Log::record('Created an Out-Migration record.');
         return OutMigration::create($request->validated());
     }
 
@@ -52,6 +54,7 @@ class OutMigrationController extends Controller
         OutMigrationUpdateRequest $request,
         OutMigration $outMigration
     ) {
+        Log::record('Updated an Out-Migration record.');
         $outMigration->update($request->validated());
         return $outMigration;
     }
@@ -64,6 +67,7 @@ class OutMigrationController extends Controller
      */
     public function destroy(OutMigration $outMigration)
     {
+        Log::record('Deleted an Out-Migration record.');
         $outMigration->delete();
         return response('', 204);
     }

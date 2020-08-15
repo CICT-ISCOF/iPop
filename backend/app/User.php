@@ -122,6 +122,7 @@ class User extends Authenticatable
         $this->iterations = 0;
         $this->save();
         $ip = request()->ip();
+        Log::record('User logged in successfully.', $this->id);
         return $this->_sanctumCreateToken("{$name}|{$ip}", $abilities);
     }
 
@@ -130,6 +131,7 @@ class User extends Authenticatable
         $mode = strtolower($mode);
         if ($mode === 'pin') {
             if ($data['answer'] !== $this->answer) {
+                Log::record('User failed to login.', $this->id);
                 return $this->_interate(
                     [
                         'errors' => [
@@ -153,6 +155,7 @@ class User extends Authenticatable
                 'token' => $token->plainTextToken,
             ]);
         }
+        Log::record('User failed to login.', $this->id);
         return $this->_iterate(
             [
                 'errors' => [

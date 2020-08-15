@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CPDB;
+use App\Log;
 use Illuminate\Http\Request;
 
 class CPDBController extends Controller
@@ -14,7 +15,7 @@ class CPDBController extends Controller
      */
     public function index()
     {
-        //
+        return CPDB::paginate(10);
     }
 
     /**
@@ -25,7 +26,8 @@ class CPDBController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Log::record('Created new CPDB record.');
+        return CPDB::create($request->all());
     }
 
     /**
@@ -36,7 +38,7 @@ class CPDBController extends Controller
      */
     public function show(CPDB $cPDB)
     {
-        //
+        return $cPDB;
     }
 
     /**
@@ -48,7 +50,9 @@ class CPDBController extends Controller
      */
     public function update(Request $request, CPDB $cPDB)
     {
-        //
+        Log::record('Updated a CPDB record.');
+        $cPDB->update($request->all());
+        return $cPDB;
     }
 
     /**
@@ -59,6 +63,8 @@ class CPDBController extends Controller
      */
     public function destroy(CPDB $cPDB)
     {
-        //
+        Log::record('Deleted a CPDB record.');
+        $cPDB->delete();
+        return response('', 204);
     }
 }

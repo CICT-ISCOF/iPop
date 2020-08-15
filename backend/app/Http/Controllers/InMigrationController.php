@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\InMigration;
+use App\Log;
 use App\Http\Requests\InMigrationRequest;
 use App\Http\Requests\InMigrationUpdateRequest;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class InMigrationController extends Controller
      */
     public function store(InMigrationRequest $request)
     {
+        Log::record('Created an In-Migration record.');
         return InMigration::create($request->validated());
     }
 
@@ -52,6 +54,7 @@ class InMigrationController extends Controller
         InMigrationUpdateRequest $request,
         InMigration $inMigration
     ) {
+        Log::record('Updated an In-Migration record.');
         $inMigration->update($request->validated());
         return $inMigration;
     }
@@ -64,6 +67,7 @@ class InMigrationController extends Controller
      */
     public function destroy(InMigration $inMigration)
     {
+        Log::record('Deleted an In-Migration record.');
         $inMigration->delete();
         return response('', 204);
     }

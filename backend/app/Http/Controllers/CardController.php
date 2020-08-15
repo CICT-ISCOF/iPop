@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Card;
 use App\File;
+use App\Log;
 use App\Http\Requests\CardRequest;
 use Illuminate\Http\Request;
 

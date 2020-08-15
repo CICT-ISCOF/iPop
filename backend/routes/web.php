@@ -4,11 +4,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', 'Auth\LoginController@authenticate');
-    Route::post('/register', 'Auth\RegisterController@register');
 });
 
-Route::middleware(['auth:sanctum', 'restrict:blocked'])->group(function () {
+Route::options('/logs/visit', 'LogController@visit');
+
+Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::apiResource('users', 'UserController');
+    Route::post('/register', 'Auth\RegisterController@register');
 
     // CMS
     Route::apiResource('links', 'LinkController');
@@ -28,6 +30,8 @@ Route::middleware(['auth:sanctum', 'restrict:blocked'])->group(function () {
 
     // User Logs
     Route::get('/logs', 'LogController@index');
+    Route::delete('/logs/{log}', 'LogController@destroy');
+    Route::delete('/logs/clear', 'LogController@clear');
 
     // Statistics
     Route::apiResource('births', 'BirthController');

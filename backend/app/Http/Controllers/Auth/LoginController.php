@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Log;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -52,6 +53,7 @@ class LoginController extends Controller
             ->where('question', $data['question'])
             ->first();
         if (!$user) {
+            Log::record('Visitor attempted to login using Pin.');
             return response(
                 [
                     'errors' => [
@@ -63,7 +65,8 @@ class LoginController extends Controller
                 404
             );
         }
-        if ($user->iterations === 5) {
+        if ($user->isBlocked()) {
+            Log::record('Blocked user attempted to login.', $user->id);
             return response(
                 [
                     'errors' => [
@@ -97,6 +100,9 @@ class LoginController extends Controller
         $data = $request->all();
         $user = User::where('username', $data['username'])->first();
         if (!$user) {
+            Log::record(
+                'Visitor attempted to login using Username and Password.'
+            );
             return response(
                 [
                     'errors' => [
@@ -106,7 +112,8 @@ class LoginController extends Controller
                 404
             );
         }
-        if ($user->iterations === 5) {
+        if ($user->isBlocked()) {
+            Log::record('Blocked user attempted to login.', $user->id);
             return response(
                 [
                     'errors' => [

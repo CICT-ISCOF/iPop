@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Marriage;
+use App\Log;
 use App\Http\Requests\MarriageRequest;
 use App\Http\Requests\MarriageUpdateRequest;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class MarriageController extends Controller
      */
     public function store(MarriageRequest $request)
     {
+        Log::record('Created a Marriage record.');
         return Marriage::create($request->validate());
     }
 
@@ -50,6 +52,7 @@ class MarriageController extends Controller
      */
     public function update(MarriageUpdateRequest $request, Marriage $marriage)
     {
+        Log::record('Updated a Marriage record.');
         $marriage->update($request->validated());
         return $marriage;
     }
@@ -62,6 +65,7 @@ class MarriageController extends Controller
      */
     public function destroy(Marriage $marriage)
     {
+        Log::record('Deleted a Marriage record.');
         $marriage->delete();
         return response('', 204);
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\Log;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
@@ -30,6 +31,7 @@ class UserController extends Controller
     public function store(RegisterRequest $request)
     {
         $data = $request->validated();
+        Log::record('Created a new ' . $data['role'] . ' user.');
         $data['password'] = Hash::make($data['password']);
         return User::create($data);
     }
@@ -55,6 +57,7 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user)
     {
         $data = $request->validated();
+        $logMessage = 'Updated a ' . $user->role . ' user.';
         if (isset($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
@@ -73,6 +76,15 @@ class UserController extends Controller
             unset($data['role']);
             unset($data['iterations']);
         }
+        if (isset($data['role'])) {
+            $logMessage =
+                'Updated a ' .
+                $user->role .
+                ' user and changed role to ' .
+                $data['role'] .
+                '.';
+        }
+        Log::record($logMessage);
         $user->update($data);
         return $user;
     }
@@ -97,6 +109,7 @@ class UserController extends Controller
                 403
             );
         }
+        Log::record('Deleted a user.');
         $user->delete();
         return response('', 201);
     }

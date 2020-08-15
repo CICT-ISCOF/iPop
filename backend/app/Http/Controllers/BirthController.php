@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Birth;
+use App\Log;
 use App\Http\BirthRequest;
 use App\Http\BirthUpdateRequest;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class BirthController extends Controller
      */
     public function store(BirthRequest $request)
     {
+        Log::record('Created new Birth record.');
         return Birth::create($request->validate());
     }
 
@@ -50,6 +52,7 @@ class BirthController extends Controller
      */
     public function update(BirthUpdateRequest $request, Birth $birth)
     {
+        Log::record('Updated a birth record.');
         $birth->update($request->validated());
         return $birth;
     }
@@ -62,6 +65,7 @@ class BirthController extends Controller
      */
     public function destroy(Birth $birth)
     {
+        Log::record('Deleted a birth record.');
         $birth->delete();
         return response('', 204);
     }

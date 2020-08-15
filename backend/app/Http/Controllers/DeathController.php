@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Death;
+use App\Log;
 use App\Http\Requests\DeathRequest;
 use App\Http\Requests\DeathUpdateRequest;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class DeathController extends Controller
      */
     public function store(DeathRequest $request)
     {
+        Log::record('Created a Death record.');
         return Death::create($request->validated());
     }
 
@@ -50,6 +52,7 @@ class DeathController extends Controller
      */
     public function update(DeathUpdateRequest $request, Death $death)
     {
+        Log::record('Updated a Death record.');
         $death->update($request->validated());
         return $death;
     }
@@ -62,6 +65,7 @@ class DeathController extends Controller
      */
     public function destroy(Death $death)
     {
+        Log::record('Deleted a Death record.');
         $death->delete();
         return response('', 204);
     }
