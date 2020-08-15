@@ -40,7 +40,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = ['password', 'pin', 'answer', 'iterations'];
+    protected $hidden = ['password', 'pin', 'answer'];
 
     protected $appends = ['blocked'];
 
