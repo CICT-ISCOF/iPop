@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Card;
+use App\File;
+use App\Http\Requests\CardRequest;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -14,28 +16,23 @@ class CardController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Card::orderBy('position', 'ASC')->get();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CardRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validated();
+        $file = File::process($data['media'], $request->user());
+        $file->public = true;
+        $file->save();
+        $data['file_id'] = $file->id;
+        return Card::create($data);
     }
 
     /**
@@ -46,18 +43,7 @@ class CardController extends Controller
      */
     public function show(Card $card)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Card  $card
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Card $card)
-    {
-        //
+        return $card;
     }
 
     /**
@@ -69,7 +55,8 @@ class CardController extends Controller
      */
     public function update(Request $request, Card $card)
     {
-        //
+        $card->update($request->except(['file_id', 'link_id']));
+        return $card;
     }
 
     /**
@@ -80,6 +67,7 @@ class CardController extends Controller
      */
     public function destroy(Card $card)
     {
-        //
+        $card->delete();
+        return response('', 204);
     }
 }

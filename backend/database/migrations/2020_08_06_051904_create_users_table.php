@@ -15,7 +15,6 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            // $table->string('email')->unique();
             $table->string('username')->unique();
             $table->string('fullname');
             $table->string('district');
@@ -36,20 +35,7 @@ class CreateUsersTable extends Migration
                 ->nullable();
             $table->enum('role', ['Super Admin', 'PPO', 'PPO1', 'BSPO']);
             $table->unsignedTinyInteger('iterations')->default(0);
-            // $table->rememberToken();
-            // $table
-            //     ->enum('provider_type', [
-            //         'Facebook',
-            //         'Google',
-            //         'Twitter',
-            //         'Instagram',
-            //         'N/A',
-            //     ])
-            //     ->default('N/A');
-            // $table
-            //     ->string('provider_id')
-            //     ->unique()
-            //     ->nullable();
+            $table->foreignId('profile_picture_id')->nullable();
             $table->timestamps();
         });
     }

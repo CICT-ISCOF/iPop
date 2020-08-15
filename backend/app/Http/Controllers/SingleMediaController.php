@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use App\SingleMedia;
+use App\Http\Requests\MediaRequest;
 use Illuminate\Http\Request;
 
 class SingleMediaController extends Controller
@@ -14,28 +16,26 @@ class SingleMediaController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return SingleMedia::orderBy('position', 'ASC')->get();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\MediaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MediaRequest $request)
     {
-        //
+        $data = $request->validated();
+        $file = File::process($data['media'], $request->user());
+        $file->public = true;
+        $file->save();
+        $media = SingleMedia::create([
+            'link_id' => $data['link_id'],
+            'file_id' => $file->id,
+        ]);
+        return $media;
     }
 
     /**
@@ -46,30 +46,7 @@ class SingleMediaController extends Controller
      */
     public function show(SingleMedia $singleMedia)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\SingleMedia  $singleMedia
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SingleMedia $singleMedia)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\SingleMedia  $singleMedia
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SingleMedia $singleMedia)
-    {
-        //
+        return $singleMedia;
     }
 
     /**
@@ -80,6 +57,7 @@ class SingleMediaController extends Controller
      */
     public function destroy(SingleMedia $singleMedia)
     {
-        //
+        $singleMedia->delete();
+        return response('', 204);
     }
 }

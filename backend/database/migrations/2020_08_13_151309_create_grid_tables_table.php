@@ -21,6 +21,7 @@ class CreateGridTablesTable extends Migration
                 ->foreign('link_id')
                 ->references('id')
                 ->on('links');
+            $table->unsignedTinyInteger('position');
             $table->timestamps();
         });
     }

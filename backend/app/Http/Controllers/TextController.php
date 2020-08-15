@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Text;
+use App\Http\Requests\TextRequest;
 use Illuminate\Http\Request;
 
 class TextController extends Controller
@@ -14,28 +15,18 @@ class TextController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Text::orderBy('position', 'ASC')->get();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\TextRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TextRequest $request)
     {
-        //
+        return Text::create($request->validated());
     }
 
     /**
@@ -46,30 +37,20 @@ class TextController extends Controller
      */
     public function show(Text $text)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Text  $text
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Text $text)
-    {
-        //
+        return $text;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\TextRequest  $request
      * @param  \App\Text  $text
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Text $text)
+    public function update(TextRequest $request, Text $text)
     {
-        //
+        $text->update($request->validated());
+        return $text;
     }
 
     /**
@@ -80,6 +61,7 @@ class TextController extends Controller
      */
     public function destroy(Text $text)
     {
-        //
+        $text->delete();
+        return response('', 204);
     }
 }

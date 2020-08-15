@@ -6,19 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Slider extends Model
 {
-    protected $fillable = ['link_id'];
+    protected $fillable = ['file_id', 'slider_table_id', 'position'];
 
-    public function getFileIdsAttribute()
+    protected static function booted()
     {
-        return isset($this->attributes['file_ids'])
-            ? json_decode($this->attributes['file_ids'])
-            : null;
+        static::deleted(function ($slider) {
+            $slider->file->delete();
+        });
     }
 
-    public function setFileIdsAttribute($value)
+    public function file()
     {
-        $this->attributes['file_ids'] = isset($value)
-            ? json_encode($value)
-            : null;
+        return $this->belongsTo(File::class);
     }
 }

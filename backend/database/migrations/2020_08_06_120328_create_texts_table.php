@@ -23,6 +23,7 @@ class CreateTextsTable extends Migration
             $table->text('h1')->nullable();
             $table->text('h4')->nullable();
             $table->text('p')->nullable();
+            $table->unsignedTinyInteger('position');
             $table->timestamps();
         });
     }

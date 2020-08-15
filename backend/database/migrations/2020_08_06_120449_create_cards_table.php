@@ -27,6 +27,7 @@ class CreateCardsTable extends Migration
                 ->foreign('file_id')
                 ->references('id')
                 ->on('files');
+            $table->unsignedTinyInteger('position');
             $table->timestamps();
         });
     }

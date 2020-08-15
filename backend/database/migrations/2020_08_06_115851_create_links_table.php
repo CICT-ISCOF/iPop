@@ -18,6 +18,7 @@ class CreateLinksTable extends Migration
             $table->string('title');
             $table->json('subcategory')->nullable();
             $table->string('slug');
+            $table->unsignedTinyInteger('position')->unique();
             $table->timestamps();
         });
     }

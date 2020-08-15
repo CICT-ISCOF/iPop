@@ -3,17 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Link;
-use App\Card;
-use App\Grid;
-use App\SingleMedia;
-use App\Slider;
-use App\Text;
+use App\Http\Requests\LinkRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class LinkController extends Controller
 {
-  
     public function index()
     {
         return Link::with('cards.file')
@@ -24,26 +19,13 @@ class LinkController extends Controller
             ->all();
     }
 
-  
-    public function store(Request $request)
+    public function store(LinkRequest $request)
     {
-        $data = $request->all();
-        foreach (['link', 'card', 'grid', 'media', 'slider', 'text'] as $key) {
-            $data[$key] = isset($data[$key])
-                ? (array) json_decode($data[$key])
-                : null;
-        }
-        $link = new Link($data['link']);
-        $link->slug = Str::slug($link->title);
-        $link->save();
-        $children = Link::searchChildren($data, $link);
-        foreach ($children as $key => $value) {
-            $link->{$key} = $value;
-        }
-        return $link;
+        $data = $request->validated();
+        $data['slug'] = Str::slug($data['title']);
+        return Link::create($data);
     }
 
-   
     public function show($id)
     {
         return Link::with('cards.file')
@@ -54,14 +36,15 @@ class LinkController extends Controller
             ->findOrFail($id);
     }
 
-    
     public function update(Request $request, Link $link)
     {
-        //
+        $link->update($request->all());
+        return $link;
     }
 
     public function destroy(Link $link)
     {
-        //
+        $link->delete();
+        return response('', 201);
     }
 }

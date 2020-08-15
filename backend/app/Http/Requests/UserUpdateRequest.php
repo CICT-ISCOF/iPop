@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class RegisterRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,18 +24,18 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'email' => 'required|string|unique:App\User|max:255|email',
-            'username' => 'required|string|unique:App\User|max:255',
-            'fullname' => 'required|string|max:255',
-            'district' => 'required|string|max:255',
-            'municipality' => 'required|string|max:255',
-            'barangay' => 'required|string|max:255',
-            'password' => 'required|string|max:255',
+            'username' => 'nullable|string|unique:App\User|max:255',
+            'fullname' => 'nullable|string|max:255',
+            'district' => 'nullable|string|max:255',
+            'municipality' => 'nullable|string|max:255',
+            'barangay' => 'nullable|string|max:255',
+            'password' => 'nullable|string|max:255',
             'question' => 'nullable|max:255',
             'answer' => 'nullable|max:255',
             'pin' => 'nullable|unique:App\User|max:255',
+            'blocked' => 'nullable|boolean',
             'role' => [
-                'required',
+                'nullable',
                 'string',
                 Rule::in(['Super Admin', 'PPO', 'PPO1', 'BSPO']),
             ],

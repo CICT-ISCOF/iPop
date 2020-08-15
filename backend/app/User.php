@@ -22,7 +22,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        // 'email',
         'username',
         'password',
         'fullname',
@@ -41,9 +40,21 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = ['password', 'pin', 'answer'];
+    protected $hidden = ['password', 'pin', 'answer', 'iterations'];
 
     protected $appends = ['blocked'];
+
+    protected static function booted()
+    {
+        static::deleting(function ($user) {
+            $user->profilePicture->delete();
+        });
+    }
+
+    public function profilePicture()
+    {
+        return $this->belongsTo(File::class, 'profile_picture_id');
+    }
 
     public function getBlockedAttribute()
     {
@@ -56,15 +67,12 @@ class User extends Authenticatable
      *
      * @return \Laravel\Sanctum\NewAccessToken
      */
-    public function createToken($name = null, $abilities = ['*'])
+    public function createToken($name = 'null', $abilities = ['*'])
     {
         $this->iterations = 0;
         $this->save();
         $ip = request()->ip();
-        return $this->_sanctumCreateToken(
-            $name ? "{$name}|{$ip}" : "null|{$ip}",
-            $abilities
-        );
+        return $this->_sanctumCreateToken("{$name}|{$ip}", $abilities);
     }
 
     public function authenticate($data, $mode)
@@ -130,7 +138,7 @@ class User extends Authenticatable
         } else {
             $this->iterations++;
             $this->save();
-            $data['tries'] = $this->iterations;
+            $data['attempts'] = $this->iterations;
             return response($data, $status);
         }
     }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -46,21 +48,30 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserUpdateRequest $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        $data = $request->except(['iterations']);
+        $data = $request->validated();
         if (isset($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
         if (isset($data['blocked'])) {
-            $data['iterations'] = $data['blocked'] ? 5 : 1;
+            $data['iterations'] = $data['blocked'] ? 5 : 0;
+        }
+        if (isset($data['profile_picture'])) {
+            $file = File::process($data['profile_picture'], $user);
+            $file->public = true;
+            if ($user->profilePicture !== null) {
+                $user->profilePicture->delete();
+            }
+            $user->profilePicture()->save($file);
         }
         if ($request->user()->id === $user->id) {
             unset($data['role']);
+            unset($data['iterations']);
         }
         $user->update($data);
         return $user;
