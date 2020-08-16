@@ -58,9 +58,6 @@ class UserController extends Controller
     {
         $data = $request->validated();
         $logMessage = 'Updated a ' . $user->role . ' user.';
-        if (isset($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
-        }
         if (isset($data['blocked'])) {
             $data['iterations'] = $data['blocked'] ? 5 : 0;
         }
@@ -75,6 +72,52 @@ class UserController extends Controller
         if ($request->user()->id === $user->id) {
             unset($data['role']);
             unset($data['iterations']);
+        }
+        if (isset($data['old_password'])) {
+            if (!Hash::check($data['old_password'], $user->password)) {
+                return response([
+                    'errors' => [
+                        'password' => ['Old password is incorrect.'],
+                    ],
+                ]);
+            }
+            $data['password'] = Hash::make($data['new_password']);
+        }
+        if (isset($data['old_question'])) {
+            if (
+                $user->question !== null &&
+                $data['old_question'] !== $user->question
+            ) {
+                return response([
+                    'errors' => [
+                        'question' => ['Old question is incorrect.'],
+                    ],
+                ]);
+            }
+            $data['question'] = $data['new_question'];
+        }
+        if (isset($data['old_answer'])) {
+            if (
+                $user->answer !== null &&
+                $data['old_answer'] !== $user->answer
+            ) {
+                return response([
+                    'errors' => [
+                        'answer' => ['Old answer is incorrect.'],
+                    ],
+                ]);
+            }
+            $data['answer'] = $data['new_answer'];
+        }
+        if (isset($data['old_pin'])) {
+            if ($user->pin !== null && $data['old_pin'] !== $user->pin) {
+                return response([
+                    'errors' => [
+                        'answer' => ['Old pin is incorrect.'],
+                    ],
+                ]);
+            }
+            $data['pin'] = $data['new_pin'];
         }
         if (isset($data['role'])) {
             $logMessage =
