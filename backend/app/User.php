@@ -47,7 +47,9 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::deleting(function ($user) {
-            $user->profilePicture->delete();
+            if ($user->profilePicture !== null) {
+                $user->profilePicture->delete();
+            }
         });
     }
 
