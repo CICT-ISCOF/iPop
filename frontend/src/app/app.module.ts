@@ -48,6 +48,7 @@ import { DropdownComponent } from './shared/navbar/dropdown/dropdown.component';
 import { SearchComponent } from './content/search/search.component';
 import { ProfileShowComponent } from './content/profile-show/profile-show.component';
 import { ShowProfileComponent } from './content/show-profile/show-profile.component';
+import { ShowAdminStatusComponent } from './content/admin-accounts/show-admin-status/show-admin-status.component';
 
 const routes: Routes = [
  
@@ -66,6 +67,7 @@ const routes: Routes = [
   { path:'marriages', component:MarriagesComponent},  
 
   { path:'admin-accounts', component:AdminAccountsComponent},  
+  { path:'admin/:id', component:ShowAdminStatusComponent}, 
   { path:'new-admin', component:AdministratorsComponent},  
  
   { path:'profiling', component:ProfilingComponent},
@@ -120,6 +122,7 @@ const routes: Routes = [
     SearchComponent,
     ProfileShowComponent,
     ShowProfileComponent,
+    ShowAdminStatusComponent,
      
   ],
   imports: [

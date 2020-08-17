@@ -24,7 +24,7 @@ export class SidebarComponent implements OnInit {
 		this.sidebarColor = this.UtilityService.getImage().subscribe(image => {
 			this.sidebar.backgroundImage = this.formatImage(image)
 		})
-	 }
+	}
 
 	sidebarColor : Subscription
 
@@ -33,6 +33,9 @@ export class SidebarComponent implements OnInit {
 		backgroundImage : this.formatImage(localStorage.getItem('sidebar-image')),
 		color : this.formatColorFromLocalStorage(localStorage.getItem('color')),	
 	}
+
+	account = JSON.parse(localStorage.getItem('user-data'))
+	
 
 	formatImage(image){
 		if(image == null){

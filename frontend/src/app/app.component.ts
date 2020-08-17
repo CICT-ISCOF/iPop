@@ -22,7 +22,9 @@ export class AppComponent implements OnInit {
 		this.userRole = this.UtilityService.getLogoutValue().subscribe(role=>{
 			this.role = role
 		})
-	}
+
+		
+	} 
 
 	userRole:Subscription
 
@@ -40,7 +42,7 @@ export class AppComponent implements OnInit {
 	}
 
 	checkLocalStorage(){
-		this.role = localStorage.getItem('role')
+		this.role = localStorage.getItem('role')	
 	}
 	
 	validateRole(path){		
