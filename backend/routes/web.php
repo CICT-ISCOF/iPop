@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', 'Auth\LoginController@authenticate');
-    Route::post('/register', 'Auth\RegisterController@register');
 });
 
 Route::options('/logs/visit', 'LogController@visit');
