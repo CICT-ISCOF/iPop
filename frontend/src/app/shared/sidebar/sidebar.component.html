@@ -34,7 +34,16 @@
             </button>
         </div>
 
+        <div *ngIf="account.user.role == 'Super Admin'" (click)="active('Logs')" class=" sidebar-btn" [class.active]="icons.Administrators == true " [routerLink]="['/logs']" routerLinkActive="router-link-active">
+            <button [class.button]="icons.Administrators == true" [class.clickable]="icons.Administrators == false ">
+                <div class="icon ">
+                    <i class="fas fa-hand-pointer"></i>
+               </div>
+               History Logs
+            </button>
+        </div>
 
+        <br>
 
 
 

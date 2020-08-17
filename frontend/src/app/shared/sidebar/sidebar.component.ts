@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription }  from 'rxjs';
 import { UtilityService }  from '../../utility.service'
+import Swal from 'sweetalert2'
+
 
 @Component({
   selector: 'app-sidebar',
@@ -25,7 +27,7 @@ export class SidebarComponent implements OnInit {
 			this.sidebar.backgroundImage = this.formatImage(image)
 		})
 	}
-
+ 
 	sidebarColor : Subscription
 
 	sidebar = {

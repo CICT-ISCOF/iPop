@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../admin.service'
 import { UtilityService } from '../../utility.service'
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-admin-accounts',
@@ -37,8 +38,7 @@ export class AdminAccountsComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false	
-			console.log(response)
+			this.isLoading = false				
 		})
 	}
 
@@ -51,21 +51,41 @@ export class AdminAccountsComponent implements OnInit {
 		})
 	}
 	blockAdmin(id){
-		this.isLoading = true	
-		const blocked = {blocked:true}	
-		this.AdminService.blockorReactivate( blocked, id ).subscribe(data => {
-			this.ngOnInit()		
-		})
+		Swal.fire({
+			title: 'Block this admin?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Block',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.isLoading = true	
+				const blocked = {blocked:true}	
+				this.AdminService.blockorReactivate( blocked, id ).subscribe(data => {
+					location.reload()
+				})
+			} 
+		})			
 	}
 
 	deleteAdmin(id){
+		Swal.fire({
+			title: 'Remove this admin?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Remove',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.isLoading = true	
+				this.AdminService.deleteAdmin( id ).subscribe(data => {	
+					location.reload()
+					this.UtilityService.setAlert('You have deleted an admin','info')
+				})
+			} 
+		})
 	
-		if(confirm("Are you sure you want to delete this admin?")){
-			this.AdminService.deleteAdmin( id ).subscribe(data => {	
-				this.ngOnInit()
-				this.UtilityService.setAlert('You have deleted an admin','info')
-			})
-		}
+		
 	}
 
 

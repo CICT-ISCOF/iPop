@@ -18,6 +18,8 @@ export class NavbarComponent implements OnInit {
 		})
 	}
 
+	theme = localStorage.getItem('data-theme')
+
 	subscription : Subscription
 
 	dropdown = false

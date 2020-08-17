@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AdminService } from '../../../admin.service'
 import { UtilityService } from '../../../utility.service'
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-show-admin-status',
@@ -18,6 +19,8 @@ export class ShowAdminStatusComponent implements OnInit {
 	) { 
 		
 	}
+ 
+	theme = localStorage.getItem('data-theme')
 
 	changeRole = false
 	isLoading = false
@@ -41,30 +44,58 @@ export class ShowAdminStatusComponent implements OnInit {
 	}
 
 	blockAdmin(){
-		this.isLoading = true	
-		const blocked = {blocked:true}	
-		this.AdminService.blockorReactivate( blocked, this.admin.id ).subscribe(data => {
-			this.ngOnInit()		
-		})
+		Swal.fire({
+			title: 'Block ' + this.admin.fullname +' from becoming Administrator?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Block',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.isLoading = true	
+				const blocked = {blocked:true}	
+				this.AdminService.blockorReactivate( blocked, this.admin.id ).subscribe(data => {
+					this.ngOnInit()		
+				})
+			} 
+		})	
+	
 	}
 
-	reactivate(){
-		this.isLoading = true	
-		const blocked = {blocked:false}
-		this.AdminService.blockorReactivate( blocked, this.admin.id ).subscribe(data => {
-			console.log(data)
-			this.ngOnInit()			
-		})
+	reactivate(){	
+		Swal.fire({
+			title: 'Reactivate ' + this.admin.fullname +'?',		
+			icon: 'success',
+			showCancelButton: true,
+			confirmButtonText: 'Reactivate',
+			cancelButtonText: 'Later'
+		  }).then((result) => {
+			if (result.value) {
+				this.isLoading = true	
+				const blocked = {blocked:false}
+				this.AdminService.blockorReactivate( blocked, this.admin.id ).subscribe(data => {				
+					this.ngOnInit()			
+				})
+			}			
+		})	
 	}
 	
 	deleteAdmin(){
-		alert(this.admin.id)
-		if(confirm("Are you sure you want to delete this admin?")){
-			this.AdminService.deleteAdmin( this.admin.id ).subscribe(data => {			
-				this.Router.navigate(['/admin-accounts'])
-				this.UtilityService.setAlert(this.admin.name + ' has been remove as an administrator','info')
-			})
-		}
+
+		Swal.fire({
+			title: 'Remove ' + this.admin.fullname +' as Administrator',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Remove',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.AdminService.deleteAdmin( this.admin.id ).subscribe(data => {			
+					this.Router.navigate(['/admin-accounts'])
+					this.UtilityService.setAlert(this.admin.fullname + ' has been remove as an administrator','info')
+				})
+			}			
+		})	
 	}
 
 	triggerInput(){

@@ -3,6 +3,7 @@ import { UtilityService } from '../../../utility.service'
 import { AccountService } from '../../../settings/account/account.service'
 import { AdminService } from '../../../admin.service'
 import { AlertsComponent } from 'src/app/shared/alerts/alerts.component';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-account',
@@ -55,6 +56,7 @@ export class AccountComponent implements OnInit {
 			this.myAccountFromDB = data
 			// this.mySecurityQuestion = data.question
 			this.mySecurityQuestion = 'null'
+			this.isLoading = false
 		})
 	}
 
@@ -148,7 +150,21 @@ export class AccountComponent implements OnInit {
 		confirmAnswer:false,
 	}
 
-	changeMySecurityQuestion(){
+	changeMySecurityQuestion(){		
+		Swal.fire({
+			title: 'This will change your Security Question?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Change',
+			cancelButtonText: "I'll think about it"
+		  }).then((result) => {
+			if (result.value) {
+				this.changeSecurity()
+			} 
+		})			
+	}
+
+	changeSecurity(){
 		this.isLoading = true
 		let hasError = false
 		for(let key in this.changeSecurityQuestion){
@@ -163,10 +179,15 @@ export class AccountComponent implements OnInit {
 			this.changeSecurityQuestion.old_question = null
 			this.AccountService.changeSecurityQuestion(this.changeMySecurityQuestion, this.myInformation.user.id).subscribe(data => {
 				console.log(data)
+				this.isLoading = false
 			})
+		}else{
+			this.isLoading = false
 		}
-		this.isLoading = true			
+		this.isLoading = true	
 	}
+
+
 
 
 	// ------------ change pin ------------
@@ -180,7 +201,21 @@ export class AccountComponent implements OnInit {
 	}
 	
 
-	changeMyPin(){
+	changeMyPin(){	
+		Swal.fire({
+			title: 'Are you sure you want to change your pin',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Change',
+			cancelButtonText: "I'll think about it"
+		  }).then((result) => {
+			if (result.value) {
+				this.changePinNow()
+			} 
+		})	
+	}
+
+	changePinNow(){
 		let hasError = false
 		for(let key in this.changePin){
 			if(this.changePin[key].length != 6){
@@ -190,7 +225,10 @@ export class AccountComponent implements OnInit {
 		if(!hasError){
 			this.AccountService.changePin(this.changePin, this.myInformation.user.id).subscribe(data => {
 				console.log(data)
+				this.isLoading = false
 			})
+		}else{
+			this.isLoading = false
 		}
 	}
 
@@ -210,7 +248,23 @@ export class AccountComponent implements OnInit {
 	}
 
 	changePasswordResponse:any
+
 	changeMyPassword(){
+		Swal.fire({
+			title: 'This will change your password',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Change',
+			cancelButtonText: "I'll think about it"
+		  }).then((result) => {
+			if (result.value) {
+				this.changeThePassword()
+			} 
+		})	
+	}
+
+
+	changeThePassword(){
 		this.isLoading = true
 		let hasError = false
 		for(let key in this.changePassword){
@@ -230,13 +284,12 @@ export class AccountComponent implements OnInit {
 				}else{
 					this.UtilityService.setAlert('Your password has been changed','success')
 				}
+				this.isLoading = false
 			})
+		}else{
+			this.isLoading = false
 		}
-		this.isLoading = false
-
-	
 	}
-
 
 
 

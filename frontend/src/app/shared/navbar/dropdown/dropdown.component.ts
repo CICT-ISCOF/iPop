@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { UtilityService } from '../../../utility.service'
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-dropdown',
@@ -17,6 +18,8 @@ export class DropdownComponent implements OnInit {
 	ngOnInit(): void {
 
 	}
+
+	theme = localStorage.getItem('data-theme')
 
 	sidebarMini = {
 		name : 'slideToggle',
@@ -71,16 +74,30 @@ export class DropdownComponent implements OnInit {
 	}
 
 	logout(){
-		let theme =  localStorage.getItem('data-theme')
-		localStorage.clear()
-			this.Router.navigate(['/'])
-		this.UtilityService.logout(true)
-		
-		setTimeout(() => {
-			location.reload()
-			localStorage.setItem('data-theme', theme)
-		}, 500);
-		this.UtilityService.setDropDown(false)		
+		Swal.fire({
+			title: 'You sure you want to Log-Out?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Log out',
+			cancelButtonText: 'Later'
+		  }).then((result) => {
+			if (result.value) {
+				let theme =  localStorage.getItem('data-theme')
+				localStorage.clear()
+					this.Router.navigate(['/'])
+				this.UtilityService.logout(true)				
+				setTimeout(() => {
+					location.reload()
+					localStorage.setItem('data-theme', theme)
+				}, 500);
+				this.UtilityService.setDropDown(false)	
+				Swal.fire(
+					'Thank you',
+					"for using Iloilo Population Office's system",
+					'success'
+				)
+			} 
+		})	
 	}
 
 	hideDropdown(button){

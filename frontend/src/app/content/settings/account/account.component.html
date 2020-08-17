@@ -2,6 +2,7 @@
     <img src="../../../../assets/login/account-settings.svg" alt="">
 
     <div *ngIf="mySecurityQuestion == null" class="set-up-account container">
+        <div *ngIf="isLoading" class="loader"></div>
         <br>
         <h4>Let us set up your security question and pin</h4>
         <hr>
@@ -57,6 +58,7 @@
 
 
     <div *ngIf="mySecurityQuestion != null" id="accordion" class="container">
+        <div *ngIf="isLoading" class="loader"></div>
         <div class="card">
             <div class="card-header" id="headingOne">
                 <h5 class="mb-0">
