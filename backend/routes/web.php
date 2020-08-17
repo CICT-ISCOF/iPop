@@ -9,8 +9,13 @@ Route::prefix('/auth')->group(function () {
 Route::options('/logs/visit', 'LogController@visit');
 
 Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
+    Route::prefix('/auth')->group(function () {
+        Route::post('/register', 'Auth\RegisterController@register');
+        Route::get('/logout', 'Auth\LoginController@logout');
+    });
+
     Route::apiResource('users', 'UserController');
-    Route::post('/register', 'Auth\RegisterController@register');
+    Route::get('/search', 'SearchController@search');
 
     // CMS
     Route::apiResource('links', 'LinkController');
@@ -23,6 +28,9 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::delete('/grids/{gridTable}', 'GridTableController@destroy');
 
     // Files
+    // Private Files
+    // Ex. http://localhost:8000/file/private/1
+    // Ex. http://localhost:8000/file/private/download/1
     Route::prefix('/file/private')->group(function () {
         Route::get('/{file}', 'FileController@streamPrivate');
         Route::get('/download/{file}', 'FileController@downloadPrivate');
@@ -41,6 +49,9 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::apiResource('marriages', 'MarriageController');
 });
 
+// Public Files
+// Ex. http://localhost:8000/file/public/1
+// Ex. http://localhost:8000/file/public/download/1
 Route::prefix('/file/public')->group(function () {
     Route::get('/{file}', 'FileController@streamPublic');
     Route::get('/download/{file}', 'FileController@downloadPublic');

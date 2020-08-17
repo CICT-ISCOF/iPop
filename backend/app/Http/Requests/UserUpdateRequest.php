@@ -26,7 +26,12 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'nullable|string|unique:App\User|max:255',
+            'username' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('users')->ignoreModel($this->user),
+            ],
             'fullname' => 'nullable|string|max:255',
             'district' => 'nullable|string|max:255',
             'municipality' => 'nullable|string|max:255',
@@ -56,14 +61,14 @@ class UserUpdateRequest extends FormRequest
                 'string',
                 'max:255',
                 Rule::requiredIf(function () {
-                    return request()->has('old_answer') &&
+                    return request()->has('old_answer') ||
                         request()->has('old_question');
                 }),
             ],
             'new_pin' => [
                 'nullable',
-                'unique:App\User',
                 'max:255',
+                Rule::unique('users', 'pin')->ignoreModel($this->user),
                 Rule::requiredIf(function () {
                     return request()->has('old_pin');
                 }),

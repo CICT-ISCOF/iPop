@@ -169,6 +169,43 @@ class User extends Authenticatable
     }
 
     /**
+     * Search for users in the database.
+     *
+     * @param string $field
+     * @param string $value
+     * @return \Illuminate\Http\Response
+     */
+    public static function search($field, $value)
+    {
+        if (!in_array($field, ['username', 'fullname', 'role'])) {
+            return response(
+                [
+                    'errors' => [
+                        'query' => [
+                            'Only username, fullname and role fields are searchable.',
+                        ],
+                    ],
+                ],
+                400
+            );
+        }
+        $collection = self::where($field, 'LIKE', "%{$value}%")
+            ->orderBy('role')
+            ->get();
+        if ($collection->isEmpty()) {
+            return response(
+                [
+                    'errors' => [
+                        'query' => ['No results found.'],
+                    ],
+                ],
+                404
+            );
+        }
+        return response($collection);
+    }
+
+    /**
      * Increment the amount of times a user has attempted to log in.
      *
      * @param array $data

@@ -25,16 +25,32 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'email' => 'required|string|unique:App\User|max:255|email',
-            'username' => 'required|string|unique:App\User|max:255',
+            'username' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('users')->ignoreModel($this->user),
+            ],
             'fullname' => 'required|string|max:255',
             'district' => 'required|string|max:255',
             'municipality' => 'required|string|max:255',
             'barangay' => 'required|string|max:255',
             'password' => 'required|string|max:255',
-            'question' => 'nullable|max:255',
-            'answer' => 'nullable|max:255',
-            'pin' => 'nullable|unique:App\User|max:255',
+            'question' => 'nullable|string|max:255',
+            'answer' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::requiredIf(function () {
+                    return request()->has('question');
+                }),
+            ],
+            'pin' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('users')->ignoreModel($this->user),
+            ],
             'role' => [
                 'required',
                 'string',

@@ -11,10 +11,10 @@ class LinkController extends Controller
 {
     public function index()
     {
-        return Link::with('cards.file')
-            ->with('grids.file')
-            ->with('medias.file')
-            ->with('sliders.file')
+        return Link::with('cards')
+            ->with('gridTables.grids')
+            ->with('medias')
+            ->with('sliderTables.sliders')
             ->with('texts')
             ->all();
     }

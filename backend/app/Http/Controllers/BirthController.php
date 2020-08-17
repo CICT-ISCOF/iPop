@@ -29,7 +29,7 @@ class BirthController extends Controller
     public function store(BirthRequest $request)
     {
         Log::record('Created new Birth record.');
-        return Birth::create($request->validate());
+        return Birth::create($request->validated());
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log as NativeLog;
 
 class Log extends Model
 {
@@ -25,11 +26,16 @@ class Log extends Model
         $user = $request->user();
         $ip = $request->ip();
         $agent = $request->userAgent();
-        return self::create([
+
+        $data = [
             'user_id' => $user instanceof User ? $user->id : $substituteID,
             'ip_address' => $ip,
             'user_agent' => $agent,
             'action' => $action,
-        ]);
+        ];
+
+        NativeLog::info(json_encode($data));
+
+        return self::create($data);
     }
 }

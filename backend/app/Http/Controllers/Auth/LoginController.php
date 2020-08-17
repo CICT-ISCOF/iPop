@@ -127,4 +127,14 @@ class LoginController extends Controller
         }
         return $user->authenticate($data, 'password');
     }
+
+    public function logout(Request $request)
+    {
+        $request
+            ->user()
+            ->currentAccessToken()
+            ->delete();
+        Log::record('A user logged out.');
+        return response('', 204);
+    }
 }

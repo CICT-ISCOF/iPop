@@ -75,11 +75,14 @@ class UserController extends Controller
         }
         if (isset($data['old_password'])) {
             if (!Hash::check($data['old_password'], $user->password)) {
-                return response([
-                    'errors' => [
-                        'password' => ['Old password is incorrect.'],
+                return response(
+                    [
+                        'errors' => [
+                            'password' => ['Old password is incorrect.'],
+                        ],
                     ],
-                ]);
+                    422
+                );
             }
             $data['password'] = Hash::make($data['new_password']);
         }
@@ -88,11 +91,14 @@ class UserController extends Controller
                 $user->question !== null &&
                 $data['old_question'] !== $user->question
             ) {
-                return response([
-                    'errors' => [
-                        'question' => ['Old question is incorrect.'],
+                return response(
+                    [
+                        'errors' => [
+                            'question' => ['Old question is incorrect.'],
+                        ],
                     ],
-                ]);
+                    422
+                );
             }
             $data['question'] = $data['new_question'];
         }
@@ -101,21 +107,27 @@ class UserController extends Controller
                 $user->answer !== null &&
                 $data['old_answer'] !== $user->answer
             ) {
-                return response([
-                    'errors' => [
-                        'answer' => ['Old answer is incorrect.'],
+                return response(
+                    [
+                        'errors' => [
+                            'answer' => ['Old answer is incorrect.'],
+                        ],
                     ],
-                ]);
+                    422
+                );
             }
             $data['answer'] = $data['new_answer'];
         }
         if (isset($data['old_pin'])) {
             if ($user->pin !== null && $data['old_pin'] !== $user->pin) {
-                return response([
-                    'errors' => [
-                        'answer' => ['Old pin is incorrect.'],
+                return response(
+                    [
+                        'errors' => [
+                            'answer' => ['Old pin is incorrect.'],
+                        ],
                     ],
-                ]);
+                    422
+                );
             }
             $data['pin'] = $data['new_pin'];
         }
