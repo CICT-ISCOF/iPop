@@ -62,11 +62,11 @@
           </svg> Filters
 
         <span style="display:flex;margin-left: auto;">
-              <div (click)="ChangeFilter('dark')" class="circle" style="background: #777777;"></div>
-              <div (click)="ChangeFilter('green')" class="circle" style="background: #74AE13;"></div>
-              <div (click)="ChangeFilter('blue')" class="circle" style="background: #1DC7EA;"></div>              
-              <div (click)="ChangeFilter('orange')" class="circle" style="background: #FFA534;"></div>
-              <div (click)="ChangeFilter('red')" class="circle" style="background: #FB404B;"></div>
+              <div tooltip="Dark" placement="bottom" show-delay="100" [theme]="theme" (click)="ChangeFilter('dark')" class="circle" style="background: #777777;"></div>
+              <div tooltip="Green" placement="bottom" show-delay="100" [theme]="theme" (click)="ChangeFilter('green')" class="circle" style="background: #74AE13;"></div>
+              <div tooltip="Blue" placement="bottom" show-delay="100" [theme]="theme" (click)="ChangeFilter('blue')" class="circle" style="background: #1DC7EA;"></div>              
+              <div tooltip="Orange" placement="bottom" show-delay="100" [theme]="theme" (click)="ChangeFilter('orange')" class="circle" style="background: #FFA534;"></div>
+              <div tooltip="Red" placement="bottom" show-delay="100" [theme]="theme" (click)="ChangeFilter('red')" class="circle" style="background: #FB404B;"></div>
               <div (click)="ChangeFilter('violet')" class="circle" style="background: #9368E9;"></div>
           </span>
     </p>

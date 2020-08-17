@@ -8,6 +8,7 @@
     background-size: 300% 100% !important;
     // background-repeat: no-repeat !important;
     z-index: 99999343234324;
+    // filter: grayscale(50%);
 }
 
 .removeBackground {
@@ -37,6 +38,11 @@ h1 {
     border-bottom: 1px solid rgba(250, 250, 250, .5);
 }
 
+.button:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
 h1 img {
     height: 40px;
     margin-right: 10px;
@@ -63,7 +69,7 @@ h1 img {
     width: 100%;
     padding-left: 10px;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .sidebar-btn:hover {

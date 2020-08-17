@@ -19,6 +19,8 @@ export class UtilityService {
 	private sidebarBackground  = new Subject<any>();
 	private sidebarImage = new Subject<any>();
 	private alert = new Subject<any>();
+	
+
 
 	setAlert(message,type) {
 		this.alert.next({message,type});			

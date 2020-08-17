@@ -18,6 +18,8 @@ export class NavbarComponent implements OnInit {
 		})
 	}
 
+	theme = localStorage.getItem('data-theme')
+
 	subscription : Subscription
 
 	dropdown = false
@@ -27,6 +29,14 @@ export class NavbarComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
+	account = JSON.parse(localStorage.getItem('user-data'))
+
+	name = this.formatName(this.account.user.fullname)
+
+	formatName(fullname){
+		let name = fullname.split(" ")
+		return name[0]
+	}
 
 	conversations(){
 		this.UtilityService.setSidebarItemasActive('Conversations')

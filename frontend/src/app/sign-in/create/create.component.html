@@ -8,11 +8,12 @@
         </div>
         <hr>
         <div class="body">
+            <div *ngIf="isLoading == true" class="loader"></div>
             <div class="col-md-12 mb-3 input-container">
-                <label for="name">What is the name of your favorite movie?</label>
+                <label for="name">{{account.question}}?</label>
 
                 <div class="input-wrapper">
-                    <input [(ngModel)]="account.securityQuestion" class="form-control w-50" id="name" required>
+                    <input [(ngModel)]="account.answer" class="form-control w-50" id="name" required>
                 </div>
                 <div class="valid-feedback">
                     Looks good!

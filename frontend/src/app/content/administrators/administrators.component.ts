@@ -28,10 +28,7 @@ export class AdministratorsComponent implements OnInit {
 		fullname:'Jamel Eid Yassin',
 		district:'4',
 		municipality:'',
-		barangay:'',
-		pin:'1234567',
-		question:'What is your favorite movie',
-		answer:'boruto'
+		barangay:'',	
 	}
 
 	invalidData = {
@@ -63,9 +60,11 @@ export class AdministratorsComponent implements OnInit {
 				this.isLoading = false				
 				this.UtilityService.setAlert( 'New Administrator Added', 'success')
 				
-			},
+			}, 
 			error =>{				
-				this.UtilityService.setAlert(error.message,'error')								
+				for(let message in error.error.errors){
+					this.UtilityService.setAlert(error.error.errors[message],'error')
+				}				
 				this.isLoading = false
 			})
 		}

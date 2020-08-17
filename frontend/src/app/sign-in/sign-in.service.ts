@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { BaseAPIService } from '../base-api.service'
 
 @Injectable({
@@ -15,23 +15,28 @@ export class SignInService {
 	baseURL = this.BaseAPIService.baseURL + '/auth'
 	
 	register(data){
-		const url = this.baseURL + '/register'		
-		const body = JSON.stringify(data)		
-		return this.http.post(url, body)
+		const url = this.baseURL + '/register'	
+		const headers =  new HttpHeaders({'Accept':'application/json'})		
+		return this.http.post(url, data, {headers:headers})
 	}
 
 	loginWithPin(credentials){
-		const headers = {'X-Auth-Mode':'Pin'}
-		const body = JSON.stringify(credentials)
+		const headers = new HttpHeaders({'X-Auth-Mode':'Pin',
+		'Accept':'application/json'})	
 		const url = this.baseURL + '/login'				
-		return this.http.post(url, body, {headers:headers})
+		return this.http.post(url, credentials, {headers:headers})
 	}
 
 	loginWithPassword(credentials){
-		const headers = {'X-Auth-Mode':'Password'}
-		const body = JSON.stringify(credentials)
+		const headers =  new HttpHeaders({'X-Auth-Mode':'Password',
+		'Accept':'application/json'})	
 		const url = this.baseURL + '/login'				
-		return this.http.post(url, body, {headers:headers})
+		return this.http.post(url, credentials, {headers:headers})
+	}
+
+	visit(){
+		const url = this.BaseAPIService.baseURL + '/logs/visit'
+		return this.http.options(url)
 	}
 	
 }

@@ -9,8 +9,14 @@
 .toast {
     opacity: 1;
     width: 250px;
+    background: var(--bg);
+}
+
+.toast-header {
+    background: var(--bg1);
 }
 
 .toast-body {
-    word-break: break-all;
+    word-break: normal;
+    background: var(--bg);
 }

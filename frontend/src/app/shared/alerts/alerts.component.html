@@ -16,7 +16,9 @@
             </svg>
 
 
-            <strong class="mr-auto">Iloilo Population Office</strong>
+            <strong *ngIf="alert.type == 'info' " class="mr-auto" style="color:blue">Iloilo Population Office</strong>
+            <strong *ngIf="alert.type == 'error' " class="mr-auto" style="color:red">Iloilo Population Office</strong>
+            <strong *ngIf="alert.type == 'success' " class="mr-auto" style="color:#81D340">Iloilo Population Office</strong>
             <small></small>
             <button (click)="alerts.pop()" type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
             <span aria-hidden="true">&times;</span>

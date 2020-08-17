@@ -1,6 +1,7 @@
 .account-component {
     padding: 20px;
     text-align: center;
+    transform: translate(-30px);
 }
 
 img {
@@ -23,9 +24,19 @@ h5,
 }
 
 .input-wrapper {
-    display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+}
+
+input-wrapper {
+    text-align: center
+}
+
+p,
+input,
+select {
+    display: inline-block
 }
 
 .card-body,
@@ -46,15 +57,55 @@ h5,
     justify-content: center;
 }
 
+.is-colored {
+    background: gray !important;
+}
+
 .animate {
     animation: invalid .2s linear;
+}
+
+h5 {
+    text-align: left;
+    display: flex !important;
+    align-items: center;
+    padding: 10 30px;
+}
+
+h5 p {
+    font-size: 18px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+h5 span {
+    margin-left: auto;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h5 span:hover {
+    background: var(--inputBg)
+}
+
+h5 span:hover>svg {
+    background: var(--inputBg)
+}
+
+option {
+    text-align: center;
 }
 
 .dot {
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    border: 1px solid #2659D8;
+    border: 1px solid gray;
     margin-right: 10px;
 }
 
@@ -86,4 +137,13 @@ h5,
 
 .button:active {
     opacity: .4;
+}
+
+.is-invalid {
+    border: 1px solid rgba(250, 0, 0, 0.4) !important;
+    box-shadow: 0px 0px 3px rgba(250, 53, 0, .25);
+}
+
+.invalid-feedback {
+    margin-bottom: 10px;
 }

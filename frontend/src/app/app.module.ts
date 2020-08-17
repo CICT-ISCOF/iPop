@@ -9,7 +9,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { SlideToggleModule } from 'ngx-slide-toggle';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NetworkStatusAngularModule } from 'network-status-angular';
+import { TooltipModule } from 'ng2-tooltip-directive';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
@@ -48,6 +49,10 @@ import { DropdownComponent } from './shared/navbar/dropdown/dropdown.component';
 import { SearchComponent } from './content/search/search.component';
 import { ProfileShowComponent } from './content/profile-show/profile-show.component';
 import { ShowProfileComponent } from './content/show-profile/show-profile.component';
+import { ShowAdminStatusComponent } from './content/admin-accounts/show-admin-status/show-admin-status.component';
+// import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { LogsComponent } from './content/logs/logs.component';
 
 const routes: Routes = [
  
@@ -66,7 +71,9 @@ const routes: Routes = [
   { path:'marriages', component:MarriagesComponent},  
 
   { path:'admin-accounts', component:AdminAccountsComponent},  
+  { path:'admin/:id', component:ShowAdminStatusComponent}, 
   { path:'new-admin', component:AdministratorsComponent},  
+  { path:'logs', component:LogsComponent},  
  
   { path:'profiling', component:ProfilingComponent},
 
@@ -120,6 +127,8 @@ const routes: Routes = [
     SearchComponent,
     ProfileShowComponent,
     ShowProfileComponent,
+    ShowAdminStatusComponent,
+    LogsComponent,
      
   ],
   imports: [
@@ -132,7 +141,10 @@ const routes: Routes = [
     GoogleChartsModule,
     LeafletModule,
     SlideToggleModule,
-    HttpClientModule
+    HttpClientModule,
+    NetworkStatusAngularModule.forRoot(),
+    TooltipModule
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 
     
   ], 
