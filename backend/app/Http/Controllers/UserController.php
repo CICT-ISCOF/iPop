@@ -73,7 +73,7 @@ class UserController extends Controller
             unset($data['role']);
             unset($data['iterations']);
         }
-        if (isset($data['old_password'])) {
+        if (isset($data['new_password'])) {
             if (!Hash::check($data['old_password'], $user->password)) {
                 return response(
                     [
@@ -86,7 +86,7 @@ class UserController extends Controller
             }
             $data['password'] = Hash::make($data['new_password']);
         }
-        if (isset($data['old_question'])) {
+        if (isset($data['new_question'])) {
             if (
                 $user->question !== null &&
                 $data['old_question'] !== $user->question
@@ -102,7 +102,7 @@ class UserController extends Controller
             }
             $data['question'] = $data['new_question'];
         }
-        if (isset($data['old_answer'])) {
+        if (isset($data['new_answer'])) {
             if (
                 $user->answer !== null &&
                 $data['old_answer'] !== $user->answer
@@ -118,7 +118,7 @@ class UserController extends Controller
             }
             $data['answer'] = $data['new_answer'];
         }
-        if (isset($data['old_pin'])) {
+        if (isset($data['new_pin'])) {
             if ($user->pin !== null && $data['old_pin'] !== $user->pin) {
                 return response(
                     [
