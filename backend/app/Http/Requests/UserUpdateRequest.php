@@ -30,7 +30,7 @@ class UserUpdateRequest extends FormRequest
                 'nullable',
                 'string',
                 'max:255',
-                Rule::unique('users')->ignoreModel($this->user),
+                Rule::unique('users')->ignoreModel($this->user()),
             ],
             'fullname' => 'nullable|string|max:255',
             'district' => 'nullable|string|max:255',
@@ -68,7 +68,7 @@ class UserUpdateRequest extends FormRequest
             'new_pin' => [
                 'nullable',
                 'max:255',
-                Rule::unique('users', 'pin')->ignoreModel($this->user),
+                Rule::unique('users', 'pin')->ignoreModel($this->user()),
                 Rule::requiredIf(function () {
                     return request()->has('old_pin');
                 }),

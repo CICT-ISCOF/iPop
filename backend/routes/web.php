@@ -27,9 +27,6 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::post('/grids', 'GridTableController@store');
     Route::delete('/grids/{gridTable}', 'GridTableController@destroy');
 
-    Route::resource('cpdb','CPDBController');
-
-
     // Files
     // Private Files
     // Ex. http://localhost:8000/file/private/1
@@ -50,6 +47,7 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::apiResource('in-migrations', 'InMigrationController');
     Route::apiResource('out-migrations', 'OutMigrationController');
     Route::apiResource('marriages', 'MarriageController');
+    Route::apiResource('cpdb', 'CPDBController');
 });
 
 // Public Files
