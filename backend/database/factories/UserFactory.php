@@ -18,10 +18,10 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(User::class, function (Faker $faker) {
-    $count = 1;
+    static $count = 1;
     return [
         'fullname' => $faker->name,
-        'username' => 'admin'.$count,
+        'username' => 'admin'.$count++,
         'role' => 'Super Admin',
         'district' => '4',
         'municipality' => 'Barotac Nuevo',
