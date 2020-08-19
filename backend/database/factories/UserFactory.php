@@ -18,14 +18,13 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(User::class, function (Faker $faker) {
-
-	static count = 1;
     return [
-        'id' => count ++,
         'fullname' => $faker->name,
-        'district' => 4,
-      	'municipality' => 'Barotac Nuevo',
-  	  	'barangay' => 'Lagubang,
-  	  	'password' => Hash::make(123);,       
+        'username' => 'admin',
+        'role' => 'Super Admin',
+        'district' => '4',
+        'municipality' => 'Barotac Nuevo',
+        'barangay' => 'Lagubang',
+        'password' => Hash::make(123),
     ];
 });
