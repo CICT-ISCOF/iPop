@@ -19,6 +19,8 @@ export class AdminAccountsComponent implements OnInit {
 		this.getAllAdmins()
 	}
 
+	theme = localStorage.getItem('data-theme')
+
 	admins = []
 	isLoading = false
 
@@ -27,6 +29,10 @@ export class AdminAccountsComponent implements OnInit {
 		lastPage:0,
 		totalPages:[],
 	}
+
+	district = [
+		1,2,3,4,5,6
+	]
 
 
 	getAllAdmins(){

@@ -54,8 +54,8 @@ export class AccountComponent implements OnInit {
 		this.isLoading = true 
 		this.AdminService.showAdmin(this.myInformation.user.id).subscribe(data => {			
 			this.myAccountFromDB = data
-			// this.mySecurityQuestion = data.question
-			this.mySecurityQuestion = 'null'
+			this.mySecurityQuestion = data.question
+			// this.mySecurityQuestion = 'null'
 			this.isLoading = false
 		})
 	}
@@ -121,6 +121,7 @@ export class AccountComponent implements OnInit {
 				this.AccountService.setUpSecurityQuestionAndPin(credentials,this.myInformation.user.id).subscribe(data => {	
 					console.log(data)
 					this.UtilityService.setAlert( 'Pin successfully set up', 'success')		
+					this.ngOnInit()
 				})		
 			},
 			error =>{				

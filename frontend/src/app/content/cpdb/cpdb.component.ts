@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CpdbService } from './cpdb.service'
+import { UtilityService } from '../../utility.service'
 
 @Component({
   selector: 'app-cpdb',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CpdbComponent implements OnInit {
 
-	constructor() { }
+	constructor(
+		private CpdbService : CpdbService,
+		private UtilityService: UtilityService,
+	) { }
 
 	ngOnInit(): void {
 	}
@@ -110,8 +115,7 @@ export class CpdbComponent implements OnInit {
 			'College grad',
 			'Vocational grad',
 			'Looking for work',
-			'House far from school',
-			'Others, specify',
+			'House far from school',		
 			'Not applicable',
 		],
 
@@ -142,7 +146,7 @@ export class CpdbComponent implements OnInit {
 			'Performing Arts',
 			'Visual Arts',
 			'Sports',
-			'Others (specify)',			
+		
 		],
 
 		TypeofDisabilities:[
@@ -161,7 +165,7 @@ export class CpdbComponent implements OnInit {
 			'Ati',
 			'Panayanon',
 			'Bukidnon',
-			'Others, specify',
+			
 		],
 
 		PhilHealthMemberships:[
@@ -271,8 +275,7 @@ export class CpdbComponent implements OnInit {
 			'Water Refilling Station',
 			'MIWD/LWUA',
 			'Spring',
-			'Rain Water',
-			'Others, specify',
+			'Rain Water',		
 		],
 
 		TypeofToilettheHouseholdwns:[
@@ -289,7 +292,7 @@ export class CpdbComponent implements OnInit {
 			'Burying',
 			'Collected by Garbage Truck',
 			'Thrown Anywhere',
-			'Others, specify',			
+			
 		],
 
 		TypeofFuelUseforLighting: [
@@ -298,16 +301,14 @@ export class CpdbComponent implements OnInit {
 			'Tap from nearby house',
 			'Illegal Connection',
 			'Generator Set',
-			'Solar Panels',
-			'Others, specify',			
+			'Solar Panels',				
 		],
 
 		TypeofuelforCooking:[
 			'Electricity',
 			'Kerosene (Gas)',
 			'LPG',
-			'Wood/charcoal',
-			'Others, specify',			
+			'Wood/charcoal',			
 		],
 
 
@@ -318,7 +319,7 @@ export class CpdbComponent implements OnInit {
 			'Along the seashore/storm surge area',
 			'Along faultline',
 			'Along Road Slips',
-			'Others, specify',			
+			'Others, specify house hold location',			
 		],
 
 		WaterLevelinfloodpronearea:[
@@ -330,8 +331,7 @@ export class CpdbComponent implements OnInit {
 		AccesstoInformationTechnology:[
 			'Cable Satellite services',
 			'Internet Services',
-			'Mobile service providers',
-			'Others, specify',
+			'Mobile service providers',		
 		],
 	}
 
@@ -343,9 +343,9 @@ export class CpdbComponent implements OnInit {
         'zone':'',
         'household_number':'',
         'household_characteristics':'',
-        // 'number_of_persons_living':'',
+        'number_of_persons_living':'',
         'household_size_bracket':'',
-        'number_of_families':'',
+        'number_of_families':'5',
         'line_number_of_household_member':'',
         'name_of_household_member':'',
         'relationship_to_household_head':'',
@@ -372,7 +372,7 @@ export class CpdbComponent implements OnInit {
         'usual_occupation_of_working_household_member':'',
         'specify_usual_occupation':'',
         'gross_monthly_income':'',
-        // 'income_bracket':'',
+        'income_bracket':'',
         'place_of_work':'',
         'number_of_years_stay':'',
         'number_of_years_bracket':'',
@@ -393,23 +393,161 @@ export class CpdbComponent implements OnInit {
         'household_location':'',
         'flood_prone_area_water_level':'',
         'access_to_infotech':'',
-        'forps_beneficiary_household':'',
+		'forps_beneficiary_household':'',		
+		'4ps_beneficiary_household':''
 	}
 
 
-	requiredFields = []
+	specify ={
+		reason_for_not_attending_school:false,
+		religious_affiliation:false,
+		type_of_special_skill:false,
+		name_of_group_or_tribe:false,
+		usual_occupation_of_working_household_member:false,
+		source_of_drinking_water:false,
+		type_of_lighting_fuel:false,
+		type_of_cooking_fuel:false,
+		access_to_infotech:false,
+		household_location:false
+	}
 
-	checkRequiredFields(){
-		const fields = this.requiredFields
-		for (let field of fields) {
-			if(field == "" || field == null){
-				//alert nga on or more fields should not be empty
-			}
+	changeHandler(chosen_field){
+	
+		if(chosen_field.target.value == 'Others, please specify reason'){			
+			this.specify.reason_for_not_attending_school = true		
+			this.field.reason_for_not_attending_school = ''
+		}
+		else if(chosen_field.target.value == 'Others (Born Again, Mormon, etc.)'){
+			this.specify.religious_affiliation = true			
+			this.field.religious_affiliation = ''
+		}
+		else if(chosen_field.target.value == 'Others, specify special skill'){
+			this.specify.type_of_special_skill = true		
+			this.field.type_of_special_skill = ''	
+		}
+		else if(chosen_field.target.value == 'Others, specify tribe'){
+			this.specify.name_of_group_or_tribe = true	
+			this.field.name_of_group_or_tribe = ''		
+		}
+		else if(chosen_field.target.value == 'Others, specify ususal occupation'){
+			this.specify.usual_occupation_of_working_household_member = true	
+			this.field.usual_occupation_of_working_household_member = ''		
+		}
+		else if(chosen_field.target.value == 'Others, specify source of water'){
+			this.specify.source_of_drinking_water = true	
+			this.field.source_of_drinking_water = ''		
+		}
+		else if(chosen_field.target.value == 'Others, specify fuel use for lighting'){
+			this.specify.type_of_lighting_fuel = true	
+			this.field.type_of_lighting_fuel = ''		
+		}
+		else if(chosen_field.target.value == 'Others, specify fuel use for cooking'){
+			this.specify.type_of_cooking_fuel = true	
+			this.field.type_of_cooking_fuel = ''		
+		}
+		else if(chosen_field.target.value == 'Others, specify access to information technology'){
+			this.specify.access_to_infotech = true	
+			this.field.access_to_infotech = ''		
+		}
+		else if(chosen_field.target.value == 'Others, specify house hold location'){
+			this.specify.household_location = true	
+			this.field.household_location = ''		
 		}
 	}
 
+
+	requiredFields = {
+		'sorting_number':false,
+        'municipality':false,
+        'barangay':false,
+        'zone':false,
+        'household_number':false,
+        'household_characteristics':false,
+        'number_of_persons_living':false,
+        'household_size_bracket':false,
+        'number_of_families':false,
+        'line_number_of_household_member':false,
+        'name_of_household_member':false,
+        'relationship_to_household_head':false,
+        'sex':false,
+        'date_of_birth':false,
+        'age':false,
+        'age_bracket':false,
+        'civil_status':false,
+        'highest_educational_attainment':false,
+        'school_attendance':false,
+        'level_of_school_attendance':false,
+        'reason_for_not_attending_school':false,
+        'religious_affiliation':false,
+        'have_special_skills':false,
+        'type_of_special_skill':false,
+        'skills_specify':false,
+        'presence_of_disability':false,
+        'type_of_disability':false,
+        'indigenous_group_or_tribe':false,
+        'name_of_group_or_tribe':false,
+        'specify_tribe':false,
+        'active_philhealth_member':false,
+        'philhealth_membership_specify':false,
+        'usual_occupation_of_working_household_member':false,
+        'specify_usual_occupation':false,
+        'gross_monthly_income':false,
+        'income_bracket':false,
+        'place_of_work':false,
+        'number_of_years_stay':false,
+        'number_of_years_bracket':false,
+        'fp_currently_used':false,
+        'total_household_monthly_income':false,
+        'household_income_bracket':false,
+        'house_ownership':false,
+        'house_levels':false,
+        'house_construction_material':false,
+        'homelot_ownership_or_tenure_status':false,
+        'source_of_drinking_water':false,
+        'type_of_toilet':false,
+        'garbage_disposal':false,
+        'type_of_lighting_fuel':false,
+        'type_of_cooking_fuel':false,
+        'specify_cooking_fuel':false,
+        'geohazard_area':false,
+        'household_location':false,
+        'flood_prone_area_water_level':false,
+        'access_to_infotech':false,
+        'forps_beneficiary_household':false,
+	}
+
+	checkRequiredFields(){
+		const fields = this.requiredFields
+		// for (let field of fields) {
+		// 	if(field == "" || field == null){
+		// 		//alert nga on or more fields should not be empty
+		// 	}
+		// }
+	}
+
 	submit(){
-		console.log(JSON.stringify(this.field))
+		// let hasError
+		// for (let key in this.field){
+		// 	if(this.field[key] == "" || this.field[key] == null){
+		// 		this.requiredFields[key] = true
+		// 		hasError = true				
+		// 	}
+		// } 
+		// if(!hasError){
+			
+		// }
+
+	
+		this.field['4ps_beneficiary_household'] = this.field['forps_beneficiary_household']	
+		this.field['specify_cooking_fuel'] = this.field.type_of_cooking_fuel
+		this.field['specify_usual_occupation'] = '5'
+		this.field['skills_specify'] = '5'
+		this.field['specify_tribe'] = '5'
+		
+		this.CpdbService.saveCPDPB(this.field).subscribe(data => {
+			this.UtilityService.setAlert('Record has been saved','success')
+		})
+		
 	}
 
 }

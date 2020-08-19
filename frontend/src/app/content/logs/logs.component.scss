@@ -3,23 +3,25 @@
     height: auto;
     padding: 10px 30px;
     background: var(--bg);
+    transform: translate(-30px);
 }
 
 td span {
     margin-right: 10px;
 }
 
-td img {
+ag-table-cell img {
     width: 30px;
     height: 30px;
     border-radius: 10px;
     margin-top: -6px;
     border-radius: 50%;
     border: 1px solid black;
+    margin-right: 20px;
 }
 
-tr td,
-tr th {
+tr ag-table-cell,
+tr ag-table-col {
     border-bottom: 1px solid rgba(150, 150, 150, .3);
 }
 
@@ -58,7 +60,8 @@ nav {
 
 .search-container {
     display: flex;
-    padding: 0 70px;
+    padding: 0 40px;
+    padding-right: 100px;
 }
 
 input {
@@ -70,7 +73,57 @@ input {
     color: white !important
 }
 
-table.table th,
-table.table td {
+table.table ag-table-col,
+table.table ag-table-cell {
     padding: .8rem;
+}
+
+.ag-table-body .ag-table-row {
+    background: transparent;
+    border-bottom: 1px solid rgba(150, 150, 150, .3);
+}
+
+input {
+    width: 30% !important;
+    margin-right: auto;
+}
+
+button {
+    color: #00A663 !important;
+    border-radius: 50%;
+    display: flex;
+    box-shadow: none;
+    background: none;
+    height: 50px;
+    width: 50px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+button i {
+    color: #00A663 !important;
+    font-size: 20px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    margin-left: 15px;
+}
+
+button:hover {
+    background: var(--inputBg);
+}
+
+.ag-table-body.clickable .ag-table-row {
+    cursor: default;
+}
+
+ag-table-col span {
+    color: #149EF8
+}
+
+.fullname {
+    color: var(--absolute) !important;
+    font-weight: 600;
 }

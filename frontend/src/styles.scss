@@ -2,6 +2,9 @@
     
     @import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
     @import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+    @import '~ag-table/scss/style.scss';
+    @include ag-table-core();
+    // ------------------------------------------------------------------------
     html {
         --dark1: linear-gradient(180deg, gray, #111);
         --blue1: linear-gradient(#149EF8, rgba(64, 145, 255, 0.7));
@@ -13,7 +16,7 @@
     
     html[data-theme="light"] {
         --bg: white;
-        --bg1: #F5F5F5;
+        --bg1: #F3F7FA;
         --inputBg: #E3E5E8;
         --contrast: linear-gradient(45deg, #149EF8, #7A6BEC);
         --shadow: 0 2px 5px 0 rgba(150, 150, 150, 0.16), 0 2px 5px 0 rgba(50, 50, 150, 0.12);
@@ -39,6 +42,16 @@
         --hover: #282C34
     }
     
+    .ag-table-col .ag-table-filter-input,
+    .ag-table-col .ag-table-filter-select {
+        box-shadow: none !important;
+        height: calc(1.5em + .75rem + 2px);
+    }
+    
+    ag-table-cell {
+        color: var(--colorPrimary) !important
+    }
+    
     tbody tr td,
     thead tr th {
         border-bottom: 1px solid rgba(150, 150, 150, .3) !important;
@@ -48,8 +61,11 @@
         overflow: hidden;
     }
     
-    tbody tr:hover {
-        background: var(--inputBg) !important;
+    tbody tr:hover,
+    .ag-table-body .ag-table-row:hover {
+        outline: px solid #149EF8 !important;
+        box-shadow: inset 0px 0px 5px #149EF8;
+        border-radius: 4px;
     }
     
     select:focus {
@@ -113,7 +129,7 @@
     
     .container {
         border-radius: 4px;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, .05), 0 0 0 1px rgba(63, 63, 68, .1);
+        box-shadow: 0 1px 2px rgba(0, 0, 50, .05), 0 0 0 1px rgba(63, 63, 168, .1);
         margin-bottom: 25px;
         background: var(--bg);
         padding: 10px;
@@ -170,7 +186,7 @@
         width: 70%;
         height: 3px;
         background: #149EF8;
-        animation: loader 1.5s linear infinite;
+        animation: loader 1s linear infinite;
         margin-top: -10px;
     }
     

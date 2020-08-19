@@ -20,11 +20,8 @@ class LogAPIActivity
         $response = $next($request);
         Log::info(
             json_encode([
-<<<<<<< HEAD
-                // 'uri' => $request->fullUrlWithQuery(),
-=======
+
                 'uri' => $request->fullUrl(),
->>>>>>> 9f3422d829fd1642aff5be236b8f4abe6f752ad0
                 'method' => $request->method(),
                 'body' => $request->all(),
                 'response' => $response->getContent(),

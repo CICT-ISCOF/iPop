@@ -30,9 +30,12 @@ h4 {
     margin-bottom: 20px;
 }
 
-span {
-    margin-left: auto;
-    margin-left: 10px;
+label {
+    display: flex;
+}
+
+label span {
+    margin-left: auto !important;
 }
 
 svg {

@@ -13,10 +13,17 @@ export class SignInService {
 	  ) { }
 	
 	baseURL = this.BaseAPIService.baseURL + '/auth'
+
+	
 	
 	register(data){
-		const url = this.baseURL + '/register'	
-		const headers =  new HttpHeaders({'Accept':'application/json'})		
+		const user = JSON.parse(localStorage.getItem('user-data'))
+		const token = user.token
+		const headers = 	new HttpHeaders({
+		'Accept':'application/json',
+		'Authorization' : 'Bearer '+ token
+	})	
+		const url = this.baseURL + '/register'			
 		return this.http.post(url, data, {headers:headers})
 	}
 

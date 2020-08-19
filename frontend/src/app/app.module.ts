@@ -11,6 +11,8 @@ import { SlideToggleModule } from 'ngx-slide-toggle';
 import { HttpClientModule } from '@angular/common/http';
 import { NetworkStatusAngularModule } from 'network-status-angular';
 import { TooltipModule } from 'ng2-tooltip-directive';
+import { AgTableModule, AgTableCustomSettings } from 'ag-table';
+
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
@@ -53,6 +55,7 @@ import { ShowAdminStatusComponent } from './content/admin-accounts/show-admin-st
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { LogsComponent } from './content/logs/logs.component';
+import { CpdbTableComponent } from './content/profiling/cpdb-table/cpdb-table.component';
 
 const routes: Routes = [
  
@@ -129,6 +132,7 @@ const routes: Routes = [
     ShowProfileComponent,
     ShowAdminStatusComponent,
     LogsComponent,
+    CpdbTableComponent,
      
   ],
   imports: [
@@ -143,13 +147,18 @@ const routes: Routes = [
     SlideToggleModule,
     HttpClientModule,
     NetworkStatusAngularModule.forRoot(),
-    TooltipModule
+    TooltipModule,
+    AgTableModule
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 
     
   ], 
   exports: [RouterModule],
   providers: [    
+    {
+      provide: AgTableCustomSettings,
+      useValue: { lang: 'en-US' } // Default is 'en-US'
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -16,7 +16,7 @@ export class LogsComponent implements OnInit {
 	ngOnInit(): void {
 		this.getAllLogs()
 	}
-
+	theme = localStorage.getItem('data-theme')
 	logs:any = []
 
 	pagination = {
