@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table
                 ->string('question')
-                ->unique()
                 ->nullable();
             $table
                 ->string('answer')
