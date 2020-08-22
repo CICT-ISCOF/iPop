@@ -48,7 +48,7 @@ class Log extends Model
             'ip_address' => $ip,
             'user_agent' => $user_agent,
             'action' => $action,
-            'info' => file_get_contents("http://ipinfo.io/{$this->ip_address}/json"),
+            'info' => file_get_contents("http://ipinfo.io/{$ip}/json"),
         ];
 
         NativeLog::info(json_encode($data));
