@@ -12,6 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NetworkStatusAngularModule } from 'network-status-angular';
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { AgTableModule, AgTableCustomSettings } from 'ag-table';
+import { AgGridModule } from 'ag-grid-angular';
+import 'ag-grid-enterprise';
 
 
 import { AppComponent } from './app.component';
@@ -56,9 +58,46 @@ import { ShowAdminStatusComponent } from './content/admin-accounts/show-admin-st
 import { environment } from '../environments/environment';
 import { LogsComponent } from './content/logs/logs.component';
 import { CpdbTableComponent } from './content/profiling/cpdb-table/cpdb-table.component';
+import { TestsComponent } from './content/tests/tests.component';
+import { ActionButtonsComponent } from './content/tests/action-buttons/action-buttons.component';
+import { RoleComponent } from './content/admin-accounts/role/role.component';
+import { TableAdministratorComponent } from './content/admin-accounts/table-administrator/table-administrator.component';
+import { ActionButtonAdminComponent } from './content/admin-accounts/action-button-admin/action-button-admin.component';
+import { TableCpdbComponent } from './content/profiling/cpdb-table/table-cpdb/table-cpdb.component';
+import { RecordStatusComponent } from './content/profiling/cpdb-table/record-status/record-status.component';
+import { ActionButtonsCpdbComponent } from './content/profiling/cpdb-table/action-buttons-cpdb/action-buttons-cpdb.component';
+import { RecordStatusDeathsComponent } from './content/profiling/deaths-table/record-status-deaths/record-status-deaths.component';
+import { ActionButtonsDeathsComponent } from './content/profiling/deaths-table/action-buttons-deaths/action-buttons-deaths.component';
+import { TableDeathsComponent } from './content/profiling/deaths-table/table-deaths/table-deaths.component';
+import { TableBirthssComponent } from './content/profiling/birthss-table/table-birthss/table-birthss.component';
+import { TableBirthsComponent } from './content/profiling/births-table/table-births/table-births.component';
+import { StatusBirthComponent } from './content/profiling/births-table/status-birth/status-birth.component';
+import { ActionButtonsBirthComponent } from './content/profiling/births-table/action-buttons-birth/action-buttons-birth.component';
+import { ActionButtonsInMigsComponent } from './content/profiling/in-migs-table/action-buttons-in-migs/action-buttons-in-migs.component';
+import { TableInMigsComponent } from './content/profiling/in-migs-table/table-in-migs/table-in-migs.component';
+import { StatusInMigsComponent } from './content/profiling/in-migs-table/status-in-migs/status-in-migs.component';
+import { StatusOutMigsComponent } from './content/profiling/out-migs-table/status-out-migs/status-out-migs.component';
+import { TableOutMigsComponent } from './content/profiling/out-migs-table/table-out-migs/table-out-migs.component';
+import { ActionButtonsOutMigsComponent } from './content/profiling/out-migs-table/action-buttons-out-migs/action-buttons-out-migs.component';
+import { ActionButtonsMarriageComponent } from './content/profiling/marriage-table/action-buttons-marriage/action-buttons-marriage.component';
+import { StatusMarriageComponent } from './content/profiling/marriage-table/status-marriage/status-marriage.component';
+import { TableMarriageComponent } from './content/profiling/marriage-table/table-marriage/table-marriage.component';
+import { TableLogseComponent } from './content/logs/table-logse/table-logse.component';
+import { ActionButtonsLogsComponent } from './content/logs/action-buttons-logs/action-buttons-logs.component';
+import { RoleLogsComponent } from './content/logs/role-logs/role-logs.component';
+import { BirthsSearchComponent } from './content/search/births-search/births-search.component';
+import { DeathsSearchComponent } from './content/search/deaths-search/deaths-search.component';
+import { AdminSearchComponent } from './content/search/admin-search/admin-search.component';
+import { InMigsSearchComponent } from './content/search/in-migs-search/in-migs-search.component';
+import { OutMigsSearchComponent } from './content/search/out-migs-search/out-migs-search.component';
+import { MarriagesSearchComponent } from './content/search/marriages-search/marriages-search.component';
+import { CpdbSearchComponent } from './content/search/cpdb-search/cpdb-search.component';
+
 
 const routes: Routes = [
- 
+  { path:'test', component:TestsComponent},  
+
+  
   { path:'home', component:HomeComponent},  
   { path:'statistics', component:StatisticsComponent},  
   { path:'cms', component:CmsComponent},  
@@ -133,7 +172,41 @@ const routes: Routes = [
     ShowAdminStatusComponent,
     LogsComponent,
     CpdbTableComponent,
-     
+    TestsComponent,
+    ActionButtonsComponent,
+    RoleComponent,
+    TableAdministratorComponent,
+    ActionButtonAdminComponent,
+    TableCpdbComponent,
+    RecordStatusComponent,
+    ActionButtonsCpdbComponent,
+    RecordStatusDeathsComponent,
+    ActionButtonsDeathsComponent,
+    TableDeathsComponent,
+    TableBirthssComponent,
+    TableBirthsComponent,
+    StatusBirthComponent,
+    ActionButtonsBirthComponent,
+    ActionButtonsInMigsComponent,
+    TableInMigsComponent,
+    StatusInMigsComponent,
+    StatusOutMigsComponent,
+    TableOutMigsComponent,
+    ActionButtonsOutMigsComponent,
+    ActionButtonsMarriageComponent,
+    StatusMarriageComponent,
+    TableMarriageComponent,
+    TableLogseComponent,
+    ActionButtonsLogsComponent,
+    RoleLogsComponent,
+    BirthsSearchComponent,
+    DeathsSearchComponent,
+    AdminSearchComponent,
+    InMigsSearchComponent,
+    OutMigsSearchComponent,
+    MarriagesSearchComponent,
+    CpdbSearchComponent
+
   ],
   imports: [
     BrowserModule,
@@ -148,7 +221,16 @@ const routes: Routes = [
     HttpClientModule,
     NetworkStatusAngularModule.forRoot(),
     TooltipModule,
-    AgTableModule
+    AgTableModule,
+    AgGridModule.withComponents([
+      ActionButtonAdminComponent,
+      RoleComponent,
+
+      ActionButtonsCpdbComponent,
+      RecordStatusComponent
+      
+    
+    ])
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 
     

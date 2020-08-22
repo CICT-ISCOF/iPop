@@ -165,7 +165,7 @@ export class AccountComponent implements OnInit {
 		})			
 	}
 
-	changeSecurity(){
+	changeSecurity(){	
 		this.isLoading = true
 		let hasError = false
 		for(let key in this.changeSecurityQuestion){
@@ -177,15 +177,26 @@ export class AccountComponent implements OnInit {
 			}
 		}
 		if(!hasError){			
-			this.changeSecurityQuestion.old_question = null
-			this.AccountService.changeSecurityQuestion(this.changeMySecurityQuestion, this.myInformation.user.id).subscribe(data => {
+			this.changeSecurityQuestion.old_question = this.mySecurityQuestion
+			this.AccountService.changeSecurityQuestion(this.changeSecurityQuestion, this.myInformation.user.id).subscribe(data => {
 				console.log(data)
 				this.isLoading = false
+				this.UtilityService.setAlert('Your Security Question and answer has been successfully changed','success')
+				this.ngOnInit()				
+				this.changeSecurityQuestion.new_answer = ''
+				this.changeSecurityQuestion.new_question = ''
+				this.changeSecurityQuestion.old_answer =''
+				this.changeSecurityQuestion.confirmAnswer =''
+			},
+			error=>{
+				for(let message in error.error.errors){
+					this.UtilityService.setAlert(error.error.errors[message],'error')
+				}	
+				this.isLoading = false	
 			})
 		}else{
 			this.isLoading = false
 		}
-		this.isLoading = true	
 	}
 
 
@@ -227,8 +238,16 @@ export class AccountComponent implements OnInit {
 			this.AccountService.changePin(this.changePin, this.myInformation.user.id).subscribe(data => {
 				console.log(data)
 				this.isLoading = false
+				this.UtilityService.setAlert('Pin Successfully Changed','success')
+			},
+			error=>{
+				for(let message in error.error.errors){
+					this.UtilityService.setAlert(error.error.errors[message],'error')
+				}	
+				this.isLoading = false	
 			})
 		}else{
+			this.UtilityService.setAlert('Fields must be equal to 6 digits','error')
 			this.isLoading = false
 		}
 	}
@@ -280,14 +299,17 @@ export class AccountComponent implements OnInit {
 		if(!hasError){
 			this.AccountService.changePassword(this.changePassword, this.myInformation.user.id).subscribe(data => {
 				this.changePasswordResponse = data
-				if(this.changePasswordResponse.errors){
-					this.UtilityService.setAlert('Your password is incorrect','error')
-				}else{
-					this.UtilityService.setAlert('Your password has been changed','success')
-				}
+				this.UtilityService.setAlert('Your password has been changed','success')			
 				this.isLoading = false
+			},
+			error=>{
+				for(let message in error.error.errors){
+					this.UtilityService.setAlert(error.error.errors[message],'error')
+				}	
+				this.isLoading = false	
 			})
 		}else{
+			this.UtilityService.setAlert('One or more fields should not be empty','error')
 			this.isLoading = false
 		}
 	}

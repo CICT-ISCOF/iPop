@@ -4,22 +4,21 @@
 }
 
 .wrapper {
-    border-radius: 50%;
-    background: var(--sidebar);
-    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
 }
 
 i,
 svg {
-    fill: white;
-    color: white;
-    font-size: 16px;
-    width: 16px;
-    height: 16px;
+    fill: var(--colorPrimary);
+    color: var(--colorPrimary);
+    font-size: 26px;
+    width: 30px;
+    height: 30px;
     text-align: center;
+}
+
+i {
+    margin-top: 5px;
 }

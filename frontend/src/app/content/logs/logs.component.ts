@@ -17,7 +17,7 @@ export class LogsComponent implements OnInit {
 		this.getAllLogs()
 	}
 	theme = localStorage.getItem('data-theme')
-	logs:any = []
+	logs = []
 
 	pagination = {
 		currentPage:0,
@@ -38,7 +38,7 @@ export class LogsComponent implements OnInit {
 				this.pagination.totalPages.push(i)
 			}			
 			this.isLoading = false	
-			
+			console.log(this.logs)
 		})
 	}
 

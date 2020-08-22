@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CpdbService } from '../../cpdb/cpdb.service'
+
 
 @Component({
   selector: 'app-cpdb-table',
@@ -7,9 +9,64 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CpdbTableComponent implements OnInit {
 
-  constructor() { }
+	constructor(
+		private CpdbService : CpdbService
+	) { }
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {
+		this.getCPDBLists()
+	}
+
+	isLoading = false
+
+	theme = localStorage.getItem('data-theme')
+
+	getCPDBLists(){
+		this.pagination = {
+			currentPage:0,
+			lastPage:0,
+			totalPages:[],
+		}
+	
+		this.isLoading = true	
+		this.CpdbService.getCPDBLists().subscribe(response=>{				
+			this.CpdbService.setData(response.data)
+			this.pagination.currentPage = response.current_page
+			this.pagination.lastPage = response.last_page
+			for(let i = 0; i <= response.last_page; i ++){
+				this.pagination.totalPages.push(i)
+			}			
+			this.isLoading = false				
+		})
+	}
+
+	pagination = {
+		currentPage:0,
+		lastPage:0,
+		totalPages:[],
+	}
+
+	paginate(page){
+		this.isLoading = true	
+		this.pagination.currentPage = page
+		this.CpdbService.paginateAdminList(page).subscribe(response=>{
+			this.CpdbService.setData(response.data)
+			this.isLoading = false	
+			this.CpdbService.setData(response.data)
+		})	
+	}
+
+	keyword = ''
+	search(){
+
+	}
+
+	multipleDelete(){
+
+	}
+
+	refresh(){
+
+	}
 
 }

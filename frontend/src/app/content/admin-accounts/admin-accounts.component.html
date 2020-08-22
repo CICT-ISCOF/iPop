@@ -1,76 +1,50 @@
 <div *ngIf="isLoading" class="loader"></div>
 <br>
 <div class="search-container">
-    <input type="text" class="form-control w-50" placeholder="Global Search">
-    <button tooltip="Filter Column" placement="left" [theme]="theme">
-        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-filter" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
-        </svg>
-    </button>
+    <div class="icon-holder">
+        <div style="position: relative;">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+          </svg>
+        </div>
+    </div>
 
-    <button tooltip="Download in .xls format" placement="bottom" [theme]="theme" show-delay="50" class="button">
-        <i  class="fas fa-file-excel"></i>
-    </button>
+    <input (keyup.enter)="search()" [(ngModel)]="keyword" type="text" class="form-control w-50" placeholder="Administrator's Global Search">
 
-    <button tooltip="Print data" placement="bottom" [theme]="theme">
-        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-printer" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11 2H5a1 1 0 0 0-1 1v2H3V3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h-1V3a1 1 0 0 0-1-1zm3 4H2a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h1v1H2a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1z"/>
-            <path fill-rule="evenodd" d="M11 9H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zM5 8a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H5z"/>
-            <path d="M3 7.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+
+    <div (click)="search()" *ngIf="keyword != ''" class="icon-holder-button">
+        <div style="position: relative;">
+            <svg width="25px" height="25px" viewBox="0 0 16 16" class="bi bi-arrow-right-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.793 8 8.146 5.354a.5.5 0 0 1 0-.708z"/>
+                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5H11a.5.5 0 0 1 0 1H4.5A.5.5 0 0 1 4 8z"/>
+          </svg>
+        </div>
+    </div>
+
+    <button (click)="multipleDelete()" tooltip="Delete Checked" placement="left" [theme]="theme" style="margin-left: auto;">
+        <svg width="25px" height="25px" viewBox="0 0 16 16" class="bi bi-trash2" fill="red" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M3.18 4l1.528 9.164a1 1 0 0 0 .986.836h4.612a1 1 0 0 0 .986-.836L12.82 4H3.18zm.541 9.329A2 2 0 0 0 5.694 15h4.612a2 2 0 0 0 1.973-1.671L14 3H2l1.721 10.329z"/>
+            <path d="M14 3c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2z"/>
+            <path fill-rule="evenodd" d="M12.9 3c-.18-.14-.497-.307-.974-.466C10.967 2.214 9.58 2 8 2s-2.968.215-3.926.534c-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466zM8 5c3.314 0 6-.895 6-2s-2.686-2-6-2-6 .895-6 2 2.686 2 6 2z"/>
           </svg>
     </button>
+
+    <button (click)="refresh()" tooltip="Refresh Table" placement="left" [theme]="theme">      
+            <i class="im im-sync"></i>        
+    </button>
 </div>
+
 <div class="admin-accounts container">
-    <ag-table #table paginate="100" clickable height="800px" min-width="650px">
-        <ag-table-header>
-
-            <ag-table-col filter="text" field="date" width="350px">
-                Fullname
-            </ag-table-col>
-            <ag-table-col filter="select" field="profType" width="150px">
-                <span>Role</span>
-            </ag-table-col>
-            <ag-table-col filter="select" field="profType" [options]="district" width="150px">
-                <span>District</span>
-            </ag-table-col>
-            <ag-table-col filter="select" field="profType" width="150px">
-                <span>Muncipality</span>
-            </ag-table-col>
-            <ag-table-col filter="text" field="profType" width="150px">
-                <span>Barangay</span>
-            </ag-table-col>
-            <ag-table-col filter="date" field="date_created" no-sort="true" width="250px">
-                <span> Date Created</span>
-            </ag-table-col>
-        </ag-table-header>
-        <ag-table-body row-height="80px">
-            <ag-table-row *ngFor="let admin of admins">
-                <ag-table-cell class="fullname">
-
-                    <i [routerLink]="['/admin/' + admin.id]" routerLinkActive="router-link-active" style="color:orange " class="im im-radar " tooltip="Show status of {{admin.fullname}}" placement="right" show-delay="100" [theme]="theme"></i>
-
-                    <i *ngIf="admin.iterations <= 4" [class.hide]="admin.role == 'Super Admin'" (click)="blockAdmin(admin.id)" tooltip="Block {{ admin.fullname }}" placement="bottom" show-delay="100" [theme]="theme" class="fas fa-user-slash"></i>
-
-                    <i *ngIf="admin.role != 'Super Admin'" (click)="deleteAdmin(admin.id)" tooltip="Delete {{ admin.fullname }}" placement="right" show-delay="100" [theme]="theme" style="color:red " class="im im-minus-circle "></i>
-
-                    <span *ngIf="admin.iterations >= 5" class="badge badge-danger">Blocked</span>
-
-                    <img src=" ../../../assets/wallpapers/1.jpg"> {{ admin.fullname }}
-                </ag-table-cell>
-                <ag-table-cell> <span class="badge badge-success">{{ admin.role }}</span> </ag-table-cell>
-                <ag-table-cell>{{ admin.district }}</ag-table-cell>
-                <ag-table-cell>{{ admin.municipality }}</ag-table-cell>
-                <ag-table-cell>{{ admin.barangay }}</ag-table-cell>
-                <ag-table-cell field="date_created">{{ admin.created_at | date : 'EEEE, MMMM dd, yyy' }} <br> {{ admin.created_at | date : 'h:mm A' }} </ag-table-cell>
-            </ag-table-row>
-        </ag-table-body>
-    </ag-table>
+    <app-table-administrator></app-table-administrator>
 </div>
 
 <nav aria-label="... ">
     <ul class="pagination ">
         <li class="page-item " [class.disabled]="pagination.currentPage == 1">
-            <a class="page-link " (click)="paginate( pagination.currentPage - 1 ) " tabindex="-1 " aria-disabled="true " style="color:gray !important ">Previous</a>
+            <a class="page-link " (click)="paginate( pagination.currentPage - 1 ) " tabindex="-1 " aria-disabled="true " style="color:gray !important ">
+                <i class="fas fa-chevron-left"></i>
+            </a>
         </li>
 
         <li (click)="paginate(page) " *ngFor="let page of pagination.totalPages " class="page-item " [class.active]='pagination.currentPage == page'>
@@ -79,8 +53,10 @@
 
 
         <li class="page-item " [class.disabled]="pagination.currentPage==pagination.lastPage ">
-            <a class="page-link " (click)="paginate( pagination.currentPage + 1 ) " tabindex="-1 " aria-disabled="true " style="color:gray !important ">Next</a>
+            <a class="page-link " (click)="paginate( pagination.currentPage + 1 ) " tabindex="-1 " aria-disabled="true " style="color:gray !important ">
+                <i class="fas fa-chevron-right"></i>
+            </a>
         </li>
     </ul>
 </nav>
-<br><br><br><br><br><br><br>
+<br>

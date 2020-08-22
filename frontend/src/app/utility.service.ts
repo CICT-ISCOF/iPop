@@ -23,7 +23,20 @@ export class UtilityService {
 
 
 	setAlert(message,type) {
-		this.alert.next({message,type});			
+	
+		const success = new Audio('../assets/audio/success.mp3')
+		const info = new Audio('../assets/audio/info.mp3')
+		const error = new Audio('../assets/audio/error.mp3')
+		if(type == 'success'){
+			success.play()
+		}
+		else if (type == 'error'){
+			error.play()
+		}
+		else{
+			info.play()
+		}
+		this.alert.next({message,type});	
 	}
 
 	getAlert(){

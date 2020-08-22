@@ -82,7 +82,7 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
                     <br>
-                    <p>What is your favorite movie?</p>
+                    <p>{{ mySecurityQuestion }}</p>
                     <div class="col-md-12 mb-3 input-container">
                         <label for="oldans">Old Answer</label>
 
@@ -173,7 +173,7 @@
                             <div class="dot" [class.is-colored]="changePin.old_pin.length == 6" [class.is-invalid]="isValid==false"></div>
                         </div>
                         <div class="input-wrapper">
-                            <input [(ngModel)]="changePin.old_pin" maxlength="6" [class.is-invalid]="true" id="oldpin" class="form-control w-50" type="password" style="-webkit-text-security: disc;font-size: 1em;">
+                            <input [(ngModel)]="changePin.old_pin" maxlength="6" [class.is-invalid]="false" id="oldpin" class="form-control w-50" type="password" style="-webkit-text-security: disc;font-size: 1em;">
                             <div class="invalid-feedback">
                                 Invalid Pin {{tries}} 1 tries left
                             </div>

@@ -46,9 +46,9 @@
         <ag-table-body row-height="70px">
             <ag-table-row *ngFor="let log of logs ">
                 <ag-table-cell class="fullname">
-                    <img src="../../../assets/wallpapers/1.jpg" alt=""> {{ log.user.fullname }} <br>
+                    <img src="../../../assets/wallpapers/1.jpg" alt=""> {{ log.user == null || log.user == undefined ? 'Uknown user' : log.user.fullname}} <br>
                 </ag-table-cell>
-                <ag-table-cell> <span class="badge badge-success">{{ log.user.role }}</span> </ag-table-cell>
+                <ag-table-cell> <span class="badge badge-success"> {{ log.user == null || log.user == undefined ? 'Visitor' : log.user.role}} </span> </ag-table-cell>
                 <ag-table-cell>{{ log.ip_address }} </ag-table-cell>
 
                 <ag-table-cell>

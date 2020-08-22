@@ -10,7 +10,7 @@
         <br>
 
 
-        <div *ngIf="account.user.role == 'Super Admin'" (click)="active('AdminAccounts')" class=" sidebar-btn" [class.active]="icons.AdminAccounts == true " [routerLink]="['/admin-accounts']" routerLinkActive="router-link-active">
+        <div *ngIf="account.user.role == 'Super Admin'" (click)="active('Admin Accounts')" class=" sidebar-btn" [class.active]="icons.AdminAccounts == true " [routerLink]="['/admin-accounts']" routerLinkActive="router-link-active">
             <button [class.button]="icons.AdminAccounts == true" [class.clickable]="icons.AdminAccounts == false ">
                 <div class="icon ">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-lines-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -34,10 +34,14 @@
             </button>
         </div>
 
-        <div *ngIf="account.user.role == 'Super Admin'" (click)="active('Logs')" class=" sidebar-btn" [class.active]="icons.Administrators == true " [routerLink]="['/logs']" routerLinkActive="router-link-active">
-            <button [class.button]="icons.Administrators == true" [class.clickable]="icons.Administrators == false ">
+        <div *ngIf="account.user.role == 'Super Admin'" (click)="active('Logs')" class=" sidebar-btn" [class.active]="icons.Logs == true" [routerLink]="['/logs']" routerLinkActive="router-link-active">
+            <button [class.button]="icons.Logs == true" [class.clickable]="icons.Logs == false ">
                 <div class="icon ">
-                    <i class="fas fa-hand-pointer"></i>
+                    <svg width="23px" height="23px" viewBox="0 0 16 16" class="bi bi-watch" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4 14.333v-1.86A5.985 5.985 0 0 1 2 8c0-1.777.772-3.374 2-4.472V1.667C4 .747 4.746 0 5.667 0h4.666C11.253 0 12 .746 12 1.667v1.86A5.985 5.985 0 0 1 14 8a5.985 5.985 0 0 1-2 4.472v1.861c0 .92-.746 1.667-1.667 1.667H5.667C4.747 16 4 15.254 4 14.333zM13 8A5 5 0 1 0 3 8a5 5 0 0 0 10 0z"/>
+                        <path d="M13.918 8.993A.502.502 0 0 0 14.5 8.5v-1a.5.5 0 0 0-.582-.493 6.044 6.044 0 0 1 0 1.986z"/>
+                        <path fill-rule="evenodd" d="M8 4.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H6a.5.5 0 0 1 0-1h1.5V5a.5.5 0 0 1 .5-.5z"/>
+                    </svg>
                </div>
                History Logs
             </button>
@@ -97,10 +101,12 @@
         <div (click)="active('Profiling')" class=" sidebar-btn" [class.active]="icons.Profiling == true " [routerLink]="['/profiling']" routerLinkActive="router-link-active">
             <button [class.button]="icons.Profiling == true" [class.clickable]="icons.Profiling == false ">
                 <div class="icon ">
-                    <i class="fas fa-table"></i>
+                    <svg width="23px" height="23px" viewBox="0 0 16 16" class="bi bi-grid-3x3-gap-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2z"/>
+                    </svg>
                </div>
                 Records
-                <span style="margin-left: auto;" class="badge badge-danger"><span style="font-size: 9px;">Pending</span> 135</span>
+                <span style="margin-left: auto;" class="badge badge-warning"><span style="font-size: 9px;">Pending</span> 135</span>
             </button>
         </div>
 
@@ -109,7 +115,10 @@
         <div (click)="active('CPDB')" class=" sidebar-btn" [class.active]="icons.CPDB == true " [routerLink]="['/cpdb']" routerLinkActive="router-link-active">
             <button [class.button]="icons.CPDB == true" [class.clickable]="icons.CPDB == false ">
                 <div class="icon ">
-                    <i class="fas fa-male"></i>
+                    <svg width="23px" height="23px" viewBox="0 0 16 16" class="bi bi-person-bounding-box" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z"/>
+                        <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                      </svg>
                </div>
                 CPDB
             </button>
@@ -159,7 +168,9 @@
         <div (click)="active('Marriages')" class=" sidebar-btn" [class.active]="icons.Marriages == true " [routerLink]="['/marriages']" routerLinkActive="router-link-active">
             <button [class.button]="icons.Marriages == true" [class.clickable]="icons.Marriages == false ">
                 <div class="icon ">
-                    <i class="fas fa-people-carry"></i>
+                    <svg  style="margin-left: -5px;" width="23PX" height="23PX" viewBox="0 0 16 16" class="bi bi-suit-heart-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+                    </svg>
                </div>
                 Marriages
             </button>

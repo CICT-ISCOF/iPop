@@ -12,8 +12,20 @@ export class AdminAccountsComponent implements OnInit {
 
 	constructor(
 		private  AdminService : AdminService,
-		private UtilityService : UtilityService
-	) { }
+		private UtilityService : UtilityService,		
+	) { 
+		this.reload = this.AdminService.getReload().subscribe(data => {
+			this.ngOnInit()
+		})
+
+		this.reload = this.AdminService.getMultipleDelete().subscribe(array => {
+			for(let id in array){
+				this.deleteMultipleAdmin(array[id])
+			}
+		})
+	}
+
+	reload
 
 	ngOnInit(): void {
 		this.getAllAdmins()
@@ -21,8 +33,14 @@ export class AdminAccountsComponent implements OnInit {
 
 	theme = localStorage.getItem('data-theme')
 
+	myAccount = JSON.parse( localStorage.getItem('user-data'))
+
+	myID = this.myAccount.user.id	
+
 	admins = []
 	isLoading = false
+
+
 
 	pagination = {
 		currentPage:0,
@@ -36,9 +54,16 @@ export class AdminAccountsComponent implements OnInit {
 
 
 	getAllAdmins(){
+		this.pagination = {
+			currentPage:0,
+			lastPage:0,
+			totalPages:[],
+		}
+	
 		this.isLoading = true	
 		this.AdminService.getAdminLists().subscribe(response=>{
-			this.admins = response.data
+			this.admins = response.data			
+			this.AdminService.setPage(response.data)
 			this.pagination.currentPage = response.current_page
 			this.pagination.lastPage = response.last_page
 			for(let i = 0; i <= response.last_page; i ++){
@@ -54,8 +79,10 @@ export class AdminAccountsComponent implements OnInit {
 		this.AdminService.paginateAdminList(page).subscribe(response=>{
 			this.admins = response.data
 			this.isLoading = false	
-		})
+			this.AdminService.setPage(response.data)
+		})	
 	}
+
 	blockAdmin(id){
 		Swal.fire({
 			title: 'Block this admin?',		
@@ -90,8 +117,34 @@ export class AdminAccountsComponent implements OnInit {
 				})
 			} 
 		})
-	
-		
+	}
+
+	deleteMultipleAdmin(id){
+		this.isLoading = true	
+		this.AdminService.deleteAdmin( id ).subscribe(data => {		
+			this.UtilityService.setAlert('You have deleted an admin','info')		
+			this.isLoading = false	
+			this.UtilityService.setAlert('Refresh Page to see changes','info')
+		})
+	}
+
+	multipleDelete(){
+		this.AdminService.setActionToDelete()
+	}
+
+
+	keyword = ''
+
+
+	search(){
+		this.AdminService.search(this.keyword).subscribe(data => {
+			this.AdminService.setPage(data)
+			this.keyword = ''
+		})
+	}
+
+	refresh(){
+		this.ngOnInit()
 	}
 
 

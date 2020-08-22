@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MarriagesService } from './marriages.service'
 
 @Component({
   selector: 'app-marriages',
@@ -7,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MarriagesComponent implements OnInit {
 
-  constructor() { }
+	constructor(
+		private MarriagesService : MarriagesService
+	) { }
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {
+	}
 
 	months = [
 		'January',
@@ -86,6 +89,52 @@ export class MarriagesComponent implements OnInit {
         'residence_address':'',
         'solemnizing_officer':'',
         'registered_lcr':'',
+	}
+
+	invalid = {
+		'sorting_number':false,
+        'municipality':false,
+        'barangay':false,
+        'total_cases':false,
+        'household_number':false,
+        'case_number':false,
+        'month':false,
+        'couple_name':false,
+        'sex':false,
+        'age_bracket':false,
+        'address':false,
+        'wedding_ceremony_type':false,
+        'residence_address':false,
+        'solemnizing_officer':false,
+        'registered_lcr':false,	
+	}
+
+	isLoading = false
+	save(){
+		this.isLoading = true
+		let hasError = false
+		for(let key in this.fields){
+			if( this.fields[key] == '' || this.fields[key] == null){
+				this.invalid[key] = true
+				hasError = true
+			
+			}
+			else{
+				this.invalid[key] = false
+			}
+		}
+		if(!hasError){
+			// this.fields.sorting_number = this.fields.sorting_number.toString()
+			// this.fields.household_number = this.fields.household_number.toString()
+			 
+			this.MarriagesService.saveMarriageRecord(this.fields).subscribe(data => {
+				console.log(data)
+			})
+			this.isLoading = false
+		}else{			
+			this.isLoading = false
+			
+		}	
 	}
 	
 

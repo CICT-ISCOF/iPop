@@ -13,9 +13,6 @@ export class AlertsComponent implements OnInit {
 		private UtilityService : UtilityService
 	) {
 		this.message = this.UtilityService.getAlert().subscribe(message => {
-
-			console.log(message)
-
 			this.alerts.push(message)		
 		})
 	 }

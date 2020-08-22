@@ -85,7 +85,7 @@ input:focus {
 
 .content {
     width: 100%;
-    height: 100vh;
+    height: auto;
     overflow: hidden;
     display: flex;
 }
@@ -270,3 +270,20 @@ owl-carousel-o img {
     font-size: 35px;
     margin-left: 0px;
 }
+
+.quick-links-container {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.another-quick-links {
+    height: 256px;
+    width: 150px;
+    border-radius: 10px;
+    margin-right: 10px;
+    display: inline-block;
+    background: lightgray;
+}
+
+.another-quick-links img {}

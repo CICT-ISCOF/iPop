@@ -4,7 +4,7 @@
         <div class="col-md-4 container">
 
             <div class="image-container">
-                <img src="../../../../assets/wallpapers/land-4.jpg" alt="">
+                <img src="../../../../assets/wallpapers/1.jpg" alt="">
                 <div (click)="triggerInput()" class="icon-container">
                     <i style="font-size: 25px;" class="fas fa-camera"></i>
                     <input accept="image/*" type="file" class="hidden" id="profile-picture">
@@ -57,7 +57,10 @@
                     <option>BSPO</option>
                 </select>
                 <br>
-                <button (click)="saveChanges()" class="button">Save</button>
+                <div style="display: flex;">
+                    <button (click)="saveChanges()" class="button">Save</button>
+                    <button style="width:auto;;margin-left: 20px;" (click)="changeRole = false" class="clickable">Cancel</button>
+                </div>
             </div>
             <hr>
         </div>

@@ -3,7 +3,7 @@ import { Subscription }  from 'rxjs';
 import { UtilityService }  from '../../utility.service'
 import Swal from 'sweetalert2'
 
-
+ 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -26,6 +26,10 @@ export class SidebarComponent implements OnInit {
 		this.sidebarColor = this.UtilityService.getImage().subscribe(image => {
 			this.sidebar.backgroundImage = this.formatImage(image)
 		})
+	}
+
+	ngOnInit(): void {
+		this.sidebarListener()		
 	}
  
 	sidebarColor : Subscription
@@ -73,22 +77,142 @@ export class SidebarComponent implements OnInit {
 			color = "var(--violet1)"
 		}
 		else{
-			color = "var(--blue)"
+			color = "var(--blue1)"
 		}	
 		return color
 	}
 	
-	ngOnInit(): void {
-		this.sidebarListener()		
+
+	
+
+
+	subscription : Subscription
+	
+	icons = {
+		Administrators:false,
+		AdminAccounts:false,
+		Logs:false,
+
+		Home:true,
+		Statistics:false,
+		CMS:false,
+
+		Profiling:false,
+
+		CPDB:false,
+		Births:false,
+		Deaths:false,
+		InMig:false,
+		OutMig:false,
+		Marriages:false,
+
+	}
+
+	
+	removeActives(){
+		this.
+		icons = {
+			Administrators:false,
+			AdminAccounts:false,
+			Logs:false,
+
+			Home:false,
+			Statistics:false,
+			CMS:false,
+
+			Profiling:false,
+
+			CPDB:false,
+			Births:false,
+			Deaths:false,
+			InMig:false,
+			OutMig:false,
+			Marriages:false,
+
+			
+		}
+	}
+
+	active(classname){	
+		this.removeActives()
+		if(classname == "Home"){
+			this.icons.Home = true
+		}
+		else if(classname == "Statistics"){
+			this.icons.Statistics = true
+		}
+		else if(classname == "CMS"){
+			this.icons.CMS = true
+			classname = "Content Management"
+		}
+
+		else if(classname == "CPDB"){
+			this.icons.CPDB = true
+			classname = "Add CPDP Record"
+		}
+		else if(classname == "Deaths"){
+			this.icons.Deaths = true
+			classname = "Add Death Record"
+		}
+		else if(classname == "Births"){
+			this.icons.Births = true
+			classname = "Add Birth Record"
+		}
+		else if(classname == "InMig"){
+			this.icons.InMig = true
+			classname = "Add In-Migration Record"
+		}
+		else if(classname == "OutMig"){
+			this.icons.OutMig = true
+			classname = "Add Out-Migration Record"
+		}
+		else if(classname == "Marriages"){
+			this.icons.Marriages = true
+			classname = "Add Marriage Record"
+		}
+
+		else if (classname == "Profiling"){
+			this.icons.Profiling = true
+			classname = "Records"
+		}
+
+		else if ( classname == "Administrators"){
+			this.icons.Administrators = true
+			classname = "New Administrator"
+		}
+
+		else if ( classname == "Admin Accounts"){
+			this.icons.AdminAccounts = true
+			classname = "Admin Accounts"
+		}
+		else if ( classname == "Logs"){
+			this.icons.Logs = true
+		}
+
+		this.UtilityService.setNavText(classname)
 	}
 
 	sidebarListener(){
 		let url = document.createElement('a');
 		url.href = window.location.href;
 		const path = url.pathname	
-		
 
-		if(path == '/home'){
+		if(path == '/admin-accounts'){
+			this.UtilityService.setSidebarItemasActive('Admin Accounts')
+		}
+		else if(path == '/logs'){
+			this.UtilityService.setSidebarItemasActive('Logs')		
+		}
+
+		else if(path == '/new-admin'){
+			this.UtilityService.setSidebarItemasActive('Administrators')		
+		}
+
+
+
+
+
+		else if(path == '/home'){
 			this.UtilityService.setSidebarItemasActive('Home')
 		}
 		else if(path == '/statistics'){
@@ -141,97 +265,12 @@ export class SidebarComponent implements OnInit {
 	
 	}
 
-
+	
 	findRoute(){
 		this.subscription = this.UtilityService.getActiveItemonSidebar().subscribe(data =>{
 			this.active(data)	
 		})
 	}
 
-	subscription : Subscription
-	
-	icons = {
-		Home:true,
-		Statistics:false,
-		CMS:false,
 
-		Profiling:false,
-
-		CPDB:false,
-		Births:false,
-		Deaths:false,
-		InMig:false,
-		OutMig:false,
-		Marriages:false,
-
-		Administrators:false,
-		AdminAccounts:false
-	}
-
-	active(classname){	
-		this.removeActives()
-		if(classname == "Home"){
-			this.icons.Home = true
-		}
-		else if(classname == "Statistics"){
-			this.icons.Statistics = true
-		}
-		else if(classname == "CMS"){
-			this.icons.CMS = true
-			classname = "Content Management"
-		}
-
-		else if(classname == "CPDB"){
-			this.icons.CPDB = true
-			classname = "Add CPDP Record"
-		}
-		else if(classname == "Deaths"){
-			this.icons.Deaths = true
-			classname = "Add Death Record"
-		}
-		else if(classname == "Births"){
-			this.icons.Births = true
-			classname = "Add Birth Record"
-		}
-		else if(classname == "InMig"){
-			this.icons.InMig = true
-			classname = "Add In-Migration Record"
-		}
-		else if(classname == "OutMig"){
-			this.icons.OutMig = true
-			classname = "Add Out-Migration Record"
-		}
-		else if(classname == "Marriages"){
-			this.icons.Marriages = true
-			classname = "Add Marriage Record"
-		}
-
-		else if (classname == "Profiling"){
-			this.icons.Profiling = true
-			classname = "Records"
-		}
-
-		this.UtilityService.setNavText(classname)
-	}
-
-	removeActives(){
-		this.
-		icons = {
-			Home:false,
-			Statistics:false,
-			CMS:false,
-
-			Profiling:false,
-
-			CPDB:false,
-			Births:false,
-			Deaths:false,
-			InMig:false,
-			OutMig:false,
-			Marriages:false,
-
-			Administrators:false,
-			AdminAccounts:false
-		}
-	}
 }

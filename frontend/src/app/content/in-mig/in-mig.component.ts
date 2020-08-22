@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InMigService } from './in-mig.service'
 
 @Component({
   selector: 'app-in-mig',
@@ -7,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InMigComponent implements OnInit {
 
-  constructor() { }
+	constructor(
+		private InMigService : InMigService
+	) { }
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {
+	}
 
 	monthOfMigrations = [
 		'January',
@@ -129,6 +132,57 @@ export class InMigComponent implements OnInit {
         'actual_place_of_origin':'',
         'place_of_origin':'',
         'reasons_for_in_migrating':'',
+	}
+
+	invalid = {
+		'sorting_number':false,
+        'municipality':false,
+        'barangay':false,
+        'total_cases':false,
+        'case_number':false,
+        'month':false,
+        'name':false,
+        'sex':false,
+        'date_of_birth':false,
+        'age':false,
+        'age_in_months':false,
+        'age_bracket':false,
+        'completed_educational_attainment':false,
+        'actual_occupation':false,
+        'major_occupation':false,
+        'monthly_income':false,
+        'skills_acquired':false,
+        'actual_place_of_origin':false,
+        'place_of_origin':false,
+        'reasons_for_in_migrating':false,
+	}
+
+	isLoading = false
+	save(){
+		this.isLoading = true
+		let hasError = false
+		for(let key in this.fields){
+			if( this.fields[key] == '' || this.fields[key] == null){
+				this.invalid[key] = true
+				hasError = true
+			
+			}
+			else{
+				this.invalid[key] = false
+			}
+		}
+		if(!hasError){
+			// this.fields.sorting_number = this.fields.sorting_number.toString()
+			// this.fields.household_number = this.fields.household_number.toString()
+			 
+			this.InMigService.saveInMigrationRecord(this.fields).subscribe(data => {
+				console.log(data)
+			})
+			this.isLoading = false
+		}else{			
+			this.isLoading = false
+			
+		}	
 	}
 
 }

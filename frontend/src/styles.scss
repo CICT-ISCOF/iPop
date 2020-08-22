@@ -4,11 +4,27 @@
     @import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
     @import '~ag-table/scss/style.scss';
     @include ag-table-core();
+    @import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+    @import "../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
+    @import "../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material-mixin.scss";
+    @import "../node_modules/ag-grid-community/src/styles/ag-theme-alpine-dark/sass/ag-theme-alpine-dark-mixin.scss";
+    .ag-theme-alpine {
+        @include ag-theme-alpine();
+    }
+    
+    .ag-theme-material {
+        @include ag-theme-material();
+    }
+    
+    .ag-theme-alpine-dark {
+        @include ag-theme-alpine-dark();
+    }
+    
     // ------------------------------------------------------------------------
     html {
         --dark1: linear-gradient(180deg, gray, #111);
         --blue1: linear-gradient(#149EF8, rgba(64, 145, 255, 0.7));
-        --green1: linear-gradient(#033A11, rgba(109, 192, 48, 0.7));
+        --green1: linear-gradient(#00B54A, rgba(109, 192, 48, 0.7));
         --orange1: linear-gradient(rgb(255, 165, 52) 0px, rgba(236, 22, 87, 0.7));
         --red1: linear-gradient(rgb(251, 64, 75) 0px, rgba(187, 5, 2, 0.7));
         --violet1: linear-gradient(rgb(147, 104, 233) 0px, rgba(148, 59, 234, 0.7));
@@ -16,7 +32,7 @@
     
     html[data-theme="light"] {
         --bg: white;
-        --bg1: #F3F7FA;
+        --bg1: #EEF0F2;
         --inputBg: #E3E5E8;
         --contrast: linear-gradient(45deg, #149EF8, #7A6BEC);
         --shadow: 0 2px 5px 0 rgba(150, 150, 150, 0.16), 0 2px 5px 0 rgba(50, 50, 150, 0.12);
@@ -74,6 +90,17 @@
     
     .heading {
         font-size: 20px;
+    }
+    
+    .ag-text-field-input {
+        height: 30px;
+        width: 100%;
+        padding: 5px 10px;
+        font-size: 13px;
+        border-radius: 4px;
+        color: var(--bg) !important;
+        color: var(--colorPrimary) !important;
+        margin-top: 10px;
     }
     
     .form-control,
@@ -138,7 +165,7 @@
     
     .button {
         padding: 10px 12px;
-        border-radius: 6px;
+        border-radius: 2px;
         color: white;
         box-shadow: var(--shadow);
         background: var(--contrast);

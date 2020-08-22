@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BirthsService } from './births.service'
 
 @Component({
   selector: 'app-births',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BirthsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+	  private BirthsService : BirthsService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -94,7 +97,7 @@ export class BirthsComponent implements OnInit {
 		'Common-Law/Live-in',
 		'Separated/Solo Parent',
 	]
-
+ 
 	fields = {
 		'sorting_number':'',
 		'municipality':'',
@@ -114,6 +117,55 @@ export class BirthsComponent implements OnInit {
 		'religion':'',
 		'mother_marital_status':'',
 		'registered_lcr':'',
+	}
+ 
+	invalid = {
+		'sorting_number':false,
+		'municipality':false,
+		'barangay':false,
+		'total_cases':false,
+		'number_of_cases':false,
+		'household_number':false,
+		'month':false,
+		'name':false,
+		'sex':false,
+		'birth_order':false,
+		'place_of_birth':false,
+		'name_of_mother':false,
+		'age_of_mother':false,
+		'age_bracket_of_mother':false,
+		'occupation_of_mother':false,
+		'religion':false,
+		'mother_marital_status':false,
+		'registered_lcr':false,
+	}
+
+	isLoading = false
+	save(){
+		this.isLoading = true
+		let hasError = false
+		for(let key in this.fields){
+			if( this.fields[key] == '' || this.fields[key] == null){
+				this.invalid[key] = true
+				hasError = true
+				alert(JSON.stringify(this.fields[key]) + 'amo ni ang lantawa ho ' + key)
+			}
+			else{
+				this.invalid[key] = false
+			}
+		}
+		if(!hasError){
+			// this.fields.sorting_number = this.fields.sorting_number.toString()
+			// this.fields.household_number = this.fields.household_number.toString()
+			 
+			this.BirthsService.saveBirthRecord(this.fields).subscribe(data => {
+				console.log(data)
+			})
+			this.isLoading = false
+		}else{			
+			this.isLoading = false
+			
+		}	
 	}
 
 }

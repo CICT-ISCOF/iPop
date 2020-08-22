@@ -51,7 +51,7 @@ export class StatisticsComponent implements OnInit {
 		],
 				
 		birthAndDeath:[
-			['Age', 'Deaths', 'Births'],
+			['Age', 'Births', 'Deaths'],
 			['January',54,-54],
 			['Feburary',254,-54],
 			['March',54,-54],

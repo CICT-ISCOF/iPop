@@ -17,6 +17,8 @@ export class CpdbComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
+	isLoading = false
+
 	select = {
 		houseHoldSizeBrackets:[
 			'1-3',
@@ -537,7 +539,7 @@ export class CpdbComponent implements OnInit {
 			
 		// }
 
-	
+		this.isLoading = true
 		this.field['4ps_beneficiary_household'] = this.field['forps_beneficiary_household']	
 		this.field['specify_cooking_fuel'] = this.field.type_of_cooking_fuel
 		this.field['specify_usual_occupation'] = '5'
@@ -546,6 +548,7 @@ export class CpdbComponent implements OnInit {
 		
 		this.CpdbService.saveCPDPB(this.field).subscribe(data => {
 			this.UtilityService.setAlert('Record has been saved','success')
+			this.isLoading = false
 		})
 		
 	}
