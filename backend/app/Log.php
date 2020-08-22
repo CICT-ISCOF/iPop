@@ -48,10 +48,12 @@ class Log extends Model
             'ip_address' => $ip,
             'user_agent' => $user_agent,
             'action' => $action,
-            'info' => file_get_contents("http://ipinfo.io/{$ip}/json"),
+            'info' => geoip()->getLocation($ip)->toArray(),
         ];
 
         NativeLog::info(json_encode($data));
+
+        $data['info'] = json_encode($data['info']);
 
         return self::create($data);
     }
