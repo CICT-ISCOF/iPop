@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\InMigration;
 use App\Log;
+use App\Record;
 use App\Http\Requests\InMigrationRequest;
 use App\Http\Requests\InMigrationUpdateRequest;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class InMigrationController extends Controller
      */
     public function index()
     {
-        return InMigration::paginate(10);
+        return InMigration::with('record')->paginate(10);
     }
 
     /**
@@ -29,18 +30,25 @@ class InMigrationController extends Controller
     public function store(InMigrationRequest $request)
     {
         Log::record('Created an In-Migration record.');
-        return InMigration::create($request->validated());
+        $inMigration = InMigration::create($request->validated());
+        $record = new Record([
+            'user_id' => $request->user()->id,
+            'status' => 'Pending'
+        ]);
+        $inMigration->record()->save($record);
+        $inMigration->record = $record;
+        return $inMigration;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\InMigration  $inMigration
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(InMigration $inMigration)
+    public function show($id)
     {
-        return $inMigration;
+        return InMigration::with('record')->findOrFail($id);
     }
 
     /**
@@ -56,6 +64,9 @@ class InMigrationController extends Controller
     ) {
         Log::record('Updated an In-Migration record.');
         $inMigration->update($request->validated());
+        $inMigration->record->update([
+            'status' => 'Requires Revalidation'
+        ]);
         return $inMigration;
     }
 

@@ -14,7 +14,7 @@ class CreateCPDBSTable extends Migration
     public function up()
     {
         Schema::create('c_p_d_b_s', function (Blueprint $table) {
-            $table->id()->nullable();
+            $table->id();
             $table->string('sorting_number')->nullable();
             $table->string('municipality')->nullable();
             $table->string('barangay')->nullable();

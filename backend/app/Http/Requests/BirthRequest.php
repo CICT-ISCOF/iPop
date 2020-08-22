@@ -25,12 +25,12 @@ class BirthRequest extends FormRequest
     public function rules()
     {
         return [
-            'sorting_number' => ['required', 'string', 'max:255'],
-            'municipality' => ['required', 'string', 'max:255'],
-            'barangay' => ['required', 'string', 'max:255'],
+            'sorting_number' => ['required', 'max:255'],
+            'municipality' => ['required', 'max:255'],
+            'barangay' => ['required', 'max:255'],
             'total_cases' => ['required', 'numeric'],
             'number_of_cases' => ['required', 'numeric'],
-            'household_number' => ['required', 'string', 'max:255'],
+            'household_number' => ['required', 'max:255'],
             'month' => [
                 'required',
                 Rule::in([
@@ -48,7 +48,7 @@ class BirthRequest extends FormRequest
                     'December',
                 ]),
             ],
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'max:255'],
             'sex' => ['required', Rule::in(['Male', 'Female'])],
             'birth_order' => [
                 'required',
@@ -60,8 +60,8 @@ class BirthRequest extends FormRequest
                     'Fifth and up',
                 ]),
             ],
-            'place_of_birth' => ['required', 'string', 'max:255'],
-            'name_of_mother' => ['required', 'string', 'max:255'],
+            'place_of_birth' => ['required', 'max:255'],
+            'name_of_mother' => ['required', 'max:255'],
             'age_of_mother' => ['required', 'numeric', 'max:255'],
             'age_bracket_of_mother' => [
                 'required',
@@ -77,10 +77,11 @@ class BirthRequest extends FormRequest
                     '50-54',
                 ]),
             ],
-            'occupation_of_mother' => ['required', 'string', 'max:255'],
-            'religion' => ['required', 'string', 'max:255'],
-            'mother_marital_status' => ['required', 'string', 'max:255'],
-            'registered_lcr' => ['required', 'boolean'],
+            'occupation_of_mother' => ['required', 'max:255'],
+            'mothers_actual_work' => ['required', 'max:255'],
+            'religion' => ['required', 'max:255'],
+            'mother_marital_status' => ['required', 'max:255'],
+            'registered_lcr' => ['required'],
         ];
     }
 
@@ -88,18 +89,14 @@ class BirthRequest extends FormRequest
     {
         return [
             'sorting_number.required' => 'Please provide a Sorting Number',
-            'sorting_number.string' => 'Sorting Number must be a string.',
             'sorting_number.max:255' =>
                 'Sorting Number must not exceed 255 characters.',
             'municipality.required' => 'Please provide a Municipality',
-            'municipality.string' => 'Municipality must be a string.',
             'municipality.max:255' =>
                 'Municipality must not exceed 255 characters.',
             'barangay.required' => 'Please provide a Barangay',
-            'barangay.string' => 'Barangay must be a string.',
             'barangay.max:255' => 'Barangay must not exceed 255 characters.',
             'household_number.required' => 'Please provide a Household Number',
-            'household_number.string' => 'Household Number must be a string.',
             'household_number.max:255' =>
                 'Household Number must not exceed 255 characters.',
             'number_of_cases.required' => 'Please provide the number of cases.',
@@ -111,7 +108,6 @@ class BirthRequest extends FormRequest
             'month.in' =>
                 'The month provided must be one of the following: January, February, March, April, May, June, July, August, September, October, November or December.',
             'name.required' => 'Please provide a Name',
-            'name.string' => 'Name must be a string.',
             'name.max:255' => 'Name must not exceed 255 characters.',
         ];
     }

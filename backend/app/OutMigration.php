@@ -28,4 +28,16 @@ class OutMigration extends Model
         'place_of_origin',
         'reasons_for_out_migrating',
     ];
+
+    protected static function booted()
+    {
+        static::deleting(function ($outMigration) {
+            $outMigration->record->delete();
+        });
+    }
+
+    public function record()
+    {
+        return $this->morphOne(Record::class, 'recordable');
+    }
 }

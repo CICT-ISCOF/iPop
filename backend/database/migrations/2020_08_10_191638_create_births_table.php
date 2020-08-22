@@ -59,9 +59,10 @@ class CreateBirthsTable extends Migration
                 '50-54',
             ]);
             $table->string('occupation_of_mother');
+            $table->string('mothers_actual_work');
             $table->string('religion');
             $table->string('mother_marital_status');
-            $table->boolean('registered_lcr');
+            $table->string('registered_lcr');
             $table->timestamps();
         });
     }

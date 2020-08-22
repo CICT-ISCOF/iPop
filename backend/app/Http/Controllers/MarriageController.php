@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Marriage;
 use App\Log;
+use App\Record;
 use App\Http\Requests\MarriageRequest;
 use App\Http\Requests\MarriageUpdateRequest;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class MarriageController extends Controller
      */
     public function index()
     {
-        return Marriage::paginate(10);
+        return Marriage::with('record')->paginate(10);
     }
 
     /**
@@ -29,18 +30,25 @@ class MarriageController extends Controller
     public function store(MarriageRequest $request)
     {
         Log::record('Created a Marriage record.');
-        return Marriage::create($request->validate());
+        $marriage = Marriage::create($request->validate());
+        $record = new Record([
+            'user_id' => $request->user()->id,
+            'status' => 'Pending'
+        ]);
+        $marriage->record()->save($record);
+        $marriage->record = $record;
+        return $marriage;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Marriage  $marriage
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Marriage $marriage)
+    public function show($id)
     {
-        return $marriage;
+        return Marriage::with('record')->findOrFail($id);
     }
 
     /**
@@ -54,6 +62,9 @@ class MarriageController extends Controller
     {
         Log::record('Updated a Marriage record.');
         $marriage->update($request->validated());
+        $marriage->record->update([
+            'status' => 'Requires Revalidation'
+        ]);
         return $marriage;
     }
 

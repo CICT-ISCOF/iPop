@@ -25,12 +25,12 @@ class BirthUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'sorting_number' => ['nullable', 'string', 'max:255'],
-            'municipality' => ['nullable', 'string', 'max:255'],
-            'barangay' => ['nullable', 'string', 'max:255'],
+            'sorting_number' => ['nullable', 'max:255'],
+            'municipality' => ['nullable', 'max:255'],
+            'barangay' => ['nullable', 'max:255'],
             'total_cases' => ['nullable', 'numeric'],
             'number_of_cases' => ['nullable', 'numeric'],
-            'household_number' => ['nullable', 'string', 'max:255'],
+            'household_number' => ['nullable', 'max:255'],
             'month' => [
                 'nullable',
                 Rule::in([
@@ -48,7 +48,7 @@ class BirthUpdateRequest extends FormRequest
                     'December',
                 ]),
             ],
-            'name' => ['nullable', 'string', 'max:255'],
+            'name' => ['nullable', 'max:255'],
             'sex' => ['nullable', Rule::in(['Male', 'Female'])],
             'birth_order' => [
                 'nullable',
@@ -60,8 +60,8 @@ class BirthUpdateRequest extends FormRequest
                     'Fifth and up',
                 ]),
             ],
-            'place_of_birth' => ['nullable', 'string', 'max:255'],
-            'name_of_mother' => ['nullable', 'string', 'max:255'],
+            'place_of_birth' => ['nullable', 'max:255'],
+            'name_of_mother' => ['nullable', 'max:255'],
             'age_of_mother' => ['nullable', 'numeric', 'max:255'],
             'age_bracket_of_mother' => [
                 'nullable',
@@ -77,10 +77,11 @@ class BirthUpdateRequest extends FormRequest
                     '50-54',
                 ]),
             ],
-            'occupation_of_mother' => ['nullable', 'string', 'max:255'],
-            'religion' => ['nullable', 'string', 'max:255'],
-            'mother_marital_status' => ['nullable', 'string', 'max:255'],
-            'registered_lcr' => ['nullable', 'boolean'],
+            'occupation_of_mother' => ['nullable', 'max:255'],
+            'mothers_actual_work' => ['nullable', 'max:255'],
+            'religion' => ['nullable', 'max:255'],
+            'mother_marital_status' => ['nullable', 'max:255'],
+            'registered_lcr' => ['nullable'],
         ];
     }
 }

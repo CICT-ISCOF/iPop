@@ -25,12 +25,12 @@ class DeathUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'sorting_number' => ['nullable', 'string', 'max:255'],
-            'municipality' => ['nullable', 'string', 'max:255'],
-            'barangay' => ['nullable', 'string', 'max:255'],
+            'sorting_number' => ['nullable', 'max:255'],
+            'municipality' => ['nullable', 'max:255'],
+            'barangay' => ['nullable', 'max:255'],
             'total_cases' => ['nullable', 'numeric'],
             'number_of_cases' => ['nullable', 'numeric'],
-            'household_number' => ['nullable', 'string', 'max:255'],
+            'household_number' => ['nullable', 'max:255'],
             'month' => [
                 'nullable',
                 Rule::in([
@@ -48,7 +48,7 @@ class DeathUpdateRequest extends FormRequest
                     'December',
                 ]),
             ],
-            'name' => ['nullable', 'string', 'max:255'],
+            'name' => ['nullable', 'max:255'],
             'sex' => ['nullable', Rule::in(['Male', 'Female'])],
             'age_at_death' => ['nullable', 'numeric', 'max:255'],
             'age_bracket' => [
@@ -74,8 +74,8 @@ class DeathUpdateRequest extends FormRequest
                     '80 and above',
                 ]),
             ],
-            'place_of_death' => ['nullable', 'string', 'max:255'],
-            'registered_lcr' => ['nullable', 'boolean'],
+            'place_of_death' => ['nullable', 'max:255'],
+            'registered_lcr' => ['nullable'],
         ];
     }
 }

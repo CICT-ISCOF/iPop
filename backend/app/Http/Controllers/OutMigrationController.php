@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\OutMigration;
 use App\Log;
+use App\Record;
 use App\Http\Requests\OutMigrationRequest;
 use App\Http\Requests\OutMigrationUpdateRequest;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class OutMigrationController extends Controller
      */
     public function index()
     {
-        return OutMigration::paginate(10);
+        return OutMigration::with('record')->paginate(10);
     }
 
     /**
@@ -29,18 +30,24 @@ class OutMigrationController extends Controller
     public function store(OutMigrationRequest $request)
     {
         Log::record('Created an Out-Migration record.');
-        return OutMigration::create($request->validated());
+        $outMigration = OutMigration::create($request->validated());
+        $record = new Record([
+            'user_id' => $request->user()->id,
+            'status' => 'Pending'
+        ]);
+        $outMigration->record()->save($record);
+        return $outMigration;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\OutMigration  $outMigration
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(OutMigration $outMigration)
+    public function show($id)
     {
-        return $outMigration;
+        return OutMigration::with('record')->findOrFail($id);
     }
 
     /**
@@ -56,6 +63,9 @@ class OutMigrationController extends Controller
     ) {
         Log::record('Updated an Out-Migration record.');
         $outMigration->update($request->validated());
+        $outMigration->record->update([
+            'status' => 'Requires Revalidation'
+        ]);
         return $outMigration;
     }
 

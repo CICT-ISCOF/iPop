@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Death;
 use App\Log;
+use App\Record;
 use App\Http\Requests\DeathRequest;
 use App\Http\Requests\DeathUpdateRequest;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class DeathController extends Controller
      */
     public function index()
     {
-        return Death::paginate(10);
+        return Death::with('record')->paginate(10);
     }
 
     /**
@@ -29,18 +30,25 @@ class DeathController extends Controller
     public function store(DeathRequest $request)
     {
         Log::record('Created a Death record.');
-        return Death::create($request->validated());
+        $death = Death::create($request->validated());
+        $record = new Record([
+            'user_id' => $request->user()->id,
+            'status' => 'Pending'
+        ]);
+        $death->record()->save($record);
+        $death->record = $record;
+        return $death;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Death  $death
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Death $death)
+    public function show($id)
     {
-        return $death;
+        return Death::with('record')->findOrFail($id);
     }
 
     /**
@@ -54,6 +62,9 @@ class DeathController extends Controller
     {
         Log::record('Updated a Death record.');
         $death->update($request->validated());
+        $death->record->update([
+            'status' => 'Requires Revalidation'
+        ]);
         return $death;
     }
 

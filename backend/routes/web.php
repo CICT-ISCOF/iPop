@@ -15,7 +15,8 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     });
 
     Route::apiResource('users', 'UserController');
-    Route::get('/search', 'SearchController@search');
+    Route::get('/search/users', 'SearchController@users');
+    Route::get('/search/records', 'SearchController@records');
 
     // CMS
     Route::apiResource('links', 'LinkController');
@@ -48,6 +49,7 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::apiResource('out-migrations', 'OutMigrationController');
     Route::apiResource('marriages', 'MarriageController');
     Route::apiResource('cpdb', 'CPDBController');
+    Route::apiResource('records', 'RecordController')->except(['store', 'destroy']);
 });
 
 // Public Files

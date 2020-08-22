@@ -25,12 +25,12 @@ class MarriageRequest extends FormRequest
     public function rules()
     {
         return [
-            'sorting_number' => ['required', 'string', 'max:255'],
-            'municipality' => ['required', 'string', 'max:255'],
-            'barangay' => ['required', 'string', 'max:255'],
+            'sorting_number' => ['required', 'max:255'],
+            'municipality' => ['required', 'max:255'],
+            'barangay' => ['required', 'max:255'],
             'total_cases' => ['required', 'numeric'],
-            'household_number' => ['required', 'string', 'max:255'],
-            'case_number' => ['required', 'string', 'max:255'],
+            'household_number' => ['required', 'max:255'],
+            'case_number' => ['required', 'max:255'],
             'month' => [
                 'required',
                 Rule::in([
@@ -48,7 +48,7 @@ class MarriageRequest extends FormRequest
                     'December',
                 ]),
             ],
-            'couple_name' => ['required', 'string', 'max:255'],
+            'couple_name' => ['required', 'max:255'],
             'sex' => ['required', Rule::in(['Male', 'Female'])],
             'age_bracket' => [
                 'required',
@@ -73,17 +73,11 @@ class MarriageRequest extends FormRequest
                     '80 and above',
                 ]),
             ],
-            'address' => ['required', 'string', 'max:255'],
-            'wedding_ceremony_type' => [
-                'required',
-                Rule::in(['Church', 'Civil', 'Tribal Rites']),
-            ],
-            'residence_address' => ['required', 'string', 'max:255'],
-            'solemnizing_officer' => [
-                'required',
-                Rule::in(['Judge', 'Mayor', 'Priest/Pastor/Imam']),
-            ],
-            'registered_lcr' => ['required', 'boolean'],
+            'address' => ['required', 'max:255'],
+            'wedding_ceremony_type' => ['required', 'max:255'],
+            'residence_address' => ['required', 'max:255'],
+            'solemnizing_officer' => ['required', 'max:255'],
+            'registered_lcr' => ['required', 'max:255'],
         ];
     }
 }

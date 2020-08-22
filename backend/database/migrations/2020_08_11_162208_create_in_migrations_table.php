@@ -20,6 +20,7 @@ class CreateInMigrationsTable extends Migration
             $table->string('barangay');
             $table->bigInteger('total_cases');
             $table->string('case_number');
+            $table->string('household_number');
             $table->enum('month', [
                 'January',
                 'February',

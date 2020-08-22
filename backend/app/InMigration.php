@@ -12,6 +12,7 @@ class InMigration extends Model
         'barangay',
         'total_cases',
         'case_number',
+        'household_number',
         'month',
         'name',
         'sex',
@@ -28,4 +29,16 @@ class InMigration extends Model
         'place_of_origin',
         'reasons_for_in_migrating',
     ];
+
+    protected static function booted()
+    {
+        static::deleting(function ($inMigration) {
+            $inMigration->record->delete();
+        });
+    }
+
+    public function record()
+    {
+        return $this->morphOne(Record::class, 'recordable');
+    }
 }

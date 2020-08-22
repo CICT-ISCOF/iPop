@@ -23,4 +23,16 @@ class Marriage extends Model
         'solemnizing_officer',
         'registered_lcr',
     ];
+
+    protected static function booted()
+    {
+        static::deleting(function ($marriage) {
+            $marriage->record->delete();
+        });
+    }
+
+    public function record()
+    {
+        return $this->morphOne(Record::class, 'recordable');
+    }
 }

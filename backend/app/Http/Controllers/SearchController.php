@@ -4,13 +4,52 @@ namespace App\Http\Controllers;
 
 use App\Log;
 use App\User;
+use App\Birth;
+use App\Death;
+use App\CPDB;
+use App\InMigration;
+use App\OutMigration;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function search(Request $request)
+
+    public function users(Request $request)
     {
-        Log::record('User searched for: ' . $request->input('value'));
-        return User::search($request->input('field'), $request->input('value'));
+        $query = $request->input('query');
+        Log::record('User searched for users. Query: ' . $query);
+        return User::search($query);
+    }
+
+    public function records(Request $request)
+    {
+        $query = $request->input('query');
+        Log::record('User searched for records. Query: ' . $query);
+        $type = $request->input('type');
+        $types = ['Birth', 'Death', 'CPDB', 'InMigration', 'OutMigration'];
+        if(!in_array($type, $types))
+        {
+            return response([
+                'errors' => [
+                    'query' => ['Invalid record type. Valid types are '.implode(', ', $types)]
+                ]
+            ]);
+        }
+        $model = new $type();
+        $model = $model->with('record');
+        $count = 0;
+        foreach($model->getFillable() as $key)
+        {
+            if($count === 0)
+            {
+                $model = $model->where($key, 'LIKE', "%{$query}%");
+            }
+            else
+            {
+                $model = $model->orWhere($key, 'LIKE', "%{$query}%");
+            }
+            $count++;
+        }
+        return $model->paginate(10);
     }
 }

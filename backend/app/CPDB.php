@@ -65,4 +65,17 @@ class CPDB extends Model
         'access_to_infotech',
         '4ps_beneficiary_household',
     ];
+
+    protected static function booted()
+    {
+        static::deleting(function ($cpdb) {
+            $cpdb->record->delete();
+        });
+    }
+
+
+    public function record()
+    {
+        return $this->morphOne(Record::class, 'recordable');
+    }
 }

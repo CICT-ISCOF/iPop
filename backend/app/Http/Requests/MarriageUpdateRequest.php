@@ -25,12 +25,12 @@ class MarriageUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'sorting_number' => ['nullable', 'string', 'max:255'],
-            'municipality' => ['nullable', 'string', 'max:255'],
-            'barangay' => ['nullable', 'string', 'max:255'],
+            'sorting_number' => ['nullable', 'max:255'],
+            'municipality' => ['nullable', 'max:255'],
+            'barangay' => ['nullable', 'max:255'],
             'total_cases' => ['nullable', 'numeric'],
-            'household_number' => ['nullable', 'string', 'max:255'],
-            'case_number' => ['nullable', 'string', 'max:255'],
+            'household_number' => ['nullable', 'max:255'],
+            'case_number' => ['nullable', 'max:255'],
             'month' => [
                 'nullable',
                 Rule::in([
@@ -48,7 +48,7 @@ class MarriageUpdateRequest extends FormRequest
                     'December',
                 ]),
             ],
-            'couple_name' => ['nullable', 'string', 'max:255'],
+            'couple_name' => ['nullable', 'max:255'],
             'sex' => ['nullable', Rule::in(['Male', 'Female'])],
             'age_bracket' => [
                 'nullable',
@@ -73,17 +73,11 @@ class MarriageUpdateRequest extends FormRequest
                     '80 and above',
                 ]),
             ],
-            'address' => ['nullable', 'string', 'max:255'],
-            'wedding_ceremony_type' => [
-                'nullable',
-                Rule::in(['Church', 'Civil', 'Tribal Rites']),
-            ],
-            'residence_address' => ['nullable', 'string', 'max:255'],
-            'solemnizing_officer' => [
-                'nullable',
-                Rule::in(['Judge', 'Mayor', 'Priest/Pastor/Imam']),
-            ],
-            'registered_lcr' => ['nullable', 'boolean'],
+            'address' => ['nullable', 'max:255'],
+            'wedding_ceremony_type' => ['nullable', 'max:255'],
+            'residence_address' => ['nullable', 'max:255'],
+            'solemnizing_officer' => ['nullable', 'max:255'],
+            'registered_lcr' => ['nullable', 'max:255'],
         ];
     }
 }

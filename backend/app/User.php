@@ -175,21 +175,10 @@ class User extends Authenticatable
      * @param string $value
      * @return \Illuminate\Http\Response
      */
-    public static function search($field, $value)
+    public static function search($query)
     {
-        if (!in_array($field, ['username', 'fullname', 'role'])) {
-            return response(
-                [
-                    'errors' => [
-                        'query' => [
-                            'Only username, fullname and role fields are searchable.',
-                        ],
-                    ],
-                ],
-                400
-            );
-        }
-        $collection = self::where($field, 'LIKE', "%{$value}%")
+        $collection = self::where('username', 'LIKE', "%{$query}%")
+            ->orWhere('fullname', 'LIKE', "%{$query}%")
             ->orderBy('role')
             ->get();
         if ($collection->isEmpty()) {

@@ -22,8 +22,21 @@ class Birth extends Model
         'age_of_mother',
         'age_bracket_of_mother',
         'occupation_of_mother',
+        'mothers_actual_work',
         'religion',
         'mother_marital_status',
         'registered_lcr',
     ];
+
+    protected static function booted()
+    {
+        static::deleting(function ($birth) {
+            $birth->record->delete();
+        });
+    }
+
+    public function record()
+    {
+        return $this->morphOne(Record::class, 'recordable');
+    }
 }

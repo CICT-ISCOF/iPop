@@ -58,18 +58,10 @@ class CreateMarriagesTable extends Migration
                 '80 and above',
             ]);
             $table->string('address');
-            $table->enum('wedding_ceremony_type', [
-                'Church',
-                'Civil',
-                'Tribal Rites',
-            ]);
+            $table->string('wedding_ceremony_type');
             $table->string('residence_address');
-            $table->enum('solemnizing_officer', [
-                'Judge',
-                'Mayor',
-                'Priest/Pastor/Imam',
-            ]);
-            $table->boolean('registered_lcr');
+            $table->string('solemnizing_officer');
+            $table->string('registered_lcr');
             $table->timestamps();
         });
     }

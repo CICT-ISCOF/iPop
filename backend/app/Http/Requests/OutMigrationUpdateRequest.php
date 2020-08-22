@@ -25,11 +25,11 @@ class OutMigrationUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'sorting_number' => ['nullable', 'string', 'max:255'],
-            'municipality' => ['nullable', 'string', 'max:255'],
-            'barangay' => ['nullable', 'string', 'max:255'],
+            'sorting_number' => ['nullable', 'max:255'],
+            'municipality' => ['nullable', 'max:255'],
+            'barangay' => ['nullable', 'max:255'],
             'total_cases' => ['nullable', 'numeric'],
-            'case_number' => ['nullable', 'string', 'max:255'],
+            'case_number' => ['nullable', 'max:255'],
             'month' => [
                 'nullable',
                 Rule::in([
@@ -47,11 +47,11 @@ class OutMigrationUpdateRequest extends FormRequest
                     'December',
                 ]),
             ],
-            'name' => ['nullable', 'string', 'max:255'],
+            'name' => ['nullable', 'max:255'],
             'sex' => ['nullable', Rule::in(['Male', 'Female'])],
             'date_of_birth' => ['nullable', 'date'],
             'age' => ['nullable', 'numeric', 'max:255'],
-            'age_in_months' => ['nullable', 'string', 'max:255'],
+            'age_in_months' => ['nullable', 'max:255'],
             'age_bracket' => [
                 'nullable',
                 Rule::in([
@@ -77,16 +77,15 @@ class OutMigrationUpdateRequest extends FormRequest
             ],
             'completed_educational_attainment' => [
                 'nullable',
-                'string',
                 'max:255',
             ],
-            'actual_occupation' => ['nullable', 'string', 'max:255'],
-            'major_occupation' => ['nullable', 'string', 'max:255'],
-            'monthly_income' => ['nullable', 'string', 'max:255'],
-            'skills_acquired' => ['nullable', 'string'],
-            'actual_place_of_origin' => ['nullable', 'string', 'max:255'],
-            'place_of_origin' => ['nullable', 'string', 'max:255'],
-            'reasons_for_out_migrating' => ['nullable', 'string', 'max:255'],
+            'actual_occupation' => ['nullable', 'max:255'],
+            'major_occupation' => ['nullable', 'max:255'],
+            'monthly_income' => ['nullable', 'max:255'],
+            'skills_acquired' => ['nullable'],
+            'actual_place_of_origin' => ['nullable', 'max:255'],
+            'place_of_origin' => ['nullable', 'max:255'],
+            'reasons_for_out_migrating' => ['nullable', 'max:255'],
         ];
     }
 }

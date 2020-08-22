@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Birth;
+use App\Record;
 use App\Log;
-use App\Http\BirthRequest;
-use App\Http\BirthUpdateRequest;
+use App\Http\Requests\BirthRequest;
+use App\Http\Requests\BirthUpdateRequest;
 use Illuminate\Http\Request;
 
 class BirthController extends Controller
@@ -29,7 +30,14 @@ class BirthController extends Controller
     public function store(BirthRequest $request)
     {
         Log::record('Created new Birth record.');
-        return Birth::create($request->validated());
+        $birth = Birth::create($request->validated());
+        $record = new Record([
+            'user_id' => $request->user()->id,
+            'status' => 'Pending'
+        ]);
+        $birth->record()->save($record);
+        $birth->record = $record;
+        return $birth;
     }
 
     /**
@@ -54,6 +62,7 @@ class BirthController extends Controller
     {
         Log::record('Updated a birth record.');
         $birth->update($request->validated());
+        $birth->record->update(['status' => 'Requires Revalidation']);
         return $birth;
     }
 

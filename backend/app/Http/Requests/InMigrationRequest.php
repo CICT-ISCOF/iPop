@@ -25,11 +25,12 @@ class InMigrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'sorting_number' => ['required', 'string', 'max:255'],
-            'municipality' => ['required', 'string', 'max:255'],
-            'barangay' => ['required', 'string', 'max:255'],
+            'sorting_number' => ['required', 'max:255'],
+            'municipality' => ['required', 'max:255'],
+            'barangay' => ['required', 'max:255'],
             'total_cases' => ['required', 'numeric'],
-            'case_number' => ['required', 'string', 'max:255'],
+            'case_number' => ['required', 'max:255'],
+            'household_number' => ['required', 'max:255'],
             'month' => [
                 'required',
                 Rule::in([
@@ -47,11 +48,11 @@ class InMigrationRequest extends FormRequest
                     'December',
                 ]),
             ],
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'max:255'],
             'sex' => ['required', Rule::in(['Male', 'Female'])],
             'date_of_birth' => ['required', 'date'],
             'age' => ['required', 'numeric', 'max:255'],
-            'age_in_months' => ['required', 'string', 'max:255'],
+            'age_in_months' => ['required', 'max:255'],
             'age_bracket' => [
                 'required',
                 Rule::in([
@@ -77,16 +78,15 @@ class InMigrationRequest extends FormRequest
             ],
             'completed_educational_attainment' => [
                 'required',
-                'string',
                 'max:255',
             ],
-            'actual_occupation' => ['required', 'string', 'max:255'],
-            'major_occupation' => ['required', 'string', 'max:255'],
-            'monthly_income' => ['required', 'string', 'max:255'],
-            'skills_acquired' => ['required', 'string'],
-            'actual_place_of_origin' => ['required', 'string', 'max:255'],
-            'place_of_origin' => ['required', 'string', 'max:255'],
-            'reasons_for_in_migrating' => ['required', 'string', 'max:255'],
+            'actual_occupation' => ['required', 'max:255'],
+            'major_occupation' => ['required', 'max:255'],
+            'monthly_income' => ['required', 'max:255'],
+            'skills_acquired' => ['required'],
+            'actual_place_of_origin' => ['required', 'max:255'],
+            'place_of_origin' => ['required', 'max:255'],
+            'reasons_for_in_migrating' => ['required', 'max:255'],
         ];
     }
 }

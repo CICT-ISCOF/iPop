@@ -59,7 +59,7 @@ class CreateDeathsTable extends Migration
                 '80 and above',
             ]);
             $table->enum('place_of_death', ['Home', 'Hospital', 'Others']);
-            $table->boolean('registered_lcr');
+            $table->string('registered_lcr');
             $table->timestamps();
         });
     }

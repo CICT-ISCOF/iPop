@@ -21,4 +21,16 @@ class Death extends Model
         'place_of_death',
         'registered_lcr',
     ];
+
+    protected static function booted()
+    {
+        static::deleting(function ($death) {
+            $death->record->delete();
+        });
+    }
+
+    public function record()
+    {
+        return $this->morphOne(Record::class, 'recordable');
+    }
 }

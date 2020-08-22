@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CPDB;
 use App\Log;
+use App\Record;
 use Illuminate\Http\Request;
 
 class CPDBController extends Controller
@@ -15,7 +16,7 @@ class CPDBController extends Controller
      */
     public function index()
     {
-        return CPDB::paginate(10);
+        return CPDB::with('record')->paginate(10);
     }
 
     /**
@@ -27,18 +28,25 @@ class CPDBController extends Controller
     public function store(Request $request)
     {
         Log::record('Created new CPDB record.');
-        return CPDB::create($request->all());
+        $cpdb =  CPDB::create($request->all());
+        $record = new Record([
+            'user_id' => $request->user()->id,
+            'status' => 'Pending',
+        ]);
+        $cpdb->record()->save($record);
+        $cpdb->record = $record;
+        return $cpdb;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\CPDB  $cPDB
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(CPDB $cPDB)
+    public function show($id)
     {
-        return $cPDB;
+        return CPDB::with('record')->findOrFail($id);
     }
 
     /**
@@ -52,6 +60,7 @@ class CPDBController extends Controller
     {
         Log::record('Updated a CPDB record.');
         $cPDB->update($request->all());
+        $cPDB->record->update(['status' => 'Requires Revalidation']);
         return $cPDB;
     }
 

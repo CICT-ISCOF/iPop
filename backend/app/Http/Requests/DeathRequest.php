@@ -25,12 +25,12 @@ class DeathRequest extends FormRequest
     public function rules()
     {
         return [
-            'sorting_number' => ['required', 'string', 'max:255'],
-            'municipality' => ['required', 'string', 'max:255'],
-            'barangay' => ['required', 'string', 'max:255'],
+            'sorting_number' => ['required', 'max:255'],
+            'municipality' => ['required', 'max:255'],
+            'barangay' => ['required', 'max:255'],
             'total_cases' => ['required', 'numeric'],
             'number_of_cases' => ['required', 'numeric'],
-            'household_number' => ['required', 'string', 'max:255'],
+            'household_number' => ['required', 'max:255'],
             'month' => [
                 'required',
                 Rule::in([
@@ -48,7 +48,7 @@ class DeathRequest extends FormRequest
                     'December',
                 ]),
             ],
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'max:255'],
             'sex' => ['required', Rule::in(['Male', 'Female'])],
             'age_at_death' => ['required', 'numeric', 'max:255'],
             'age_bracket' => [
@@ -74,8 +74,8 @@ class DeathRequest extends FormRequest
                     '80 and above',
                 ]),
             ],
-            'place_of_death' => ['required', 'string', 'max:255'],
-            'registered_lcr' => ['required', 'boolean'],
+            'place_of_death' => ['required', 'max:255'],
+            'registered_lcr' => ['required'],
         ];
     }
 }
