@@ -1,0 +1,234 @@
+<div class="container out-migs-component">
+
+    <br>
+    <div class="inputs">
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="sorting-number">Sorting Number</label>
+                <input [class.is-invalid]="invalid.sorting_number" [(ngModel)]="fields.sorting_number" type="number" class="form-control" id="sorting-number" required>
+                <div class="invalid-feedback">
+                    Sorting Number is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>Location</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="municipality">Municipality</label>
+                <select [class.is-invalid]="invalid.municipality" [(ngModel)]="fields.municipality" class="custom-select" id="municipality" required>
+                    <option selected disabled >Choose...</option>
+                    <option>Barotac Nuevo</option>
+                </select>
+                <div class="invalid-feedback">
+                    Municipality is required
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="barangay">Barangay</label>
+                <select [class.is-invalid]="invalid.barangay" [(ngModel)]="fields.barangay" class="custom-select" id="barangay" required>
+                    <option selected disabled >Choose...</option>
+                    <option>Lagubang</option>
+                </select>
+                <div class="invalid-feedback">
+                    Barangay is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>household case</h5>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="household-number">Household Number</label>
+                <input [class.is-invalid]="invalid.sorting_number" [(ngModel)]="fields.sorting_number" type="number" class="form-control" id="household-number" required>
+                <div class="invalid-feedback">
+                    Household Number is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="total-cases">Total Cases</label>
+                <input [class.is-invalid]="invalid.total_cases" [(ngModel)]="fields.total_cases" type="number" class="form-control" id="total-cases" required>
+                <div class="invalid-feedback">
+                    Total Cases is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="case-number">Case Number</label>
+                <input [class.is-invalid]="invalid.case_number" [(ngModel)]="fields.case_number" type="number" class="form-control" id="case-number" required>
+                <div class="invalid-feedback">
+                    Case Number is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>details</h5>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="month-of-death">Month of  Migration</label>
+                <select [class.is-invalid]="invalid.month" [(ngModel)]="fields.month" class="custom-select" id="month-of-death" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let monthOfMigration of monthOfMigrations">{{ monthOfMigration }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Month of Migration is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="case-number">Name of Household Members</label>
+                <input [class.is-invalid]="invalid.name" [(ngModel)]="fields.name" type="text" class="form-control" id="deaceased-name" required>
+                <div class="invalid-feedback">
+                    Name of Household Members is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="sex">Sex of Outmigrant</label>
+                <select [class.is-invalid]="invalid.sex" [(ngModel)]="fields.sex" class="custom-select" id="sex" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let sex of sexs">{{ sex }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Sex of Outmigrant is required
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="age-at-death">Date of Birth</label>
+                <input [class.is-invalid]="invalid.date_of_birth" [(ngModel)]="fields.date_of_birth" type="date" class="form-control" id="age-at-death" required>
+                <div class="invalid-feedback">
+                    Date of Birth is required
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="age-at-death">Age of HH member</label>
+                <input [class.is-invalid]="invalid.age" [(ngModel)]="fields.age" type="number" class="form-control" id="age-at-death" required>
+                <div class="invalid-feedback">
+                    Age of HH member is required
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="age-at-death">Age in  Months</label>
+                <input [class.is-invalid]="invalid.age_in_months" [(ngModel)]="fields.age_in_months" type="number" class="form-control" id="age-at-death" required>
+                <div class="invalid-feedback">
+                    Age in Months is required
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="age-bracket">Age Bracket</label>
+                <select [class.is-invalid]="invalid.age_bracket" [(ngModel)]="fields.age_bracket" class="custom-select" id="age-bracket" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let ageBracket of ageBrackets">{{ ageBracket }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Age Bracket is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>education and occupation</h5>
+        <div class="row">
+            <div class="col-md-7 mb-3">
+                <label for="place-of-death">Completed Educational Attainment</label>
+                <select [class.is-invalid]="invalid.completed_educational_attainment" [(ngModel)]="fields.completed_educational_attainment" class="custom-select" id="place-of-death" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let educationalAttainment of educationalAttainment">{{ educationalAttainment }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Completed Educational Attainment is required
+                </div>
+            </div>
+
+            <div class="col-md-5 mb-3">
+                <label for="registered-lcr">Actual Occupation</label>
+                <select [class.is-invalid]="invalid.actual_occupation" [(ngModel)]="fields.actual_occupation" class="custom-select" id="registered-lcr" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let occupation of occupations">{{ occupation }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Actual Occupation is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="age-at-death">Major Occupation of Outmigrant</label>
+                <input [class.is-invalid]="invalid.major_occupation" [(ngModel)]="fields.major_occupation" type="text" class="form-control" id="age-at-death" required>
+                <div class="invalid-feedback">
+                    Major Occupation of Outmigrant is required
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="registered-lcr">Monthly Income</label>
+                <select [class.is-invalid]="invalid.monthly_income" [(ngModel)]="fields.monthly_income" class="custom-select" id="registered-lcr" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let monthlyIncome of monthlyIncome">{{ monthlyIncome }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Monthly Income is required
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="skills-aquired">Skills Acquired</label>
+                <input [class.is-invalid]="invalid.skills_acquired" [(ngModel)]="fields.skills_acquired" type="text" class="form-control" id="skills-aquired" required>
+                <div class="invalid-feedback">
+                    Skills Acquired is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>origin</h5>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="skills-aquired">Actual Place of origin</label>
+                <input [class.is-invalid]="invalid.actual_place_of_origin" [(ngModel)]="fields.actual_place_of_origin" type="text" class="form-control" id="skills-aquired" required>
+                <div class="invalid-feedback">
+                    Actual Place of origin is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="registered-lcr">Place of Origin</label>
+                <select [class.is-invalid]="invalid.place_of_origin" [(ngModel)]="fields.place_of_origin" class="custom-select" id="registered-lcr" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let placeOfOrigin of placeOfOrigin">{{ placeOfOrigin }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Place of Origin is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="registered-lcr">Reasons for Out-Migrating</label>
+                <select [class.is-invalid]="invalid.reasons_for_out_migrating" [(ngModel)]="fields.reasons_for_out_migrating" class="custom-select" id="registered-lcr" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let reasonForInMagrating of reasonForInMagrating">{{ reasonForInMagrating }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Reasons for Out-Migrating is required
+                </div>
+            </div>
+        </div>
+
+
+        <br>
+        <div class="button-container">
+            <button (click)="save()" class="button">Submit Record</button>
+        </div>
+        <br> <br>
+        <div *ngIf="isLoading" class="loader "></div>
+
+    </div>
+
+</div>

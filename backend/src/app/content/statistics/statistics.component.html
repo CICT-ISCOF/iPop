@@ -1,0 +1,322 @@
+<div class="statistics-component">
+
+
+
+
+    <div class="row row1">
+        <div class="col-md-3 container box">
+            <div class="icon mr-auto">
+                <i style="font-size: 30px !important;color:#57B894" class="fas fa-users"></i>
+            </div>
+            <div class="texts">
+                <p>Total Population</p>
+                <h2>16,000</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3 container box">
+            <div class="icon mr-auto">
+                <i style="font-size: 30px !important;color:orange" class="fas fa-university"></i>
+            </div>
+            <div class="texts">
+                <p>Number of Municipalities</p>
+                <h2>16,000</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3 container box">
+            <div class="icon mr-auto">
+                <i style="font-size: 30px !important;color:#2659D8" class="fas fa-ship"></i>
+            </div>
+            <div class="texts">
+                <p>Number of Barangays</p>
+                <h2>16,000</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row container">
+        <div class="form-group col-md-6">
+            <h3>Top Populated Municipalities</h3>
+            <p>All over Iloilo</p>
+            <ul class="list-group">
+                <li *ngFor="let item of [0,1,1,1,1]" class="list-group-item barangays">
+                    <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
+                    <p>Barotac Nuevo</p>
+                    <p>290</p>
+                    <p>15%</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="form-group col-md-6">
+            <div class="map w-100 col-md-12" #map id="map" style="height: 100%; ">
+            </div>
+        </div>
+    </div>
+
+    <div class="row container">
+        <div class="form-group col-md-12">
+            <br>
+            <i style="font-size: 20px !important;color:gray" class="fas fa-cogs"></i> &nbsp; Settings
+            <hr>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="municipality">Municipality</label>
+            <select (change)="changeMunicipality($event)" class="form-control" id="municipality">
+                    <option selected disabled>Choose Municipality</option>
+                    <option>Barotac Nuevo</option>
+                </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="barangay">Barangay</label>
+            <select (change)="changeMap($event)" class="form-control" id="barangay">
+                    <option selected disabled>Choose Barangay</option>
+                    <option>Cruz</option>
+                </select>
+        </div>
+        <hr>
+        <div class="form-group col-md-6">
+            <label for="year">Year</label>
+            <select class="form-control " id="year">
+                <option selected disabled>Choose Year</option>
+                <option>2020</option>
+                </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="month">Month</label>
+            <select class="form-control" id="month">
+                    <option selected disabled>Choose Month</option>
+                    <option>January</option>
+                </select>
+        </div>
+    </div>
+
+    <div class="row container details-container">
+        <h4 style="display: flex;padding-left: 0;">
+            <i class="fa fa-university"></i> &nbsp; Municipality of Zarraga &nbsp;
+            <svg width="30px" height="30px" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="gray" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+            </svg> &nbsp; Baragay Ilaud
+            <span tooltip="Settings affects the data below" placement="left" show-delay="100" [theme]="theme" style="margin-left: auto;cursor: pointer;">
+                <i style="font-size: 30px;color:orange"  class="fas fa-info-circle"></i>
+            </span>
+        </h4>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <p>District : <span>4</span></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Population</p>
+                <ul class="list-group">
+                    <li class="list-group-item barangays">
+                        <i style="color:#32B0DF;font-size: 20px;" class="fas fa-user"></i>
+                        <p> <span class="badge badge-info"> 14,400</span> </p>
+                        <p style="margin-right: 10px;width: 50%;margin-left: auto;">14% of Province of Iloilo</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-5">
+                <p>Households</p>
+                <ul class="list-group">
+                    <li class="list-group-item barangays">
+                        <i style="color:#A448B1;font-size: 20px;" class="fas fa-home"></i>
+                        <p> <span class="badge badge-info"> 14,400</span> </p>
+                        <p style="margin-right: 10px;width: 50%;margin-left: auto;">14% of Province of Iloilo</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <hr>
+                <p>
+                    <i style="font-size: 20px !important;color:#2659D8" class="fas fa-ship"></i> &nbsp; Total Barangays: <span>78</span>
+                </p>
+            </div>
+            <hr>
+            <div class="col-md-6">
+                <hr>
+                <p>
+                    <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i> &nbsp; Total Zones: <span>78</span>
+                </p>
+            </div>
+            <hr>
+            <div class="col-md-6">
+                <hr>
+                <p> Barangays Lists: </p>
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        <li *ngFor="let item of [0,1,1,1,1]" class="list-group-item barangays">
+                            <i style="font-size: 20px !important;color:#2659D8" class="fas fa-ship"></i>
+                            <p>ilaud</p>
+                            <p>290</p>
+                            <p>15%</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <hr>
+                <p>Zones Lists:</p>
+                <ul class="list-group">
+                    <li *ngFor="let item of [0,1,1,1,1]" class="list-group-item barangays">
+                        <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i>
+                        <p>1</p>
+                        <p>90</p>
+                        <p>15%</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <br> <br>
+                <p>
+                    <i style="font-size: 20px !important;color:#81D340" class="fas fa-globe-africa"></i> &nbsp; Area
+                    <span> 54.48 km2 (21.03 sq mi) </span>
+                </p> <br>
+                <hr>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    <i style="font-size: 20px !important;color:wheat" class="fas fa-baby"></i> &nbsp; Births<span> - 540 | 54%</span>
+                </p>
+                <ul class="list-group">
+                    <li class="list-group-item barangays">
+                        <i style="font-size: 20px !important;color: teal;margin-right: 20px;" class="fas fa-mars"></i>
+                        <p style="text-align: left;">Male</p>
+                        <p style="text-align: left;">290</p>
+                        <p>15% of Zaragga</p>
+                    </li>
+                    <li class="list-group-item barangays">
+                        <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
+                        <p style="text-align: left;">Female</p>
+                        <p style="text-align: left;">290</p>
+                        <p>85% of Zaragga</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    <i style="font-size: 20px !important;color:red;margin-right: 20px;" class="fas fa-book-dead"></i> &nbsp; Deaths
+                    <span> - 54,000 | 25%</span>
+                </p>
+                <ul class="list-group">
+                    <li class="list-group-item barangays">
+                        <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
+                        <p style="text-align: left;">Male</p>
+                        <p style="text-align: left;">290</p>
+                        <p>15% of Zaragga</p>
+                    </li>
+                    <li class="list-group-item barangays">
+                        <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
+                        <p style="text-align: left;">Female</p>
+                        <p style="text-align: left;">290</p>
+                        <p>85% of Zaragga</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6"><br> <br><br>
+                <p>
+                    <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-arrival"></i> &nbsp; Migrants <span> - 54,000 | 54%</span>
+                </p>
+                <ul class="list-group">
+                    <li class="list-group-item barangays">
+                        <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
+                        <p style="text-align: left;">Male</p>
+                        <p style="text-align: left;">290</p>
+                        <p>15% of Zaragga</p>
+                    </li>
+                    <li class="list-group-item barangays">
+                        <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
+                        <p style="text-align: left;">Female</p>
+                        <p style="text-align: left;">290</p>
+                        <p>85% of Zaragga</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6"><br> <br><br>
+                <p>
+                    <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-departure"></i> &nbsp; Out Migrants<span> - 54,000 | 25%</span>
+                </p>
+                <ul class="list-group">
+                    <li class="list-group-item barangays">
+                        <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
+                        <p style="text-align: left;">Male</p>
+                        <p style="text-align: left;">290</p>
+                        <p>15% of Zaragga</p>
+                    </li>
+                    <li class="list-group-item barangays">
+                        <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
+                        <p style="text-align: left;">Female</p>
+                        <p style="text-align: left;">290</p>
+                        <p>85% of Zaragga</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12"><br>
+                <p>
+                    <i style="font-size: 20px !important;color:pink;margin-right: 20px;" class="fas fa-people-carry"></i> &nbsp; Married<span> 25,000 | 50% of Zarraga</span>
+                </p>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    <br>
+
+    <div class="row container chart-container">
+        <h4>Age Distribution Male & Female <br>
+            <span><span style="color:var(--colorPrimary) !important">Male </span> &nbsp; |&nbsp; 3,000 &nbsp; |&nbsp;<span class="low">30%</span> <br>
+            <span style="color:var(--colorPrimary) !important">Female</span> &nbsp; |&nbsp;7,000 &nbsp; |&nbsp;<span class="high">70%</span> </span>
+        </h4>
+        <div id="male-and-female" class="w-100"></div>
+    </div>
+    <br>
+
+
+    <div class="row container chart-container">
+        <h4>Deaths & Births<br>
+            <span><span style="color:var(--colorPrimary) !important">Deaths </span> &nbsp; |&nbsp; 3,000 &nbsp; |&nbsp;<span class="low">30%</span> <br>
+            <span style="color:var(--colorPrimary) !important">Births</span> &nbsp; |&nbsp;7,000 &nbsp; |&nbsp;<span class="high">70%</span> </span>
+        </h4>
+        <div id="death-and-birth" class="w-100"></div>
+    </div>
+    <br>
+
+    <div class="row container chart-container">
+        <h4>In-Migrants & Out Migrants<br>
+            <span><span style="color:var(--colorPrimary) !important">In-Migrants </span> &nbsp; |&nbsp; 3,000 &nbsp; |&nbsp;<span class="low">30%</span> <br>
+            <span style="color:var(--colorPrimary) !important"> Out Migrants</span> &nbsp; |&nbsp;7,000 &nbsp; |&nbsp;<span class="high">70%</span> </span>
+        </h4>
+        <div id="in-mig-and-Out-mig" class="w-100"></div>
+    </div>
+    <br>
+
+    <div class="row container ">
+        <h4> 1200 Married - 30%</h4>
+        <google-chart class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions">
+        </google-chart>
+    </div>
+    <br> <br> <br>
+</div>

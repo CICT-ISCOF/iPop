@@ -1,0 +1,69 @@
+<div *ngIf="isLoading" class="loader"></div>
+<div class="admin-status-component">
+    <div class="row">
+        <div class="col-md-4 container">
+
+            <div class="image-container">
+                <img src="../../../../assets/wallpapers/1.jpg" alt="">
+                <div (click)="triggerInput()" class="icon-container">
+                    <i style="font-size: 25px;" class="fas fa-camera"></i>
+                    <input accept="image/*" type="file" class="hidden" id="profile-picture">
+                </div>
+            </div>
+            <p class="name">{{ admin.fullname }} <br>
+                <span class="role">
+                    <i class="fa fa-user-cog"></i>&nbsp;&nbsp;{{ admin.role }}
+                </span>
+            </p>
+
+            <p class="distict">District {{ admin.distict }}</p>
+
+            <p class="municipality"><span>Municipality</span> {{ admin.municipality }} </p>
+
+            <p class="barangay"><span>Barangay</span> {{ admin.barangay }}</p>
+        </div>
+
+        <div class="col-md-4 container status-option">
+            <h4>Status</h4>
+            <br>
+            <p>Number of tries left <span class="badge badge-warning"> 3 </span> </p>
+            <p>Administrator status <span class="badge" [class.badge-danger]="admin.blocked" [class.badge-success]="!admin.blocked"> {{ !admin.blocked ? "Active" : "Blocked" }} </span></p>
+            <p>Active status <span class="badge badge-light">Offline</span></p>
+            <hr>
+
+
+            <h4>Options</h4>
+            <br>
+            <div *ngIf="!changeRole">
+                <p (click)="blockAdmin()" class="clickable" [class.disabled]="admin.blocked || admin.role == 'Super Admin'">
+                    <i title="Block" class="fas fa-user-slash"></i> Block
+                </p>
+                <p (click)="deleteAdmin()" [class.disabled]="admin.role == 'Super Admin'" class="clickable">
+                    <i title="Delete " title="red " style="color:red " class="im im-minus-circle "></i> Delete
+                </p>
+                <p (click)="reactivate()" [class.disabled]="!admin.blocked == true" class="clickable">
+                    <i style="color:#81D340 " class="fas fa-sync-alt"></i>Reactivate
+                </p>
+                <p (click)="changeRole = true" class="clickable">
+                    <i style="color:orange " class="fa fa-users-cog"></i>Change Role
+                </p>
+            </div>
+            <div *ngIf="changeRole" class="role-container">
+                <label>From {{ admin.role }} to</label>
+                <select [(ngModel)]="newRole" type="text" class="form-control">                   
+                    <option>Super Admin</option>
+                    <option>PPO1</option>
+                    <option>PPO</option>
+                    <option>BSPO</option>
+                </select>
+                <br>
+                <div style="display: flex;">
+                    <button (click)="saveChanges()" class="button">Save</button>
+                    <button style="width:auto;;margin-left: 20px;" (click)="changeRole = false" class="clickable">Cancel</button>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+
+</div>

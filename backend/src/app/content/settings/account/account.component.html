@@ -1,0 +1,301 @@
+<div class="account-component">
+    <img src="../../../../assets/login/account-settings.svg" alt="">
+
+    <div *ngIf="mySecurityQuestion == null" class="set-up-account container">
+        <div *ngIf="isLoading" class="loader"></div>
+        <br>
+        <h4>Let us set up your security question and pin</h4>
+        <hr>
+        <br>
+        <div class="col-md-12 mb-3 input-container">
+            <label for="securityq">Choose a security question</label>
+            <div class="input-wrapper">
+                <select [class.is-invalid]="invalidsetUpSeucrityQuestion.new_question" [(ngModel)]="setUpSeucrityQuestion.new_question" class="form-control w-50 is-invalid" id="securityq" required>
+                     <option selected disabled></option>
+                    <option *ngFor="let question of securityQuestions">{{ question }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Security Question is required
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-3 input-container">
+            <label for="ANSWER">What is your answer?</label>
+            <div class="input-wrapper">
+                <input [class.is-invalid]="invalidsetUpSeucrityQuestion.new_answer" [(ngModel)]="setUpSeucrityQuestion.new_answer" class="form-control w-50" id="ANSWER" required>
+                <div class="invalid-feedback">
+                    Your answer is required
+                </div>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="col-md-12 mb-3 input-container">
+            <label for="pincode">Enter your desired pin</label>
+            <div class="input-wrapper">
+                <input [class.is-invalid]="invalidsetUpPin.new_pin" maxlength="6" [(ngModel)]="setUpPin.new_pin" type="password" class="form-control w-50" id="pincode" required>
+                <div class="invalid-feedback">
+                    Your Pin is required
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mb-3 input-container">
+            <label for="confirmpin">Confirm pin</label>
+            <div class="input-wrapper">
+                <input [class.is-invalid]="invalidsetUpPin.new_pin != invalidsetUpPin.confirmPin" maxlength="6" [(ngModel)]="setUpPin.confirmPin" type="password" class="form-control w-50" id="confirmpin" required>
+                <div class="invalid-feedback">
+                    Pin do not match
+                </div>
+            </div>
+        </div>
+        <br>
+        <button (click)="save()" class="button" style="width: 150px;">Save</button>
+        <br> <br> <br>
+    </div>
+
+
+
+    <div *ngIf="mySecurityQuestion != null" id="accordion" class="container">
+        <div *ngIf="isLoading" class="loader"></div>
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <p>
+                        Change Security Question
+                    </p>
+                    <span *ngIf="!collapse == 1" (click)="collapse =1" data-toggle="collapse" data-target="#collapseOne">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-compact-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
+                        </svg>                        
+                    </span>
+
+                    <span (click)="collapse = 0" *ngIf="collapse == 1" data-toggle="collapse" data-target="#collapseZero">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-compact-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"/>
+                        </svg>                   
+                    </span>
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <br>
+                    <p>{{ mySecurityQuestion }}</p>
+                    <div class="col-md-12 mb-3 input-container">
+                        <label for="oldans">Old Answer</label>
+
+                        <div class="input-wrapper">
+                            <input [class.is-invalid]="invalidchangeSecurityQuestion.old_answer" [(ngModel)]="changeSecurityQuestion.old_answer" class="form-control w-50" id="oldans" required>
+                            <div class="invalid-feedback">
+                                Old answer is required
+                            </div>
+                            <div class="invalid-feedback">
+                                Invalid answer 1 tries left
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <br>
+                    <div class="col-md-12 mb-3 input-container">
+                        <label for="securityq1">Choose a new security question</label>
+                        <div class="input-wrapper">
+                            <select [class.is-invalid]="invalidchangeSecurityQuestion.new_question" [(ngModel)]="changeSecurityQuestion.new_question" class="form-control w-50 is-invalid" id="securityq1" required>
+                                 <option selected disabled></option>
+                                <option *ngFor="let question of securityQuestions">{{ question }}</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Security Question is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-3 input-container">
+                        <label for="newanswer">New Answer</label>
+
+                        <div class="input-wrapper">
+                            <input [class.is-invalid]="invalidchangeSecurityQuestion.new_answer" [(ngModel)]="changeSecurityQuestion.new_answer" class="form-control w-50" id="newanswer" required>
+                            <div class="invalid-feedback">
+                                New answer is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-3 input-container">
+                        <label for="newans">Confrim New Answer</label>
+
+                        <div class="input-wrapper">
+                            <input [class.is-invalid]="changeSecurityQuestion.confirmAnswer  != changeSecurityQuestion.new_answer" [(ngModel)]="changeSecurityQuestion.confirmAnswer" class="form-control w-50" id="newans" required>
+                            <div class="invalid-feedback">
+                                Answer should match
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <button (click)="changeMySecurityQuestion()" class="button">Change My Security Question</button>
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <p>
+                        Change Pin
+                    </p>
+                    <span *ngIf="!collapse == 1" (click)="collapse =2" data-toggle="collapse" data-target="#collapseTwo">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-compact-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
+                        </svg>                        
+                    </span>
+
+                    <span (click)="collapse = 0" *ngIf="collapse == 2" data-toggle="collapse" data-target="#collapseZero">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-compact-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"/>
+                        </svg>                   
+                    </span>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="col-md-12 mb-3 input-container">
+                        <br>
+                        <label for="oldpin">Input your old 6 digit pin</label>
+
+                        <div class="dots-container" [class.animate]="isValid==false">
+                            <div class="dot" [class.is-colored]="changePin.old_pin.length >= 1" [class.is-invalid]="isValid==false"></div>
+                            <div class="dot" [class.is-colored]="changePin.old_pin.length >= 2" [class.is-invalid]="isValid==false"></div>
+                            <div class="dot" [class.is-colored]="changePin.old_pin.length >= 3" [class.is-invalid]="isValid==false"></div>
+                            <div class="dot" [class.is-colored]="changePin.old_pin.length >= 4" [class.is-invalid]="isValid==false"></div>
+                            <div class="dot" [class.is-colored]="changePin.old_pin.length >= 5" [class.is-invalid]="isValid==false"></div>
+                            <div class="dot" [class.is-colored]="changePin.old_pin.length == 6" [class.is-invalid]="isValid==false"></div>
+                        </div>
+                        <div class="input-wrapper">
+                            <input [(ngModel)]="changePin.old_pin" maxlength="6" [class.is-invalid]="false" id="oldpin" class="form-control w-50" type="password" style="-webkit-text-security: disc;font-size: 1em;">
+                            <div class="invalid-feedback">
+                                Invalid Pin {{tries}} 1 tries left
+                            </div>
+                            <div class="invalid-feedback">
+                                You can change your pin after 1hr
+                            </div>
+                            <div class="invalid-feedback">
+                                Pin must be 6 digits
+                            </div>
+                            <br>
+                            <label for="newpin">Input your new 6 digit pin</label>
+
+                            <div class="dots-container">
+                                <div class="dot" [class.is-colored]="changePin.new_pin.length >= 1"></div>
+                                <div class="dot" [class.is-colored]="changePin.new_pin.length >= 2"></div>
+                                <div class="dot" [class.is-colored]="changePin.new_pin.length >= 3"></div>
+                                <div class="dot" [class.is-colored]="changePin.new_pin.length >= 4"></div>
+                                <div class="dot" [class.is-colored]="changePin.new_pin.length >= 5"></div>
+                                <div class="dot" [class.is-colored]="changePin.new_pin.length >= 6"></div>
+                            </div>
+                            <div class="input-wrapper">
+                                <input [class.is-invalid]="changePin.new_pin.length <= 5" [(ngModel)]="changePin.new_pin" maxlength="6" id="newpin" class="form-control w-50" type="password" style="-webkit-text-security: disc;font-size: 1em;">
+                                <div class="invalid-feedback">
+                                    New Pin must be 6 digits
+                                </div>
+                            </div>
+                            <br>
+                            <label for="confirmpinChange">Confirm New Pin</label>
+
+                            <div class="dots-container">
+                                <div class="dot" [class.is-colored]="changePin.confirmnewpin.length >= 1"></div>
+                                <div class="dot" [class.is-colored]="changePin.confirmnewpin.length >= 2"></div>
+                                <div class="dot" [class.is-colored]="changePin.confirmnewpin.length >= 3"></div>
+                                <div class="dot" [class.is-colored]="changePin.confirmnewpin.length >= 4"></div>
+                                <div class="dot" [class.is-colored]="changePin.confirmnewpin.length >= 5"></div>
+                                <div class="dot" [class.is-colored]="changePin.confirmnewpin.length >= 6"></div>
+                            </div>
+                            <div class="input-wrapper">
+                                <input [class.is-invalid]="changePin.new_pin != changePin.confirmnewpin" [(ngModel)]="changePin.confirmnewpin" maxlength="6" id="confirmpinChange" class="form-control w-50" type="password" style="-webkit-text-security: disc;font-size: 1em;">
+                                <div class="invalid-feedback">
+                                    New Pin should match
+                                </div>
+                            </div>
+                            <br>
+                            <button (click)="changeMyPin()" class="button">Change My Pin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <p aria-expanded="true" aria-controls="collapseThree">
+                            Change Password
+                        </p>
+                        <span *ngIf="!collapse == 1" (click)="collapse =3" data-toggle="collapse" data-target="#collapseThree">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-compact-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
+                            </svg>                        
+                        </span>
+
+                        <span (click)="collapse = 0" *ngIf="collapse == 3" data-toggle="collapse" data-target="#collapseZero">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-compact-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"/>
+                            </svg>                   
+                        </span>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        <br>
+                        <div class="col-md-12 mb-3 input-container">
+                            <label for="oldpassword">Old Password</label>
+
+                            <div class="input-wrapper">
+                                <input [class.is-invalid]="invalidchangePassword.old_password" [(ngModel)]="changePassword.old_password" class="form-control w-50" id="oldpassword" required>
+                                <div class="invalid-feedback">
+                                    Old Password is required
+                                </div>
+                                <div class="invalid-feedback">
+                                    Invalid password 4 tries left
+                                </div>
+                                <div class="invalid-feedback">
+                                    You can change your password after 1 hour
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3 input-container">
+                            <label for="newPassword">New Password</label>
+
+                            <div class="input-wrapper">
+                                <input [class.is-invalid]="invalidchangePassword.new_password" [(ngModel)]="changePassword.new_password" class="form-control w-50" id="newPassword" required>
+                                <div class="invalid-feedback">
+                                    New Password is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3 input-container">
+                            <label for="confirmPassword">Confirm Password</label>
+
+                            <div class="input-wrapper">
+                                <input [class.is-invalid]="changePassword.new_password != changePassword.confirmPassword" [(ngModel)]="changePassword.confirmPassword" class="form-control w-50" id="confirmPassword" required>
+                                <div class="invalid-feedback">
+                                    New password should match
+                                </div>
+                            </div>
+                            <br>
+                            <button (click)="changeMyPassword()" class="button">Change My Password</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="collapseZero" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+
+            </div>
+        </div>
+        <br>
+
+
+    </div>
+
+    <br> <br> <br>

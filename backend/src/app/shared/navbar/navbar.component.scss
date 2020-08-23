@@ -1,0 +1,84 @@
+.navbar {
+    display: flex;
+    flex-grow: 1;
+    align-items: flex-end;
+    height: 60px;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    padding: 5px 30px;
+    position: fixed;
+    z-index: 999999999999;
+    width: 100%;
+    background: var(--bg);
+    box-shadow: none !important;
+    opacity: .97;
+}
+
+* {
+    backdrop-filter: blur(100px);
+}
+
+.ml-50 {
+    margin-left: 100px;
+}
+
+img {
+    height: 100%;
+    margin-right: auto;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.clickable {
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    height: 100%;
+    cursor: pointer;
+}
+
+svg {
+    color: var(--colorPrimary)
+}
+
+.clickable:hover,
+.nav-profile-holder:hover {
+    background: var(--inputBg);
+}
+
+.nav-profile-holder {
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border-radius: 30px;
+}
+
+.nav-profile-holder img {
+    margin-right: 10px;
+    height: 30px;
+    width: auto;
+}
+
+.sync {
+    background: transparent !important;
+}
+
+.animate {
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(90de);
+    }
+    50% {
+        transform: rotate(190deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

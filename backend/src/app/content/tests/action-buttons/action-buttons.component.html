@@ -1,0 +1,7 @@
+<i [routerLink]="['/admin/' + admin.id]" routerLinkActive="router-link-active" style="color:orange " class="im im-radar " tooltip="Show status of this admin" placement="right" show-delay="100" [theme]="theme"></i>
+
+<i (click)="blockAdmin(admin.id)" tooltip="Block this admin" placement="bottom" show-delay="100" [theme]="theme" class="fas fa-user-slash"></i>
+
+<i (click)="deleteAdmin(admin.id)" tooltip="Delete this admin" placement="right" show-delay="100" [theme]="theme" style="color:red " class="im im-minus-circle "></i>
+
+<span lass="badge badge-danger">Blocked</span>

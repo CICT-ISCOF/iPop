@@ -1,0 +1,118 @@
+.statistics-component {
+    width: 103%;
+    height: 110%;
+    padding: 10px 50px;
+    background: var(--bg1);
+    display: flexbox;
+}
+
+.Caption {
+    background: var(--contrast);
+    color: white;
+    margin-bottom: 15px;
+}
+
+h4 {
+    text-align: left;
+    font-weight: 500;
+    width: 100%;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 9;
+    border-bottom: 1px solid rgba(150, 150, 150, .5);
+}
+
+h4 span {
+    font-size: 16px;
+}
+
+.high {
+    color: #00C34F
+}
+
+.mid {
+    color: orange
+}
+
+.low {
+    color: red
+}
+
+table {
+    width: 100%;
+    margin-top: -14px;
+}
+
+thead {
+    border-bottom: 1px solid rgba(150, 150, 150, .5);
+}
+
+tr {
+    height: 30px;
+}
+
+td,
+th {
+    padding: 5px 10px;
+}
+
+li {
+    background: var(--bg);
+}
+
+.box {
+    margin-left: 5px;
+    display: flex;
+}
+
+.icon {
+    margin-right: auto;
+    margin-right: auto!important;
+    height: 100%;
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.texts {
+    text-align: right;
+}
+
+.texts h2 {
+    margin-top: -15px;
+    font-weight: 500;
+}
+
+.barangays {
+    display: flex;
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.barangays p {
+    width: 30%;
+    text-align: right;
+}
+
+#death-and-birth,
+#male-and-female,
+#in-mig-and-Out-mig {
+    height: 107%;
+    margin-top: -87px;
+    width: 120% !important;
+}
+
+.chart-container {
+    height: 80vh;
+    overflow: hidden;
+}
+
+.details-container {
+    padding-left: 50px;
+}
+
+.details-container p span {
+    color: #149EF8;
+    font-weight: bold;
+}
