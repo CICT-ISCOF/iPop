@@ -60,6 +60,7 @@ class CreateDeathsTable extends Migration
             ]);
             $table->enum('place_of_death', ['Home', 'Hospital', 'Others']);
             $table->string('registered_lcr');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

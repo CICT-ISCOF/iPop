@@ -68,6 +68,7 @@ class CreateCPDBSTable extends Migration
             $table->string('flood_prone_area_water_level')->nullable();
             $table->string('access_to_infotech')->nullable();
             $table->string('4ps_beneficiary_household')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Marriage extends Model
 {
     protected $fillable = [
@@ -14,6 +12,7 @@ class Marriage extends Model
         'household_number',
         'case_number',
         'month',
+        'age',
         'couple_name',
         'sex',
         'age_bracket',

@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Record extends Model
 {
     protected $fillable = ['status', 'user_id'];
@@ -11,5 +9,10 @@ class Record extends Model
     public function recordable()
     {
         return $this->morphTo();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

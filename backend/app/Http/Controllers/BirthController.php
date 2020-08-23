@@ -18,7 +18,7 @@ class BirthController extends Controller
      */
     public function index()
     {
-        return Birth::all();
+        return Birth::with('record.user')->paginate(10);
     }
 
     /**
@@ -43,12 +43,12 @@ class BirthController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Birth  $birth
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Birth $birth)
+    public function show($id)
     {
-        return $birth;
+        return Birth::with('record.user')->findOrFail($id);
     }
 
     /**

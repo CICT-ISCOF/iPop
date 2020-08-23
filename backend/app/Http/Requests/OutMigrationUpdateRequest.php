@@ -30,6 +30,7 @@ class OutMigrationUpdateRequest extends FormRequest
             'barangay' => ['nullable', 'max:255'],
             'total_cases' => ['nullable', 'numeric'],
             'case_number' => ['nullable', 'max:255'],
+            'household_number' => ['nullable', 'max:255'],
             'month' => [
                 'nullable',
                 Rule::in([

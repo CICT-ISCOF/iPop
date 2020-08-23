@@ -18,7 +18,7 @@ class MarriageController extends Controller
      */
     public function index()
     {
-        return Marriage::with('record')->paginate(10);
+        return Marriage::with('record.user')->paginate(10);
     }
 
     /**
@@ -48,7 +48,7 @@ class MarriageController extends Controller
      */
     public function show($id)
     {
-        return Marriage::with('record')->findOrFail($id);
+        return Marriage::with('record.user')->findOrFail($id);
     }
 
     /**

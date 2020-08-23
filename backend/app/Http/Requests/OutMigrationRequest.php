@@ -30,6 +30,7 @@ class OutMigrationRequest extends FormRequest
             'barangay' => ['required', 'max:255'],
             'total_cases' => ['required', 'numeric'],
             'case_number' => ['required', 'max:255'],
+            'household_number' => ['required', 'max:255'],
             'month' => [
                 'required',
                 Rule::in([
