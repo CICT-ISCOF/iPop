@@ -50,6 +50,9 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::apiResource('marriages', 'MarriageController');
     Route::apiResource('cpdb', 'CPDBController');
     Route::apiResource('records', 'RecordController')->except(['store', 'destroy']);
+
+    // Comments
+    Route::apiResource('comments', 'CommentController')->except(['index']);
 });
 
 // Public Files

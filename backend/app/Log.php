@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log as NativeLog;
 use Jenssegers\Agent\Agent;
+use Exception;
 
 class Log extends Model
 {
@@ -12,7 +13,7 @@ class Log extends Model
 
     public function getInfoAttribute()
     {
-        return json_decode($this->info);
+        return json_decode($this->attributes['info']);
     }
 
     public function user()

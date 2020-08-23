@@ -18,7 +18,9 @@ class DeathController extends Controller
      */
     public function index()
     {
-        return Death::with('record.user')->paginate(10);
+        return Death::with('record.user')
+            ->with('comments.user')
+            ->paginate(10);
     }
 
     /**
@@ -48,7 +50,9 @@ class DeathController extends Controller
      */
     public function show($id)
     {
-        return Death::with('record.user')->findOrFail($id);
+        return Death::with('record.user')
+            ->with('comments.user')
+            ->findOrFail($id);
     }
 
     /**

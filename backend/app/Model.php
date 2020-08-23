@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 abstract class Model extends BaseModel
 {
     use SoftDeletes;
+    protected $hidden = ['deleted_at'];
 }

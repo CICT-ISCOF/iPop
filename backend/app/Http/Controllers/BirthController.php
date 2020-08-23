@@ -18,7 +18,9 @@ class BirthController extends Controller
      */
     public function index()
     {
-        return Birth::with('record.user')->paginate(10);
+        return Birth::with('record.user')
+            ->with('comments.user')
+            ->paginate(10);
     }
 
     /**
@@ -48,7 +50,9 @@ class BirthController extends Controller
      */
     public function show($id)
     {
-        return Birth::with('record.user')->findOrFail($id);
+        return Birth::with('record.user')
+            ->with('comments.user')
+            ->findOrFail($id);
     }
 
     /**

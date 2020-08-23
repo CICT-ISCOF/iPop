@@ -16,7 +16,9 @@ class CPDBController extends Controller
      */
     public function index()
     {
-        return CPDB::with('record.user')->paginate(10);
+        return CPDB::with('record.user')
+            ->with('comments.user')
+            ->paginate(10);
     }
 
     /**
@@ -46,7 +48,9 @@ class CPDBController extends Controller
      */
     public function show($id)
     {
-        return CPDB::with('record.user')->findOrFail($id);
+        return CPDB::with('record.user')
+            ->with('comments.user')
+            ->findOrFail($id);
     }
 
     /**

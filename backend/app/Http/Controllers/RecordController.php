@@ -14,7 +14,7 @@ class RecordController extends Controller
      */
     public function index()
     {
-        return Record::with('recordable')
+        return Record::with('recordable.comments.user')
             ->with('user')
             ->orderBy('recordable_type', 'ASC')
             ->paginate(10);
@@ -28,7 +28,7 @@ class RecordController extends Controller
      */
     public function show($id)
     {
-        return Record::with('recordable')
+        return Record::with('recordable.comments.user')
             ->with('user')
             ->findOrFail($id);
     }

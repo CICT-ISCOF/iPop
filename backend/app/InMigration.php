@@ -39,4 +39,9 @@ class InMigration extends Model
     {
         return $this->morphOne(Record::class, 'recordable');
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }

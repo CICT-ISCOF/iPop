@@ -18,7 +18,9 @@ class OutMigrationController extends Controller
      */
     public function index()
     {
-        return OutMigration::with('record.user')->paginate(10);
+        return OutMigration::with('record.user')
+            ->with('comments.user')
+            ->paginate(10);
     }
 
     /**
@@ -47,7 +49,9 @@ class OutMigrationController extends Controller
      */
     public function show($id)
     {
-        return OutMigration::with('record.user')->findOrFail($id);
+        return OutMigration::with('record.user')
+            ->with('comments.user')
+            ->findOrFail($id);
     }
 
     /**
