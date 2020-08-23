@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InMigService } from './in-mig.service'
+import { UtilityService } from '../../utility.service'
 
 @Component({
   selector: 'app-in-mig',
@@ -9,12 +10,13 @@ import { InMigService } from './in-mig.service'
 export class InMigComponent implements OnInit {
 
 	constructor(
-		private InMigService : InMigService
+		private InMigService : InMigService,
+		private UtilityService: UtilityService,
 	) { }
 
 	ngOnInit(): void {
 	}
-
+ 
 	monthOfMigrations = [
 		'January',
 		'February',
@@ -131,7 +133,8 @@ export class InMigComponent implements OnInit {
         'skills_acquired':'',
         'actual_place_of_origin':'',
         'place_of_origin':'',
-        'reasons_for_in_migrating':'',
+		'reasons_for_in_migrating':'',
+		household_number:''
 	}
 
 	invalid = {
@@ -154,7 +157,8 @@ export class InMigComponent implements OnInit {
         'skills_acquired':false,
         'actual_place_of_origin':false,
         'place_of_origin':false,
-        'reasons_for_in_migrating':false,
+		'reasons_for_in_migrating':false,
+		household_number:false
 	}
 
 	isLoading = false
@@ -172,11 +176,8 @@ export class InMigComponent implements OnInit {
 			}
 		}
 		if(!hasError){
-			// this.fields.sorting_number = this.fields.sorting_number.toString()
-			// this.fields.household_number = this.fields.household_number.toString()
-			 
 			this.InMigService.saveInMigrationRecord(this.fields).subscribe(data => {
-				console.log(data)
+				this.UtilityService.setAlert('In Migration Record has been saved','success')
 			})
 			this.isLoading = false
 		}else{			

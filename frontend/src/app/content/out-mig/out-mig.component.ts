@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OutMigService } from './out-mig.service'
+import { UtilityService } from '../../utility.service'
 
 @Component({
   selector: 'app-out-mig',
@@ -9,7 +10,8 @@ import { OutMigService } from './out-mig.service'
 export class OutMigComponent implements OnInit {
 
 	constructor(
-		private OutMigService : OutMigService
+		private OutMigService : OutMigService,
+		private UtilityService: UtilityService,
 	) { }
 
 	ngOnInit(): void {
@@ -175,11 +177,8 @@ export class OutMigComponent implements OnInit {
 			}
 		}
 		if(!hasError){
-			// this.fields.sorting_number = this.fields.sorting_number.toString()
-			// this.fields.household_number = this.fields.household_number.toString()
-			 
 			this.OutMigService.saveOutMigrationRecord(this.fields).subscribe(data => {
-				console.log(data)
+				this.UtilityService.setAlert('Out Migration Record has been saved','success')
 			})
 			this.isLoading = false
 		}else{			

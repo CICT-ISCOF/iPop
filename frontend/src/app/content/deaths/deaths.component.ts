@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DeathsService } from './deaths.service'
-
+import { UtilityService } from '../../utility.service'
 
 @Component({
   selector: 'app-deaths',
@@ -10,7 +10,8 @@ import { DeathsService } from './deaths.service'
 export class DeathsComponent implements OnInit {
 
 	constructor(
-		private DeathsService : DeathsService
+		private DeathsService : DeathsService,
+		private UtilityService : UtilityService
 	) { }
 
 	ngOnInit(): void {
@@ -120,7 +121,7 @@ export class DeathsComponent implements OnInit {
 			this.fields.household_number = this.fields.household_number.toString()
 			 
 			this.DeathsService.saveDeathRecord(this.fields).subscribe(data => {
-				console.log(data)
+				this.UtilityService.setAlert('Death Record has been successfully saved','success')
 			})
 			this.isLoading = false
 		}else{			

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BirthsService } from './births.service'
+import { UtilityService } from '../../utility.service'
 
 @Component({
   selector: 'app-births',
@@ -9,7 +10,8 @@ import { BirthsService } from './births.service'
 export class BirthsComponent implements OnInit {
 
   constructor(
-	  private BirthsService : BirthsService
+	  private BirthsService : BirthsService,
+	  private UtilityService : UtilityService,
   ) { }
 
   ngOnInit(): void {
@@ -36,9 +38,6 @@ export class BirthsComponent implements OnInit {
 	]
 
 	ageBrackets = [
-		'Below 1 year old',
-		'01-04',
-		'05-09',
 		'10-14',
 		'15-19',
 		'20-24',
@@ -48,12 +47,6 @@ export class BirthsComponent implements OnInit {
 		'40-44',
 		'45-49',
 		'50-54',
-		'55-59',
-		'60-64',
-		'65-69',
-		'70-74',
-		'75-79',
-		'80 and above'
 	]
 
 	registeredLCRs = [
@@ -117,6 +110,7 @@ export class BirthsComponent implements OnInit {
 		'religion':'',
 		'mother_marital_status':'',
 		'registered_lcr':'',
+		mothers_actual_work:''
 	}
  
 	invalid = {
@@ -138,8 +132,9 @@ export class BirthsComponent implements OnInit {
 		'religion':false,
 		'mother_marital_status':false,
 		'registered_lcr':false,
+		mothers_actual_work:false
 	}
-
+ 
 	isLoading = false
 	save(){
 		this.isLoading = true
@@ -155,11 +150,8 @@ export class BirthsComponent implements OnInit {
 			}
 		}
 		if(!hasError){
-			// this.fields.sorting_number = this.fields.sorting_number.toString()
-			// this.fields.household_number = this.fields.household_number.toString()
-			 
 			this.BirthsService.saveBirthRecord(this.fields).subscribe(data => {
-				console.log(data)
+				this.UtilityService.setAlert('Birth Record has been successfully saved','success')
 			})
 			this.isLoading = false
 		}else{			

@@ -7,9 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoleLogsComponent implements OnInit {
 
-  constructor() { }
+	constructor() { }
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {
+	}
+
+	log
+	params
+
+	agInit(params:any){
+		this.log = params.value
+		this.params  = params.data
+	}
+
+	refresh(params:any):boolean{
+		this.log = params.value
+		this.params = params.data
+		return true
+	}
+  
 
 }

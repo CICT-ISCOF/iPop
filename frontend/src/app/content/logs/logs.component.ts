@@ -19,6 +19,8 @@ export class LogsComponent implements OnInit {
 	theme = localStorage.getItem('data-theme')
 	logs = []
 
+	keyword = ''
+	
 	pagination = {
 		currentPage:0,
 		lastPage:0,
@@ -37,8 +39,7 @@ export class LogsComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false	
-			console.log(this.logs)
+			this.isLoading = false				
 		})
 	}
 
@@ -48,26 +49,27 @@ export class LogsComponent implements OnInit {
 		this.LogsService.paginateLogs(page).subscribe(response=>{
 			this.logs = response.data
 			this.isLoading = false	
+			this.LogsService.setPage(response.data)
 		})
 	}
 
 
-	formatUserAgent(agent){
-		let array = agent.split('/')
-		return  array[array.length - 2].replace(/[0-9,.]/g, '')
-	}
-
-	checkifMobile(params){
-		if(params.includes('Mobile')){
-			return false
-		}
-		return true
-	}
 
 	deleteLog(id){
 
 	}
 
+	refresh(){
+		this.ngOnInit()
+	}
+
+	search(){
+
+	}
+
+	multipleDelete(){
+
+	}
 
 
 }

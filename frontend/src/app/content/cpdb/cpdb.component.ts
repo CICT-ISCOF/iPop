@@ -347,7 +347,7 @@ export class CpdbComponent implements OnInit {
         'household_characteristics':'',
         'number_of_persons_living':'',
         'household_size_bracket':'',
-        'number_of_families':'5',
+        'number_of_families':'',
         'line_number_of_household_member':'',
         'name_of_household_member':'',
         'relationship_to_household_head':'',
@@ -363,16 +363,16 @@ export class CpdbComponent implements OnInit {
         'religious_affiliation':'',
         'have_special_skills':'',
         'type_of_special_skill':'',
-        'skills_specify':'',
+       
         'presence_of_disability':'',
-        'type_of_disability':'',
+		"type_of_disability":'',
         'indigenous_group_or_tribe':'',
         'name_of_group_or_tribe':'',
-        'specify_tribe':'',
+    
         'active_philhealth_member':'',
         'philhealth_membership_specify':'',
         'usual_occupation_of_working_household_member':'',
-        'specify_usual_occupation':'',
+     
         'gross_monthly_income':'',
         'income_bracket':'',
         'place_of_work':'',
@@ -395,8 +395,8 @@ export class CpdbComponent implements OnInit {
         'household_location':'',
         'flood_prone_area_water_level':'',
         'access_to_infotech':'',
-		'forps_beneficiary_household':'',		
-		'4ps_beneficiary_household':''
+		'4ps_beneficiary_household':'',
+		forps_beneficiary_household:'',
 	}
 
 
@@ -541,13 +541,8 @@ export class CpdbComponent implements OnInit {
 
 		this.isLoading = true
 		this.field['4ps_beneficiary_household'] = this.field['forps_beneficiary_household']	
-		this.field['specify_cooking_fuel'] = this.field.type_of_cooking_fuel
-		this.field['specify_usual_occupation'] = '5'
-		this.field['skills_specify'] = '5'
-		this.field['specify_tribe'] = '5'
-		
 		this.CpdbService.saveCPDPB(this.field).subscribe(data => {
-			this.UtilityService.setAlert('Record has been saved','success')
+			this.UtilityService.setAlert('CPDB Record has been saved','success')
 			this.isLoading = false
 		})
 		

@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
 import { UtilityService } from '../../../../utility.service'
 
+
 @Component({
   selector: 'app-table-cpdb',
   templateUrl: './table-cpdb.component.html',
@@ -20,70 +21,78 @@ export class TableCpdbComponent implements OnInit {
 		private  CpdbService :CpdbService,
 		@Inject(LOCALE_ID) private locale: string ,
 		private UtilityService : UtilityService
-	) { }
+	) { 
+		this.reload = this.CpdbService.getData().subscribe(data => {
+			this.rowData = data
+		})
+	}
 
+	reload
+	
 	ngOnInit(): void {
 
 	}
 
 	columnDefs = [	
-		{headerName: 'OPERATIONS', field: '',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:200 },
-		{headerName: 'STATUS', field: '', sortable: true, filter: 'agTextColumnFilter',cellRenderer: 'status' },
-		{headerName: 'MUNICIPALITY', field: 'municipality', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'BARANGAY', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'PUROK OR ZONE', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HOUSEHOLD NUMBER', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HOUSEHOLD CHARACTERISITCS', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'NO. OF PERSONS LIVING IN THE HOUSE', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HOUSEHOLD SIZE BRACKET', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'NUMBER OF FAMILIES', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'LINE NUMBER OF HOUSEHOLD MEMBER', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'NAME OF HOUSEHOLD MEMBERS', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'LINE NUMBER OF HOUSEHOLD MEMBER', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'NAME OF HOUSEHOLD MEMBERS', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'RELATIONSHIP TO HOUSEHOLD HEAD', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'SEX', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'DATE OF BIRTH', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'AGE AS OF LAST BIRTHDAY', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'AGE BRACKET', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'CIVIL STATUS', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HIGHEST EDUCATIONAL ATTAINMENT', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'SCHOOL ATTENDANCE', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'GRADE/YEAR LEVEL OF SCHOOL ATTENDANCE', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'REASON FOR NOT ATTENDING SCHOOL', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'RELIGIOUS AFFILIATION', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HAVE SPECIAL SKILLS', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'TYPE OF SPECIAL SKILLS', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'PRESENCE OF DISABILITY', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'TYPE OF DISABILITY', field: '', sortable: true, filter: 'agTextColumnFilter' },	
+		{headerName: 'OPERATIONS', field: '',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:250 },
+		{headerName: 'STATUS', field: 'status', sortable: true, filter: 'agTextColumnFilter',cellRenderer: 'status',width:150 },
+		{headerName: 'MUNICIPALITY', field: 'municipality', sortable: true, filter: 'agTextColumnFilter',width:200 },	
+		{headerName: 'BARANGAY', field: 'barangay', sortable: true, filter: 'agTextColumnFilter',width:200 },	
+		{headerName: 'PUROK OR ZONE', field: 'zone', sortable: true, filter: 'agTextColumnFilter',width:200 },	
+		{headerName: 'HOUSEHOLD NUMBER', field: 'household_number', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'HOUSEHOLD CHARACTERISITCS', field: 'household_characteristics', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'NO. OF PERSONS LIVING IN THE HOUSE', field: 'number_of_persons_living', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'HOUSEHOLD SIZE BRACKET', field: 'household_size_bracket', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'NUMBER OF FAMILIES', field: 'number_of_families', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'LINE NUMBER OF HOUSEHOLD MEMBER', field: 'line_number_of_household_member', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'NAME OF HOUSEHOLD MEMBERS', field: 'name_of_household_member', sortable: true, filter: 'agTextColumnFilter',width:350 },		
+		{headerName: 'RELATIONSHIP TO HOUSEHOLD HEAD', field: 'relationship_to_household_head', sortable: true, filter: 'agTextColumnFilter',width:350 },
 
-		{headerName: 'INDIGENOUS GROUP OR TRIBE', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'NAME OF INDIGENOUS OR TRIBE', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'ACTIVE PHILHEALTH MEMBER (18 YEARS OLD & ABOVE)', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'PHILHEALTH MEMBERSHIP-SPECIFY', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'USUAL OCCUPATION OF WORKING HH MEMBER', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'GROSS MONTHLY INCOME', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'INCOME BRACKET', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'PLACE OF WORK/EMPLOYMENT OF THE EARNING HOUSEHOLD MEMBER', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'NO. OF YEARS STAY (IN CURRENT ADDRESS)', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'NO. OF YEARS STAY BRACKET', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'FP CURRENTLY USED (BY WOMEN 10-50 YRS OLD)', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'TOTAL HOUSEHOLD MONTHLY INCOME', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HOUSEHOLD INCOME BRACKET', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HOUSE OWNERSHIP', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HOW MANY STORIES/LEVEL IS THE HOUSE?', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HOUSE CONSTRUCTION MATERIAL', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HOMELOT OWNERSHIP/TENURE STATUS', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HOUSEHOLD USUAL SOURCE OF WATER FOR DRINKING', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'TYPE OF TOILET THE HOUSEHOLD OWNS', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: "HOUSEHOLD'S GARBAGE DISPOSAL", field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'TYPE OF FUEL USE FOR LIGHTING', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'TYPE OF FUEL FOR COOKING', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HOUSE LOCATION GEO-HAZARD AREA', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'HOUSEHOLD LOCATION', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'WATER LEVEL IN FLOOD PRONE AREA', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'ACCESS TO INFORMATION TECHNOLOGY', field: '', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: '4PS BENEFICIARY HOUSEHOLD', field: '', sortable: true, filter: 'agTextColumnFilter' },		
+
+		{headerName: 'SEX', field: 'recordable.sex', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'DATE OF BIRTH', field: 'date_of_birth', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'AGE AS OF LAST BIRTHDAY', field: 'age', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'AGE BRACKET', field: 'age_bracket', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'CIVIL STATUS', field: 'civil_status', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'HIGHEST EDUCATIONAL ATTAINMENT', field: 'highest_educational_attainment', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'SCHOOL ATTENDANCE', field: 'school_attendance', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'GRADE/YEAR LEVEL OF SCHOOL ATTENDANCE', field: 'level_of_school_attendance', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'REASON FOR NOT ATTENDING SCHOOL', field: 'reason_for_not_attending_school', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'RELIGIOUS AFFILIATION', field: 'religious_affiliation', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'HAVE SPECIAL SKILLS', field: 'have_special_skills', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'TYPE OF SPECIAL SKILLS', field: 'type_of_special_skill', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'PRESENCE OF DISABILITY', field: 'presence_of_disability', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'TYPE OF DISABILITY', field: 'type_of_disability', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+
+		{headerName: 'INDIGENOUS GROUP OR TRIBE', field: 'indigenous_group_or_tribe', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'NAME OF INDIGENOUS OR TRIBE', field: 'name_of_group_or_tribe', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'ACTIVE PHILHEALTH MEMBER (18 YEARS OLD & ABOVE)', field: 'active_philhealth_member', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'PHILHEALTH MEMBERSHIP-SPECIFY', field: 'philhealth_membership_specify', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'USUAL OCCUPATION OF WORKING HH MEMBER', field: 'usual_occupation_of_working_household_member', sortable: true, filter: 'agTextColumnFilter' ,width:200},	
+		{headerName: 'GROSS MONTHLY INCOME', field: 'gross_monthly_income', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'INCOME BRACKET', field: 'income_bracket', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'PLACE OF WORK/EMPLOYMENT OF THE EARNING HOUSEHOLD MEMBER', field: 'place_of_work', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'NO. OF YEARS STAY (IN CURRENT ADDRESS)', field: 'number_of_years_stay', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'NO. OF YEARS STAY BRACKET', field: 'number_of_years_bracket', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'FP CURRENTLY USED (BY WOMEN 10-50 YRS OLD)', field: 'fp_currently_used', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'TOTAL HOUSEHOLD MONTHLY INCOME', field: 'total_household_monthly_income', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'HOUSEHOLD INCOME BRACKET', field: 'household_income_bracket', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+
+
+		{headerName: 'HOUSE OWNERSHIP', field: 'house_ownership', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'HOW MANY STORIES/LEVEL IS THE HOUSE?', field: 'house_levels', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'HOUSE CONSTRUCTION MATERIAL', field: 'house_construction_material', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'HOMELOT OWNERSHIP/TENURE STATUS', field: 'homelot_ownership_or_tenure_status', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'HOUSEHOLD USUAL SOURCE OF WATER FOR DRINKING', field: 'source_of_drinking_water', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'TYPE OF TOILET THE HOUSEHOLD OWNS', field: 'type_of_toilet', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: "HOUSEHOLD'S GARBAGE DISPOSAL", field: 'garbage_disposal', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'TYPE OF FUEL USE FOR LIGHTING', field: 'type_of_lighting_fuel', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'TYPE OF FUEL FOR COOKING', field: 'type_of_cooking_fuel', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'HOUSE LOCATION GEO-HAZARD AREA', field: 'geohazard_area', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'HOUSEHOLD LOCATION', field: 'household_location', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'WATER LEVEL IN FLOOD PRONE AREA', field: 'flood_prone_area_water_level', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: 'ACCESS TO INFORMATION TECHNOLOGY', field: 'access_to_infotech', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		{headerName: '4PS BENEFICIARY HOUSEHOLD', field: '4ps_beneficiary_household', sortable: true, filter: 'agTextColumnFilter' ,width:350},		
 		{headerName: 'DATE CREATED', field: 'created_at', sortable: true, filter: 'agTextColumnFilter', cellRenderer: (data) => {
 			return formatDate(data.value, 'EEEE,  MMM dd, yyyy - h:mm a', this.locale);
 		},width:300},	
@@ -95,7 +104,7 @@ export class TableCpdbComponent implements OnInit {
 		if(this.theme == 'dark' ){
 			return 'ag-theme-alpine-dark'
 		}else{
-			return 'ag-theme-material'
+			return 'ag-theme-alpine'
 		}
 	}
 
@@ -141,7 +150,8 @@ export class TableCpdbComponent implements OnInit {
 		this.gridAPI = event.api
 		this.columnAPi = event.columnAPi
 		this.CpdbService.getCPDBLists().subscribe(data => {
-			 event.api.setRowData(data.data)
+			 event.api.setRowData(data.data)		
+			 console.log(data)
 		 })
 	}
 

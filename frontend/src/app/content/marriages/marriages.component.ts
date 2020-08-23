@@ -88,7 +88,8 @@ export class MarriagesComponent implements OnInit {
         'wedding_ceremony_type':'',
         'residence_address':'',
         'solemnizing_officer':'',
-        'registered_lcr':'',
+		'registered_lcr':'',
+		age:''
 	}
 
 	invalid = {
@@ -106,7 +107,8 @@ export class MarriagesComponent implements OnInit {
         'wedding_ceremony_type':false,
         'residence_address':false,
         'solemnizing_officer':false,
-        'registered_lcr':false,	
+		'registered_lcr':false,	
+		age:false
 	}
 
 	isLoading = false

@@ -22,9 +22,40 @@ export class DeathsService {
 					'Authorization' : 'Bearer '+ this.token
 				})	
 
+	
+	private data = new Subject<any>();
+	private array = new Subject<any>();
+
+	setMultipleDelete(array){
+		this.array.next(array)
+	}
+
+	getMultipleDelete(){
+		return this.array.asObservable();
+	}	
+
+	setData(data){
+		this.data.next(data)
+	}
+
+	getData(){
+		return this.data.asObservable();
+	}	
+
+	getDeathLists(){
+		const url = this.baseURL 		
+		return this.http.get<any>(url, {headers:this.headers})
+	}
+
 
 	saveDeathRecord(record){
 		const url = this.baseURL 		
 		return this.http.post(url, record, {headers:this.headers})
+	}	
+	
+	
+	paginateAdminList(page){
+		const url = this.baseURL + '?page=' + page
+		return this.http.get<any>(url,{headers:this.headers})
 	}
 }

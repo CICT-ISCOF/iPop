@@ -12,4 +12,18 @@ export class ActionButtonsInMigsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
+  theme = localStorage.getItem('data-theme')
+
+  role
+
+	agInit(params:any){
+		this.role = params.value
+	}
+
+	refresh(params:any):boolean{
+	this.role = params.value
+		return true
+	}
+
 }

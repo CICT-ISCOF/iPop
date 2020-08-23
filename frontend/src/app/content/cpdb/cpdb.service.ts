@@ -21,6 +21,7 @@ export class CpdbService {
 					'Accept':'application/json',
 					'Authorization' : 'Bearer '+ this.token
 				})	
+	
 
 	private data = new Subject<any>();
 	private array = new Subject<any>();
@@ -43,7 +44,7 @@ export class CpdbService {
 	}	
 	
 	getCPDBLists(){
-		const url = this.baseURL 		
+		const url = this.baseURL  		
 		return this.http.get<any>(url, {headers:this.headers})
 	}
 
