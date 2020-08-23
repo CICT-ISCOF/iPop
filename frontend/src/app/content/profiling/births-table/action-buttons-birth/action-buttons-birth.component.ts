@@ -14,16 +14,15 @@ export class ActionButtonsBirthComponent implements OnInit {
 
   theme = localStorage.getItem('data-theme')
 
-  role
+  params
 
 	agInit(params:any){
-		this.role = params.value
+		this.params = params.data
 	}
 
 	refresh(params:any):boolean{
-	this.role = params.value
+	this.params = params.data
 		return true
 	}
-
 
 }

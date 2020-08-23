@@ -130,6 +130,10 @@ export class TableAdministratorComponent implements OnInit {
 			fullnames.push(selectedNodes[id].data.fullname)
 		}		
 		let names = fullnames.join(', ')
+		if(identifiers.length == 0){
+			this.UtilityService.setAlert('Please select admin you want to delete','error')
+			return
+		}
 		Swal.fire({
 			title: 'Are you sure you want to delete ' + names + ' ?' ,		
 			icon: 'warning',

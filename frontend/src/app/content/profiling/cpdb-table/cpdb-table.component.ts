@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CpdbService } from '../../cpdb/cpdb.service'
+import {   Subscription} from 'rxjs'
+import { UtilityService } from '../../../utility.service'
 
 
 @Component({
@@ -10,8 +12,18 @@ import { CpdbService } from '../../cpdb/cpdb.service'
 export class CpdbTableComponent implements OnInit {
 
 	constructor(
-		private CpdbService : CpdbService
-	) { }
+		private CpdbService : CpdbService,
+		private UtilityService : UtilityService
+	) {
+		
+		this.reload = this.CpdbService.getMultipleDelete().subscribe(array => {
+			for(let id in array){
+				this.deleteRecord(array[id])
+			}
+		})
+	 }
+
+	reload
 
 	ngOnInit(): void {
 		this.getCPDBLists()
@@ -61,12 +73,19 @@ export class CpdbTableComponent implements OnInit {
 
 	}
 
-	multipleDelete(){
+	deleteRecord(id){
+		this.CpdbService.deleteCPDB(id).subscribe(data=>{
+			this.UtilityService.setAlert('Data has been sucessfully deleted, Please refresh to see changes','info')
+		})
+	}
 
+
+	multipleDelete(){
+		this.CpdbService.setActionToDelete()
 	}
 
 	refresh(){
-
+		this.ngOnInit()
 	}
 
 }

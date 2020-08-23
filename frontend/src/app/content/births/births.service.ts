@@ -26,7 +26,29 @@ export class BirthsService {
 
 	
 	private data = new Subject<any>();
+	private reload = new Subject<any>();
 	private array = new Subject<any>();
+	private actionToDelete = new Subject<any>();
+
+
+	setActionToDelete(){
+		this.actionToDelete.next()
+	}
+
+	getActionToDelete(){
+		return this.actionToDelete.asObservable();
+	}
+
+	
+	setReload(){
+		this.reload.next();		
+	}
+	
+	getReload(){
+		return this.reload.asObservable();
+	}
+
+
 
 	setMultipleDelete(array){
 		this.array.next(array)
@@ -59,6 +81,11 @@ export class BirthsService {
 	paginateAdminList(page){
 		const url = this.baseURL + '?page=' + page
 		return this.http.get<any>(url,{headers:this.headers})
+	}
+
+	deleteRecord(id){		
+		const url = this.baseURL + '/' + id 		
+		return this.http.delete<any>(url, {headers:this.headers})
 	}
 
 }

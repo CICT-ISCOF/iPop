@@ -25,6 +25,11 @@ export class TableCpdbComponent implements OnInit {
 		this.reload = this.CpdbService.getData().subscribe(data => {
 			this.rowData = data
 		})
+
+		
+		this.reload = this.CpdbService.getActionToDelete().subscribe(()=>{
+			this.getSelectedRows()
+		})
 	}
 
 	reload
@@ -163,12 +168,16 @@ export class TableCpdbComponent implements OnInit {
 		for( let id in selectedNodes ){
 			identifiers.push(selectedNodes[id].data.id)
 		}
+		if(identifiers.length == 0){
+			this.UtilityService.setAlert('Please select data you want to delete','error')
+			return
+		}
 		for( let id in selectedNodes ){
 			fullnames.push(selectedNodes[id].data.fullname)
 		}		
-		let names = fullnames.join(', ')
+		let names = fullnames.join(', ')	
 		Swal.fire({
-			title: 'Are you sure you want to this record?' ,		
+			title: 'Are you sure you want to delete this record/s?' ,		
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonText: 'Delete',

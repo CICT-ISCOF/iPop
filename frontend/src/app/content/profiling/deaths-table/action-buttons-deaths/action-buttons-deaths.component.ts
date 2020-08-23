@@ -14,14 +14,16 @@ export class ActionButtonsDeathsComponent implements OnInit {
 
   theme = localStorage.getItem('data-theme')
 
-  status = 'Noted and will edit'
+  params
 
 	agInit(params:any){
-		// this.status = params.value
+		this.params = params.data
 	}
 
 	refresh(params:any):boolean{
-	// this.status = params.value
+	this.params = params.data
 		return true
 	}
+
+
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BirthsService } from '../../births/births.service'
+import { UtilityService } from '../../../utility.service'
 
 
 @Component({
@@ -10,8 +11,17 @@ import { BirthsService } from '../../births/births.service'
 export class BirthsTableComponent implements OnInit {
 
 	constructor(
-		private BirthsService : BirthsService
-	) { }
+		private BirthsService : BirthsService,
+		private UtilityService : UtilityService
+	) { 
+		this.reload = this.BirthsService.getMultipleDelete().subscribe(array => {
+			for(let id in array){
+				this.deleteRecord(array[id])
+			}
+		})
+	}
+
+	reload
 
 	ngOnInit(): void {
 		this.getCPDBLists()
@@ -61,12 +71,18 @@ export class BirthsTableComponent implements OnInit {
 
 	}
 
-	multipleDelete(){
+	deleteRecord(id){
+		this.BirthsService.deleteRecord(id).subscribe(data=>{
+			this.UtilityService.setAlert('Data has been sucessfully deleted, Please refresh to see changes','info')
+		})
+	}
 
+
+	multipleDelete(){
+		this.BirthsService.setActionToDelete()
 	}
 
 	refresh(){
-
+		this.ngOnInit()
 	}
-
 }

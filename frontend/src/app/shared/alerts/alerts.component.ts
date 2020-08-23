@@ -18,12 +18,20 @@ export class AlertsComponent implements OnInit {
 	 }
 
 	ngOnInit(): void {
-
+		this.fadeOut()
 	}
 
 	message
 
 	alerts = []
+
+	fadeOut(){
+		setInterval(()=>{
+			if(this.alerts.length !== 0){
+				this.alerts.pop()
+			}
+		},4500)
+	}
 
 	
 }

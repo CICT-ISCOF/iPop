@@ -135,7 +135,8 @@ export class OutMigComponent implements OnInit {
         'skills_acquired':'',
         'actual_place_of_origin':'',
         'place_of_origin':'',
-        'reasons_for_out_migrating':'',
+		'reasons_for_out_migrating':'',
+		household_number:''
 	}
 
 
@@ -159,7 +160,8 @@ export class OutMigComponent implements OnInit {
         'skills_acquired':false,
         'actual_place_of_origin':false,
         'place_of_origin':false,
-        'reasons_for_out_migrating':false,
+		'reasons_for_out_migrating':false,
+		household_number:false
 	}
 
 	isLoading = false

@@ -69,7 +69,6 @@ import { ActionButtonsCpdbComponent } from './content/profiling/cpdb-table/actio
 import { RecordStatusDeathsComponent } from './content/profiling/deaths-table/record-status-deaths/record-status-deaths.component';
 import { ActionButtonsDeathsComponent } from './content/profiling/deaths-table/action-buttons-deaths/action-buttons-deaths.component';
 import { TableDeathsComponent } from './content/profiling/deaths-table/table-deaths/table-deaths.component';
-import { TableBirthssComponent } from './content/profiling/birthss-table/table-birthss/table-birthss.component';
 import { TableBirthsComponent } from './content/profiling/births-table/table-births/table-births.component';
 import { StatusBirthComponent } from './content/profiling/births-table/status-birth/status-birth.component';
 import { ActionButtonsBirthComponent } from './content/profiling/births-table/action-buttons-birth/action-buttons-birth.component';
@@ -92,9 +91,26 @@ import { InMigsSearchComponent } from './content/search/in-migs-search/in-migs-s
 import { OutMigsSearchComponent } from './content/search/out-migs-search/out-migs-search.component';
 import { MarriagesSearchComponent } from './content/search/marriages-search/marriages-search.component';
 import { CpdbSearchComponent } from './content/search/cpdb-search/cpdb-search.component';
+import { DeviceComponent } from './content/logs/device/device.component';
+
+import { CommentCpdbComponent } from './content/shared/comments/comment-cpdb/comment-cpdb.component';
+import { CommentBirthsComponent } from './content/shared/comments/comment-births/comment-births.component';
+import { CommentDeathsComponent } from './content/shared/comments/comment-deaths/comment-deaths.component';
+import { CommentInMigComponent } from './content/shared/comments/comment-in-mig/comment-in-mig.component';
+import { CommentOutMigComponent } from './content/shared/comments/comment-out-mig/comment-out-mig.component';
+import { CommentMarriagesComponent } from './content/shared/comments/comment-marriages/comment-marriages.component';
 
 
 const routes: Routes = [
+  
+  { path:'comments/cpdb/:id', component:CommentCpdbComponent},  
+  { path:'comments/births/:id', component:CommentBirthsComponent},  
+  { path:'comments/deaths/:id', component:CommentDeathsComponent},  
+  { path:'comments/in-migration/:id', component:CommentInMigComponent},  
+  { path:'comments/out-migration/:id', component:CommentOutMigComponent},  
+  { path:'comments/marraiges/:id', component:CommentMarriagesComponent},  
+
+
   { path:'test', component:TestsComponent},  
 
   
@@ -182,8 +198,7 @@ const routes: Routes = [
     ActionButtonsCpdbComponent,
     RecordStatusDeathsComponent,
     ActionButtonsDeathsComponent,
-    TableDeathsComponent,
-    TableBirthssComponent,
+    TableDeathsComponent,  
     TableBirthsComponent,
     StatusBirthComponent,
     ActionButtonsBirthComponent,
@@ -205,7 +220,15 @@ const routes: Routes = [
     InMigsSearchComponent,
     OutMigsSearchComponent,
     MarriagesSearchComponent,
-    CpdbSearchComponent
+    CpdbSearchComponent,
+    RecordStatusDeathsComponent,
+    DeviceComponent,
+    CommentCpdbComponent,
+    CommentBirthsComponent,
+    CommentDeathsComponent,
+    CommentInMigComponent,
+    CommentOutMigComponent,
+    CommentMarriagesComponent
 
   ],
   imports: [
@@ -223,11 +246,42 @@ const routes: Routes = [
     TooltipModule,
     AgTableModule,
     AgGridModule.withComponents([
+
+      // -----admin----------------
       ActionButtonAdminComponent,
       RoleComponent,
 
+      // -----logs----------------
+      ActionButtonsLogsComponent,
+      RoleLogsComponent,
+      DeviceComponent,
+
+      // -----cpdb----------------
       ActionButtonsCpdbComponent,
-      RecordStatusComponent
+      RecordStatusComponent,
+
+      // -----deaths----------------   
+      ActionButtonsDeathsComponent,
+      RecordStatusDeathsComponent,
+
+      // -----births----------------
+      ActionButtonsBirthComponent,
+      StatusBirthComponent,
+
+      // -----in migration----------------
+      ActionButtonsInMigsComponent,
+      StatusInMigsComponent,
+
+      // -----out migration----------------
+      ActionButtonsOutMigsComponent,
+      StatusOutMigsComponent,
+      
+      // -----marriages----------------
+      ActionButtonsMarriageComponent,
+      StatusMarriageComponent,
+
+
+
       
     
     ])

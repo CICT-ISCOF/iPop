@@ -27,6 +27,10 @@ export class TableBirthsComponent implements OnInit {
 		this.reload = this.BirthsService.getData().subscribe(data => {
 			this.rowData = data
 		})
+
+		this.reload = this.BirthsService.getActionToDelete().subscribe(()=>{
+			this.getSelectedRows()
+		})
 	}
 
 	reload
@@ -131,8 +135,12 @@ export class TableBirthsComponent implements OnInit {
 			fullnames.push(selectedNodes[id].data.fullname)
 		}		
 		let names = fullnames.join(', ')
+		if(identifiers.length == 0){
+			this.UtilityService.setAlert('Please select data you want to delete','error')
+			return
+		}
 		Swal.fire({
-			title: 'Are you sure you want to this record?' ,		
+			title: 'Are you sure you want delete to this record?' ,		
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonText: 'Delete',

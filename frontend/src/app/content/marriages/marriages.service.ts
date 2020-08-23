@@ -25,7 +25,29 @@ export class MarriagesService {
 
 	
 	private data = new Subject<any>();
+	private reload = new Subject<any>();
 	private array = new Subject<any>();
+	private actionToDelete = new Subject<any>();
+
+
+	setActionToDelete(){
+		this.actionToDelete.next()
+	}
+
+	getActionToDelete(){
+		return this.actionToDelete.asObservable();
+	}
+
+	
+	setReload(){
+		this.reload.next();		
+	}
+	
+	getReload(){
+		return this.reload.asObservable();
+	}
+
+
 
 	setMultipleDelete(array){
 		this.array.next(array)

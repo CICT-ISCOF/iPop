@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OutMigService } from '../../out-mig/out-mig.service'
-
+import { UtilityService } from '../../../utility.service'
 
 @Component({
   selector: 'app-out-migs-table',
@@ -10,8 +10,17 @@ import { OutMigService } from '../../out-mig/out-mig.service'
 export class OutMigsTableComponent implements OnInit {
 
 	constructor(
-		private OutMigService : OutMigService
-	) { }
+		private OutMigService : OutMigService,
+		private UtilityService : UtilityService
+	) {
+		this.reload = this.OutMigService.getMultipleDelete().subscribe(array => {
+			for(let id in array){
+				this.deleteRecord(array[id])
+			}
+		})
+	}
+
+	reload
 
 	ngOnInit(): void {
 		this.getCPDBLists()
@@ -61,12 +70,19 @@ export class OutMigsTableComponent implements OnInit {
 
 	}
 
-	multipleDelete(){
+	deleteRecord(id){
+		this.OutMigService.deleteRecord(id).subscribe(data=>{
+			this.UtilityService.setAlert('Data has been sucessfully deleted, Please refresh to see changes','info')
+		})
+	}
 
+
+	multipleDelete(){
+		this.OutMigService.setActionToDelete()
 	}
 
 	refresh(){
-
+		this.ngOnInit()
 	}
 
 }
