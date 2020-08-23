@@ -50,6 +50,7 @@ class MarriageUpdateRequest extends FormRequest
             ],
             'couple_name' => ['nullable', 'max:255'],
             'sex' => ['nullable', Rule::in(['Male', 'Female'])],
+            'age' => ['nullable', 'numeric'],
             'age_bracket' => [
                 'nullable',
                 Rule::in([

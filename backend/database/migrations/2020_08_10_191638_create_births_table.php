@@ -63,6 +63,7 @@ class CreateBirthsTable extends Migration
             $table->string('religion');
             $table->string('mother_marital_status');
             $table->string('registered_lcr');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

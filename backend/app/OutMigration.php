@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 class OutMigration extends Model
 {
     protected $fillable = [
@@ -12,6 +10,7 @@ class OutMigration extends Model
         'barangay',
         'total_cases',
         'case_number',
+        'household_number',
         'month',
         'name',
         'sex',

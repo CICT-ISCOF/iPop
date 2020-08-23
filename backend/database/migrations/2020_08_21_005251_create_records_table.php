@@ -20,12 +20,8 @@ class CreateRecordsTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
-            $table->enum('status', [
-                'Valid',
-                'Invalid',
-                'Pending',
-                'Requires Revalidation'
-            ]);
+            $table->string('status');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

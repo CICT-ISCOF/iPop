@@ -37,6 +37,7 @@ class CreateMarriagesTable extends Migration
             ]);
             $table->string('couple_name');
             $table->enum('sex', ['Male', 'Female']);
+            $table->unsignedTinyInteger('age');
             $table->enum('age_bracket', [
                 'Below 1 year old',
                 '01-04',
@@ -62,6 +63,7 @@ class CreateMarriagesTable extends Migration
             $table->string('residence_address');
             $table->string('solemnizing_officer');
             $table->string('registered_lcr');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -50,6 +50,7 @@ class MarriageRequest extends FormRequest
             ],
             'couple_name' => ['required', 'max:255'],
             'sex' => ['required', Rule::in(['Male', 'Female'])],
+            'age' => ['required', 'numeric'],
             'age_bracket' => [
                 'required',
                 Rule::in([

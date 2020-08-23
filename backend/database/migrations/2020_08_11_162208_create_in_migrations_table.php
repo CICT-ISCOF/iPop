@@ -62,6 +62,7 @@ class CreateInMigrationsTable extends Migration
             $table->string('actual_place_of_origin');
             $table->string('place_of_origin');
             $table->string('reasons_for_in_migrating');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ class InMigrationController extends Controller
      */
     public function index()
     {
-        return InMigration::with('record')->paginate(10);
+        return InMigration::with('record.user')->paginate(10);
     }
 
     /**
@@ -48,7 +48,7 @@ class InMigrationController extends Controller
      */
     public function show($id)
     {
-        return InMigration::with('record')->findOrFail($id);
+        return InMigration::with('record.user')->findOrFail($id);
     }
 
     /**
