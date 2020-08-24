@@ -21,6 +21,10 @@ export class CpdbTableComponent implements OnInit {
 				this.deleteRecord(array[id])
 			}
 		})
+
+		this.reload = this.CpdbService.getRow().subscribe(data => {
+			this.ngOnInit()
+		})
 	 }
 
 	reload
@@ -48,7 +52,8 @@ export class CpdbTableComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false				
+			this.isLoading = false			
+			console.log(response.data)	
 		})
 	}
 
@@ -70,7 +75,9 @@ export class CpdbTableComponent implements OnInit {
 
 	keyword = ''
 	search(){
-
+		this.CpdbService.search(this.keyword).subscribe(data => {
+			console.log(data)
+		})
 	}
 
 	deleteRecord(id){

@@ -8,7 +8,7 @@ import { DeviceComponent } from '../device/device.component';
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
 import { UtilityService } from '../../../utility.service'
-
+import { MapLogsComponent } from '../map-logs/map-logs.component'
 
 @Component({
   selector: 'app-table-logse',
@@ -49,8 +49,9 @@ export class TableLogseComponent implements OnInit {
    
     columnDefs = [	
 		{headerName: 'Fullname', field: 'user_id',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:260 },		
-		{headerName: 'IP Address', field: 'ip_address', sortable: true, filter: 'agTextColumnFilter',width:150 },	
-		{headerName: 'Device', field: 'user_agent', sortable: true, filter: 'agTextColumnFilter' ,cellRenderer: 'device' },
+		{headerName: 'IP Address', field: 'ip_address', sortable: true, filter: 'agTextColumnFilter',width:150 },	{headerName: 'Location', field: 'info.city', sortable: true, filter: 'agTextColumnFilter',width:150 },	
+		{headerName: 'Coordinates', field: 'info.city', sortable: true, filter: 'agTextColumnFilter',width:150 ,cellRenderer: 'map' , },			
+		{headerName: 'Device', field: 'user_agent', sortable: true, filter: 'agTextColumnFilter' ,cellRenderer: 'device' ,width:250  },
 		{headerName: 'Action', field: 'action', sortable: true, filter: 'agTextColumnFilter' ,width:300},
 		{headerName: 'Date Created', field: 'created_at', sortable: true, filter: 'agTextColumnFilter', cellRenderer: (data) => {
 			return formatDate(data.value, 'EEEE,  MMM dd, yyyy - h:mm a', this.locale);
@@ -71,7 +72,8 @@ export class TableLogseComponent implements OnInit {
 	frameworkComponents = {
 		actionButtons: ActionButtonsLogsComponent,
 		role: RoleLogsComponent,
-		device:DeviceComponent
+		device:DeviceComponent,
+		map:MapLogsComponent
 	}
 
     rowData: any;    

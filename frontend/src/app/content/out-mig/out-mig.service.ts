@@ -86,9 +86,5 @@ export class OutMigService {
 		return this.http.delete<any>(url, {headers:this.headers})
 	}
 
-	deleteRecord(id){		
-		const url = this.baseURL + '/' + id 		
-		return this.http.delete<any>(url, {headers:this.headers})
-	}
 
 }

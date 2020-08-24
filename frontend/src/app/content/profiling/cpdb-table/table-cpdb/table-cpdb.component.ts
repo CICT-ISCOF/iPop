@@ -54,7 +54,7 @@ export class TableCpdbComponent implements OnInit {
 		{headerName: 'RELATIONSHIP TO HOUSEHOLD HEAD', field: 'relationship_to_household_head', sortable: true, filter: 'agTextColumnFilter',width:350 },
 
 
-		{headerName: 'SEX', field: 'recordable.sex', sortable: true, filter: 'agTextColumnFilter',width:350 },	
+		{headerName: 'SEX', field: 'sex', sortable: true, filter: 'agTextColumnFilter',width:350 },	
 		{headerName: 'DATE OF BIRTH', field: 'date_of_birth', sortable: true, filter: 'agTextColumnFilter',width:350 },	
 		{headerName: 'AGE AS OF LAST BIRTHDAY', field: 'age', sortable: true, filter: 'agTextColumnFilter',width:350 },	
 		{headerName: 'AGE BRACKET', field: 'age_bracket', sortable: true, filter: 'agTextColumnFilter',width:350 },	

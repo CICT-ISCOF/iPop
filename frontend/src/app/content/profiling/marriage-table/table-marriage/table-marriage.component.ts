@@ -39,7 +39,7 @@ export class TableMarriageComponent implements OnInit {
 	}
 
 	columnDefs = [	
-		{headerName: 'Operations', field: '',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:200 },
+		{headerName: 'Operations', field: '',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:350 },
 		{headerName: 'Status', field: '', sortable: true, filter: 'agTextColumnFilter',cellRenderer: 'status' },
 		{headerName: 'Sorting Number', field: '', sortable: true, filter: 'agTextColumnFilter' },
 		{headerName: 'Municipality', field: 'municipality', sortable: true, filter: 'agTextColumnFilter' },	

@@ -39,7 +39,7 @@ export class TableDeathsComponent implements OnInit {
 	}
 
   columnDefs = [	
-		{headerName: 'Operations', field: 'id',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:250 },
+		{headerName: 'Operations', field: 'id',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:350 },
 		{headerName: 'Status', field: 'id', sortable: true, filter: 'agTextColumnFilter',cellRenderer: 'status',width:200 },
 		{headerName: 'Sorting Number', field: 'sorting_number', sortable: true, filter: 'agTextColumnFilter',width:300 },
 		{headerName: 'Municipality', field: 'municipality', sortable: true, filter: 'agTextColumnFilter',width:300 },	
