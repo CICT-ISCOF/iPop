@@ -54,7 +54,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        $comment->update($request->only(['body']));
+        $comment->update($request->only(['body', 'noted']));
         return $comment;
     }
 

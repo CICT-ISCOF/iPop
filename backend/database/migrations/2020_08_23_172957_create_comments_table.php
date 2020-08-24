@@ -21,6 +21,7 @@ class CreateCommentsTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
+            $table->boolean('noted')->default(false);
             $table->timestamps();
         });
     }
