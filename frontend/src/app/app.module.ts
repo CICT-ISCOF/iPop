@@ -99,6 +99,8 @@ import { CommentDeathsComponent } from './content/shared/comments/comment-deaths
 import { CommentInMigComponent } from './content/shared/comments/comment-in-mig/comment-in-mig.component';
 import { CommentOutMigComponent } from './content/shared/comments/comment-out-mig/comment-out-mig.component';
 import { CommentMarriagesComponent } from './content/shared/comments/comment-marriages/comment-marriages.component';
+import { MapLogsComponent } from './content/logs/map-logs/map-logs.component';
+
 
 
 const routes: Routes = [
@@ -228,7 +230,9 @@ const routes: Routes = [
     CommentDeathsComponent,
     CommentInMigComponent,
     CommentOutMigComponent,
-    CommentMarriagesComponent
+    CommentMarriagesComponent,
+    MapLogsComponent,
+
 
   ],
   imports: [
@@ -255,6 +259,7 @@ const routes: Routes = [
       ActionButtonsLogsComponent,
       RoleLogsComponent,
       DeviceComponent,
+      MapLogsComponent,
 
       // -----cpdb----------------
       ActionButtonsCpdbComponent,

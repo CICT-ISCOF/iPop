@@ -29,3 +29,11 @@ img {
 *:focus {
     outline: 0;
 }
+
+.fa-circle {
+    color: #00C34F;
+    margin-left: -30px;
+    transform: translateY(11px);
+    font-size: 10px;
+    -webkit-text-stroke: 1px white;
+}

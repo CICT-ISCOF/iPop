@@ -81,6 +81,11 @@ export class MarriagesService {
 		return this.http.get<any>(url,{headers:this.headers})
 	}
 
+	deleteRecord(id){		
+		const url = this.baseURL + '/' + id 		
+		return this.http.delete<any>(url, {headers:this.headers})
+	}
+
 
 
 }

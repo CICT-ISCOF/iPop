@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CpdbService } from '../../../cpdb/cpdb.service'
+import { Subject } from 'rxjs'
 
 @Component({
   selector: 'app-record-status',
@@ -7,21 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecordStatusComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private CpdbService : CpdbService
+  ) { 
+    
+  }
+  reload
 
   ngOnInit(): void {
   }
 
   theme = localStorage.getItem('data-theme')
 
-  status = 'Noted and will edit'
+  status = ''
 
 	agInit(params:any){
-		// this.status = params.value
+		this.status = params.data.record.status
 	}
 
 	refresh(params:any):boolean{
-	// this.status = params.value
+	this.status = params.data.record.status
 		return true
 	}
 
