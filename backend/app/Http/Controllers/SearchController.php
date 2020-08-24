@@ -35,10 +35,11 @@ class SearchController extends Controller
                 ]
             ]);
         }
+        $type = "App\\{$type}";
         $model = new $type();
-        $model = $model->with('record');
+        $model = $model::with('record.user')->with('comments.user');
         $count = 0;
-        foreach($model->getFillable() as $key)
+        foreach((new $type)->getFillable() as $key)
         {
             if($count === 0)
             {

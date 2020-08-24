@@ -32,7 +32,7 @@ class MarriageController extends Controller
     public function store(MarriageRequest $request)
     {
         Log::record('Created a Marriage record.');
-        $marriage = Marriage::create($request->validate());
+        $marriage = Marriage::create($request->validated());
         $record = new Record([
             'user_id' => $request->user()->id,
             'status' => 'Pending'

@@ -67,7 +67,6 @@ class CPDB extends Model
         });
     }
 
-
     public function record()
     {
         return $this->morphOne(Record::class, 'recordable');

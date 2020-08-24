@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\CPDB;
+use App\cpdb;
 use App\Log;
 use App\Record;
 use Illuminate\Http\Request;
 
-class CPDBController extends Controller
+class cpdbController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,8 +29,8 @@ class CPDBController extends Controller
      */
     public function store(Request $request)
     {
-        Log::record('Created new CPDB record.');
-        $cpdb =  CPDB::create($request->all());
+        Log::record('Created new cpdb record.');
+        $cpdb =  cpdb::create($request->all());
         $record = new Record([
             'user_id' => $request->user()->id,
             'status' => 'Pending',
@@ -57,27 +57,27 @@ class CPDBController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CPDB  $cPDB
+     * @param  \App\CPDB  $cpdb
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CPDB $cPDB)
+    public function update(Request $request, CPDB $cpdb)
     {
-        Log::record('Updated a CPDB record.');
-        $cPDB->update($request->all());
-        $cPDB->record->update(['status' => 'Requires Revalidation']);
-        return $cPDB;
+        Log::record('Updated a cpdb record.');
+        $cpdb->update($request->all());
+        $cpdb->record->update(['status' => 'Requires Revalidation']);
+        return $cpdb;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CPDB  $cPDB
+     * @param  \App\CPDB  $cpdb
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CPDB $cPDB)
+    public function destroy(CPDB $cpdb)
     {
-        Log::record('Deleted a CPDB record.');
-        $cPDB->delete();
+        Log::record('Deleted a cpdb record.');
+        $cpdb->delete();
         return response('', 204);
     }
 }
