@@ -13,11 +13,12 @@ class StatisticsController extends Controller
         $data = [
             'municipalities' => [],
             'barangays' => [],
-            'population' => [
-                'total' => 0,
-                'municipalities' => [],
-                'barangays' => [],
-            ],
+        ];
+
+        $population = [
+            'total' => 0,
+            'municipalities' => [],
+            'barangays' => [],
         ];
 
         $models = [
@@ -35,9 +36,9 @@ class StatisticsController extends Controller
                 ->groupBy('municipality')
                 ->get();
             foreach ($municipalities as $record) {
-                if(!isset($data['population']['municipalities'][$record->municipality]))
+                if(!isset($population['municipalities'][$record->municipality]))
                 {
-                    $data['population']['municipalities'][$record->municipality] =
+                    $population['municipalities'][$record->municipality] =
                         $model::where('municipality', $record->municipality)
                             ->count();
                 } 
@@ -58,9 +59,9 @@ class StatisticsController extends Controller
                 ->get();
 
             foreach ($barangays as $record) {
-                if(!isset($data['population']['barangays'][$record->barangay]))
+                if(!isset($population['barangays'][$record->barangay]))
                 {
-                    $data['population']['barangays'][$record->barangay] =
+                    $population['barangays'][$record->barangay] =
                         $model::where('municipality', $record->municipality)
                             ->where('barangay', $record->barangay)
                             ->count();
@@ -94,7 +95,7 @@ class StatisticsController extends Controller
                 }
             }
 
-            $data['population']['total'] += $model::count();
+            $population['total'] += $model::count();
         }
 
         // $data = $this->_transform($data);
@@ -104,6 +105,7 @@ class StatisticsController extends Controller
             'totals' => [
                 'municipalities' => count($data['municipalities']),
                 'barangays' => count($data['barangays']),
+                'population' => $population
             ],
         ];
     }
