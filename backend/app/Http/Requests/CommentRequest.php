@@ -34,7 +34,7 @@ class CommentRequest extends FormRequest
                 'OutMigration',
                 'Marriage'
             ])],
-            'commentable_id' => ['required']
+            'commentable_id' => ['required', 'numeric'],
         ];
     }
 
@@ -47,6 +47,7 @@ class CommentRequest extends FormRequest
             'type.string' => 'Specify the record\'s type.',
             'type.in' => 'Invalid type. Valid types are Birth, Death, CPDB, InMigration, OutMigration and Marriage.',
             'commentable_id.required' => 'The (Birth, Death, CPDB, InMigration, OutMigration or Marriage)\'s ID must be provided.',
+            'commentable_id.numberic' => 'ID provided must be a numeric value.'
         ];
     }
 }

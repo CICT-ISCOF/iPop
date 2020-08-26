@@ -14,6 +14,16 @@ class File extends Model
         'public' => 'boolean',
     ];
 
+    protected $hidden = ['name', 'url', 'user_id'];
+
+    protected $appends = ['uri'];
+
+    public function getUriAttribute()
+    {
+        $scope = $this->public ? 'public' : 'private';
+        return url("/file/{$scope}/{$this->id}");
+    }
+
     protected static function booted()
     {
         static::deleting(function ($file) {
