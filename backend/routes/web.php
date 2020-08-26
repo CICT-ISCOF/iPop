@@ -50,7 +50,14 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::apiResource('marriages', 'MarriageController');
     Route::apiResource('cpdb', 'CPDBController');
     Route::apiResource('records', 'RecordController')->except(['store', 'destroy']);
-    Route::get('/statistics', 'StatisticsController@index');
+    Route::prefix('/statistics')->group(function() {
+        Route::get('/general', 'StatisticsController@index');
+        Route::get('/population', 'StatisticsController@population');
+        Route::get('/totals', 'StatisticsController@totals');
+        Route::get('/genders', 'StatisticsController@genders');
+        Route::get('/municipality', 'StatisticsController@municipality');
+        Route::get('/marriages', 'StatisticsController@marriages');
+    });
 
     // Comments
     Route::apiResource('comments', 'CommentController')->except(['index']);
