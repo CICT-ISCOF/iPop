@@ -24,33 +24,22 @@ class SearchController extends Controller
     public function records(Request $request)
     {
         $query = $request->input('query');
-        Log::record('User searched for records. Query: ' . $query);
         $type = $request->input('type');
         $types = ['Birth', 'Death', 'CPDB', 'InMigration', 'OutMigration'];
-        $errors = [];
+        
         if(!in_array($type, $types))
         {
-            $errors['query'] = ['Invalid record type. Valid types are '.implode(', ', $types)];
-        }
-        $type = "App\\{$type}";
-        $model = new $type();
-        $columns = $model->getFillable();
-        $column = $request->input('column');
-        if(!in_array($column, $columns))
-        {
-            $errors['column'] = ['Invalid column. Valid columns are '.implode(', ', $columns)];
-        }
-
-        if(!empty($errors))
-        {
             return response([
-                'errors' => $errors
+                'errors' => [
+                    'type' => ['Invalid record type. Valid types are '.implode(', ', $types)]
+                ],
             ], 400);
         }
 
-        return $model::with('record.user.profilePicture')
-            ->with('comments.user.profilePicture')
-            ->where($column, $query)
-            ->paginate(10);
+        $model = "App\\{$type}";
+
+        Log::record('User searched for records. Query: ' . $query);
+
+        return $model::search($query)->paginate(10);
     }
 }

@@ -174,6 +174,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         Torann\GeoIP\GeoIPServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
+        TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
     ],
 
     /*
