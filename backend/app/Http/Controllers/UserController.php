@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::orderBy('role')->paginate(10);
+        return User::with('profile_picture')->orderBy('role')->paginate(10);
     }
 
     /**
@@ -42,9 +42,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        return $user;
+        return User::with('profile_picture')->findOrFail($id);
     }
 
     /**
@@ -64,10 +64,13 @@ class UserController extends Controller
         if (isset($data['profile_picture'])) {
             $file = File::process($data['profile_picture'], $user);
             $file->public = true;
-            if ($user->profilePicture !== null) {
-                $user->profilePicture->delete();
-            }
+            $oldFile = $user->profilePicture;
             $user->profilePicture()->save($file);
+            $user->profile_picture_id = $file->id;
+            $user->save();
+            if ($oldFile instanceof File) {
+                $oldFile->delete();
+            }
         }
         if ($request->user()->id === $user->id) {
             unset($data['role']);

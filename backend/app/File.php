@@ -20,8 +20,10 @@ class File extends Model
 
     public function getUriAttribute()
     {
-        $scope = $this->public ? 'public' : 'private';
-        return url("/file/{$scope}/{$this->id}");
+        $property = $this->attributes['public'];
+        $scope = ($property === 1 || $property === true) ? "public" : "private";
+        $id = $this->attributes['id'];
+        return url("/file/{$scope}/{$id}");
     }
 
     protected static function booted()

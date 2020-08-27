@@ -13,10 +13,7 @@ class FileController extends Controller
         if (!$file->public) {
             return response('', 404);
         }
-        return response(Storage::get($file->url), 200, [
-            'Content-Type' => $file->type,
-            'Content-Length' => $file->size,
-        ]);
+        return $this->stream($file);
     }
 
     public function downloadPublic(File $file)
@@ -24,10 +21,26 @@ class FileController extends Controller
         if (!$file->public) {
             return response('', 404);
         }
-        return Storage::download($file->url);
+        return $this->download($file);
     }
 
     public function streamPrivate(File $file)
+    {
+        return $this->stream($file);
+    }
+
+    public function downloadPrivate(File $file)
+    {
+        return $this->download($file);
+    }
+    
+    /**
+     * Stream a file as binary into the response.
+     * 
+     * @param \App\File $file
+     * @return \Illuminate\Http\Response 
+     */
+    private function stream(File $file)
     {
         return response(Storage::get($file->url), 200, [
             'Content-Type' => $file->type,
@@ -35,7 +48,10 @@ class FileController extends Controller
         ]);
     }
 
-    public function downloadPrivate(File $file)
+    /**
+     * Return a file as a download response.
+     */
+    private function download(File $file)
     {
         return Storage::download($file->url);
     }
