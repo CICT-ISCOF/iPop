@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::with('profile_picture')->orderBy('role')->paginate(10);
+        return User::with('profilePicture')->orderBy('role')->paginate(10);
     }
 
     /**
