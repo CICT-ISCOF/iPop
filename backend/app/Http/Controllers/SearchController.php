@@ -33,24 +33,24 @@ class SearchController extends Controller
                 'errors' => [
                     'query' => ['Invalid record type. Valid types are '.implode(', ', $types)]
                 ]
-            ]);
+            ], 400);
         }
         $type = "App\\{$type}";
         $model = new $type();
-        $model = $model::with('record.user')->with('comments.user');
-        $count = 0;
-        foreach((new $type)->getFillable() as $key)
+        $columns = $model->getFillable();
+        $column = $request->input('column');
+        if(!in_array($column, $columns))
         {
-            if($count === 0)
-            {
-                $model = $model->where($key, 'LIKE', "%{$query}%");
-            }
-            else
-            {
-                $model = $model->orWhere($key, 'LIKE', "%{$query}%");
-            }
-            $count++;
+            return response([
+                'errors' => [
+                    'query' => ['Invalid column. Valid columns are '.implode(', ', $columns)]
+                ]
+            ], 400);
         }
-        return $model->paginate(10);
+
+        return $model::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
+            ->where($column, $query)
+            ->paginate(10);
     }
 }
