@@ -27,13 +27,10 @@ class SearchController extends Controller
         Log::record('User searched for records. Query: ' . $query);
         $type = $request->input('type');
         $types = ['Birth', 'Death', 'CPDB', 'InMigration', 'OutMigration'];
+        $errors = [];
         if(!in_array($type, $types))
         {
-            return response([
-                'errors' => [
-                    'query' => ['Invalid record type. Valid types are '.implode(', ', $types)]
-                ]
-            ], 400);
+            $errors['query'] = ['Invalid record type. Valid types are '.implode(', ', $types)];
         }
         $type = "App\\{$type}";
         $model = new $type();
@@ -41,10 +38,13 @@ class SearchController extends Controller
         $column = $request->input('column');
         if(!in_array($column, $columns))
         {
+            $errors['column'] = ['Invalid column. Valid columns are '.implode(', ', $columns)];
+        }
+
+        if(!empty($errors))
+        {
             return response([
-                'errors' => [
-                    'query' => ['Invalid column. Valid columns are '.implode(', ', $columns)]
-                ]
+                'errors' => $errors
             ], 400);
         }
 
