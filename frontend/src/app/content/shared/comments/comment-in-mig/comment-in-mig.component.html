@@ -1,0 +1,324 @@
+<div *ngIf="isLoading" class="loader"></div>
+<div *ngIf="!ViewData" class="comment-container">
+    <div class="row">
+        <div class="col-md-3 ">
+            <div class="comment-box">
+                <p>Write a Comment
+                    <span (click)="ViewData = true" tooltip="View Data Encoded by Jamel Eid Yassin" placement="right" show-delay="100" [theme]="theme">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-journals" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2z"/>
+                            <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2zM1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                          </svg>
+                    </span>
+                </p>
+                <textarea #textarea [(ngModel)]="message" placeholder="Aa" class="form-control" name="" id="" cols="30" rows="10"></textarea>
+
+                <button (click)="addComment()" class="button send">Add Comment</button>
+            </div>
+        </div>
+
+        <div class="col-md-8 comments">
+            <br>
+            <div class="operaitve-buttons">
+                <i (click)="approve()" tooltip="Approve this data" placement="right" show-delay="100" [theme]="theme" style="color:#00C34F" class="im im-thumb-up"></i>
+
+                <i (click)="disapprove()" tooltip="Disapprove this data" placement="right" show-delay="100" [theme]="theme" style="color:black" class="im im-thumb-down"></i>
+
+
+                <svg (click)="needsEditing()" tooltip="Needs editing" placement="right" show-delay="100" [theme]="theme" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-diamond-fill" fill="orange" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                </svg>
+
+
+                <svg (click)="noted()" tooltip="Mark as noted" placement="right" show-delay="100" [theme]="theme" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check2-square" fill="#4285F4" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                    <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 0 0 3 14.5h10a1.5 1.5 0 0 0 1.5-1.5V8a.5.5 0 0 0-1 0v5a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5h8a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 3v10z"/>
+                </svg>
+
+            </div>
+            <br>
+            <span *ngIf="fields.record.status == 'Pending'" class="badge badge-danger ">{{ fields.record.status }}</span>
+            <span *ngIf="fields.record.status == 'Approved'" class="badge badge-success">{{fields.record.status }}</span>
+            <span *ngIf="fields.record.status == 'Needs Editing'" class="badge badge-warning">{{fields.record.status }}</span>
+            <span *ngIf="fields.record.status == 'Noted and will edit'" class="badge badge-primary">{{ fields.record.status }}</span>
+            <span *ngIf="fields.record.status == 'Disapproved'" class="badge badge-dark">{{ fields.record.status }}</span>
+            <span style="background: palevioletred !important;" *ngIf="fields.record.status == 'Requires Revalidation'" class="badge badge-dark">{{ fields.record.status }}!</span>
+            <br>
+            <p style="text-align: center;" *ngIf="comments.length == 0">No comments yet....</p>
+            <div class="comment container" *ngFor="let comment of comments">
+                <div class="img-container">
+                    <img src="../../../../../assets/wallpapers/1.jpg" alt="">
+                </div>
+                <div class="text">
+                    <div class="name">
+                        <span>@{{ formatName(comment.user.fullname) }}</span>{{ comment.body }}
+                    </div>
+                    <div class="time">
+                        {{ comment.created_at | date: 'EEEE, h:mm a' }}
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button (click)="reply()" class="clickable mr-auto" style="color:gray">Reply</button>
+                    <button (click)="removeComment(comment.id)" class="clickable mr-auto" style="color:gray">Remove</button>
+                    <i tooltip="Mark as noted" placement="right" show-delay="100" [theme]="theme" style="color:gray" class="fas fa-bell clickable"></i>
+                    <i tooltip="noted" placement="right" show-delay="100" [theme]="theme" style="color:#4285F4" class="fas fa-bell clickable"></i>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div *ngIf="ViewData" class="view-data">
+    <i (click)="ViewData = false" class="fa fa-chevron-left"></i>
+    <div class="container in-migs-component">
+
+        <br>
+        <div class="inputs">
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="sorting-number">Sorting Number</label>
+                    <input [(ngModel)]="fields.sorting_number" t type="number" class="form-control" id="sorting-number">
+                    <div class="invalid-feedback">
+                        Sorting Number is required
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5>Location</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="municipality">Municipality</label>
+                    <select [(ngModel)]="fields.municipality" class="custom-select" id="municipality">
+                        <option selected disabled >Choose...</option>
+                        <option>Barotac Nuevo</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Municipality is required
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="barangay">Barangay</label>
+                    <select [(ngModel)]="fields.barangay" class="custom-select" id="barangay">
+                        <option selected disabled >Choose...</option>
+                        <option>Lagubang</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Barangay is required
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5>household case</h5>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="household-number">Household Number</label>
+                    <input [(ngModel)]="fields.household_number" type="number" class="form-control" id="household-number">
+                    <div class="invalid-feedback">
+                        Household Number is required
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="total-cases">Total Cases</label>
+                    <input [(ngModel)]="fields.total_cases" type="number" class="form-control" id="total-cases">
+                    <div class="invalid-feedback">
+                        Total Cases is required
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="case-number">Case Number</label>
+                    <input [(ngModel)]="fields.case_number" type="number" class="form-control" id="case-number">
+                    <div class="invalid-feedback">
+                        Case Number is required
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5>details</h5>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="month-of-death">Month of  Migration</label>
+                    <select [(ngModel)]="fields.month" class="custom-select" id="month-of-death">
+                        <option selected disabled >Choose...</option>
+                        <option *ngFor="let monthOfMigration of monthOfMigrations">{{ monthOfMigration }}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Month of Migration is required
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="case-number">Name of Household Members</label>
+                    <input [(ngModel)]="fields.name" type="text" class="form-control" id="deaceased-name">
+                    <div class="invalid-feedback">
+                        Name of Household Members is required
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="sex">Sex of Immigrant</label>
+                    <select [(ngModel)]="fields.sex" class="custom-select" id="sex">
+                        <option selected disabled >Choose...</option>
+                        <option *ngFor="let sex of sexs">{{ sex }}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Sex of Immigran is required
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label for="age-at-death">Date of Birth</label>
+                    <input [(ngModel)]="fields.date_of_birth" type="date" class="form-control" id="age-at-death">
+                    <div class="invalid-feedback">
+                        Date of Birth is required
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label for="age-at-death">Age of HH member</label>
+                    <input [(ngModel)]="fields.age" type="number" class="form-control" id="age-at-death">
+                    <div class="invalid-feedback">
+                        Age of HH membe is required
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label for="age-at-death">Age in  Months</label>
+                    <input [(ngModel)]="fields.age_in_months" type="number" class="form-control" id="age-at-death">
+                    <div class="invalid-feedback">
+                        Age in Months is required
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label for="age-bracket">Age Bracket</label>
+                    <select [(ngModel)]="fields.age_bracket" class="custom-select" id="age-bracket">
+                        <option selected disabled >Choose...</option>
+                        <option *ngFor="let ageBracket of ageBrackets">{{ ageBracket }}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Age Bracket is required
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5>Education and occupation</h5>
+            <div class="row">
+                <div class="col-md-7 mb-3">
+                    <label for="place-of-death">Completed Educational Attainment</label>
+                    <select [(ngModel)]="fields.completed_educational_attainment" class="custom-select" id="place-of-death">
+                        <option selected disabled >Choose...</option>
+                        <option *ngFor="let educationalAttainment of educationalAttainments">{{ educationalAttainment }}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Completed Educational Attainment is required
+                    </div>
+                </div>
+
+                <div class="col-md-5 mb-3">
+                    <label for="registered-lcr">Actual Occupation</label>
+                    <select [(ngModel)]="fields.actual_occupation" class="custom-select" id="registered-lcr">
+                        <option selected disabled >Choose...</option>
+                        <option *ngFor="let occupation of occupations">{{ occupation }}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Actual Occupation is required
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="age-at-death">Major Occupation of In migrant</label>
+                    <input [(ngModel)]="fields.major_occupation" type="text" class="form-control" id="age-at-death">
+                    <div class="invalid-feedback">
+                        is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="registered-lcr">Monthly Income</label>
+                    <select [(ngModel)]="fields.monthly_income" class="custom-select" id="registered-lcr">
+                        <option selected disabled >Choose...</option>
+                        <option *ngFor="let monthlyIncome of monthlyIncomes">{{ monthlyIncome }}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Major Occupation of In migrant is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="skills-aquired">Skills Acquired</label>
+                    <input [(ngModel)]="fields.skills_acquired" t type="text" class="form-control" id="skills-aquired">
+                    <div class="invalid-feedback">
+                        Skills Acquired is required
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5>Origin</h5>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="skills-aquired">Actual Place of origin</label>
+                    <input [(ngModel)]="fields.actual_place_of_origin" type="text" class="form-control" id="skills-aquired">
+                    <div class="invalid-feedback">
+                        Actual Place of origin is required
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="registered-lcr">Place of Origin</label>
+                    <select [(ngModel)]="fields.place_of_origin" class="custom-select" id="registered-lcr">
+                        <option selected disabled >Choose...</option>
+                        <option *ngFor="let placeOfOrigin of placeOfOrigins">{{ placeOfOrigin }}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Place of Origin is required
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="registered-lcr">Reasons for In-Migrating</label>
+                    <select [(ngModel)]="fields.reasons_for_in_migrating" class="custom-select" id="registered-lcr">
+                        <option selected disabled >Choose...</option>
+                        <option *ngFor="let reasonForInMagrating of reasonForInMagratings">{{ reasonForInMagrating }}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Reasons for In-Migrating is required
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-md-7 mb-3">
+                    <label for="registered-lcr">Specific Reason</label>
+                    <select [(ngModel)]="fields.sorting_number" class="custom-select" id="registered-lcr">
+                        <option selected disabled >Choose...</option>
+                        <option *ngFor="let specificReason of specificReasons">{{ specificReason }}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Specific Reason is required
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <div class="button-container ">
+                <button (click)="updateRecord() " class="button ">Update Record</button>
+            </div>
+
+            <br> <br>
+            <div *ngIf="isLoading" class="loader "></div>
+
+        </div>
+
+    </div>
+</div>

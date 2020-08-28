@@ -1,0 +1,224 @@
+<div class="container births-component">
+
+    <br>
+    <div class="inputs">
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="sorting-number">Sorting Number</label>
+                <input [class.is-invalid]="invalid.sorting_number" [(ngModel)]="fields.sorting_number" type="number" class="form-control" id="sorting-number" required>
+                <div class="invalid-feedback">
+                    Sorting Number is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>Location</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="municipality">Municipality</label>
+                <select [class.is-invalid]="invalid.municipality" [(ngModel)]="fields.municipality" class="custom-select" id="municipality" required>
+                    <option selected disabled >Choose...</option>
+                    <option>Barotac Nuevo.</option>
+                </select>
+                <div class="invalid-feedback">
+                    Municipality is required
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="barangay">Barangay</label>
+                <select [class.is-invalid]="invalid.barangay" [(ngModel)]="fields.barangay" class="custom-select" id="barangay" required>
+                    <option selected disabled >Choose...</option>
+                    <option>Lagubang</option>
+                </select>
+                <div class="invalid-feedback">
+                    Barangay is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>household Case</h5>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="household-number">Household Number</label>
+                <input [class.is-invalid]="invalid.household_number" [(ngModel)]="fields.household_number" type="number" class="form-control" id="household-number" required>
+                <div class="invalid-feedback">
+                    Household Number is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="total-cases">Total Cases</label>
+                <input [class.is-invalid]="invalid.total_cases" [(ngModel)]="fields.total_cases" type="number" class="form-control" id="total-cases" required>
+                <div class="invalid-feedback">
+                    Total Cases is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="case-number">Number of Cases</label>
+                <input [class.is-invalid]="invalid.number_of_cases" [(ngModel)]="fields.number_of_cases" type="number" class="form-control" id="case-number" required>
+                <div class="invalid-feedback">
+                    Number of Cases is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>Birth Details</h5>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="month-of-death">Birth Month</label>
+                <select [class.is-invalid]="invalid.month" [(ngModel)]="fields.month" class="custom-select" id="month-of-death" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let month of months">{{ month }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Birth Mont is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="case-number">Baby's Name</label>
+                <input [class.is-invalid]="invalid.name" [(ngModel)]="fields.name" type="text" class="form-control" id="deaceased-name" required>
+                <div class="invalid-feedback">
+                    Baby's Name is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="sex">Sex of Child</label>
+                <select [class.is-invalid]="invalid.sex" [(ngModel)]="fields.sex" class="custom-select" id="sex" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let sex of sexs">{{ sex }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Sex of Child is required
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="age-at-death">Birth Order</label>
+                <select [class.is-invalid]="invalid.birth_order" [(ngModel)]="fields.birth_order" class="custom-select" id="age-bracket" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let birthOrder of birthOrders">{{ birthOrder }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Birth Order is required
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="age-bracket">Place of Birth</label>
+                <select [class.is-invalid]="invalid.place_of_birth" [(ngModel)]="fields.place_of_birth" class="custom-select" id="age-bracket" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let placeofBirth of placeofBirths">{{ placeofBirth }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Place of Birth is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>Mother's Details</h5>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="mothers-name">Name of Mother</label>
+                <input [class.is-invalid]="invalid.name_of_mother" [(ngModel)]="fields.name_of_mother" type="text" class="form-control" id="mothers-name" required>
+                <div class="invalid-feedback">
+                    Name of Mother is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="age-of-mother">Age of Mother</label>
+                <input [class.is-invalid]="invalid.age_of_mother" [(ngModel)]="fields.age_of_mother" type="number" class="form-control" id="age-of-mother" required>
+                <div class="invalid-feedback">
+                    Age of Mother is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="age-bracket">Age Bracket</label>
+                <select [class.is-invalid]="invalid.age_bracket_of_mother" [(ngModel)]="fields.age_bracket_of_mother" class="custom-select" id="age-bracket" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let ageBracket of ageBrackets">{{ ageBracket }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Age Bracket is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="work-of-mother">Mother's Actual Work</label>
+                <input [class.is-invalid]="invalid.mothers_actual_work" [(ngModel)]="fields.mothers_actual_work" type="text" class="form-control" id="work-of-mother" required>
+                <div class="invalid-feedback">
+                    Mother's Actual Work is required
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="age-bracket">Mother's Occupation</label>
+                <select [class.is-invalid]="invalid.occupation_of_mother" [(ngModel)]="fields.occupation_of_mother" class="custom-select" id="age-bracket" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let occupation of occupations">{{ occupation }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Mother's Occupation is required
+                </div>
+            </div>
+        </div>
+        <hr>
+
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="age-bracket">Mother's Religion</label>
+                <select [class.is-invalid]="invalid.religion" [(ngModel)]="fields.religion" class="custom-select" id="age-bracket" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let religion of religions">{{ religion }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Mother's Religion is requird
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="age-bracket">Mother's Marital Status</label>
+                <select [class.is-invalid]="invalid.mother_marital_status" [(ngModel)]="fields.mother_marital_status" class="custom-select" id="age-bracket" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let maritalStatus of maritalStatuses">{{ maritalStatus }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Mother's Marital Status is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="registered-lcr">Registered LCR</label>
+                <select [class.is-invalid]="invalid.registered_lcr" [(ngModel)]="fields.registered_lcr" class="custom-select" id="registered-lcr" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let registeredLCR of registeredLCRs">{{ registeredLCR }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Registered LCR is required
+                </div>
+            </div>
+        </div>
+
+
+
+        <br><br> <br>
+        <div class="button-container">
+            <button (click)="save()" class="button">Submit Record</button>
+        </div>
+        <br> <br><br> <br>
+        <div *ngIf="isLoading" class="loader"></div>
+    </div>
+
+</div>
