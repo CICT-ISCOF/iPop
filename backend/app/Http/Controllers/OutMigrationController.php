@@ -18,8 +18,8 @@ class OutMigrationController extends Controller
      */
     public function index()
     {
-        return OutMigration::with('record.user')
-            ->with('comments.user')
+        return OutMigration::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->paginate(10);
     }
 
@@ -49,8 +49,8 @@ class OutMigrationController extends Controller
      */
     public function show($id)
     {
-        return OutMigration::with('record.user')
-            ->with('comments.user')
+        return OutMigration::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->findOrFail($id);
     }
 

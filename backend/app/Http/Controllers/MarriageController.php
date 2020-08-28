@@ -18,8 +18,8 @@ class MarriageController extends Controller
      */
     public function index()
     {
-        return Marriage::with('record.user')
-            ->with('comments.user')
+        return Marriage::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->paginate(10);
     }
 
@@ -50,8 +50,8 @@ class MarriageController extends Controller
      */
     public function show($id)
     {
-        return Marriage::with('record.user')
-            ->with('comments.user')
+        return Marriage::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->findOrFail($id);
     }
 

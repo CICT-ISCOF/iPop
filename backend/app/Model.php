@@ -17,4 +17,9 @@ abstract class Model extends BaseModel
     {
         return $this->fillable;
     }
+
+    public function toSearchableArray()
+    {
+        return $this->toArray();
+    }
 }

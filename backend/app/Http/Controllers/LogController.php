@@ -9,7 +9,7 @@ class LogController extends Controller
 {
     public function index()
     {
-        return Log::with('user')
+        return Log::with('user.profilePicture')
             ->orderBy('created_at', 'ASC')
             ->paginate(10);
     }

@@ -18,8 +18,8 @@ class InMigrationController extends Controller
      */
     public function index()
     {
-        return InMigration::with('record.user')
-            ->with('comments.user')
+        return InMigration::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->paginate(10);
     }
 
@@ -50,8 +50,8 @@ class InMigrationController extends Controller
      */
     public function show($id)
     {
-        return InMigration::with('record.user')
-            ->with('comments.user')
+        return InMigration::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->findOrFail($id);
     }
 

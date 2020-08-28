@@ -48,9 +48,15 @@ class User extends Authenticatable
     {
         static::deleting(function ($user) {
             if ($user->profilePicture instanceof File) {
+                $user->files->delete();
                 $user->profilePicture->delete();
             }
         });
+    }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
     }
 
     /**
@@ -180,6 +186,7 @@ class User extends Authenticatable
         $collection = self::where('username', 'LIKE', "%{$query}%")
             ->orWhere('fullname', 'LIKE', "%{$query}%")
             ->orderBy('role')
+            ->with('profilePicture')
             ->get();
         if ($collection->isEmpty()) {
             return response(

@@ -18,8 +18,8 @@ class BirthController extends Controller
      */
     public function index()
     {
-        return Birth::with('record.user')
-            ->with('comments.user')
+        return Birth::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->paginate(10);
     }
 
@@ -50,8 +50,8 @@ class BirthController extends Controller
      */
     public function show($id)
     {
-        return Birth::with('record.user')
-            ->with('comments.user')
+        return Birth::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->findOrFail($id);
     }
 

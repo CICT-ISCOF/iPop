@@ -18,8 +18,8 @@ class DeathController extends Controller
      */
     public function index()
     {
-        return Death::with('record.user')
-            ->with('comments.user')
+        return Death::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->paginate(10);
     }
 
@@ -50,8 +50,8 @@ class DeathController extends Controller
      */
     public function show($id)
     {
-        return Death::with('record.user')
-            ->with('comments.user')
+        return Death::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->findOrFail($id);
     }
 

@@ -14,8 +14,8 @@ class RecordController extends Controller
      */
     public function index()
     {
-        return Record::with('recordable.comments.user')
-            ->with('user')
+        return Record::with('recordable.comments.user.profilePicture')
+            ->with('user.profilePicture')
             ->orderBy('recordable_type', 'ASC')
             ->paginate(10);
     }
@@ -28,8 +28,8 @@ class RecordController extends Controller
      */
     public function show($id)
     {
-        return Record::with('recordable.comments.user')
-            ->with('user')
+        return Record::with('recordable.comments.user.profilePicture')
+            ->with('user.profilePicture')
             ->findOrFail($id);
     }
 
