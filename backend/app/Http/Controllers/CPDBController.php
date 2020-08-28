@@ -16,8 +16,8 @@ class cpdbController extends Controller
      */
     public function index()
     {
-        return CPDB::with('record.user')
-            ->with('comments.user')
+        return CPDB::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->paginate(10);
     }
 
@@ -48,8 +48,8 @@ class cpdbController extends Controller
      */
     public function show($id)
     {
-        return CPDB::with('record.user')
-            ->with('comments.user')
+        return CPDB::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture')
             ->findOrFail($id);
     }
 

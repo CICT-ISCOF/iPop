@@ -44,7 +44,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return User::with('profile_picture')->findOrFail($id);
+        return User::with('profilePicture')->findOrFail($id);
     }
 
     /**
