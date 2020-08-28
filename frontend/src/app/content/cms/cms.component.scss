@@ -141,10 +141,11 @@ button:active {
 }
 
 owl-carousel-o,
-img {
+img,
+video {
     height: 40vh;
     min-width: 100%;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat !important;
     background-size: cover;
     background-position: center;
 }
@@ -249,10 +250,18 @@ span svg:hover {
     opacity: .5;
 }
 
+.Big-Image {
+    height: auto !important;
+}
+
 .Big-Image iframe,
-object {
-    height: auto;
-    width: 100%;
+object,
+video {
+    height: auto !important;
+    width: 50vw !important;
+    object-fit: contain;
+    margin: auto;
+    min-height: 80vh;
 }
 
 .card {
@@ -269,4 +278,18 @@ object {
 
 .clickable:hover {
     background: var(--inputBg);
+}
+
+.fa-image {
+    font-size: 5em;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: -50px;
+    text-align: center;
+    transform: translateY(50px);
+    color: gray
+}
+
+.fa-image:hover {
+    opacity: .5;
 }

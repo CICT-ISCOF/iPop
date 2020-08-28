@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as L from 'leaflet';
-import { antPath } from 'leaflet-ant-path'
+import { StatisticsService } from  './statistics.service'
 
 
 @Component({
@@ -11,18 +10,84 @@ import { antPath } from 'leaflet-ant-path'
 export class StatisticsComponent implements OnInit {
 
 	constructor(	
+		private StatisticsService : StatisticsService
 	) { }
 
 	ngOnInit(): void {
-		localStorage.setItem('location','Province of Iloilo')	
-		localStorage.setItem('coordinates',JSON.stringify([10.7202, 122.5621]))	
-		localStorage.setItem('mapOptions','12')	
-		this.renderMap()
-		this.callCharts()
-	
+		this.callCharts()	
+		this.getGeneralData()
+		this.getPopulation()
+		this.getTotals()
+		this.getGenders()
+		this.getMunicipality()
+		this.getMarriages()		
 	}
 	
 	theme = localStorage.getItem('data-theme')
+
+
+	general
+	population
+	totals
+	genders
+	municipality
+	marriages
+	getGeneralData(){
+		this.general = this.StatisticsService.general().subscribe(data => {
+		
+		})
+	}
+
+	getPopulation(){
+		this.population = this.StatisticsService.population().subscribe(data => {
+			
+		})
+	}
+
+	getTotals(){
+		this.totals = this.StatisticsService.totals().subscribe(data => {
+			
+		})
+	}
+
+	
+	getGenders(){
+		this.genders = this.StatisticsService.genders().subscribe(data => {
+			
+		})
+	}
+
+	getMunicipality(){
+		this.municipality = this.StatisticsService.municipality().subscribe(data => {
+			
+		})
+	}
+
+	getMarriages(){
+		this.municipality = this.StatisticsService.marriages().subscribe(data => {
+			
+		})
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	// ----------------- charts -----------------------------
 	
@@ -96,8 +161,6 @@ export class StatisticsComponent implements OnInit {
 			['December',154],
 		]
 	}
-
-
 		
 	googleChartOptions = {
 		marriedOptions:{
@@ -144,59 +207,8 @@ export class StatisticsComponent implements OnInit {
 		google.load("visualization", "1", {packages:["corechart"]})
 		google.setOnLoadCallback(chart)
 	}
-	
-	// --------------------- maps ------------------------
-
-	map:any;
-	coordinates:any = JSON.parse(localStorage.getItem('coordinates'))
-	mapOptions = {	
-		zoom:parseInt(localStorage.getItem('mapOptions'))
-	}
-	barangayCoordiantes:any = [10.8776,122.7083]
-
-	renderMap(){
-		this.map = L.map('map').setView(this.coordinates, this.mapOptions.zoom);
-		L.tileLayer(
-			'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-			{ 
-				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-			})
-		.addTo(this.map);	
-
-		let DefaultIcon = L.icon({
-			iconUrl: '../../../assets/marker-icon.png',
-			shadowUrl: ''
-		});		
-
-		var circle = {
-			color:'#1CB7EB',
-			fillCOlor:'#f03',
-			radius:8928
-		}
-		
-		// L.circle(this.coordinates,circle).addTo(this.map);	
 
 
-		L.Marker.prototype.options.icon = DefaultIcon;
-		L.marker(this.coordinates).bindPopup(localStorage.getItem('location')).addTo(this.map);	
-	}
-
-	location = localStorage.getItem('location')
-
-	changeMunicipality(e){
-		localStorage.setItem('coordinates',JSON.stringify([10.9216, 122.7407]))	
-		localStorage.setItem('location',e.target.value)	
-		localStorage.setItem('mapOptions','12')	
-
-		location.reload()
-	}
-	changeMap(e){
-		localStorage.setItem('coordinates',JSON.stringify(this.barangayCoordiantes))
-		localStorage.setItem('mapOptions','14')
-		localStorage.setItem('location',e.target.value)	
-		location.reload()
-		
-	}	
 	
 	// -------------- formaters ----------------
 

@@ -154,3 +154,41 @@ h5 {
     text-transform: uppercase;
     color: orange
 }
+
+.comments .badge {
+    float: right;
+}
+
+.operaitve-buttons {
+    float: left;
+    display: flex;
+}
+
+.operaitve-buttons i,
+.operaitve-buttons svg {
+    width: 1.2em;
+    height: 1.2em;
+    font-size: 1.2em;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 15px;
+    cursor: pointer;
+}
+
+.operaitve-buttons i:hover,
+.operaitve-buttons svg:hover {
+    transform: translateY(-5px) scale(1.4);
+    transition: .3s;
+}
+
+.operaitve-buttons i:focus,
+.operaitve-buttons svg:focus {
+    outline: 0;
+}
+
+.operaitve-buttons i:active,
+.operaitve-buttons svg:active {
+    opacity: .5;
+}

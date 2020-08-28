@@ -6,22 +6,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./record-status-deaths.component.scss']
 })
 export class RecordStatusDeathsComponent implements OnInit {
-
-  constructor() { }
+  reload
 
   ngOnInit(): void {
   }
 
   theme = localStorage.getItem('data-theme')
 
-  status = 'Noted and will edit'
+  status = ''
 
 	agInit(params:any){
-		// this.status = params.value
+		this.status = params.data.record.status
 	}
 
 	refresh(params:any):boolean{
-	// this.status = params.value
+	this.status = params.data.record.status
 		return true
 	}
 }

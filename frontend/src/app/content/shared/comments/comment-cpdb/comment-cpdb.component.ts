@@ -16,30 +16,6 @@ export class CommentCpdbComponent implements OnInit {
 
 	ViewData = false
 
-	constructor(
-		private CpdbService : CpdbService,
-		private route:ActivatedRoute,
-		private UtilityService: UtilityService,
-		private Router: Router,
-	) { }
-
-	ngOnInit(): void {
-		this.isLoading = true
-		this.route.params.subscribe(data => {
-			this.getRecord(data.id)
-		});
-		
-	}
-	isLoading = false
-
-	theme = localStorage.getItem('data-theme')
-
-	message
-
-	field:any
-
-	comments:any
-
 	select = {
 		houseHoldSizeBrackets:[
 			'1-3',
@@ -358,6 +334,32 @@ export class CommentCpdbComponent implements OnInit {
 		],
 	}
 
+
+	constructor(
+		private CpdbService : CpdbService,
+		private route:ActivatedRoute,
+		private UtilityService: UtilityService,
+		private Router: Router,
+	) { }
+
+	ngOnInit(): void {
+		this.isLoading = true
+		this.route.params.subscribe(data => {
+			this.getRecord(data.id)
+		});
+		
+	}
+	isLoading = false
+
+	theme = localStorage.getItem('data-theme')
+
+	message
+
+	field:any
+
+	comments:any
+
+
 	forps_beneficiary_household = 'tae'
 
 	
@@ -420,7 +422,7 @@ export class CommentCpdbComponent implements OnInit {
 				this.field['4ps_beneficiary_household'] = this.forps_beneficiary_household
 				this.CpdbService.updateRecord(this.field,this.field.id).subscribe(data => {
 					this.UtilityService.setAlert('Record has been successfully updated ', 'info')
-					console.log(data)
+					this.field = data
 				})
 			}		
 		})	
@@ -428,6 +430,54 @@ export class CommentCpdbComponent implements OnInit {
 
 	reply(){
 		this.textarea.nativeElement.focus()
+	}
+
+	approve(){		
+		Swal.fire({
+			title: 'Countinue approving this data?' ,		
+			icon: 'success',
+			showCancelButton: true,
+			confirmButtonText: 'Approve',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				status = 'Approved'
+				this.updateStatus(status)
+			}		
+		})	
+	}
+
+	disapprove(){
+		Swal.fire({
+			title: 'Are you sure you want to disapprove this data?' ,		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Disapprove',
+			cancelButtonText: 'Nope'
+			}).then((result) => {
+			if (result.value) {
+				status = 'Disapproved'
+				this.updateStatus(status)
+			}		
+		})	
+	}
+
+	needsEditing(){
+		status = 'Needs Editing'
+		this.updateStatus(status)
+	}
+
+	noted(){
+		status = 'Noted and will edit'
+		this.updateStatus(status)
+	}
+
+	updateStatus(status){
+		const id = this.field.record.id
+		this.CpdbService.updateStatus(status,id).subscribe(data => {
+			this.CpdbService.setRow()		
+			this.ngOnInit()
+		})
 	}
 
 

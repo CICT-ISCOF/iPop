@@ -18,7 +18,33 @@
         </div>
 
         <div class="col-md-8 comments">
-            <br><br>
+            <br>
+            <div class="operaitve-buttons">
+                <i (click)="approve()" tooltip="Approve this data" placement="right" show-delay="100" [theme]="theme" style="color:#00C34F" class="im im-thumb-up"></i>
+
+                <i (click)="disapprove()" tooltip="Disapprove this data" placement="right" show-delay="100" [theme]="theme" style="color:black" class="im im-thumb-down"></i>
+
+
+                <svg (click)="needsEditing()" tooltip="Needs editing" placement="right" show-delay="100" [theme]="theme" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-diamond-fill" fill="orange" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                </svg>
+
+
+                <svg (click)="noted()" tooltip="Mark as noted" placement="right" show-delay="100" [theme]="theme" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check2-square" fill="#4285F4" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                    <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 0 0 3 14.5h10a1.5 1.5 0 0 0 1.5-1.5V8a.5.5 0 0 0-1 0v5a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5h8a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 3v10z"/>
+                </svg>
+
+            </div>
+            <br>
+            <span *ngIf="field.record.status == 'Pending'" class="badge badge-danger ">{{ field.record.status }}</span>
+            <span *ngIf="field.record.status == 'Approved'" class="badge badge-success">{{ field.record.status }}</span>
+            <span *ngIf="field.record.status == 'Needs Editing'" class="badge badge-warning">{{ field.record.status }}</span>
+            <span *ngIf="field.record.status == 'Noted and will edit'" class="badge badge-primary">{{ field.record.status }}</span>
+            <span *ngIf="field.record.status == 'Disapproved'" class="badge badge-dark">{{ field.record.status }}</span>
+            <span style="background: palevioletred !important;" *ngIf="field.record.status == 'Requires Revalidation'" class="badge badge-dark">{{ field.record.status }}!</span>
+            <br>
+
             <p style="text-align: center;" *ngIf="comments.length == 0">No comments yet....</p>
             <div class="comment container" *ngFor="let comment of comments">
                 <div class="img-container">
@@ -48,7 +74,7 @@
 <div *ngIf="ViewData" class="view-data">
     <i (click)="ViewData = false" class="fa fa-chevron-left"></i>
 
-    <div class="container cpdb-component" id="cpdb-component" *ngIf="field != null">
+    <div class="container cpdb-component" id="cpdb-component">
 
         <br>
         <div class="inputs">
@@ -57,6 +83,9 @@
                 <div class="col-md-4 mb-3">
                     <label for="sorting-number">Sorting Number</label>
                     <input type="number" [(ngModel)]="field.sorting_number" class="form-control" id="sorting-number">
+                    <div class="invalid-feedback">
+                        Sorting Number is required
+                    </div>
                 </div>
             </div>
 
@@ -66,28 +95,49 @@
             <div class="row">
                 <div class="col-md-4 mb-3">
                     <label for="municipality">Municipality</label>
-                    <input [(ngModel)]="field.municipality" class="custom-select" id="municipality">
+                    <select class="custom-select" [(ngModel)]="field.municipality" id="municipality">
+                        <option selected disabled >Choose...</option>
+                        <option>Lagubang</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Municipality is required
+                    </div>
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <label for="barangay">Barangay</label>
-                    <input class="custom-select" id="barangay" [(ngModel)]="field.barangay">
+                    <select class="custom-select" id="barangay" [(ngModel)]="field.barangay">
+                        <option selected disabled >Choose...</option>
+                        <option>Lagubang</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Barangay is required
+                    </div>
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <label for="zone">Purok or Zone</label>
                     <input [(ngModel)]="field.zone" class="custom-select" id="zone">
+                    <div class="invalid-feedback">
+                        Purok or Zone is required
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="Householdnum">Household Number</label>
                     <input [(ngModel)]="field.household_number" class="custom-select" id="Householdnum">
+                    <div class="invalid-feedback">
+                        Household Number is required
+                    </div>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label for="Characterisitcs">Household Characterisitcs</label>
                     <input [(ngModel)]="field.household_characteristics" class="custom-select" id="Characterisitcs">
+                    <div class="invalid-feedback">
+                        Household Characterisitcsr is required
+                    </div>
                 </div>
             </div>
 
@@ -97,369 +147,661 @@
                 <div class="col-md-4 mb-3">
                     <label for="number_of_persons_living">NO. of Persons Living in the House</label>
                     <input [(ngModel)]="field.number_of_persons_living" class="custom-select" id="number_of_persons_living" type="number">
+                    <div class="invalid-feedback">
+                        NO. of Persons Living in the House is required
+                    </div>
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <label for="houseHoldSizeBracket">Household Size Bracket</label>
-                    <input list="list-household_size_bracket" [(ngModel)]="field.household_size_bracket" class="custom-select" id="houseHoldSizeBracket">
-
-                    <datalist id="list-household_size_bracket">
-                        <option *ngFor="let houseHoldSizeBracket of select.houseHoldSizeBrackets">{{ houseHoldSizeBracket }}</option>
-                    </datalist>
+                    <select [(ngModel)]="field.household_size_bracket" class="custom-select" id="houseHoldSizeBracket">
+                        <option selected disabled>Choose..</option>
+                         <option *ngFor="let houseHoldSizeBracket of select.houseHoldSizeBrackets">{{ houseHoldSizeBracket }}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Household Size Bracket is required
+                    </div>
                 </div>
 
 
                 <div class="col-md-4 mb-3">
                     <label for="number_of_families">Number of Families</label>
-                    <input list="list-number_of_families" [(ngModel)]="field.number_of_families" class="custom-select" id="numofFamilies" type="number">
-
-                    <datalist id="list-number_of_families">
+                    <select [(ngModel)]="field.number_of_families" class="custom-select" id="numofFamilies" type="number">
+                        <option  selected disabled>Choose..</option>  
                         <option  *ngFor="let houseHoldSizeBrackets of select.houseHoldSizeBrackets">{{houseHoldSizeBrackets}}</option>  
-                    </datalist>
-
+                    </select>
+                    <div class="invalid-feedback">
+                        Number of Families is required
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="lineNumber">Line number of Household Member</label>
                     <input [(ngModel)]="field.line_number_of_household_member" class="custom-select" id="lineNumber" type="text">
+                    <div class="invalid-feedback">
+                        Line number of Household Member is required
+                    </div>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label for="name_of_household_member">Name of Household Members</label>
-                    <input [(ngModel)]="field.name_of_household_member" class="custom-select" id="name_of_household_member" type="text">
+                    <input [(ngModel)]="field.name_of_household_member " class="custom-select " id="name_of_household_member " type="text ">
+                    <div class="invalid-feedback ">
+                        Name of Household Members is required
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="relationship_to_household_head">Relationship to Household Head</label>
-                    <input list="list-relationship_to_household_head" [(ngModel)]="field.relationship_to_household_head" class="custom-select" id="relationship_to_household_head">
-
-                    <datalist id="list-relationship_to_household_head">
-                        <option *ngFor="let RelationshiptoHouseholdHead of select.RelationshiptoHouseholdHeads">{{ RelationshiptoHouseholdHead }}</option>
-                    </datalist>
+                <div class="col-md-6 mb-3 ">
+                    <label for="relationship_to_household_head ">Relationship to Household Head</label>
+                    <select [(ngModel)]="field.relationship_to_household_head " class="custom-select " id="relationship_to_household_head ">
+                        <option  selected disabled>Choose..</option>
+                        <option *ngFor="let RelationshiptoHouseholdHead of select.RelationshiptoHouseholdHeads ">{{ RelationshiptoHouseholdHead }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Relationship to Household Head is required
+                    </div>
                 </div>
             </div>
 
             <hr>
             <h5>Household Details</h5>
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="sex">Sex</label>
-                    <input list='list-sex' [(ngModel)]="field.sex" class="custom-select" id="sex">
-                    <datalist id="list-sex">
-                        <option *ngFor="let Sex of select.Sexes">{{ Sex }}</option>
-                    </datalist>
+            <div class="row ">
+                <div class="col-md-4 mb-3 ">
+                    <label for="sex ">Sex</label>
+                    <select [(ngModel)]="field.sex " class="custom-select " id="sex ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let Sex of select.Sexes ">{{ Sex }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Sex is required
+                    </div>
                 </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="date_of_birth">Date of Birth</label>
-                    <input [(ngModel)]="field.date_of_birth" class="custom-select" id="dateOfBirth" type="date">
+                <div class="col-md-4 mb-3 ">
+                    <label for="date_of_birth ">Date of Birth</label>
+                    <input [(ngModel)]="field.date_of_birth " class="custom-select " id="dateOfBirth " type="date ">
+                    <div class="invalid-feedback ">
+                        Date of Birth is required
+                    </div>
                 </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="ageAsLastBirthDay">Age as of Last Birthday</label>
-                    <input [(ngModel)]="field.age" class="custom-select" id="ageAsLastBirthDay" type="number">
+                <div class="col-md-4 mb-3 ">
+                    <label for="ageAsLastBirthDay ">Age as of Last Birthday</label>
+                    <input [(ngModel)]="field.age " class="custom-select " id="ageAsLastBirthDay " type="number ">
+                    <div class="invalid-feedback ">
+                        Age as of Last Birthda is required
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-3 mb-3">
-                    <label for="AgeBracket">Age Bracket</label>
-                    <input list="list-age_bracket" [(ngModel)]="field.age_bracket" class="custom-select" id="AgeBracket">
-                    <datalist id="list-age_bracket">
-                        <option *ngFor="let AgeBrackets of select.AgeBrackets">{{ AgeBrackets }}</option>
-                    </datalist>
+            <div class="row ">
+                <div class="col-md-3 mb-3 ">
+                    <label for="AgeBracket ">Age Bracket</label>
+                    <select [(ngModel)]="field.age_bracket " class="custom-select " id="AgeBracket ">
+                        <option  selected disabled>Choose..</option>
+                        <option *ngFor="let AgeBrackets of select.AgeBrackets ">{{ AgeBrackets }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Age Bracket is required
+                    </div>
                 </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="civilStatus">Civil Status</label>
-                    <input list="list-civil_status" [(ngModel)]="field.civil_status" class="custom-select" id="civilStatus">
-                    <datalist id="list-civil_status">
-                        <option *ngFor="let CivilStatuses of select.CivilStatuses">{{ CivilStatuses }}</option>
-                    </datalist>
+                <div class="col-md-4 mb-3 ">
+                    <label for="civilStatus ">Civil Status</label>
+                    <select [(ngModel)]="field.civil_status " class="custom-select " id="civilStatus ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let CivilStatuses of select.CivilStatuses ">{{ CivilStatuses }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Civil Status is required
+                    </div>
                 </div>
 
-                <div class="col-md-5 mb-3">
-                    <label for="highest_educational_attainment">Highest Educational Attainment</label>
-                    <input list="list-highest_educational_attainment" [(ngModel)]="field.highest_educational_attainment" class="custom-select" id="highest_educational_attainment">
-                    <datalist id="list-highest_educational_attainment">
-                        <option *ngFor="let HighestEducationalAttainments of select.HighestEducationalAttainments">{{ HighestEducationalAttainments }}</option>
-                    </datalist>
+                <div class="col-md-5 mb-3 ">
+                    <label for="highest_educational_attainment ">Highest Educational Attainment</label>
+                    <select [(ngModel)]="field.highest_educational_attainment " class="custom-select " id="highest_educational_attainment ">
+                        <option  selected disabled>Choose..</option>
+                        <option *ngFor="let HighestEducationalAttainments of select.HighestEducationalAttainments ">{{ HighestEducationalAttainments }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Highest Educational Attainment is required
+                    </div>
                 </div>
             </div>
 
             <hr>
             <h5>School</h5>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="school_attendance">School Attendance</label>
-                    <input list="list-school_attendance" [(ngModel)]="field.school_attendance" class="custom-select" id="school_attendance">
-                    <datalist id="list-school_attendance">
-                        <option *ngFor="let SchoolAttendances of select.SchoolAttendances">{{ SchoolAttendances }}</option>
-                    </datalist>
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="school_attendance ">School Attendance</label>
+                    <select [(ngModel)]="field.school_attendance " class="custom-select " id="school_attendance ">
+                            <option selected disabled>Choose..</option>
+                            <option *ngFor="let SchoolAttendances of select.SchoolAttendances ">{{ SchoolAttendances }}</option>
+                        </select>
+                    <div class="invalid-feedback ">
+                        School Attendance is required
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-6">
-                    <label for="level_of_school_attendance">Grade/Year Level of School Attendance</label>
-                    <input list="list-level_of_school_attendance" [(ngModel)]="field.level_of_school_attendance" class="custom-select" id="level_of_school_attendance">
-                    <datalist id="list-level_of_school_attendance">
-                        <option *ngFor="let GradeYearLevelofSchoolAttendances of select.GradeYearLevelofSchoolAttendances">{{ GradeYearLevelofSchoolAttendances }}</option>
-                    </datalist>
+                <div class="col-md-6 mb-6 ">
+                    <label for="level_of_school_attendance ">Grade/Year Level of School Attendance</label>
+                    <select [(ngModel)]="field.level_of_school_attendance " class="custom-select " id="level_of_school_attendance ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let GradeYearLevelofSchoolAttendances of select.GradeYearLevelofSchoolAttendances ">{{ GradeYearLevelofSchoolAttendances }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        School Attendance is required
+                    </div>
                 </div>
             </div>
-            <div class="row">
-
-                <div class="col-md-6 mb-3">
-                    <label for="reason_for_not_attending_school">Reasons for Not Attending School</label>
-                    <input list="list-reason_for_not_attending_school" placeholder="Enter specific Reason" [(ngModel)]="field.reason_for_not_attending_school" class="custom-select" id="reason_for_not_attending_school" type="text">
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="reason_for_not_attending_school ">Reason for Not Attending School</label>
+                    <select [(ngModel)]="field.reason_for_not_attending_school " class="custom-select " id="reason_for_not_attending_school ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let ReasonforNotAttendingSchools of select.ReasonforNotAttendingSchools ">{{ ReasonforNotAttendingSchools }}</option>
+                        <option >Others, please specify reason</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Reason for Not Attending School is required
+                    </div>
                 </div>
-                <datalist id="list-reason_for_not_attending_school">
-                    <option *ngFor="let GradeYearLevelofSchoolAttendances of select.GradeYearLevelofSchoolAttendances">{{ GradeYearLevelofSchoolAttendances }}</option>
-                </datalist>
+
             </div>
 
             <hr>
             <h5>Religion</h5>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="religious_affiliation">Religious Affiliation</label>
-                    <input list="list-religious_affiliation" placeholder="Enter religion" [(ngModel)]="field.religious_affiliation" class="custom-select" id="religious_affiliation" type="text">
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="religious_affiliation ">Religious Affiliation</label>
+                    <select [(ngModel)]="field.religious_affiliation " class="custom-select " id="religious_affiliation ">
+                        <option  selected disabled>Choose..</option>
+                        <option *ngFor="let ReligiousAffiliations of select.ReligiousAffiliations ">{{ ReligiousAffiliations }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Religious Affiliationis required
+                    </div>
                 </div>
-                <datalist id="list-religious_affiliation">
-                    <option *ngFor="let GradeYearLevelofSchoolAttendances of select.GradeYearLevelofSchoolAttendances">{{ GradeYearLevelofSchoolAttendances }}</option>
-                </datalist>
+
+
+                <div class="col-md-6 mb-3 ">
+                    <label for="religious_affiliation ">Specify Religious Affiliation</label>
+                    <input placeholder="Enter religion " [(ngModel)]="field.religious_affiliation " class="custom-select " id="religious_affiliation " type="text ">
+                    <div class="invalid-feedback ">
+                        Specify Religious Affiliation is required
+                    </div>
+                </div>
             </div>
 
             <hr>
             <h5>Skills</h5>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="have_special_skills">Have special skills</label>
-                    <input [(ngModel)]="field.have_special_skills" class="custom-select" id="have_special_skills" type="text">
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="have_special_skills ">Have special skills</label>
+                    <select [(ngModel)]="field.have_special_skills " class="custom-select " id="have_special_skills " type="text ">
+                        <option selected disabled>Choose..</option>
+                        <option>Yes</option>    
+                        <option>No</option>    
+                    </select>
+                    <div class="invalid-feedback ">
+                        Have special skills is required
+                    </div>
                 </div>
 
-                <div * class="col-md-6 mb-3">
-                    <label for="skills_specify">Type of Special Skill</label>
-                    <input list="list-skills_specify" placeholder="Enter special skill" [(ngModel)]="field.skills_specify" class="custom-select" id="skills_specify">
-                    <datalist id="list-skills_specify">
-                        <option *ngFor="let TypeofSpecialSkills of select.TypeofSpecialSkills">{{ TypeofSpecialSkills }}</option>
-                    </datalist>
+                <div class="col-md-6 mb-3 ">
+                    <label for="type_of_special_skill ">Type of Special Skills</label>
+                    <select name="type_of_special_skill " [(ngModel)]="field.type_of_special_skill " class="custom-select " id="type_of_special_skill ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let TypeofSpecialSkills of select.TypeofSpecialSkills ">{{ TypeofSpecialSkills }}</option>
+                        <option >Others, specify special skill</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Type of Special Skills is required
+                    </div>
                 </div>
 
-
+                <div class="col-md-6 mb-3 ">
+                    <label for="skills_specify ">Skills Specify</label>
+                    <input placeholder="Enter special skill " [(ngModel)]="field.skills_specify " class="custom-select " id="skills_specify ">
+                    <div class="invalid-feedback ">
+                        Skills Specify is required
+                    </div>
+                </div>
             </div>
 
             <hr>
             <h5>Disability</h5>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="presence_of_disability">Presence of Disability</label>
-                    <input [(ngModel)]="field.presence_of_disability" class="custom-select" id="presence_of_disability">
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="presence_of_disability ">Presence of Disability</label>
+                    <select [(ngModel)]="field.presence_of_disability " class="custom-select " id="presence_of_disability ">
+                        <option  selected disabled>Choose..</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Presence of Disability is required
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="type_of_disability">Type of Disability</label>
-                    <input list="list-type_of_disability" [(ngModel)]="field.type_of_disability" class="custom-select" id="type_of_disability">
-                    <datalist id="list-type_of_disability">
-                        <option *ngFor="let TypeofDisabilities of select.TypeofDisabilities">{{ TypeofDisabilities }}</option>
-                    </datalist>
+                <div class="col-md-6 mb-3 ">
+                    <label for="type_of_disability ">Type of Disability</label>
+                    <select [(ngModel)]="field.type_of_disability " class="custom-select " id="type_of_disability ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let TypeofDisabilities of select.TypeofDisabilities ">{{ TypeofDisabilities }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Type of Disability is required
+                    </div>
                 </div>
             </div>
 
             <hr>
             <h5>Tribe</h5>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="indigenous_group_or_tribe">Indigenous group or tribe</label>
-                    <input list="list-type_of_disability" [(ngModel)]="field.indigenous_group_or_tribe" class="custom-select" id="indigenous_group_or_tribe">
-                    <datalist id="list-type_of_disability">
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="indigenous_group_or_tribe ">Indigenous group or tribe</label>
+                    <select [(ngModel)]="field.indigenous_group_or_tribe " class="custom-select " id="indigenous_group_or_tribe ">
+                        <option selected disabled>Choose..</option>
                         <option>Yes</option>
                         <option>No</option>
-                    </datalist>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Indigenous group or tribe is required
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="name_of_group_or_tribe">Name of Indigenous or Tribe</label>
-                    <input list="ist-name_of_group_or_tribe" (change)="changeHandler($event)" [(ngModel)]="field.name_of_group_or_tribe" class="custom-select" id="name_of_group_or_tribe">
-                    <datalist id="list-name_of_group_or_tribe">
-                        <option *ngFor="let NameofIndigenousorTribes of select.NameofIndigenousorTribes">{{ NameofIndigenousorTribes }}</option>
-                    </datalist>
+                <div class="col-md-6 mb-3 ">
+                    <label for="name_of_group_or_tribe ">Name of Indigenous or Tribe</label>
+                    <select [(ngModel)]="field.name_of_group_or_tribe " class="custom-select " id="name_of_group_or_tribe ">
+                        <option  selected disabled>Choose..</option>
+                        <option *ngFor="let NameofIndigenousorTribes of select.NameofIndigenousorTribes ">{{ NameofIndigenousorTribes }}</option>
+                        <option >Others, specify tribe</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Name of Indigenous or Tribe is required
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3 ">
+                    <label for="specify_tribe ">Specify Tribe</label>
+                    <input placeholder="Enter Tribe " [(ngModel)]="field.specify_tribe " class="custom-select " id="specify_tribe ">
+                    <div class="invalid-feedback ">
+                        Specify Tribe is required
+                    </div>
                 </div>
             </div>
 
             <hr>
             <h5>PhilHealth</h5>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="active_philhealth_member">Active PhilHealth Member (18 years old & above)</label>
-                    <input [(ngModel)]="field.active_philhealth_member" class="custom-select" id="active_philhealth_member">
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="active_philhealth_member ">Active PhilHealth Member (18 years old & above)</label>
+                    <select [(ngModel)]="field.active_philhealth_member " class="custom-select " id="active_philhealth_member ">
+                        <option selected disabled>Choose..</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Active PhilHealth Member (18 years old & above) is required
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="philhealth_membership_specify">PhilHealth Membership-Specify</label>
-                    <input [(ngModel)]="field.philhealth_membership_specify" class="custom-select" id="philhealth_membership_specify">
+                <div class="col-md-6 mb-3 ">
+                    <label for="philhealth_membership_specify ">PhilHealth Membership-Specify</label>
+                    <select [(ngModel)]="field.philhealth_membership_specify " class="custom-select " id="philhealth_membership_specify ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let PhilHealthMemberships of select.PhilHealthMemberships ">{{ PhilHealthMemberships }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        PhilHealth Membership-Specify is required
+                    </div>
                 </div>
             </div>
 
             <hr>
             <h5>Occupation</h5>
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="usual_occupation_of_working_household_member">Usual Occupation of Working HH Member</label>
-                    <input (change)="changeHandler($event)" [(ngModel)]="field.usual_occupation_of_working_household_member" class="custom-select" id="usual_occupation_of_working_household_member">
+            <div class="row ">
+                <div class="col-md-4 mb-3 ">
+                    <label for="usual_occupation_of_working_household_member ">Usual Occupation of Working HH Member</label>
+                    <select [(ngModel)]="field.usual_occupation_of_working_household_member " class="custom-select " id="usual_occupation_of_working_household_member ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let UsualOccupationofWorkingHHMembers of select.UsualOccupationofWorkingHHMembers ">{{ UsualOccupationofWorkingHHMembers }}</option>
+                        <option>Others, specify ususal occupation</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        is required
+                    </div>
                 </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="gross_monthly_income">Gross Monthly Income</label>
-                    <input type="number" [(ngModel)]="field.gross_monthly_income" class="custom-select" id="gross_monthly_income">
+                <div class="col-md-4 mb-3 ">
+                    <label for="specify_usual_occupation ">Specify Usual Occupation</label>
+                    <input placeholder="Enter specific occupation " [(ngModel)]="field.specify_usual_occupation " class="custom-select " id="specify_usual_occupation ">
+                    <div class="invalid-feedback ">
+                        is required
+                    </div>
                 </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="income_bracket">Income Bracket</label>
-                    <input class="custom-select" type="text" [(ngModel)]="field.income_bracket" id="income_bracket">
+                <div class="col-md-4 mb-3 ">
+                    <label for="gross_monthly_income ">Gross Monthly Income</label>
+                    <input type="number " [(ngModel)]="field.gross_monthly_income " class="custom-select " id="gross_monthly_income ">
+                    <div class="invalid-feedback ">
+                        is required
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3 ">
+                    <label for="income_bracket ">Income Bracket</label>
+                    <select class="custom-select " type="text " [(ngModel)]="field.income_bracket " id="income_bracket ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let IncomeBrackets of select.IncomeBrackets ">{{ IncomeBrackets }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        is required
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="place_of_work">Place of Work/Employment  of the Earning HouseHold Member</label>
-                    <input [(ngModel)]="field.place_of_work" class="custom-select" id="place_of_work">
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="place_of_work ">Place of Work/Employment  of the Earning HouseHold Member</label>
+                    <select [(ngModel)]="field.place_of_work " class="custom-select " id="place_of_work ">
+                        <option  selected disabled>Choose..</option>
+                        <option *ngFor="let PlaceofWorkorEmploymentoftheEarningHHMembers of select.PlaceofWorkorEmploymentoftheEarningHHMembers ">{{ PlaceofWorkorEmploymentoftheEarningHHMembers }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Place of Work/Employment of the Earning HouseHold Member is required
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="number_of_years_stay">No. of Years Stay (in Current Address)</label>
-                    <input [(ngModel)]="field.number_of_years_stay" type="number" class="custom-select" id="number_of_years_stay">
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="number_of_years_stay ">No. of Years Stay (in Current Address)</label>
+                    <input [(ngModel)]="field.number_of_years_stay " type="number " class="custom-select " id="number_of_years_stay ">
+                    <div class="invalid-feedback ">
+                        No. of Years Stay (in Current Address) is required
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="number_of_years_bracket">No. of Years Stay Bracket</label>
-                    <input [(ngModel)]="field.number_of_years_bracket" class="custom-select" id="number_of_years_bracket">
+                <div class="col-md-6 mb-3 ">
+                    <label for="number_of_years_bracket ">No. of Years Stay Bracket</label>
+                    <select [(ngModel)]="field.number_of_years_bracket " class="custom-select " id="number_of_years_bracket ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let NoofYearsStayBrackets of select.NoofYearsStayBrackets ">{{ NoofYearsStayBrackets }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        No. of Years Stay Bracket is required
+                    </div>
                 </div>
             </div>
 
             <hr>
             <h5>Stay</h5>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="fp_currently_used">FP Currently Used (By Women 10-50 yrs old)</label>
-                    <input [(ngModel)]="field.fp_currently_used" class="custom-select" id="fp_currently_used">
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="fp_currently_used ">FP Currently Used (By Women 10-50 yrs old)</label>
+                    <select [(ngModel)]="field.fp_currently_used " class="custom-select " id="fp_currently_used ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let FPCurrentlyUseds of select.FPCurrentlyUseds ">{{ FPCurrentlyUseds }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        FP Currently Used (By Women 10-50 yrs old) is required
+                    </div>
                 </div>
             </div>
 
             <hr>
             <h5>Income</h5>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="total_household_monthly_income">Total Household Monthly Income</label>
-                    <input [(ngModel)]="field.total_household_monthly_income" type="number" class="custom-select" id="total_household_monthly_income">
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="total_household_monthly_income ">Total Household Monthly Income</label>
+                    <input [(ngModel)]="field.total_household_monthly_income " type="number " class="custom-select " id="total_household_monthly_income ">
+                    <div class="invalid-feedback ">
+                        Total Household Monthly Income is required
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="household_income_bracket">Household Income Bracket</label>
-                    <input [(ngModel)]="field.household_income_bracket" class="custom-select" id="household_income_bracket">
+                <div class="col-md-6 mb-3 ">
+                    <label for="household_income_bracket ">Household Income Bracket</label>
+                    <select [(ngModel)]="field.household_income_bracket " class="custom-select " id="household_income_bracket ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let HouseholdIncomeBrackets of select.HouseholdIncomeBrackets ">{{ HouseholdIncomeBrackets }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Household Income Bracket is required
+                    </div>
                 </div>
             </div>
 
             <hr>
             <h5>House</h5>
-            <div class="row">
+            <div class="row ">
 
-                <div class="col-md-3 mb-3">
-                    <label for="house_ownership">House Ownership</label>
-                    <input [(ngModel)]="field.house_ownership" class="custom-select" id="house_ownership">
+                <div class="col-md-3 mb-3 ">
+                    <label for="house_ownership ">House Ownership</label>
+                    <select [(ngModel)]="field.house_ownership " class="custom-select " id="house_ownership ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let HouseOwnerships of select.HouseOwnerships ">{{ HouseOwnerships }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        House Ownership is required
+                    </div>
                 </div>
 
-                <div class="col-md-3 mb-3">
-                    <label for="house_levels">How many stories/level is the house?</label>
-                    <input [(ngModel)]="field.house_levels" class="custom-select" id="house_levels">
+                <div class="col-md-3 mb-3 ">
+                    <label for="house_levels ">How many stories/level is the house?</label>
+                    <select [(ngModel)]="field.house_levels " class="custom-select " id="house_levels ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let Howmanystories of select.Howmanystories ">{{ Howmanystories }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        How many stories/level is the house? is required
+                    </div>
                 </div>
 
 
-                <div class="col-md-6 mb-3">
-                    <label for="house_construction_material">House Construction Material</label>
-                    <input [(ngModel)]="field.house_construction_material" class="custom-select" id="house_construction_material">
+                <div class="col-md-6 mb-3 ">
+                    <label for="house_construction_material ">House Construction Material</label>
+                    <select [(ngModel)]="field.house_construction_material " class="custom-select " id="house_construction_material ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let HouseConstructionMaterials of select.HouseConstructionMaterials ">{{ HouseConstructionMaterials }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        House Construction Material is required
+                    </div>
                 </div>
 
-                <div class="col-md-3 mb-3">
-                    <label for="homelot_ownership_or_tenure_status">Homelot Ownership/Tenure Status</label>
-                    <input [(ngModel)]="field.homelot_ownership_or_tenure_status" class="custom-select" id="homelot_ownership_or_tenure_status">
+                <div class="col-md-3 mb-3 ">
+                    <label for="homelot_ownership_or_tenure_status ">Homelot Ownership/Tenure Status</label>
+                    <select [(ngModel)]="field.homelot_ownership_or_tenure_status " class="custom-select " id="homelot_ownership_or_tenure_status ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let HomelotOwnershipStatuses of select.HomelotOwnershipStatuses ">{{ HomelotOwnershipStatuses }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Homelot Ownership/Tenure Status is required
+                    </div>
                 </div>
             </div>
 
             <hr>
             <h5>Household Management</h5>
-            <div class="row">
+            <div class="row ">
 
-                <div class="col-md-4 mb-3">
-                    <label for="source_of_drinking_water">HouseHold Usual Source of Water for Drinking</label>
-                    <input (change)="changeHandler($event)" [(ngModel)]="field.source_of_drinking_water" class="custom-select" id="source_of_drinking_water">
-
+                <div class="col-md-4 mb-3 ">
+                    <label for="source_of_drinking_water ">HouseHold Usual Source of Water for Drinking</label>
+                    <select [(ngModel)]="field.source_of_drinking_water " class="custom-select " id="source_of_drinking_water ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let HHUsualSourceofWaterforDrinkings of select.HHUsualSourceofWaterforDrinkings ">{{ HHUsualSourceofWaterforDrinkings }}</option>
+                        <option >Others, specify source of water</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        HouseHold Usual Source of Water for Drinking is required
+                    </div>
                 </div>
 
-                <div class="col-md-5 mb-3">
-                    <label for="type_of_toilet">Type of Toilet the Household Owns</label>
-                    <input [(ngModel)]="field.type_of_toilet" class="custom-select" id="type_of_toilet">
+                <div class="col-md-4 mb-3 ">
+                    <label for="numofFamilies ">Specify HH Usual Source of Water for Drinking</label>
+                    <input placeholder="Enter specific source " [(ngModel)]="field.source_of_drinking_water " class="custom-select " id="source_of_drinking_water ">
+                    <div class="invalid-feedback ">
+                        Specify HH Usual Source of Water for Drinking is required
+                    </div>
                 </div>
 
-                <div class="col-md-3 mb-3">
-                    <label for="garbage_disposal">Household's Garbage Disposal</label>
-                    <input [(ngModel)]="field.garbage_disposal" class="custom-select" id="garbage_disposal">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="type_of_lighting_fuel">Type of Fuel Use for Lighting</label>
-                    <input (change)="changeHandler($event)" [(ngModel)]="field.type_of_lighting_fuel" class="custom-select" id="type_of_lighting_fuel">
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label for="type_of_cooking_fuel">Type of Fuel for Cooking</label>
-                    <input (change)="changeHandler($event)" [(ngModel)]="field.type_of_cooking_fuel" class="custom-select" id="type_of_cooking_fuel">
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="geohazard_area">House Location Geo-Hazard Area</label>
-                    <input [(ngModel)]="field.geohazard_area" class="custom-select" id="geohazard_area">
+                <div class="col-md-5 mb-3 ">
+                    <label for="type_of_toilet ">Type of Toilet the Household Owns</label>
+                    <select [(ngModel)]="field.type_of_toilet " class="custom-select " id="type_of_toilet ">
+                        <option  selected disabled>Choose..</option>
+                        <option *ngFor="let TypeofToilettheHouseholdwns of select.TypeofToilettheHouseholdwns ">{{ TypeofToilettheHouseholdwns }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Type of Toilet the Household Owns is required
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="household_location">Household Location</label>
-                    <input (change)="changeHandler($event)" [(ngModel)]="field.household_location" class="custom-select" id="household_location">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="flood_prone_area_water_level">Water Level in flood prone area</label>
-                    <input [(ngModel)]="field.flood_prone_area_water_level" class="custom-select" id="flood_prone_area_water_level">
+                <div class="col-md-3 mb-3 ">
+                    <label for="garbage_disposal ">Household's Garbage Disposal</label>
+                    <select [(ngModel)]="field.garbage_disposal " class="custom-select " id="garbage_disposal ">
+                        <option  selected disabled>Choose..</option>
+                        <option *ngFor="let HouseholdsGarbageDisposals of select.HouseholdsGarbageDisposals ">{{ HouseholdsGarbageDisposals }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Household's Garbage Disposal is required
+                    </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="access_to_infotech">Access to Information Technology</label>
-                    <input (change)="changeHandler($event)" [(ngModel)]="field.access_to_infotech" class="custom-select" id="access_to_infotech">
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="type_of_lighting_fuel ">Type of Fuel Use for Lighting</label>
+                    <select [(ngModel)]="field.type_of_lighting_fuel " class="custom-select " id="type_of_lighting_fuel ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let TypeofFuelUseforLighting of select.TypeofFuelUseforLighting ">{{ TypeofFuelUseforLighting }}</option>
+                        <option >Others, specify fuel use for lighting</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Type of Fuel Use for Lighting is required
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="forps_beneficiary_household">4Ps Beneficiary Household</label>
-                    <input [(ngModel)]="forps_beneficiary_household" class="custom-select" id="forps_beneficiary_household">
+                <div class="col-md-6 mb-3 ">
+                    <label for="type_of_lighting_fuel ">Specify Fuel for lighting</label>
+                    <input placeholder="Specify fuel for lighting " [(ngModel)]="field.type_of_lighting_fuel " class="custom-select " id="type_of_lighting_fuel ">
+                    <div class="invalid-feedback ">
+                        Specify Fuel for lighting is required
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3 ">
+                    <label for="type_of_cooking_fuel ">Type of Fuel for Cooking</label>
+                    <select [(ngModel)]="field.type_of_cooking_fuel " class="custom-select " id="type_of_cooking_fuel ">
+                        <option selected disabled>Choose..</option>
+                        <option *ngFor="let TypeofuelforCooking of select.TypeofuelforCooking ">{{ TypeofuelforCooking }}</option>
+                        <option >Others, specify fuel use for cooking</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Type of Fuel for Cooking is required
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3 ">
+                    <label for="type_of_cooking_fuel ">Specify Fuel for Cooking</label>
+                    <input placeholder="Specify fuel for cooking " [(ngModel)]="field.type_of_cooking_fuel " class="custom-select " id="type_of_cooking_fuel ">
+                    <div class="invalid-feedback ">
+                        Specify Fuel for Cooking is required
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="geohazard_area ">House Location Geo-Hazard Area</label>
+                    <select [(ngModel)]="field.geohazard_area " class="custom-select " id="geohazard_area ">
+                        <option selected disabled>Choose..</option>
+                        <option >Yes</option>
+                        <option >No</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        House Location Geo-Hazard Area is required
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3 ">
+                    <label for="household_location ">Household Location</label>
+                    <select [(ngModel)]="field.household_location " class="custom-select " id="household_location ">
+                        <option  selected disabled>Choose..</option>
+                        <option *ngFor="let HouseholdLocation of select.HouseholdLocation ">{{HouseholdLocation}}</option>                    
+                    </select>
+                    <div class="invalid-feedback ">
+                        Household Location is required
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3 ">
+                    <label for="household_location ">Specify Household Location</label>
+                    <input placeholder="Enter specif house hold location " [(ngModel)]="field.household_location " class="custom-select " id="household_location ">
+                    <div class="invalid-feedback ">
+                        Specify Household Location is required
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="flood_prone_area_water_level ">Water Level in flood prone area</label>
+                    <select [(ngModel)]="field.flood_prone_area_water_level " class="custom-select " id="flood_prone_area_water_level ">
+                        <option  selected disabled>Choose..</option>
+                        <option *ngFor="let WaterLevelinfloodpronearea of select.WaterLevelinfloodpronearea ">{{ WaterLevelinfloodpronearea }}</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Water Level in flood prone area is required
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-6 mb-3 ">
+                    <label for="access_to_infotech ">Access to Information Technology</label>
+                    <select [(ngModel)]="field.access_to_infotech " class="custom-select " id="access_to_infotech ">
+                        <option selected disabled>Choose..</option>
+                            <option *ngFor="let AccesstoInformationTechnology of select.AccesstoInformationTechnology ">{{AccesstoInformationTechnology}}</option>
+                            <option>Others, specify access to information technology</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        Access to Information Technology is required
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3 ">
+                    <label for="access_to_infotech ">Specify Access to Information Technology</label>
+                    <input [(ngModel)]="field.access_to_infotech " class="custom-select " id="access_to_infotech ">
+                    <div class="invalid-feedback ">
+                        Specify Access to Information Technology is required
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-6 mb-3 ">
+                    <label for="forps_beneficiary_household ">4Ps Beneficiary Household</label>
+                    <select [(ngModel)]="field.forps_beneficiary_household " class="custom-select " id="forps_beneficiary_household ">
+                        <option selected disabled>Choose..</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                    <div class="invalid-feedback ">
+                        4Ps Beneficiary Household is required
+                    </div>
                 </div>
             </div>
 
             <br><br> <br><br>
 
-            <div class="button-container">
-                <button (click)="updateRecord()" class="button">Update this record</button>
+            <div class="button-container ">
+                <button (click)="updateRecord() " class="button ">Update Record</button>
             </div>
 
             <br><br> <br><br>
 
 
         </div>
-        <div *ngIf="isLoading" class="loader"></div>
+        <div *ngIf="isLoading " class="loader "></div>
 
     </div>
 </div>

@@ -18,6 +18,10 @@ export class InMigsTableComponent implements OnInit {
 				this.deleteRecord(array[id])
 			}
 		})
+
+		this.reload = this.InMigService.getRow().subscribe(data => {
+			this.ngOnInit()
+		})
 	}
 
 	reload
@@ -67,7 +71,9 @@ export class InMigsTableComponent implements OnInit {
 
 	keyword = ''
 	search(){
-
+		this.InMigService.search(this.keyword).subscribe(response => {
+			this.InMigService.setData(response.data)		
+		})
 	}
 
 	deleteRecord(id){

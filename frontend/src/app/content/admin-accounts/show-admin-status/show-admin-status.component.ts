@@ -40,6 +40,7 @@ export class ShowAdminStatusComponent implements OnInit {
 		this.AdminService.showAdmin(id).subscribe(data => {
 			this.admin = data		
 			this.isLoading = false
+			console.log(data)
 		})
 	}
 

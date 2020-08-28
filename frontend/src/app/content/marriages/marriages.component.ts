@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MarriagesService } from './marriages.service'
+import { UtilityService } from '../../utility.service'
 
 @Component({
   selector: 'app-marriages',
@@ -9,7 +10,8 @@ import { MarriagesService } from './marriages.service'
 export class MarriagesComponent implements OnInit {
 
 	constructor(
-		private MarriagesService : MarriagesService
+		private MarriagesService : MarriagesService,
+		private UtilityService :  UtilityService
 	) { }
 
 	ngOnInit(): void {
@@ -126,11 +128,8 @@ export class MarriagesComponent implements OnInit {
 			}
 		}
 		if(!hasError){
-			// this.fields.sorting_number = this.fields.sorting_number.toString()
-			// this.fields.household_number = this.fields.household_number.toString()
-			 
 			this.MarriagesService.saveMarriageRecord(this.fields).subscribe(data => {
-				console.log(data)
+				this.UtilityService.setAlert('Marriage Record has been successfully saved' ,'success')
 			})
 			this.isLoading = false
 		}else{			

@@ -102,7 +102,7 @@ import { CommentMarriagesComponent } from './content/shared/comments/comment-mar
 import { MapLogsComponent } from './content/logs/map-logs/map-logs.component';
 
 
-
+ 
 const routes: Routes = [
   
   { path:'comments/cpdb/:id', component:CommentCpdbComponent},  
@@ -110,7 +110,7 @@ const routes: Routes = [
   { path:'comments/deaths/:id', component:CommentDeathsComponent},  
   { path:'comments/in-migration/:id', component:CommentInMigComponent},  
   { path:'comments/out-migration/:id', component:CommentOutMigComponent},  
-  { path:'comments/marraiges/:id', component:CommentMarriagesComponent},  
+  { path:'comments/marriages/:id', component:CommentMarriagesComponent},  
 
 
   { path:'test', component:TestsComponent},  

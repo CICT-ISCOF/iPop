@@ -41,7 +41,7 @@ reload
 
 	columnDefs = [	
 		{headerName: 'Operations', field: 'id',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:350 },
-		{headerName: 'Status', field: 'id', sortable: true, filter: 'agTextColumnFilter',cellRenderer: 'status' ,width:250},
+		{headerName: 'Status', field: 'id',cellRenderer: 'status' ,width:250},
 		{headerName: 'Sorting Number', field: 'barangay', sortable: true, filter: 'agTextColumnFilter' ,width:350 },
 		{headerName: 'Municipality', field: 'municipality', sortable: true, filter: 'agTextColumnFilter',width:350 },	
 		{headerName: 'Barangay', field: 'barangay', sortable: true, filter: 'agTextColumnFilter' ,width:350},	

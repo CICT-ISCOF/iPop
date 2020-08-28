@@ -18,6 +18,10 @@ export class OutMigsTableComponent implements OnInit {
 				this.deleteRecord(array[id])
 			}
 		})
+		
+		this.reload = this.OutMigService.getRow().subscribe(data => {
+			this.ngOnInit()
+		})
 	}
 
 	reload
@@ -67,7 +71,9 @@ export class OutMigsTableComponent implements OnInit {
 
 	keyword = ''
 	search(){
-
+		this.OutMigService.search(this.keyword).subscribe(response => {
+			this.OutMigService.setData(response.data)		
+		})
 	}
 
 	deleteRecord(id){

@@ -69,7 +69,7 @@ export class AdminAccountsComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false				
+			this.isLoading = false	
 		})
 	}
 

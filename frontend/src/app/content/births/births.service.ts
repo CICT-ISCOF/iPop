@@ -25,10 +25,19 @@ export class BirthsService {
         
 
 	
-	private data = new Subject<any>();
-	private reload = new Subject<any>();
-	private array = new Subject<any>();
-	private actionToDelete = new Subject<any>();
+	private data = new Subject<any>()
+	private reload = new Subject<any>()
+	private array = new Subject<any>()
+	private actionToDelete = new Subject<any>()
+	private row = new Subject<any>()
+
+	setRow(){
+		this.row.next()
+	}
+
+	getRow(){
+		return this.row.asObservable();
+	}
 
 
 	setActionToDelete(){
@@ -71,6 +80,11 @@ export class BirthsService {
 		return this.http.get<any>(url, {headers:this.headers})
 	}
 
+	getSpecificRecord(id){
+		const url = this.baseURL + '/' + id
+		return this.http.get<any>(url, {headers:this.headers})
+	}
+
 
 	saveBirthRecord(record){
 		const url = this.baseURL 		
@@ -86,6 +100,33 @@ export class BirthsService {
 	deleteRecord(id){		
 		const url = this.baseURL + '/' + id 		
 		return this.http.delete<any>(url, {headers:this.headers})
+	}
+
+	updateStatus(status,id){
+		const url = this.BaseAPIService.baseURL + '/records/' + id
+		return this.http.put(url, {status:status},{ headers:this.headers})
+	}
+
+	updateRecord(record,id){
+		const url = this.baseURL + '/' + id 		
+		return this.http.put(url, record,{ headers:this.headers})
+
+	}
+
+	addComment(data){
+		const url = this.BaseAPIService.baseURL + '/comments'
+		return this.http.post(url, data, {headers:this.headers})
+	}
+
+	removeComment(id){
+		const url = this.BaseAPIService.baseURL + '/comments/' + id 		
+		return this.http.delete(url,{ headers:this.headers})
+
+	}
+
+	search(keyword){
+		const url = this.BaseAPIService.baseURL + '/search/records?type=Birth&query=' + keyword
+		return this.http.get<any>(url,{headers:this.headers})
 	}
 
 }
