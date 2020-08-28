@@ -25,7 +25,7 @@ class SearchController extends Controller
     {
         $query = $request->input('query');
         $type = $request->input('type');
-        $types = ['Birth', 'Death', 'CPDB', 'InMigration', 'OutMigration'];
+        $types = ['Birth', 'Death', 'CPDB', 'InMigration', 'OutMigration','Marriage'];
         
         if(!in_array($type, $types))
         {
