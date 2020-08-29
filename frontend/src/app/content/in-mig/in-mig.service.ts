@@ -9,7 +9,7 @@ import { Observable, Subject } from 'rxjs';
 }) 
 export class InMigService {
 
- 
+  
 	constructor(
 		private http : HttpClient,
 		private BaseAPIService : BaseAPIService
@@ -27,7 +27,16 @@ export class InMigService {
 	private data = new Subject<any>();
 	private reload = new Subject<any>();
 	private array = new Subject<any>();
-	private actionToDelete = new Subject<any>();
+	private actionToDelete = new Subject<any>()
+	private row = new Subject<any>()
+
+	setRow(){
+		this.row.next()
+	}
+
+	getRow(){
+		return this.row.asObservable();
+	}
 
 
 	setActionToDelete(){
@@ -70,6 +79,11 @@ export class InMigService {
 		return this.http.get<any>(url, {headers:this.headers})
 	}
 
+	getSpecificRecord(id){
+		const url = this.baseURL + '/' + id	
+		return this.http.get<any>(url, {headers:this.headers})
+	}
+
 
 	saveInMigrationRecord(record){
 		const url = this.baseURL 		
@@ -86,6 +100,35 @@ export class InMigService {
 		const url = this.baseURL + '/' + id 		
 		return this.http.delete<any>(url, {headers:this.headers})
 	}
+
+	updateStatus(status,id){
+		const url = this.BaseAPIService.baseURL + '/records/' + id
+		return this.http.put(url, {status:status},{ headers:this.headers})
+	}
+
+	updateRecord(record,id){
+		const url = this.baseURL + '/' + id 		
+		return this.http.put(url, record,{ headers:this.headers})
+
+	}
+
+	addComment(data){
+		const url = this.BaseAPIService.baseURL + '/comments'
+		return this.http.post(url, data, {headers:this.headers})
+	}
+
+	removeComment(id){
+		const url = this.BaseAPIService.baseURL + '/comments/' + id 		
+		return this.http.delete(url,{ headers:this.headers})
+
+	}
+
+	search(keyword){
+		const url = this.BaseAPIService.baseURL + '/search/records?type=InMigration&query=' + keyword
+		return this.http.get<any>(url,{headers:this.headers})
+	}
+
+	
   
 
 }

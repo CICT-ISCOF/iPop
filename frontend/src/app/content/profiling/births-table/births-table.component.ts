@@ -19,6 +19,10 @@ export class BirthsTableComponent implements OnInit {
 				this.deleteRecord(array[id])
 			}
 		})
+
+		this.reload = this.BirthsService.getRow().subscribe(data => {
+			this.ngOnInit()
+		})
 	}
 
 	reload
@@ -46,7 +50,8 @@ export class BirthsTableComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false				
+			this.isLoading = false			
+			console.log(response.data)	
 		})
 	}
 
@@ -68,7 +73,9 @@ export class BirthsTableComponent implements OnInit {
 
 	keyword = ''
 	search(){
-
+		this.BirthsService.search(this.keyword).subscribe(response => {
+			this.BirthsService.setData(response.data)		
+		})
 	}
 
 	deleteRecord(id){

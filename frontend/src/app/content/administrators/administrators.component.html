@@ -2,8 +2,20 @@
     <div *ngIf="isLoading" class="loader"></div>
     <br>
     <h4>Fields with asterisks <span style="color:red">* </span> &nbsp; are required</h4>
-    <hr>
-    <br>
+    <div class="row">
+        <div class="col-md-4 mb-3" style="position: relative;">
+            <img [src]="image" alt="">
+            <div (click)="triggerInput()" class="icon-container">
+                <i style="font-size: 25px;" class="fas fa-camera"></i>
+                <input (change)="readURL($event.target.files,$event)" accept="image/*" type="file" class="hidden" id="profile-picture">
+            </div>
+            <br><br>
+            <div (click)="setRandomImage()" class="clickable">
+                Click here for random avatar
+            </div>
+        </div>
+    </div>
+    <br><br>
     <div class="inputs">
 
         <div class="row">

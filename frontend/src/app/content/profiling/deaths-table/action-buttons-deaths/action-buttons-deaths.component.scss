@@ -1,13 +1,14 @@
 i,
 svg {
-    margin-left: 14px;
+    margin-right: 14px;
     font-size: 15px;
     cursor: pointer;
+    margin-top: 3px;
 }
 
 img {
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     border-radius: 10px;
     border-radius: 50%;
     border: 1px solid gray;
@@ -20,4 +21,13 @@ img {
     transform: translateY(11px);
     font-size: 10px;
     -webkit-text-stroke: 1px white;
+}
+
+th {
+    display: flex;
+    justify-content: center;
+}
+
+*:focus {
+    outline: 0;
 }

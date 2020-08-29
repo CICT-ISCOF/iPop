@@ -19,7 +19,8 @@ export class AdminService {
 	baseURL = 	this.BaseAPIService.baseURL + '/users'
 	headers = 	new HttpHeaders({
 					'Accept':'application/json',
-					'Authorization' : 'Bearer '+ this.token
+					'Authorization' : 'Bearer '+ this.token,
+					'Content-Type':[]
 				})	
 
 	private page = new Subject<any>();

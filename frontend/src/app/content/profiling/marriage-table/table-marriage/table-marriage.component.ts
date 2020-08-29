@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, LOCALE_ID, Inject,  } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { InMigService } from '../../../in-mig/in-mig.service';
+
 import { GridOptions } from "ag-grid-community"
 import { formatDate } from '@angular/common';
 import { ActionButtonsMarriageComponent } from '../action-buttons-marriage/action-buttons-marriage.component';
@@ -8,7 +8,7 @@ import { StatusMarriageComponent } from '../status-marriage/status-marriage.comp
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
 import { UtilityService } from '../../../../utility.service'
-
+import { MarriagesService } from '../../../marriages/marriages.service'
 
 @Component({
   selector: 'app-table-marriage',
@@ -19,15 +19,15 @@ export class TableMarriageComponent implements OnInit {
 	
 	@ViewChild('agGrid') agGrid: AgGridAngular;
 	constructor(
-		private  InMigService :InMigService,
+		private  MarriagesService :MarriagesService,
 		@Inject(LOCALE_ID) private locale: string ,
 		private UtilityService : UtilityService
 	) { 
-		this.reload = this.InMigService.getData().subscribe(data => {
+		this.reload = this.MarriagesService.getData().subscribe(data => {
 			this.rowData = data
 		})
 
-		this.reload = this.InMigService.getActionToDelete().subscribe(()=>{
+		this.reload = this.MarriagesService.getActionToDelete().subscribe(()=>{
 			this.getSelectedRows()
 		})
 	}
@@ -40,8 +40,8 @@ export class TableMarriageComponent implements OnInit {
 
 	columnDefs = [	
 		{headerName: 'Operations', field: '',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:350 },
-		{headerName: 'Status', field: '', sortable: true, filter: 'agTextColumnFilter',cellRenderer: 'status' },
-		{headerName: 'Sorting Number', field: '', sortable: true, filter: 'agTextColumnFilter' },
+		{headerName: 'Status', field: '',cellRenderer: 'status' },
+		{headerName: 'Sorting Number', field: 'sorting_number', sortable: true, filter: 'agTextColumnFilter' },
 		{headerName: 'Municipality', field: 'municipality', sortable: true, filter: 'agTextColumnFilter' },	
 		{headerName: 'Barangay', field: '', sortable: true, filter: 'agTextColumnFilter' },	
 		{headerName: 'Household Number', field: '', sortable: true, filter: 'agTextColumnFilter' },	
@@ -112,7 +112,7 @@ export class TableMarriageComponent implements OnInit {
 	public onGridReady(event){
 		this.gridAPI = event.api
 		this.columnAPi = event.columnAPi
-		this.InMigService.getInMigrationLists().subscribe(data => {
+		this.MarriagesService.getMarriageRecords().subscribe(data => {
 			 event.api.setRowData(data.data)
 		 })
 	}
@@ -141,7 +141,7 @@ export class TableMarriageComponent implements OnInit {
 			cancelButtonText: 'Nope'
 		  }).then((result) => {
 			if (result.value) {
-				this.InMigService.setMultipleDelete(identifiers)	
+				this.MarriagesService.setMultipleDelete(identifiers)	
 			}		
 		})	
 	

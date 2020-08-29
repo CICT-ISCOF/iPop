@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2'
+import { DeathsService } from '../../../deaths/deaths.service'
+import { UtilityService } from '../../../../utility.service'
 
 @Component({
   selector: 'app-action-buttons-deaths',
@@ -7,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActionButtonsDeathsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private DeathsService : DeathsService,
+    private UtilityService : UtilityService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -23,6 +29,54 @@ export class ActionButtonsDeathsComponent implements OnInit {
 	refresh(params:any):boolean{
 	this.params = params.data
 		return true
+  }
+  
+  approve(){		
+		Swal.fire({
+			title: 'Countinue approving this data?' ,		
+			icon: 'success',
+			showCancelButton: true,
+			confirmButtonText: 'Approve',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				status = 'Approved'
+				this.updateStatus(status)
+			}		
+		})	
+	}
+
+	disapprove(){
+		Swal.fire({
+			title: 'Are you sure you want to disapprove this data?' ,		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Disapprove',
+			cancelButtonText: 'Nope'
+			}).then((result) => {
+			if (result.value) {
+				status = 'Disapproved'
+				this.updateStatus(status)
+			}		
+		})	
+	}
+
+	needsEditing(){
+		status = 'Needs Editing'
+		this.updateStatus(status)
+	}
+
+	noted(){
+		status = 'Noted and will edit'
+		this.updateStatus(status)
+	}
+
+	updateStatus(status){
+		const id = this.params.record.id
+		this.DeathsService.updateStatus(status,id).subscribe(data => {
+			this.DeathsService.setRow()
+			this.UtilityService.setAlert('Status has been change to ' + status , 'success')
+		})
 	}
 
 

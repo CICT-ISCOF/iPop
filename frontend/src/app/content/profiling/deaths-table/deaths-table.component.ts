@@ -19,6 +19,12 @@ export class DeathsTableComponent implements OnInit {
 				this.deleteRecord(array[id])
 			}
 		})
+
+		this.reload = this.DeathsService.getRow().subscribe(data => {
+			this.ngOnInit()
+		})
+
+		
 	}
 
 	reload
@@ -69,7 +75,9 @@ export class DeathsTableComponent implements OnInit {
 
 	keyword = ''
 	search(){
-
+		this.DeathsService.search(this.keyword).subscribe(response => {
+			this.DeathsService.setData(response.data)				
+		})
 	}
 
 	deleteRecord(id){

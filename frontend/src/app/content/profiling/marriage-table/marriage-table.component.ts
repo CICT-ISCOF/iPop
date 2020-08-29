@@ -12,25 +12,29 @@ export class MarriageTableComponent implements OnInit {
 	constructor(
 		private MarriagesService : MarriagesService,
 		private UtilityService : UtilityService
-	){
+	) { 
 		this.reload = this.MarriagesService.getMultipleDelete().subscribe(array => {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+		})
+
+		this.reload = this.MarriagesService.getRow().subscribe(data => {
+			this.ngOnInit()
 		})
 	}
 
 	reload
 
 	ngOnInit(): void {
-		this.getCPDBLists()
+		this.getMarraigeRecord()
 	}
 
 	isLoading = false
 
 	theme = localStorage.getItem('data-theme')
 
-	getCPDBLists(){
+	getMarraigeRecord(){
 		this.pagination = {
 			currentPage:0,
 			lastPage:0,
@@ -67,10 +71,11 @@ export class MarriageTableComponent implements OnInit {
 
 	keyword = ''
 	search(){
-
+		this.MarriagesService.search(this.keyword).subscribe(response => {
+			this.MarriagesService.setData(response.data)		
+		})
 	}
 
-	
 	deleteRecord(id){
 		this.MarriagesService.deleteRecord(id).subscribe(data=>{
 			this.UtilityService.setAlert('Data has been sucessfully deleted, Please refresh to see changes','info')

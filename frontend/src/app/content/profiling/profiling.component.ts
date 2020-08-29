@@ -10,7 +10,12 @@ export class ProfilingComponent implements OnInit {
 	constructor() { }
 
 	ngOnInit(): void {
-
+		
+		if (!(localStorage.getItem("tab") != null)) {
+			
+		}else{
+			this.maekActive(localStorage.getItem('tab'))
+		}
 	}
 
 	tabs = {
@@ -51,6 +56,8 @@ export class ProfilingComponent implements OnInit {
 		else if(tab == "CPDB"){
 			this.tabs.CPDB = true
 		}
+
+		localStorage.setItem('tab',tab)
 	}
 
 	removeActive(){

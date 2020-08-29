@@ -1,8 +1,20 @@
 .sign-in-container {
     width: 100vw;
     height: 100vh;
-    background: var(--bg1);
     padding: 50px 200px;
+}
+
+.sign-in-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // background-image: url(../../../assets/home/4.jpg);
+    background: linear-gradient(var(--bg), var(--bg1));
+    background-size: 100% 100%;
+    filter: blur;
 }
 
 .sign-in-panel {
@@ -12,6 +24,7 @@
     border-radius: 10px;
     overflow: hidden;
     background: var(--bg);
+    opacity: .99;
 }
 
 .overlay {
@@ -112,4 +125,16 @@ p {
 
 p:hover {
     color: #0675E7;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

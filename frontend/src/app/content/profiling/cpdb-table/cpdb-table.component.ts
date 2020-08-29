@@ -75,8 +75,8 @@ export class CpdbTableComponent implements OnInit {
 
 	keyword = ''
 	search(){
-		this.CpdbService.search(this.keyword).subscribe(data => {
-			console.log(data)
+		this.CpdbService.search(this.keyword).subscribe(response => {
+			this.CpdbService.setData(response.data)		
 		})
 	}
 
