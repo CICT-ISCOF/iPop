@@ -14,6 +14,7 @@ class StatisticsController extends Controller
             'records' => $this->records(),
             'totals' => $this->totals(),
             'population' => $this->population(),
+            'marriages' => $this->marriages(),
         ];
     }
 
@@ -147,7 +148,9 @@ class StatisticsController extends Controller
             $population['total'] += $model::count();
         }
 
-        $topMunicipalities = array_reverse(Arr::sort($population['municipalities']));
+        $topMunicipalities = array_reverse(
+            Arr::sort($population['municipalities'])
+        );
 
         $top = [];
 
@@ -198,7 +201,9 @@ class StatisticsController extends Controller
                     'total' => $total,
                 ];
             }
-            $data['barangays'] = array_reverse(Arr::sort($array));
+            $data['barangays'] = array_reverse(
+                Arr::sort($array)
+            );
             $final[] = $data;
         }
         $top = $final;
@@ -252,7 +257,9 @@ class StatisticsController extends Controller
             }
         }
 
-        $data['barangays'] = array_reverse(Arr::sort($data['barangays']));
+        $data['barangays'] = array_reverse(
+            Arr::sort($data['barangays'])
+        );
 
         $final = [];
 
