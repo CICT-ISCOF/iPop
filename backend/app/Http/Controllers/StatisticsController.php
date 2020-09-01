@@ -157,7 +157,7 @@ class StatisticsController extends Controller
         $count = 0;
         foreach($topMunicipalities as $name => $data)
         {
-            if($count == 4)
+            if($count == 5)
             {
                 break;
             }
@@ -171,7 +171,7 @@ class StatisticsController extends Controller
             {
                 $barangays = $model
                     ::selectRaw('barangay, municipality, COUNT(barangay) as total')
-                    ->where('municipality', $name)
+                    ->where('municipality', 'LIKE', '%'.$name.'%')
                     ->groupBy('barangay')
                     ->get();
 
@@ -215,8 +215,9 @@ class StatisticsController extends Controller
 
     public function municipality(Request $request)
     {
+        // to be changed
         $name = $request->input('name');
-
+        
         $models = [
             "App\\Birth",
             "App\\Death",
@@ -234,11 +235,11 @@ class StatisticsController extends Controller
 
         foreach($models as $model)
         {
-            $data['total_population'] += $model::where('municipality', $name)
+            $data['total_population'] += $model::where('municipality', 'LIKE','%'.$name.'%')
                 ->count();
                 
-            $data['total_barangays'] += $model::selectRaw('barangay')
-                ->where('municipality', $name)
+            // *
+            $data['total_barangays'] += $model::where('municipality', $name)
                 ->groupBy('barangay')
                 ->count();
 
@@ -261,17 +262,17 @@ class StatisticsController extends Controller
             Arr::sort($data['barangays'])
         );
 
-        $final = [];
+        // $final = [];
 
-        foreach($data['barangays'] as $name => $metadata)
-        {
-            $final[] = [
-                'name' => $name,
-                'total' => $metadata,
-            ];
-        }
+        // foreach($data['barangays'] as $name => $metadata)
+        // {
+        //     $final[] = [
+        //         'name' => $name,
+        //         'total' => $metadata,
+        //     ];
+        // }
 
-        $data['barangays'] = $final;
+        // $data['barangays'] = $final;
 
         return $data;
     }
