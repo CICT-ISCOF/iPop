@@ -72,6 +72,9 @@ class UserController extends Controller
                 $oldFile->delete();
             }
         }
+        if(isset($data['profile_picture_url'])) {
+            
+        }
         if ($request->user()->id === $user->id) {
             unset($data['role']);
             unset($data['iterations']);
