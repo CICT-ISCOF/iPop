@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StatisticsService } from  './statistics.service'
+import { Console } from 'console';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class StatisticsComponent implements OnInit {
 	marriages
 	getGeneralData(){
 		this.general = this.StatisticsService.general().subscribe(data => {
-		
+			console.log(data)
 		})
 	}
 
@@ -53,7 +54,7 @@ export class StatisticsComponent implements OnInit {
 	
 	getGenders(){
 		this.genders = this.StatisticsService.genders().subscribe(data => {
-			
+		
 		})
 	}
 

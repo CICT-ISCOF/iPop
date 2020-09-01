@@ -5,6 +5,11 @@
     background: var(--bg1);
 }
 
+.nav-item {
+    width: 200px !important;
+    flex: none !important;
+}
+
 .action-buttons {
     display: flex;
     padding-right: 20px;
@@ -34,6 +39,10 @@
 .preview:hover,
 .reset:hover {
     background: var(--inputBg);
+}
+
+.Slider {
+    overflow: hidden;
 }
 
 .tabs {
@@ -146,8 +155,9 @@ video {
     height: 40vh;
     min-width: 100%;
     background-repeat: no-repeat !important;
-    background-size: cover;
-    background-position: center;
+    background-size: fill !important;
+    background-position: center !important;
+    background-size: 100% 100% !important;
 }
 
 .owl-carousel .owl-item img,
@@ -170,8 +180,7 @@ video {
 .row4 h4,
 p {
     width: 100%;
-    padding: 5px 5vw;
-    text-align: center;
+    text-align: left;
 }
 
 .grid,
@@ -194,7 +203,8 @@ p {
 
 .row6,
 .row7 {
-    padding: 20px
+    padding: 20px;
+    min-height: 50vh;
 }
 
 .row4[_ngcontent-pfp-c26] h4[_ngcontent-pfp-c26],
@@ -238,6 +248,7 @@ span select {
     border: none !important;
     cursor: pointer;
     font-size: 14px;
+    height: 30px;
 }
 
 span svg {
@@ -251,6 +262,7 @@ span svg:hover {
 }
 
 .Big-Image {
+    min-height: 40vh;
     height: auto !important;
 }
 
@@ -292,4 +304,91 @@ video {
 
 .fa-image:hover {
     opacity: .5;
+}
+
+.card {
+    position: relative;
+}
+
+.fa-times-circle {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 25px;
+    color: gray;
+}
+
+.fa-times-circle:hover {
+    opacity: .5;
+}
+
+.initiator {
+    transform: translateY(5px);
+}
+
+.drop-down-container {
+    position: relative !important;
+    font-size: 16px;
+    line-height: 1.2em;
+    cursor: pointer;
+    z-index: 999999;
+}
+
+.top-bot {
+    display: none;
+    position: absolute;
+    padding: 7px 20px;
+    border-radius: 3px;
+    width: 85px;
+    background: var(--bg);
+    text-align: center;
+    margin-top: 20px;
+    box-shadow: var(--shadow)
+}
+
+.top-bot:nth-child(3) {
+    margin-top: 50px;
+}
+
+.drop-down {
+    position: absolute;
+    display: none;
+    width: 150px;
+    left: -150px;
+    top: 0;
+    text-align: left;
+    box-shadow: var(--shadow)
+}
+
+.clicked {
+    .top-bot {
+        display: block !important;
+    }
+    cursor: pointer;
+    position: absolute;
+    .title {
+        border-bottom: none !important
+    }
+}
+
+.top-bot:hover {
+    .drop-down {
+        display: block;
+    }
+    .drop-down div {
+        padding: 7px 20px;
+        border-radius: 3px;
+        background: var(--bg);
+        border-bottom: 1px solid rgba(150, 150, 150, .2);
+    }
+    color: #0497F7 !important
+}
+
+.drop-down div:hover {
+    color: #0497F7 !important
+}
+
+.block {
+    display: block !important;
 }

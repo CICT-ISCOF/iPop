@@ -3,6 +3,8 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CmsService } from './cms.service'
 import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { UtilityService } from '../../utility.service'
+import { Subscription } from 'rxjs'
+
 
 @Component({
 	selector: 'app-cms',
@@ -15,13 +17,44 @@ export class CmsComponent implements OnInit {
 		private CmsService : CmsService,
 		private DomSanitizer : DomSanitizer,
 		private UtilityService : UtilityService
-	) { }
+	) { 
+		this.subscription = this.CmsService.getPreview().subscribe(preview => {
+			this.preview = preview
+		})
+	}
 
 	ngOnInit(): void {
 
 	}
 
+
+	tabs = {
+		newContent:true,
+		contentList:false,
+		newQuickLink:false,
+		quickLinks:true
+	}
+
+
+
+
+
+	subscription
+
+	preview = false
+
 	theme = localStorage.getItem('data-theme')
+
+
+
+	previewData(){
+		this.preview = true		
+		setTimeout(() => {
+			this.CmsService.setData(this.items)	
+			
+		}, 1000);
+		console.log(JSON.stringify(this.items))
+	}
 
 	
 	submit(){	
@@ -69,67 +102,12 @@ export class CmsComponent implements OnInit {
 
 	items:any = []
 
+
 	
-	autoIncrement = 0
-	addItem(item){
-		this.autoIncrement += 1
-		if(item == 'Texts'){			
-			this.items.push({
-					Texts:{					
-						title:'',
-						body:'',	
-						id:this.autoIncrement,
-						position:'`',											
-					},
-				})
-		}
-		if(item == 'Media'){
-			this.items.push({
-				Media: {				
-					attachment:'',				
-					video:'',
-					image:'',	
-					pdf:'',		
-					id:this.autoIncrement,
-					position:'',
-				},
-				
-			})		
-		}
-		if(item == 'Grids'){
-			this.items.push({
-				Grids: {	
-					griditems:[],
-					id:this.autoIncrement,					
-					position:'',					
-				},			
-			})		
-		}
-		if(item == 'Cards'){
-			this.items.push({
-				Cards: {	
-					carditems:[],
-					id:this.autoIncrement,
-					position:'',					
-				},			
-			})		
-		}
-		if(item == 'Sliders'){
-			this.items.push({
-				Sliders: {	
-					images:[],
-					videos:[],
-					id:this.autoIncrement,
-					position:'',		
-					attachments:[]			
-				},			
-			})		
-		}
-	}
 
 	
 	triggerMediaInput(id, index){		
-		document.getElementById(id + index).click()
+		document.getElementById(id + index).click()		
 	}
 		
 
@@ -179,7 +157,7 @@ export class CmsComponent implements OnInit {
 			title:'',
 			attachment:'',
 		})
-		console.log(this.items)
+		
 	}
 
 
@@ -204,19 +182,28 @@ export class CmsComponent implements OnInit {
 	}
 
 	readSliderURL(files: FileList,event,index,type){	
-		if (event.target.files && event.target.files[0]) {
-			const reader = new FileReader();   
-			reader.readAsDataURL(event.target.files[0]);   
-			reader.onload = (event) => {	
-				if(type == 'video'){
-					this.items[index].Sliders.videos.push( (<FileReader>event.target).result ) 	
-				}	
-				else{
-					this.items[index].Sliders.images.push( (<FileReader>event.target).result ) 	
-				}	
+		if (event.target.files && event.target.files[0]) {	
+			if(type == 'video'){
+				Object.keys(files).forEach(i => {				
+					const reader = new FileReader();   
+					reader.readAsDataURL(event.target.files[i]);   		     
+					reader.onload = (event) => {
+						this.items[index].Sliders.videos.push( (<FileReader>event.target).result ) 	
+						this.items[index].Sliders.attachments.push(files.item(0)) 
+					}						
+				})			
+			}	
+			else{
+				Object.keys(files).forEach(i => {					
+					const reader = new FileReader();   
+					reader.readAsDataURL(event.target.files[i]);   		   
+					reader.onload = (event) => {
+						this.items[index].Sliders.images.push( (<FileReader>event.target).result ) 							
+						this.items[index].Sliders.attachments.push(files.item(0))  						
+					}						
+				})
 			}
-		}
-		this.items[index].Sliders.attachments.push(files.item(0))  	
+		}	
 	}
 	
 	reload(){
@@ -226,6 +213,134 @@ export class CmsComponent implements OnInit {
 			subcategory:''
 		}
 	}
+
+
+	removeItem(index){
+		this.items.splice(index, 1)				
+	}
+
+
+	removeGrid(index, gridIndex){
+		this.items[index].Grids.griditems.splice(gridIndex, 1)
+	}
+
+	removeCard(index, cardIndex){
+		this.items[index].Cards.carditems.splice(cardIndex, 1)
+	}
+	
+	addItem(item){	
+		if(item == 'Texts'){			
+			this.items.push({
+					Texts:{					
+						title:'',
+						body:'',						
+						position:'`',											
+					},
+				})
+		}
+		if(item == 'Media'){
+			this.items.push({
+				Media: {				
+					attachment:'',				
+					video:'',
+					image:'',	
+					pdf:'',							
+					position:'',
+				},
+				
+			})		
+		}
+		if(item == 'Grids'){
+			this.items.push({
+				Grids: {	
+					griditems:[],								
+					position:'',					
+				},			
+			})		
+		}
+		if(item == 'Cards'){
+			this.items.push({
+				Cards: {	
+					carditems:[],					
+					position:'',					
+				},			
+			})		
+		}
+		if(item == 'Sliders'){
+			this.items.push({
+				Sliders: {	
+					images:[],
+					videos:[],				
+					position:'',		
+					attachments:[]			
+				},			
+			})		
+		}
+	}
+
+
+	insertItem(item, index){		
+
+		if(item == 'Texts'){			
+			this.items.splice(index, 0, ({
+					Texts:{					
+						title:'',
+						body:'',						
+						position:'`',											
+					},
+				})
+			)
+		}
+
+		if(item == 'Media'){
+			this.items.splice(index, 0, ({
+					Media: {				
+						attachment:'',				
+						video:'',
+						image:'',	
+						pdf:'',							
+						position:'',
+					},
+					
+				})	
+			)	
+		}
+
+		if(item == 'Grids'){
+			this.items.splice(index, 0, ({
+					Grids: {	
+						griditems:[],								
+						position:'',					
+					},			
+				})	
+			)	
+		}
+
+		if(item == 'Cards'){
+			this.items.splice(index, 0, ({
+					Cards: {	
+						carditems:[],					
+						position:'',					
+					},			
+				})	
+			)	
+		}
+		if(item == 'Sliders'){
+			this.items.splice(index, 0, ({
+					Sliders: {	
+						images:[],
+						videos:[],				
+						position:'',		
+						attachments:[]			
+					},			
+				})	
+			)	
+		}
+		
+	}
+
+
+
 
 	
 

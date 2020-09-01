@@ -22,7 +22,24 @@ export class CmsService {
 					'Authorization' : 'Bearer '+ this.token,
 					'Content-Type':[]
 				})	
+	private content = new Subject<any>();
+	private preview = new Subject<any>();
+	
+	setPreview(boolean){
+		this.preview.next(boolean)
+	}
 
+	getPreview(){
+		return this.preview.asObservable();
+	}
+
+	setData(data){
+		this.content.next(data)
+	}
+
+	getData(){
+		return this.content.asObservable();
+	}
 
 	save(content){
 		const url = this.baseURL + '/links'				

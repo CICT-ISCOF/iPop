@@ -1,7 +1,7 @@
 <app-create *ngIf="pinLogin == true"></app-create>
-
+<div *ngIf="isLoading == true" class="loader"></div>
 <div class="sign-in-container">
-    <div *ngIf="isLoading == true" class="loader"></div>
+
     <div class="sign-in-panel">
         <div>
             <div class="overlay1"></div>

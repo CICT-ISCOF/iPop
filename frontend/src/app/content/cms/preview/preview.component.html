@@ -1,1 +1,102 @@
-<p>preview works!</p>
+<div class="preview-component">
+    <div *ngIf="isLoading" class="loader "></div>
+    <i (click)="closePreview()" class="im im-x-mark"></i>
+
+    <div class="header">
+        <div class="logo-container">
+            <img src="../../../../assets/iloilo-seal.png" style="margin-right: 20px;animation: .3s zoom linear;">
+            <img style=" animation: fromleft .5s linear;" class="small" src="../../../../assets/ipo-logo.png">
+        </div>
+        <div class="texts">
+            <P>Republic of the Philippines</P>
+            <p>Province of Iloilo</p>
+            <h1 style=" animation: fromtop .5s linear;">PROVINCIAL POPULATION OFFICE</h1>
+        </div>
+    </div>
+
+    <div class="quick-links-container">
+        <div *ngFor="let item of [0,1,1,1,1,1,1,1]" class="another-quick-links">
+
+        </div>
+    </div>
+    <br>
+    <div *ngFor="let item of items" class="content row">
+
+
+        <div *ngIf="item.Sliders != null" class="Sliders">
+            <div class="carousel-holder">
+                <owl-carousel-o [options]="customOptions">
+                    <ng-template carouselSlide *ngFor="let image of item.Sliders.images">
+                        <img alt="" [style.background]="'url(' + image + ')'">
+                    </ng-template>
+                    <ng-template carouselSlide *ngFor="let video of item.Sliders.videos ">
+                        <video controls [src]="video " style="margin:0 !important;width:100% !important;height: 50vh !important;  object-fit: fill;    min-height: 40vh;"></video>
+                    </ng-template>
+                </owl-carousel-o>
+            </div>
+            <div class="quick-links">
+                <p>Quick Links</p>
+                <br>
+                <div *ngFor="let number of [0,1,2,3]" class="links">
+                    <div class="link-images">
+                        <img src="../../../assets/iloilo-seal.png">
+                    </div>
+                    <div class="link-text">
+                        <div class="placeholder-line"></div>
+                        <div class="placeholder-line"></div>
+                        <div class="placeholder-line"></div>
+                    </div>
+                </div>
+            </div><br>
+        </div>
+
+
+        <div *ngIf="item.Texts != null" class="Texts">
+            <br> <br>
+            <h4>{{item.Texts.title}}</h4>
+            <hr>
+            <p>{{item.Texts.body}}</p>
+        </div>
+
+
+
+        <div *ngIf="item.Media != null" class="media">
+            <video controls [src]="item.Media.video " *ngIf="item.Media.video !='' "></video>
+            <img [src]="item.Media.image " *ngIf="item.Media.image !='' " alt="">
+            <object [data]="cleanURL(item.Media.pdf) " *ngIf="item.Media.pdf !='' "></object>
+            <br>
+        </div>
+
+
+
+        <div *ngIf="item.Grids != null" class="grids">
+            <div *ngFor="let grid of item.Grids.griditems; let j=index; " class="card grid " style="width: 18rem; ">
+                <i *ngIf="grid.image=='' " (click)="triggerMediaInput( 'griditem',j) " class="fas fa-image "></i>
+                <img (click)="triggerMediaInput( 'griditem',j) " [src]="grid.image " class="card-img-top " alt="">
+                <div class="card-body ">
+                    <h5>{{grid.title}}</h5>
+                </div>
+                <input accept="image/* " type="file" (change)="readGridUrl($event.target.files,$event,i,j) " style="display: none; " [id]=" 'griditem' + j ">
+            </div>
+            <br>
+        </div>
+
+
+        <div *ngIf="item.Cards != null" class="">
+            <div class="card " *ngFor="let card of item.Cards.carditems; let j=index; ">
+                <i *ngIf="card.image=='' " (click)="triggerMediaInput( 'carditem',j) " class="fas fa-image "></i>
+                <img (click)="triggerMediaInput( 'carditem',j) " [src]="card.image " class="card-img-top " alt="">
+                <div class="card-body ">
+                    <h5 class="card-title ">{{card.title}}</h5>
+                    <p>{{card.body}}</p>
+                    <input accept="image/* " type="file" (change)="readCardURL($event.target.files,$event,i,j) " style="display: none; " [id]=" 'carditem' + j ">
+                </div>
+            </div>
+            <br>
+        </div>
+
+
+
+    </div>
+    <br><br><br>
+</div>

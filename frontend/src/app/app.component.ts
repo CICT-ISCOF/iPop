@@ -12,6 +12,7 @@ import Swal from 'sweetalert2'
 })
 export class AppComponent implements OnInit {
   title = 'ipo-web';
+  
 
 	constructor(			
 		private UtilityService : UtilityService,
