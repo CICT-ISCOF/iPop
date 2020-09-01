@@ -40,6 +40,10 @@ class SearchController extends Controller
 
         Log::record('User searched for records. Query: ' . $query);
 
-        return $model::search($query)->paginate(10);
+        $paginate = $request->input('paginate') == 'true';
+
+        $data = $model::search($query);
+
+        return $paginate ? $data->paginate(10) : $data->get();
     }
 }
