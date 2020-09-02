@@ -1,8 +1,5 @@
 <div class="statistics-component">
 
-
-
-
     <div class="row row1">
         <div class="col-md-3 container box">
             <div class="icon mr-auto">
@@ -10,7 +7,7 @@
             </div>
             <div class="texts">
                 <p>Total Population</p>
-                <h2>16,000</h2>
+                <h2>{{ population.total }}</h2>
             </div>
         </div>
 
@@ -20,7 +17,7 @@
             </div>
             <div class="texts">
                 <p>Number of Municipalities</p>
-                <h2>16,000</h2>
+                <h2>{{ totals.municipalities }}</h2>
             </div>
         </div>
 
@@ -30,21 +27,27 @@
             </div>
             <div class="texts">
                 <p>Number of Barangays</p>
-                <h2>16,000</h2>
+                <h2>{{ totals.barangays }}</h2>
             </div>
         </div>
     </div>
+
+
+
+
+
+
 
     <div class="row container">
         <div class="form-group col-md-6">
             <h3>Top Populated Municipalities</h3>
             <p>All over Iloilo</p>
             <ul class="list-group">
-                <li *ngFor="let item of [0,1,1,1,1]" class="list-group-item barangays">
+                <li *ngFor="let municipality of population.top" class="list-group-item barangays">
                     <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
-                    <p>Barotac Nuevo</p>
-                    <p>290</p>
-                    <p>15%</p>
+                    <p>{{municipality.name}}</p>
+                    <p>{{municipality.total}}</p>
+                    <p>{{ municipality.total / population.total * 100 | number:'1.0-0' }}%</p>
                 </li>
             </ul>
         </div>
@@ -58,7 +61,7 @@
     <div class="row container">
         <div class="form-group col-md-12">
             <br>
-            <i style="font-size: 20px !important;color:gray" class="fas fa-cogs"></i> &nbsp; Settings
+            <i style="font-size: 20px !important;color:gray" class="fas fa-cogs"></i> &nbsp; Filters
             <hr>
         </div>
         <div class="form-group col-md-6">
@@ -101,7 +104,7 @@
                 <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
                 <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
             </svg> &nbsp; Baragay Ilaud
-            <span tooltip="Settings affects the data below" placement="left" show-delay="100" [theme]="theme" style="margin-left: auto;cursor: pointer;">
+            <span tooltip="Filters affects the data below" placement="left" show-delay="100" [theme]="theme" style="margin-left: auto;cursor: pointer;">
                 <i style="font-size: 30px;color:orange"  class="fas fa-info-circle"></i>
             </span>
         </h4>
@@ -315,8 +318,13 @@
 
     <div class="row container ">
         <h4> 1200 Married - 30%</h4>
-        <google-chart class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions">
+        <google-chart *ngIf="!marriageisLoading" class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions">
         </google-chart>
+        <div *ngIf="marriageisLoading" class="d-flex justify-content-center">
+            <div class="spinner-border" role="status" style="color:#32B0DF">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
     </div>
     <br> <br> <br>
 </div>

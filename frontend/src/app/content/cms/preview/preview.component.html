@@ -10,7 +10,7 @@
         <div class="texts">
             <P>Republic of the Philippines</P>
             <p>Province of Iloilo</p>
-            <h1 style=" animation: fromtop .5s linear;">PROVINCIAL POPULATION OFFICE</h1>
+            <h1 style=" animation: fromtop .5s linear;color:#0497F7 !important">PROVINCIAL POPULATION OFFICE</h1>
         </div>
     </div>
 
@@ -19,7 +19,15 @@
 
         </div>
     </div>
-    <br>
+    <br> <br> <br>
+    <div class="navigation">
+        <p>{{ !isLoading && categories.title == '' ? 'No selected Category': categories.title }}</p>
+        <svg width="4em" height="2em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        <p>{{ categories.subcategory }}</p>
+    </div>
+    <br> <br> <br>
     <div *ngFor="let item of items" class="content row">
 
 
@@ -96,7 +104,8 @@
         </div>
 
 
-
     </div>
+
+    <h3 *ngIf="!isLoading && items.length == 0" style="text-align: center;margin-top: 30px;">Nothing to Preview...</h3>
     <br><br><br>
 </div>

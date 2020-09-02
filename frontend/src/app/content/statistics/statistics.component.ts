@@ -32,22 +32,25 @@ export class StatisticsComponent implements OnInit {
 	totals
 	genders
 	municipality
-	marriages
+
 	getGeneralData(){
-		this.general = this.StatisticsService.general().subscribe(data => {
-			console.log(data)
-		})
+		// this.general = this.StatisticsService.general().subscribe(data => {			
+		// 	this.general = data
+			
+		// })
 	}
 
 	getPopulation(){
 		this.population = this.StatisticsService.population().subscribe(data => {
-			
+			console.log('population',data)
+			this.population = data
 		})
 	}
 
 	getTotals(){
 		this.totals = this.StatisticsService.totals().subscribe(data => {
-			
+			console.log('totals',data)
+			this.totals = data
 		})
 	}
 
@@ -64,9 +67,18 @@ export class StatisticsComponent implements OnInit {
 		})
 	}
 
+	marriageisLoading = true
 	getMarriages(){
-		this.municipality = this.StatisticsService.marriages().subscribe(data => {
-			
+		this.marriageisLoading = true
+		this.StatisticsService.marriages().subscribe(data => {
+			const  truncate = (month) => {
+				return month.substring(0, 3);
+			}
+			this.charts.married = []
+			for(let key in data){
+				this.charts.married.push([ truncate(key.toString()) ,data[key]])
+			}
+			this.marriageisLoading = false
 		})
 	}
 

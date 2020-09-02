@@ -24,6 +24,14 @@ export class CmsService {
 				})	
 	private content = new Subject<any>();
 	private preview = new Subject<any>();
+	private category = new Subject<any>();
+
+	setCategory(data){
+		this.category.next(data)
+	}
+	getCategory(){
+		return this.category.asObservable();
+	}
 	
 	setPreview(boolean){
 		this.preview.next(boolean)

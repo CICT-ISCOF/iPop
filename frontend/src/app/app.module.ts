@@ -14,7 +14,7 @@ import { TooltipModule } from 'ng2-tooltip-directive';
 import { AgTableModule, AgTableCustomSettings } from 'ag-table';
 import { AgGridModule } from 'ag-grid-angular';
 import 'ag-grid-enterprise';
-
+import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
@@ -100,6 +100,11 @@ import { CommentInMigComponent } from './content/shared/comments/comment-in-mig/
 import { CommentOutMigComponent } from './content/shared/comments/comment-out-mig/comment-out-mig.component';
 import { CommentMarriagesComponent } from './content/shared/comments/comment-marriages/comment-marriages.component';
 import { MapLogsComponent } from './content/logs/map-logs/map-logs.component';
+import { NewQuickLinksComponent } from './content/cms/new-quick-links/new-quick-links.component';
+import { QuickLinksListComponent } from './content/cms/quick-links-list/quick-links-list.component';
+import { UpdateContentComponent } from './content/cms/update-content/update-content.component';
+import { UpdateQuickLinkComponent } from './content/cms/update-quick-link/update-quick-link.component';
+import { ShowQuickLinkComponent } from './content/cms/show-quick-link/show-quick-link.component';
 
 
  
@@ -232,6 +237,11 @@ const routes: Routes = [
     CommentOutMigComponent,
     CommentMarriagesComponent,
     MapLogsComponent,
+    NewQuickLinksComponent,
+    QuickLinksListComponent,
+    UpdateContentComponent,
+    UpdateQuickLinkComponent,
+    ShowQuickLinkComponent,
 
 
   ],
@@ -246,6 +256,7 @@ const routes: Routes = [
     LeafletModule,
     SlideToggleModule,
     HttpClientModule,
+    TextareaAutosizeModule,
     NetworkStatusAngularModule.forRoot(),
     TooltipModule,
     AgTableModule,

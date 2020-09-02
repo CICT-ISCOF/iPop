@@ -5,39 +5,66 @@
     <br>
     <ul class="nav nav-pills nav-fill">
         <li class="nav-item">
-            <a class="nav-link active">New Content</a>
+            <a class="nav-link" (click)="changeTab('newContent')" [class.active]="tabs.newContent">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M9.828 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91H9v1H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0 0 13.81 4H9.828zm-2.95-1.707L7.587 3H2.19c-.24 0-.47.042-.684.12L1.5 2.98a1 1 0 0 1 1-.98h3.672a1 1 0 0 1 .707.293z"/>
+                    <path fill-rule="evenodd" d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                  </svg> New Content
+            </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link">Content List</a>
+            <a class="nav-link" (click)="changeTab('contentList')" [class.active]="tabs.contentList">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                  </svg> Content List
+            </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link">New Quick Link</a>
+            <a class="nav-link" (click)="changeTab('newQuickLink')" [class.active]="tabs.newQuickLink">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-earmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 0h5.5v1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h1V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
+                    <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z"/>
+                    <path fill-rule="evenodd" d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"/>
+                  </svg> New Quick Link
+            </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link">Quick Links</a>
+            <a class="nav-link" (click)="changeTab('quickLinks')" [class.active]="tabs.quickLinks">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-link" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>
+                    <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
+                  </svg> Quick Links
+            </a>
         </li>
     </ul>
 
-    <div class="action-buttons">
-        <div (click)="previewData()" class="preview" tooltip="Preview" placement="bottom" [theme]="theme">
-            <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-view-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+
+    <app-quick-links-list *ngIf="tabs.quickLinks"></app-quick-links-list>
+    <app-new-quick-links *ngIf="tabs.newQuickLink"></app-new-quick-links>
+    <app-contents-list *ngIf="tabs.contentList"></app-contents-list>
+
+    <div *ngIf="tabs.newContent" class="new-content">
+
+        <div class="action-buttons">
+            <div (click)="previewData()" class="preview" tooltip="Preview" placement="bottom" [theme]="theme">
+                <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-view-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
               </svg>
-        </div>
-        <div (click)="reload()" class="reset" tooltip="Reset Content" placement="bottom" [theme]="theme">
-            <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-arrow-counterclockwise" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            </div>
+            <div (click)="reload()" class="reset" tooltip="Reset Content" placement="bottom" [theme]="theme">
+                <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-arrow-counterclockwise" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M12.83 6.706a5 5 0 0 0-7.103-3.16.5.5 0 1 1-.454-.892A6 6 0 1 1 2.545 5.5a.5.5 0 1 1 .91.417 5 5 0 1 0 9.375.789z"/>
                 <path fill-rule="evenodd" d="M7.854.146a.5.5 0 0 0-.708 0l-2.5 2.5a.5.5 0 0 0 0 .708l2.5 2.5a.5.5 0 1 0 .708-.708L5.707 3 7.854.854a.5.5 0 0 0 0-.708z"/>
               </svg>
+            </div>
         </div>
-    </div>
 
 
 
-    <div class="row row1 container">
-        <div *ngIf="newCategory == false" class="form-group col-md-4">
-            <label for="Category secondary">
+        <div class="row row1 container">
+            <div *ngIf="newCategory == false" class="form-group col-md-4">
+                <label for="Category secondary">
                 Main Category
                 <span (click)="newCategory = true" class="options" title="Add New Category">
                     <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -46,16 +73,16 @@
                     </svg>
                 </span>                
             </label>
-            <select [(ngModel)]="categories.title" id="Category" class="form-control">
+                <select [(ngModel)]="categories.title" id="Category" class="form-control">
                 <option selected disabled>Choose...</option>
                 <option>About</option>
                 <option>Program Areas</option>
                 <option>Services Offered</option>
             </select>
-        </div>
+            </div>
 
-        <div *ngIf="newCategory == true" class="form-group col-md-4">
-            <label for="New Category secondary">               
+            <div *ngIf="newCategory == true" class="form-group col-md-4">
+                <label for="New Category secondary" [class.active]="false">               
                 <span class="options" title="Add New Category" style="visibility: hidden;">
                     <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
@@ -63,11 +90,11 @@
                     </svg>
                 </span>
             </label>
-            <input [(ngModel)]="categories.title" placeholder=" New Category" id="New Category" type="text" class="form-control">
-        </div>
+                <input [(ngModel)]="categories.title" placeholder=" New Category" id="New Category" type="text" class="form-control">
+            </div>
 
-        <div *ngIf="newSubCategory == false && newCategory == false " class="form-group col-md-4">
-            <label for="sub-category secondary">
+            <div *ngIf="newSubCategory == false && newCategory == false " class="form-group col-md-4">
+                <label for="sub-category-secondary">
                 Sub Category
                 <span (click)="newSubCategory = true" class="options" title="Add another Sub-Category">
                     <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -76,16 +103,16 @@
                     </svg>
                 </span>               
             </label>
-            <select [(ngModel)]="categories.subcategory" id="sub-category" class="form-control">
+                <select [(ngModel)]="categories.subcategory" id="sub-category" class="form-control">
                 <option selected disabled>Choose...</option>
                 <option>Responsible Parenthood</option>
                 <option>Adolescent Health and Youth Development</option>
                 <option>Data Banking and Management</option>
             </select>
-        </div>
+            </div>
 
-        <div *ngIf="newSubCategory == true || newCategory == true " class="form-group col-md-4">
-            <label for="New-Sub-Category">                
+            <div *ngIf="newSubCategory == true || newCategory == true " class="form-group col-md-4">
+                <label for="New-Sub-Category" [class.active]="false">                
                 <span class="options" title="New-Sub-Category" style="visibility: hidden;">
                     <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
@@ -93,34 +120,37 @@
                      </svg>
                 </span>           
             </label>
-            <input [(ngModel)]="categories.subcategory" placeholder="  New Sub Category    " id="New Sub Categoryy" type="text" class="form-control">
+                <input [(ngModel)]="categories.subcategory" placeholder="  New Sub Category    " id="New Sub Categoryy" type="text" class="form-control">
+            </div>
+
         </div>
 
-    </div>
+
+
+        <div class="row row2 container">
+
+            <button class="clickable" (click)="addItem('Sliders')"> Slider </button>
+
+            <button class="clickable" (click)="addItem('Grids')"> Grids </button>
+
+            <button class="clickable" (click)="addItem('Texts')"> Texts </button>
+
+            <button class="clickable" (click)="addItem('Media')"> Media </button>
+
+            <button class="clickable" (click)="addItem('Cards')"> Cards </button>
+
+            <button class="clickable" (click)="addItem('Articles')"> Articles </button>
+
+            <button class="clickable" (click)="addItem('Lists')"> Lists </button>
+        </div>
 
 
 
-    <div class="row row2 container">
+        <div *ngFor="let item of items; let i = index;">
 
-        <button class="clickable" (click)="addItem('Sliders')"> Slider </button>
-
-        <button class="clickable" (click)="addItem('Grids')"> Grids </button>
-
-        <button class="clickable" (click)="addItem('Texts')"> Texts </button>
-
-        <button class="clickable" (click)="addItem('Media')"> Media </button>
-
-        <button class="clickable" (click)="addItem('Cards')"> Cards </button>
-
-    </div>
-
-
-
-    <div *ngFor="let item of items; let i = index;">
-
-        <div *ngIf="item.Sliders != null" class="row row3 Slider container ">
-            <h4 class="headings title ">Slider
-                <span>
+            <div *ngIf="item.Sliders != null" class="row row3 Slider container ">
+                <h4 class="headings title ">Slider
+                    <span>
                    <div class="drop-down-container" (click)="status=!status" [ngClass]="status ? 'clicked' : 'danger'">            
                         <i tooltip="Insert Item" placement="left" [theme]="theme" class="fas fa-puzzle-piece initiator"></i>
                         <div class="top-bot" >
@@ -171,23 +201,23 @@
                         </svg>
                    </div>
                 </span>
-            </h4>
-            <owl-carousel-o [options]="customOptions">
-                <ng-template carouselSlide *ngFor="let image of item.Sliders.images">
-                    <img alt="" title="slide.title " [style.background]="'url(' + image + ')'">
-                </ng-template>
-                <ng-template carouselSlide *ngFor="let video of item.Sliders.videos ">
-                    <video autoplay [src]="video " style="margin:0 !important;width:100% !important;height: 40vh !important;  object-fit: fill;    min-height: 40vh;"></video>
-                </ng-template>
-            </owl-carousel-o>
-            <br>
-            <input multiple (change)="readSliderURL( $event.target.files, $event, i, 'image' ) " type="file" accept="image/* " style="display:none " [id]="'Sliderimg' + i ">
-            <input multiple (change)="readSliderURL( $event.target.files, $event, i, 'video' ) " type="file" accept="video/* " style="display:none " [id]="'Slidervideo' + i ">
-        </div>
+                </h4>
+                <owl-carousel-o [options]="customOptions">
+                    <ng-template carouselSlide *ngFor="let image of item.Sliders.images">
+                        <img alt="" title="slide.title " [style.background]="'url(' + image + ')'">
+                    </ng-template>
+                    <ng-template carouselSlide *ngFor="let video of item.Sliders.videos ">
+                        <video autoplay [src]="video " style="margin:0 !important;width:100% !important;height: 40vh !important;  object-fit: fill;    min-height: 40vh;"></video>
+                    </ng-template>
+                </owl-carousel-o>
+                <br>
+                <input multiple (change)="readSliderURL( $event.target.files, $event, i, 'image' ) " type="file" accept="image/* " style="display:none " [id]="'Sliderimg' + i ">
+                <input multiple (change)="readSliderURL( $event.target.files, $event, i, 'video' ) " type="file" accept="video/* " style="display:none " [id]="'Slidervideo' + i ">
+            </div>
 
-        <div *ngIf="item.Grids != null " class="row row6 Grids container ">
-            <h4 class="headings title ">Grids
-                <span title="Position ">
+            <div *ngIf="item.Grids != null " class="row row6 Grids container ">
+                <h4 class="headings title ">Grids
+                    <span title="Position ">
                     <div class="drop-down-container" (click)="status=!status" [ngClass]="status ? 'clicked' : 'danger'">            
                         <i tooltip="Insert Item" placement="left" [theme]="theme" class="fas fa-puzzle-piece initiator"></i>
                         <div class="top-bot" >
@@ -227,21 +257,21 @@
                         </svg>
                     </div>
                 </span>
-            </h4><br>
-            <div *ngFor="let grid of item.Grids.griditems; let j=index; " class="card grid " style="width: 18rem; ">
-                <i *ngIf="grid.image=='' " (click)="triggerMediaInput( 'griditem',j) " class="fas fa-image "></i>
-                <i (click)="removeGrid(i,j)" class="fas fa-times-circle"></i>
-                <img (click)="triggerMediaInput( 'griditem',j) " [src]="grid.image " class="card-img-top " alt="">
-                <div class="card-body ">
-                    <h5 (input)="grid.title = $event.target.innerText " class="card-title " contenteditable>Grid title</h5>
+                </h4><br>
+                <div *ngFor="let grid of item.Grids.griditems; let j=index; " class="card grid " style="width: 18rem; ">
+                    <i *ngIf="grid.image=='' " (click)="triggerMediaInput( 'griditem',j) " class="fas fa-image "></i>
+                    <i (click)="removeGrid(i,j)" class="fas fa-times-circle"></i>
+                    <img (click)="triggerMediaInput( 'griditem',j) " [src]="grid.image " class="card-img-top " alt="">
+                    <div class="card-body ">
+                        <h5 (input)="grid.title = $event.target.innerText " class="card-title " contenteditable>Grid title</h5>
+                    </div>
+                    <input accept="image/* " type="file" (change)="readGridUrl($event.target.files,$event,i,j) " style="display: none; " [id]=" 'griditem' + j ">
                 </div>
-                <input accept="image/* " type="file" (change)="readGridUrl($event.target.files,$event,i,j) " style="display: none; " [id]=" 'griditem' + j ">
             </div>
-        </div>
 
-        <div *ngIf="item.Texts !=null " class="row row4 Texts container ">
-            <h4 class="headings title ">Texts
-                <span title="Position ">
+            <div *ngIf="item.Texts !=null " class="row row4 Texts container ">
+                <h4 class="headings title ">Texts
+                    <span title="Position ">
                     <div class="drop-down-container" (click)="status=!status" [ngClass]="status ? 'clicked' : 'danger'">            
                         <i tooltip="Insert Item" placement="left" [theme]="theme" class="fas fa-puzzle-piece initiator"></i>
                         <div class="top-bot" >
@@ -279,14 +309,14 @@
                         </svg>
                     </div>
                 </span>
-            </h4><br>
-            <h4 (input)="item.Texts.title=$event.target.innerText " contenteditable>Title Here</h4>
-            <p (input)="item.Texts.body=$event.target.innerText " contenteditable>Paragraph here</p>
-        </div>
+                </h4><br>
+                <h4 (input)="item.Texts.title=$event.target.innerText " contenteditable>Title Here</h4>
+                <p (input)="item.Texts.body=$event.target.innerText " contenteditable>Paragraph here</p>
+            </div>
 
-        <div *ngIf="item.Media !=null " class="row row5 Big-Image container ">
-            <h4 class="headings title ">Media
-                <span title="Position ">
+            <div *ngIf="item.Media !=null " class="row row5 Big-Image container ">
+                <h4 class="headings title ">Media
+                    <span title="Position ">
                     <div class="drop-down-container" (click)="status3=!status3" [ngClass]="status3 ? 'clicked' : 'danger'">            
                         <i tooltip="Insert Item" placement="left" [theme]="theme" class="fas fa-puzzle-piece initiator"></i>
                         <div class="top-bot" >
@@ -345,18 +375,18 @@
                         </svg>
                     </div>
                 </span>
-                <input (change)="readURL($event.target.files,$event,i, 'pdf') " type="file" accept="application/pdf " style="display:none " [id]="'mediapdf' + i ">
-                <input (change)="readURL($event.target.files,$event,i, 'image') " type="file" accept="image/* " style="display:none " [id]="'mediaimg' + i ">
-                <input (change)="readURL($event.target.files,$event,i, 'video') " type="file" accept="video/* " style="display:none " [id]="'mediavideo' + i ">
-            </h4>
-            <video controls [src]="item.Media.video " *ngIf="item.Media.video !='' "></video>
-            <img [src]="item.Media.image " *ngIf="item.Media.image !='' " alt="">
-            <object [data]="cleanURL(item.Media.pdf) " *ngIf="item.Media.pdf !='' "></object>
-        </div>
+                    <input (change)="readURL($event.target.files,$event,i, 'pdf') " type="file" accept="application/pdf " style="display:none " [id]="'mediapdf' + i ">
+                    <input (change)="readURL($event.target.files,$event,i, 'image') " type="file" accept="image/* " style="display:none " [id]="'mediaimg' + i ">
+                    <input (change)="readURL($event.target.files,$event,i, 'video') " type="file" accept="video/* " style="display:none " [id]="'mediavideo' + i ">
+                </h4>
+                <video controls [src]="item.Media.video " *ngIf="item.Media.video !='' "></video>
+                <img [src]="item.Media.image " *ngIf="item.Media.image !='' " alt="">
+                <object [data]="cleanURL(item.Media.pdf) " *ngIf="item.Media.pdf !='' "></object>
+            </div>
 
-        <div *ngIf="item.Cards !=null " class="row row7 Cards container ">
-            <h4 class="headings title ">Cards
-                <span title="Position ">
+            <div *ngIf="item.Cards !=null " class="row row7 Cards container ">
+                <h4 class="headings title ">Cards
+                    <span title="Position ">
                     <div class="drop-down-container" (click)="status4=!status4" [ngClass]="status4 ? 'clicked' : 'danger'">            
                         <i tooltip="Insert Item" placement="left" [theme]="theme" class="fas fa-puzzle-piece initiator"></i>
                         <div class="top-bot" >
@@ -399,31 +429,35 @@
                         </svg>
                     </div>
                 </span>
-            </h4><br>
-            <div class="card " *ngFor="let card of item.Cards.carditems; let j=index; ">
-                <i *ngIf="card.image=='' " (click)="triggerMediaInput( 'carditem',j)" class="fas fa-image "></i>
-                <i (click)="removeCard(i,j)" class=" fas fa-times-circle "></i>
-                <img (click)="triggerMediaInput('carditem', j) " [src]="card.image " class="card-img-top " alt="">
-                <div class="card-body ">
-                    <h5 class="card-title " contenteditable (input)="card.title=$event.target.innerText ">Card title</h5>
-                    <p contenteditable (input)="card.body=$event.target.innerText ">Card body here.. </p>
-                    <input accept="image/* " type="file" (change)="readCardURL($event.target.files,$event,i,j) " style="display: none; " [id]="'carditem' + j">
+                </h4><br>
+                <div class="card " *ngFor="let card of item.Cards.carditems; let j=index; ">
+                    <i *ngIf="card.image=='' " (click)="triggerMediaInput( 'carditem',j)" class="fas fa-image "></i>
+                    <i (click)="removeCard(i,j)" class=" fas fa-times-circle "></i>
+                    <img (click)="triggerMediaInput('carditem', j) " [src]="card.image " class="card-img-top " alt="">
+                    <div class="card-body ">
+                        <h5 class="card-title " contenteditable (input)="card.title=$event.target.innerText ">Card title</h5>
+                        <p contenteditable (input)="card.body=$event.target.innerText ">Card body here.. </p>
+                        <input accept="image/* " type="file" (change)="readCardURL($event.target.files,$event,i,j) " style="display: none; " [id]="'carditem' + j">
+                    </div>
                 </div>
             </div>
+
         </div>
 
-    </div>
 
 
 
-
-    <div class="button-container ">
-        <button (click)="previewData() " class="button clickable " style="margin-right: 0px ">
-            Preview
-        </button>
-        <button (click)="submit() " class="button " style="margin-left: 20px; ">
-            Im okay with this
-        </button>
+        <div class="button-container ">
+            <button (click)="previewData() " class="button clickable " style="margin-right: 0px ">
+                Preview
+            </button>
+            <button (click)="submit() " class="button " style="margin-left: 20px; ">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check2" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                  </svg>
+                  Im okay with this
+            </button>
+        </div>
     </div>
 
     <br> <br><br> <br><br> <br>

@@ -5,6 +5,53 @@
     background: var(--bg1);
 }
 
+ul {
+    padding: 10px 30px;
+}
+
+svg,
+i {
+    margin-right: 10px;
+}
+
+.active svg,
+.active i {
+    fill: white;
+    color: white;
+}
+
+.active {
+    background: var(--contrast);
+    color: white;
+    border-radius: 2px !important;
+    transition: none !important;
+}
+
+label.active {
+    background: none !important;
+    color: var(--colorPrimary)
+}
+
+.active:hover {
+    color: white !important;
+    opacity: 1;
+    transition: none !important;
+}
+
+li {
+    border-radius: 2px !important;
+    margin-right: 20px;
+    transition: none !important;
+}
+
+li:hover {
+    background: var(--inputBg);
+}
+
+.badge {
+    font-size: 9px;
+}
+
 .nav-item {
     width: 200px !important;
     flex: none !important;

@@ -8,7 +8,11 @@
     left: 0;
     top: 0;
     overflow-y: auto;
-    padding: 0vh 7vw;
+    .header,
+    .quick-links-container,
+    .content {
+        padding: 0vh 7vw;
+    }
 }
 
 .quick-links-container {
@@ -242,6 +246,21 @@ img {
     width: 350px !important;
     height: 350px !important;
     float: left !important;
+}
+
+.navigation {
+    padding: 20px 5vw;
+    background: var(--contrast);
+    display: flex;
+    align-items: center;
+}
+
+.navigation p {
+    color: white;
+    font-size: 2em;
+    text-transform: uppercase;
+    font-weight: 900;
+    margin: 0;
 }
 
 // ---------copied---------------

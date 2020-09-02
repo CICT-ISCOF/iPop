@@ -17,24 +17,36 @@ export class PreviewComponent implements OnInit  {
 	) {		
 		this.subscription = this.CmsService.getData().subscribe(data=>{
 			this.items = data
-			this.isLoading = false
-			console.log(data)
+			this.isLoading = false		
 			this.subscription.unsubscribe()
+		})
+
+		this. categorySubscription = this.CmsService.getCategory().subscribe(data=>{
+			this.categories = data
+			console.log(data)
+			this.isLoading = false		
+			this.categorySubscription.unsubscribe()
 		})
 	}
 
 	isLoading = true
 	subscription:Subscription
-	items
+	categorySubscription :  Subscription
+	items:any = []
 
 	cleanURL(oldURL: string): SafeResourceUrl {
 		return this.DomSanitizer.bypassSecurityTrustResourceUrl(oldURL);
 	}
 
 
+	categories:any = {
+		title:'',
+		subcategory:''
+	}
+
 
 	ngOnInit(){
-
+		
 	}
 
 	ngOnDestroy(){

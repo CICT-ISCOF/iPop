@@ -32,10 +32,23 @@ export class CmsComponent implements OnInit {
 		newContent:true,
 		contentList:false,
 		newQuickLink:false,
-		quickLinks:true
+		quickLinks:false
 	}
 
+	
+	changeTab( item : string ){
+		this.removActiveTab()
+		this.tabs[item] = true
+	}
 
+	removActiveTab(){
+		this.tabs = {
+			newContent:false,
+			contentList:false,
+			newQuickLink:false,
+			quickLinks:false
+		}	
+	}
 
 
 
@@ -53,7 +66,13 @@ export class CmsComponent implements OnInit {
 			this.CmsService.setData(this.items)	
 			
 		}, 1000);
-		console.log(JSON.stringify(this.items))
+	
+
+		setTimeout(() => {
+			this.CmsService.setCategory(this.categories)	
+			
+		}, 1000);
+	
 	}
 
 	
@@ -74,8 +93,7 @@ export class CmsComponent implements OnInit {
 
 	// ----------------- content options --------------------------
 
-	customOptions: OwlOptions = {
-	
+	customOptions: OwlOptions = {	
 		center: true,
 		items:2,
 		loop:true,
@@ -100,10 +118,7 @@ export class CmsComponent implements OnInit {
 	newCategory = false
 	newSubCategory = false
 
-	items:any = []
-
-
-	
+	items:any = []	
 
 	
 	triggerMediaInput(id, index){		
@@ -183,26 +198,19 @@ export class CmsComponent implements OnInit {
 
 	readSliderURL(files: FileList,event,index,type){	
 		if (event.target.files && event.target.files[0]) {	
-			if(type == 'video'){
-				Object.keys(files).forEach(i => {				
-					const reader = new FileReader();   
-					reader.readAsDataURL(event.target.files[i]);   		     
-					reader.onload = (event) => {
-						this.items[index].Sliders.videos.push( (<FileReader>event.target).result ) 	
-						this.items[index].Sliders.attachments.push(files.item(0)) 
-					}						
-				})			
-			}	
-			else{
-				Object.keys(files).forEach(i => {					
-					const reader = new FileReader();   
-					reader.readAsDataURL(event.target.files[i]);   		   
-					reader.onload = (event) => {
-						this.items[index].Sliders.images.push( (<FileReader>event.target).result ) 							
-						this.items[index].Sliders.attachments.push(files.item(0))  						
-					}						
-				})
-			}
+			Object.keys(files).forEach(i => {				
+				const reader = new FileReader();   
+				reader.readAsDataURL(event.target.files[i]);   		     
+				reader.onload = (event) => {			
+					if(type == 'video'){				
+						this.items[index].Sliders.videos.push( (<FileReader>event.target).result ) 											
+					}	
+					else{		
+						this.items[index].Sliders.images.push( (<FileReader>event.target).result )
+					}
+				}	
+				this.items[index].Sliders.attachments.push(files.item(0)) 						
+			})	
 		}	
 	}
 	

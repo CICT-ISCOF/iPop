@@ -148,7 +148,7 @@ export class SidebarComponent implements OnInit {
 
 		else if(classname == "CPDB"){
 			this.icons.CPDB = true
-			classname = "Add CPDP Record"
+			classname = "Add Census of Population Record"
 		}
 		else if(classname == "Deaths"){
 			this.icons.Deaths = true

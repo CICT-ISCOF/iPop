@@ -26,6 +26,7 @@ export class StatisticsService {
 	general(){
 		const url = this.baseURL + '/general'
 		return this.http.get<any>(url,{headers:this.headers})
+	
 	}
 
 	population(){
@@ -46,7 +47,7 @@ export class StatisticsService {
 	municipality(){
 		const url = this.baseURL + '/municipality'
 		return this.http.get<any>(url,{headers:this.headers})
-	}
+	} 
 
 	marriages(){
 		const url = this.baseURL + '/marriages'
