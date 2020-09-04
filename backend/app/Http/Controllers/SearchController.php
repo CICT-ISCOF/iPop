@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-
     public function users(Request $request)
     {
         $query = $request->input('query');
@@ -25,22 +24,34 @@ class SearchController extends Controller
     {
         $query = $request->input('query');
         $type = $request->input('type');
-        $types = ['Birth', 'Death', 'CPDB', 'InMigration', 'OutMigration','Marriage'];
-        
-        if(!in_array($type, $types))
-        {
-            return response([
-                'errors' => [
-                    'type' => ['Invalid record type. Valid types are '.implode(', ', $types)]
+        $types = [
+            'Birth',
+            'Death',
+            'CPDB',
+            'InMigration',
+            'OutMigration',
+            'Marriage',
+        ];
+
+        if (!in_array($type, $types)) {
+            return response(
+                [
+                    'errors' => [
+                        'type' => [
+                            'Invalid record type. Valid types are ' .
+                            implode(', ', $types),
+                        ],
+                    ],
                 ],
-            ], 400);
+                400
+            );
         }
 
         $model = "App\\{$type}";
 
         Log::record('User searched for records. Query: ' . $query);
 
-        $paginate = $request->input('paginate') == 'true';
+        $paginate = $request->input('paginate') === 'true';
 
         $data = $model::search($query);
 

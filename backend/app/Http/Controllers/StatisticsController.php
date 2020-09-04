@@ -122,12 +122,15 @@ class StatisticsController extends Controller
                 ->groupBy('municipality')
                 ->get();
             foreach ($municipalities as $record) {
-                if(!isset($population['municipalities'][$record->municipality]))
-                {
-                    $population['municipalities'][$record->municipality] =
-                        $model::where('municipality', $record->municipality)
-                            ->count();
-                } 
+                if (
+                    !isset($population['municipalities'][$record->municipality])
+                ) {
+                    $population['municipalities'][
+                        $record->municipality
+                    ] = $model
+                        ::where('municipality', $record->municipality)
+                        ->count();
+                }
             }
 
             $barangays = $model
@@ -136,12 +139,11 @@ class StatisticsController extends Controller
                 ->get();
 
             foreach ($barangays as $record) {
-                if(!isset($population['barangays'][$record->barangay]))
-                {
-                    $population['barangays'][$record->barangay] =
-                        $model::where('municipality', $record->municipality)
-                            ->where('barangay', $record->barangay)
-                            ->count();
+                if (!isset($population['barangays'][$record->barangay])) {
+                    $population['barangays'][$record->barangay] = $model
+                        ::where('municipality', $record->municipality)
+                        ->where('barangay', $record->barangay)
+                        ->count();
                 }
             }
 
@@ -155,10 +157,8 @@ class StatisticsController extends Controller
         $top = [];
 
         $count = 0;
-        foreach($topMunicipalities as $name => $data)
-        {
-            if($count == 5)
-            {
+        foreach ($topMunicipalities as $name => $data) {
+            if ($count == 5) {
                 break;
             }
 
@@ -167,21 +167,21 @@ class StatisticsController extends Controller
                 'barangays' => [],
             ];
 
-            foreach($models as $model)
-            {
+            foreach ($models as $model) {
                 $barangays = $model
-                    ::selectRaw('barangay, municipality, COUNT(barangay) as total')
-                    ->where('municipality', 'LIKE', '%'.$name.'%')
+                    ::selectRaw(
+                        'barangay, municipality, COUNT(barangay) as total'
+                    )
+                    ->where('municipality', 'LIKE', '%' . $name . '%')
                     ->groupBy('barangay')
                     ->get();
 
                 foreach ($barangays as $record) {
-                    if(!isset($top[$name]['barangays'][$record->barangay]))
-                    {
-                        $top[$name]['barangays'][$record->barangay] =
-                            $model::where('municipality', $record->municipality)
-                                ->where('barangay', $record->barangay)
-                                ->count();
+                    if (!isset($top[$name]['barangays'][$record->barangay])) {
+                        $top[$name]['barangays'][$record->barangay] = $model
+                            ::where('municipality', $record->municipality)
+                            ->where('barangay', $record->barangay)
+                            ->count();
                     }
                 }
             }
@@ -190,20 +190,16 @@ class StatisticsController extends Controller
 
         $final = [];
 
-        foreach($top as $name => $data)
-        {
+        foreach ($top as $name => $data) {
             $data['name'] = $name;
             $array = [];
-            foreach($data['barangays'] as $name => $total)
-            {
+            foreach ($data['barangays'] as $name => $total) {
                 $array[] = [
                     'name' => $name,
                     'total' => $total,
                 ];
             }
-            $data['barangays'] = array_reverse(
-                Arr::sort($array)
-            );
+            $data['barangays'] = array_reverse(Arr::sort($array));
             $final[] = $data;
         }
         $top = $final;
@@ -217,7 +213,7 @@ class StatisticsController extends Controller
     {
         // to be changed
         $name = $request->input('name');
-        
+
         $models = [
             "App\\Birth",
             "App\\Death",
@@ -233,46 +229,43 @@ class StatisticsController extends Controller
             'barangays' => [],
         ];
 
-        foreach($models as $model)
-        {
-            $data['total_population'] += $model::where('municipality', 'LIKE','%'.$name.'%')
+        foreach ($models as $model) {
+            $data['total_population'] += $model
+                ::where('municipality', 'LIKE', '%' . $name . '%')
                 ->count();
-                
+
             // *
-            $data['total_barangays'] += $model::where('municipality', $name)
+            $data['total_barangays'] += $model
+                ::where('municipality', $name)
                 ->groupBy('barangay')
                 ->count();
 
-            $records = $model::selectRaw('barangay, COUNT(*) as total')
+            $records = $model
+                ::selectRaw('barangay, COUNT(*) as total')
                 ->where('municipality', $name)
                 ->groupBy('barangay')
                 ->get();
 
-            foreach($records as $record)
-            {
-                if(!isset($data['barangays'][$record->barangay]))
-                {
+            foreach ($records as $record) {
+                if (!isset($data['barangays'][$record->barangay])) {
                     $data['barangays'][$record->barangay] = 0;
                 }
                 $data['barangays'][$record->barangay] += $record->total;
             }
         }
 
-        $data['barangays'] = array_reverse(
-            Arr::sort($data['barangays'])
-        );
+        $data['barangays'] = array_reverse(Arr::sort($data['barangays']));
 
-        // $final = [];
+        $final = [];
 
-        // foreach($data['barangays'] as $name => $metadata)
-        // {
-        //     $final[] = [
-        //         'name' => $name,
-        //         'total' => $metadata,
-        //     ];
-        // }
+        foreach ($data['barangays'] as $name => $metadata) {
+            $final[] = [
+                'name' => $name,
+                'total' => $metadata,
+            ];
+        }
 
-        // $data['barangays'] = $final;
+        $data['barangays'] = $final;
 
         return $data;
     }
@@ -307,26 +300,50 @@ class StatisticsController extends Controller
         ];
     }
 
-    public function marriages()
+    public function months()
     {
-        $data = [
-            'January' => 0,
-            'February' => 0,
-            'March' => 0,
-            'April' => 0,
-            'May' => 0,
-            'June' => 0,
-            'July' => 0,
-            'August' => 0,
-            'September' => 0,
-            'October' => 0,
-            'November' => 0,
-            'December' => 0,
+        $data = [];
+
+        $months = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
         ];
 
-        foreach(array_keys($data) as $month)
-        {
-            $data[$month] += \App\Marriage::where('month', $month)->count();
+        $models = [
+            "App\\Birth" => 'birth',
+            "App\\Death" => 'death',
+            "App\\CPDB" => 'cpdb',
+            "App\\InMigration" => 'inmigraiton',
+            "App\\OutMigration" => 'outmigration',
+            "App\\Marriage" => 'marriage',
+        ];
+
+        foreach ($models as $model => $name) {
+            foreach ($months as $month) {
+                if (!isset($data[$name][$month])) {
+                    $data[$name][$month] = 0;
+                }
+
+                $data[$name][$month] += $model::where('month', $month)->count();
+            }
+        }
+
+        foreach ($models as $name) {
+            $total = 0;
+            foreach ($data[$name] as $month) {
+                $total += $month;
+            }
+            $data[$name]['total'] = $total;
         }
 
         return $data;

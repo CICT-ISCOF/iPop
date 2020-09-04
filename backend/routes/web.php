@@ -6,6 +6,14 @@ Route::prefix('/auth')->group(function () {
     Route::post('/login', 'Auth\LoginController@authenticate');
 });
 
+Route::prefix('/location')->group(function () {
+    Route::get('/regions', 'LocationController@regions');
+    Route::get('/provinces', 'LocationController@provinces');
+    Route::get('/municipalities', 'LocationController@municipalities');
+    Route::get('/barangays', 'LocationController@barangays');
+    Route::get('/search', 'LocationController@search');
+});
+
 Route::options('/logs/visit', 'LogController@visit');
 
 Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
@@ -49,14 +57,17 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::apiResource('out-migrations', 'OutMigrationController');
     Route::apiResource('marriages', 'MarriageController');
     Route::apiResource('cpdb', 'CPDBController');
-    Route::apiResource('records', 'RecordController')->except(['store', 'destroy']);
-    Route::prefix('/statistics')->group(function() {
+    Route::apiResource('records', 'RecordController')->except([
+        'store',
+        'destroy',
+    ]);
+    Route::prefix('/statistics')->group(function () {
         Route::get('/general', 'StatisticsController@index');
         Route::get('/population', 'StatisticsController@population');
         Route::get('/totals', 'StatisticsController@totals');
         Route::get('/genders', 'StatisticsController@genders');
         Route::get('/municipality', 'StatisticsController@municipality');
-        Route::get('/marriages', 'StatisticsController@marriages');
+        Route::get('/months', 'StatisticsController@months');
     });
 
     // Comments
