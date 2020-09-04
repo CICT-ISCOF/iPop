@@ -14,7 +14,7 @@ class StatisticsController extends Controller
             'records' => $this->records(),
             'totals' => $this->totals(),
             'population' => $this->population(),
-            'marriages' => $this->marriages(),
+            'months' => $this->months(),
             'distributions' => $this->distributions(),
         ];
     }
@@ -321,7 +321,6 @@ class StatisticsController extends Controller
         $models = [
             "App\\Birth" => 'birth',
             "App\\Death" => 'death',
-            "App\\CPDB" => 'cpdb',
             "App\\InMigration" => 'inmigration',
             "App\\OutMigration" => 'outmigration',
             "App\\Marriage" => 'marriage',

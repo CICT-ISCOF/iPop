@@ -38,7 +38,7 @@ class LocationController extends Controller
                         'region_code' => ['Region Code is required.'],
                     ],
                 ],
-                422
+                400
             );
         }
         return Province::where('region_code', $code)
@@ -62,7 +62,7 @@ class LocationController extends Controller
                         'province_code' => ['Province Code is required.'],
                     ],
                 ],
-                422
+                400
             );
         }
         return Municipality::where('province_code', $code)
@@ -82,7 +82,7 @@ class LocationController extends Controller
                         ],
                     ],
                 ],
-                422
+                400
             );
         }
         return Barangay::where('municipality_code', $code)->get();
