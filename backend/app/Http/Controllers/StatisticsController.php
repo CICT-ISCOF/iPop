@@ -15,6 +15,7 @@ class StatisticsController extends Controller
             'totals' => $this->totals(),
             'population' => $this->population(),
             'marriages' => $this->marriages(),
+            'distributions' => $this->distributions(),
         ];
     }
 
@@ -211,7 +212,6 @@ class StatisticsController extends Controller
 
     public function municipality(Request $request)
     {
-        // to be changed
         $name = $request->input('name');
 
         $models = [
@@ -234,15 +234,14 @@ class StatisticsController extends Controller
                 ::where('municipality', 'LIKE', '%' . $name . '%')
                 ->count();
 
-            // *
             $data['total_barangays'] += $model
-                ::where('municipality', $name)
+                ::where('municipality', 'LIKE', '%' . $name . '%')
                 ->groupBy('barangay')
                 ->count();
 
             $records = $model
                 ::selectRaw('barangay, COUNT(*) as total')
-                ->where('municipality', $name)
+                ->where('municipality', 'LIKE', '%' . $name . '%')
                 ->groupBy('barangay')
                 ->get();
 
@@ -323,7 +322,7 @@ class StatisticsController extends Controller
             "App\\Birth" => 'birth',
             "App\\Death" => 'death',
             "App\\CPDB" => 'cpdb',
-            "App\\InMigration" => 'inmigraiton',
+            "App\\InMigration" => 'inmigration',
             "App\\OutMigration" => 'outmigration',
             "App\\Marriage" => 'marriage',
         ];
@@ -346,6 +345,39 @@ class StatisticsController extends Controller
             $data[$name]['total'] = $total;
         }
 
+        return $data;
+    }
+
+    public function distributions()
+    {
+        $models = [
+            "App\\Death" => 'death',
+            "App\\CPDB" => 'cpdb',
+            "App\\InMigration" => 'inmigration',
+            "App\\OutMigration" => 'outmigration',
+            "App\\Marriage" => 'marriage',
+        ];
+
+        $data = [];
+
+        foreach ($models as $model => $name) {
+            $records = $model
+                ::selectRaw('age_bracket, COUNT(age_bracket) as total')
+                ->groupBy('age_bracket')
+                ->get();
+            foreach ($records as $record) {
+                $data[$name][$record->age_bracket] = $record->total;
+            }
+        }
+
+        $records = \App\Birth::selectRaw(
+            'age_bracket_of_mother, COUNT(age_bracket_of_mother) as total'
+        )
+            ->groupBy('age_bracket_of_mother')
+            ->get();
+        foreach ($records as $record) {
+            $data['birth'][$record->age_bracket_of_mother] = $record->total;
+        }
         return $data;
     }
 }

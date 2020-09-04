@@ -70,6 +70,7 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
         Route::get('/genders', 'StatisticsController@genders');
         Route::get('/municipality', 'StatisticsController@municipality');
         Route::get('/months', 'StatisticsController@months');
+        Route::get('/distributions', 'StatisticsController@distributions');
     });
 
     // Comments

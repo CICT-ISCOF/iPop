@@ -11,14 +11,26 @@ use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
-    public function regions()
+    public function regions(Request $request)
     {
+        $region = $request->input('region');
+        if ($region) {
+            return Region::where('code', $region)
+                ->with('provinces')
+                ->first();
+        }
         return Region::with('provinces')->get();
     }
 
     public function provinces(Request $request)
     {
         $code = $request->input('region_code');
+        $province = $request->input('province');
+        if ($province) {
+            return Province::where('code', $province)
+                ->with('municipalities')
+                ->first();
+        }
         if (!$code) {
             return response(
                 [
@@ -37,6 +49,12 @@ class LocationController extends Controller
     public function municipalities(Request $request)
     {
         $code = $request->input('province_code');
+        $municipality = $request->input('municipality');
+        if ($municipality) {
+            return Municipality::where('code', $municipality)
+                ->with('barangays')
+                ->first();
+        }
         if (!$code) {
             return response(
                 [
