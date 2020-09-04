@@ -18,8 +18,8 @@ class Barangay extends ReadOnly
     {
         return $this->belongsTo(
             Municipality::class,
-            'municipality_code',
-            'code'
+            'code',
+            'municipality_code'
         );
     }
 }

@@ -16,6 +16,6 @@ class Province extends ReadOnly
 
     public function barangays()
     {
-        return $this->hasMany(Barangay::class, 'code', 'province_code');
+        return $this->hasMany(Barangay::class, 'province_code', 'code');
     }
 }

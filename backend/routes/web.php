@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\File;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', 'Auth\LoginController@authenticate');

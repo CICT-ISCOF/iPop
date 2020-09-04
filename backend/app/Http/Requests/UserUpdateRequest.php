@@ -79,7 +79,7 @@ class UserUpdateRequest extends FormRequest
                 'string',
                 Rule::in(['Super Admin', 'PPO', 'PPO1', 'BSPO']),
             ],
-            'profile_picture' => 'nullable|file',
+            'profile_picture' => 'nullable',
         ];
     }
 }

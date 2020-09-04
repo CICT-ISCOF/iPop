@@ -19,7 +19,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::with('profilePicture')->orderBy('role')->paginate(10);
+        return User::with('profilePicture')
+            ->orderBy('role')
+            ->paginate(10);
     }
 
     /**
@@ -33,7 +35,15 @@ class UserController extends Controller
         $data = $request->validated();
         Log::record('Created a new ' . $data['role'] . ' user.');
         $data['password'] = Hash::make($data['password']);
-        return User::create($data);
+        $user = User::create($data);
+        if (isset($data['profile_picture'])) {
+            $file = File::process($data['profile_picture'], $user);
+            $file->public = true;
+            $file->save();
+            $user->profile_picture_id = $file->id;
+            $user->profilePicture = $file;
+        }
+        return $user;
     }
 
     /**
@@ -71,9 +81,6 @@ class UserController extends Controller
             if ($oldFile instanceof File) {
                 $oldFile->delete();
             }
-        }
-        if(isset($data['profile_picture_url'])) {
-            
         }
         if ($request->user()->id === $user->id) {
             unset($data['role']);
