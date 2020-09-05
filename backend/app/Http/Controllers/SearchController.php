@@ -54,9 +54,10 @@ class SearchController extends Controller
         $paginate = $request->input('paginate') === 'true';
 
         $data = $model::search($query);
+        $data = $paginate ? $data->paginate(10) : $data->get();
         $data->load('record.user.profilePicture');
         $data->load('comments.user.profilePicture');
 
-        return $paginate ? $data->paginate(10) : $data->get();
+        return $data;
     }
 }
