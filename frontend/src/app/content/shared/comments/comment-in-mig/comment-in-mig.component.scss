@@ -93,7 +93,7 @@
 }
 
 .comment-box textarea {
-    height: 70vh;
+    height: auto;
     width: 100%;
     padding: 20px;
     border: 1px solid rgba(150, 150, 150, .3) !important;
@@ -191,4 +191,50 @@ h5 {
 .operaitve-buttons i:active,
 .operaitve-buttons svg:active {
     opacity: .5;
+}
+
+.comment-box-header {
+    display: flex;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.comment-box img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.comment-box-header span {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.comment-box-header .encoder-wrapper {
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+    font-size: 12px;
+    word-break: break-all;
+    max-width: 60%;
+}
+
+.encoder {
+    font-weight: bold;
+    font-size: 12px;
+    color: #0497F7;
+    margin-right: 14px;
+    margin-top: 5px;
+}
+
+i:focus {
+    outline: 0;
 }

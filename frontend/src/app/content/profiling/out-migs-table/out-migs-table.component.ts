@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OutMigService } from '../../out-mig/out-mig.service'
 import { UtilityService } from '../../../utility.service'
+import { ExcelService } from '../../../excel.service'
 
 @Component({
   selector: 'app-out-migs-table',
@@ -11,7 +12,8 @@ export class OutMigsTableComponent implements OnInit {
 
 	constructor(
 		private OutMigService : OutMigService,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private ExcelService : ExcelService,
 	) {
 		this.reload = this.OutMigService.getMultipleDelete().subscribe(array => {
 			for(let id in array){
@@ -28,6 +30,8 @@ export class OutMigsTableComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getCPDBLists()
+		this.searched = false
+		this.keyword = ''
 	}
 
 	isLoading = false
@@ -69,11 +73,47 @@ export class OutMigsTableComponent implements OnInit {
 		})	
 	}
 
+	
+
+	searchResults = []
 	keyword = ''
+	searched = false
 	search(){
+		this.searched = true
+		this.pagination = {
+			currentPage:0,
+			lastPage:0,
+			totalPages:[],
+		}
 		this.OutMigService.search(this.keyword).subscribe(response => {
-			this.OutMigService.setData(response.data)		
+			console.log('search', response)
+			this.OutMigService.setData(response.data)
+			this.pagination.currentPage = response.current_page
+			this.pagination.lastPage = response.last_page
+			for(let i = 0; i <= response.last_page; i ++){
+				this.pagination.totalPages.push(i)
+			}			
+			this.isLoading = false		
 		})
+		this.OutMigService.getSearched(this.keyword).subscribe(data =>{
+			this.searchResults = data
+		})
+	}
+
+	print(){
+		const fileName = prompt("Enter your file name")
+		if(fileName != null){
+			this.ExcelService.exportAsExcelFile(this.searchResults,fileName)
+		}
+	}
+
+
+	searchHandler(event){	  
+		if(	event.target.value == ""){
+			this.isLoading = true
+			this.searched = false
+			this.ngOnInit() 
+		}	
 	}
 
 	deleteRecord(id){

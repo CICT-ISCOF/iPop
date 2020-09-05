@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MarriagesService } from '../../marriages/marriages.service'
 import { UtilityService } from '../../../utility.service'
+import { ExcelService } from '../../../excel.service'
 
 @Component({
   selector: 'app-marriage-table',
@@ -11,7 +12,8 @@ export class MarriageTableComponent implements OnInit {
 
 	constructor(
 		private MarriagesService : MarriagesService,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private ExcelService : ExcelService,
 	) { 
 		this.reload = this.MarriagesService.getMultipleDelete().subscribe(array => {
 			for(let id in array){
@@ -27,6 +29,8 @@ export class MarriageTableComponent implements OnInit {
 	reload
 
 	ngOnInit(): void {
+		this.searched = false
+		this.keyword = ''
 		this.getMarraigeRecord()
 	}
 
@@ -69,11 +73,46 @@ export class MarriageTableComponent implements OnInit {
 		})	
 	}
 
+	searchResults = []
 	keyword = ''
+	searched = false
 	search(){
+		this.searched = true
+		this.pagination = {
+			currentPage:0,
+			lastPage:0,
+			totalPages:[],
+		}
 		this.MarriagesService.search(this.keyword).subscribe(response => {
-			this.MarriagesService.setData(response.data)		
+			console.log('search', response)
+			this.MarriagesService.setData(response.data)
+			this.pagination.currentPage = response.current_page
+			this.pagination.lastPage = response.last_page
+			for(let i = 0; i <= response.last_page; i ++){
+				this.pagination.totalPages.push(i)
+			}			
+			this.isLoading = false		
 		})
+		this.MarriagesService.getSearched(this.keyword).subscribe(data =>{
+			this.searchResults = data
+		})
+	}
+
+	
+	print(){
+		const fileName = prompt("Enter your file name")
+		if(fileName != null){
+			this.ExcelService.exportAsExcelFile(this.searchResults,fileName)
+		}
+	}
+
+
+	searchHandler(event){	  
+		if(	event.target.value == ""){
+			this.isLoading = true
+			this.searched = false
+			this.ngOnInit() 
+		}	
 	}
 
 	deleteRecord(id){

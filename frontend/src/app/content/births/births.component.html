@@ -17,9 +17,9 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="municipality">Municipality</label>
-                <select [class.is-invalid]="invalid.municipality" [(ngModel)]="fields.municipality" class="custom-select" id="municipality" required>
-                    <option selected disabled >Choose...</option>
-                    <option>Barotac Nuevo.</option>
+                <select (change)="getBarangays($event)" [class.is-invalid]="invalid.municipality" class="custom-select" id="municipality" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option style="text-transform:capitalize" *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                 </select>
                 <div class="invalid-feedback">
                     Municipality is required
@@ -29,8 +29,8 @@
             <div class="col-md-6 mb-3">
                 <label for="barangay">Barangay</label>
                 <select [class.is-invalid]="invalid.barangay" [(ngModel)]="fields.barangay" class="custom-select" id="barangay" required>
-                    <option selected disabled >Choose...</option>
-                    <option>Lagubang</option>
+                    <option selected disabled value="">Choose...</option>
+                    <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
                 </select>
                 <div class="invalid-feedback">
                     Barangay is required

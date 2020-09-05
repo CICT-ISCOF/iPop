@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OutMigService } from './out-mig.service'
 import { UtilityService } from '../../utility.service'
+import { LocationService } from '../../location.service'
 
 @Component({
   selector: 'app-out-mig',
@@ -12,10 +13,34 @@ export class OutMigComponent implements OnInit {
 	constructor(
 		private OutMigService : OutMigService,
 		private UtilityService: UtilityService,
+		private LocationService : LocationService,
 	) { }
 
+	
 	ngOnInit(): void {
+		this.getMuncipalities()
 	}
+
+	getMuncipalities(){
+		this.isLoading = true
+		 this.LocationService.getMunicipalities().subscribe(data => {
+			this.municipalities = data	
+			this.isLoading = false			
+		})
+	}
+
+	getBarangays(event){
+		this.isLoading = true
+		this.fields.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data	
+			this.isLoading = false
+		})
+	}
+
+	municipalities:any = [] 
+	barangays:any = [] 
+
 
   
 	monthOfMigrations = [

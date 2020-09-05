@@ -3,6 +3,8 @@ import { InMigService } from '../../../in-mig/in-mig.service'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UtilityService } from '../../../../utility.service'
 import Swal from 'sweetalert2'
+import { LocationService } from '../../../../location.service'
+
 @Component({
   selector: 'app-comment-in-mig',
   templateUrl: './comment-in-mig.component.html',
@@ -19,6 +21,7 @@ export class CommentInMigComponent implements OnInit {
 		private route:ActivatedRoute,
 		private UtilityService: UtilityService,
 		private Router: Router,
+		private LocationService : LocationService,
 	) { }
 
 	ngOnInit(): void {
@@ -26,8 +29,29 @@ export class CommentInMigComponent implements OnInit {
 		this.route.params.subscribe(data => {
 			this.getRecord(data.id)
 		});
-		
+		this.getMuncipalities()
 	}
+	
+	getMuncipalities(){
+		this.isLoading = true
+		 this.LocationService.getMunicipalities().subscribe(data => {
+			this.municipalities = data	
+			this.isLoading = false		
+			console.log('municipalities',data)	
+		})
+	}
+
+	getBarangays(event){
+		this.isLoading = true
+		this.fields.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data	
+			this.isLoading = false
+		})
+	}
+
+	municipalities:any = [] 
+	barangays:any = [] 
 	isLoading = false
 
 	theme = localStorage.getItem('data-theme')

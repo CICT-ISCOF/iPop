@@ -49,8 +49,18 @@ export class StatisticsService {
 		return this.http.get<any>(url,{headers:this.headers})
 	} 
 
-	marriages(){
-		const url = this.baseURL + '/marriages'
+	months(){
+		const url = this.baseURL + '/months'
+		return this.http.get<any>(url,{headers:this.headers})
+	}
+
+	ageDistribution(){
+		const url = this.baseURL + '/distributions'
+		return this.http.get<any>(url,{headers:this.headers})
+	}
+
+	getMunicipality(municipality){		
+		const url = this.baseURL + '/filter?municipality=' + municipality
 		return this.http.get<any>(url,{headers:this.headers})
 	}
 }

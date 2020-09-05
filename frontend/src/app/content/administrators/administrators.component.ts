@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { SignInService } from '../../sign-in/sign-in.service'
 import { UtilityService } from '../../utility.service'
 import { ThrowStmt } from '@angular/compiler';
+import { LocationService } from '../../location.service'
+import { Subscription } from 'rxjs'
+
+
 
 @Component({
   selector: 'app-administrators',
@@ -12,13 +16,42 @@ export class AdministratorsComponent implements OnInit {
 
 	constructor(
 		private SignInService : SignInService,
-		private UtilityService : UtilityService
-	) { }
+		private UtilityService : UtilityService,
+		private LocationService : LocationService
+	) { 
+		
+	}
+
+	location : Subscription
+
+	municipalities:any = [] 
+	barangays:any = [] 
 
 	ngOnInit(): void {
 		this.setRandomImage()
+		this.getMuncipalities()
 	}
 
+
+	getMuncipalities(){
+		this.isLoading = true
+		 this.LocationService.getMunicipalities().subscribe(data => {
+			this.municipalities = data	
+			this.isLoading = false			
+		})
+	}
+
+	getBarangays(event){
+		this.isLoading = true
+		this.data.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data	
+			this.isLoading = false
+		})
+	
+	}
+
+	
 	isLoading = false
 
 	data = {
@@ -45,6 +78,7 @@ export class AdministratorsComponent implements OnInit {
 
 	
 	register(){
+	
 		this.isLoading = true
 		let hasError: boolean		
 		for (let key in this.data) {		

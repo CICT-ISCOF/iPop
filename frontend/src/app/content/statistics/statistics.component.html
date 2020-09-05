@@ -66,17 +66,17 @@
         </div>
         <div class="form-group col-md-6">
             <label for="municipality">Municipality</label>
-            <select class="form-control" id="municipality">
+            <select (change)="getBarangays($event)" class="form-control" id="municipality">
                 <option selected disabled>Choose Municipality</option>
-                <option>Barotac Nuevo</option>
+                <option *ngFor="let municipality of municipalities" [value]="municipality.code">{{municipality.name}}</option>
                 </select>
         </div>
 
         <div class="form-group col-md-6">
             <label for="barangay">Barangay</label>
-            <select class="form-control" id="barangay">
+            <select (change)="setBarangay($event)" class="form-control" id="barangay">
                 <option selected disabled>Choose Barangay</option>
-                <option>Cruz</option>
+                <option *ngFor="let barangay of barangays">{{barangay.name}}</option>
                 </select>
         </div>
         <hr>
@@ -97,13 +97,14 @@
         </div>
     </div>
 
-    <div class="row container details-container">
+    <div *ngIf="filter.municipality != ''" class="row container details-container">
         <h4 style="display: flex;padding-left: 0;">
-            <i class="fa fa-university"></i> &nbsp; Municipality of Zarraga &nbsp;
-            <svg width="30px" height="30px" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="gray" xmlns="http://www.w3.org/2000/svg">
+            <i class="fa fa-university"></i> &nbsp; Municipality of {{filter.municipality}} &nbsp;
+            <svg *ngIf="filter.barangay != ''" width="30px" height="30px" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="gray" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
                 <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg> &nbsp; Baragay Ilaud
+            </svg> &nbsp;
+            <P *ngIf="filter.barangay != ''">{{ filter.barangay }}</P>
             <span tooltip="Filters affects the data below" placement="left" show-delay="100" [theme]="theme" style="margin-left: auto;cursor: pointer;">
                 <i style="font-size: 30px;color:orange"  class="fas fa-info-circle"></i>
             </span>

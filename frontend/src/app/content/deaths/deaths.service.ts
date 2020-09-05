@@ -124,6 +124,12 @@ export class DeathsService {
 	}
 
 	search(keyword){
+		const url = this.BaseAPIService.baseURL + '/search/records?type=Death&paginate=true&query=' + keyword
+		return this.http.get<any>(url,{headers:this.headers})
+	}
+
+	
+	getSearched(keyword){
 		const url = this.BaseAPIService.baseURL + '/search/records?type=Death&query=' + keyword
 		return this.http.get<any>(url,{headers:this.headers})
 	}
