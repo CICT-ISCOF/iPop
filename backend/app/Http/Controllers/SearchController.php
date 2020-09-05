@@ -7,6 +7,7 @@ use App\User;
 use App\Birth;
 use App\Death;
 use App\CPDB;
+use App\Record;
 use App\InMigration;
 use App\OutMigration;
 use Illuminate\Http\Request;
@@ -55,9 +56,26 @@ class SearchController extends Controller
 
         $data = $model::search($query);
         $data = $paginate ? $data->paginate(10) : $data->get();
-        $data->load('record.user.profilePicture');
-        $data->load('comments.user.profilePicture');
+        $data
+            ->load('record.user.profilePicture')
+            ->load('comments.user.profilePicture');
 
+        return $data;
+    }
+
+    public function status(Request $request)
+    {
+        $query = $request->input('query');
+
+        Log::record('User searched for records. Query: ' . $query);
+
+        $data = Record::search($query);
+
+        $paginate = $request->input('paginate') === 'true';
+        $data = $paginate ? $data->paginate(10) : $data->get();
+        $data
+            ->load('recordable.comments.user.profilePicture')
+            ->load('user.profilePicture');
         return $data;
     }
 }

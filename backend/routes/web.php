@@ -27,6 +27,7 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::apiResource('users', 'UserController');
     Route::get('/search/users', 'SearchController@users');
     Route::get('/search/records', 'SearchController@records');
+    Route::get('/search/status', 'SearchController@status');
 
     // CMS
     Route::apiResource('links', 'LinkController');
@@ -71,6 +72,7 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
         Route::get('/municipality', 'StatisticsController@municipality');
         Route::get('/months', 'StatisticsController@months');
         Route::get('/distributions', 'StatisticsController@distributions');
+        Route::get('/filter', 'StatisticsController@filter');
     });
 
     // Comments

@@ -379,4 +379,41 @@ class StatisticsController extends Controller
         }
         return $data;
     }
+
+    public function filter(Request $request)
+    {
+        $municipality = $request->input('municipality');
+        $barangay = $request->input('barangay');
+        $year = $request->input('year');
+        $month = $request->input('month');
+
+        $models = [
+            "App\\Birth" => 'birth',
+            "App\\Death" => 'death',
+            "App\\InMigration" => 'inmigration',
+            "App\\OutMigration" => 'outmigration',
+            "App\\Marriage" => 'marriage',
+        ];
+
+        $data = [];
+
+        foreach ($models as $modelName => $name) {
+            $model = new $modelName();
+            if ($municipality) {
+                $model->where('municipality', $muncipality);
+            }
+            if ($barangay) {
+                $model->where('barangay', $barangay);
+            }
+            if ($year) {
+                $model->where('created_at', $year);
+            }
+            if ($month) {
+                $model->where('month', $month);
+            }
+            $data[$name] = $model->get();
+        }
+
+        return $data;
+    }
 }
