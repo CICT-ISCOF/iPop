@@ -123,6 +123,11 @@ export class MarriagesService {
 	}
 
 	search(keyword){
+		const url = this.BaseAPIService.baseURL + '/search/records?type=Marriage&paginate=true&query=' + keyword
+		return this.http.get<any>(url,{headers:this.headers})
+	}
+
+	getSearched(keyword){
 		const url = this.BaseAPIService.baseURL + '/search/records?type=Marriage&query=' + keyword
 		return this.http.get<any>(url,{headers:this.headers})
 	}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StatisticsService } from  './statistics.service'
 import { Console } from 'console';
-
+import { LocationService } from '../../location.service'
 
 @Component({
   selector: 'app-statistics',
@@ -11,8 +11,19 @@ import { Console } from 'console';
 export class StatisticsComponent implements OnInit {
 
 	constructor(	
-		private StatisticsService : StatisticsService
+		private StatisticsService : StatisticsService,
+		private LocationService : LocationService
 	) { }
+
+	theme = localStorage.getItem('data-theme')
+	isLoading = false
+
+	filter = {
+		municipality:'',
+		barangay:'',
+		year:'',
+		month:''
+	}
 
 	ngOnInit(): void {
 		this.callCharts()	
@@ -21,11 +32,39 @@ export class StatisticsComponent implements OnInit {
 		this.getTotals()
 		this.getGenders()
 		this.getMunicipality()
-		this.getMarriages()		
+		this.getMonths()		
+		this.getMuncipalities()
+		this.getAgeDistributions()
+	}
+
+
+	municipalities = []
+	getMuncipalities(){
+		this.isLoading = true
+		this.LocationService.getMunicipalities().subscribe(data => {
+			this.municipalities = data	
+			this.isLoading = false			
+		})		
+	}
+	barangays = []
+	getBarangays(event){
+		this.isLoading = true
+		this.filter.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.filter.barangay = ''
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data	
+			this.isLoading = false
+		})
+
+		this.StatisticsService.getMunicipality(this.filter.municipality).subscribe(data => {
+			console.log('filter by municipality', data)
+		})
+	}
+
+	setBarangay(event){
+		this.filter.barangay = event.target.options[event.target.options.selectedIndex].text;	
 	}
 	
-	theme = localStorage.getItem('data-theme')
-
 
 	general
 	population
@@ -41,15 +80,13 @@ export class StatisticsComponent implements OnInit {
 	}
 
 	getPopulation(){
-		this.population = this.StatisticsService.population().subscribe(data => {
-			console.log('population',data)
+		this.population = this.StatisticsService.population().subscribe(data => {		
 			this.population = data
 		})
 	}
 
 	getTotals(){
-		this.totals = this.StatisticsService.totals().subscribe(data => {
-			console.log('totals',data)
+		this.totals = this.StatisticsService.totals().subscribe(data => {			
 			this.totals = data
 		})
 	}
@@ -67,18 +104,25 @@ export class StatisticsComponent implements OnInit {
 		})
 	}
 
-	marriageisLoading = true
-	getMarriages(){
-		this.marriageisLoading = true
-		this.StatisticsService.marriages().subscribe(data => {
-			const  truncate = (month) => {
-				return month.substring(0, 3);
-			}
-			this.charts.married = []
-			for(let key in data){
-				this.charts.married.push([ truncate(key.toString()) ,data[key]])
-			}
-			this.marriageisLoading = false
+	monthsisLoading = true
+	getMonths(){
+		this.monthsisLoading = true
+		this.StatisticsService.months().subscribe(data => {
+			// const  truncate = (month) => {
+			// 	return month.substring(0, 3);
+			// }
+			// this.charts.married = []
+			// for(let key in data){
+			// 	this.charts.married.push([ truncate(key.toString()) ,data[key]])
+			// }
+			console.log('marriages',data)
+			this.monthsisLoading = false
+		})
+	}
+
+	getAgeDistributions(){
+		this.StatisticsService.ageDistribution().subscribe(data => {
+			console.log('age distributions',data)
 		})
 	}
 

@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs'
 import { NetworkStatusAngularService } from 'network-status-angular';
 import Swal from 'sweetalert2'
 
+
+
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
@@ -16,7 +18,7 @@ export class AppComponent implements OnInit {
 
 	constructor(			
 		private UtilityService : UtilityService,
-		private	 NetworkStatusAngularService : NetworkStatusAngularService
+		private	 NetworkStatusAngularService : NetworkStatusAngularService,	
 		
 	){
 		this.userRole = this.UtilityService.getUserROle().subscribe(role=>{
@@ -42,6 +44,9 @@ export class AppComponent implements OnInit {
 	role:string = ''	
 
 	ngOnInit(): void {
+
+		
+
 	
 		this.validateRole(function(){
 			let url = document.createElement('a');

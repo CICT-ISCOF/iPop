@@ -1,5 +1,4 @@
-<div *ngIf="isLoading" class="loader">
-</div>
+<div *ngIf="isLoading" class="loader"></div>
 <br>
 <div class="search-container">
     <div class="icon-holder">
@@ -11,8 +10,7 @@
         </div>
     </div>
 
-    <input (keyup.enter)="search()" [(ngModel)]="keyword" type="text" class="form-control w-50" placeholder="Birth Records Global Search">
-
+    <input (keyup)="searchHandler($event)" (keyup.enter)="search()" [(ngModel)]="keyword" type="text" class="form-control w-50" placeholder="CPDB Global Search">
 
     <div (click)="search()" *ngIf="keyword != ''" class="icon-holder-button">
         <div style="position: relative;">
@@ -23,6 +21,7 @@
         </div>
     </div>
 
+
     <button (click)="multipleDelete()" tooltip="Delete Checked" placement="left" [theme]="theme" style="margin-left: auto;">
         <svg width="25px" height="25px" viewBox="0 0 16 16" class="bi bi-trash2" fill="red" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M3.18 4l1.528 9.164a1 1 0 0 0 .986.836h4.612a1 1 0 0 0 .986-.836L12.82 4H3.18zm.541 9.329A2 2 0 0 0 5.694 15h4.612a2 2 0 0 0 1.973-1.671L14 3H2l1.721 10.329z"/>
@@ -31,20 +30,30 @@
           </svg>
     </button>
 
-    <button (click)="refresh()" tooltip="Refresh Table" placement="left" [theme]="theme">      
+
+    <button (click)="refresh()" tooltip="Refresh Table / Clear Searches" placement="left" [theme]="theme">      
             <i class="im im-sync"></i>        
+    </button>
+
+    <button (click)="print()" *ngIf="searched && searchResults.length != 0 " tooltip="Print all Results of {{ keyword }} (All Pages)" placement="left " [theme]="theme ">        
+        <svg  width="25px " height="25px " viewBox="0 0 16 16 " class="bi bi-printer " fill="currentColor " xmlns="http://www.w3.org/2000/svg ">
+            <path d="M11 2H5a1 1 0 0 0-1 1v2H3V3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h-1V3a1 1 0 0 0-1-1zm3 4H2a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h1v1H2a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1z "/>
+            <path fill-rule="evenodd " d="M11 9H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zM5 8a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H5z "/>
+            <path d="M3 7.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z "/>
+        </svg>
     </button>
 </div>
 
-<div class="cpdpb-component container">
+<div class="cpdpb-component container ">
+    <p *ngIf="searched ">Search results for <i> {{ keyword }}...</i></p>
     <app-table-births></app-table-births>
 </div>
 
 <nav aria-label="... ">
     <ul class="pagination ">
-        <li class="page-item " [class.disabled]="pagination.currentPage == 1">
+        <li class="page-item " [class.disabled]="pagination.currentPage==1 ">
             <a class="page-link " (click)="paginate( pagination.currentPage - 1 ) " tabindex="-1 " aria-disabled="true " style="color:gray !important ">
-                <i class="fas fa-chevron-left"></i>
+                <i class="fas fa-chevron-left "></i>
             </a>
         </li>
 
@@ -55,7 +64,7 @@
 
         <li class="page-item " [class.disabled]="pagination.currentPage==pagination.lastPage ">
             <a class="page-link " (click)="paginate( pagination.currentPage + 1 ) " tabindex="-1 " aria-disabled="true " style="color:gray !important ">
-                <i class="fas fa-chevron-right"></i>
+                <i class="fas fa-chevron-right "></i>
             </a>
         </li>
     </ul>

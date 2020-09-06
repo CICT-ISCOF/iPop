@@ -130,9 +130,9 @@
                         </svg>
                     </span>
                 </label>
-                <select [(ngModel)]="data.municipality" class="custom-select " id="municipality" [class.is-invalid]="invalidData.municipality" required>
+                <select (change)="getBarangays($event)" class="custom-select " id="municipality" [class.is-invalid]="invalidData.municipality" required>
                     <option selected disabled value="">Choose...</option>
-                    <option>Barotac Neuvo</option>
+                    <option style="text-transform:capitalize" *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                 </select>
                 <div class="invalid-feedback">
                     Municipality is required
@@ -149,7 +149,7 @@
                 </label>
                 <select [(ngModel)]="data.barangay" class="custom-select" id="barangay" [class.is-invalid]="invalidData.barangay" required>
                     <option selected disabled value="">Choose...</option>
-                    <option>Lagubang</option>
+                    <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
                 </select>
                 <div class="invalid-feedback">
                     Barangay is required
@@ -165,4 +165,6 @@
 
         <br> <br>
     </div>
+
 </div>
+<div *ngIf="isLoading" class="loader"></div>

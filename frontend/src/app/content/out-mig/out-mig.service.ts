@@ -124,9 +124,15 @@ export class OutMigService {
 	}
 
 	search(keyword){
+		const url = this.BaseAPIService.baseURL + '/search/records?type=OutMigration&paginate=true&query=' + keyword
+		return this.http.get<any>(url,{headers:this.headers})
+	}
+
+	getSearched(keyword){
 		const url = this.BaseAPIService.baseURL + '/search/records?type=OutMigration&query=' + keyword
 		return this.http.get<any>(url,{headers:this.headers})
 	}
+
 
 	
   

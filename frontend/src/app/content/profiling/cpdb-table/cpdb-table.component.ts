@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { CpdbService } from '../../cpdb/cpdb.service'
 import {   Subscription} from 'rxjs'
 import { UtilityService } from '../../../utility.service'
-
+import { ExcelService } from '../../../excel.service'
 
 @Component({
   selector: 'app-cpdb-table',
@@ -13,7 +13,9 @@ export class CpdbTableComponent implements OnInit {
 
 	constructor(
 		private CpdbService : CpdbService,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private ExcelService : ExcelService,
+	
 	) {
 		
 		this.reload = this.CpdbService.getMultipleDelete().subscribe(array => {
@@ -25,13 +27,22 @@ export class CpdbTableComponent implements OnInit {
 		this.reload = this.CpdbService.getRow().subscribe(data => {
 			this.ngOnInit()
 		})
+
+	
 	 }
 
-	reload
+		
+
+
+	reload: Subscription
 
 	ngOnInit(): void {
 		this.getCPDBLists()
+		this.searched = false
+		this.keyword = ''
 	}
+	
+
 
 	isLoading = false
 
@@ -52,8 +63,7 @@ export class CpdbTableComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false			
-			console.log(response.data)	
+			this.isLoading = false		
 		})
 	}
 
@@ -73,12 +83,53 @@ export class CpdbTableComponent implements OnInit {
 		})	
 	}
 
+	searchResults = []
 	keyword = ''
+	searched = false
 	search(){
+		this.searched = true
+		this.pagination = {
+			currentPage:0,
+			lastPage:0,
+			totalPages:[],
+		}
 		this.CpdbService.search(this.keyword).subscribe(response => {
-			this.CpdbService.setData(response.data)		
+			console.log('search', response)
+			this.CpdbService.setData(response.data)
+			this.pagination.currentPage = response.current_page
+			this.pagination.lastPage = response.last_page
+			for(let i = 0; i <= response.last_page; i ++){
+				this.pagination.totalPages.push(i)
+			}			
+			this.isLoading = false		
+		})
+		this.CpdbService.getSearched(this.keyword).subscribe(data =>{
+			this.searchResults = data
 		})
 	}
+
+
+	print(){
+		const fileName = prompt("Enter your file name")
+		if(fileName != null){
+			this.ExcelService.exportAsExcelFile(this.searchResults,fileName)
+		}
+	}
+
+
+	searchHandler(event){	  
+		if(	event.target.value == ""){
+			this.isLoading = true
+			this.searched = false
+			this.ngOnInit() 
+		}	
+	}
+
+
+
+
+
+
 
 	deleteRecord(id){
 		this.CpdbService.deleteCPDB(id).subscribe(data=>{
@@ -91,7 +142,7 @@ export class CpdbTableComponent implements OnInit {
 		this.CpdbService.setActionToDelete()
 	}
 
-	refresh(){
+	refresh(){		
 		this.ngOnInit()
 	}
 

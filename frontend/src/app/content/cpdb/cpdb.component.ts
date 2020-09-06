@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CpdbService } from './cpdb.service'
 import { UtilityService } from '../../utility.service'
+import { LocationService } from '../../location.service'
+
+
 
 @Component({
   selector: 'app-cpdb',
@@ -12,12 +15,36 @@ export class CpdbComponent implements OnInit {
 	constructor(
 		private CpdbService : CpdbService,
 		private UtilityService: UtilityService,
+		private LocationService : LocationService,
 	) { }
 
 	ngOnInit(): void {
+		this.getMuncipalities()
 	}
 
+	
+	municipalities:any = [] 
+	barangays:any = [] 
+
+	
 	isLoading = false
+
+	getMuncipalities(){
+		this.isLoading = true
+		 this.LocationService.getMunicipalities().subscribe(data => {
+			this.municipalities = data	
+			this.isLoading = false			
+		})
+	}
+
+	getBarangays(event){
+		this.isLoading = true
+		this.field.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data	
+			this.isLoading = false
+		})
+	}
 
 	select = {
 		houseHoldSizeBrackets:[

@@ -83,7 +83,7 @@ export class DropdownComponent implements OnInit {
 		  }).then((result) => {
 			if (result.value) {
 				let theme =  localStorage.getItem('data-theme')
-				localStorage.clear()
+				// localStorage.clear()
 					this.Router.navigate(['/'])
 				this.UtilityService.logout(true)				
 				setTimeout(() => {

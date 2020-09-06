@@ -121,10 +121,14 @@ export class CpdbService {
 	}
 
 	search(keyword){
-		const url = this.BaseAPIService.baseURL + '/search/records?type=CPDB'
+		const url = this.BaseAPIService.baseURL + '/search/records?type=CPDB&paginate=true&query=' + keyword
 		return this.http.get<any>(url,{headers:this.headers})
 	}
 
+	getSearched(keyword){
+		const url = this.BaseAPIService.baseURL + '/search/records?type=CPDB&query=' + keyword
+		return this.http.get<any>(url,{headers:this.headers})
+	}
 
 	
 	

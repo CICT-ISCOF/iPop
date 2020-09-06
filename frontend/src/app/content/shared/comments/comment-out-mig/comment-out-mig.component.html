@@ -1,16 +1,25 @@
 <div *ngIf="isLoading" class="loader"></div>
 <div *ngIf="!ViewData" class="comment-container">
+    <br>
+    <i [routerLink]="['/profiling']" routerLinkActive="router-link-active" class="fa fa-chevron-left" style="font-size: 25px;margin-bottom: 30px;cursor: pointer;margin-left: 7px;transform: translateY(2px);"></i>
+
     <div class="row">
         <div class="col-md-3 ">
             <div class="comment-box">
-                <p>Write a Comment
-                    <span (click)="ViewData = true" tooltip="View Data Encoded by Jamel Eid Yassin" placement="right" show-delay="100" [theme]="theme">
+                <div class="comment-box-header">
+                    <img src="../../../../../assets/avatars/boy-blue.png" alt="">
+                    <div class="encoder-wrapper">Encoded by: <br>
+                        <div class="encoder">{{ fields.record.user.fullname }} </div>
+                    </div>
+
+                    <span (click)="ViewData = true" tooltip="View Data Encoded by {{ fields.record.user.fullname }}" placement="right" show-delay="100" [theme]="theme">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-journals" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2z"/>
                             <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2zM1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
                           </svg>
                     </span>
-                </p>
+                </div>
+
                 <textarea #textarea [(ngModel)]="message" placeholder="Aa" class="form-control" name="" id="" cols="30" rows="10"></textarea>
 
                 <button (click)="addComment()" class="button send">Add Comment</button>
@@ -45,6 +54,7 @@
             <span style="background: palevioletred !important;" *ngIf="fields.record.status == 'Requires Revalidation'" class="badge badge-dark">{{ fields.record.status }}!</span>
             <br>
             <p style="text-align: center;" *ngIf="comments.length == 0">No comments yet....</p>
+            <br>
             <div class="comment container" *ngFor="let comment of comments">
                 <div class="img-container">
                     <img src="../../../../../assets/wallpapers/1.jpg" alt="">
@@ -71,9 +81,10 @@
 </div>
 
 
-
 <div *ngIf="ViewData" class="view-data">
-    <i (click)="ViewData = false" class="fa fa-chevron-left"></i>
+    <br>
+    <i (click)="ViewData = false" routerLinkActive="router-link-active" class="fa fa-chevron-left" style="font-size: 25px;margin-bottom: 30px;cursor: pointer;"></i>
+
     <div class="container out-migs-component">
 
         <br>
@@ -92,25 +103,19 @@
             <h5>Location</h5>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="municipality">Municipality</label>
-                    <select [(ngModel)]="fields.municipality" class="custom-select" id="municipality">
-                        <option selected disabled >Choose...</option>
-                        <option>Barotac Nuevo</option>
+                    <label for="municipality">Municipality: &nbsp; {{fields.municipality}} (Encoded)</label>
+                    <select (change)="getBarangays($event)" class="custom-select" id="municipality" required>
+                        <option selected disabled value="">Choose...</option>
+                        <option style="text-transform:capitalize" *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                     </select>
-                    <div class="invalid-feedback">
-                        Municipality is required
-                    </div>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label for="barangay">Barangay</label>
-                    <select [(ngModel)]="fields.barangay" class="custom-select" id="barangay">
-                        <option selected disabled >Choose...</option>
-                        <option>Lagubang</option>
+                    <label for="barangay">Barangay : &nbsp; {{fields.barangay}} (Encoded)</label>
+                    <select [(ngModel)]="fields.barangay" class="custom-select" id="barangay" required>
+                        <option selected disabled value="">Choose...</option>
+                        <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
                     </select>
-                    <div class="invalid-feedback">
-                        Barangay is required
-                    </div>
                 </div>
             </div>
             <hr>
