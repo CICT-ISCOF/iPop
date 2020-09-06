@@ -75,9 +75,10 @@ class UserController extends Controller
             $file = File::process($data['profile_picture'], $user);
             $file->public = true;
             $oldFile = $user->profilePicture;
-            $user->profilePicture()->save($file);
+            $file->save();
             $user->profile_picture_id = $file->id;
             $user->save();
+            $user->profilePicture = $file;
             if ($oldFile instanceof File) {
                 $oldFile->delete();
             }

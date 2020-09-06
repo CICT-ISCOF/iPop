@@ -49,7 +49,8 @@ class LoginController extends Controller
             );
         }
         $data = $request->all();
-        $user = User::where('pin', $data['pin'])
+        $user = User::with('profilePicture')
+            ->where('pin', $data['pin'])
             ->where('question', $data['question'])
             ->first();
         if (!$user) {
@@ -98,7 +99,9 @@ class LoginController extends Controller
             );
         }
         $data = $request->all();
-        $user = User::where('username', $data['username'])->first();
+        $user = User::with('profilePicture')
+            ->where('username', $data['username'])
+            ->first();
         if (!$user) {
             Log::record(
                 'Visitor attempted to login using Username and Password.'
