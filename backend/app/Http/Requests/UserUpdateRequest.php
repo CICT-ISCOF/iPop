@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 
@@ -79,7 +80,14 @@ class UserUpdateRequest extends FormRequest
                 'string',
                 Rule::in(['Super Admin', 'PPO', 'PPO1', 'BSPO']),
             ],
-            'profile_picture' => 'nullable',
+            'profile_picture' => [
+                Rule::requiredIf(function () {
+                    return request()->has('profile_picture') &&
+                        (request()->input('profile_picture') instanceof
+                            UploadedFile ||
+                            is_string(request()->input('profile_picture')));
+                }),
+            ],
         ];
     }
 }
