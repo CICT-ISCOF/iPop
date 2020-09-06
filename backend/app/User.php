@@ -48,7 +48,7 @@ class User extends Authenticatable
     {
         static::deleting(function ($user) {
             if ($user->profilePicture instanceof File) {
-                $user->files->delete();
+                $user->files()->delete();
                 $user->profilePicture->delete();
             }
         });
