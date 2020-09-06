@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <input (keyup.enter)="search()" [(ngModel)]="keyword" type="text" class="form-control w-50" placeholder="Administrator's Global Search">
+    <input (keyup)="searchHandler($event)" (keyup.enter)="search()" [(ngModel)]="keyword" type="text" class="form-control w-50" placeholder="Administrator's Global Search">
 
 
     <div (click)="search()" *ngIf="keyword != ''" class="icon-holder-button">
@@ -34,8 +34,9 @@
             <i class="im im-sync"></i>        
     </button>
 </div>
-
+<p style="padding-left: 40px;" *ngIf="searched ">You are searching for <i> {{ keyword }}...</i></p>
 <div class="admin-accounts container">
+
     <app-table-administrator></app-table-administrator>
 </div>
 

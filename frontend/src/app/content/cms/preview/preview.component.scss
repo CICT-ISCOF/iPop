@@ -45,6 +45,10 @@
     right: 0;
 }
 
+.Texts {
+    width: 100%;
+}
+
 .media,
 .media img,
 .media object,
@@ -264,3 +268,123 @@ img {
 }
 
 // ---------copied---------------
+.article-container {
+    display: flex;
+    .img-container {
+        height: 100%;
+        width: 30%;
+        position: relative;
+        padding: 20px;
+    }
+    .img-container img {
+        width: 100%;
+    }
+    .title {
+        min-height: 50px;
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .body {
+        min-height: 350px;
+    }
+    .inputs-container {
+        display: flexbox;
+        width: 70%;
+        padding: 20px;
+        h4,
+        p {
+            text-align: left;
+        }
+    }
+    .inputs-container textarea {
+        width: 100%;
+    }
+    .icon-container {
+        svg,
+        i {
+            margin-right: 0 !important;
+        }
+        width: 50px;
+        height: 50px;
+        right: 0;
+        bottom: 0;
+        background: var(--inputBg);
+        border-radius: 50px;
+        position: absolute;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    .button-container {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+    .button {
+        margin: auto;
+    }
+    .button:hover {
+        opacity: .6;
+    }
+    .button:active {
+        opacity: .4;
+    }
+}
+
+.list-Items {
+    width: 100%;
+}
+
+.Texts ul {
+    padding: 0 15vw;
+    width: 100%;
+    li p {
+        text-align: left;
+    }
+}
+
+.list-input-container {
+    display: flexbox;
+    list-style: none;
+    width: 100%;
+    textarea {
+        width: 100%;
+    }
+    i {
+        margin-left: 10px;
+    }
+    .buttonciontainer-list {
+        display: flex;
+        .remove-btn {
+            width: 100% !important;
+            text-align: center;
+        }
+        .remove-btn:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+ul,
+li {
+    list-style: none;
+    position: relative;
+}
+
+ul li p::before {
+    content: "\2022";
+    color: #0497F7;
+    position: absolute;
+    font-size: 40px;
+    transform: translate(-25px, 3px);
+}
+
+.article-body {
+    font-size: 20px;
+    line-height: 1.95;
+    margin-bottom: 1rem;
+    text-rendering: optimizeLegibility;
+}

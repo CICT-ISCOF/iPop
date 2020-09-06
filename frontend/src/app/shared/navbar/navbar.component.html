@@ -29,7 +29,7 @@
 
 
     <div tooltip="View Accounts" placement="bottom" show-delay="100" [theme]="theme" class="nav-profile-holder" [routerLink]="['/account']" routerLinkActive="router-link-active">
-        <img src="../../../assets/wallpapers/1.jpg"> {{ name }}
+        <img [src]="account.user.profile_picture != null ?  account.user.profile_picture.uri : '../../../assets/avatars/boy-blue.png'"> {{ name }}
     </div>
 
     <div (click)="conversations()" class="clickable" tooltip="Conversations" placement="bottom" show-delay="100" [theme]="theme" [routerLink]="['/conversations']" routerLinkActive="router-link-active">

@@ -29,7 +29,7 @@ export class AdministratorsComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.setRandomImage()
-		this.getMuncipalities()
+		this.getMuncipalities()	
 	}
 
 
@@ -63,6 +63,7 @@ export class AdministratorsComponent implements OnInit {
 		district:'4',
 		municipality:'',
 		barangay:'',	
+		profile_picture:''
 	}
 
 	invalidData = {
@@ -77,8 +78,7 @@ export class AdministratorsComponent implements OnInit {
 	}
 
 	
-	register(){
-	
+	register(){		
 		this.isLoading = true
 		let hasError: boolean		
 		for (let key in this.data) {		
@@ -125,14 +125,15 @@ export class AdministratorsComponent implements OnInit {
 	image :any
 	file :File
 	randomImages = [
-		'../../../assets/avatars/boy-blue.png',
-		'../../../assets/avatars/boyorange.png',
-		'../../../assets/avatars/girl-black.png',
-		'../../../assets/avatars/girl-orange.png'
+		window.location.origin + '/assets/avatars/boy-blue.png',
+		window.location.origin + '//assets/avatars/boyorange.png',
+		window.location.origin + '/assets/avatars/girl-black.png',
+		window.location.origin + '//assets/avatars/girl-orange.png'
 	]
 
 	setRandomImage(){
 		this.image = this.randomImages[Math.floor(Math.random() * this.randomImages.length)];
+		this.data.profile_picture = this.image
 	}
 
 	readURL(files: FileList,event) {   
@@ -141,7 +142,8 @@ export class AdministratorsComponent implements OnInit {
 			const reader = new FileReader();   
 			reader.readAsDataURL(event.target.files[0]);   
 			reader.onload = (event) => {
-				this.image = event.target.result;           
+				this.image = event.target.result;   
+				this.data.profile_picture = this.image        
 			}
 		}
 	}

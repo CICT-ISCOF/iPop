@@ -3,11 +3,49 @@ import { CmsService } from '../cms.service'
 import { Subscription } from 'rxjs'
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+import {trigger, transition, style, animate, query, stagger, keyframes} from '@angular/animations'
 
 @Component({
-  selector: 'app-preview',
-  templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.scss']
+	selector: 'app-preview',
+	templateUrl: './preview.component.html',
+	styleUrls: ['./preview.component.scss'],
+	animations: [
+		trigger('listAnimation', [
+			transition('* => *',[
+				query(':enter', style({opacity:0}),{optional:true}),
+
+				query(':enter', stagger('300ms',[
+					animate('.6s ease-in', keyframes([
+						style({opacity:0,transform: 'translateX(75%)', offset:0}),
+						style({opacity:.5,transform: 'translateX(30px%)', offset:0.3}),
+						style({opacity:1,transform: 'translateX(0)', offset:1})
+					]))
+				]))
+			])
+		]),
+		trigger('quickLinksAnimation', [
+			transition('* => *',[
+				query(':enter', [
+					stagger(3000, [
+						animate('.3s ease-in', keyframes([
+							style({opacity:0,transform: 'translateX(-25px)', offset:0}),
+							style({opacity:.5,transform: 'translateX(-10px)', offset:0.3}),
+							style({opacity:1,transform: 'translateX(0)', offset:1})
+						]))
+					]),
+				], { optional: true }),
+				query(':leave', [
+					stagger(3000, [
+						animate('.2s ease-in', keyframes([	
+							style({opacity:1,transform: 'translateX(0)', offset:0}),
+							style({opacity:.5,transform: 'translateX(-50px)', offset:0.3}),
+							style({opacity:0,transform: 'translateX(-100%)', offset:1}),
+						]))
+					]),
+				], { optional: true })
+			]),
+		  ])
+		]
 })
 export class PreviewComponent implements OnInit  {
 

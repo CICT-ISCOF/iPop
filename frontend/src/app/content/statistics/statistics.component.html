@@ -6,8 +6,10 @@
                 <i style="font-size: 30px !important;color:#57B894" class="fas fa-users"></i>
             </div>
             <div class="texts">
-                <p>Total Population</p>
-                <h2>{{ population.total }}</h2>
+                <p>Registered Population Total</p>
+                <h2>
+                    <ng2-odometer [number]="population.total" [config]="{ animation: 'count', format: 'd', value: 0, auto: true }"></ng2-odometer>
+                </h2>
             </div>
         </div>
 
@@ -16,8 +18,10 @@
                 <i style="font-size: 30px !important;color:orange" class="fas fa-university"></i>
             </div>
             <div class="texts">
-                <p>Number of Municipalities</p>
-                <h2>{{ totals.municipalities }}</h2>
+                <p>Number of Registered Municipalities</p>
+                <h2>
+                    <ng2-odometer [number]="totals.municipalities" [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>
+                </h2>
             </div>
         </div>
 
@@ -26,8 +30,10 @@
                 <i style="font-size: 30px !important;color:#2659D8" class="fas fa-ship"></i>
             </div>
             <div class="texts">
-                <p>Number of Barangays</p>
-                <h2>{{ totals.barangays }}</h2>
+                <p>Number of Registered Barangays</p>
+                <h2>
+                    <ng2-odometer [number]="totals.barangays" [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>
+                </h2>
             </div>
         </div>
     </div>
@@ -42,12 +48,14 @@
         <div class="form-group col-md-6">
             <h3>Top Populated Municipalities</h3>
             <p>All over Iloilo</p>
-            <ul class="list-group">
+            <ul class="list-group" [@listAnimation]="population.top.length">
                 <li *ngFor="let municipality of population.top" class="list-group-item barangays">
                     <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
                     <p>{{municipality.name}}</p>
                     <p>{{municipality.total}}</p>
-                    <p>{{ municipality.total / population.total * 100 | number:'1.0-0' }}%</p>
+                    <p>
+                        <ng2-odometer [number]=" municipality.total / population.total * 100 | number:'1.0-0' " [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>%</p>
+
                 </li>
             </ul>
         </div>
@@ -156,7 +164,7 @@
                 <hr>
                 <p> Barangays Lists: </p>
                 <div class="col-md-6">
-                    <ul class="list-group">
+                    <ul class="list-group" [@listAnimation]="5">
                         <li *ngFor="let item of [0,1,1,1,1]" class="list-group-item barangays">
                             <i style="font-size: 20px !important;color:#2659D8" class="fas fa-ship"></i>
                             <p>ilaud</p>
@@ -169,7 +177,7 @@
             <div class="col-md-6">
                 <hr>
                 <p>Zones Lists:</p>
-                <ul class="list-group">
+                <ul class="list-group" [@listAnimation]="5">
                     <li *ngFor="let item of [0,1,1,1,1]" class="list-group-item barangays">
                         <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i>
                         <p>1</p>
@@ -291,8 +299,8 @@
 
     <div class="row container chart-container">
         <h4>Age Distribution Male & Female <br>
-            <span><span style="color:var(--colorPrimary) !important">Male </span> &nbsp; |&nbsp; 3,000 &nbsp; |&nbsp;<span class="low">30%</span> <br>
-            <span style="color:var(--colorPrimary) !important">Female</span> &nbsp; |&nbsp;7,000 &nbsp; |&nbsp;<span class="high">70%</span> </span>
+            <span><span style="color:var(--colorPrimary) !important">Male </span> &nbsp; &bull; &nbsp; 3,000 &nbsp; -&nbsp;<span class="low">30%</span> <br>
+            <span style="color:var(--colorPrimary) !important">Female</span> &nbsp; &bull; &nbsp;7,000 &nbsp; -&nbsp;<span class="high">70%</span> </span>
         </h4>
         <div id="male-and-female" class="w-100"></div>
     </div>
@@ -301,8 +309,8 @@
 
     <div class="row container chart-container">
         <h4>Deaths & Births<br>
-            <span><span style="color:var(--colorPrimary) !important">Deaths </span> &nbsp; |&nbsp; 3,000 &nbsp; |&nbsp;<span class="low">30%</span> <br>
-            <span style="color:var(--colorPrimary) !important">Births</span> &nbsp; |&nbsp;7,000 &nbsp; |&nbsp;<span class="high">70%</span> </span>
+            <span><span style="color:var(--colorPrimary) !important">Deaths </span> &nbsp; &bull; &nbsp; {{ month.death.total }}&nbsp; -&nbsp;<span class="low">{{ month.death.total / population.total * 100 | number:'1.0-0' }}%</span> <br>
+            <span style="color:var(--colorPrimary) !important">Births</span> &nbsp; &bull; &nbsp; {{ month.birth.total }}&nbsp;-&nbsp;<span class="high">{{  month.birth.total / population.total * 100 | number:'1.0-0' }}%</span> </span>
         </h4>
         <div id="death-and-birth" class="w-100"></div>
     </div>
@@ -310,15 +318,15 @@
 
     <div class="row container chart-container">
         <h4>In-Migrants & Out Migrants<br>
-            <span><span style="color:var(--colorPrimary) !important">In-Migrants </span> &nbsp; |&nbsp; 3,000 &nbsp; |&nbsp;<span class="low">30%</span> <br>
-            <span style="color:var(--colorPrimary) !important"> Out Migrants</span> &nbsp; |&nbsp;7,000 &nbsp; |&nbsp;<span class="high">70%</span> </span>
+            <span><span style="color:var(--colorPrimary) !important">In-Migrants </span> &nbsp; &bull; &nbsp; {{ month.inmigration.total }} &nbsp; -&nbsp;<span class="low">{{  month.inmigration.total / population.total * 100 | number:'1.0-0' }}%</span>            <br>
+            <span style="color:var(--colorPrimary) !important"> Out Migrants</span> &nbsp; &bull; &nbsp; {{ month.outmigration.total }}&nbsp;-&nbsp;<span class="high">{{  month.outmigration.total / population.total * 100 | number:'1.0-0' }}%</span> </span>
         </h4>
         <div id="in-mig-and-Out-mig" class="w-100"></div>
     </div>
     <br>
 
     <div class="row container ">
-        <h4> 1200 Married - 30%</h4>
+        <h4> 1200 Married - {{ month.marriage.total / population.total * 100 | number:'1.0-0' }}%</h4>
         <google-chart *ngIf="!marriageisLoading" class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions">
         </google-chart>
         <div *ngIf="marriageisLoading" class="d-flex justify-content-center">
