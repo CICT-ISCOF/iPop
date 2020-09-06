@@ -7,6 +7,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use finfo;
+use InvalidArgumentException;
 
 class File extends Model
 {
@@ -45,9 +46,15 @@ class File extends Model
         if (!$user) {
             $user = request()->user();
         }
-        return $file instanceof UploadedFile
-            ? self::processFile($file, $user)
-            : self::processURL($file, $user);
+        if ($file instanceof UploadedFile) {
+            return self::processFile($file);
+        } elseif (is_string($file)) {
+            return self::processURI($file);
+        } else {
+            throw InvalidArgumentException(
+                'File must be either a string or an instance of Illuminate\Http\UploadedFile'
+            );
+        }
     }
 
     /**
