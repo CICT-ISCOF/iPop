@@ -39,8 +39,9 @@ export class ShowAdminStatusComponent implements OnInit {
 		this.isLoading = true
 		this.AdminService.showAdmin(id).subscribe(data => {
 			this.admin = data		
-			this.isLoading = false
-			console.log(data)
+			this.isLoading = false			
+			data.profile_picture != null ? this.imgSrc = data.profile_picture.uri : 
+			this.imgSrc = '../../../../assets/avatars/boyorange.png'			
 		})
 	}
 
@@ -115,5 +116,23 @@ export class ShowAdminStatusComponent implements OnInit {
 		this.AdminService.updateRole( role, this.admin.id ).subscribe(data => {
 			this.ngOnInit()			
 		})
+	}
+
+	imgSrc:any = ''
+	readURL(files: FileList,event) {  
+		this.isLoading = true			
+		if (event.target.files && event.target.files[0]) {
+			const reader = new FileReader();   
+			reader.readAsDataURL(event.target.files[0]);   
+			reader.onload = (event) => {			
+				this.imgSrc = (<FileReader>event.target).result;		
+				let profile_picture = files.item(0)	
+				const formData = new FormData()	
+				formData.append('profile_picture', profile_picture, profile_picture.name); 
+				this.AdminService.changeProfilePicture(formData,this.admin.id).subscribe(data =>{
+					this.isLoading = false		
+				})
+			}
+		}		
 	}
 }

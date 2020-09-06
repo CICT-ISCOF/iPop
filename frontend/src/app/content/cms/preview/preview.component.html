@@ -1,4 +1,4 @@
-<div class="preview-component">
+<div class="preview-component" [@listAnimation]=[items.length]>
     <div *ngIf="isLoading" class="loader "></div>
     <i (click)="closePreview()" class="im im-x-mark"></i>
 
@@ -30,6 +30,33 @@
     <br> <br> <br>
     <div *ngFor="let item of items" class="content row">
 
+        <div *ngIf="item.Articles != null" class="Sliders" style="min-height: 40vh;">
+            <br>
+            <div class="container article-container">
+                <div class="img-container">
+                    <img style="min-height: 100%;" *ngIf="item.Articles.image.length !== ''" [src]="item.Articles.image " alt="">
+                </div>
+                <div class="inputs-container">
+                    <h4>{{item.Articles.title}}</h4>
+                    <br>
+                    <p class="article-body">{{item.Articles.body}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="item.Lists != null" class="Texts">
+            <br>
+            <h4>{{item.Lists.title}}</h4>
+            <ul [@quickLinksAnimation]=[item.Lists.listitems.length]>
+                <li class="list-Items" *ngFor="let listitem of item.Lists.listitems;let j = index;">
+                    <p *ngIf="listitem != ''">{{listitem}}</p>
+                </li>
+            </ul>
+        </div>
+
+
+
+
 
         <div *ngIf="item.Sliders != null" class="Sliders">
             <div class="carousel-holder">
@@ -45,14 +72,16 @@
             <div class="quick-links">
                 <p>Quick Links</p>
                 <br>
-                <div *ngFor="let number of [0,1,2,3]" class="links">
-                    <div class="link-images">
-                        <img src="../../../assets/iloilo-seal.png">
-                    </div>
-                    <div class="link-text">
-                        <div class="placeholder-line"></div>
-                        <div class="placeholder-line"></div>
-                        <div class="placeholder-line"></div>
+                <div [@quickLinksAnimation]=[items.length]>
+                    <div *ngFor="let number of [0,1,2,3]" class="links">
+                        <div class="link-images">
+                            <img src="../../../assets/iloilo-seal.png">
+                        </div>
+                        <div class="link-text">
+                            <div class="placeholder-line"></div>
+                            <div class="placeholder-line"></div>
+                            <div class="placeholder-line"></div>
+                        </div>
                     </div>
                 </div>
             </div><br>

@@ -95,8 +95,14 @@ export class AdminService {
 
 
 	search(keyword){
-		const url = this.BaseAPIService.baseURL + '/search?field=fullname&value=' + keyword
+		const url = this.BaseAPIService.baseURL + '/search/users?field=fullname&query=' + keyword + '&value=' + keyword
 		return this.http.get<any>(url,{headers:this.headers})
+	}
+
+	changeProfilePicture(file,id){
+		const url = this.baseURL + '/' + id		
+		console.log(file)
+		return this.http.put<any>(url,file,{headers:this.headers})
 	}
 
 }

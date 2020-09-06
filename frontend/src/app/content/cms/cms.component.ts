@@ -4,12 +4,36 @@ import { CmsService } from './cms.service'
 import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { UtilityService } from '../../utility.service'
 import { Subscription } from 'rxjs'
-
+import {trigger, transition, style, animate, query, stagger, keyframes} from '@angular/animations'
 
 @Component({
 	selector: 'app-cms',
 	templateUrl: './cms.component.html',
-	styleUrls: ['./cms.component.scss']
+	styleUrls: ['./cms.component.scss'],
+	animations: [
+		trigger('listAnimation', [
+			transition('* => *',[
+				query(':enter', [
+					stagger(3000, [
+						animate('.3s ease-in', keyframes([
+							style({opacity:0,transform: 'translateX(-25px)', offset:0}),
+							style({opacity:.5,transform: 'translateX(-10px)', offset:0.3}),
+							style({opacity:1,transform: 'translateX(0)', offset:1})
+						]))
+					]),
+				], { optional: true }),
+				query(':leave', [
+					stagger(3000, [
+						animate('.2s ease-in', keyframes([	
+							style({opacity:1,transform: 'translateX(0)', offset:0}),
+							style({opacity:.5,transform: 'translateX(-50px)', offset:0.3}),
+							style({opacity:0,transform: 'translateX(-100%)', offset:1}),
+						]))
+					]),
+				], { optional: true })
+			]),
+		  ])
+	]
 })
 export class CmsComponent implements OnInit {
 
@@ -65,13 +89,13 @@ export class CmsComponent implements OnInit {
 		setTimeout(() => {
 			this.CmsService.setData(this.items)	
 			
-		}, 1000);
+		}, 500);
 	
 
 		setTimeout(() => {
 			this.CmsService.setCategory(this.categories)	
 			
-		}, 1000);
+		}, 500);
 	
 	}
 
@@ -121,7 +145,7 @@ export class CmsComponent implements OnInit {
 	items:any = []	
 
 	
-	triggerMediaInput(id, index){		
+	triggerMediaInput(id, index){	
 		document.getElementById(id + index).click()		
 	}
 		
@@ -168,7 +192,7 @@ export class CmsComponent implements OnInit {
 	
 	addGrid(index){
 		this.items[index].Grids.griditems.push({
-			image:'',
+			image:'../../../assets/placeholders/image.jpg',	
 			title:'',
 			attachment:'',
 		})
@@ -190,7 +214,7 @@ export class CmsComponent implements OnInit {
 	
 	addCard(index){		
 		this.items[index].Cards.carditems.push({
-			image:'',
+			image:'../../../assets/placeholders/image.jpg',	
 			title:'',
 			attachment:'',
 		})
@@ -284,6 +308,25 @@ export class CmsComponent implements OnInit {
 				},			
 			})		
 		}
+
+		if(item == 'Articles'){
+			this.items.push({
+				Articles: {	
+					image:'../../../assets/placeholders/image.jpg',	
+					attachment:[],
+					title:'',
+					body:'',		
+				},			
+			})		
+		}
+		if(item == 'Lists'){
+			this.items.push({
+				Lists: {	
+					listitems:[''],						
+					title:'',					
+				},			
+			})		
+		}
 	}
 
 
@@ -344,7 +387,60 @@ export class CmsComponent implements OnInit {
 				})	
 			)	
 		}
+
+		if(item == 'Articles'){
+			this.items.splice(index, 0, ({
+					Articles: {	
+						image:'../../../assets/placeholders/image.jpg',	
+						attachment:[],
+						title:'',
+						body:'',		
+					},			
+				})	
+			)	
+
+		}
+		if(item == 'Lists'){
+			this.items.splice(index, 0, ({
+					Lists: {	
+						listitems:[''],						
+						title:'',					
+					},			
+				})
+			)	
+
+		}
 		
+	}
+
+	readArticleUrl(files: FileList,event,index){
+		if (event.target.files && event.target.files[0]) {
+			const reader = new FileReader();   
+			reader.readAsDataURL(event.target.files[0])		     
+			reader.onload = (event) => {
+				this.items[index].Articles.image = event.target.result
+				this.items[index].Sliders.attachment.push(files.item(0)) 	
+			}
+		}	
+	}
+
+	list =''
+	addList(index){	
+		this.items[index].Lists.listitems.push('')
+	}
+
+	clearList(index,listIndex){
+		this.items[index].Lists.listitems[listIndex] = ''
+	}
+
+	pushList(index,listIndex){		
+		this.items[index].Lists.listitems[listIndex] = this.list
+		this.list = ''
+		this.addList(index)
+	}
+
+	popList(index, listIndex){
+		this.items[index].Lists.splice(listIndex, 1)
 	}
 
 
@@ -355,3 +451,4 @@ export class CmsComponent implements OnInit {
 	
 
 }
+

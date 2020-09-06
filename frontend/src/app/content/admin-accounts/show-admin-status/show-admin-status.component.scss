@@ -118,3 +118,7 @@ li {
     opacity: .5;
     cursor: not-allowed;
 }
+
+i:focus {
+    outline: 0;
+}

@@ -15,6 +15,8 @@ import { AgTableModule, AgTableCustomSettings } from 'ag-table';
 import { AgGridModule } from 'ag-grid-angular';
 import 'ag-grid-enterprise';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
+import { Ng2OdometerModule } from 'ng2-odometer';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
@@ -259,7 +261,9 @@ const routes: Routes = [
     TextareaAutosizeModule,
     NetworkStatusAngularModule.forRoot(),
     TooltipModule,
+    Ng2OdometerModule.forRoot(),
     AgTableModule,
+    NgxPaginationModule,
     AgGridModule.withComponents([
 
       // -----admin----------------

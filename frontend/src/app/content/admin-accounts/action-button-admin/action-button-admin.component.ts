@@ -34,7 +34,20 @@ export class ActionButtonAdminComponent implements OnInit {
 	agInit(params:any){
 		this.admin.id = params.value
 		this.params = params.data
+		this.params
+		this.params.profile_picture != null ? this.imgSrc = this.params.profile_picture.uri : 
+		this.imgSrc =  this.randomImages[Math.floor(Math.random() * this.randomImages.length)];	
 	}
+
+	randomImages = [
+		window.location.origin + '/assets/avatars/boy-blue.png',
+		window.location.origin + '/assets/avatars/boyorange.png',
+		window.location.origin + '/assets/avatars/girl-black.png',
+		window.location.origin + '/assets/avatars/girl-orange.png'
+	]
+
+
+	imgSrc
 
 	refresh(params:any):boolean{
 		this.admin.id = params.value

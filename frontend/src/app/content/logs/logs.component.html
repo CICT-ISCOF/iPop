@@ -41,6 +41,7 @@
     <app-table-logse></app-table-logse>
 </div>
 
+
 <nav aria-label="... ">
     <ul class="pagination ">
         <li class="page-item " [class.disabled]="pagination.currentPage == 1">
@@ -49,8 +50,14 @@
             </a>
         </li>
 
-        <li (click)="paginate(page) " *ngFor="let page of pagination.totalPages " class="page-item " [class.active]='pagination.currentPage == page'>
+        <li (click)="paginate(page) " *ngFor="let page of pagination.totalPages | slice:0:10;" class="page-item " [class.active]='pagination.currentPage == page'>
             <a *ngIf="page !=0 " style="color:gray " class="page-link ">{{ page }}</a>
+        </li>
+        <li class="page-item ">
+            <a>... </a>
+        </li>
+        <li (click)="paginate(pagination.lastPage) " class="page-item ">
+            <a style="color:gray " class="page-link ">{{ pagination.lastPage }}</a>
         </li>
 
 

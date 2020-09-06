@@ -28,6 +28,7 @@ export class AdminAccountsComponent implements OnInit {
 	reload
 
 	ngOnInit(): void {
+		this.searched = false
 		this.getAllAdmins()
 	}
 
@@ -135,12 +136,22 @@ export class AdminAccountsComponent implements OnInit {
 
 	keyword = ''
 
-
+	searched = false
 	search(){
+		this.searched = true
 		this.AdminService.search(this.keyword).subscribe(data => {
-			this.AdminService.setPage(data)
-			this.keyword = ''
+			this.AdminService.setPage(data)			
 		})
+	}
+
+	searchHandler(event){
+		if(event.target.value == '' ){
+			this.searched == false; 
+			this.ngOnInit()
+		}
+		else{ 
+			this.searched == true
+		}
 	}
 
 	refresh(){
