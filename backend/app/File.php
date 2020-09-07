@@ -52,7 +52,7 @@ class File extends Model
             return self::processURI($file);
         } else {
             throw InvalidArgumentException(
-                'File must be either a string or an instance of Illuminate\Http\UploadedFile'
+                'File must be either a string url or an instance of Illuminate\Http\UploadedFile'
             );
         }
     }
@@ -87,9 +87,8 @@ class File extends Model
         $data = [];
 
         $binary = file_get_contents($url);
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
 
-        $data['type'] = $finfo->buffer($binary);
+        $data['type'] = (new finfo(FILEINFO_MIME_TYPE))->buffer($binary);
         $data['name'] =
             Str::random(40) . '.' . self::convertMimeToExtension($data['type']);
         $path = 'files/' . $data['name'];

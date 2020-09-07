@@ -71,6 +71,7 @@ class UserController extends Controller
         if (isset($data['blocked'])) {
             $data['iterations'] = $data['blocked'] ? 5 : 0;
         }
+
         if (isset($data['profile_picture'])) {
             $file = File::process($data['profile_picture'], $user);
             $file->public = true;
