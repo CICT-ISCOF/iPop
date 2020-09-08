@@ -49,7 +49,7 @@ class File extends Model
         if ($file instanceof UploadedFile) {
             return self::processFile($file);
         } elseif (is_string($file)) {
-            return self::processURI($file);
+            return self::processURL($file);
         } else {
             throw InvalidArgumentException(
                 'File must be either a string url or an instance of Illuminate\Http\UploadedFile'
@@ -97,6 +97,18 @@ class File extends Model
         $data['user_id'] = $user->id;
         Storage::put($path, $binary);
         return new self($data);
+    }
+
+    /**
+     * Alias for processURL
+     *
+     * @param string $url
+     * @param User $user
+     * @return File
+     */
+    public static function processURI(string $url, User $user)
+    {
+        return self::processURL($url, $user);
     }
 
     /**
