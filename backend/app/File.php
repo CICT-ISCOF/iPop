@@ -89,8 +89,7 @@ class File extends Model
         $binary = file_get_contents($url);
 
         $data['type'] = (new finfo(FILEINFO_MIME_TYPE))->buffer($binary);
-        $data['name'] =
-            Str::random(40) . '.' . self::convertMimeToExtension($data['type']);
+        $data['name'] = self::generateFileName($data['type']);
         $path = 'files/' . $data['name'];
         $data['url'] = $path;
         $data['size'] = strlen($binary);
@@ -109,6 +108,11 @@ class File extends Model
     public static function processURI(string $url, User $user)
     {
         return self::processURL($url, $user);
+    }
+
+    public static function generateFileName(string $mimeType)
+    {
+        return Str::random(40) . '.' . self::convertMimeToExtension($mimeType);
     }
 
     /**
