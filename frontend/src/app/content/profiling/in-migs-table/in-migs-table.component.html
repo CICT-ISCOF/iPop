@@ -39,9 +39,9 @@
         <i style="color:greenyellow" class="fas fa-file-excel"></i>
     </button>
 </div>
-
+<p class="search-results" style="margin-left: 50px;" *ngIf="searched ">Search results for <i> {{ keyword }}...</i></p>
 <div class="cpdpb-component container">
-    <p *ngIf="searched">Search results for <i> {{ keyword }}...</i></p>
+
     <app-table-in-migs></app-table-in-migs>
 </div>
 

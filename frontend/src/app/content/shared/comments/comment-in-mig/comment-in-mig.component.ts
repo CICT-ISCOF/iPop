@@ -8,7 +8,7 @@ import { LocationService } from '../../../../location.service'
 @Component({
   selector: 'app-comment-in-mig',
   templateUrl: './comment-in-mig.component.html',
-  styleUrls: ['./comment-in-mig.component.scss']
+  styleUrls: ['./comment-in-mig.component.scss','../comment.responsive.scss']
 })
 export class CommentInMigComponent implements OnInit {
 
@@ -56,12 +56,18 @@ export class CommentInMigComponent implements OnInit {
 
 	theme = localStorage.getItem('data-theme')
 
-	message
+	message = ''
 
-	fields:any
+	fields:any = {
+		record: {
+			user:{
+				fullname:'',
+				profile_picture:null
+			}
+		}
+	}
 
-	comments:any
-
+	comments:any = []
 
 	forps_beneficiary_household = 'tae'
 

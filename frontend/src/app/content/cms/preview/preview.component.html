@@ -107,34 +107,36 @@
 
 
         <div *ngIf="item.Grids != null" class="grids">
-            <div *ngFor="let grid of item.Grids.griditems; let j=index; " class="card grid " style="width: 18rem; ">
-                <i *ngIf="grid.image=='' " (click)="triggerMediaInput( 'griditem',j) " class="fas fa-image "></i>
-                <img (click)="triggerMediaInput( 'griditem',j) " [src]="grid.image " class="card-img-top " alt="">
-                <div class="card-body ">
-                    <h5>{{grid.title}}</h5>
+            <div class="inline">
+                <div *ngFor="let grid of item.Grids.griditems; let j=index; " class="card grid1 " style="width: 18rem; ">
+                    <i *ngIf="grid.image=='' " class="fas fa-image "></i>
+                    <img style="height: 35vh;" [src]="grid.image " class="card-img-top " alt=" ">
+                    <div class="card-body ">
+                        <h5>{{grid.title}}</h5>
+                    </div>
                 </div>
-                <input accept="image/* " type="file" (change)="readGridUrl($event.target.files,$event,i,j) " style="display: none; " [id]=" 'griditem' + j ">
             </div>
-            <br>
+
         </div>
 
 
-        <div *ngIf="item.Cards != null" class="">
-            <div class="card " *ngFor="let card of item.Cards.carditems; let j=index; ">
-                <i *ngIf="card.image=='' " (click)="triggerMediaInput( 'carditem',j) " class="fas fa-image "></i>
-                <img (click)="triggerMediaInput( 'carditem',j) " [src]="card.image " class="card-img-top " alt="">
-                <div class="card-body ">
-                    <h5 class="card-title ">{{card.title}}</h5>
-                    <p>{{card.body}}</p>
-                    <input accept="image/* " type="file" (change)="readCardURL($event.target.files,$event,i,j) " style="display: none; " [id]=" 'carditem' + j ">
+        <div *ngIf="item.Cards != null " class=" ">
+            <div class="inline ">
+                <div class="card card1 " *ngFor="let card of item.Cards.carditems; let j=index; ">
+                    <i *ngIf="card.image=='' " class="fas fa-image "></i>
+                    <img style="height: 40%;" [src]="card.image " class="card-img-top " alt=" ">
+                    <div class="card-body ">
+                        <h5 class="card-title ">{{card.title}}</h5>
+                        <p>{{card.body}}</p>
+
+                    </div>
                 </div>
             </div>
-            <br>
         </div>
 
 
     </div>
 
-    <h3 *ngIf="!isLoading && items.length == 0" style="text-align: center;margin-top: 30px;">Nothing to Preview...</h3>
+    <h3 *ngIf="!isLoading && items.length==0 " style="text-align: center;margin-top: 30px; ">Nothing to Preview...</h3>
     <br><br><br>
 </div>

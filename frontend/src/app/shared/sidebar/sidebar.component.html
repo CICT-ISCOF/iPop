@@ -1,4 +1,4 @@
-<div class="sidebar-component" [style.background]="'url(' + sidebar.backgroundImage + ')'" [class.removeBackground]="sidebar.background == false">
+<div [class.hide]="!hide" class="sidebar-component" [style.background]="'url(' + sidebar.backgroundImage + ')'" [class.removeBackground]="sidebar.background == false">
     <div class="filter" [ngStyle]="{background: sidebar.color}"></div>
     <h1>
         <img src="../../../assets/iloilo-seal.png"> Iloilo Provincial Office

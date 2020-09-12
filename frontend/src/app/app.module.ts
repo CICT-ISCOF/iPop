@@ -13,10 +13,13 @@ import { NetworkStatusAngularModule } from 'network-status-angular';
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { AgTableModule, AgTableCustomSettings } from 'ag-table';
 import { AgGridModule } from 'ag-grid-angular';
-import 'ag-grid-enterprise';
+
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { Ng2OdometerModule } from 'ng2-odometer';
 import {NgxPaginationModule} from 'ngx-pagination';
+
+import { ResponsiveModule } from 'ngx-responsive'
+import 'ag-grid-enterprise';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
@@ -107,9 +110,11 @@ import { QuickLinksListComponent } from './content/cms/quick-links-list/quick-li
 import { UpdateContentComponent } from './content/cms/update-content/update-content.component';
 import { UpdateQuickLinkComponent } from './content/cms/update-quick-link/update-quick-link.component';
 import { ShowQuickLinkComponent } from './content/cms/show-quick-link/show-quick-link.component';
+import { MobileAuthenticationComponent } from './sign-in/mobile/mobile-authentication/mobile-authentication.component'
+import { NavbarMobileComponent } from './shared/devices/mobile/navbar-mobile/navbar-mobile.component'
+import { DropdownComponentMobile }  from './shared/devices/mobile/dropdown/dropdown.component'
 
 
- 
 const routes: Routes = [
   
   { path:'comments/cpdb/:id', component:CommentCpdbComponent},  
@@ -158,6 +163,9 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarMobileComponent,
+    DropdownComponentMobile,
+    MobileAuthenticationComponent,
     NavbarComponent,
     SidebarComponent,
     HomeComponent,
@@ -248,6 +256,7 @@ const routes: Routes = [
 
   ],
   imports: [
+    ResponsiveModule,
     BrowserModule,
     FormsModule,
     AppRoutingModule,

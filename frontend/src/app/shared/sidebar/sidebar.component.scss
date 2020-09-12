@@ -11,6 +11,22 @@
     // filter: grayscale(50%);
 }
 
+@media only screen and (max-width: 600px) {
+    .sidebar-component {
+        width: 290px;
+        transition: .2s;
+    }
+    .hide {
+        width: 0px;
+        .button-group,
+        h1,
+        h4 {
+            opacity: 0;
+            font-size: 0px;
+        }
+    }
+}
+
 .removeBackground {
     background: var(--bg) !important;
 }

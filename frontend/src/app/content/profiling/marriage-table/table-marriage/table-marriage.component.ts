@@ -113,6 +113,7 @@ export class TableMarriageComponent implements OnInit {
 	public onGridReady(event){
 		this.gridAPI = event.api
 		this.columnAPi = event.columnAPi
+		event.api.closeToolPanel();
 		this.MarriagesService.getMarriageRecords().subscribe(data => {
 			 event.api.setRowData(data.data)
 		 })

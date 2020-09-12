@@ -1,10 +1,12 @@
-<div class="app-component">
+<app-navbar *ngIf="role == 'admin'">
+</app-navbar>
 
-    <app-navbar *ngIf="role == 'admin'"></app-navbar>
+<app-sidebar *ngIf="role == 'admin' "></app-sidebar>
 
-    <app-sidebar *ngIf="role == 'admin'"></app-sidebar>
+<app-alerts></app-alerts>
 
-    <app-alerts></app-alerts>
+<div class="app-component" [class.mobile-600]="media < 600" (onResize)="onResize()">
+
 
 
 

@@ -1,40 +1,52 @@
 <app-preview *ngIf="preview"></app-preview>
 
 
-<div class="cms-component">
+<div *ngIf="!preview" class="cms-component">
     <br>
-    <ul class="nav nav-pills nav-fill">
+
+    <ul class="nav nav-pills nav-fill mobile-nav">
         <li class="nav-item">
             <a class="nav-link" (click)="changeTab('newContent')" [class.active]="tabs.newContent">
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M9.828 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91H9v1H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0 0 13.81 4H9.828zm-2.95-1.707L7.587 3H2.19c-.24 0-.47.042-.684.12L1.5 2.98a1 1 0 0 1 1-.98h3.672a1 1 0 0 1 .707.293z"/>
-                    <path fill-rule="evenodd" d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
-                  </svg> New Content
+               New Content
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" (click)="changeTab('contentList')" [class.active]="tabs.contentList">
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
-                  </svg> Content List
+                Content List
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" (click)="changeTab('newQuickLink')" [class.active]="tabs.newQuickLink">
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-earmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 0h5.5v1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h1V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
-                    <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z"/>
-                    <path fill-rule="evenodd" d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"/>
-                  </svg> New Quick Link
+               New Quick Link
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link" (click)="changeTab('quickLinks')" [class.active]="tabs.quickLinks">
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-link" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>
-                    <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
-                  </svg> Quick Links
+                 Quick Links
+            </a>
+        </li>
+    </ul>
+    <ul class="nav nav-pills nav-fill desktop">
+        <li class="nav-item">
+            <a class="nav-link" (click)="changeTab('newContent')" [class.active]="tabs.newContent">
+                 New Content
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" (click)="changeTab('contentList')" [class.active]="tabs.contentList">
+                Content List
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" (click)="changeTab('newQuickLink')" [class.active]="tabs.newQuickLink">
+                New Quick Link
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" (click)="changeTab('quickLinks')" [class.active]="tabs.quickLinks">
+                Quick Links
             </a>
         </li>
     </ul>
@@ -368,14 +380,16 @@
                             </div>
                         </span>
                     </h4><br>
-                    <div *ngFor="let grid of item.Grids.griditems; let j=index; " class="card grid " style="width: 18rem; ">
-                        <i *ngIf="grid.image=='' " (click)="triggerMediaInput( 'griditem',j) " class="fas fa-image "></i>
-                        <i (click)="removeGrid(i,j)" class="fas fa-times-circle"></i>
-                        <img (click)="triggerMediaInput( 'griditem',j) " [src]="grid.image " class="card-img-top " alt="">
-                        <div class="card-body ">
-                            <h5 (input)="grid.title = $event.target.innerText " class="card-title " contenteditable>Grid title</h5>
+                    <div class="inline">
+                        <div *ngFor="let grid of item.Grids.griditems; let j=index; " class="card grid " style="width: 18rem; ">
+                            <i *ngIf="grid.image=='' " (click)="triggerMediaInput( 'griditem',j) " class="fas fa-image "></i>
+                            <i (click)="removeGrid(i,j)" class="fas fa-times-circle"></i>
+                            <img (click)="triggerMediaInput( 'griditem',j) " [src]="grid.image " class="card-img-top " alt="">
+                            <div class="card-body ">
+                                <h5 (input)="grid.title = $event.target.innerText " class="card-title " contenteditable>Grid title</h5>
+                            </div>
+                            <input accept="image/* " type="file" (change)="readGridUrl($event.target.files,$event,i,j) " style="display: none; " [id]=" 'griditem' + j ">
                         </div>
-                        <input accept="image/* " type="file" (change)="readGridUrl($event.target.files,$event,i,j) " style="display: none; " [id]=" 'griditem' + j ">
                     </div>
                 </div>
 
@@ -532,14 +546,16 @@
                             </div>
                         </span>
                     </h4><br>
-                    <div class="card " *ngFor="let card of item.Cards.carditems; let j=index; ">
-                        <i *ngIf="card.image=='' " (click)="triggerMediaInput( 'carditem',j)" class="fas fa-image "></i>
-                        <i (click)="removeCard(i,j)" class=" fas fa-times-circle "></i>
-                        <img (click)="triggerMediaInput('carditem', j) " [src]="card.image " class="card-img-top " alt="">
-                        <div class="card-body ">
-                            <h5 class="card-title " contenteditable (input)="card.title=$event.target.innerText ">Card title</h5>
-                            <p contenteditable (input)="card.body=$event.target.innerText ">Card body here.. </p>
-                            <input accept="image/* " type="file" (change)="readCardURL($event.target.files,$event,i,j) " style="display: none; " [id]="'carditem' + j">
+                    <div class="inline">
+                        <div class="card " *ngFor="let card of item.Cards.carditems; let j=index; ">
+
+                            <i (click)="removeCard(i,j)" class=" fas fa-times-circle "></i>
+                            <img (click)="triggerMediaInput('carditem', j) " [src]="card.image " class="card-img-top " alt="">
+                            <div class="card-body ">
+                                <h5 class="card-title " contenteditable (input)="card.title=$event.target.innerText ">Card title</h5>
+                                <p contenteditable (input)="card.body=$event.target.innerText ">Card body here.. </p>
+                                <input accept="image/* " type="file" (change)="readCardURL($event.target.files,$event,i,j) " style="display: none; " [id]="'carditem' + j">
+                            </div>
                         </div>
                     </div>
                 </div>

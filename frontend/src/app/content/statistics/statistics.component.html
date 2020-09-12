@@ -1,6 +1,54 @@
 <div class="statistics-component">
 
-    <div class="row row1">
+    <div class="mobile-top-view">
+
+        <div class="mobile-box container">
+            <div class="box-wrapper-mobile">
+                <div class="text-mobile">
+                    <p>Registered Population Total</p>
+                    <h2>
+                        <ng2-odometer [number]="population.total" [config]="{ animation: 'count', format: 'd', value: 0, auto: true }"></ng2-odometer>
+                    </h2>
+                </div>
+                <div class="icon-container ml-auto">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-box container">
+            <div class="box-wrapper-mobile">
+                <div class="text-mobile">
+                    <p>Number of Registered Municipalities</p>
+                    <h2>
+                        <ng2-odometer [number]="totals.municipalities" [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>
+                    </h2>
+                </div>
+                <div class="icon-container ml-auto">
+                    <i class="fas fa-university"></i>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="mobile-box container">
+            <div class="box-wrapper-mobile">
+                <div class="text-mobile">
+                    <p>Number of Registered Barangays</p>
+                    <h2>
+                        <ng2-odometer [number]="totals.barangays" [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>
+                    </h2>
+                </div>
+                <div class="icon-container ml-auto">
+                    <i class="fas fa-ship"></i>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row row1 hide-on-mobile">
         <div class="col-md-3 container box">
             <div class="icon mr-auto">
                 <i style="font-size: 30px !important;color:#57B894" class="fas fa-users"></i>
@@ -47,14 +95,14 @@
     <div class="row container">
         <div class="form-group col-md-6">
             <h3>Top Populated Municipalities</h3>
-            <p>All over Iloilo</p>
+            <p style="color:gray">All over Iloilo</p>
             <ul class="list-group" [@listAnimation]="population.top.length">
                 <li *ngFor="let municipality of population.top" class="list-group-item barangays">
                     <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
                     <p>{{municipality.name}}</p>
                     <p>{{municipality.total}}</p>
                     <p>
-                        <ng2-odometer [number]=" municipality.total / population.total * 100 | number:'1.0-0' " [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>%</p>
+                        <ng2-odometer class="low" [number]=" municipality.total / population.total * 100 | number:'1.0-0' " [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>%</p>
 
                 </li>
             </ul>
@@ -130,7 +178,7 @@
                     <li class="list-group-item barangays">
                         <i style="color:#32B0DF;font-size: 20px;" class="fas fa-user"></i>
                         <p> <span class="badge badge-info"> 14,400</span> </p>
-                        <p style="margin-right: 10px;width: 50%;margin-left: auto;">14% of Province of Iloilo</p>
+                        <p style="margin-right: 10px;width: 50%;margin-left: auto;"><span class="mid">14%</span> of Province of Iloilo</p>
                     </li>
                 </ul>
             </div>
@@ -140,7 +188,7 @@
                     <li class="list-group-item barangays">
                         <i style="color:#A448B1;font-size: 20px;" class="fas fa-home"></i>
                         <p> <span class="badge badge-info"> 14,400</span> </p>
-                        <p style="margin-right: 10px;width: 50%;margin-left: auto;">14% of Province of Iloilo</p>
+                        <p style="margin-right: 10px;width: 50%;margin-left: auto;"><span class="mid">14%</span> of Province of Iloilo</p>
                     </li>
                 </ul>
             </div>
@@ -160,21 +208,21 @@
                 </p>
             </div>
             <hr>
-            <div class="col-md-6">
+            <div class="col-md-6 mt-20">
                 <hr>
                 <p> Barangays Lists: </p>
-                <div class="col-md-6">
+                <div>
                     <ul class="list-group" [@listAnimation]="5">
                         <li *ngFor="let item of [0,1,1,1,1]" class="list-group-item barangays">
                             <i style="font-size: 20px !important;color:#2659D8" class="fas fa-ship"></i>
                             <p>ilaud</p>
                             <p>290</p>
-                            <p>15%</p>
+                            <p><span class="low">84%</span></p>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 mt-20">
                 <hr>
                 <p>Zones Lists:</p>
                 <ul class="list-group" [@listAnimation]="5">
@@ -182,7 +230,7 @@
                         <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i>
                         <p>1</p>
                         <p>90</p>
-                        <p>15%</p>
+                        <p><span class="high">1%</span></p>
                     </li>
                 </ul>
             </div>
@@ -201,81 +249,80 @@
         <div class="row">
             <div class="col-md-6">
                 <p>
-                    <i style="font-size: 20px !important;color:wheat" class="fas fa-baby"></i> &nbsp; Births<span> - 540 | 54%</span>
+                    <i style="font-size: 20px !important;color:wheat" class="fas fa-baby"></i> &nbsp; Births<span> - 540 | <span class="mid">14%</span></span>
                 </p>
                 <ul class="list-group">
                     <li class="list-group-item barangays">
                         <i style="font-size: 20px !important;color: teal;margin-right: 20px;" class="fas fa-mars"></i>
                         <p style="text-align: left;">Male</p>
                         <p style="text-align: left;">290</p>
-                        <p>15% of Zaragga</p>
+                        <p><span class="mid">14%</span>of Zaragga</p>
                     </li>
                     <li class="list-group-item barangays">
                         <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
                         <p style="text-align: left;">Female</p>
                         <p style="text-align: left;">290</p>
-                        <p>85% of Zaragga</p>
+                        <p><span class="mid">14%</span> of Zaragga</p>
                     </li>
                 </ul>
             </div>
             <div class="col-md-6">
                 <p>
                     <i style="font-size: 20px !important;color:red;margin-right: 20px;" class="fas fa-book-dead"></i> &nbsp; Deaths
-                    <span> - 54,000 | 25%</span>
+                    <span> - 54,000 |<span class="mid">14%</span></span>
                 </p>
-                <ul class="list-group">
-                    <li class="list-group-item barangays">
-                        <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
-                        <p style="text-align: left;">Male</p>
-                        <p style="text-align: left;">290</p>
-                        <p>15% of Zaragga</p>
-                    </li>
-                    <li class="list-group-item barangays">
-                        <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
-                        <p style="text-align: left;">Female</p>
-                        <p style="text-align: left;">290</p>
-                        <p>85% of Zaragga</p>
-                    </li>
-                </ul>
+                <li class="list-group-item barangays">
+                    <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
+                    <p style="text-align: left;">Male</p>
+                    <p style="text-align: left;">290</p>
+                    <p><span class="mid">14%</span> of Zaragga</p>
+                </li>
+                <li class="list-group-item barangays">
+                    <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
+                    <p style="text-align: left;">Female</p>
+                    <p style="text-align: left;">290</p>
+                    <p><span class="mid">14%</span>of Zaragga</p>
+                </li>
+
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-md-6"><br> <br><br>
                 <p>
-                    <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-arrival"></i> &nbsp; Migrants <span> - 54,000 | 54%</span>
+                    <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-arrival"></i> &nbsp; Migrants <span> - 54,000 | <span class="mid">54%</span></span>
                 </p>
                 <ul class="list-group">
                     <li class="list-group-item barangays">
                         <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
                         <p style="text-align: left;">Male</p>
                         <p style="text-align: left;">290</p>
-                        <p>15% of Zaragga</p>
+                        <p><span class="mid">14%</span> of Zaragga</p>
                     </li>
                     <li class="list-group-item barangays">
                         <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
                         <p style="text-align: left;">Female</p>
                         <p style="text-align: left;">290</p>
-                        <p>85% of Zaragga</p>
+                        <p><span class="mid">14%</span> of Zaragga</p>
                     </li>
                 </ul>
             </div>
             <div class="col-md-6"><br> <br><br>
                 <p>
-                    <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-departure"></i> &nbsp; Out Migrants<span> - 54,000 | 25%</span>
+                    <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-departure"></i> &nbsp; Out Migrants<span> - 54,000 | <span class="mid">14%</span></span>
                 </p>
                 <ul class="list-group">
                     <li class="list-group-item barangays">
                         <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
                         <p style="text-align: left;">Male</p>
                         <p style="text-align: left;">290</p>
-                        <p>15% of Zaragga</p>
+                        <p><span class="mid">14%</span> of Zaragga</p>
                     </li>
                     <li class="list-group-item barangays">
                         <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
                         <p style="text-align: left;">Female</p>
                         <p style="text-align: left;">290</p>
-                        <p>85% of Zaragga</p>
+                        <p><span class="mid">14%</span> of Zaragga</p>
                     </li>
                 </ul>
             </div>
@@ -284,7 +331,7 @@
         <div class="row">
             <div class="col-md-12"><br>
                 <p>
-                    <i style="font-size: 20px !important;color:pink;margin-right: 20px;" class="fas fa-people-carry"></i> &nbsp; Married<span> 25,000 | 50% of Zarraga</span>
+                    <i style="font-size: 20px !important;color:pink;margin-right: 20px;" class="fas fa-people-carry"></i> &nbsp; Married<span> 25,000 | <span class="mid">14%</span> of Zarraga</span>
                 </p>
             </div>
         </div>
@@ -292,48 +339,49 @@
 
     </div>
 
+    <div class="inline">
 
 
 
-    <br>
-
-    <div class="row container chart-container">
-        <h4>Age Distribution Male & Female <br>
-            <span><span style="color:var(--colorPrimary) !important">Male </span> &nbsp; &bull; &nbsp; 3,000 &nbsp; -&nbsp;<span class="low">30%</span> <br>
-            <span style="color:var(--colorPrimary) !important">Female</span> &nbsp; &bull; &nbsp;7,000 &nbsp; -&nbsp;<span class="high">70%</span> </span>
-        </h4>
-        <div id="male-and-female" class="w-100"></div>
-    </div>
-    <br>
+        <div class="row container chart-container">
+            <h4>Age Distribution Male & Female <br>
+                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">Male </span> &nbsp; &bull; &nbsp; 3,000 &nbsp; -&nbsp;<span class="low">30%</span> <br>
+                <span class="chart-details" style="color:var(--colorPrimary) !important">Female</span> &nbsp; &bull; &nbsp;7,000 &nbsp; -&nbsp;<span class="high">70%</span> </span>
+            </h4>
+            <div id="male-and-female" class="w-100"></div>
+        </div>
+        <br>
 
 
-    <div class="row container chart-container">
-        <h4>Deaths & Births<br>
-            <span><span style="color:var(--colorPrimary) !important">Deaths </span> &nbsp; &bull; &nbsp; {{ month.death.total }}&nbsp; -&nbsp;<span class="low">{{ month.death.total / population.total * 100 | number:'1.0-0' }}%</span> <br>
-            <span style="color:var(--colorPrimary) !important">Births</span> &nbsp; &bull; &nbsp; {{ month.birth.total }}&nbsp;-&nbsp;<span class="high">{{  month.birth.total / population.total * 100 | number:'1.0-0' }}%</span> </span>
-        </h4>
-        <div id="death-and-birth" class="w-100"></div>
-    </div>
-    <br>
+        <div class="row container chart-container">
+            <h4>Deaths & Births<br>
+                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">Deaths </span> &nbsp; &bull; &nbsp; {{ month.death.total }}&nbsp; -&nbsp;<span class="low">{{ month.death.total / population.total * 100 | number:'1.0-0' }}%</span>                <br>
+                <span class="chart-details" style="color:var(--colorPrimary) !important">Births</span> &nbsp; &bull; &nbsp; {{ month.birth.total }}&nbsp;-&nbsp;<span class="high">{{  month.birth.total / population.total * 100 | number:'1.0-0' }}%</span>                </span>
+            </h4>
+            <div id="death-and-birth" class="w-100"></div>
+        </div>
+        <br>
 
-    <div class="row container chart-container">
-        <h4>In-Migrants & Out Migrants<br>
-            <span><span style="color:var(--colorPrimary) !important">In-Migrants </span> &nbsp; &bull; &nbsp; {{ month.inmigration.total }} &nbsp; -&nbsp;<span class="low">{{  month.inmigration.total / population.total * 100 | number:'1.0-0' }}%</span>            <br>
-            <span style="color:var(--colorPrimary) !important"> Out Migrants</span> &nbsp; &bull; &nbsp; {{ month.outmigration.total }}&nbsp;-&nbsp;<span class="high">{{  month.outmigration.total / population.total * 100 | number:'1.0-0' }}%</span> </span>
-        </h4>
-        <div id="in-mig-and-Out-mig" class="w-100"></div>
-    </div>
-    <br>
+        <div class="row container chart-container">
+            <h4>In-Migrants & Out Migrants<br>
+                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">In-Migrants </span> &nbsp; &bull; &nbsp; {{ month.inmigration.total }} &nbsp; -&nbsp;<span class="low">{{  month.inmigration.total / population.total * 100 | number:'1.0-0' }}%</span>                <br>
+                <span class="chart-details" style="color:var(--colorPrimary) !important"> Out Migrants</span> &nbsp; &bull; &nbsp; {{ month.outmigration.total }}&nbsp;-&nbsp;<span class="high">{{  month.outmigration.total / population.total * 100 | number:'1.0-0' }}%</span>                </span>
+            </h4>
+            <div id="in-mig-and-Out-mig" class="w-100"></div>
+        </div>
+        <br>
 
-    <div class="row container ">
-        <h4> 1200 Married - {{ month.marriage.total / population.total * 100 | number:'1.0-0' }}%</h4>
-        <google-chart *ngIf="!marriageisLoading" class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions">
-        </google-chart>
-        <div *ngIf="marriageisLoading" class="d-flex justify-content-center">
+        <div class="row container chart-container">
+            <h4> 1200 Married - {{ month.marriage.total / population.total * 100 | number:'1.0-0' }}%</h4>
+            <google-chart class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions">
+            </google-chart>
+            <!-- <div *ngIf="marriageisLoading" class="d-flex justify-content-center">
             <div class="spinner-border" role="status" style="color:#32B0DF">
                 <span class="sr-only">Loading...</span>
             </div>
+        </div> -->
         </div>
     </div>
+
     <br> <br> <br>
 </div>

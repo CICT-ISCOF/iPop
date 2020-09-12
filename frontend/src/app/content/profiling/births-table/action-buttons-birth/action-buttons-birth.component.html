@@ -23,9 +23,9 @@
         <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 0 0 3 14.5h10a1.5 1.5 0 0 0 1.5-1.5V8a.5.5 0 0 0-1 0v5a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5h8a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 3v10z"/>
       </svg>
 
-    <!-- <span tooltip="Encoded by {{params.record.user.fullname}}" placement="top" show-delay="100" [theme]="theme" style="position: relative;">
-        <img  src="../../../../../assets/wallpapers/1.jpg" alt="">
-    </span> -->
+    <span tooltip="Encoded by {{params.record.user.fullname}}" placement="top" show-delay="100" [theme]="theme" style="position: relative;">
+        <img  [src]="params.record.user.profile_picture != null ? params.record.user.profile_picture.uri : '../../../../../assets/avatars/boy-blue.png'" alt="">
+    </span>
 
 
     <!-- 

@@ -8,7 +8,7 @@ import { LocationService } from '../../../../location.service'
 @Component({
   selector: 'app-comment-births',
   templateUrl: './comment-births.component.html',
-  styleUrls: ['./comment-births.component.scss']
+  styleUrls: ['./comment-births.component.scss','../comment.responsive.scss']
 })
 export class CommentBirthsComponent implements OnInit {
 
@@ -357,7 +357,7 @@ export class CommentBirthsComponent implements OnInit {
 		 this.LocationService.getMunicipalities().subscribe(data => {
 			this.municipalities = data	
 			this.isLoading = false		
-			console.log('municipalities',data)	
+			
 		})
 	}
 
@@ -376,11 +376,18 @@ export class CommentBirthsComponent implements OnInit {
 
 	theme = localStorage.getItem('data-theme')
 
-	message
+	message = ''
 
-	fields:any
+	fields:any = {
+		record: {
+			user:{
+				fullname:'',
+				profile_picture:null
+			}
+		}
+	}
 
-	comments:any
+	comments:any = []
 
 
 	forps_beneficiary_household = 'tae'
@@ -398,7 +405,7 @@ export class CommentBirthsComponent implements OnInit {
 			this.comments = data.comments
 			this.isLoading = false	
 			this.forps_beneficiary_household = data['4ps_beneficiary_household']			
-			console.log('data',data)
+			
 		})
 	}
 
@@ -444,7 +451,7 @@ export class CommentBirthsComponent implements OnInit {
 			if (result.value) {		
 				this.BirthsService.updateRecord(this.fields,this.fields.id).subscribe(data => {
 					this.UtilityService.setAlert('Record has been successfully updated ', 'info')
-					console.log(data)
+				
 				})
 			}		
 		})	

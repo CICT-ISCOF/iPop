@@ -1,9 +1,13 @@
 .statistics-component {
-    width: 103%;
-    height: 110%;
+    width: 100%;
+    min-height: 100%;
     padding: 10px 50px;
     background: var(--bg1);
     display: flexbox;
+}
+
+.mobile-top-view {
+    display: none;
 }
 
 .Caption {
@@ -27,15 +31,24 @@ h4 span {
 }
 
 .high {
-    color: #00C34F
+    color: #00C34F !important;
+    font-weight: 900 !important;
 }
 
 .mid {
-    color: orange
+    color: orange !important;
+    font-weight: 900 !important;
 }
 
 .low {
-    color: red
+    color: red !important;
+    font-weight: 900 !important;
+}
+
+ul,
+li {
+    width: 100% !important;
+    flex: 1;
 }
 
 table {
@@ -116,4 +129,15 @@ li {
 .details-container p span {
     color: #149EF8;
     font-weight: bold;
+}
+
+.chart-container h4 {
+    display: flex;
+    .chart-details1 {
+        margin-left: auto;
+    }
+    .chart-details1,
+    .chart-details {
+        text-align: right;
+    }
 }

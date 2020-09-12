@@ -4,7 +4,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss','home.component.inherit.cms.responsive.scss']
 })
 export class HomeComponent implements OnInit {
 
@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   role = localStorage.getItem('role')
 
   ngOnInit(): void {
-  }
+  } 
 
   customOptions: OwlOptions = {
     center: true,

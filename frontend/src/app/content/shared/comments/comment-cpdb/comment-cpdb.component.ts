@@ -8,7 +8,7 @@ import { LocationService } from '../../../../location.service'
 @Component({
   selector: 'app-comment-cpdb',
   templateUrl: './comment-cpdb.component.html',
-  styleUrls: ['./comment-cpdb.component.scss']
+  styleUrls: ['./comment-cpdb.component.scss','../comment.responsive.scss']
 })
 export class CommentCpdbComponent implements OnInit {
 
@@ -376,11 +376,18 @@ export class CommentCpdbComponent implements OnInit {
 
 	theme = localStorage.getItem('data-theme')
 
-	message
+	message = ''
 
-	field:any
+	field:any = {
+		record: {
+			user:{
+				fullname:'',
+				profile_picture:null
+			}
+		}
+	}
 
-	comments:any
+	comments:any = []
 
 
 	forps_beneficiary_household = 'tae'

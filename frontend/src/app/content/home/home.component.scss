@@ -142,7 +142,8 @@
         display: flex;
         height: 30px;
         width: 100px;
-        margin-left: 20px;
+        margin-left: 20px !important;
+        padding-left: 20px;
     }
     
     .im {
@@ -166,14 +167,9 @@
         background-position: center;
     }
     
-    owl-carousel-o img {
-        min-width: 100%;
+    owl-carousel-o img,
+    video {
         height: 50vh;
-        object-fit: contain;
-        background-position: center;
-        background-size: 100%;
-        max-width: initial;
-        background-repeat: no-repeat;
     }
     
     .carousel-holder .center img {
@@ -239,7 +235,6 @@
     }
     
     .nav-list .Item:hover {
-        font-weight: 900;
         color: #149EF8 !important
     }
     

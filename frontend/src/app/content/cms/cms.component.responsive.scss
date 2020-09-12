@@ -4,6 +4,11 @@
         background: var(--bg);
         position: relative;
         z-index: 1;
+        .preview {
+             ::-webkit-scrollbar {
+                display: none;
+            }
+        }
     }
     .desktop {
         display: none;
@@ -103,4 +108,8 @@
             }
         }
     }
+}
+
+.mobile-nav {
+    display: none;
 }

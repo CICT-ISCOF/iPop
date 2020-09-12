@@ -232,21 +232,27 @@ p {
     text-align: center;
 }
 
-.grid,
-.Cards .card {
-    margin: 35px;
-    width: 150px;
-    min-height: 350px;
-    float: left;
-}
-
-.Cards .card {
-    width: 270px;
+.inline {
+    .grid,
+    .card {
+        margin: 35px;
+        width: 250px !important;
+        min-height: 350px;
+        display: inline-block;
+    }
+    .card-img-top img {
+        height: 40%;
+    }
+    .grid .card-img-top img {
+        height: 70% !important;
+    }
+    display: inline-block;
+    white-space: nowrap;
+    width: 100%;
+    overflow-x: auto;
 }
 
 .Cards .card p {
-    word-break: break-all;
-    width: 100%;
     text-align: left !important;
 }
 
@@ -259,22 +265,6 @@ p {
 .row4[_ngcontent-pfp-c26] h4[_ngcontent-pfp-c26],
 p {
     padding: 0;
-}
-
-.card img {
-    height: 40%;
-}
-
-.grid {
-    text-align: center;
-}
-
-.card {
-    background: inherit;
-}
-
-.grid img {
-    height: 70%;
 }
 
 .title {
@@ -365,7 +355,7 @@ video {
     top: 10px;
     cursor: pointer;
     font-size: 25px;
-    color: gray;
+    color: white;
 }
 
 .fa-times-circle:hover {
