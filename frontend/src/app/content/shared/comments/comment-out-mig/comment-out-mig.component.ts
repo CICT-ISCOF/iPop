@@ -8,7 +8,7 @@ import { LocationService } from '../../../../location.service'
 @Component({
   selector: 'app-comment-out-mig',
   templateUrl: './comment-out-mig.component.html',
-  styleUrls: ['./comment-out-mig.component.scss']
+  styleUrls: ['./comment-out-mig.component.scss','../comment.responsive.scss']
 })
 export class CommentOutMigComponent implements OnInit {
 
@@ -55,12 +55,18 @@ export class CommentOutMigComponent implements OnInit {
 	isLoading = false
 
 	theme = localStorage.getItem('data-theme')
+	message = ''
 
-	message
+	fields:any = {
+		record: {
+			user:{
+				fullname:'',
+				profile_picture:null
+			}
+		}
+	}
 
-	fields:any
-
-	comments:any
+	comments:any = []
 
 
 	forps_beneficiary_household = 'tae'

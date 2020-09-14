@@ -7,7 +7,7 @@ import {trigger, transition, style, animate, query, stagger, keyframes} from '@a
 @Component({
 	selector: 'app-statistics',
 	templateUrl: './statistics.component.html',
-	styleUrls: ['./statistics.component.scss'],
+	styleUrls: ['./statistics.component.scss','statistics.component.responsive.scss'],
 	animations: [
 		trigger('listAnimation', [
 			transition('* => *',[

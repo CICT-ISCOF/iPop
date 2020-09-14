@@ -120,6 +120,7 @@ export class TableInMigsComponent implements OnInit {
 	columnAPi
 	public onGridReady(event){
 		this.gridAPI = event.api
+		event.api.closeToolPanel();
 		this.columnAPi = event.columnAPi
 		this.InMigService.getInMigrationLists().subscribe(data => {
 			 event.api.setRowData(data.data)

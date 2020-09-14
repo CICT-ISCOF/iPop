@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription }  from 'rxjs';
 import { UtilityService }  from '../../utility.service'
 import Swal from 'sweetalert2'
+import { MediaQueryService } from '../../media-query.service'
+import { DeviceService }  from '../../device.service'
 
- 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -12,7 +13,9 @@ import Swal from 'sweetalert2'
 export class SidebarComponent implements OnInit {
 
 	constructor(
-		private UtilityService: UtilityService
+		private UtilityService: UtilityService,
+		private MediaQueryService : MediaQueryService,
+		private DeviceService : DeviceService
 	) {
 		this.findRoute()
 		this.sidebarColor = this.UtilityService.geColor().subscribe(color => {
@@ -26,7 +29,24 @@ export class SidebarComponent implements OnInit {
 		this.sidebarColor = this.UtilityService.getImage().subscribe(image => {
 			this.sidebar.backgroundImage = this.formatImage(image)
 		})
+
+		this.sidebarColor = this.MediaQueryService.getSize().subscribe(size => 			
+			{this.hide = this.processSize(size)}
+		) 
+
+		this.sidebarColor = this.DeviceService.sidebarState().subscribe(state=>{
+			this.hide = state
+		})
 	}
+	processSize(size){
+		if(size <= 600){
+			return false
+		}
+		return true
+	}
+
+	hide = false
+	
 
 	ngOnInit(): void {
 		this.sidebarListener()		
@@ -109,28 +129,11 @@ export class SidebarComponent implements OnInit {
 	}
 
 	
-	removeActives(){
-		this.
-		icons = {
-			Administrators:false,
-			AdminAccounts:false,
-			Logs:false,
-
-			Home:false,
-			Statistics:false,
-			CMS:false,
-
-			Profiling:false,
-
-			CPDB:false,
-			Births:false,
-			Deaths:false,
-			InMig:false,
-			OutMig:false,
-			Marriages:false,
-
-			
+	removeActives(){		
+		for(let key in this.icons){
+			this.icons[key] = false
 		}
+		this.DeviceService.showSidebar(false)	
 	}
 
 	active(classname){	

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from './utility.service'
 import { Subscription } from 'rxjs'
 import { NetworkStatusAngularService } from 'network-status-angular';
 import Swal from 'sweetalert2'
-
-
+import { MediaQueryService } from './media-query.service'
+import { DeviceService } from './device.service'
 
 @Component({
 	selector: 'app-root',
@@ -19,6 +19,8 @@ export class AppComponent implements OnInit {
 	constructor(			
 		private UtilityService : UtilityService,
 		private	 NetworkStatusAngularService : NetworkStatusAngularService,	
+		private MediaQueryService : MediaQueryService,
+		private DeviceService : DeviceService
 		
 	){
 		this.userRole = this.UtilityService.getUserROle().subscribe(role=>{
@@ -36,12 +38,19 @@ export class AppComponent implements OnInit {
 					this.UtilityService.setAlert('You are not connected to the internet','error')
 				}
 		});
+
+		this.userRole = this.MediaQueryService.getSize().subscribe(media => {
+			this.media = media
+			
+		})
 		
 	} 
 
 	userRole:Subscription
 
 	role:string = ''	
+
+	media:number
 
 	ngOnInit(): void {
 
@@ -69,11 +78,30 @@ export class AppComponent implements OnInit {
 	}
 
 	hideDropdown(){
-		this.UtilityService.setDropDown(false)		
+		this.UtilityService.setDropDown(false)	
+		this.DeviceService.showSidebar(false)	
+		this.DeviceService.showDropdown(true)
 	}
 
 	
 
+
+	@HostListener("window:resize", [])
+	public onResize() {
+	  this.detectScreenSize();
+	}
+	
+	public ngAfterViewInit() {
+		this.detectScreenSize();
+	}
+	
+	private detectScreenSize() {
+		const height = window.innerHeight;
+		const width = window.innerWidth;
+		this.MediaQueryService.setSize(width)
+	}
+	
+	
 	
 
 

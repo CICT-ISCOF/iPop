@@ -39,7 +39,7 @@ export class TableCpdbComponent implements OnInit {
 	}
 
 	columnDefs = [	
-		{headerName: 'OPERATIONS', field: '',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:250 },
+		{headerName: 'OPERATIONS', field: '',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:300 },
 		{headerName: 'STATUS', field: 'status',cellRenderer: 'status',width:150 },
 		{headerName: 'MUNICIPALITY', field: 'municipality', sortable: true, filter: 'agTextColumnFilter',width:200 },	
 		{headerName: 'BARANGAY', field: 'barangay', sortable: true, filter: 'agTextColumnFilter',width:200 },	
@@ -109,7 +109,7 @@ export class TableCpdbComponent implements OnInit {
 		if(this.theme == 'dark' ){
 			return 'ag-theme-alpine-dark'
 		}else{
-			return 'ag-theme-alpine'
+			return 'ag-theme-material'
 		}
 	}
 
@@ -154,6 +154,7 @@ export class TableCpdbComponent implements OnInit {
 	public onGridReady(event){
 		this.gridAPI = event.api
 		this.columnAPi = event.columnAPi
+		event.api.closeToolPanel();
 		this.CpdbService.getCPDBLists().subscribe(data => {
 			 event.api.setRowData(data.data)		
 			 console.log(data)

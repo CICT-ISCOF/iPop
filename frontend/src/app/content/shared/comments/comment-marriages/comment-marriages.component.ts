@@ -8,7 +8,7 @@ import { LocationService } from '../../../../location.service'
 @Component({
   selector: 'app-comment-marriages',
   templateUrl: './comment-marriages.component.html',
-  styleUrls: ['./comment-marriages.component.scss']
+  styleUrls: ['./comment-marriages.component.scss','../comment.responsive.scss']
 })
 export class CommentMarriagesComponent implements OnInit {
 
@@ -57,11 +57,18 @@ export class CommentMarriagesComponent implements OnInit {
 
 	theme = localStorage.getItem('data-theme')
 
-	message
+	message = ''
 
-	fields:any
+	fields:any = {
+		record: {
+			user:{
+				fullname:'',
+				profile_picture:null
+			}
+		}
+	}
 
-	comments:any
+	comments:any = []
 
 
 	forps_beneficiary_household = 'tae'

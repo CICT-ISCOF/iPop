@@ -1,0 +1,72 @@
+@media only screen and (max-width: 600px) {
+    .comment-container {
+        padding: 20px;
+        padding-top: 0px;
+    }
+    .comment-box {
+        height: auto;
+        position: none;
+    }
+    .textarea-container1 {
+        display: none;
+    }
+    .textarea-container {
+        position: fixed;
+        bottom: 20px;
+        z-index: 9999;
+        display: flex !important;
+        width: 100vw;
+        background: var(--bg);
+        backdrop-filter: blur(50px);
+        padding: 0px;
+        opacity: .9;
+        height: auto !important;
+        .button {
+            font-size: 0px;
+            width: 50px;
+            margin-left: 20px;
+            height: 45px;
+            transform: translate(-15px, -10px);
+            background: none;
+            box-shadow: none;
+            svg {
+                height: 35px;
+                width: 35px;
+                fill: #4285F4;
+            }
+        }
+        .button:focus {
+            box-shadow: none !important;
+            outline: 0!important;
+            border: none!important;
+        }
+        textarea {
+            width: 80%;
+        }
+    }
+    .comments {
+        overflow-y: auto;
+        padding-bottom: 50px;
+        margin-top: -30px;
+        .comment {
+            margin-left: -5px;
+        }
+    }
+    .time {
+        transform: translateX(0px);
+    }
+    .back1 {
+        position: absolute;
+        z-index: 9;
+    }
+    .comment-box-header {
+        padding-left: 50px;
+        position: relative;
+        margin-top: -20px;
+        z-index: 1;
+    }
+}
+
+.textarea-container {
+    display: none;
+}

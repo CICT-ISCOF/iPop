@@ -109,6 +109,7 @@ export class TableDeathsComponent implements OnInit {
 	columnAPi
 	public onGridReady(event){
 		this.gridAPI = event.api
+		event.api.closeToolPanel();
 		this.columnAPi = event.columnAPi
 		this.DeathsService.getDeathLists().subscribe(data => {
 			 event.api.setRowData(data.data)

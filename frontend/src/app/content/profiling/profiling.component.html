@@ -1,6 +1,41 @@
 <div class=" profiling-component">
     <br>
-    <ul class="nav nav-pills nav-fill">
+
+    <ul class="nav nav-pills nav-fill  mobile-nav">
+        <li (click)="maekActive('CPDB')" class="nav-item">
+            <a [class.active]="tabs.CPDB == true" class="nav-link">
+               Census of Population               
+            </a>
+        </li>
+        <li (click)="maekActive('Deaths')" class="nav-item">
+            <a [class.active]="tabs.Deaths == true" class="nav-link">
+                 Deaths             
+            </a>
+        </li>
+        <li (click)="maekActive('Births')" class="nav-item">
+            <a [class.active]="tabs.Births == true" class="nav-link">
+               Births              
+            </a>
+        </li>
+        <li (click)="maekActive('InMigs')" class="nav-item">
+            <a [class.active]="tabs.InMigs == true" class="nav-link">
+              In-Migration               
+            </a>
+        </li>
+        <li (click)="maekActive('OutmiGS')" class="nav-item">
+            <a [class.active]="tabs.OutmiGS == true" class="nav-link">
+               Out-Migration    
+            </a>
+        </li>
+        <li (click)="maekActive('Marraige')" class="nav-item">
+            <a [class.active]="tabs.Marraige == true" class="nav-link">
+                Marriage             
+            </a>
+        </li>
+    </ul>
+
+
+    <ul class="nav nav-pills nav-fill hide-on-mobile">
         <li (click)="maekActive('CPDB')" class="nav-item">
             <a [class.active]="tabs.CPDB == true" class="nav-link">
                 <svg width="23px" height="23px" viewBox="0 0 16 16" class="bi bi-person-bounding-box" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

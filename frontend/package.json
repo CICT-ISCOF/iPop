@@ -38,6 +38,7 @@
         "ng2-tooltip-directive": "^2.9.22",
         "ngx-owl-carousel-o": "^4.0.0",
         "ngx-pagination": "^5.0.0",
+        "ngx-responsive": "^9.0.3",
         "ngx-slide-toggle": "^0.1.1",
         "ngx-super-table": "0.0.2",
         "ngx-textarea-autosize": "^2.0.3",

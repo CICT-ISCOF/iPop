@@ -8,7 +8,7 @@ import { LocationService } from '../../../../location.service'
 @Component({
   selector: 'app-comment-deaths',
   templateUrl: './comment-deaths.component.html',
-  styleUrls: ['./comment-deaths.component.scss']
+  styleUrls: ['./comment-deaths.component.scss','../comment.responsive.scss']
 })
 export class CommentDeathsComponent implements OnInit {
 
@@ -58,9 +58,18 @@ export class CommentDeathsComponent implements OnInit {
 
 	isLoading = false
 	theme = localStorage.getItem('data-theme')
-	message
-	fields:any
-	comments:any
+	message = ''
+
+	fields:any = {
+		record: {
+			user:{
+				fullname:'',
+				profile_picture:null
+			}
+		}
+	}
+
+	comments:any = []
 	forps_beneficiary_household = ''
 	
 	formatName(name){

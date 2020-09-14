@@ -119,6 +119,7 @@ reload
 	public onGridReady(event){
 		this.gridAPI = event.api
 		this.columnAPi = event.columnAPi
+		event.api.closeToolPanel();
 		this.OutMigService.getOutMigrationRecord().subscribe(data => {
 			 event.api.setRowData(data.data)
 		 })

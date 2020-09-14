@@ -111,6 +111,7 @@ export class TableAdministratorComponent implements OnInit {
 	columnAPi
 	public onGridReady(event){
 		this.gridAPI = event.api
+		event.api.closeToolPanel();
 		this.columnAPi = event.columnAPi
 		this.AdminService.getAdminLists().subscribe(data => {
 			 event.api.setRowData(data.data)

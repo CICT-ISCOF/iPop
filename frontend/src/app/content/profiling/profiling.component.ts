@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-profiling',
   templateUrl: './profiling.component.html',
-  styleUrls: ['./profiling.component.scss']
+  styleUrls: ['./profiling.component.scss','../cms/cms.component.responsive.scss']
 })
 export class ProfilingComponent implements OnInit {
 

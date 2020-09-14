@@ -1,22 +1,33 @@
 .app-component {
     width: 103%;
-    height: 100vh;
+    min-height: 100vh;
     background: var(--bg1);
-    overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto !important;
     overflow-x: hidden;
 }
 
 .content {
     float: right;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     background: var(--bg1);
     overflow-x: hidden;
 }
 
 .removePadding {
     padding: 0px 5px;
+}
+
+.mobile-600 {
+    overflow-y: auto;
+    position: relative;
+    background: var(--bg);
+    .content {
+        padding: 0 !important;
+        background: var(--bg);
+        overflow-y: auto;
+        position: relative;
+    }
 }
 
 .addPadding {

@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 @Component({
   selector: 'app-show-admin-status',
   templateUrl: './show-admin-status.component.html',
-  styleUrls: ['./show-admin-status.component.scss']
+  styleUrls: ['./show-admin-status.component.scss','../admin-accounts.component.responsive.scss']
 })
 export class ShowAdminStatusComponent implements OnInit {
 

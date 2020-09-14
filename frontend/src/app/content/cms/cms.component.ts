@@ -9,7 +9,7 @@ import {trigger, transition, style, animate, query, stagger, keyframes} from '@a
 @Component({
 	selector: 'app-cms',
 	templateUrl: './cms.component.html',
-	styleUrls: ['./cms.component.scss'],
+	styleUrls: ['./cms.component.scss','cms.component.responsive.scss'],
 	animations: [
 		trigger('listAnimation', [
 			transition('* => *',[
