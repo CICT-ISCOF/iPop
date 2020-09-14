@@ -4,6 +4,22 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\File;
 
+Route::post('/test', function(Request $request) {
+    return $request->all();
+});
+
+Route::get('/test', function(Request $request) {
+    return [];
+});
+
+Route::put('/test/{id}', function(Request $request, $id) {
+    return $id;
+});
+
+Route::delete('/test/{id}', function(Request $request, $id) {
+    return $id;
+});
+
 Route::prefix('/auth')->group(function () {
     Route::post('/login', 'Auth\LoginController@authenticate');
 });

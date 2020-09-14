@@ -47,9 +47,9 @@ class File extends Model
             $user = request()->user();
         }
         if ($file instanceof UploadedFile) {
-            return self::processFile($file);
+            return self::processFile($file, $user);
         } elseif (is_string($file)) {
-            return self::processURL($file);
+            return self::processURL($file, $user);
         } else {
             throw InvalidArgumentException(
                 'File must be either a string url or an instance of Illuminate\Http\UploadedFile'
@@ -62,16 +62,16 @@ class File extends Model
      *
      * @param Illuminate\Http\UploadedFile $file
      * @param User $user
-     * @return File
+     * @return File|null $user
      */
-    public static function processFile(UploadedFile $file, User $user)
+    public static function processFile(UploadedFile $file, $user = null)
     {
         return new self([
             'type' => $file->getMimeType(),
             'name' => $file->getClientOriginalName(),
             'url' => $file->store('files'),
             'size' => $file->getSize(),
-            'user_id' => $user->id,
+            'user_id' => $user instanceof User ? $user->id : null,
         ]);
     }
 
@@ -79,10 +79,10 @@ class File extends Model
      * Process a file url for saving to the database.
      *
      * @param string $url
-     * @param User $user
+     * @param User|null $user
      * @return File
      */
-    public static function processURL(string $url, User $user)
+    public static function processURL(string $url, $user = null)
     {
         $data = [];
 
@@ -93,7 +93,7 @@ class File extends Model
         $path = 'files/' . $data['name'];
         $data['url'] = $path;
         $data['size'] = strlen($binary);
-        $data['user_id'] = $user->id;
+        $data['user_id'] = $user instanceof User ? $user->id : null;
         Storage::put($path, $binary);
         return new self($data);
     }
@@ -102,10 +102,10 @@ class File extends Model
      * Alias for processURL
      *
      * @param string $url
-     * @param User $user
+     * @param User|null $user
      * @return File
      */
-    public static function processURI(string $url, User $user)
+    public static function processURI(string $url, $user = null)
     {
         return self::processURL($url, $user);
     }
