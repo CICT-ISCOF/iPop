@@ -10,7 +10,7 @@ class LogController extends Controller
     public function index()
     {
         return Log::with('user.profilePicture')
-            ->orderBy('created_at', 'ASC')
+            ->orderBy('created_at', 'DESC')
             ->paginate(10);
     }
 
