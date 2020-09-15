@@ -35,7 +35,7 @@ class BirthController extends Controller
         $birth = Birth::create($request->validated());
         $record = new Record([
             'user_id' => $request->user()->id,
-            'status' => 'Pending'
+            'status' => 'Pending',
         ]);
         $birth->record()->save($record);
         $birth->record = $record;
