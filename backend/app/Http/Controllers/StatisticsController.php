@@ -27,12 +27,12 @@ class StatisticsController extends Controller
         ];
 
         $models = [
-            "App\\Birth",
-            "App\\Death",
-            "App\\CPDB",
-            "App\\InMigration",
-            "App\\OutMigration",
-            "App\\Marriage",
+            Birth::class,
+            Death::class,
+            CPDB::class,
+            InMigration::class,
+            OutMigration::class,
+            Marriage::class,
         ];
 
         foreach ($models as $model) {
@@ -109,12 +109,12 @@ class StatisticsController extends Controller
         ];
 
         $models = [
-            "App\\Birth",
-            "App\\Death",
-            "App\\CPDB",
-            "App\\InMigration",
-            "App\\OutMigration",
-            "App\\Marriage",
+            Birth::class,
+            Death::class,
+            CPDB::class,
+            InMigration::class,
+            OutMigration::class,
+            Marriage::class,
         ];
 
         foreach ($models as $model) {
@@ -215,12 +215,12 @@ class StatisticsController extends Controller
         $name = $request->input('name');
 
         $models = [
-            "App\\Birth",
-            "App\\Death",
-            "App\\CPDB",
-            "App\\InMigration",
-            "App\\OutMigration",
-            "App\\Marriage",
+            Birth::class,
+            Death::class,
+            CPDB::class,
+            InMigration::class,
+            OutMigration::class,
+            Marriage::class,
         ];
 
         $data = [
@@ -273,28 +273,28 @@ class StatisticsController extends Controller
     {
         return [
             'birth' => [
-                'male' => \App\Birth::where('sex', 'Male')->count(),
-                'female' => \App\Birth::where('sex', 'Female')->count(),
+                'male' => Birth::where('sex', 'Male')->count(),
+                'female' => Birth::where('sex', 'Female')->count(),
             ],
             'death' => [
-                'male' => \App\Death::where('sex', 'Male')->count(),
-                'female' => \App\Death::where('sex', 'Female')->count(),
+                'male' => Death::where('sex', 'Male')->count(),
+                'female' => Death::where('sex', 'Female')->count(),
             ],
             'cpdb' => [
-                'male' => \App\CPDB::where('sex', 'Male')->count(),
-                'female' => \App\CPDB::where('sex', 'Female')->count(),
+                'male' => CPDB::where('sex', 'Male')->count(),
+                'female' => CPDB::where('sex', 'Female')->count(),
             ],
             'inmigration' => [
-                'male' => \App\InMigration::where('sex', 'Male')->count(),
-                'female' => \App\InMigration::where('sex', 'Female')->count(),
+                'male' => InMigration::where('sex', 'Male')->count(),
+                'female' => InMigration::where('sex', 'Female')->count(),
             ],
             'outmigration' => [
-                'male' => \App\OutMigration::where('sex', 'Male')->count(),
-                'female' => \App\OutMigration::where('sex', 'Female')->count(),
+                'male' => OutMigration::where('sex', 'Male')->count(),
+                'female' => OutMigration::where('sex', 'Female')->count(),
             ],
             'marriage' => [
-                'male' => \App\Marriage::where('sex', 'Male')->count(),
-                'female' => \App\Marriage::where('sex', 'Female')->count(),
+                'male' => Marriage::where('sex', 'Male')->count(),
+                'female' => Marriage::where('sex', 'Female')->count(),
             ],
         ];
     }
@@ -319,11 +319,11 @@ class StatisticsController extends Controller
         ];
 
         $models = [
-            "App\\Birth" => 'birth',
-            "App\\Death" => 'death',
-            "App\\InMigration" => 'inmigration',
-            "App\\OutMigration" => 'outmigration',
-            "App\\Marriage" => 'marriage',
+            Birth::class => 'birth',
+            Death::class => 'death',
+            InMigration::class => 'inmigration',
+            OutMigration::class => 'outmigration',
+            Marriage::class => 'marriage',
         ];
 
         foreach ($models as $model => $name) {
