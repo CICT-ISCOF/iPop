@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\File;
-use App\Log;
-use App\User;
+use App\Models\File;
+use App\Models\Log;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest as Request;

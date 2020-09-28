@@ -14,11 +14,12 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^8.0",
+        "laravel/legacy-factories": "^1.0",
         "laravel/sanctum": "^2.4",
         "laravel/scout": "^8.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
-        "teamtnt/laravel-scout-tntsearch-driver": "^9.0",
+        "teamtnt/laravel-scout-tntsearch-driver": "^10.0",
         "torann/geoip": "^1.2"
     },
     "require-dev": {

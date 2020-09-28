@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class RegionSeeder extends Seeder
+class MunicipalitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +15,9 @@ class RegionSeeder extends Seeder
      */
     public function run()
     {
-        Eloquent::unguard();
+        Model::unguard();
 
-        $path = storage_path('ph/regions.sql');
+        $path = storage_path('ph/municipalities.sql');
         DB::unprepared(file_get_contents($path));
     }
 }

@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use App\File;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -20,7 +18,6 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserController;
-use App\Models\Log;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate']);
@@ -44,7 +41,7 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
 
     Route::apiResource('users', UserController::class);
     Route::get('/search/users', [SearchController::class, 'users']);
-    Route::get('/search/records',[SearchController::class, 'records']);
+    Route::get('/search/records', [SearchController::class, 'records']);
     Route::get('/search/status', [SearchController::class, 'status']);
 
     // Files

@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
-class BarangaySeeder extends Seeder
+class ProvinceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +15,9 @@ class BarangaySeeder extends Seeder
      */
     public function run()
     {
-        Eloquent::unguard();
+        Model::unguard();
 
-        $path = storage_path('ph/barangays.sql');
+        $path = storage_path('ph/provinces.sql');
         DB::unprepared(file_get_contents($path));
     }
 }
