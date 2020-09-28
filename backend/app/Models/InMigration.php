@@ -1,29 +1,37 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-class Death extends Model
+class InMigration extends Model
 {
     protected $fillable = [
         'sorting_number',
         'municipality',
         'barangay',
         'total_cases',
-        'number_of_cases',
+        'case_number',
         'household_number',
         'month',
         'name',
         'sex',
-        'age_at_death',
+        'date_of_birth',
+        'age',
+        'age_in_months',
         'age_bracket',
-        'place_of_death',
-        'registered_lcr',
+        'completed_educational_attainment',
+        'actual_occupation',
+        'major_occupation',
+        'monthly_income',
+        'skills_acquired',
+        'actual_place_of_origin',
+        'place_of_origin',
+        'reasons_for_in_migrating',
     ];
 
     protected static function booted()
     {
-        static::deleting(function ($death) {
-            $death->record->delete();
+        static::deleting(function ($inMigration) {
+            $inMigration->record->delete();
         });
     }
 

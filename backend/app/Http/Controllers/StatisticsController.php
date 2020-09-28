@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Birth;
+use App\Models\Death;
+use App\Models\CPDB;
+use App\Models\InMigration;
+use App\Models\OutMigration;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;

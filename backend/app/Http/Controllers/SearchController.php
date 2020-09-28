@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Log;
-use App\User;
-use App\Birth;
-use App\Death;
-use App\CPDB;
-use App\Record;
-use App\InMigration;
-use App\OutMigration;
+use App\Models\Log;
+use App\Models\User;
+use App\Models\Birth;
+use App\Models\Death;
+use App\Models\CPDB;
+use App\Models\Record;
+use App\Models\InMigration;
+use App\Models\OutMigration;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller

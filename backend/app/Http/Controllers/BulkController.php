@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Birth;
-use App\Death;
-use App\CPDB;
-use App\Marriage;
-use App\InMigration;
-use App\OutMigration;
-use App\Record;
-use App\Log;
+use App\Models\Birth;
+use App\Models\Death;
+use App\Models\CPDB;
+use App\Models\Marriage;
+use App\Models\InMigration;
+use App\Models\OutMigration;
+use App\Models\Record;
+use App\Models\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

@@ -1,32 +1,29 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-class Marriage extends Model
+class Death extends Model
 {
     protected $fillable = [
         'sorting_number',
         'municipality',
         'barangay',
         'total_cases',
+        'number_of_cases',
         'household_number',
-        'case_number',
         'month',
-        'age',
-        'couple_name',
+        'name',
         'sex',
+        'age_at_death',
         'age_bracket',
-        'address',
-        'wedding_ceremony_type',
-        'residence_address',
-        'solemnizing_officer',
+        'place_of_death',
         'registered_lcr',
     ];
 
     protected static function booted()
     {
-        static::deleting(function ($marriage) {
-            $marriage->record->delete();
+        static::deleting(function ($death) {
+            $death->record->delete();
         });
     }
 
