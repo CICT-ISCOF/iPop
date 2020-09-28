@@ -12,10 +12,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { NetworkStatusAngularModule } from 'network-status-angular';
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { AgTableModule, AgTableCustomSettings } from 'ag-table';
-import { AgGridModule } from 'ag-grid-angular';
+import { AgGridModule } from 'ag-grid-angular'; 
 
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
-import { Ng2OdometerModule } from 'ng2-odometer';
+import { Ng2OdometerModule } from 'ng2-odometer'; 
 import {NgxPaginationModule} from 'ngx-pagination';
 
 import { ResponsiveModule } from 'ngx-responsive'
