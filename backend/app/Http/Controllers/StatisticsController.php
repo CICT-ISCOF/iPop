@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Birth;
 use App\Models\Death;
 use App\Models\CPDB;
+use App\Models\Marriage;
 use App\Models\InMigration;
 use App\Models\OutMigration;
 use App\Http\Controllers\Controller;
@@ -79,15 +80,11 @@ class StatisticsController extends Controller
 
                 if (
                     !Arr::exists(
-                        $data['municipalities'][$record->municipality][
-                            'barangays'
-                        ],
+                        $data['municipalities'][$record->municipality]['barangays'],
                         $record->barangay
                     )
                 ) {
-                    $data['municipalities'][$record->municipality][
-                        'barangays'
-                    ][] = $record->barangay;
+                    $data['municipalities'][$record->municipality]['barangays'][] = $record->barangay;
                 }
             }
         }
@@ -131,9 +128,7 @@ class StatisticsController extends Controller
                 if (
                     !isset($population['municipalities'][$record->municipality])
                 ) {
-                    $population['municipalities'][
-                        $record->municipality
-                    ] = $model
+                    $population['municipalities'][$record->municipality] = $model
                         ::where('municipality', $record->municipality)
                         ->count();
                 }
@@ -355,33 +350,92 @@ class StatisticsController extends Controller
     public function distributions()
     {
         $models = [
-            "App\\Death" => 'death',
-            "App\\CPDB" => 'cpdb',
-            "App\\InMigration" => 'inmigration',
-            "App\\OutMigration" => 'outmigration',
-            "App\\Marriage" => 'marriage',
+            Death::class => 'death',
+            CPDB::class => 'cpdb',
+            InMigration::class => 'inmigration',
+            OutMigration::class => 'outmigration',
+            Marriage::class => 'marriage',
         ];
 
-        $data = [];
+        $data = [
+            ['Age', 'Male', 'Female'],
+            ['Below 1 year old', 0, 0],
+            ['0-4', 0, 0],
+            ['5-9', 0, 0],
+            ['10-14', 0, 0],
+            ['15-19', 0, 0],
+            ['20-24', 0, 0],
+            ['25-29', 0, 0],
+            ['30-34', 0, 0],
+            ['35-39', 0, 0],
+            ['40-44', 0, 0],
+            ['45-49', 0, 0],
+            ['50-54', 0, 0],
+            ['55-59', 0, 0],
+            ['60-64', 0, 0],
+            ['64-69', 0, 0],
+            ['70-74', 0, 0],
+            ['75-79', 0, 0],
+            ['80 and above', 0, 0],
+        ];
+
+        $age_brackets_male = [];
+        $age_brackets_female = [];
 
         foreach ($models as $model => $name) {
             $records = $model
                 ::selectRaw('age_bracket, COUNT(age_bracket) as total')
                 ->groupBy('age_bracket')
+                ->where('sex', 'Male')
                 ->get();
             foreach ($records as $record) {
-                $data[$name][$record->age_bracket] = $record->total;
+                if (!isset($age_brackets_male[$record->age_bracket])) {
+                    $age_brackets_male[$record->age_bracket] = 0;
+                }
+                $age_brackets_male[$record->age_bracket] += $record->total;
+            }
+            $records = $model
+                ::selectRaw('age_bracket, COUNT(age_bracket) as total')
+                ->groupBy('age_bracket')
+                ->where('sex', 'Female')
+                ->get();
+            foreach ($records as $record) {
+                if (!isset($age_brackets_female[$record->age_bracket])) {
+                    $age_brackets_female[$record->age_bracket] = 0;
+                }
+                $age_brackets_female[$record->age_bracket] -= $record->total;
             }
         }
 
-        $records = \App\Birth::selectRaw(
+        $records = Birth::selectRaw(
             'age_bracket_of_mother, COUNT(age_bracket_of_mother) as total'
         )
             ->groupBy('age_bracket_of_mother')
             ->get();
         foreach ($records as $record) {
-            $data['birth'][$record->age_bracket_of_mother] = $record->total;
+            if (!isset($age_brackets[$record->age_bracket])) {
+                $age_brackets_female[$record->age_bracket_of_mother] = 0;
+            }
+            $age_brackets_female[$record->age_bracket_of_mother] +=
+                $record->total;
         }
+
+        foreach ($age_brackets_male as $category => $count) {
+            foreach ($data as $index => $array) {
+                if ($array[0] === $category) {
+                    $data[$index][1] += $count;
+                }
+            }
+        }
+
+        foreach ($age_brackets_female as $category => $count) {
+            foreach ($data as $index => $array) {
+                if ($array[0] === $category) {
+                    $data[$index][2] += $count;
+                }
+            }
+        }
+
         return $data;
     }
 
@@ -393,11 +447,11 @@ class StatisticsController extends Controller
         $month = $request->input('month');
 
         $models = [
-            "App\\Birth" => 'birth',
-            "App\\Death" => 'death',
-            "App\\InMigration" => 'inmigration',
-            "App\\OutMigration" => 'outmigration',
-            "App\\Marriage" => 'marriage',
+            Birth::class => 'birth',
+            Death::class => 'death',
+            InMigration::class => 'inmigration',
+            OutMigration::class => 'outmigration',
+            Marriage::class => 'marriage',
         ];
 
         $data = [];
@@ -405,7 +459,7 @@ class StatisticsController extends Controller
         foreach ($models as $modelName => $name) {
             $model = new $modelName();
             if ($municipality) {
-                $model->where('municipality', $muncipality);
+                $model->where('municipality', $municipality);
             }
             if ($barangay) {
                 $model->where('barangay', $barangay);
