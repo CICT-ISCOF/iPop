@@ -56,6 +56,17 @@ class BulkController extends Controller
 
         foreach($data as $sheet) {
             foreach($sheet as $row) {
+                $this->_iterateSave($row, $model);
+            }
+        }
+
+        Log::record('User imported bulk data of type: ' . $type);
+        return response('', 201);
+    }
+
+    private function _iterateSave($rows, $model) {
+        foreach($rows as $row) {
+            if($this->_isAssocArray($row)) {
                 $model::create($row)
                     ->record()
                     ->save(new Record([
@@ -63,9 +74,13 @@ class BulkController extends Controller
                         'status' => 'Imported',
                     ]));
             }
+            else {
+                $this->_iterateSave($row, $model);
+            }
         }
+    }
 
-        Log::record('User imported bulk data of type: ' . $type);
-        return response('', 201);
+    private function _isAssocArray($data) {
+        return count(array_filter(array_keys($data), 'is_string')) > 0;
     }
 }
