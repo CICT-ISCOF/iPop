@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CPDB;
 use App\Log;
 use App\Record;
+use Exception;
 use Illuminate\Http\Request;
 
 class CPDBController extends Controller
@@ -29,7 +30,7 @@ class CPDBController extends Controller
      */
     public function store(Request $request)
     {
-        Log::record('Created new cpdb record.');
+        Log::record('Created new CPDB record.');
         $cpdb =  CPDB::create($request->all());
         $record = new Record([
             'user_id' => $request->user()->id,
@@ -57,12 +58,12 @@ class CPDBController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CPDB  $cpdb
+     * @param CPDB $cpdb
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, CPDB $cpdb)
     {
-        Log::record('Updated a cpdb record.');
+        Log::record('Updated a CPDB record.');
         $cpdb->update($request->all());
         $cpdb->record->update(['status' => 'Requires Revalidation']);
         return $cpdb;
@@ -71,12 +72,13 @@ class CPDBController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CPDB  $cpdb
+     * @param CPDB $cpdb
      * @return \Illuminate\Http\Response
+     * @throws Exception
      */
     public function destroy(CPDB $cpdb)
     {
-        Log::record('Deleted a cpdb record.');
+        Log::record('Deleted a CPDB record.');
         $cpdb->delete();
         return response('', 204);
     }

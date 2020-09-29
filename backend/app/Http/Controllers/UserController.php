@@ -76,6 +76,7 @@ class UserController extends Controller
             $file = File::process($data['profile_picture'], $user);
             $file->public = true;
             $oldFile = $user->profilePicture;
+            unset($user->profilePicture);
             $file->save();
             $user->profile_picture_id = $file->id;
             $user->save();
@@ -155,6 +156,7 @@ class UserController extends Controller
                 '.';
         }
         Log::record($logMessage);
+        unset($user->profilePicture);
         $user->update($data);
         return $user;
     }
