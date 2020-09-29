@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\CPDB;
-use App\Log;
+use App\Models\CPDB;
+use App\Models\Log;
 use App\Record;
 use Exception;
 use Illuminate\Http\Request;
