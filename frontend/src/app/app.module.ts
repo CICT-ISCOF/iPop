@@ -12,13 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NetworkStatusAngularModule } from 'network-status-angular';
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { AgTableModule, AgTableCustomSettings } from 'ag-table';
-<<<<<<< HEAD
 import { AgGridModule } from 'ag-grid-angular';
 import { NgxFileDropModule } from 'ngx-file-drop';
-=======
-import { AgGridModule } from 'ag-grid-angular'; 
-
->>>>>>> 2a345da6033609cd9110938095daf358075792aa
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { Ng2OdometerModule } from 'ng2-odometer'; 
 import {NgxPaginationModule} from 'ngx-pagination';

@@ -7,7 +7,7 @@ export class BaseAPIService {
 
   constructor() { }
 
-  public baseURL = 'http://127.0.0.1:8000'
+  public baseURL = 'http://192.168.2.92:8000'
 
 
 }
