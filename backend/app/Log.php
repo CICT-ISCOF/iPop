@@ -9,7 +9,13 @@ use Exception;
 
 class Log extends Model
 {
-    protected $fillable = ['user_id', 'ip_address', 'user_agent', 'action', 'info'];
+    protected $fillable = [
+        'user_id',
+        'ip_address',
+        'user_agent',
+        'action',
+        'info',
+    ];
 
     public function getInfoAttribute()
     {
@@ -35,13 +41,11 @@ class Log extends Model
         $user = $request->user();
         $ip = $request->ip();
         $user_agent = $request->userAgent();
-        if($agent->isPhone())
-        {
+        if ($agent->isPhone()) {
             $user_agent = $agent->device() . ' | ' . $agent->deviceType();
         }
-        if($agent->isDesktop())
-        {
-             $user_agent = $agent->browser() . ' | ' . $agent->deviceType();
+        if ($agent->isDesktop()) {
+            $user_agent = $agent->browser() . ' | ' . $agent->deviceType();
         }
 
         $data = [
@@ -49,7 +53,9 @@ class Log extends Model
             'ip_address' => $ip,
             'user_agent' => $user_agent,
             'action' => $action,
-            'info' => geoip()->getLocation($ip)->toArray(),
+            'info' => geoip()
+                ->getLocation($ip)
+                ->toArray(),
         ];
 
         NativeLog::info(json_encode($data));

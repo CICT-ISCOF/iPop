@@ -33,12 +33,12 @@ class FileController extends Controller
     {
         return $this->download($file);
     }
-    
+
     /**
      * Stream a file as binary into the response.
-     * 
+     *
      * @param \App\File $file
-     * @return \Illuminate\Http\Response 
+     * @return \Illuminate\Http\Response
      */
     private function stream(File $file)
     {
@@ -50,6 +50,9 @@ class FileController extends Controller
 
     /**
      * Return a file as a download response.
+     *
+     * @param \App\File $file
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     private function download(File $file)
     {

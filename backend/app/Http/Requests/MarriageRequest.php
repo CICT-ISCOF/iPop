@@ -25,14 +25,14 @@ class MarriageRequest extends FormRequest
     public function rules()
     {
         return [
-            'sorting_number' => ['required', 'max:255'],
-            'municipality' => ['required', 'max:255'],
-            'barangay' => ['required', 'max:255'],
-            'total_cases' => ['required', 'numeric'],
-            'household_number' => ['required', 'max:255'],
-            'case_number' => ['required', 'max:255'],
+            'sorting_number' => ['nullable', 'max:255'],
+            'municipality' => ['nullable', 'max:255'],
+            'barangay' => ['nullable', 'max:255'],
+            'total_cases' => ['nullable', 'numeric'],
+            'household_number' => ['nullable', 'max:255'],
+            'case_number' => ['nullable', 'max:255'],
             'month' => [
-                'required',
+                'nullable',
                 Rule::in([
                     'January',
                     'February',
@@ -48,11 +48,11 @@ class MarriageRequest extends FormRequest
                     'December',
                 ]),
             ],
-            'couple_name' => ['required', 'max:255'],
-            'sex' => ['required', Rule::in(['Male', 'Female'])],
-            'age' => ['required', 'numeric'],
+            'couple_name' => ['nullable', 'max:255'],
+            'sex' => ['nullable', Rule::in(['Male', 'Female'])],
+            'age' => ['nullable', 'numeric'],
             'age_bracket' => [
-                'required',
+                'nullable',
                 Rule::in([
                     'Below 1 year old',
                     '01-04',
@@ -74,11 +74,11 @@ class MarriageRequest extends FormRequest
                     '80 and above',
                 ]),
             ],
-            'address' => ['required', 'max:255'],
-            'wedding_ceremony_type' => ['required', 'max:255'],
-            'residence_address' => ['required', 'max:255'],
-            'solemnizing_officer' => ['required', 'max:255'],
-            'registered_lcr' => ['required', 'max:255'],
+            'address' => ['nullable', 'max:255'],
+            'wedding_ceremony_type' => ['nullable', 'max:255'],
+            'residence_address' => ['nullable', 'max:255'],
+            'solemnizing_officer' => ['nullable', 'max:255'],
+            'registered_lcr' => ['nullable', 'max:255'],
         ];
     }
 }

@@ -51,7 +51,7 @@ class File extends Model
         } elseif (is_string($file)) {
             return self::processURL($file, $user);
         } else {
-            throw InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'File must be either a string url or an instance of Illuminate\Http\UploadedFile'
             );
         }
