@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
 import {  WorkBook, read, utils, write, readFile } from 'xlsx';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,9 @@ export class ExcelService {
 	
 	constructor() {
 	}
-  
+	
+	private JSON = new Subject<any>();
+
 	static toExportFileName(excelFileName: string): string {
 	  return `${excelFileName}_export_${new Date().getTime()}.xlsx`;
 	}
@@ -22,24 +25,23 @@ export class ExcelService {
 
 
 	public convertExcelToJson(file){
-		let reader = new FileReader();
-		let workbookkk
-		let XL_row_object
-		let json_object
-		let jsonData = []
-		reader.readAsBinaryString(file)	
-		reader.onload = function(){				
-			let data = reader.result;
-			workbookkk=read(data,{type: 'binary'})				
-			workbookkk.SheetNames.some(function(index) {								
-				XL_row_object = utils.sheet_to_json(workbookkk.Sheets[index])					
-				jsonData.push(utils.sheet_to_json(workbookkk.Sheets[index]))	
-				return		
-			})
-		}	
-		
-		return jsonData
-		
+		const reader = new FileReader()		
+		reader.onload = (event) => {
+		const data = reader.result;
+		let workBook = XLSX.read(data, { type: 'binary' });
+		let jsonData = workBook.SheetNames.reduce((initial, name) => {
+			const sheet = workBook.Sheets[name];
+			initial[name] = XLSX.utils.sheet_to_json(sheet);
+			return initial;
+		}, {});
+		const dataString = JSON.stringify(jsonData);
+		this.JSON.next( jsonData)	
+		}
+		reader.readAsBinaryString(file);
+	}
+
+	getExcellData(){
+		return this.JSON.asObservable();
 	}
 		
 }

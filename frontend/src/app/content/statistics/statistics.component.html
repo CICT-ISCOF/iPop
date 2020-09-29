@@ -345,8 +345,8 @@
 
         <div class="row container chart-container">
             <h4>Age Distribution Male & Female <br>
-                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">Male </span> &nbsp; &bull; &nbsp; 3,000 &nbsp; -&nbsp;<span class="low">30%</span> <br>
-                <span class="chart-details" style="color:var(--colorPrimary) !important">Female</span> &nbsp; &bull; &nbsp;7,000 &nbsp; -&nbsp;<span class="high">70%</span> </span>
+                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">Male </span> {{sexs.male}} <span class="low">{{ sexs.male / population.total * 100 | number:'1.0-0' }}%</span> <br>
+                <span class="chart-details" style="color:var(--colorPrimary) !important">Female</span> {{sexs.female}} <span class="high">{{ sexs.female / population.total * 100 | number:'1.0-0' }}%</span> </span>
             </h4>
             <div id="male-and-female" class="w-100"></div>
         </div>
@@ -355,8 +355,8 @@
 
         <div class="row container chart-container">
             <h4>Deaths & Births<br>
-                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">Deaths </span> &nbsp; &bull; &nbsp; {{ month.death.total }}&nbsp; -&nbsp;<span class="low">{{ month.death.total / population.total * 100 | number:'1.0-0' }}%</span>                <br>
-                <span class="chart-details" style="color:var(--colorPrimary) !important">Births</span> &nbsp; &bull; &nbsp; {{ month.birth.total }}&nbsp;-&nbsp;<span class="high">{{  month.birth.total / population.total * 100 | number:'1.0-0' }}%</span>                </span>
+                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">Deaths </span> {{ month.death.total }}<span class="low">{{ month.death.total / population.total * 100 | number:'1.0-0' }}%</span> <br>
+                <span class="chart-details" style="color:var(--colorPrimary) !important">Births</span>{{ month.birth.total }}<span class="high">{{  month.birth.total / population.total * 100 | number:'1.0-0' }}%</span> </span>
             </h4>
             <div id="death-and-birth" class="w-100"></div>
         </div>
@@ -364,8 +364,8 @@
 
         <div class="row container chart-container">
             <h4>In-Migrants & Out Migrants<br>
-                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">In-Migrants </span> &nbsp; &bull; &nbsp; {{ month.inmigration.total }} &nbsp; -&nbsp;<span class="low">{{  month.inmigration.total / population.total * 100 | number:'1.0-0' }}%</span>                <br>
-                <span class="chart-details" style="color:var(--colorPrimary) !important"> Out Migrants</span> &nbsp; &bull; &nbsp; {{ month.outmigration.total }}&nbsp;-&nbsp;<span class="high">{{  month.outmigration.total / population.total * 100 | number:'1.0-0' }}%</span>                </span>
+                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">In-Migrants </span>{{ month.inmigration.total }} <span class="low">{{  month.inmigration.total / population.total * 100 | number:'1.0-0' }}%</span> <br>
+                <span class="chart-details" style="color:var(--colorPrimary) !important"> Out Migrants</span> {{ month.outmigration.total }} <span class="high">{{  month.outmigration.total / population.total * 100 | number:'1.0-0' }}%</span> </span>
             </h4>
             <div id="in-mig-and-Out-mig" class="w-100"></div>
         </div>
