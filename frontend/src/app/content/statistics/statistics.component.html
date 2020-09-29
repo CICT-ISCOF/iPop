@@ -372,7 +372,7 @@
         <br>
 
         <div class="row container chart-container">
-            <h4> 1200 Married - {{ month.marriage.total / population.total * 100 | number:'1.0-0' }}%</h4>
+            <h4 style="height: 40px;"> 1200 Married - {{ month.marriage.total / population.total * 100 | number:'1.0-0' }}%</h4>
             <google-chart class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions">
             </google-chart>
             <!-- <div *ngIf="marriageisLoading" class="d-flex justify-content-center">

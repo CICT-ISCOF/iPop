@@ -55,12 +55,12 @@ export class AdministratorsComponent implements OnInit {
 	isLoading = false
 
 	data = {
-		username:'jamel',
-		password:'123',
-		confirmPassword:'123',
-		role:'Super Admin',
-		fullname:'Jamel Eid Yassin',
-		district:'4',
+		username:'',
+		password:'',
+		confirmPassword:'',
+		role:'',
+		fullname:'',
+		district:'',
 		municipality:'',
 		barangay:'',	
 		profile_picture:''

@@ -30,7 +30,7 @@
                 </div>
 
                 <br>
-                <button class="button" (click)="login()">Login</button>
+                <button *ngIf="!isLoading" class="button" (click)="login()">Login</button>
                 <br>
                 <br> <br>
                 <p (click)="loginWithPin()">Forgot Password? I will use pin instead</p>

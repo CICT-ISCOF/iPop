@@ -214,7 +214,7 @@ export class StatisticsComponent implements OnInit {
 		],
 
 		inMigAndOutMig:[
-			['Age', 'Deaths', 'Births'],	
+			['Age', 'In-Migrants', 'Out-Migrants'],	
 					
 		],
 		married:[			

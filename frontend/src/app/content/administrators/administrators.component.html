@@ -111,7 +111,7 @@
                 </span></label>
                 <select [(ngModel)]="data.district" class="custom-select" id="district" [class.is-invalid]="invalidData.district" required>
                     <option selected disabled value="">Choose...</option>
-                    <option>4</option>
+                    <option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10,11]">{{number}}</option>
                 </select>
                 <div class="invalid-feedback">
                     District is required

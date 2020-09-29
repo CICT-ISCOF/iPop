@@ -101,8 +101,8 @@ export class AdminService {
 
 	changeProfilePicture(file,id){
 		const url = this.baseURL + '/' + id		
-		console.log(file)
-		return this.http.put<any>(url,file,{headers:this.headers})
+	
+		return this.http.post<any>(url,file,{headers:this.headers})
 	}
 
 }

@@ -129,6 +129,7 @@ export class ShowAdminStatusComponent implements OnInit {
 				let profile_picture = files.item(0)	
 				const formData = new FormData()	
 				formData.append('profile_picture', profile_picture, profile_picture.name); 
+				formData.append('_method', 'PUT'); 
 				this.AdminService.changeProfilePicture(formData,this.admin.id).subscribe(data =>{
 					this.isLoading = false		
 				})

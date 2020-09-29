@@ -1,0 +1,54 @@
+.cpdpb-component {
+    margin-left: 40px;
+    width: 100%;
+}
+
+.container {
+    padding: 40px;
+    box-shadow: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .cpdpb-component {
+        margin-left: 0 !important;
+    }
+}
+
+.ngx-file-drop__drop-zone {
+    height: 100px;
+    margin: auto;
+    border: 2px dashed #0782d0 !important;
+    border-radius: 0px !important;
+    cursor: pointer;
+}
+
+.drag-and-drop-container:hover {
+    opacity: .8;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    button {
+        margin: 20;
+    }
+}
+
+.progress {
+    width: 50%;
+}
+
+.invalid {
+    color: red !important;
+}
+
+svg {
+    margin-right: 15px;
+    margin-top: -2px;
+}
+
+.delete-row {
+    cursor: pointer;
+}
