@@ -18,7 +18,7 @@ import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { Ng2OdometerModule } from 'ng2-odometer'; 
 import {NgxPaginationModule} from 'ngx-pagination';
 
-import { ResponsiveModule } from 'ngx-responsive'
+import { ResponsiveModule } from 'ngx-responsive';
 import 'ag-grid-enterprise';
 
 import { AppComponent } from './app.component';
