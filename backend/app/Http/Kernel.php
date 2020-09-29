@@ -58,7 +58,7 @@ class Kernel extends HttpKernel
         'web' => [
             // API
             EnsureFrontendRequestsAreStateful::class,
-            'throttle:60,1',
+            // 'throttle:60,1',
             SubstituteBindings::class,
             LogAPIActivity::class,
 

@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Log;
 use App\Models\Record;
 use App\Models\User;
+use App\Models\Birth;
+use App\Models\Death;
+use App\Models\CPDB;
+use App\Models\Marriage;
+use App\Models\InMigration;
+use App\Models\OutMigration;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -21,21 +27,21 @@ class SearchController extends Controller
         $query = $request->input('query');
         $type = $request->input('type');
         $types = [
-            Birth::class,
-            Death::class,
-            CPDB::class,
-            InMigration::class,
-            OutMigration::class,
-            Marriage::class,
+            'Birth' => Birth::class,
+            'Death' => Death::class,
+            'CPDB' => CPDB::class,
+            'InMigration' => InMigration::class,
+            'OutMigration' => OutMigration::class,
+            'Marriage' => Marriage::class,
         ];
 
-        if (!in_array($type, $types)) {
+        if (!in_array($type, array_keys($types))) {
             return response(
                 [
                     'errors' => [
                         'type' => [
                             'Invalid record type. Valid types are ' .
-                                implode(', ', $types),
+                                implode(', ', array_keys($types)),
                         ],
                     ],
                 ],
@@ -43,7 +49,7 @@ class SearchController extends Controller
             );
         }
 
-        $model = "App\\{$type}";
+        $model = $types[$type];
 
         Log::record('User searched for records. Query: ' . $query);
 
@@ -52,14 +58,7 @@ class SearchController extends Controller
         $data = $model::search($query);
         $data = $paginate ? $data->paginate(10) : $data->get();
         if ($data->isEmpty()) {
-            return response(
-                [
-                    'errors' => [
-                        'query' => ['No results found.'],
-                    ],
-                ],
-                404
-            );
+            return response([]);
         }
         $data
             ->load('record.user.profilePicture')
