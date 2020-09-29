@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\File;
-use App\Log;
-use App\User;
+use App\Models\File;
+use App\Models\Log;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UserUpdateRequest;

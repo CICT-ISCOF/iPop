@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\OutMigration;
-use App\Log;
-use App\Record;
+use App\Models\OutMigration;
+use App\Models\Log;
+use App\Models\Record;
 use App\Http\Requests\OutMigrationRequest;
 use App\Http\Requests\OutMigrationUpdateRequest;
 use Illuminate\Http\Request;

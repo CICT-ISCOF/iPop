@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Birth;
-use App\Death;
-use App\CPDB;
-use App\Marriage;
-use App\InMigration;
-use App\OutMigration;
-use App\Record;
-use App\Log;
+use App\Models\Birth;
+use App\Models\Death;
+use App\Models\CPDB;
+use App\Models\Marriage;
+use App\Models\InMigration;
+use App\Models\OutMigration;
+use App\Models\Record;
+use App\Models\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -33,7 +33,7 @@ class BulkController extends Controller
                 [
                     'errors' => [
                         'type' =>
-                            'Valid types are ' .
+                        'Valid types are ' .
                             implode(', ', array_keys($models)),
                     ],
                 ],
@@ -54,32 +54,32 @@ class BulkController extends Controller
         $model = $models[$type];
 
         $this->_iterateSave($data, $model);
-        
+
         Log::record('User imported bulk data of type: ' . $type);
         return response('', 201);
-        
     }
 
-    private function _iterateSave($data, $model) {
-        if(is_iterable($data)) {
-            if($this->_isAssociativeArray($data)) {
+    private function _iterateSave($data, $model)
+    {
+        if (is_iterable($data)) {
+            if ($this->_isAssociativeArray($data)) {
                 $model
-                ::create($data)
-                ->record()
-                ->save(new Record([
-                    'user_id' => request()->user()->id,
-                    'status' => 'Imported',
-                ]));
-            }
-            else {
-                foreach($data as $row) {
+                    ::create($data)
+                    ->record()
+                    ->save(new Record([
+                        'user_id' => request()->user()->id,
+                        'status' => 'Imported',
+                    ]));
+            } else {
+                foreach ($data as $row) {
                     $this->_iterateSave($row, $model);
                 }
             }
         }
     }
 
-    private function _isAssociativeArray($array) {
+    private function _isAssociativeArray($array)
+    {
         return count(array_filter(array_keys($array), 'is_string')) > 0;
     }
 }

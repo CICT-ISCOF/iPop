@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\InMigration;
-use App\Log;
-use App\Record;
+use App\Models\InMigration;
+use App\Models\Log;
+use App\Models\Record;
 use App\Http\Requests\InMigrationRequest;
 use App\Http\Requests\InMigrationUpdateRequest;
 use Illuminate\Http\Request;

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Barangay;
-use App\Municipality;
-use App\Province;
-use App\Region;
+use App\Models\Barangay;
+use App\Models\Municipality;
+use App\Models\Province;
+use App\Models\Region;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

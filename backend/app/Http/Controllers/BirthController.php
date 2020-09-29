@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Birth;
-use App\Record;
-use App\Log;
+use App\Models\Birth;
+use App\Models\Record;
+use App\Models\Log;
 use App\Http\Requests\BirthRequest;
 use App\Http\Requests\BirthUpdateRequest;
 use Illuminate\Http\Request;

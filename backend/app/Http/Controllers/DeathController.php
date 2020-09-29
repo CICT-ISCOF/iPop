@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Death;
-use App\Log;
-use App\Record;
+use App\Models\Death;
+use App\Models\Log;
+use App\Models\Record;
 use App\Http\Requests\DeathRequest;
 use App\Http\Requests\DeathUpdateRequest;
 use Illuminate\Http\Request;

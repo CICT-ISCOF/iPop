@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Log;
-use App\User;
-use App\Birth;
-use App\Death;
-use App\CPDB;
-use App\Record;
-use App\InMigration;
-use App\OutMigration;
+use App\Models\Log;
+use App\Models\Record;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -26,12 +21,12 @@ class SearchController extends Controller
         $query = $request->input('query');
         $type = $request->input('type');
         $types = [
-            'Birth',
-            'Death',
-            'CPDB',
-            'InMigration',
-            'OutMigration',
-            'Marriage',
+            Birth::class,
+            Death::class,
+            CPDB::class,
+            InMigration::class,
+            OutMigration::class,
+            Marriage::class,
         ];
 
         if (!in_array($type, $types)) {
@@ -40,7 +35,7 @@ class SearchController extends Controller
                     'errors' => [
                         'type' => [
                             'Invalid record type. Valid types are ' .
-                            implode(', ', $types),
+                                implode(', ', $types),
                         ],
                     ],
                 ],
@@ -56,6 +51,16 @@ class SearchController extends Controller
 
         $data = $model::search($query);
         $data = $paginate ? $data->paginate(10) : $data->get();
+        if ($data->isEmpty()) {
+            return response(
+                [
+                    'errors' => [
+                        'query' => ['No results found.'],
+                    ],
+                ],
+                404
+            );
+        }
         $data
             ->load('record.user.profilePicture')
             ->load('comments.user.profilePicture');
@@ -73,6 +78,16 @@ class SearchController extends Controller
 
         $paginate = $request->input('paginate') === 'true';
         $data = $paginate ? $data->paginate(10) : $data->get();
+        if ($data->isEmpty()) {
+            return response(
+                [
+                    'errors' => [
+                        'query' => ['No results found.'],
+                    ],
+                ],
+                404
+            );
+        }
         $data
             ->load('recordable.comments.user.profilePicture')
             ->load('user.profilePicture');

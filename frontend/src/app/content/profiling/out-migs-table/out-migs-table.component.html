@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <input (keyup)="searchHandler($event)" (keyup.enter)="search()" [(ngModel)]="keyword" type="text" class="form-control w-50" placeholder="CPDB Global Search">
+    <input (keyup)="searchHandler($event)" (keyup.enter)="search()" [(ngModel)]="keyword" type="text" class="form-control w-50" placeholder="Out-Migrations Global Search">
 
     <div (click)="search()" *ngIf="keyword != ''" class="icon-holder-button">
         <div style="position: relative;">

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Birth;
-use App\Death;
-use App\CPDB;
-use App\Marriage;
-use App\InMigration;
-use App\OutMigration;
+use App\Models\Birth;
+use App\Models\Death;
+use App\Models\CPDB;
+use App\Models\Marriage;
+use App\Models\InMigration;
+use App\Models\OutMigration;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -80,15 +80,11 @@ class StatisticsController extends Controller
 
                 if (
                     !Arr::exists(
-                        $data['municipalities'][$record->municipality][
-                            'barangays'
-                        ],
+                        $data['municipalities'][$record->municipality]['barangays'],
                         $record->barangay
                     )
                 ) {
-                    $data['municipalities'][$record->municipality][
-                        'barangays'
-                    ][] = $record->barangay;
+                    $data['municipalities'][$record->municipality]['barangays'][] = $record->barangay;
                 }
             }
         }
@@ -132,9 +128,7 @@ class StatisticsController extends Controller
                 if (
                     !isset($population['municipalities'][$record->municipality])
                 ) {
-                    $population['municipalities'][
-                        $record->municipality
-                    ] = $model
+                    $population['municipalities'][$record->municipality] = $model
                         ::where('municipality', $record->municipality)
                         ->count();
                 }
@@ -427,16 +421,16 @@ class StatisticsController extends Controller
         }
 
         foreach ($age_brackets_male as $category => $count) {
-            foreach($data as $index => $array) {
-                if($array[0] === $category) {
+            foreach ($data as $index => $array) {
+                if ($array[0] === $category) {
                     $data[$index][1] += $count;
                 }
             }
         }
 
         foreach ($age_brackets_female as $category => $count) {
-            foreach($data as $index => $array) {
-                if($array[0] === $category) {
+            foreach ($data as $index => $array) {
+                if ($array[0] === $category) {
                     $data[$index][2] += $count;
                 }
             }

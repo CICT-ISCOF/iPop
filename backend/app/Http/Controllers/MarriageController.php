@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Marriage;
-use App\Log;
-use App\Record;
+use App\Models\Marriage;
+use App\Models\Log;
+use App\Models\Record;
 use App\Http\Requests\MarriageRequest;
 use App\Http\Requests\MarriageUpdateRequest;
 use Illuminate\Http\Request;

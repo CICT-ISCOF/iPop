@@ -25,7 +25,8 @@ export class ProfilingComponent implements OnInit {
 		InMigs:false,
 		OutmiGS:false,
 		Marraige:false,
-		CPDB:true
+		CPDB:true,
+		fileUpload:true
 	}
 
 	tables = {
@@ -34,7 +35,8 @@ export class ProfilingComponent implements OnInit {
 		InMigs:false,
 		OutmiGS:false,
 		Marraige:false,
-		CPDB:true
+		CPDB:true,
+		fileUpload:false
 	}
 
 	maekActive(tab){
@@ -57,18 +59,16 @@ export class ProfilingComponent implements OnInit {
 		else if(tab == "CPDB"){
 			this.tabs.CPDB = true
 		}
+		else{
+			this.tabs.fileUpload = true
+		}
 
 		localStorage.setItem('tab',tab)
 	}
 
 	removeActive(){
-		this.tabs = {
-			Deaths:false,
-			Births:false,
-			InMigs:false,
-			OutmiGS:false,
-			Marraige:false,
-			CPDB:false
+		for(let key in this.tabs){
+			this.tabs[key] = false
 		}
 	}
 
