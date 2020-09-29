@@ -54,33 +54,18 @@ class BulkController extends Controller
 
         $model = $models[$type];
 
-        $this->_iterateSave($data, $model);
-
-        Log::record('User imported bulk data of type: ' . $type);
-        return response('', 201);
-    }
-
-    private function _iterateSave($data, $model)
-    {
-        if (is_iterable($data)) {
-            if ($this->_isAssociativeArray($data)) {
-                $model
-                    ::create($data)
+        foreach($data as $sheet) {
+            foreach($sheet as $row) {
+                $model::create($row)
                     ->record()
                     ->save(new Record([
                         'user_id' => request()->user()->id,
                         'status' => 'Imported',
                     ]));
-            } else {
-                foreach ($data as $row) {
-                    $this->_iterateSave($row, $model);
-                }
             }
         }
-    }
 
-    private function _isAssociativeArray($array)
-    {
-        return count(array_filter(array_keys($array), 'is_string')) > 0;
+        Log::record('User imported bulk data of type: ' . $type);
+        return response('', 201);
     }
 }
