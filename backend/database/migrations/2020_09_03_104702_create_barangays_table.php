@@ -28,10 +28,6 @@ class CreateBarangaysTable extends Migration
                 ->references('code')
                 ->on('provinces');
             $table->string('municipality_code');
-            $table
-                ->foreign('municipality_code')
-                ->references('code')
-                ->on('municipalities');
         });
     }
 
