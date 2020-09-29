@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\cpdb;
+use App\CPDB;
 use App\Log;
 use App\Record;
 use Illuminate\Http\Request;
 
-class cpdbController extends Controller
+class CPDBController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,7 +30,7 @@ class cpdbController extends Controller
     public function store(Request $request)
     {
         Log::record('Created new cpdb record.');
-        $cpdb =  cpdb::create($request->all());
+        $cpdb =  CPDB::create($request->all());
         $record = new Record([
             'user_id' => $request->user()->id,
             'status' => 'Pending',
