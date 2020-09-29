@@ -63,4 +63,5 @@ export class StatisticsService {
 		const url = this.baseURL + '/filter?municipality=' + municipality
 		return this.http.get<any>(url,{headers:this.headers})
 	}
+
 }

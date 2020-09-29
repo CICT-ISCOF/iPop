@@ -49,7 +49,7 @@ export class StatisticsComponent implements OnInit {
 		this.getMunicipality()
 		this.getMonths()		
 		this.getMuncipalities()
-		this.getAgeDistributions()
+	
 		
 	}
 
@@ -130,8 +130,24 @@ export class StatisticsComponent implements OnInit {
 		inmigration:{total:''},
 		outmigration:{total:''},	
 	}
+
+	sexs = {
+		male:0,
+		female:0
+	}
+
 	getMonths(){
 		this.monthsisLoading = true
+		this.StatisticsService.ageDistribution().subscribe(data => {
+			console.log(data)
+			this.charts.ageDistribution = data
+			for(let value in data){
+				if(Number.isInteger(data[value][1]) ){
+					this.sexs.male += data[value][1]
+					this.sexs.female -= data[value][2]
+				}
+			}
+		})
 		this.StatisticsService.months().subscribe(data => {
 			this.month = data
 			const  truncate = (month) => {
@@ -146,36 +162,15 @@ export class StatisticsComponent implements OnInit {
 				
 			}	
 			for(let key in data.inmigration){
-				this.charts.inMigAndOutMig.push([ key , data.inmigration[key]  ,-data.outmigration[key]    ])
-			
+				this.charts.inMigAndOutMig.push([ key , data.inmigration[key]  ,-data.outmigration[key]    ])			
 			}		
 			this.charts.birthAndDeath.pop()
 			this.charts.inMigAndOutMig.pop()
 			this.monthsisLoading = false
+		
 			this.callCharts()	
 		})
 	}
-
-	getAgeDistributions(){
-		this.StatisticsService.ageDistribution().subscribe(data => {
-		
-		})
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -186,26 +181,8 @@ export class StatisticsComponent implements OnInit {
 	
 
 	charts = {		
-		maleAndFemale : [
-			['Age', 'Male', 'Female'],
-			['Below 1 year old', 120, -124],
-			['0-4',   106, -104],
-			['5-9',   91,  -86 ],
-			['10-14', 79,  -77 ],
-			['15-19', 68,  -64 ],
-			['20-24', 62,  -58 ],
-			['25-29', 56,  -53 ],
-			['30-34', 51,  -46 ],
-			['35-39', 48,  -41 ],
-			['40-44', 43,  -35 ],
-			['45-49', 39,  -30 ],
-			['50-54', 33,  -27 ],
-			['55-59', 32,  -25 ],
-			['60-64', 27,  -20 ],
-			['64-69', 19,  -16 ],
-			['70-74', 13,  -12 ],
-			['75-79', 8,   -7  ],
-			['80 and above', 3,   -3  ],	
+		ageDistribution : [
+			['Age', 'Male', 'Female'],		
 		],
 				
 		birthAndDeath:[			
@@ -248,7 +225,7 @@ export class StatisticsComponent implements OnInit {
 	}
 
 	callCharts(){
-		this.drawChart('male-and-female',this.charts.maleAndFemale)
+		this.drawChart('male-and-female',this.charts.ageDistribution)
 		this.drawChart('death-and-birth',this.charts.birthAndDeath)
 		this.drawChart('in-mig-and-Out-mig',this.charts.inMigAndOutMig)
 	}

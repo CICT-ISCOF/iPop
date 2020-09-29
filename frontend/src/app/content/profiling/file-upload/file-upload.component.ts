@@ -1,7 +1,9 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { UtilityService } from '../../../utility.service'
 import { ExcelService } from '../../../excel.service'
+import { BulkService } from './bulk.service'
 
 @Component({
   selector: 'app-file-upload',
@@ -12,15 +14,31 @@ export class FileUploadComponent implements OnInit {
 
 	constructor(
 		private UtilityService  : UtilityService,
-		private ExcelService : ExcelService
-	) { }
+		private ExcelService : ExcelService,
+		private BulkService : BulkService
+	) { 
 
+		this.ExcelService.getExcellData().subscribe(data => {
+			console.log(JSON.stringify(data))
+			this.BulkService.storeBulk(this.type, { data: data } ).subscribe(data => {
+				console.log(data)
+				this.progressWIDTH = 100
+			},
+			error =>{
+				this.progressWIDTH = 100
+				this.uploadError = true
+			})
+		})
+	
+	}
+
+	subscription: Subscription
 	public files: NgxFileDropEntry[] = [];
 	isUploading = false
 	tableFiles = []
 	unUploadedFiles = []
 	theme = localStorage.getItem('data-theme')
-
+	type = 'cpdb'
 	ngOnInit(): void {
 
 	}
@@ -72,16 +90,17 @@ export class FileUploadComponent implements OnInit {
 		this.files.splice(index, 1)
 		this.tableFiles.splice(index, 1)
 	}
-
+	uploadError = false
 	progressWIDTH = 0
 	uploadFile(){	
 		this.progressWIDTH = 0
 		if(this.tableFiles.length != 0){
 			this.isUploading = true			
-			let data = []
+			let data = {}
+			let count
 			for(let file in this.tableFiles){
-				if(this.checkIfXlsx(this.tableFiles[file].name) == false){				
-					data.push('JSONdata',this.ExcelService.convertExcelToJson(this.tableFiles[file])	)				
+				if(this.checkIfXlsx(this.tableFiles[file].name) == false){	
+					this.ExcelService.convertExcelToJson(this.tableFiles[file])
 				}
 				else{
 					this.unUploadedFiles.push(this.tableFiles[file])
@@ -92,12 +111,7 @@ export class FileUploadComponent implements OnInit {
 					if(this.progressWIDTH <= 90){
 						this.progressWIDTH +=1
 					}					
-			}, 200);
-
-			let rows =  data.filter(function(a){return a !== 'JSONdata'})
-			console.log('data',rows)
-		
-			
+			}, 200)				
 		}
 		else{
 			this.UtilityService.setAlert('No files to upload','error')

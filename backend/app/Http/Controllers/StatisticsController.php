@@ -431,7 +431,7 @@ class StatisticsController extends Controller
         foreach ($age_brackets_female as $category => $count) {
             foreach ($data as $index => $array) {
                 if ($array[0] === $category) {
-                    $data[$index][2] += $count;
+                    $data[$index][2] -= $count;
                 }
             }
         }
