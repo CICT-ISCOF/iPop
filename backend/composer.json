@@ -54,6 +54,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "recharge": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php artisan migrate:fresh & php artisan db:seed"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

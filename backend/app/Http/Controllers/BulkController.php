@@ -19,6 +19,7 @@ class BulkController extends Controller
     {
         $type = $request->input('type');
         $data = $request->input('data');
+        
         $models = [
             'birth' => Birth::class,
             'death' => Death::class,
