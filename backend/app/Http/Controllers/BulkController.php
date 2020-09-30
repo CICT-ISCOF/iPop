@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 
 class BulkController extends Controller
 {
+    protected $_rows = array();
+    
     public function insert(Request $request)
     {
         $type = $request->input('type');
@@ -62,25 +64,29 @@ class BulkController extends Controller
         $model = $models[$type];
 
         foreach($data as $sheet) {
-            $this->_iterateSave($sheet, $model);
+            $this->_iterateSave($sheet);
+        }
+        
+        foreach($this->_rows as $row) {
+            $model::create($row)
+                ->record()
+                ->save(new Record(array(
+                    'user_id' => $request->user()->id,
+                    'status' => 'Imported'
+                )));
         }
 
         Log::record('User imported bulk data of type: ' . $type);
-        return response('', 201);
+        return response('', 200);
     }
 
-    private function _iterateSave($rows, $model) {
+    private function _iterateSave($rows) {
         foreach($rows as $row) {
             if($this->_isAssocArray($row)) {
-                $model::create($row)
-                    ->record()
-                    ->save(new Record([
-                        'user_id' => request()->user()->id,
-                        'status' => 'Imported',
-                    ]));
+                $this->_rows[] = $row;
             }
             else {
-                $this->_iterateSave($row, $model);
+                $this->_iterateSave($row);
             }
         }
     }

@@ -101,3 +101,4 @@ Route::middleware('throttle:60,1')->group(function() {
 
 // Bulk data
 Route::middleware(['auth:sanctum', 'restrict.blocked'])->post('/bulk', [BulkController::class, 'insert']);
+Route::middleware(['auth:sanctum', 'restrict.blocked'])->post('/bulk/one', [BulkController::class, 'insertOne']);
