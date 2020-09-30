@@ -27,6 +27,12 @@ class BulkController extends Controller
             'marriage' => Marriage::class,
             'inmigration' => InMigration::class,
             'outmigration' => OutMigration::class,
+            'Birth' => Birth::class,
+            'Death' => Death::class,
+            'CPDB' => CPDB::class,
+            'Marriage' => Marriage::class,
+            'InMigration' => InMigration::class,
+            'OutMigration' => OutMigration::class,
         ];
 
         if (!in_array($type, array_keys($models))) {
@@ -66,14 +72,12 @@ class BulkController extends Controller
     private function _iterateSave($rows, $model) {
         foreach($rows as $row) {
             if($this->_isAssocArray($row)) {
-                $model::withoutSyncingToSearch(function() use ($model, $row) {
-                    $model::create($row)
+                $model::create($row)
                     ->record()
                     ->save(new Record([
                         'user_id' => request()->user()->id,
                         'status' => 'Imported',
                     ]));
-                });
             }
             else {
                 $this->_iterateSave($row, $model);
