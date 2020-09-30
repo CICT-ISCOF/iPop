@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Birth;
+use App\Models\Death;
+use App\Models\CPDB;
+use App\Models\Marriage;
+use App\Models\InMigration;
+use App\Models\OutMigration;
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
 
@@ -17,15 +23,27 @@ class CommentController extends Controller
     public function store(CommentRequest $request)
     {
         $data = $request->validated();
-        $model = 'App\\'.$data['type'];
+        $models = [
+            'Birth' => Birth::class,
+            'Death' => Death::class,
+            'CPDB' => CPDB::class,
+            'InMigration' => InMigration::class,
+            'OutMigration' => OutMigration::class,
+            'Marriage' => Marriage::class,
+        ];
+        $model = $models[$data['type']];
         $model = $model::find($data['commentable_id']);
-        if(!$model)
-        {
-            return response([
-                'errors' => [
-                    'commentable_id' => ['ID does not exist in '.$data['type'].'s.']
-                ]
-            ], 422);
+        if (!$model) {
+            return response(
+                [
+                    'errors' => [
+                        'commentable_id' => [
+                            'ID does not exist in ' . $data['type'] . 's.',
+                        ],
+                    ],
+                ],
+                422
+            );
         }
         $comment = new Comment($data);
         $comment->user_id = $request->user()->id;
