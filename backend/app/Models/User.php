@@ -59,6 +59,16 @@ class User extends Authenticatable
         return $this->hasMany(File::class);
     }
 
+    public function records()
+    {
+        return $this->hasMany(Record::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     /**
      * Checks if the user is a Super Admin.
      *

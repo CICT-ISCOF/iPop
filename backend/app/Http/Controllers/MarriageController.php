@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Marriage;
 use App\Models\Log;
 use App\Models\Record;
+use App\Events\RecordSaved;
 use App\Http\Requests\MarriageRequest;
 use App\Http\Requests\MarriageUpdateRequest;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ class MarriageController extends Controller
         ]);
         $marriage->record()->save($record);
         $marriage->record = $record;
+        broadcast(new RecordSaved($marriage))->toOthers();
         return $marriage;
     }
 

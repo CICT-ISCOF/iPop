@@ -9,12 +9,14 @@ use App\Http\Controllers\BulkController;
 use App\Http\Controllers\DeathController;
 use App\Http\Controllers\CPDBController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CountController;
 use App\Http\Controllers\MarriageController;
 use App\Http\Controllers\InMigrationController;
 use App\Http\Controllers\OutMigrationController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\RecordController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserController;
@@ -80,6 +82,9 @@ Route::middleware('throttle:60,1')->group(function() {
             Route::get('/distributions', [StatisticsController::class, 'distributions']);
             Route::get('/filter', [StatisticsController::class, 'filter']);
         });
+
+        Route::get('/counts', [CountController::class, 'count']);
+        Route::get('/counts/type', [CountController::class, 'countByType']);
 
         // Comments
         Route::apiResource('comments', CommentController::class)->except(['index']);
