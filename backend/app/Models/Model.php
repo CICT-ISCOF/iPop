@@ -22,4 +22,10 @@ abstract class Model extends BaseModel
     {
         return $this->toArray();
     }
+
+    public function getColumns() {
+        return $this->getConnection()
+            ->getSchemaBuilder()
+            ->getColumnListing($this->getTable());
+    }
 }

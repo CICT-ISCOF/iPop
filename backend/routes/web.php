@@ -93,9 +93,8 @@ Route::prefix('/file/public')->group(function () {
 });
 
 // Bulk data
-Route::post('/bulk', [BulkController::class, 'insert']);
-
-
+Route::middleware(['auth:sanctum', 'restrict.blocked'])->post('/bulk', [BulkController::class, 'insert']);
+Route::middleware(['auth:sanctum', 'restrict.blocked'])->post('/bulk/one', [BulkController::class, 'insertOne']);
 
 Route::fallback(function () {
     return response('', 404);
