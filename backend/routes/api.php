@@ -28,7 +28,10 @@ Route::prefix('/auth')->group(function () {
 Route::prefix('/location')->group(function () {
     Route::get('/regions', [LocationController::class, 'regions']);
     Route::get('/provinces', [LocationController::class, 'provinces']);
-    Route::get('/municipalities', [LocationController::class, 'municipalities']);
+    Route::get('/municipalities', [
+        LocationController::class,
+        'municipalities',
+    ]);
     Route::get('/barangays', [LocationController::class, 'barangays']);
     Route::get('/search', [LocationController::class, 'search']);
 });
@@ -52,7 +55,10 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     // Ex. http://localhost:8000/file/private/download/1
     Route::prefix('/file/private')->group(function () {
         Route::get('/{file}', [FileController::class, 'streamPrivate']);
-        Route::get('/download/{file}', [FileController::class, 'downloadPrivate']);
+        Route::get('/download/{file}', [
+            FileController::class,
+            'downloadPrivate',
+        ]);
     });
 
     // User Logs
@@ -76,9 +82,15 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
         Route::get('/population', [StatisticsController::class, 'population']);
         Route::get('/totals', [StatisticsController::class, 'totals']);
         Route::get('/genders', [StatisticsController::class, 'genders']);
-        Route::get('/municipality', [StatisticsController::class, 'municipality']);
+        Route::get('/municipality', [
+            StatisticsController::class,
+            'municipality',
+        ]);
         Route::get('/months', [StatisticsController::class, 'months']);
-        Route::get('/distributions', [StatisticsController::class, 'distributions']);
+        Route::get('/distributions', [
+            StatisticsController::class,
+            'distributions',
+        ]);
         Route::get('/filter', [StatisticsController::class, 'filter']);
     });
 
@@ -87,6 +99,10 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
 
     // Comments
     Route::apiResource('comments', CommentController::class)->except(['index']);
+
+    // Bulk data
+    Route::post('/bulk', [BulkController::class, 'insert',]);
+    Route::post('/bulk/one', [BulkController::class, 'insertOne',]);
 });
 
 // Public Files
@@ -94,13 +110,5 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
 // Ex. http://localhost:8000/file/public/download/1
 Route::prefix('/file/public')->group(function () {
     Route::get('/{file}', [FileController::class, 'streamPublic']);
-    Route::get('/download/{file}',  [FileController::class, 'downloadPublic']);
-});
-
-// Bulk data
-Route::middleware(['auth:sanctum', 'restrict.blocked'])->post('/bulk', [BulkController::class, 'insert']);
-Route::middleware(['auth:sanctum', 'restrict.blocked'])->post('/bulk/one', [BulkController::class, 'insertOne']);
-
-Route::fallback(function () {
-    return response('', 404);
+    Route::get('/download/{file}', [FileController::class, 'downloadPublic']);
 });

@@ -8,11 +8,13 @@ class ChannelController extends Controller
 {
     public function comments(Request $request)
     {
-        $channels = array();
-        foreach($request->user()->records as $record)
-        {
-            $channels[] = 'comment.record.' . $record->id;
+        $comments = array();
+        foreach ($request->user()->records as $record) {
+            $comments[] = 'comment.record.' . $record->id;
         }
-        return $channels;
+        return array(
+            'comments' => $comments,
+            'record' => 'record.count'
+        );
     }
 }
