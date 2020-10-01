@@ -19,7 +19,7 @@ class BulkController extends Controller
     {
         $type = $request->input('type');
         $data = $request->input('data');
-        
+
         $models = [
             'birth' => Birth::class,
             'death' => Death::class,
@@ -34,7 +34,7 @@ class BulkController extends Controller
                 [
                     'errors' => [
                         'type' =>
-                        'Valid types are ' .
+                            'Valid types are ' .
                             implode(', ', array_keys($models)),
                     ],
                 ],
@@ -55,7 +55,7 @@ class BulkController extends Controller
 
         $model = $models[$type];
 
-        foreach($data as $sheet) {
+        foreach ($data as $sheet) {
             $this->_iterateSave($sheet, $model);
         }
 
@@ -63,25 +63,29 @@ class BulkController extends Controller
         return response('', 201);
     }
 
-    private function _iterateSave($rows, $model) {
-        foreach($rows as $row) {
-            if($this->_isAssocArray($row)) {
-                $model::withoutSyncingToSearch(function() use ($model, $row) {
-                    $model::create($row)
-                    ->record()
-                    ->save(new Record([
-                        'user_id' => request()->user()->id,
-                        'status' => 'Imported',
-                    ]));
+    private function _iterateSave($rows, $model)
+    {
+        foreach ($rows as $row) {
+            if ($this->_isAssocArray($row)) {
+                $model::withoutSyncingToSearch(function () use ($model, $row) {
+                    $model
+                        ::create($row)
+                        ->record()
+                        ->save(
+                            new Record([
+                                'user_id' => request()->user()->id,
+                                'status' => 'Imported',
+                            ])
+                        );
                 });
-            }
-            else {
+            } else {
                 $this->_iterateSave($row, $model);
             }
         }
     }
 
-    private function _isAssocArray($data) {
+    private function _isAssocArray($data)
+    {
         return count(array_filter(array_keys($data), 'is_string')) > 0;
     }
 }
