@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\SPAController;
+
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -15,6 +17,15 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     // protected $namespace = 'App\Http\Controllers';
+
+    /**
+     * The SPA route action for the application.
+     *
+     * When present, all routes in your routes/spa.php file will be directed to this action.
+     *
+     * @var array|string
+     */
+    protected $spaAction = [SPAController::class, 'index'];
 
     /**
      * The path to the "home" route for your application.
@@ -46,7 +57,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapSpaRoutes();
     }
 
     /**
@@ -76,5 +87,24 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * Define the "spa" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     * 
+     * @return void
+     */
+    protected function mapSpaRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(function () {
+                collect(require base_path('routes/spa.php'))
+                    ->each(function ($path) {
+                        Route::get($path, $this->spaAction);
+                    });
+            });
     }
 }
