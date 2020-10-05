@@ -460,6 +460,8 @@ class StatisticsController extends Controller
             Marriage::class => 'marriage',
         ];
 
+        $results = [];
+
         foreach ($models as $model => $name) {
             $data = [
                 'municipality' => [],
@@ -667,6 +669,6 @@ class StatisticsController extends Controller
             $results[$name] = $data;
         }
 
-        return $data;
+        return $results;
     }
 }
