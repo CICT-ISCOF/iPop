@@ -80,11 +80,15 @@ class StatisticsController extends Controller
 
                 if (
                     !Arr::exists(
-                        $data['municipalities'][$record->municipality]['barangays'],
+                        $data['municipalities'][$record->municipality][
+                            'barangays'
+                        ],
                         $record->barangay
                     )
                 ) {
-                    $data['municipalities'][$record->municipality]['barangays'][] = $record->barangay;
+                    $data['municipalities'][$record->municipality][
+                        'barangays'
+                    ][] = $record->barangay;
                 }
             }
         }
@@ -128,7 +132,9 @@ class StatisticsController extends Controller
                 if (
                     !isset($population['municipalities'][$record->municipality])
                 ) {
-                    $population['municipalities'][$record->municipality] = $model
+                    $population['municipalities'][
+                        $record->municipality
+                    ] = $model
                         ::where('municipality', $record->municipality)
                         ->count();
                 }
@@ -455,13 +461,13 @@ class StatisticsController extends Controller
         ];
 
         foreach ($models as $model => $name) {
-
             $data = [
                 'municipality' => [],
-                'barangays' => []
+                'barangays' => [],
             ];
 
-            $municipalities = $model::selectRaw('municipality, COUNT(municipality) as total')
+            $municipalities = $model
+                ::selectRaw('municipality, COUNT(municipality) as total')
                 ->groupBy('municipality');
 
             if ($municipality) {
@@ -491,7 +497,8 @@ class StatisticsController extends Controller
                 }
             }
 
-            $barangays = $model::selectRaw('barangay, municipality, COUNT(barangay) as total')
+            $barangays = $model
+                ::selectRaw('barangay, municipality, COUNT(barangay) as total')
                 ->groupBy('barangay');
 
             if ($municipality) {
@@ -526,11 +533,15 @@ class StatisticsController extends Controller
 
                 if (
                     !Arr::exists(
-                        $data['municipalities'][$record->municipality]['barangays'],
+                        $data['municipalities'][$record->municipality][
+                            'barangays'
+                        ],
                         $record->barangay
                     )
                 ) {
-                    $data['municipalities'][$record->municipality]['barangays'][] = $record->barangay;
+                    $data['municipalities'][$record->municipality][
+                        'barangays'
+                    ][] = $record->barangay;
                 }
             }
 
@@ -541,7 +552,7 @@ class StatisticsController extends Controller
                 OutMigration::class => 'outmigration',
                 Marriage::class => 'marriage',
             ];
-    
+
             $age_brackets = [
                 ['Age', 'Male', 'Female'],
                 ['Below 1 year old', 0, 0],
@@ -563,10 +574,10 @@ class StatisticsController extends Controller
                 ['75-79', 0, 0],
                 ['80 and above', 0, 0],
             ];
-    
+
             $age_brackets_male = [];
             $age_brackets_female = [];
-    
+
             foreach ($models as $model => $name) {
                 $records = $model
                     ::selectRaw('age_bracket, COUNT(age_bracket) as total')
@@ -603,14 +614,14 @@ class StatisticsController extends Controller
                     if (!isset($age_brackets_female[$record->age_bracket])) {
                         $age_brackets_female[$record->age_bracket] = 0;
                     }
-                    $age_brackets_female[$record->age_bracket] -= $record->total;
+                    $age_brackets_female[$record->age_bracket] -=
+                        $record->total;
                 }
             }
-    
+
             $records = Birth::selectRaw(
                 'age_bracket_of_mother, COUNT(age_bracket_of_mother) as total'
-            )
-                ->groupBy('age_bracket_of_mother');
+            )->groupBy('age_bracket_of_mother');
 
             if ($municipality) {
                 $records->where('municipality', $municipality);
@@ -634,7 +645,7 @@ class StatisticsController extends Controller
                 $age_brackets_female[$record->age_bracket_of_mother] +=
                     $record->total;
             }
-    
+
             foreach ($age_brackets_male as $category => $count) {
                 foreach ($age_brackets as $index => $array) {
                     if ($array[0] === $category) {
@@ -642,7 +653,7 @@ class StatisticsController extends Controller
                     }
                 }
             }
-    
+
             foreach ($age_brackets_female as $category => $count) {
                 foreach ($age_brackets as $index => $array) {
                     if ($array[0] === $category) {
@@ -655,7 +666,6 @@ class StatisticsController extends Controller
 
             $results[$name] = $data;
         }
-            
 
         return $data;
     }
