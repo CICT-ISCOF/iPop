@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class ChannelController extends Controller
@@ -17,8 +18,21 @@ class ChannelController extends Controller
     public function comments(Request $request)
     {
         $comments = [];
-        foreach ($request->user()->records as $record) {
-            $comments[] = 'comment.record.' . $record->id;
+
+        $comments = Comment::where('user_id', $request->user()->id)
+            ->with('commentable')
+            ->get();
+
+        $ids = [];
+
+        foreach ($comments as $comment) {
+            if (!in_array($comment->commentable->id, $ids)) {
+                $ids[] = $comment->commentable->id;
+            }
+        }
+
+        foreach ($ids as $id) {
+            $comments[] = 'comments.record.' . $id;
         }
 
         return $comments;
