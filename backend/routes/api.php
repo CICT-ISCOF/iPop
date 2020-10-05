@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BirthController;
 use App\Http\Controllers\BulkController;
+use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\DeathController;
 use App\Http\Controllers\CPDBController;
 use App\Http\Controllers\CommentController;
@@ -103,6 +104,12 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     // Bulk data
     Route::post('/bulk', [BulkController::class, 'insert',]);
     Route::post('/bulk/one', [BulkController::class, 'insertOne',]);
+
+
+    // Sockets
+    Route::get('/sockets/all', [ChannelController::class, 'index']);
+    Route::get('/sockets/comments', [ChannelController::class, 'comments']);
+    Route::get('/sockets/record', [ChannelController::class, 'record']);
 });
 
 // Public Files
