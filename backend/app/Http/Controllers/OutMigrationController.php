@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OutMigration;
 use App\Models\Log;
 use App\Models\Record;
+use App\Events\RecordSaved;
 use App\Http\Requests\OutMigrationRequest;
 use App\Http\Requests\OutMigrationUpdateRequest;
 use Illuminate\Http\Request;
@@ -38,6 +39,7 @@ class OutMigrationController extends Controller
             'status' => 'Pending'
         ]);
         $outMigration->record()->save($record);
+        broadcast(new RecordSaved($outMigration))->toOthers();
         return $outMigration;
     }
 

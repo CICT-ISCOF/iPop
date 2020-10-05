@@ -56,24 +56,17 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            // API
-            EnsureFrontendRequestsAreStateful::class,
-            // 'throttle:60,1',
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            AuthenticateSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
             SubstituteBindings::class,
-            LogAPIActivity::class,
-
-            // Original
-            // EncryptCookies::class,
-            // AddQueuedCookiesToResponse::class,
-            // StartSession::class,
-            // AuthenticateSession::class,
-            // ShareErrorsFromSession::class,
-            // VerifyCsrfToken::class,
-            // SubstituteBindings::class,
         ],
 
         'api' => [
-            // EnsureFrontendRequestsAreStateful::class,
+            EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
             SubstituteBindings::class,
             LogAPIActivity::class,

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\CPDB;
 use App\Models\Log;
-use App\Record;
+use App\Models\Record;
+use App\Events\RecordSaved;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -38,6 +39,7 @@ class CPDBController extends Controller
         ]);
         $cpdb->record()->save($record);
         $cpdb->record = $record;
+        broadcast(new RecordSaved($cpdb))->toOthers();
         return $cpdb;
     }
 

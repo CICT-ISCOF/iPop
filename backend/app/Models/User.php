@@ -59,6 +59,21 @@ class User extends Authenticatable
         return $this->hasMany(File::class);
     }
 
+    public function records()
+    {
+        return $this->hasMany(Record::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function profilePicture()
+    {
+        return $this->belongsTo(File::class, 'profile_picture_id');
+    }
+
     /**
      * Checks if the user is a Super Admin.
      *
@@ -97,11 +112,6 @@ class User extends Authenticatable
     public function isBSPO()
     {
         return $this->role === 'BSPO';
-    }
-
-    public function profilePicture()
-    {
-        return $this->belongsTo(File::class, 'profile_picture_id');
     }
 
     public function getBlockedAttribute()

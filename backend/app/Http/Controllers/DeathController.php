@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Death;
 use App\Models\Log;
 use App\Models\Record;
+use App\Events\RecordSaved;
 use App\Http\Requests\DeathRequest;
 use App\Http\Requests\DeathUpdateRequest;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ class DeathController extends Controller
         ]);
         $death->record()->save($record);
         $death->record = $record;
+        broadcast(new RecordSaved($death))->toOthers();
         return $death;
     }
 

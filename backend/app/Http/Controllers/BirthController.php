@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Birth;
 use App\Models\Record;
 use App\Models\Log;
+use App\Events\RecordSaved;
 use App\Http\Requests\BirthRequest;
 use App\Http\Requests\BirthUpdateRequest;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ class BirthController extends Controller
         ]);
         $birth->record()->save($record);
         $birth->record = $record;
+        broadcast(new RecordSaved($birth))->toOthers();
         return $birth;
     }
 
