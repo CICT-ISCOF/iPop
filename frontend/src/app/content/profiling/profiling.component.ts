@@ -26,7 +26,7 @@ export class ProfilingComponent implements OnInit {
 		OutmiGS:false,
 		Marraige:false,
 		CPDB:true,
-		fileUpload:true
+		fileUpload:false
 	}
 
 	tables = {

@@ -138,7 +138,7 @@ reload
 		}		
 		let names = fullnames.join(', ')
 		if(identifiers.length == 0){
-			this.UtilityService.setAlert('Please select data you want to delete','error')
+			// this.UtilityService.setAlert('Please select data you want to delete','error')
 			return
 		}
 		Swal.fire({

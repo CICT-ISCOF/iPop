@@ -19,6 +19,7 @@ export class InMigsTableComponent implements OnInit {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.InMigService.getRow().subscribe(data => {
@@ -93,7 +94,8 @@ export class InMigsTableComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false		
+			this.isLoading = false
+			this.pagination.totalPages.pop()		
 		})
 		this.InMigService.getSearched(this.keyword).subscribe(data =>{
 			this.searchResults = data

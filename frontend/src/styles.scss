@@ -58,7 +58,7 @@
         --hover: #282C34
     }
     
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 1500px) {
         .admin-accounts,
         .search-container {
             transform: translate(0px) !important;
@@ -81,6 +81,30 @@
         .search-results {
             margin-left: 10px !important;
         }
+        .headline {
+            margin-left: 20px !important;
+        }
+    }
+    
+    .disabled {
+        opacity: .3;
+    }
+    
+    .filedrop,
+    .ngx-file-drop__drop-zone {
+        height: 100px;
+        margin: auto;
+        border: 2px dashed gray !important;
+        border-radius: 0px !important;
+    }
+    
+    .ngx-pagination .current {
+        color: white !important;
+    }
+    
+    .headline {
+        font-weight: 800;
+        margin-left: 40px;
     }
     
     owl-carousel-o img,
@@ -123,11 +147,12 @@
     
     html {
         min-height: 100%;
+        background: var(--bg);
+        overflow-y: scroll !important;
     }
     
     html,
     body {
-        overflow-y: scroll !important;
         overflow-x: hidden;
         width: 100%;
         background: var(--bg);

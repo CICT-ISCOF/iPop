@@ -345,8 +345,19 @@
 
         <div class="row container chart-container">
             <h4>Age Distribution Male & Female <br>
-                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">Male </span> {{sexs.male}} <span class="low">{{ sexs.male / population.total * 100 | number:'1.0-0' }}%</span> <br>
-                <span class="chart-details" style="color:var(--colorPrimary) !important">Female</span> {{sexs.female}} <span class="high">{{ sexs.female / population.total * 100 | number:'1.0-0' }}%</span> </span>
+                <span class="chart-details1"><span style="color:var(--colorPrimary) !important"> Male </span>
+                <span style="margin-left: 20px;">
+                    {{sexs.male}}
+                </span>
+                <span style="margin-left: 20px;font-size: 11px;text-align: right;" [class.low]="sexs.male / population.total * 100 > 50" [class.high]="sexs.male / population.total * 100 < 50">
+                    {{ sexs.male / population.total * 100 | number:'1.0-0' }}%
+                </span>
+                <br>
+                <span class="chart-details" style="color:var(--colorPrimary) !important">Female</span>
+                <span style="margin-left: 20px;">
+                    {{sexs.female}}
+                </span>
+                <span style="margin-left: 20px;font-size: 11px;" [class.low]="sexs.female / population.total * 100 > 50" [class.high]="sexs.female / population.total * 100 < 50">{{ sexs.female / population.total * 100 | number:'1.0-0' }}%</span> </span>
             </h4>
             <div id="male-and-female" class="w-100"></div>
         </div>
@@ -355,29 +366,44 @@
 
         <div class="row container chart-container">
             <h4>Deaths & Births<br>
-                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">Deaths </span> {{ month.death.total }}<span class="low">{{ month.death.total / population.total * 100 | number:'1.0-0' }}%</span> <br>
-                <span class="chart-details" style="color:var(--colorPrimary) !important">Births</span>{{ month.birth.total }}<span class="high">{{  month.birth.total / population.total * 100 | number:'1.0-0' }}%</span> </span>
+                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">Deaths </span>
+                <span style="margin-left: 20px;">{{ month.death.total }}</span>
+                <span style="margin-left: 20px;font-size: 11px;" [class.low]="month.death.total/ population.total * 100 > 50" [class.high]="month.death.total / population.total * 100 < 50">{{ month.death.total / population.total * 100 | number:'1.0-0' }}%</span>
+                <br>
+                <span class="chart-details" style="color:var(--colorPrimary) !important">Births</span>
+                <span style="margin-left: 20px;">{{ month.birth.total }}</span>
+                <span style="margin-left: 20px;font-size: 11px;" [class.low]="month.birth.total/ population.total * 100 > 50" [class.high]="month.birth.total / population.total * 100 < 50">{{  month.birth.total / population.total * 100 | number:'1.0-0' }}%</span>                </span>
             </h4>
+
             <div id="death-and-birth" class="w-100"></div>
         </div>
         <br>
 
         <div class="row container chart-container">
             <h4>In-Migrants & Out Migrants<br>
-                <span class="chart-details1"><span style="color:var(--colorPrimary) !important">In-Migrants </span>{{ month.inmigration.total }} <span class="low">{{  month.inmigration.total / population.total * 100 | number:'1.0-0' }}%</span> <br>
-                <span class="chart-details" style="color:var(--colorPrimary) !important"> Out Migrants</span> {{ month.outmigration.total }} <span class="high">{{  month.outmigration.total / population.total * 100 | number:'1.0-0' }}%</span> </span>
-            </h4>
+                <span class="chart-details1">
+                <span style="color:var(--colorPrimary) !important"> In-Migrants  </span>
+                <span style="margin-left: 20px;"> {{ month.inmigration.total }} </span>
+                <span style="margin-left: 20px;" [class.low]="month.inmigration.total/ population.total * 100 > 50" [class.high]="month.inmigration.total / population.total * 100 < 50">{{  month.inmigration.total / population.total * 100 | number:'1.0-0' }}%</span>
+                <br>
+                <span class="chart-details" style="color:var(--colorPrimary) !important"> Out Migrants</span>
+                <span style="margin-left: 20px;">{{ month.outmigration.total }} </span>
+                <span style="margin-left: 20px;" [class.low]="month.outmigration.total/ population.total * 100 > 50" [class.high]="month.outmigration.total / population.total * 100 < 50">{{  month.outmigration.total / population.total * 100 | number:'1.0-0' }}%</span>                </span>
+            </h4>`
             <div id="in-mig-and-Out-mig" class="w-100"></div>
         </div>
         <br>
 
         <div class="row container chart-container">
-            <h4 style="height: 40px;"> 1200 Married - {{ month.marriage.total / population.total * 100 | number:'1.0-0' }}%</h4>
-            <google-chart class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions">
+            <h4 style="height: 70px;display: block;">Married <br>
+
+                <span>Total couples:{{month.marriage.total}}</span> <br>
+                <span style="align-self: flex-end;" [class.low]="month.marriage.total/ population.total * 100 < 50" [class.high]="month.marriage.total / population.total * 100 > 50">{{ month.marriage.total / population.total * 100 | number:'1.0-0' }}% of total population</span></h4>
+            <google-chart class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions ">
             </google-chart>
-            <!-- <div *ngIf="marriageisLoading" class="d-flex justify-content-center">
-            <div class="spinner-border" role="status" style="color:#32B0DF">
-                <span class="sr-only">Loading...</span>
+            <!-- <div *ngIf="marriageisLoading " class="d-flex justify-content-center ">
+            <div class="spinner-border " role="status " style="color:#32B0DF ">
+                <span class="sr-only ">Loading...</span>
             </div>
         </div> -->
         </div>

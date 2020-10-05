@@ -22,6 +22,7 @@ export class CpdbTableComponent implements OnInit {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.CpdbService.getRow().subscribe(data => {
@@ -63,7 +64,8 @@ export class CpdbTableComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false		
+			this.isLoading = false	
+			this.pagination.totalPages.pop()	
 		})
 	}
 
@@ -124,11 +126,6 @@ export class CpdbTableComponent implements OnInit {
 			this.ngOnInit() 
 		}	
 	}
-
-
-
-
-
 
 
 	deleteRecord(id){

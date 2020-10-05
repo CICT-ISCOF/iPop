@@ -1,5 +1,7 @@
 <div *ngIf="isLoading" class="loader"></div>
 <br>
+<h2 class="headline">Births</h2>
+<br>
 <div class="search-container">
     <div class="icon-holder">
         <div style="position: relative;">
@@ -45,24 +47,11 @@
     <app-table-births></app-table-births>
 </div>
 
-<nav aria-label="... ">
-    <ul class="pagination ">
-        <li class="page-item " [class.disabled]="pagination.currentPage==1 ">
-            <a class="page-link " (click)="paginate( pagination.currentPage - 1 ) " tabindex="-1 " aria-disabled="true " style="color:gray !important ">
-                <i class="fas fa-chevron-left "></i>
-            </a>
-        </li>
-
-        <li (click)="paginate(page) " *ngFor="let page of pagination.totalPages " class="page-item " [class.active]='pagination.currentPage == page'>
-            <a *ngIf="page !=0 " style="color:gray " class="page-link ">{{ page }}</a>
-        </li>
-
-
-        <li class="page-item " [class.disabled]="pagination.currentPage==pagination.lastPage ">
-            <a class="page-link " (click)="paginate( pagination.currentPage + 1 ) " tabindex="-1 " aria-disabled="true " style="color:gray !important ">
-                <i class="fas fa-chevron-right "></i>
-            </a>
-        </li>
+<nav>
+    <ul>
+        <p *ngFor="let page of pagination.totalPages | paginate: { itemsPerPage: 1, currentPage: pagination.currentPage, totalItems: pagination.totalPages.length  }"></p>
     </ul>
+    <pagination-controls (pageChange)="paginate($event)" maxSize="15" directionLinks="true" autoHide="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+    </pagination-controls>
 </nav>
 <br>

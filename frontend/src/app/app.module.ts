@@ -258,6 +258,7 @@ const routes: Routes = [
 
   ],
   imports: [
+    NgxPaginationModule,
     ResponsiveModule,
     BrowserModule,
     NgxFileDropModule,

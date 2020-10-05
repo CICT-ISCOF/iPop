@@ -32,6 +32,11 @@
                 Marriage             
             </a>
         </li>
+        <li (click)="maekActive('fileUpload')" class="nav-item">
+            <a [class.active]="tabs.fileUpload == true" class="nav-link">
+                File Upload             
+            </a>
+        </li>
     </ul>
 
 
@@ -91,7 +96,7 @@
 
     </ul>
 
-    <hr>
+    <br>
 
     <div>
         <app-deaths-table *ngIf="tabs.Deaths == true"></app-deaths-table>

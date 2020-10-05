@@ -15,7 +15,7 @@ export class AdminAccountsComponent implements OnInit {
 		private UtilityService : UtilityService,		
 	) { 
 		this.reload = this.AdminService.getReload().subscribe(data => {
-			this.ngOnInit()
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.AdminService.getMultipleDelete().subscribe(array => {
@@ -125,7 +125,7 @@ export class AdminAccountsComponent implements OnInit {
 		this.AdminService.deleteAdmin( id ).subscribe(data => {		
 			this.UtilityService.setAlert('You have deleted an admin','info')		
 			this.isLoading = false	
-			this.UtilityService.setAlert('Refresh Page to see changes','info')
+			this.AdminService.setReload(true)
 		})
 	}
 
