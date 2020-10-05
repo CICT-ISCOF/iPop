@@ -547,14 +547,6 @@ class StatisticsController extends Controller
                 }
             }
 
-            $models = [
-                Death::class => 'death',
-                CPDB::class => 'cpdb',
-                InMigration::class => 'inmigration',
-                OutMigration::class => 'outmigration',
-                Marriage::class => 'marriage',
-            ];
-
             $age_brackets = [
                 ['Age', 'Male', 'Female'],
                 ['Below 1 year old', 0, 0],
@@ -580,11 +572,11 @@ class StatisticsController extends Controller
             $age_brackets_male = [];
             $age_brackets_female = [];
 
-            foreach ($models as $model => $name) {
+            if($model !== Birth::class) {
                 $records = $model
-                    ::selectRaw('age_bracket, COUNT(age_bracket) as total')
-                    ->groupBy('age_bracket')
-                    ->where('sex', 'Male');
+                ::selectRaw('age_bracket, COUNT(age_bracket) as total')
+                ->groupBy('age_bracket')
+                ->where('sex', 'Male');
 
                 if ($municipality) {
                     $records->where('municipality', $municipality);
@@ -647,7 +639,7 @@ class StatisticsController extends Controller
                 $age_brackets_female[$record->age_bracket_of_mother] +=
                     $record->total;
             }
-
+            
             foreach ($age_brackets_male as $category => $count) {
                 foreach ($age_brackets as $index => $array) {
                     if ($array[0] === $category) {
@@ -655,7 +647,7 @@ class StatisticsController extends Controller
                     }
                 }
             }
-
+    
             foreach ($age_brackets_female as $category => $count) {
                 foreach ($age_brackets as $index => $array) {
                     if ($array[0] === $category) {
@@ -665,7 +657,10 @@ class StatisticsController extends Controller
             }
 
             $data['age_brackets'] = $age_brackets;
-
+            $data['genders'] = [
+                'male' => $model::where('sex', 'Male')->count(),
+                'female' => $model::where('sex', 'Female')->count(),
+            ];
             $results[$name] = $data;
         }
 
