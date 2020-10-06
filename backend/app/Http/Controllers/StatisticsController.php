@@ -495,20 +495,16 @@ class StatisticsController extends Controller
 
             $data['households'] += $this->_applyFilters(
                 $request,
-                $model::selectRaw('*')->groupBy('household_number')
-            )->count();
-
-            $data['barangays'] += $this->_applyFilters(
-                $request,
-                $model::selectRaw('*')->groupBy('barangay')
-            )->count();
+                $model::selectRaw('household_number, COUNT(household_number) as total')->groupBy('household_number')
+            )->get()->count();
 
             $barangays = $this->_applyFilters(
                 $request,
-                $model
-                    ::selectRaw('barangay, COUNT(barangay) as total')
-                    ->groupBy('barangay')
+                $model::selectRaw('barangay, COUNT(barangay) as total')->groupBy('barangay')
             )->get();
+
+            $data['barangays'] += $barangays->count();
+            
             foreach ($barangays as $record) {
                 if (!isset($tops['barangays'][$record->barangay])) {
                     $tops['barangays'][$record->barangay] = 0;
@@ -555,7 +551,7 @@ class StatisticsController extends Controller
         $final = [];
         $count = 0;
         foreach(array_reverse(Arr::sort($tops['barangays'])) as $barangay => $count) {
-            if($count === 5) {
+            if($count < 5) {
                 break;
             }
             $final[] = [
@@ -570,7 +566,7 @@ class StatisticsController extends Controller
         $final = [];
         $count = 0;
         foreach(array_reverse(Arr::sort($tops['zones'])) as $zone => $count) {
-            if($count === 5) {
+            if($count < 5) {
                 break;
             }
             $final[] = [
