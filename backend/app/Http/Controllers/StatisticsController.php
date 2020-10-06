@@ -484,6 +484,11 @@ class StatisticsController extends Controller
                     $model::where('sex', 'Female')
                 )->count(),
             ];
+
+            $genders = $data['genders'][$name];
+
+            $data['genders'][$name]['total'] = $genders['male'] + $genders['female'];
+            
             $sample = $this->_applyFilters($request, new $model())->first();
             if ($sample && !$data['district']) {
                 $data['district'] = $sample->district;
