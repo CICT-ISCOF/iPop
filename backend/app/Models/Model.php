@@ -28,4 +28,15 @@ abstract class Model extends BaseModel
             ->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
+
+    public function getDistrictAttribute()
+    {
+        $user = User::where('municipality', 'LIKE', '%' . $this->municipality . '%')
+            ->first();
+        if($user)
+        {
+            return $user->district;
+        }
+        return null;
+    }
 }
