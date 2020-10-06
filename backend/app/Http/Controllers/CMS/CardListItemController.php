@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Models\Media;
+use App\Models\CMS\CardListItem;
 use Illuminate\Http\Request;
 
-class MediaController extends Controller
+class CardListItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class MediaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Media  $media
+     * @param  \App\Models\CardListItem  $cardListItem
      * @return \Illuminate\Http\Response
      */
-    public function show(Media $media)
+    public function show(CardListItem $cardListItem)
     {
         //
     }
@@ -52,10 +52,10 @@ class MediaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Media  $media
+     * @param  \App\Models\CardListItem  $cardListItem
      * @return \Illuminate\Http\Response
      */
-    public function edit(Media $media)
+    public function edit(CardListItem $cardListItem)
     {
         //
     }
@@ -64,10 +64,10 @@ class MediaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Media  $media
+     * @param  \App\Models\CardListItem  $cardListItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Media $media)
+    public function update(Request $request, CardListItem $cardListItem)
     {
         //
     }
@@ -75,10 +75,10 @@ class MediaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Media  $media
+     * @param  \App\Models\CardListItem  $cardListItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Media $media)
+    public function destroy(CardListItem $cardListItem)
     {
         //
     }

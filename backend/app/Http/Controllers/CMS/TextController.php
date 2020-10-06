@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Models\SliderList;
+use App\Models\CMS\Text;
 use Illuminate\Http\Request;
 
-class SliderListController extends Controller
+class TextController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class SliderListController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SliderList  $sliderList
+     * @param  \App\Models\Text  $text
      * @return \Illuminate\Http\Response
      */
-    public function show(SliderList $sliderList)
+    public function show(Text $text)
     {
         //
     }
@@ -52,10 +52,10 @@ class SliderListController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SliderList  $sliderList
+     * @param  \App\Models\Text  $text
      * @return \Illuminate\Http\Response
      */
-    public function edit(SliderList $sliderList)
+    public function edit(Text $text)
     {
         //
     }
@@ -64,10 +64,10 @@ class SliderListController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SliderList  $sliderList
+     * @param  \App\Models\Text  $text
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SliderList $sliderList)
+    public function update(Request $request, Text $text)
     {
         //
     }
@@ -75,10 +75,10 @@ class SliderListController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SliderList  $sliderList
+     * @param  \App\Models\Text  $text
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SliderList $sliderList)
+    public function destroy(Text $text)
     {
         //
     }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Models\Text;
+use App\Models\CMS\GridList;
 use Illuminate\Http\Request;
 
-class TextController extends Controller
+class GridListController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TextController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Text  $text
+     * @param  \App\Models\GridList  $gridList
      * @return \Illuminate\Http\Response
      */
-    public function show(Text $text)
+    public function show(GridList $gridList)
     {
         //
     }
@@ -52,10 +52,10 @@ class TextController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Text  $text
+     * @param  \App\Models\GridList  $gridList
      * @return \Illuminate\Http\Response
      */
-    public function edit(Text $text)
+    public function edit(GridList $gridList)
     {
         //
     }
@@ -64,10 +64,10 @@ class TextController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Text  $text
+     * @param  \App\Models\GridList  $gridList
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Text $text)
+    public function update(Request $request, GridList $gridList)
     {
         //
     }
@@ -75,10 +75,10 @@ class TextController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Text  $text
+     * @param  \App\Models\GridList  $gridList
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Text $text)
+    public function destroy(GridList $gridList)
     {
         //
     }

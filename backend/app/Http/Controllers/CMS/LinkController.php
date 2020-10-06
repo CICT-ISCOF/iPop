@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Models\ListItem;
+use App\Models\CMS\Link;
 use Illuminate\Http\Request;
 
-class ListItemController extends Controller
+class LinkController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ListItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ListItem  $listItem
+     * @param  \App\Models\Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function show(ListItem $listItem)
+    public function show(Link $link)
     {
         //
     }
@@ -52,10 +52,10 @@ class ListItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ListItem  $listItem
+     * @param  \App\Models\Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function edit(ListItem $listItem)
+    public function edit(Link $link)
     {
         //
     }
@@ -64,10 +64,10 @@ class ListItemController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ListItem  $listItem
+     * @param  \App\Models\Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ListItem $listItem)
+    public function update(Request $request, Link $link)
     {
         //
     }
@@ -75,10 +75,10 @@ class ListItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ListItem  $listItem
+     * @param  \App\Models\Link  $link
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ListItem $listItem)
+    public function destroy(Link $link)
     {
         //
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Models\CardList;
+use App\Models\CMS\CardList;
 use Illuminate\Http\Request;
 
 class CardListController extends Controller

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Models\GridListItem;
+use App\Models\CMS\SliderListItem;
 use Illuminate\Http\Request;
 
-class GridListItemController extends Controller
+class SliderListItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class GridListItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\GridListItem  $gridListItem
+     * @param  \App\Models\SliderListItem  $sliderListItem
      * @return \Illuminate\Http\Response
      */
-    public function show(GridListItem $gridListItem)
+    public function show(SliderListItem $sliderListItem)
     {
         //
     }
@@ -52,10 +52,10 @@ class GridListItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\GridListItem  $gridListItem
+     * @param  \App\Models\SliderListItem  $sliderListItem
      * @return \Illuminate\Http\Response
      */
-    public function edit(GridListItem $gridListItem)
+    public function edit(SliderListItem $sliderListItem)
     {
         //
     }
@@ -64,10 +64,10 @@ class GridListItemController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\GridListItem  $gridListItem
+     * @param  \App\Models\SliderListItem  $sliderListItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, GridListItem $gridListItem)
+    public function update(Request $request, SliderListItem $sliderListItem)
     {
         //
     }
@@ -75,10 +75,10 @@ class GridListItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\GridListItem  $gridListItem
+     * @param  \App\Models\SliderListItem  $sliderListItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GridListItem $gridListItem)
+    public function destroy(SliderListItem $sliderListItem)
     {
         //
     }

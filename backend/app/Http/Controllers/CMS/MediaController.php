@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Models\LinkList;
+use App\Models\CMS\Media;
 use Illuminate\Http\Request;
 
-class LinkListController extends Controller
+class MediaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class LinkListController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\LinkList  $linkList
+     * @param  \App\Models\Media  $media
      * @return \Illuminate\Http\Response
      */
-    public function show(LinkList $linkList)
+    public function show(Media $media)
     {
         //
     }
@@ -52,10 +52,10 @@ class LinkListController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\LinkList  $linkList
+     * @param  \App\Models\Media  $media
      * @return \Illuminate\Http\Response
      */
-    public function edit(LinkList $linkList)
+    public function edit(Media $media)
     {
         //
     }
@@ -64,10 +64,10 @@ class LinkListController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LinkList  $linkList
+     * @param  \App\Models\Media  $media
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LinkList $linkList)
+    public function update(Request $request, Media $media)
     {
         //
     }
@@ -75,10 +75,10 @@ class LinkListController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\LinkList  $linkList
+     * @param  \App\Models\Media  $media
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LinkList $linkList)
+    public function destroy(Media $media)
     {
         //
     }

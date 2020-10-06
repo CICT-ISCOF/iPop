@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Models\Article;
+use App\Models\CMS\ListItem;
 use Illuminate\Http\Request;
 
-class ArticleController extends Controller
+class ListItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\ListItem  $listItem
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show(ListItem $listItem)
     {
         //
     }
@@ -52,10 +52,10 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\ListItem  $listItem
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit(ListItem $listItem)
     {
         //
     }
@@ -64,10 +64,10 @@ class ArticleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\ListItem  $listItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(Request $request, ListItem $listItem)
     {
         //
     }
@@ -75,10 +75,10 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\ListItem  $listItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy(ListItem $listItem)
     {
         //
     }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Models\CardListItem;
+use App\Models\CMS\GridListItem;
 use Illuminate\Http\Request;
 
-class CardListItemController extends Controller
+class GridListItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class CardListItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CardListItem  $cardListItem
+     * @param  \App\Models\GridListItem  $gridListItem
      * @return \Illuminate\Http\Response
      */
-    public function show(CardListItem $cardListItem)
+    public function show(GridListItem $gridListItem)
     {
         //
     }
@@ -52,10 +52,10 @@ class CardListItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CardListItem  $cardListItem
+     * @param  \App\Models\GridListItem  $gridListItem
      * @return \Illuminate\Http\Response
      */
-    public function edit(CardListItem $cardListItem)
+    public function edit(GridListItem $gridListItem)
     {
         //
     }
@@ -64,10 +64,10 @@ class CardListItemController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CardListItem  $cardListItem
+     * @param  \App\Models\GridListItem  $gridListItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CardListItem $cardListItem)
+    public function update(Request $request, GridListItem $gridListItem)
     {
         //
     }
@@ -75,10 +75,10 @@ class CardListItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CardListItem  $cardListItem
+     * @param  \App\Models\GridListItem  $gridListItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CardListItem $cardListItem)
+    public function destroy(GridListItem $gridListItem)
     {
         //
     }
