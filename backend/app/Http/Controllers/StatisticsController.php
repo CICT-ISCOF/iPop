@@ -132,12 +132,11 @@ class StatisticsController extends Controller
                 if (
                     !isset($population['municipalities'][$record->municipality])
                 ) {
-                    $population['municipalities'][
-                        $record->municipality
-                    ] = $model
-                        ::where('municipality', $record->municipality)
-                        ->count();
+                    $population['municipalities'][$record->municipality] = 0;
                 }
+                $population['municipalities'][
+                    $record->municipality
+                ] += $record->total;
             }
 
             $barangays = $model
@@ -147,14 +146,12 @@ class StatisticsController extends Controller
 
             foreach ($barangays as $record) {
                 if (!isset($population['barangays'][$record->barangay])) {
-                    $population['barangays'][$record->barangay] = $model
-                        ::where('municipality', $record->municipality)
-                        ->where('barangay', $record->barangay)
-                        ->count();
+                    $population['barangays'][$record->barangay] = 0;
                 }
+                $population['barangays'][$record->barangay] += $record->total;
             }
 
-            $population['total'] += $model::count();
+            $population['total'] += $model::all()->count();
         }
 
         $topMunicipalities = array_reverse(
@@ -493,10 +490,6 @@ class StatisticsController extends Controller
             if ($sample && !$data['district']) {
                 $data['district'] = $sample->district;
             }
-            $data['population'] += $this->_applyFilters(
-                $request,
-                new $model()
-            )->count();
 
             $data['households'] += $this->_applyFilters(
                 $request,
@@ -579,6 +572,10 @@ class StatisticsController extends Controller
 
         for($x = 0; ($x < 5 && $x < count($final)); $x++) {
             $tops['zones'][] = $final[$x];
+        }
+
+        foreach($data['genders'] as $gender) {
+            $data['population'] += $gender['total'];
         }
         
         $data['tops'] = $tops;
