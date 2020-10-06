@@ -41,10 +41,9 @@ class CountController extends Controller
         }
 
         $model = $types[$type];
-
-        return Record::where('status', 'Pending')
-            ->where('recordable_type', $model)
-            ->count();
+        return $model::with(['record' => function($query) {
+            $query->where('status', 'Pending');
+        }])->get()->count();
     }
 
     public function count()
