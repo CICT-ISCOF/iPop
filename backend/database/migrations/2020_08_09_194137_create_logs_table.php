@@ -24,6 +24,7 @@ class CreateLogsTable extends Migration
             $table->text('user_agent')->nullable();
             $table->json('info')->nullable();
             $table->text('action');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

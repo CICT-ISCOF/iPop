@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::get('/search/users', [SearchController::class, 'users']);
     Route::get('/search/records', [SearchController::class, 'records']);
     Route::get('/search/status', [SearchController::class, 'status']);
+    Route::get('/search/logs', [SearchController::class, 'logs']);
 
     // Files
     // Private Files
