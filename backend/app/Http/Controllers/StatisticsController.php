@@ -488,7 +488,7 @@ class StatisticsController extends Controller
             $genders = $data['genders'][$name];
 
             $data['genders'][$name]['total'] = $genders['male'] + $genders['female'];
-            
+
             $sample = $this->_applyFilters($request, new $model())->first();
             if ($sample && !$data['district']) {
                 $data['district'] = $sample->district;
@@ -554,34 +554,32 @@ class StatisticsController extends Controller
         }
 
         $final = [];
-        $count = 0;
         foreach(array_reverse(Arr::sort($tops['barangays'])) as $barangay => $count) {
-            if($count < 5) {
-                break;
-            }
             $final[] = [
                 'name' => $barangay,
                 'total' => $count,
             ];
-            $count++;
         }
 
-        $tops['barangays'] = $final;
+        $tops['barangays'] = [];
+
+        for($x = 0; ($x < 5 && $x < count($final)); $x++) {
+            $tops['barangays'][] = $final[$x];
+        }
 
         $final = [];
-        $count = 0;
         foreach(array_reverse(Arr::sort($tops['zones'])) as $zone => $count) {
-            if($count < 5) {
-                break;
-            }
             $final[] = [
                 'name' => $zone,
                 'total' => $count
             ];
-            $count++;
         }
-        
-        $tops['zones'] = $final;
+
+        $tops['zones'] = [];
+
+        for($x = 0; ($x < 5 && $x < count($final)); $x++) {
+            $tops['zones'][] = $final[$x];
+        }
         
         $data['tops'] = $tops;
 
