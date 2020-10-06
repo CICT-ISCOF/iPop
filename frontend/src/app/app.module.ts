@@ -17,6 +17,8 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { Ng2OdometerModule } from 'ng2-odometer';
 import {NgxPaginationModule} from 'ngx-pagination';
+// import { AngularOpenlayersModule } from "ngx-openlayers";
+
 
 import { ResponsiveModule } from 'ngx-responsive';
 import 'ag-grid-enterprise';
@@ -113,7 +115,10 @@ import { ShowQuickLinkComponent } from './content/cms/show-quick-link/show-quick
 import { MobileAuthenticationComponent } from './sign-in/mobile/mobile-authentication/mobile-authentication.component'
 import { NavbarMobileComponent } from './shared/devices/mobile/navbar-mobile/navbar-mobile.component'
 import { DropdownComponentMobile }  from './shared/devices/mobile/dropdown/dropdown.component';
-import { FileUploadComponent } from './content/profiling/file-upload/file-upload.component'
+import { FileUploadComponent } from './content/profiling/file-upload/file-upload.component';
+import { MapsComponent } from './content/maps/maps.component';
+import { LocationComponent } from './content/admin-accounts/location/location.component';
+import { PreloaderComponent } from './shared/preloader/preloader.component'
 
 
 const routes: Routes = [
@@ -254,10 +259,14 @@ const routes: Routes = [
     UpdateQuickLinkComponent,
     ShowQuickLinkComponent,
     FileUploadComponent,
-
+    MapsComponent,
+    LocationComponent,
+    PreloaderComponent,
+    
 
   ],
   imports: [
+    NgxPaginationModule,
     ResponsiveModule,
     BrowserModule,
     NgxFileDropModule,
@@ -281,6 +290,7 @@ const routes: Routes = [
       // -----admin----------------
       ActionButtonAdminComponent,
       RoleComponent,
+      LocationComponent,
 
       // -----logs----------------
       ActionButtonsLogsComponent,

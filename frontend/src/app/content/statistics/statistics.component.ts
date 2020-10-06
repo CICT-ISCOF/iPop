@@ -16,7 +16,7 @@ import {trigger, transition, style, animate, query, stagger, keyframes} from '@a
 				query(':enter', stagger('300ms',[
 					animate('.6s ease-in', keyframes([
 						style({opacity:0,transform: 'translateY(-75%)', offset:0}),
-						style({opacity:.5,transform: 'translateY(30px%)', offset:0.3}),
+						style({opacity:.5,transform: 'translateY(30px)', offset:0.3}),
 						style({opacity:1,transform: 'translateY(0)', offset:1})
 					]))
 				]))
@@ -55,25 +55,61 @@ export class StatisticsComponent implements OnInit {
 
 
 	municipalities = []
+	municipalityIsLoading = false
 	getMuncipalities(){
-		this.isLoading = true
+		this.municipalityIsLoading = true
 		this.LocationService.getMunicipalities().subscribe(data => {
 			this.municipalities = data	
-			this.isLoading = false			
+			this.municipalityIsLoading = false			
 		})		
 	}
+
 	barangays = []
+	barangayIsLoading
+	filteredCensusData:any = {		
+		barangays:'',
+		zones:[],
+		genders:{
+			birth:{
+				male:'',
+				female:''
+			},
+			cpdb:{
+				male:'',
+				female:''
+			},
+			death:{
+				male:'',
+				female:''
+			},
+			inmigration:{
+				male:'',
+				female:''
+			},
+			household:{
+				male:'',
+				female:''
+			},
+		},
+		tops:{
+			barangays:[]
+		},
+		hasResults:false
+	}
 	getBarangays(event){	
-		this.isLoading = true
+		this.filteredCensusData.hasResults = false
+		this.barangayIsLoading = true
 		this.filter.municipality = event.target.options[event.target.options.selectedIndex].text;	
 		this.filter.barangay = ''
 		this.LocationService.getBarangays(event.target.value).subscribe(data => {
 			this.barangays = data	
-			this.isLoading = false
+			this.barangayIsLoading = false
 		})
 
 		this.StatisticsService.getMunicipality(this.filter.municipality).subscribe(data => {
-		
+			console.log('filters', data)
+			this.filteredCensusData = data
+			this.filteredCensusData.hasResults = true
 		})
 	}
 
@@ -83,8 +119,9 @@ export class StatisticsComponent implements OnInit {
 	
 
 	general
-	population:any = {
-		top:[]
+	population = {
+		top:[],
+		total:0
 	}
 	totals
 	genders
@@ -98,8 +135,9 @@ export class StatisticsComponent implements OnInit {
 	}
 
 	getPopulation(){
-		this.population = this.StatisticsService.population().subscribe(data => {		
-			this.population = data
+		this.StatisticsService.population().subscribe(data => {		
+			this.population = data		
+			console.log(data)
 		})
 	}
 
@@ -136,10 +174,10 @@ export class StatisticsComponent implements OnInit {
 		female:0
 	}
 
+	marriageisLoading = false
 	getMonths(){
 		this.monthsisLoading = true
-		this.StatisticsService.ageDistribution().subscribe(data => {
-			console.log(data)
+		this.StatisticsService.ageDistribution().subscribe(data => {			
 			this.charts.ageDistribution = data
 			for(let value in data){
 				if(Number.isInteger(data[value][1]) ){
@@ -149,14 +187,16 @@ export class StatisticsComponent implements OnInit {
 			}
 		})
 		this.StatisticsService.months().subscribe(data => {
-			this.month = data
+			this.marriageisLoading = true
+	 		this.month = data
 			const  truncate = (month) => {
 				return month.substring(0, 3);
 			}
 			this.charts.married = []
 			for(let key in data.marriage){
 				this.charts.married.push([ truncate(key.toString()) ,data.marriage[key]])
-			}								
+			}		
+			this.charts.married.pop()						
 			for(let key in data.birth){
 				this.charts.birthAndDeath.push([ key , data.birth[key]  ,-data.death[key]    ])
 				
@@ -167,9 +207,10 @@ export class StatisticsComponent implements OnInit {
 			this.charts.birthAndDeath.pop()
 			this.charts.inMigAndOutMig.pop()
 			this.monthsisLoading = false
-		
+			
 			this.callCharts()	
 		})
+		
 	}
 
 
@@ -208,18 +249,59 @@ export class StatisticsComponent implements OnInit {
 				textStyle:{color:this.formatChatColor()},			
 			},
 			curveType: 'function',			
+			colors: ['#BB1D4F'],
+			
 		},		
 		pyramidChartOptions :{
-			color:['green','orange'],
-			isStacked: true,				
-			vAxis: {
-				direction: -1,
-				textStyle:{color:this.formatChatColor()},
-			},
-			hAxis: {
-				textStyle:{color:this.formatChatColor()},
-				format: ';'
-			},
+			title: '',
+            titleTextStyle: {color: 'blue', fontSize: 16, align: 'center', bold: true},
+            colors: ['#09B2E7','#F30091', ],
+            chartArea: { backgroundColor: 'white', height: '70%', top: '10%' },
+            isStacked: true,        
+            hAxis: {
+                textPosition: 'none',
+                format: ';',
+                title: ''
+            },
+            vAxis: {
+                direction: 1,
+                title: ''
+            },			
+			backgroundColor:this.formatChartBackground(),	
+					
+		},
+		birthsAndDeaths :{
+			title: '',
+            titleTextStyle: {color: 'blue', fontSize: 16, align: 'center', bold: true},
+            colors: ['red','#81D340', ],
+            chartArea: { backgroundColor: 'white', height: '70%', top: '10%' },
+            isStacked: true,           
+            hAxis: {
+                textPosition: 'none',
+                format: ';',
+                title: ''
+            },
+            vAxis: {
+                direction: 1,
+                title: ''
+            },			
+			backgroundColor:this.formatChartBackground(),			
+		},
+		inMIgsandOutMigs :{
+			title: '',
+            titleTextStyle: {color: 'blue', fontSize: 16, align: 'center', bold: true},
+            colors: ['#F2C30D','#59B8B3', ],
+            chartArea: { backgroundColor: 'white', height: '70%', top: '10%' },
+            isStacked: true,          
+            hAxis: {
+                textPosition: 'none',
+                format: ';',
+                title: ''
+            },
+            vAxis: {
+                direction: 1,
+                title: ''
+            },			
 			backgroundColor:this.formatChartBackground(),			
 		}
 	}
@@ -228,9 +310,17 @@ export class StatisticsComponent implements OnInit {
 		this.drawChart('male-and-female',this.charts.ageDistribution)
 		this.drawChart('death-and-birth',this.charts.birthAndDeath)
 		this.drawChart('in-mig-and-Out-mig',this.charts.inMigAndOutMig)
+		
 	}
 
 	drawChart(chartId,chartData){
+		let style = this.googleChartOptions.pyramidChartOptions
+		if(chartId == 'death-and-birth'){
+		   style = this.googleChartOptions.birthsAndDeaths
+		}
+		if(chartId == 'in-mig-and-Out-mig'){
+			style = this.googleChartOptions.inMIgsandOutMigs
+		}
 		const chart = () => {
 			var data = google.visualization.arrayToDataTable(chartData)
 			var chart = new google.visualization.BarChart(document.getElementById(chartId))			
@@ -238,10 +328,11 @@ export class StatisticsComponent implements OnInit {
 				pattern: ';'
 			})
 			formatter.format(data, 2)
-			chart.draw(data, this.googleChartOptions.pyramidChartOptions)
+			chart.draw(data, style )
 		}
 		google.load("visualization", "1", {packages:["corechart"]})
 		google.setOnLoadCallback(chart)
+		
 	}
 
 

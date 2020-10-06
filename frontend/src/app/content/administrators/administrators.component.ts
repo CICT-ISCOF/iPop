@@ -41,12 +41,13 @@ export class AdministratorsComponent implements OnInit {
 		})
 	}
 
+	barangayIsLoading
 	getBarangays(event){
-		this.isLoading = true
+		this.barangayIsLoading = true
 		this.data.municipality = event.target.options[event.target.options.selectedIndex].text;	
 		this.LocationService.getBarangays(event.target.value).subscribe(data => {
 			this.barangays = data	
-			this.isLoading = false
+			this.barangayIsLoading = false
 		})
 	
 	}
@@ -77,9 +78,9 @@ export class AdministratorsComponent implements OnInit {
 		barangay:false,
 	}
 
-	
+	isSubmitting = false
 	register(){		
-		this.isLoading = true
+		this.isSubmitting = true
 		let hasError: boolean		
 		for (let key in this.data) {		
 			if( this.data[key] == "" || this.data[key] == null ){
@@ -98,7 +99,7 @@ export class AdministratorsComponent implements OnInit {
 				formData.append(key, this.data[key]); 
 			}
 			this.SignInService.register(formData).subscribe(data => {	
-				this.isLoading = false				
+				this.isSubmitting = false				
 				this.UtilityService.setAlert( 'New Administrator Added', 'success')
 				
 			}, 
@@ -106,11 +107,11 @@ export class AdministratorsComponent implements OnInit {
 				for(let message in error.error.errors){
 					this.UtilityService.setAlert(error.error.errors[message],'error')
 				}				
-				this.isLoading = false
+				this.isSubmitting = false
 			})
 		}
 		else{
-			this.isLoading = false
+			this.isSubmitting = false
 			this.UtilityService.setAlert('One or more fields should not be empty', 'error')				
 		}
 		

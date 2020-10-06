@@ -6,6 +6,11 @@
 
             <div class="image-container">
                 <img [src]="imgSrc" alt="" *ngIf="imgSrc != ''">
+                <div *ngIf="imgIsLoading" class="img-loader">
+                    <div class="spinner-border text-info" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
                 <div (click)="triggerInput()" class="icon-container">
                     <i style="font-size: 25px;" class="fas fa-camera"></i>
                     <input (change)="readURL($event.target.files,$event)" accept="image/*" type="file" class="hidden" id="profile-picture">

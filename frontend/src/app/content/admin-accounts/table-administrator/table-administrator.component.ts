@@ -5,6 +5,7 @@ import {GridOptions} from "ag-grid-community"
 import { formatDate } from '@angular/common';
 import { ActionButtonAdminComponent } from '../action-button-admin/action-button-admin.component';
 import { RoleComponent } from '../role/role.component';
+import { LocationComponent } from '../location/location.component'
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
 import { UtilityService } from '../../../utility.service'
@@ -30,7 +31,7 @@ export class TableAdministratorComponent implements OnInit {
 		this.reload = this.AdminService.getReload().subscribe(data => {		
 			this.AdminService.getAdminLists().subscribe(data => {
 				this.rowData = data.data
-			})
+			}) 
 		})
 
 		this.reload = this.AdminService.getActionToDelete().subscribe(()=>{
@@ -53,7 +54,7 @@ export class TableAdministratorComponent implements OnInit {
 		{headerName: 'Role', field: 'role', sortable: true, filter: 'agTextColumnFilter' ,cellRenderer: 'role' },
 		{headerName: 'District', field: 'district', sortable: 'district', filter: 'agTextColumnFilter',width:130},
 		{headerName: 'Muncipality', field: 'municipality', sortable: 'municipality', filter: 'agTextColumnFilter'},
-		{headerName: 'Barangay', field: 'barangay', sortable: 'barangay', filter: 'agTextColumnFilter'},
+		{headerName: 'Barangay', field: 'barangay',sortable: true, filter: 'agTextColumnFilter' ,cellRenderer: 'location' },
 		{headerName: ' Date Created', field: 'created_at', sortable: true, filter: 'agTextColumnFilter', cellRenderer: (data) => {
 			return formatDate(data.value, 'EEEE,  MMM dd, yyyy - h:mm a', this.locale);
 		},width:300},	
@@ -71,8 +72,10 @@ export class TableAdministratorComponent implements OnInit {
 
     
 	frameworkComponents = {
+		location : LocationComponent,
 		actionButtons: ActionButtonAdminComponent,
-		role: RoleComponent
+		role: RoleComponent,
+		
 	}
 
     rowData: any;    

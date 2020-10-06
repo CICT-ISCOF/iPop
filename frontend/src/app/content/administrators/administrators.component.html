@@ -1,5 +1,9 @@
-<div class="new-administrator-component container">
-    <div *ngIf="isLoading" class="loader"></div>
+<div *ngIf="isLoading" class="flex-container">
+    <div class="spinner-border text-warning fast" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div *ngIf="!isLoading" class="new-administrator-component container">
     <br>
     <h4>Fields with asterisks <span style="color:red">* </span> &nbsp; are required</h4>
     <div class="row">
@@ -55,9 +59,12 @@
                         </svg>
                     </span>
                 </label>
-                <input [(ngModel)]="data.confirmPassword" type="password" class="form-control" id="confrim-password" [class.is-invalid]="data.confirmPassword != data.password" required>
-                <div class="invalid-feedback">
+                <input [(ngModel)]="data.confirmPassword" type="password" class="form-control" id="confrim-password" [class.is-invalid]="data.confirmPassword != data.password || invalidData.confirmPassword" required>
+                <div class="invalid-feedback" *ngIf="data.confirmPassword != data.password">
                     Password should match
+                </div>
+                <div *ngIf="invalidData.confirmPassword" class="invalid-feedback">
+                    Password is required
                 </div>
             </div>
         </div>
@@ -140,14 +147,18 @@
             </div>
 
             <div class="col-md-5 mb-3">
-                <label for="barangay">Barangay
-                    <span>
+                <label for="barangay">
+                    <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    Barangay
+                    <span>                       
                         <svg width="9px" height="9px" viewBox="0 0 16 16" class="bi bi-asterisk" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
                         </svg>
                     </span>
                 </label>
-                <select [(ngModel)]="data.barangay" class="custom-select" id="barangay" [class.is-invalid]="invalidData.barangay" required>
+                <select [disabled]="barangays.length == 0" [(ngModel)]="data.barangay" class="custom-select" id="barangay" [class.is-invalid]="invalidData.barangay" required>
                     <option selected disabled value="">Choose...</option>
                     <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
                 </select>
@@ -160,11 +171,14 @@
         <br> <br>
 
         <div class="button-container">
-            <button (click)="register()" class="button">Create Admin</button>
+            <button *ngIf="!isSubmitting" (click)="register()" class="button">Create Admin</button>
+            <button *ngIf="isSubmitting" class="btn button" type="button" disabled>
+                <span class="spinner-border spinner-border-sm text-light fast" role="status" aria-hidden="true"></span>
+                Loading...
+            </button>
         </div>
 
         <br> <br>
     </div>
 
 </div>
-<div *ngIf="isLoading" class="loader"></div>

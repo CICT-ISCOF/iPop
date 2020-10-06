@@ -28,7 +28,7 @@
 }
 
 .removeBackground {
-    background: var(--bg) !important;
+    background: black !important;
 }
 
 .sidebar-component:hover {
@@ -49,8 +49,12 @@ h1 {
     position: relative;
     z-index: 9999;
     font-weight: 500;
-    padding: 5px 20px;
+    padding: 15px 20px;
     font-size: 13px !important;
+    border-bottom: 1px solid rgba(250, 250, 250, .5);
+}
+
+hr {
     border-bottom: 1px solid rgba(250, 250, 250, .5);
 }
 
@@ -141,4 +145,35 @@ i {
     color: white;
     fill: white;
     font-size: 20px !important;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    background: #A5B0C4;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: var(--bg1);
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    border: 1px solid rgba(150, 150, 150, .7)
+}
+
+
+/* Handle on hover */
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: var(--bg1);
 }

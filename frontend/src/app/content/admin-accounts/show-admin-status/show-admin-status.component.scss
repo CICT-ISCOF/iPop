@@ -10,6 +10,13 @@
     border-radius: 15px;
 }
 
+.img-loader {
+    height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 li {
     display: flex;
     border-left: none !important;

@@ -18,32 +18,49 @@ export class FileUploadComponent implements OnInit {
 		private BulkService : BulkService
 	) { 
 
-		this.ExcelService.getExcellData().subscribe(data => {
-			console.log(JSON.stringify(data))
-			this.BulkService.storeBulk(this.type, { data: data } ).subscribe(data => {
-				console.log(data)
+		this.ExcelService.getExceltoJSONlData().subscribe(data => {			
+			this.BulkService.storeBulk(this.type, { data: data } ).subscribe(data => {		
+				this.noValidFIle = false		
+				this.uploadError = false
 				this.progressWIDTH = 100
+				this.uploadFinished = true		
+				this.isUploading = false		
 			},
 			error =>{
 				this.progressWIDTH = 100
 				this.uploadError = true
+				this.UtilityService.setAlert('Something went wrong. Upload Failed','error')
 			})
 		})
 	
 	}
 
+	
 	subscription: Subscription
 	public files: NgxFileDropEntry[] = [];
 	isUploading = false
 	tableFiles = []
 	unUploadedFiles = []
-	theme = localStorage.getItem('data-theme')
-	type = 'cpdb'
+	theme = localStorage.getItem('data-theme')	
+	uploadError = false
+	progressWIDTH = 0
+	uploadFinished = false
+	noValidFIle = false
+	type = ''	
+	types = ['cpdb','marriage','birth','death','inmigration','outmigration']
+	 
 	ngOnInit(): void {
 
 	}
 
+	
+
 	public dropped(files: NgxFileDropEntry[]) {
+		if (this.uploadFinished) {
+			this.clearFiles()	
+			this.unUploadedFiles = []
+			this.uploadFinished = false		
+		}
 		this.files = files;
 		for (const droppedFile of files) {	 
 		
@@ -61,12 +78,21 @@ export class FileUploadComponent implements OnInit {
 		}
 	}
 
+	readInputTypeFile(event){
+		const files = event.target.files
+		this.files = files;
+		console.log(files)
+		for (const droppedFile of files) {	 
+			this.tableFiles.push(droppedFile)	
+		}
+	}
+
 	triggerInput(){
 		document.getElementById('fileUpload').click()
 	}
 
 	public fileOver(event){
-		// console.log(event);
+		this.progressWIDTH = 0
 	}
 	 
 	public fileLeave(event){
@@ -76,6 +102,12 @@ export class FileUploadComponent implements OnInit {
 	clearFiles(){
 		this.files = [];
 		this.tableFiles = []
+		this.isUploading = false
+		this.uploadError = false
+		this.progressWIDTH = 0
+		this.uploadFinished = false
+		this.unUploadedFiles = []
+
 	}
 
 	checkIfXlsx(fileName){
@@ -89,29 +121,41 @@ export class FileUploadComponent implements OnInit {
 	removeItem(index){
 		this.files.splice(index, 1)
 		this.tableFiles.splice(index, 1)
+		if(this.tableFiles.length == 0){
+			this.clearFiles
+		}
 	}
-	uploadError = false
-	progressWIDTH = 0
-	uploadFile(){	
+
+	uploadFile(){			
 		this.progressWIDTH = 0
 		if(this.tableFiles.length != 0){
 			this.isUploading = true			
 			let data = {}
 			let count
+			let xlsFiles = 0
 			for(let file in this.tableFiles){
 				if(this.checkIfXlsx(this.tableFiles[file].name) == false){	
 					this.ExcelService.convertExcelToJson(this.tableFiles[file])
+					xlsFiles += 1
+					setInterval(() => {
+						if(this.progressWIDTH <= 90){
+							this.progressWIDTH +=1
+						}					
+					}, 200)	
 				}
 				else{
-					this.unUploadedFiles.push(this.tableFiles[file])
-					console.log('unUploadedFiles',this.unUploadedFiles)
+					this.unUploadedFiles.push(this.tableFiles[file])				
 				}
-			}		
-			setInterval(() => {
-					if(this.progressWIDTH <= 90){
-						this.progressWIDTH +=1
-					}					
-			}, 200)				
+			}						
+			if(xlsFiles == 0){
+				this.noValidFIle = true
+				this.progressWIDTH == 100
+				this.uploadError = true
+				this.uploadFinished = false
+				this.UtilityService.setAlert('No valid files to upload`','error')
+				this.isUploading = false		
+				return
+			}	
 		}
 		else{
 			this.UtilityService.setAlert('No files to upload','error')

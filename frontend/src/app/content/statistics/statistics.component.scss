@@ -4,6 +4,7 @@
     padding: 10px 50px;
     background: var(--bg1);
     display: flexbox;
+    font-family: Raleway;
 }
 
 .mobile-top-view {
@@ -113,8 +114,11 @@ li {
 #male-and-female,
 #in-mig-and-Out-mig {
     height: 107%;
-    margin-top: -87px;
+    margin-top: -57px;
     width: 120% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .chart-container {
@@ -140,4 +144,12 @@ li {
     .chart-details {
         text-align: right;
     }
+}
+
+.flex-container {
+    height: 30vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

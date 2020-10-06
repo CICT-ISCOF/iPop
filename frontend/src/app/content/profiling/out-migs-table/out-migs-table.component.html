@@ -1,28 +1,36 @@
-<div *ngIf="isLoading" class="loader"></div>
-<br>
-<div class="search-container">
-    <div class="icon-holder">
-        <div style="position: relative;">
-            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+<div *ngIf="isLoading" class="flex-container">
+    <div class="spinner-border text-warning fast" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<div *ngIf="!isLoading">
+    <br>
+    <h2 class="headline">Out-Migrations</h2>
+    <br>
+    <div class="search-container">
+        <div class="icon-holder">
+            <div style="position: relative;">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
                 <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
           </svg>
+            </div>
         </div>
-    </div>
 
-    <input (keyup)="searchHandler($event)" (keyup.enter)="search()" [(ngModel)]="keyword" type="text" class="form-control w-50" placeholder="Out-Migrations Global Search">
+        <input (keyup)="searchHandler($event)" (keyup.enter)="search()" [(ngModel)]="keyword" type="text" class="form-control w-50" placeholder="Out-Migrations Global Search">
 
-    <div (click)="search()" *ngIf="keyword != ''" class="icon-holder-button">
-        <div style="position: relative;">
-            <svg width="25px" height="25px" viewBox="0 0 16 16" class="bi bi-arrow-right-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <div (click)="search()" *ngIf="keyword != ''" class="icon-holder-button">
+            <div style="position: relative;">
+                <svg width="25px" height="25px" viewBox="0 0 16 16" class="bi bi-arrow-right-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M8.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.793 8 8.146 5.354a.5.5 0 0 1 0-.708z"/>
                 <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5H11a.5.5 0 0 1 0 1H4.5A.5.5 0 0 1 4 8z"/>
           </svg>
+            </div>
         </div>
-    </div>
 
 
-    <button (click)="multipleDelete()" tooltip="Delete Checked" placement="left" [theme]="theme" style="margin-left: auto;">
+        <button (click)="multipleDelete()" tooltip="Delete Checked" placement="left" [theme]="theme" style="margin-left: auto;">
         <svg width="25px" height="25px" viewBox="0 0 16 16" class="bi bi-trash2" fill="red" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M3.18 4l1.528 9.164a1 1 0 0 0 .986.836h4.612a1 1 0 0 0 .986-.836L12.82 4H3.18zm.541 9.329A2 2 0 0 0 5.694 15h4.612a2 2 0 0 0 1.973-1.671L14 3H2l1.721 10.329z"/>
             <path d="M14 3c0 1.105-2.686 2-6 2s-6-.895-6-2 2.686-2 6-2 6 .895 6 2z"/>
@@ -31,37 +39,25 @@
     </button>
 
 
-    <button (click)="refresh()" tooltip="Refresh Table / Clear Searches" placement="left" [theme]="theme">      
+        <button (click)="refresh()" tooltip="Refresh Table / Clear Searches" placement="left" [theme]="theme">      
             <i class="im im-sync"></i>        
     </button>
-    <button (click)="print()" *ngIf="searched && searchResults.length != 0" tooltip="Export all Results of {{ keyword }} (All Pages) to .xslsx" placement="left" [theme]="theme">        
+        <button (click)="print()" *ngIf="searched && searchResults.length != 0" tooltip="Export all Results of {{ keyword }} (All Pages) to .xslsx" placement="left" [theme]="theme">        
         <i style="color:greenyellow" class="fas fa-file-excel"></i>
     </button>
+    </div>
+    <p class="search-results" style="margin-left: 50px;" *ngIf="searched ">Search results for <i> {{ keyword }}...</i></p>
+    <div class="cpdpb-component container">
+
+        <app-table-out-migs></app-table-out-migs>
+    </div>
+
+    <nav>
+        <ul>
+            <p *ngFor="let page of pagination.totalPages | paginate: { itemsPerPage: 1, currentPage: pagination.currentPage, totalItems: pagination.totalPages.length  }"></p>
+        </ul>
+        <pagination-controls (pageChange)="paginate($event)" maxSize="15" directionLinks="true" autoHide="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+        </pagination-controls>
+    </nav>
+    <br>
 </div>
-<p class="search-results" style="margin-left: 50px;" *ngIf="searched ">Search results for <i> {{ keyword }}...</i></p>
-<div class="cpdpb-component container">
-
-    <app-table-out-migs></app-table-out-migs>
-</div>
-
-<nav aria-label="... ">
-    <ul class="pagination ">
-        <li class="page-item " [class.disabled]="pagination.currentPage == 1">
-            <a class="page-link " (click)="paginate( pagination.currentPage - 1 ) " tabindex="-1 " aria-disabled="true " style="color:gray !important ">
-                <i class="fas fa-chevron-left"></i>
-            </a>
-        </li>
-
-        <li (click)="paginate(page) " *ngFor="let page of pagination.totalPages " class="page-item " [class.active]='pagination.currentPage == page'>
-            <a *ngIf="page !=0 " style="color:gray " class="page-link ">{{ page }}</a>
-        </li>
-
-
-        <li class="page-item " [class.disabled]="pagination.currentPage==pagination.lastPage ">
-            <a class="page-link " (click)="paginate( pagination.currentPage + 1 ) " tabindex="-1 " aria-disabled="true " style="color:gray !important ">
-                <i class="fas fa-chevron-right"></i>
-            </a>
-        </li>
-    </ul>
-</nav>
-<br>

@@ -83,13 +83,9 @@ export class DropdownComponent implements OnInit {
 		  }).then((result) => {
 			if (result.value) {
 				let theme =  localStorage.getItem('data-theme')
-				// localStorage.clear()
-					this.Router.navigate(['/'])
-				this.UtilityService.logout(true)				
-				setTimeout(() => {
-					location.reload()
-					localStorage.setItem('data-theme', theme)
-				}, 500);
+				localStorage.clear()
+				this.Router.navigate(['/'])
+				this.UtilityService.logout(true)
 				this.UtilityService.setDropDown(false)	
 				Swal.fire(
 					'Thank you',

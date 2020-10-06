@@ -13,6 +13,14 @@
     }
 }
 
+.flex-container {
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .button-container {
     width: 100%;
     align-items: center;

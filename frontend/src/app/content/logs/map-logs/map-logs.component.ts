@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import { MapService } from '../../maps/map.service'
 
 @Component({
   selector: 'app-map-logs',
@@ -8,7 +9,9 @@ import * as L from 'leaflet';
 })
 export class MapLogsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+	  private MapService : MapService
+  ) { }
 
   ngOnInit(): void {
 
@@ -30,6 +33,11 @@ export class MapLogsComponent implements OnInit {
 		this.params = params.data
 		
 		return true
+	}
+
+	showMap(){
+		this.MapService.setCoordinates(this.params.info.lat, this.params.info.lon)
+		this.MapService.mapToggler(true)
 	}
 	
 }
