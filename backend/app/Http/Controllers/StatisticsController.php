@@ -9,8 +9,6 @@ use App\Models\Marriage;
 use App\Models\InMigration;
 use App\Models\OutMigration;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -454,6 +452,7 @@ class StatisticsController extends Controller
             Death::class => 'death',
             InMigration::class => 'inmigration',
             OutMigration::class => 'outmigration',
+            CPDB::class => 'cpdb',
         ];
 
         $data = [
@@ -559,7 +558,10 @@ class StatisticsController extends Controller
             if($count === 5) {
                 break;
             }
-            $final[$barangay] = $count;
+            $final[] = [
+                'name' => $barangay,
+                'total' => $count,
+            ];
             $count++;
         }
 
@@ -571,7 +573,10 @@ class StatisticsController extends Controller
             if($count === 5) {
                 break;
             }
-            $final[$zone] = $count;
+            $final[] = [
+                'name' => $zone,
+                'total' => $count
+            ];
             $count++;
         }
         
@@ -598,19 +603,19 @@ class StatisticsController extends Controller
         $month = $request->input('month');
 
         if ($municipality) {
-            $model->where('municipality', $municipality);
+            $model->where('municipality', 'LIKE', '%' . $municipality . '%');
         }
 
         if ($barangay) {
-            $model->where('barangay', $barangay);
+            $model->where('barangay', 'LIKE', '%' . $barangay . '%');
         }
 
         if ($year) {
-            $model->where('created_at', (new Carbon())->setYear($year));
+            $model->where('created_at', 'LIKE', '%' . $year . '%');
         }
 
         if ($month) {
-            $model->where('month', (new Carbon())->setYear($month));
+            $model->where('month', 'LIKE', '%' . $month . '%');
         }
 
         return $model;
