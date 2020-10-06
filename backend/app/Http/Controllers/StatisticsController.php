@@ -9,6 +9,8 @@ use App\Models\Marriage;
 use App\Models\InMigration;
 use App\Models\OutMigration;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -447,223 +449,170 @@ class StatisticsController extends Controller
 
     public function filter(Request $request)
     {
-        $municipality = $request->input('municipality');
-        $barangay = $request->input('barangay');
-        $year = $request->input('year');
-        $month = $request->input('month');
-
         $models = [
             Birth::class => 'birth',
             Death::class => 'death',
             InMigration::class => 'inmigration',
             OutMigration::class => 'outmigration',
-            Marriage::class => 'marriage',
         ];
 
-        $results = [];
+        $data = [
+            'genders' => [],
+        ];
+
+        $data['married'] = $this->_applyFilters(
+            $request,
+            new Marriage()
+        )->count();
+        $data['district'] = null;
+        $data['population'] = 0;
+        $data['households'] = 0;
+        $data['barangays'] = 0;
+        $data['zones'] = 0;
+        $tops = [
+            'barangays' => [],
+            'zones' => [],
+        ];
 
         foreach ($models as $model => $name) {
-            $data = [
-                'municipality' => [],
-                'barangays' => [],
+            $data['genders'][$name] = [
+                'male' => $this->_applyFilters(
+                    $request,
+                    $model::where('sex', 'Male')
+                )->count(),
+                'female' => $this->_applyFilters(
+                    $request,
+                    $model::where('sex', 'Female')
+                )->count(),
             ];
+            $sample = $this->_applyFilters($request, new $model())->first();
+            if ($sample && !$data['district']) {
+                $data['district'] = $sample->district;
+            }
+            $data['population'] += $this->_applyFilters(
+                $request,
+                new $model()
+            )->count();
 
-            $municipalities = $model
-                ::selectRaw('municipality, COUNT(municipality) as total')
-                ->groupBy('municipality');
+            $data['households'] += $this->_applyFilters(
+                $request,
+                $model::selectRaw('*')->groupBy('household_number')
+            )->count();
 
-            if ($municipality) {
-                $municipalities->where('municipality', $municipality);
-            }
-            if ($barangay) {
-                $municipalities->where('barangay', $barangay);
-            }
-            if ($year) {
-                $municipalities->where('created_at', $year);
-            }
-            if ($month) {
-                $municipalities->where('month', $month);
-            }
+            $data['barangays'] += $this->_applyFilters(
+                $request,
+                $model::selectRaw('*')->groupBy('barangay')
+            )->count();
 
-            $municipalities->get();
-
-            foreach ($municipalities as $record) {
-                if (!isset($data['municipalities'][$record->municipality])) {
-                    $data['municipalities'][$record->municipality] = [
-                        'records' => $record->total,
-                        'barangays' => [],
-                    ];
-                } else {
-                    $data['municipalities'][$record->municipality]['records'] +=
-                        $record->total;
-                }
-            }
-
-            $barangays = $model
-                ::selectRaw('barangay, municipality, COUNT(barangay) as total')
-                ->groupBy('barangay');
-
-            if ($municipality) {
-                $barangays->where('municipality', $municipality);
-            }
-            if ($barangay) {
-                $barangays->where('barangay', $barangay);
-            }
-            if ($year) {
-                $barangays->where('created_at', $year);
-            }
-            if ($month) {
-                $barangays->where('month', $month);
-            }
-
-            $barangays->get();
-
+            $barangays = $this->_applyFilters(
+                $request,
+                $model
+                    ::selectRaw('barangay, COUNT(barangay) as total')
+                    ->groupBy('barangay')
+            )->get();
             foreach ($barangays as $record) {
-                if (!isset($data['barangays'][$record->barangay])) {
-                    $data['barangays'][$record->barangay] = [];
+                if (!isset($tops['barangays'][$record->barangay])) {
+                    $tops['barangays'][$record->barangay] = 0;
                 }
-
-                $data['barangays'][$record->barangay]['municipality'] =
-                    $record->municipality;
-                if (!isset($data['barangays'][$record->barangay]['records'])) {
-                    $data['barangays'][$record->barangay]['records'] =
-                        $record->total;
-                } else {
-                    $data['barangays'][$record->barangay]['records'] +=
-                        $record->total;
-                }
-
-                if (
-                    !Arr::exists(
-                        $data['municipalities'][$record->municipality][
-                            'barangays'
-                        ],
-                        $record->barangay
-                    )
-                ) {
-                    $data['municipalities'][$record->municipality][
-                        'barangays'
-                    ][] = $record->barangay;
-                }
+                $tops['barangays'][$record->barangay] += $record->total;
             }
-
-            $age_brackets = [
-                ['Age', 'Male', 'Female'],
-                ['Below 1 year old', 0, 0],
-                ['0-4', 0, 0],
-                ['5-9', 0, 0],
-                ['10-14', 0, 0],
-                ['15-19', 0, 0],
-                ['20-24', 0, 0],
-                ['25-29', 0, 0],
-                ['30-34', 0, 0],
-                ['35-39', 0, 0],
-                ['40-44', 0, 0],
-                ['45-49', 0, 0],
-                ['50-54', 0, 0],
-                ['55-59', 0, 0],
-                ['60-64', 0, 0],
-                ['64-69', 0, 0],
-                ['70-74', 0, 0],
-                ['75-79', 0, 0],
-                ['80 and above', 0, 0],
-            ];
-
-            $age_brackets_male = [];
-            $age_brackets_female = [];
-
-            if($model !== Birth::class) {
-                $records = $model
-                ::selectRaw('age_bracket, COUNT(age_bracket) as total')
-                ->groupBy('age_bracket')
-                ->where('sex', 'Male');
-
-                if ($municipality) {
-                    $records->where('municipality', $municipality);
-                }
-                if ($barangay) {
-                    $records->where('barangay', $barangay);
-                }
-                if ($year) {
-                    $records->where('created_at', $year);
-                }
-                if ($month) {
-                    $records->where('month', $month);
-                }
-
-                $records->get();
-
-                foreach ($records as $record) {
-                    if (!isset($age_brackets_male[$record->age_bracket])) {
-                        $age_brackets_male[$record->age_bracket] = 0;
-                    }
-                    $age_brackets_male[$record->age_bracket] += $record->total;
-                }
-                $records = $model
-                    ::selectRaw('age_bracket, COUNT(age_bracket) as total')
-                    ->groupBy('age_bracket')
-                    ->where('sex', 'Female')
-                    ->get();
-                foreach ($records as $record) {
-                    if (!isset($age_brackets_female[$record->age_bracket])) {
-                        $age_brackets_female[$record->age_bracket] = 0;
-                    }
-                    $age_brackets_female[$record->age_bracket] -=
-                        $record->total;
-                }
-            }
-
-            $records = Birth::selectRaw(
-                'age_bracket_of_mother, COUNT(age_bracket_of_mother) as total'
-            )->groupBy('age_bracket_of_mother');
-
-            if ($municipality) {
-                $records->where('municipality', $municipality);
-            }
-            if ($barangay) {
-                $records->where('barangay', $barangay);
-            }
-            if ($year) {
-                $records->where('created_at', $year);
-            }
-            if ($month) {
-                $records->where('month', $month);
-            }
-
-            $records->get();
-
-            foreach ($records as $record) {
-                if (!isset($age_brackets[$record->age_bracket])) {
-                    $age_brackets_female[$record->age_bracket_of_mother] = 0;
-                }
-                $age_brackets_female[$record->age_bracket_of_mother] +=
-                    $record->total;
-            }
-            
-            foreach ($age_brackets_male as $category => $count) {
-                foreach ($age_brackets as $index => $array) {
-                    if ($array[0] === $category) {
-                        $age_brackets[$index][1] += $count;
-                    }
-                }
-            }
-    
-            foreach ($age_brackets_female as $category => $count) {
-                foreach ($age_brackets as $index => $array) {
-                    if ($array[0] === $category) {
-                        $age_brackets[$index][2] -= $count;
-                    }
-                }
-            }
-
-            $data['age_brackets'] = $age_brackets;
-            $data['genders'] = [
-                'male' => $model::where('sex', 'Male')->count(),
-                'female' => $model::where('sex', 'Female')->count(),
-            ];
-            $results[$name] = $data;
         }
 
-        return $results;
+        $data['zones'] += $this->_applyFilters(
+            $request,
+            CPDB::selectRaw('*')->groupBy('zone')
+        )->count();
+
+        foreach (
+            $this->_applyFilters(
+                $request,
+                Marriage::selectRaw(
+                    'barangay, COUNT(barangay) as total'
+                )->groupBy('barangay')
+            )->get()
+            as $record
+        ) {
+            if (!isset($tops['barangays'][$record->barangay])) {
+                $tops['barangays'][$record->barangay] = 0;
+            }
+            $tops['barangays'][$record->barangay] += $record->total;
+        }
+
+        foreach (
+            $this->_applyFilters(
+                $request,
+                CPDB::selectRaw('zone, COUNT(zone) as total')->groupBy(
+                    'zone'
+                )
+            )->get()
+            as $record
+        ) {
+            if(!isset($tops['zones'][$record->zone])) {
+                $tops['zones'][$record->zone] = 0;
+            }
+            $tops['zones'][$record->zone] += $record->total;
+        }
+
+        $final = [];
+        $count = 0;
+        foreach(array_reverse(Arr::sort($tops['barangays'])) as $barangay => $count) {
+            if($count === 5) {
+                break;
+            }
+            $final[$barangay] = $count;
+            $count++;
+        }
+
+        $tops['barangays'] = $final;
+
+        $final = [];
+        $count = 0;
+        foreach(array_reverse(Arr::sort($tops['zones'])) as $zone => $count) {
+            if($count === 5) {
+                break;
+            }
+            $final[$zone] = $count;
+            $count++;
+        }
+        
+        $tops['zones'] = $final;
+        
+        $data['tops'] = $tops;
+
+        return $data;
+    }
+
+    /**
+     * Apply filters to a model.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
+     * @return \Illuminate\Database\Eloquent\Model $model
+     */
+    protected function _applyFilters(Request $request, $model)
+    {
+        $municipality = $request->input('municipality');
+        $barangay = $request->input('barangay');
+        $year = $request->input('year');
+        $month = $request->input('month');
+
+        if ($municipality) {
+            $model->where('municipality', $municipality);
+        }
+
+        if ($barangay) {
+            $model->where('barangay', $barangay);
+        }
+
+        if ($year) {
+            $model->where('created_at', (new Carbon())->setYear($year));
+        }
+
+        if ($month) {
+            $model->where('month', (new Carbon())->setYear($month));
+        }
+
+        return $model;
     }
 }
