@@ -35,13 +35,16 @@ export class ShowAdminStatusComponent implements OnInit {
 		fullname:''
 	}
 
+	imgIsLoading = false
 	getUser(id){
+		this.imgIsLoading = true
 		this.isLoading = true
 		this.AdminService.showAdmin(id).subscribe(data => {
 			this.admin = data		
 			this.isLoading = false			
 			data.profile_picture != null ? this.imgSrc = data.profile_picture.uri : 
-			this.imgSrc = '../../../../assets/avatars/boyorange.png'			
+			this.imgSrc = window.location.origin + '/assets/avatars/boy-blue.png'
+			this.imgIsLoading = false
 		})
 	}
 
@@ -57,7 +60,8 @@ export class ShowAdminStatusComponent implements OnInit {
 				this.isLoading = true	
 				const blocked = {blocked:true}	
 				this.AdminService.blockorReactivate( blocked, this.admin.id ).subscribe(data => {
-					this.ngOnInit()		
+					this.admin = data
+					this.isLoading = false
 				})
 			} 
 		})	
@@ -76,7 +80,8 @@ export class ShowAdminStatusComponent implements OnInit {
 				this.isLoading = true	
 				const blocked = {blocked:false}
 				this.AdminService.blockorReactivate( blocked, this.admin.id ).subscribe(data => {				
-					this.ngOnInit()			
+					this.admin = data
+					this.isLoading = false
 				})
 			}			
 		})	
@@ -114,7 +119,8 @@ export class ShowAdminStatusComponent implements OnInit {
 		this.changeRole = false
 		const role = {role:this.newRole}
 		this.AdminService.updateRole( role, this.admin.id ).subscribe(data => {
-			this.ngOnInit()			
+			this.admin = data
+			this.isLoading = false
 		})
 	}
 
@@ -132,6 +138,7 @@ export class ShowAdminStatusComponent implements OnInit {
 				formData.append('_method', 'PUT'); 
 				this.AdminService.changeProfilePicture(formData,this.admin.id).subscribe(data =>{
 					this.isLoading = false		
+					this.UtilityService.setAlert('Profile Image has been successfully changed','success')
 				})
 			}
 		}		

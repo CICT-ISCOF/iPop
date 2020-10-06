@@ -39,6 +39,7 @@ export class InMigsTableComponent implements OnInit {
 
 	theme = localStorage.getItem('data-theme')
 
+	tableData = []
 	getCPDBLists(){
 		this.pagination = {
 			currentPage:0,
@@ -49,6 +50,7 @@ export class InMigsTableComponent implements OnInit {
 		this.isLoading = true	
 		this.InMigService.getInMigrationLists().subscribe(response=>{				
 			this.InMigService.setData(response.data)
+			this.tableData = response.data
 			this.pagination.currentPage = response.current_page
 			this.pagination.lastPage = response.last_page
 			for(let i = 0; i <= response.last_page; i ++){

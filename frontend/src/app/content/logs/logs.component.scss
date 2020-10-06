@@ -5,6 +5,18 @@
     transform: translate(-30px);
 }
 
+.flex-container {
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader-holder {
+    margin-left: 100px;
+}
+
 .container {
     padding: 0;
 }
@@ -27,12 +39,6 @@ i:hover {
 
 i:active {
     opacity: .4 !important;
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    text-align: center;
 }
 
 .search-container {

@@ -1,5 +1,7 @@
+import { keyframes } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-
+import { CountService } from '../../services/count.service'
+import { SocketsService } from '../../services/sockets.service'
 
 @Component({
   selector: 'app-profiling',
@@ -8,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilingComponent implements OnInit {
 
-	constructor() { }
+	constructor(
+		private CountService : CountService,
+		private SocketsService : SocketsService
+	) { }
 
 	ngOnInit(): void {
 		
@@ -17,6 +22,10 @@ export class ProfilingComponent implements OnInit {
 		}else{
 			this.maekActive(localStorage.getItem('tab'))
 		}
+		this.getCountTpyes()
+		this.getSocketsAll()
+		this.getSocketsComments()
+		this.getSocketRecords()
 	}
 
 	tabs = {
@@ -72,7 +81,49 @@ export class ProfilingComponent implements OnInit {
 		}
 	}
 
+	count = {
+		'Birth':'',
+		'Death':'' ,
+		'CPDB':'',
+		'InMigration':'' ,
+		'OutMigration':'' ,
+		'Marriage':'' ,
+	}
+
+	getCountTpyes(){
+		for(let key in this.count){
+			this.CountService.getRecordCount(key).subscribe(data => {
+				this.count[key] = data
+			})			
+		}
+	}
 
 
+	commentSubscriptions 
 
+	getSocketsAll(){
+		this.SocketsService.getAll().subscribe(data => {
+			console.log('getAll',data)
+		})
+	}
+
+	getSocketsComments(){
+		this.SocketsService.getComments().subscribe(data => {
+			console.log('getComments',data)
+			this.commentSubscriptions = data
+		})
+
+		this.commentSubscriptions.forEach(element => {
+			//socket io element
+		});
+	}
+
+
+	getSocketRecords(){
+		this.SocketsService.getRecord().subscribe(data => {
+			console.log('getRecord',data)
+		})
+	}
+
+	
 }

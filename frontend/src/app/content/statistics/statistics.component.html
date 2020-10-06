@@ -22,6 +22,7 @@
                     <p>Number of Registered Municipalities</p>
                     <h2>
                         <ng2-odometer [number]="totals.municipalities" [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>
+
                     </h2>
                 </div>
                 <div class="icon-container ml-auto">
@@ -96,13 +97,19 @@
         <div class="form-group col-md-6">
             <h3>Top Populated Municipalities</h3>
             <p style="color:gray">All over Iloilo</p>
+            <div *ngIf="population.top.length == 0 " class="flex-container">
+                <div class="spinner-border text-light fast" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
             <ul class="list-group" [@listAnimation]="population.top.length">
                 <li *ngFor="let municipality of population.top" class="list-group-item barangays">
                     <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
                     <p>{{municipality.name}}</p>
                     <p>{{municipality.total}}</p>
                     <p>
-                        <ng2-odometer class="low" [number]=" municipality.total / population.total * 100 | number:'1.0-0' " [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>%</p>
+                        <ng2-odometer class="low" [number]=" municipality.total / population.total * 100 | number:'1.0-0' " [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }">
+                        </ng2-odometer>%</p>
 
                 </li>
             </ul>
@@ -121,15 +128,23 @@
             <hr>
         </div>
         <div class="form-group col-md-6">
-            <label for="municipality">Municipality</label>
+            <label for="municipality">
+                <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                Municipality</label>
             <select (change)="getBarangays($event)" class="form-control" id="municipality">
                 <option selected disabled>Choose Municipality</option>
                 <option *ngFor="let municipality of municipalities" [value]="municipality.code">{{municipality.name}}</option>
-                </select>
+            </select>
         </div>
 
         <div class="form-group col-md-6">
-            <label for="barangay">Barangay</label>
+            <label for="barangay">
+                <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                Barangay</label>
             <select (change)="setBarangay($event)" class="form-control" id="barangay">
                 <option selected disabled>Choose Barangay</option>
                 <option *ngFor="let barangay of barangays">{{barangay.name}}</option>
@@ -166,173 +181,183 @@
             </span>
         </h4>
         <hr>
-        <div class="row">
-            <div class="col-md-6">
-                <p>District : <span>4</span></p>
+
+        <div *ngIf="!filteredCensusData.hasResults" class="flex-container">
+            <div class="spinner-border text-warning fast" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <p>Population</p>
-                <ul class="list-group">
-                    <li class="list-group-item barangays">
-                        <i style="color:#32B0DF;font-size: 20px;" class="fas fa-user"></i>
-                        <p> <span class="badge badge-info"> 14,400</span> </p>
-                        <p style="margin-right: 10px;width: 50%;margin-left: auto;"><span class="mid">14%</span> of Province of Iloilo</p>
-                    </li>
-                </ul>
+
+        <div class="row" *ngIf="filteredCensusData.hasResults">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>District : <span>{{filteredCensusData.district == null ? 'Not Avilable' : filteredCensusData.district}}</span></p>
+                </div>
             </div>
-            <div class="col-md-5">
-                <p>Households</p>
-                <ul class="list-group">
-                    <li class="list-group-item barangays">
-                        <i style="color:#A448B1;font-size: 20px;" class="fas fa-home"></i>
-                        <p> <span class="badge badge-info"> 14,400</span> </p>
-                        <p style="margin-right: 10px;width: 50%;margin-left: auto;"><span class="mid">14%</span> of Province of Iloilo</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <hr>
-                <p>
-                    <i style="font-size: 20px !important;color:#2659D8" class="fas fa-ship"></i> &nbsp; Total Barangays: <span>78</span>
-                </p>
-            </div>
-            <hr>
-            <div class="col-md-6">
-                <hr>
-                <p>
-                    <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i> &nbsp; Total Zones: <span>78</span>
-                </p>
-            </div>
-            <hr>
-            <div class="col-md-6 mt-20">
-                <hr>
-                <p> Barangays Lists: </p>
-                <div>
-                    <ul class="list-group" [@listAnimation]="5">
-                        <li *ngFor="let item of [0,1,1,1,1]" class="list-group-item barangays">
-                            <i style="font-size: 20px !important;color:#2659D8" class="fas fa-ship"></i>
-                            <p>ilaud</p>
-                            <p>290</p>
-                            <p><span class="low">84%</span></p>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Population</p>
+                    <ul class="list-group">
+                        <li class="list-group-item barangays">
+                            <i style="color:#32B0DF;font-size: 20px;" class="fas fa-user"></i>
+                            <p> <span class="badge badge-info"> {{filteredCensusData.population}}</span> </p>
+                            <p style="margin-right: 10px;width: 50%;margin-left: auto;"><span class="mid">  {{filteredCensusData.population / population.total * 100 | number:'1.0-0'}}%  </span> of Province of Iloilo</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-5">
+                    <p>Households</p>
+                    <ul class="list-group">
+                        <li class="list-group-item barangays">
+                            <i style="color:#A448B1;font-size: 20px;" class="fas fa-home"></i>
+                            <p> <span class="badge badge-info"> {{filteredCensusData.households}} </span> </p>
+                            <p style="margin-right: 10px;width: 50%;margin-left: auto;"><span class="mid"> {{filteredCensusData.households / population.total * 100 | number:'1.0-0'}} % </span> of Province of Iloilo</p>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6 mt-20">
+            <div class="row">
+                <div class="col-md-6">
+                    <br>
+                    <p>
+                        <i style="font-size: 20px !important;color:#2659D8" class="fas fa-ship"></i> &nbsp; Total Barangays: <span>{{filteredCensusData.barangays}}</span>
+                    </p>
+                </div>
                 <hr>
-                <p>Zones Lists:</p>
-                <ul class="list-group" [@listAnimation]="5">
-                    <li *ngFor="let item of [0,1,1,1,1]" class="list-group-item barangays">
-                        <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i>
-                        <p>1</p>
-                        <p>90</p>
-                        <p><span class="high">1%</span></p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <br> <br>
-                <p>
-                    <i style="font-size: 20px !important;color:#81D340" class="fas fa-globe-africa"></i> &nbsp; Area
-                    <span> 54.48 km2 (21.03 sq mi) </span>
-                </p> <br>
+                <div class="col-md-6">
+                    <br>
+                    <p>
+                        <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i> &nbsp; Total Zones: <span>{{filteredCensusData.zones.length}}</span>
+                    </p>
+                </div>
                 <hr>
+                <div class="col-md-6 mt-20">
+                    <br><br>
+                    <p> Barangay Lists: </p>
+                    <div>
+                        <ul class="list-group" [@listAnimation]="5">
+                            <li *ngFor="let barangay of filteredCensusData.tops.barangays" class="list-group-item barangays">
+                                <i style="font-size: 20px !important;color:#2659D8" class="fas fa-ship"></i>
+                                <p>{{barangay.name}}</p>
+                                <p>{{barangay.total}}</p>
+                                <p><span class="low">84%</span></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-20">
+                    <br><br>
+                    <p>Zones Lists:</p>
+                    <ul class="list-group" [@listAnimation]="5">
+                        <li *ngFor="let zone of filteredCensusData.tops.zones" class="list-group-item barangays">
+                            <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i>
+                            <p>{{zone.name}}</p>
+                            <p>{{zone.total}}</p>
+                            <p><span class="high">1%</span></p>
+                        </li>
+                    </ul>
+                    <p *ngIf="filteredCensusData.tops.zones.length == 0">No listed zones yet..</p>
+                </div>
             </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-6">
-                <p>
-                    <i style="font-size: 20px !important;color:wheat" class="fas fa-baby"></i> &nbsp; Births<span> - 540 | <span class="mid">14%</span></span>
-                </p>
-                <ul class="list-group">
-                    <li class="list-group-item barangays">
-                        <i style="font-size: 20px !important;color: teal;margin-right: 20px;" class="fas fa-mars"></i>
-                        <p style="text-align: left;">Male</p>
-                        <p style="text-align: left;">290</p>
-                        <p><span class="mid">14%</span>of Zaragga</p>
-                    </li>
-                    <li class="list-group-item barangays">
-                        <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
-                        <p style="text-align: left;">Female</p>
-                        <p style="text-align: left;">290</p>
-                        <p><span class="mid">14%</span> of Zaragga</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    <i style="font-size: 20px !important;color:red;margin-right: 20px;" class="fas fa-book-dead"></i> &nbsp; Deaths
-                    <span> - 54,000 |<span class="mid">14%</span></span>
-                </p>
-                <li class="list-group-item barangays">
-                    <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
-                    <p style="text-align: left;">Male</p>
-                    <p style="text-align: left;">290</p>
-                    <p><span class="mid">14%</span> of Zaragga</p>
-                </li>
-                <li class="list-group-item barangays">
-                    <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
-                    <p style="text-align: left;">Female</p>
-                    <p style="text-align: left;">290</p>
-                    <p><span class="mid">14%</span>of Zaragga</p>
-                </li>
+            <div class="row">
+                <div class="col-md-12">
+                    <br> <br>
+                    <p>
+                        <i style="font-size: 20px !important;color:#81D340" class="fas fa-globe-africa"></i> &nbsp; Area
+                        <span> 54.48 km2 (21.03 sq mi) </span>
+                    </p> <br>
 
+                </div>
             </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-6"><br> <br><br>
-                <p>
-                    <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-arrival"></i> &nbsp; Migrants <span> - 54,000 | <span class="mid">54%</span></span>
-                </p>
-                <ul class="list-group">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p>
+                        <i style="font-size: 20px !important;color:wheat" class="fas fa-baby"></i> &nbsp; Births<span> - {{filteredCensusData.genders.birth.total}} | <span class="mid">{{filteredCensusData.genders.birth.total / filteredCensusData.population * 100 | number:'1.0-0'}}%</span></span>
+                    </p>
+                    <ul class="list-group">
+                        <li class="list-group-item barangays">
+                            <i style="font-size: 20px !important;color: teal;margin-right: 20px;" class="fas fa-mars"></i>
+                            <p style="text-align: left;">Male</p>
+                            <p style="text-align: left;">{{filteredCensusData.genders.birth.male}}</p>
+                            <p><span class="mid">{{filteredCensusData.genders.birth.male / filteredCensusData.population * 100 | number:'1.0-0'}}%</span> of {{filter.municipality}}</p>
+                        </li>
+                        <li class="list-group-item barangays">
+                            <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
+                            <p style="text-align: left;">Female</p>
+                            <p style="text-align: left;">{{filteredCensusData.genders.birth.female}}</p>
+                            <p><span class="mid">{{filteredCensusData.genders.birth.female / filteredCensusData.population * 100 | number:'1.0-0'}}%</span> of {{filter.municipality}}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <p>
+                        <i style="font-size: 20px !important;color:red;margin-right: 20px;" class="fas fa-book-dead"></i> &nbsp; Deaths
+                        <span> - {{filteredCensusData.genders.death.total}}  |<span class="mid">{{filteredCensusData.genders.death.total / filteredCensusData.population * 100 | number:'1.0-0'}}%</span></span>
+                    </p>
                     <li class="list-group-item barangays">
                         <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
                         <p style="text-align: left;">Male</p>
-                        <p style="text-align: left;">290</p>
-                        <p><span class="mid">14%</span> of Zaragga</p>
+                        <p style="text-align: left;">{{filteredCensusData.genders.death.male}}</p>
+                        <p><span class="mid">{{filteredCensusData.genders.death.male / filteredCensusData.population * 100 | number:'1.0-0'}}%</span> of {{filter.municipality}}</p>
                     </li>
                     <li class="list-group-item barangays">
                         <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
                         <p style="text-align: left;">Female</p>
-                        <p style="text-align: left;">290</p>
-                        <p><span class="mid">14%</span> of Zaragga</p>
+                        <p style="text-align: left;">{{filteredCensusData.genders.death.female}}</p>
+                        <p><span class="mid">{{filteredCensusData.genders.death.female / filteredCensusData.population * 100 | number:'1.0-0'}}%</span> of {{filter.municipality}}</p>
                     </li>
-                </ul>
-            </div>
-            <div class="col-md-6"><br> <br><br>
-                <p>
-                    <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-departure"></i> &nbsp; Out Migrants<span> - 54,000 | <span class="mid">14%</span></span>
-                </p>
-                <ul class="list-group">
-                    <li class="list-group-item barangays">
-                        <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
-                        <p style="text-align: left;">Male</p>
-                        <p style="text-align: left;">290</p>
-                        <p><span class="mid">14%</span> of Zaragga</p>
-                    </li>
-                    <li class="list-group-item barangays">
-                        <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
-                        <p style="text-align: left;">Female</p>
-                        <p style="text-align: left;">290</p>
-                        <p><span class="mid">14%</span> of Zaragga</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12"><br>
-                <p>
-                    <i style="font-size: 20px !important;color:pink;margin-right: 20px;" class="fas fa-people-carry"></i> &nbsp; Married<span> 25,000 | <span class="mid">14%</span> of Zarraga</span>
-                </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6"><br> <br><br>
+                    <p>
+                        <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-arrival"></i> &nbsp; Migrants <span> - {{filteredCensusData.genders.inmigration.total}}  | <span class="mid">{{filteredCensusData.genders.inmigration.total / filteredCensusData.population * 100 | number:'1.0-0'}}%</span></span>
+                    </p>
+                    <ul class="list-group">
+                        <li class="list-group-item barangays">
+                            <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
+                            <p style="text-align: left;">Male</p>
+                            <p style="text-align: left;">{{filteredCensusData.genders.inmigration.male}}</p>
+                            <p><span class="mid">{{filteredCensusData.genders.inmigration.male / filteredCensusData.population * 100 | number:'1.0-0'}}%</span> of {{filter.municipality}}</p>
+                        </li>
+                        <li class="list-group-item barangays">
+                            <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
+                            <p style="text-align: left;">Female</p>
+                            <p style="text-align: left;">{{filteredCensusData.genders.inmigration.female}}</p>
+                            <p><span class="mid">{{filteredCensusData.genders.inmigration.female / filteredCensusData.population * 100 | number:'1.0-0'}}%</span> of {{filter.municipality}}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6"><br> <br><br>
+                    <p>
+                        <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-departure"></i> &nbsp; Out Migrants<span> - {{filteredCensusData.genders.outmigration.total}}  | <span class="mid">{{filteredCensusData.genders.outmigration.total / filteredCensusData.population * 100 | number:'1.0-0'}}%</span></span>
+                    </p>
+                    <ul class="list-group">
+                        <li class="list-group-item barangays">
+                            <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-mars"></i>
+                            <p style="text-align: left;">Male</p>
+                            <p style="text-align: left;">{{ filteredCensusData.genders.outmigration.male }}</p>
+                            <p><span class="mid">{{filteredCensusData.genders.outmigration.male / filteredCensusData.population * 100 | number:'1.0-0'}}%</span> of {{filter.municipality}}</p>
+                        </li>
+                        <li class="list-group-item barangays">
+                            <i style="font-size: 20px !important;color:palevioletred;margin-right: 20px;" class="fas fa-venus"></i>
+                            <p style="text-align: left;">Female</p>
+                            <p style="text-align: left;">{{filteredCensusData.genders.outmigration.female}}</p>
+                            <p><span class="mid">{{filteredCensusData.genders.outmigration.female / filteredCensusData.population * 100 | number:'1.0-0'}}%</span> of {{filter.municipality}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12"><br>
+                    <p>
+                        <i style="font-size: 20px !important;color:pink;margin-right: 20px;" class="fas fa-people-carry"></i> &nbsp; Married <span>{{ filteredCensusData.married}} | <span class="mid">{{ filteredCensusData.married / filteredCensusData.population * 100 | number:'1.0-0'}}%</span>                        of Zarraga</span>
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -359,7 +384,11 @@
                 </span>
                 <span style="margin-left: 20px;font-size: 11px;" [class.low]="sexs.female / population.total * 100 > 50" [class.high]="sexs.female / population.total * 100 < 50">{{ sexs.female / population.total * 100 | number:'1.0-0' }}%</span> </span>
             </h4>
-            <div id="male-and-female" class="w-100"></div>
+            <div id="male-and-female" class="w-100">
+                <div class="spinner-border text-warning fast" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
         </div>
         <br>
 
@@ -375,7 +404,11 @@
                 <span style="margin-left: 20px;font-size: 11px;" [class.low]="month.birth.total/ population.total * 100 > 50" [class.high]="month.birth.total / population.total * 100 < 50">{{  month.birth.total / population.total * 100 | number:'1.0-0' }}%</span>                </span>
             </h4>
 
-            <div id="death-and-birth" class="w-100"></div>
+            <div id="death-and-birth" class="w-100">
+                <div class="spinner-border text-warning fast" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
         </div>
         <br>
 
@@ -390,22 +423,27 @@
                 <span style="margin-left: 20px;">{{ month.outmigration.total }} </span>
                 <span style="margin-left: 20px;" [class.low]="month.outmigration.total/ population.total * 100 > 50" [class.high]="month.outmigration.total / population.total * 100 < 50">{{  month.outmigration.total / population.total * 100 | number:'1.0-0' }}%</span>                </span>
             </h4>`
-            <div id="in-mig-and-Out-mig" class="w-100"></div>
+            <div id="in-mig-and-Out-mig" class="w-100">
+                <div class="spinner-border text-warning fast" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
         </div>
         <br>
 
         <div class="row container chart-container">
-            <h4 style="height: 70px;display: block;">Married <br>
-
+            <h4 class="marriage-total-population" style="height: 70px;display: block;">Married <br>
                 <span>Total couples:{{month.marriage.total}}</span> <br>
-                <span style="align-self: flex-end;" [class.low]="month.marriage.total/ population.total * 100 < 50" [class.high]="month.marriage.total / population.total * 100 > 50">{{ month.marriage.total / population.total * 100 | number:'1.0-0' }}% of total population</span></h4>
-            <google-chart class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions ">
-            </google-chart>
-            <!-- <div *ngIf="marriageisLoading " class="d-flex justify-content-center ">
-            <div class="spinner-border " role="status " style="color:#32B0DF ">
-                <span class="sr-only ">Loading...</span>
+                <span style="align-self: flex-end;" [class.low]="month.marriage.total/ population.total * 100 < 50" [class.high]="month.marriage.total / population.total * 100 > 50">{{ month.marriage.total / population.total * 100 | number:'1.0-0' }}% of total population</span>
+            </h4>
+            <div *ngIf="!marriageisLoading " class="flex-container">
+                <div class="spinner-border text-warning fast" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
-        </div> -->
+            <google-chart *ngIf="marriageisLoading || charts.married.length != 0" class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions "></google-chart>
+
+
         </div>
     </div>
 

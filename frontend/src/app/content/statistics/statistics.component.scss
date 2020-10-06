@@ -116,6 +116,9 @@ li {
     height: 107%;
     margin-top: -57px;
     width: 120% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .chart-container {
@@ -141,4 +144,12 @@ li {
     .chart-details {
         text-align: right;
     }
+}
+
+.flex-container {
+    height: 30vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

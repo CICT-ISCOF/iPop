@@ -28,7 +28,7 @@ export class LogsComponent implements OnInit {
 	}
 
 	isLoading = false
-
+	 
 
 	getAllLogs(){
 		this.isLoading = true
@@ -40,16 +40,18 @@ export class LogsComponent implements OnInit {
 				this.pagination.totalPages.push(i)
 			}			
 			this.isLoading = false				
+			this.pagination.totalPages.pop()
 		})
 	}
 
-	paginate(page){
-		this.isLoading = true	
+	isPaginating = false
+	paginate(page){	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.LogsService.paginateLogs(page).subscribe(response=>{
-			this.logs = response.data
-			this.isLoading = false	
+			this.logs = response.data		
 			this.LogsService.setPage(response.data)
+			this.isPaginating = false
 		})
 	}
 

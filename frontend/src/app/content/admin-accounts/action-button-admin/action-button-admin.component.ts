@@ -36,7 +36,7 @@ export class ActionButtonAdminComponent implements OnInit {
 		this.params = params.data
 		this.params
 		this.params.profile_picture != null ? this.imgSrc = this.params.profile_picture.uri : 
-		this.imgSrc =  this.randomImages[Math.floor(Math.random() * this.randomImages.length)];	
+		this.imgSrc = window.location.origin + '/assets/avatars/boy-blue.png'
 	}
 
 	randomImages = [

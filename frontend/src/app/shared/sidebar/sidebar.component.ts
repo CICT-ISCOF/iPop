@@ -4,6 +4,8 @@ import { UtilityService }  from '../../utility.service'
 import Swal from 'sweetalert2'
 import { MediaQueryService } from '../../media-query.service'
 import { DeviceService }  from '../../device.service'
+import { CountService } from '../../services/count.service'
+
 
 @Component({
   selector: 'app-sidebar',
@@ -15,7 +17,8 @@ export class SidebarComponent implements OnInit {
 	constructor(
 		private UtilityService: UtilityService,
 		private MediaQueryService : MediaQueryService,
-		private DeviceService : DeviceService
+		private DeviceService : DeviceService,
+		private CountService : CountService
 	) {
 		this.findRoute()
 		this.sidebarColor = this.UtilityService.geColor().subscribe(color => {
@@ -38,6 +41,7 @@ export class SidebarComponent implements OnInit {
 			this.hide = state
 		})
 	}
+
 	processSize(size){
 		if(size <= 600){
 			return false
@@ -49,7 +53,10 @@ export class SidebarComponent implements OnInit {
 	
 
 	ngOnInit(): void {
-		this.sidebarListener()		
+		this.sidebarListener()	
+		if(this.account || this.account != undefined){
+			this.getRecordCount()
+		}
 	}
  
 	sidebarColor : Subscription
@@ -102,10 +109,6 @@ export class SidebarComponent implements OnInit {
 		return color
 	}
 	
-
-	
-
-
 	subscription : Subscription
 	
 	icons = {
@@ -268,10 +271,16 @@ export class SidebarComponent implements OnInit {
 	
 	}
 
-	
 	findRoute(){
 		this.subscription = this.UtilityService.getActiveItemonSidebar().subscribe(data =>{
 			this.active(data)	
+		})
+	}
+
+	pendingCount = 0
+	getRecordCount(){		
+		this.CountService.getOverlAllCount().subscribe(data => {		
+			this.pendingCount = data
 		})
 	}
 

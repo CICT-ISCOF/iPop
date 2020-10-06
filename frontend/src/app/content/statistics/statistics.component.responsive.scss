@@ -1,13 +1,13 @@
 @media only screen and (max-width: 600px) {
     .statistics-component {
         padding: 10px 50px;
-        padding-right: 35px;
+        padding-right: 15px;
     }
     .statistics-component::before {
         width: 130%;
-        height: 400px;
+        height: 100%;
         padding: 10px 50px;
-        background: var(--red1);
+        background: var(--bg);
         position: absolute;
         z-index: 0;
         content: '';
@@ -104,5 +104,8 @@
             width: 200px !important;
             margin-right: 50px;
         }
+    }
+    .marriage-total-population {
+        height: 90px !important;
     }
 }

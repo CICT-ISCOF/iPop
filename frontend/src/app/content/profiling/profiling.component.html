@@ -47,31 +47,31 @@
                     <path fill-rule="evenodd" d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z"/>
                     <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                 </svg>Census
-                <span class="badge badge-danger">21</span>
+                <span class="badge badge-danger">{{count.CPDB}}</span>
             </a>
         </li>
         <li (click)="maekActive('Deaths')" class="nav-item">
             <a [class.active]="tabs.Deaths == true" class="nav-link"> <i class="fas fa-skull-crossbones"></i>Deaths
 
-                <span class="badge badge-danger">5</span>
+                <span class="badge badge-danger">{{count.Death}}</span>
             </a>
         </li>
         <li (click)="maekActive('Births')" class="nav-item">
             <a [class.active]="tabs.Births == true" class="nav-link">
                 <i class="fas fa-baby"></i>Births
-                <span class="badge badge-danger">12</span>
+                <span class="badge badge-danger">{{count.Birth}}</span>
             </a>
         </li>
         <li (click)="maekActive('InMigs')" class="nav-item">
             <a [class.active]="tabs.InMigs == true" class="nav-link">
                 <i class="fas fa-plane-arrival"></i>In-Migration
-                <span class="badge badge-danger">42</span>
+                <span class="badge badge-danger">{{count.InMigration}}</span>
             </a>
         </li>
         <li (click)="maekActive('OutmiGS')" class="nav-item">
             <a [class.active]="tabs.OutmiGS == true" class="nav-link">
                 <i style="transform: scaleX(-1);" class="fas fa-plane-departure"></i>Out-Migration
-                <span class="badge badge-danger">21</span>
+                <span class="badge badge-danger">{{count.OutMigration}}</span>
             </a>
         </li>
         <li (click)="maekActive('Marraige')" class="nav-item">
@@ -79,7 +79,7 @@
                 <svg style="margin-left: -5px;" width="23PX" height="23PX" viewBox="0 0 16 16" class="bi bi-suit-heart-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
                 </svg>Marriage
-                <span class="badge badge-danger">65</span>
+                <span class="badge badge-danger">{{count.Marriage}}</span>
             </a>
         </li>
 
