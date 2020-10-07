@@ -143,7 +143,7 @@ class CMSController extends Controller
                 $data['lists'] = LinkList::create(['link_id' => $link->id]);
             }
             if ($type === 'slider' && !$data['sliders']) {
-                $data['sliders'] = SliderList::create(['lind_id' => $link->id]);
+                $data['sliders'] = SliderList::create(['link_id' => $link->id]);
             }
         }
 
