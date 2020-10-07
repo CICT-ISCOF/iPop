@@ -17,6 +17,7 @@ class CreateLinkListsTable extends Migration
         Schema::create('link_lists', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(new Link());
+            $table->string('title');
             $table->timestamps();
         });
     }

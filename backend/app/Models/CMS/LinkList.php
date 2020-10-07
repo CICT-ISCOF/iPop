@@ -9,7 +9,7 @@ class LinkList extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['link_id'];
+    protected $fillable = ['title', 'link_id'];
 
     protected static function booted()
     {

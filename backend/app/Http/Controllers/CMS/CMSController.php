@@ -45,6 +45,7 @@ class CMSController extends Controller
             'items.*.file' => ['required', 'base64'],
         ],
         'list' => [
+            'title' => ['required', 'string'],
             'items' => ['required', 'array'],
         ],
         'media' => [
@@ -117,17 +118,39 @@ class CMSController extends Controller
             return response($validator->messages()->all(), 422);
         }
 
+        $json = $this->cleanArray($json);
+
+        $invalid_indexes = [];
+        foreach ($json as $index => $object) {
+            $type = $object['type'];
+            if (!in_array($type, array_keys($this->rules))) {
+                $invalid_indexes[] = $index;
+                continue;
+            }
+            $validator = $this->makeValidator($object, $this->rules[$type]);
+            if ($validator->fails()) {
+                $invalid[] = [
+                    'payload' => $object,
+                    'messages' => $validator->messages()->all(),
+                ];
+                $invalid_indexes[] = $index;
+                continue;
+            }
+        }
+
+        $json = $this->cleanArray($json);
+
+        foreach($invalid_indexes as $index) {
+            unset($json[$index]);
+        }
+
+        $json = $this->cleanArray($json);
+
         $data['link'] = Link::create($json[$linkIndex]);
         $link = $data['link'];
         unset($json[$linkIndex]);
 
-        $clean = [];
-
-        foreach($json as $object) {
-            $clean[] = $object;
-        }
-
-        $json = $clean;
+        $json = $this->cleanArray($json);
 
         // Check individual possible listings
         foreach ($json as $object) {
@@ -139,7 +162,10 @@ class CMSController extends Controller
                 $data['grids'] = GridList::create(['link_id' => $link->id]);
             }
             if ($type === 'list' && !$data['lists']) {
-                $data['lists'] = LinkList::create(['link_id' => $link->id]);
+                $data['lists'] = LinkList::create([
+                    'link_id' => $link->id,
+                    'title' => $object['title'],
+                ]);
             }
             if ($type === 'slider' && !$data['sliders']) {
                 $data['sliders'] = SliderList::create(['link_id' => $link->id]);
@@ -147,19 +173,6 @@ class CMSController extends Controller
         }
 
         foreach ($json as $object) {
-            $type = $object['type'];
-            if (!in_array($type, array_keys($this->rules))) {
-                echo 'wrong';
-                continue;
-            }
-            $validator = $this->makeValidator($object, $this->rules[$type]);
-            if ($validator->fails()) {
-                $invalid[] = [
-                    'payload' => $object,
-                    'messages' => $validator->messages()->all(),
-                ];
-                continue;
-            }
             switch ($type) {
                 case 'article':
                     $file = File::process($object['file']);
@@ -354,8 +367,16 @@ class CMSController extends Controller
      *
      * @return \Illuminate\Validation\Validator
      */
-    public function makeValidator($data, $rules)
+    protected function makeValidator($data, $rules)
     {
         return Validator::make($data, $rules);
+    }
+
+    protected function cleanArray($iterable) {
+        $clean = [];
+        foreach($iterable as $element) {
+            $clean[] = $element;
+        }
+        return $clean;
     }
 }
