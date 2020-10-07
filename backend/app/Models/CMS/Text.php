@@ -9,7 +9,7 @@ class Text extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'link_id'];
+    protected $fillable = ['title', 'body', 'link_id'];
 
     public function link()
     {

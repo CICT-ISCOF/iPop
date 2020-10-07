@@ -18,7 +18,7 @@ class CreateTextsTable extends Migration
             $table->id();
             $table->foreignIdFor(new Link());
             $table->string('title');
-            $table->text('description');
+            $table->text('body');
             $table->timestamps();
         });
     }

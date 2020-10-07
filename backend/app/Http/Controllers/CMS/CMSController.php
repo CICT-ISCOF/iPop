@@ -22,6 +22,7 @@ class CMSController extends Controller
 {
     public function create(CMSRequest $request)
     {
+        return $request->all();
         $data = $request->validated();
         
         $link = Link::create($data);

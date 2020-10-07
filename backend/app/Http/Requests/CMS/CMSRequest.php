@@ -49,10 +49,10 @@ class CMSRequest extends FormRequest
 
             'sliders' => ['nullable', 'array'],
             'sliders.*.file' => ['required', 'base64'],
-            
+
             'texts' => ['nullable', 'array'],
             'texts.*.title' => ['required', 'string', 'max:255'],
-            'texts.*.description' => ['required', 'string'],
+            'texts.*.body' => ['required', 'string'],
         ];
     }
 }
