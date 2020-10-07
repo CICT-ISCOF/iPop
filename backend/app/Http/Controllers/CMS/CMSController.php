@@ -42,7 +42,7 @@ class CMSController extends Controller
         'grid' => [
             'items' => ['required', 'array'],
             'items.*.title' => ['required', 'string', 'max:255'],
-            'items.*.image' => ['required', 'base64'],
+            'items.*.file' => ['required', 'base64'],
         ],
         'list' => [
             'items' => ['required', 'array'],
@@ -181,7 +181,7 @@ class CMSController extends Controller
                     break;
                 case 'grid':
                     foreach($object['items'] as $gridData) {
-                        $file = File::process($gridData['image']);
+                        $file = File::process($gridData['file']);
                         $file->save();
                         $gridData['file_id'] = $file->id;
                         $data['grids']->items()->save(new GridListItem($gridData));
