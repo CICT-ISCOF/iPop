@@ -25,6 +25,6 @@ class CardList extends Model
 
     public function items()
     {
-        return $this->hasMany(GridListItem::class);
+        return $this->hasMany(CardListItem::class);
     }
 }
