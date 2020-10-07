@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SliderList extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['link_id'];
     protected static function booted()
     {
         static::deleting(function($list) {
