@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\CMS;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LinkRequest extends FormRequest
+class ArticleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class LinkRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'subcategory' => ['nullable'],
+            'description' => ['required', 'string'],
         ];
     }
 }

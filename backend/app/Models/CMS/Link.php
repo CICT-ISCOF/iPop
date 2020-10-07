@@ -11,6 +11,19 @@ class Link extends Model
 
     protected $fillable = ['title', 'sub_categories'];
 
+    protected static function booted()
+    {
+        static::deleting(function ($link) {
+            $link->cardLists->delete();
+            $link->gridLists->delete();
+            $link->linkLists->delete();
+            $link->sliderLists->delete();
+            $link->articles->delete();
+            $link->medias->delete();
+            $link->texts->delete();
+        });
+    }
+
     public function articles()
     {
         return $this->hasMany(Article::class);

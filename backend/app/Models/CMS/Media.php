@@ -9,6 +9,16 @@ use Illuminate\Database\Eloquent\Model;
 class Media extends Model
 {
     use HasFactory;
+    
+    protected $fillable = ['link_id', 'file_id'];
+    protected $with = ['file'];
+
+    protected static function booted()
+    {
+        static::deleting(function($media) {
+            $media->file->delete();
+        });
+    }
 
     public function link()
     {

@@ -9,6 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 class SliderListItem extends Model
 {
     use HasFactory;
+    protected $with = ['file'];
+
+    protected static function booted()
+    {
+        static::deleting(function($item) {
+            $item->file->delete();
+        });
+    }
 
     public function slider()
     {

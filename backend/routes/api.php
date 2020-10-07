@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BirthController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\CMS\CMSController;
+use App\Http\Controllers\CMS\LinkController;
 use App\Http\Controllers\DeathController;
 use App\Http\Controllers\CPDBController;
 use App\Http\Controllers\CommentController;
@@ -111,6 +113,10 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::get('/sockets/all', [ChannelController::class, 'index']);
     Route::get('/sockets/comments', [ChannelController::class, 'comments']);
     Route::get('/sockets/record', [ChannelController::class, 'record']);
+
+    // CMS
+    Route::apiResource('/cms/links', LinkController::class);
+    Route::post('/cms/all', [CMSController::class, 'create']);
 });
 
 // Public Files

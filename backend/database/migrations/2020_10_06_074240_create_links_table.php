@@ -16,7 +16,7 @@ class CreateLinksTable extends Migration
         Schema::create('links', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->json('sub_categories');
+            $table->json('sub_categories')->nullable();
             $table->timestamps();
         });
     }

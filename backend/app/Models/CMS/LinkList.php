@@ -9,6 +9,15 @@ class LinkList extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['link_id'];
+
+    protected static function booted()
+    {
+        static::deleting(function($list) {
+            $list->items->delete();
+        });
+    }
+
     public function link()
     {
         return $this->belongsTo(Link::class);

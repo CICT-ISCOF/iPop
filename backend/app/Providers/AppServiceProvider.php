@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,13 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Validator::extend('isFile', function (
-            $attribute,
-            $value,
-            $parameters,
-            $validator
-        ) {
-            return is_string($value) || $value instanceof UploadedFile;
-        });
+        
     }
 }

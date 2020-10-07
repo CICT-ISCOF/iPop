@@ -9,6 +9,13 @@ class SliderList extends Model
 {
     use HasFactory;
 
+    protected static function booted()
+    {
+        static::deleting(function($list) {
+            $list->items->delete();
+        });
+    }
+
     public function link()
     {
         return $this->belongsTo(Link::class);

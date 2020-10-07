@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Http\Requests\CMS\LinkRequest;
 use App\Models\CMS\Link;
 use Illuminate\Http\Request;
 
@@ -14,50 +15,43 @@ class LinkController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Link::with('articles')
+            ->with('cards')
+            ->with('grids')
+            ->with('lists')
+            ->with('medias')
+            ->with('sliders')
+            ->with('texts')
+            ->all();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CMS\LinkRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(LinkRequest $request)
     {
-        //
+        return Link::create($request->validated());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Link  $link
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Link $link)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Link  $link
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Link $link)
-    {
-        //
+        return Link::with('articles')
+            ->with('cards')
+            ->with('grids')
+            ->with('lists')
+            ->with('medias')
+            ->with('sliders')
+            ->with('texts')
+            ->findOrFail($id);
     }
 
     /**
@@ -69,7 +63,8 @@ class LinkController extends Controller
      */
     public function update(Request $request, Link $link)
     {
-        //
+        $link->update($request->only(['title', 'sub_categories']));
+        return $link;
     }
 
     /**
@@ -80,6 +75,7 @@ class LinkController extends Controller
      */
     public function destroy(Link $link)
     {
-        //
+        $link->delete();
+        return response('', 204);
     }
 }

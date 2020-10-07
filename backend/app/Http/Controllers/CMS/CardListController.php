@@ -14,17 +14,9 @@ class CardListController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return CardList::with('link')
+            ->with('items')
+            ->all();
     }
 
     /**
@@ -35,29 +27,20 @@ class CardListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response('', 403);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CardList  $cardList
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(CardList $cardList)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\CardList  $cardList
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(CardList $cardList)
-    {
-        //
+        return CardList::with('link')
+            ->with('items')
+            ->findOrFail($id);
     }
 
     /**
@@ -69,7 +52,7 @@ class CardListController extends Controller
      */
     public function update(Request $request, CardList $cardList)
     {
-        //
+        return response('', 403);
     }
 
     /**
@@ -80,6 +63,7 @@ class CardListController extends Controller
      */
     public function destroy(CardList $cardList)
     {
-        //
+        $cardList->delete();
+        return response('', 204);
     }
 }
