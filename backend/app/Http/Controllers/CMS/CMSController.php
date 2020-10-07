@@ -34,22 +34,26 @@ class CMSController extends Controller
             'file' => ['required', 'base64'],
         ],
         'card' => [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'file' => ['required', 'base64'],
+            'items' => ['required', 'array'],
+            'items.*.title' => ['required', 'string', 'max:255'],
+            'items.*.description' => ['required', 'string'],
+            'items.*.file' => ['required', 'base64'],
         ],
         'grid' => [
-            'title' => ['required', 'string', 'max:255'],
-            'file' => ['required', 'base64'],
+            'items' => ['required', 'array'],
+            'items.*.title' => ['required', 'string', 'max:255'],
+            'items.*.file' => ['required', 'base64'],
         ],
         'list' => [
-            'body' => ['required', 'string'],
+            'items' => ['required', 'array'],
+            'items.*.body' => ['required', 'string'],
         ],
         'media' => [
             'file' => ['required', 'base64'],
         ],
         'slider' => [
-            'file' => ['required', 'base64'],
+            'items' => ['required', 'array'],
+            'items.*.file' => ['required', 'base64'],
         ],
         'text' => [
             'title' => ['required', 'string', 'max:255'],
@@ -168,19 +172,25 @@ class CMSController extends Controller
                     $data['articles'][] = $article;
                     break;
                 case 'card':
-                    $file = File::process($object['file']);
-                    $file->save();
-                    $object['file_id'] = $file->id;
-                    $data['cards']->items()->save(new CardListItem($object));
+                    foreach($object['items'] as $cardData) {
+                        $file = File::process($cardData['file']);
+                        $file->save();
+                        $cardData['file_id'] = $file->id;
+                        $data['cards']->items()->save(new CardListItem($cardData));
+                    }
                     break;
                 case 'grid':
-                    $file = File::process($object['file']);
-                    $file->save();
-                    $object['file_id'] = $file->id;
-                    $data['grids']->items()->save(new GridListItem($object));
+                    foreach($object['items'] as $gridData) {
+                        $file = File::process($gridData['file']);
+                        $file->save();
+                        $gridData['file_id'] = $file->id;
+                        $data['grids']->items()->save(new GridListItem($gridData));
+                    }
                     break;
                 case 'list':
-                    $data['lists']->items()->save(new ListItem($object));
+                    foreach($object['items'] as $listData) {
+                        $data['lists']->items()->save(new ListItem($listData));
+                    }
                     break;
                 case 'media':
                     $file = File::process($object['file']);
@@ -191,12 +201,14 @@ class CMSController extends Controller
                     $data['medias'][] = $media;
                     break;
                 case 'slider':
-                    $file = File::process($object['file']);
-                    $file->save();
-                    $object['file_id'] = $file->id;
-                    $data['sliders']
-                        ->items()
-                        ->save(new SliderListItem($object));
+                    foreach($object['items'] as $sliderData) {
+                        $file = File::process($sliderData['file']);
+                        $file->save();
+                        $sliderData['file_id'] = $file->id;
+                        $data['sliders']
+                            ->items()
+                            ->save(new SliderListItem($sliderData));
+                    }
                     break;
                 case 'text':
                     $object['link_id'] = $link->id;
