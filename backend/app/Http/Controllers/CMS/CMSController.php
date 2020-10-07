@@ -173,6 +173,7 @@ class CMSController extends Controller
         }
 
         foreach ($json as $object) {
+            $type = $object['type'];
             switch ($type) {
                 case 'article':
                     $file = File::process($object['file']);
@@ -239,7 +240,6 @@ class CMSController extends Controller
         $listingKeys = [
             'cards',
             'grids',
-            'lists',
             'sliders'
         ];
 
@@ -248,6 +248,10 @@ class CMSController extends Controller
                 $data[$key] = $data[$key]->items;
             }
         }
+
+        if(isset($data['lists']) && $data['lists'] instanceof LinkList) {
+            $data['lists']->load('items');
+        } 
 
         return [
             'data' => $data,
