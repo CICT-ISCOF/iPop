@@ -13,6 +13,8 @@ use App\Models\CMS\GridListItem;
 use App\Models\CMS\LinkList;
 use App\Models\CMS\ListItem;
 use App\Models\CMS\Media;
+use App\Models\CMS\SliderList;
+use App\Models\CMS\SliderListItem;
 use App\Models\CMS\Text;
 use App\Models\File;
 
@@ -39,7 +41,9 @@ class CMSController extends Controller
                 $file->save();
                 $articleData['file_id'] = $file->id;
                 $articleData['link_id'] = $link->id;
-                $articles[] = Article::create($articleData);
+                $article = Article::create($articleData);
+                $article->file = $file;
+                $articles[] = $article;
             }
         }
 
@@ -51,7 +55,9 @@ class CMSController extends Controller
                 $file->save();
                 $cardData['file_id'] = $file->id;
                 $cardData['card_list_id'] = $cardList->id;
-                $cards[] = CardListItem::create($cardData);
+                $item = CardListItem::create($cardData);
+                $item->file = $file;
+                $cards[] = $item;
             }
         }
 
@@ -62,7 +68,9 @@ class CMSController extends Controller
                 $file->save();
                 $gridData['file_id'] = $file->id;
                 $gridData['grid_list_id'] = $gridList->id;
-                $grids[] = GridListItem::create($gridData);
+                $item = GridListItem::create($gridData);
+                $item->file = $file;
+                $grids[] = $item;
             }
         }
 
@@ -80,17 +88,22 @@ class CMSController extends Controller
                 $file->save();
                 $mediaData['link_id'] = $link->id;
                 $mediaData['file_id'] = $file->id;
-                $medias[] = Media::create($mediaData);
+                $media = Media::create($mediaData);
+                $media->file = $file;
+                $medias[] = $media;
             }
         }
 
         if(!empty($data['sliders'])) {
+            $sliderList = SliderList::create(['link_id' => $link->id]);
             foreach($data['sliders'] as $sliderData) {
                 $file = File::process($sliderData['file']);
                 $file->save();
-                $sliderData['link_id'] = $link->id;
+                $sliderData['slider_list_id'] = $sliderList->id;
                 $sliderData['file_id'] = $file->id;
-                $sliders[] = Media::create($sliderData);
+                $item = SliderListItem::create($sliderData);
+                $item->file = $file;
+                $sliders[] = $item;
             }
         }
 

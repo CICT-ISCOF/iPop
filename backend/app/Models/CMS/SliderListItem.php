@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class SliderListItem extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['file_id', 'slider_list_id'];
     protected $with = ['file'];
 
     protected static function booted()
