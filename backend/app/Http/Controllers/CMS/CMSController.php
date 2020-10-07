@@ -71,7 +71,7 @@ class CMSController extends Controller
             'articles' => [],
             'cards' => null,
             'grids' => null,
-            'lists' => null,
+            'lists' => [],
             'medias' => [],
             'sliders' => null,
             'texts' => [],
@@ -161,12 +161,6 @@ class CMSController extends Controller
             if ($type === 'grid' && !$data['grids']) {
                 $data['grids'] = GridList::create(['link_id' => $link->id]);
             }
-            if ($type === 'list' && !$data['lists']) {
-                $data['lists'] = LinkList::create([
-                    'link_id' => $link->id,
-                    'title' => $object['title'],
-                ]);
-            }
             if ($type === 'slider' && !$data['sliders']) {
                 $data['sliders'] = SliderList::create(['link_id' => $link->id]);
             }
@@ -201,16 +195,22 @@ class CMSController extends Controller
                     }
                     break;
                 case 'list':
+                    $object['link_id'] = $link->id;
+                    $list = LinkList::create($object);
                     foreach($object['items'] as $listData) {
                         if(is_string($listData)) {
-                            $data['lists']->items()->save(new ListItem([
+                            $list->items()->save(new ListItem([
                                 'body' => $listData
                             ]));
                         }
                         else if(isset($listData['body'])) {
-                            $data['lists']->items()->save(new ListItem($listData));
+                            $list->items()->save(new ListItem($listData));
                         }
                     }
+
+                    $list->load('items');
+                    
+                    $data['lists'][] = $list;
                     break;
                 case 'media':
                     $file = File::process($object['file']);
@@ -248,10 +248,6 @@ class CMSController extends Controller
                 $data[$key] = $data[$key]->items;
             }
         }
-
-        if(isset($data['lists']) && $data['lists'] instanceof LinkList) {
-            $data['lists']->load('items');
-        } 
 
         return [
             'data' => $data,

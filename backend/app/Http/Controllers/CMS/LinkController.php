@@ -18,7 +18,7 @@ class LinkController extends Controller
         return Link::with('articles')
             ->with('cards')
             ->with('grids')
-            ->with('linkLists.items')
+            ->with('lists.items')
             ->with('medias')
             ->with('sliders')
             ->with('texts')

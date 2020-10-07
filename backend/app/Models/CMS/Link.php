@@ -41,7 +41,7 @@ class Link extends Model
 
     public function lists()
     {
-        return $this->hasManyThrough(ListItem::class, LinkList::class);
+        return $this->hasMany(LinkList::class);
     }
 
     public function medias()
@@ -71,11 +71,6 @@ class Link extends Model
     public function gridLists()
     {
         return $this->hasMany(GridList::class);
-    }
-
-    public function linkLists()
-    {
-        return $this->hasMany(LinkList::class);
     }
 
     public function sliderLists()
