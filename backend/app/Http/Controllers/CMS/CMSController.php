@@ -46,7 +46,6 @@ class CMSController extends Controller
         ],
         'list' => [
             'items' => ['required', 'array'],
-            'items.*.body' => ['required', 'string'],
         ],
         'media' => [
             'file' => ['required', 'base64'],
@@ -189,7 +188,14 @@ class CMSController extends Controller
                     break;
                 case 'list':
                     foreach($object['items'] as $listData) {
-                        $data['lists']->items()->save(new ListItem($listData));
+                        if(is_string($listData)) {
+                            $data['lists']->items()->save(new ListItem([
+                                'body' => $listData
+                            ]));
+                        }
+                        else if(isset($listData['body'])) {
+                            $data['lists']->items()->save(new ListItem($listData));
+                        }
                     }
                     break;
                 case 'media':
