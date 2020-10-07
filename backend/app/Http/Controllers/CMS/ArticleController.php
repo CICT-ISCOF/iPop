@@ -15,7 +15,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return Article::with('link')->all();
+        return Article::with('link')->get();
     }
 
     /**

@@ -22,7 +22,7 @@ class LinkController extends Controller
             ->with('medias')
             ->with('sliders')
             ->with('texts')
-            ->all();
+            ->get();
     }
 
     /**

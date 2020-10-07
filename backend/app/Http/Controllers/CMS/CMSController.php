@@ -17,14 +17,217 @@ use App\Models\CMS\SliderList;
 use App\Models\CMS\SliderListItem;
 use App\Models\CMS\Text;
 use App\Models\File;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CMSController extends Controller
 {
-    public function create(CMSRequest $request)
+    protected $rules = [
+        'link' => [
+            'title' => ['required', 'string', 'max:255'],
+            'sub_categories' => ['nullable', 'json']
+        ],
+        'article' => [
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'file' => ['required', 'base64'],
+        ],
+        'card' => [
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'file' => ['required', 'base64'],
+        ],
+        'grid' => [
+            'title' => ['required', 'string', 'max:255'],
+            'file' => ['required', 'base64'],
+        ],
+        'list' => [
+            'body' => ['required', 'string'],
+        ],
+        'media' => [
+            'file' => ['required', 'base64'],
+        ],
+        'slider' => [
+            'file' => ['required', 'base64'],
+        ],
+        'text' => [
+            'title' => ['required', 'string', 'max:255'],
+            'body' => ['required', 'string'],
+        ],
+    ];
+
+    public function array(Request $request)
     {
-        return $request->all();
+        $hasLink = false;
+        $linkIndex = -1;
+
+        $data = [
+            'link' => [],
+            'articles' => [],
+            'cards' => null,
+            'grids' => null,
+            'lists' => null,
+            'medias' => [],
+            'sliders' => null,
+            'texts' => [],
+        ];
+
+        $json = $request->all();
+        $invalid = [];
+
+        // Make sure that all elements have types.
+        foreach ($json as $index => $object) {
+            if (!isset($object['type'])) {
+                $invalid[] = [
+                    'payload' => $object,
+                    'messages' => [
+                        'type' => ['Data does not have a type assigned.'],
+                    ],
+                ];
+                unset($json[$index]);
+            }
+        }
+
+        // Check if link object exists
+        foreach ($json as $index => $object) {
+            if ($object['type'] === 'link') {
+                $hasLink = true;
+                $linkIndex = $index;
+            }
+        }
+
+        if (!$hasLink) {
+            return response(
+                [
+                    'errors' => [
+                        'link' => ['A link is required.'],
+                    ],
+                ],
+                422
+            );
+        }
+
+        $validator = $this->makeValidator($json[$linkIndex], $this->rules['link']);
+
+        if($validator->fails()) {
+            return response($validator->messages()->all(), 422);
+        }
+
+        $data['link'] = Link::create($json[$linkIndex]);
+        $link = $data['link'];
+        unset($json[$linkIndex]);
+
+        $clean = [];
+
+        foreach($json as $object) {
+            $clean[] = $object;
+        }
+
+        $json = $clean;
+
+        // Check individual possible listings
+        foreach ($json as $object) {
+            $type = $object['type'];
+            if ($type === 'card' && !$data['cards']) {
+                $data['cards'] = CardList::create(['link_id' => $link->id]);
+            }
+            if ($type === 'grid' && !$data['grids']) {
+                $data['grids'] = GridList::create(['link_id' => $link->id]);
+            }
+            if ($type === 'list' && !$data['lists']) {
+                $data['lists'] = LinkList::create(['link_id' => $link->id]);
+            }
+            if ($type === 'slider' && !$data['sliders']) {
+                $data['sliders'] = SliderList::create(['lind_id' => $link->id]);
+            }
+        }
+
+        foreach ($json as $object) {
+            $type = $object['type'];
+            if (!in_array($type, array_keys($this->rules))) {
+                echo 'wrong';
+                continue;
+            }
+            $validator = $this->makeValidator($object, $this->rules[$type]);
+            if ($validator->fails()) {
+                $invalid[] = [
+                    'payload' => $object,
+                    'messages' => $validator->messages()->all(),
+                ];
+                continue;
+            }
+            switch ($type) {
+                case 'article':
+                    $file = File::process($object['file']);
+                    $file->save();
+                    $object['file_id'] = $file->id;
+                    $object['link_id'] = $link->id;
+                    $article = Article::create($object);
+                    $article->file = $file;
+                    $data['articles'][] = $article;
+                    break;
+                case 'card':
+                    $file = File::process($object['file']);
+                    $file->save();
+                    $object['file_id'] = $file->id;
+                    $data['cards']->items()->save(new CardListItem($object));
+                    break;
+                case 'grid':
+                    $file = File::process($object['file']);
+                    $file->save();
+                    $object['file_id'] = $file->id;
+                    $data['grids']->items()->save(new GridListItem($object));
+                    break;
+                case 'list':
+                    $data['lists']->items()->save(new ListItem($object));
+                    break;
+                case 'media':
+                    $file = File::process($object['file']);
+                    $file->save();
+                    $mediaData['link_id'] = $link->id;
+                    $mediaData['file_id'] = $file->id;
+                    $media = Media::create($mediaData);
+                    $data['medias'][] = $media;
+                    break;
+                case 'slider':
+                    $file = File::process($object['file']);
+                    $file->save();
+                    $object['file_id'] = $file->id;
+                    $data['sliders']
+                        ->items()
+                        ->save(new SliderListItem($object));
+                    break;
+                case 'text':
+                    $object['link_id'] = $link->id;
+                    $data['texts'][] = Text::create($object);
+                    break;
+            }
+        }
+
+        $listingKeys = [
+            'cards',
+            'grids',
+            'lists',
+            'sliders'
+        ];
+
+        foreach($listingKeys as $key) {
+            if(isset($data[$key]) && $data[$key] instanceof Model) {
+                $data[$key] = $data[$key]->items;
+            }
+        }
+
+        return [
+            'data' => $data,
+            'invalid' => $invalid,
+        ];
+    }
+
+    public function object(CMSRequest $request)
+    {
         $data = $request->validated();
-        
+
         $link = Link::create($data);
 
         $articles = [];
@@ -35,9 +238,8 @@ class CMSController extends Controller
         $sliders = [];
         $texts = [];
 
-        if(!empty($data['articles'])) {
-            foreach($data['articles'] as $articleData)
-            {
+        if (!empty($data['articles'])) {
+            foreach ($data['articles'] as $articleData) {
                 $file = File::process($articleData['file']);
                 $file->save();
                 $articleData['file_id'] = $file->id;
@@ -48,10 +250,9 @@ class CMSController extends Controller
             }
         }
 
-        if(!empty($data['cards'])) {
+        if (!empty($data['cards'])) {
             $cardList = CardList::create(['link_id' => $link->id]);
-            foreach($data['cards'] as $cardData)
-            {
+            foreach ($data['cards'] as $cardData) {
                 $file = File::process($cardData['file']);
                 $file->save();
                 $cardData['file_id'] = $file->id;
@@ -62,9 +263,9 @@ class CMSController extends Controller
             }
         }
 
-        if(!empty($data['grids'])) {
+        if (!empty($data['grids'])) {
             $gridList = GridList::create(['link_id' => $link->id]);
-            foreach($data['grids'] as $gridData) {
+            foreach ($data['grids'] as $gridData) {
                 $file = File::process($gridData['file']);
                 $file->save();
                 $gridData['file_id'] = $file->id;
@@ -75,16 +276,16 @@ class CMSController extends Controller
             }
         }
 
-        if(!empty($data['lists'])) {
+        if (!empty($data['lists'])) {
             $linkList = LinkList::create(['link_id' => $link->id]);
-            foreach($data['lists'] as $listData) {
+            foreach ($data['lists'] as $listData) {
                 $listData['link_list_id'] = $linkList->id;
                 $lists[] = ListItem::create($listData);
             }
         }
 
-        if(!empty($data['medias'])) {
-            foreach($data['medias'] as $mediaData) {
+        if (!empty($data['medias'])) {
+            foreach ($data['medias'] as $mediaData) {
                 $file = File::process($mediaData['file']);
                 $file->save();
                 $mediaData['link_id'] = $link->id;
@@ -95,9 +296,9 @@ class CMSController extends Controller
             }
         }
 
-        if(!empty($data['sliders'])) {
+        if (!empty($data['sliders'])) {
             $sliderList = SliderList::create(['link_id' => $link->id]);
-            foreach($data['sliders'] as $sliderData) {
+            foreach ($data['sliders'] as $sliderData) {
                 $file = File::process($sliderData['file']);
                 $file->save();
                 $sliderData['slider_list_id'] = $sliderList->id;
@@ -108,13 +309,13 @@ class CMSController extends Controller
             }
         }
 
-        if(!empty($data['texts'])) {
-            foreach($data['texts'] as $textData) {
+        if (!empty($data['texts'])) {
+            foreach ($data['texts'] as $textData) {
                 $textData['link_id'] = $link->id;
                 $texts[] = Text::create($textData);
             }
         }
-        
+
         return [
             'link' => $link,
             'aricles' => $articles,
@@ -125,5 +326,18 @@ class CMSController extends Controller
             'sliders' => $sliders,
             'texts' => $texts,
         ];
+    }
+
+    /**
+     * Create a validator for the given data.
+     *
+     * @param mixed $data
+     * @param array $rules
+     *
+     * @return \Illuminate\Validation\Validator
+     */
+    public function makeValidator($data, $rules)
+    {
+        return Validator::make($data, $rules);
     }
 }

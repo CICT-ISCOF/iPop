@@ -116,7 +116,8 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
 
     // CMS
     Route::apiResource('/cms/links', LinkController::class);
-    Route::post('/cms/all', [CMSController::class, 'create']);
+    Route::post('/cms/array', [CMSController::class, 'array']);
+    Route::post('/cms/object', [CMSController::class, 'object']);
 });
 
 // Public Files

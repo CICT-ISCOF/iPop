@@ -29,12 +29,12 @@ class CMSRequest extends FormRequest
 
             'articles' => ['nullable', 'array'],
             'articles.*.title' => ['required', 'string', 'max:255'],
-            'articles.*.description' => ['required', 'string', 'max:255'],
+            'articles.*.description' => ['required', 'string'],
             'articles.*.file' => ['required', 'base64'],
 
             'cards' => ['nullable', 'array'],
             'cards.*.title' => ['required', 'string', 'max:255'],
-            'cards.*.description' => ['required', 'string', 'max:255'],
+            'cards.*.description' => ['required', 'string'],
             'cards.*.file' => ['required', 'base64'],
 
             'grids' => ['nullable', 'array'],

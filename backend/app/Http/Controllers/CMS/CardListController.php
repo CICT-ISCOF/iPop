@@ -16,7 +16,7 @@ class CardListController extends Controller
     {
         return CardList::with('link')
             ->with('items')
-            ->all();
+            ->get();
     }
 
     /**
