@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Models\CMS\SliderList;
 use App\Models\CMS\SliderListItem;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class SliderListItemController extends Controller
@@ -12,19 +14,14 @@ class SliderListItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $id = $request->validate([
+            'slider_list_id' => ['required', 'exists:App\Models\CMS\SliderList,id'],
+        ])['slider_list_id'];
+        return SliderListItem::where('slider_list_id', $id)
+            ->with('slider')
+            ->get();
     }
 
     /**
@@ -35,29 +32,28 @@ class SliderListItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'slider_list_id' => ['required', 'exists:App\Models\CMS\SliderList,id'],
+            'file' => ['required', 'file'],
+        ]);
+
+        $file = File::process($data['file']);
+        $file->public = true;
+        $file->save();
+        $data['file_id'] = $file->id;
+        return SliderListItem::create($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SliderListItem  $sliderListItem
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SliderListItem $sliderListItem)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\SliderListItem  $sliderListItem
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SliderListItem $sliderListItem)
-    {
-        //
+        return SliderListItem::with('slider')
+            ->findOrFail($id);
     }
 
     /**
@@ -69,7 +65,20 @@ class SliderListItemController extends Controller
      */
     public function update(Request $request, SliderListItem $sliderListItem)
     {
-        //
+        $data = $request->validate([
+            'slider_list_id' => ['nullable', 'exists:App\Models\CMS\SliderList,id'],
+            'file' => ['nullable', 'file'],
+        ]);
+
+        if (isset($data['file'])) {
+            $file = File::process($data['file']);
+            $file->public = true;
+            $file->save();
+            $data['file_id'] = $file->id;
+            $sliderListItem->file->delete();
+        }
+        $sliderListItem->update($data);
+        return $sliderListItem;
     }
 
     /**
@@ -80,6 +89,7 @@ class SliderListItemController extends Controller
      */
     public function destroy(SliderListItem $sliderListItem)
     {
-        //
+        $sliderListItem->delete();
+        return response('', 204);
     }
 }

@@ -16,13 +16,13 @@ class LinkController extends Controller
     public function index()
     {
         return Link::get();
-            // ->with('cards')
-            // ->with('grids')
-            // ->with('lists.items')
-            // ->with('medias')
-            // ->with('sliders')
-            // ->with('texts')
-            // ->get('articles');
+        // ->with('cards')
+        // ->with('grids')
+        // ->with('lists.items')
+        // ->with('medias')
+        // ->with('sliders')
+        // ->with('texts')
+        // ->get('articles');
     }
 
     /**

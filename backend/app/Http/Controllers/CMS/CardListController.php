@@ -27,7 +27,10 @@ class CardListController extends Controller
      */
     public function store(Request $request)
     {
-        return response('', 403);
+        $data = $request->validate([
+            'link_id' => ['required', 'exists:App\Models\CMS\Link,id'],
+        ]);
+        return CardList::create($data);
     }
 
     /**
@@ -52,7 +55,11 @@ class CardListController extends Controller
      */
     public function update(Request $request, CardList $cardList)
     {
-        return response('', 403);
+        $data = $request->validate([
+            'link_id' => ['required', 'exists:App\Models\CMS\Link,id'],
+        ]);
+        $cardList->update($data);
+        return $cardList;
     }
 
     /**

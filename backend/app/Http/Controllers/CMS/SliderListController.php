@@ -14,17 +14,9 @@ class SliderListController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return SliderList::with('link')
+            ->with('items')
+            ->get();
     }
 
     /**
@@ -35,29 +27,23 @@ class SliderListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'link_id' => ['required', 'exists:App\Models\CMS\Link,id'],
+        ]);
+        return SliderList::create($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SliderList  $sliderList
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SliderList $sliderList)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\SliderList  $sliderList
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SliderList $sliderList)
-    {
-        //
+        return SliderList::with('link')
+            ->with('items')
+            ->findOrFail($id);
     }
 
     /**
@@ -69,7 +55,11 @@ class SliderListController extends Controller
      */
     public function update(Request $request, SliderList $sliderList)
     {
-        //
+        $data = $request->validate([
+            'link_id' => ['required', 'exists:App\Models\CMS\Link,id'],
+        ]);
+        $sliderList->update($data);
+        return $sliderList;
     }
 
     /**
@@ -80,6 +70,7 @@ class SliderListController extends Controller
      */
     public function destroy(SliderList $sliderList)
     {
-        //
+        $sliderList->delete();
+        return response('', 204);
     }
 }

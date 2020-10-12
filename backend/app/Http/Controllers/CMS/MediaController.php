@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Models\CMS\Media;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class MediaController extends Controller
@@ -14,17 +15,7 @@ class MediaController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Media::with('link')->get();
     }
 
     /**
@@ -35,29 +26,28 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'link_id' => ['required', 'exists:App\CMS\Link,id'],
+            'file' => ['required', 'isFile'],
+        ]);
+
+        $file = File::process($data['file']);
+        $file->public = true;
+        $file->save();
+        $data['file_id'] = $file->id;
+        return Media::create($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Media  $media
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Media $media)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Media  $media
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Media $media)
-    {
-        //
+        return Media::with('link')
+            ->findOrFail($id);
     }
 
     /**
@@ -69,7 +59,20 @@ class MediaController extends Controller
      */
     public function update(Request $request, Media $media)
     {
-        //
+        $data = $request->validate([
+            'link_id' => ['nullable', 'exists:App\CMS\Link,id'],
+            'file' => ['nullable', 'isFile'],
+        ]);
+
+        if (isset($data['file'])) {
+            $file = File::process($data['file']);
+            $file->public = true;
+            $file->save();
+            $data['file_id'] = $file->id;
+            $media->file->delete();
+        }
+        $media->update($data);
+        return $media;
     }
 
     /**
@@ -80,6 +83,7 @@ class MediaController extends Controller
      */
     public function destroy(Media $media)
     {
-        //
+        $media->delete();
+        return response('', 204);
     }
 }

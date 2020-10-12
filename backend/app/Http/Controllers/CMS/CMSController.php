@@ -114,7 +114,7 @@ class CMSController extends Controller
 
         $validator = $this->makeValidator($json[$linkIndex], $this->rules['link']);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response($validator->messages()->all(), 422);
         }
 
@@ -140,7 +140,7 @@ class CMSController extends Controller
 
         $json = $this->cleanArray($json);
 
-        foreach($invalid_indexes as $index) {
+        foreach ($invalid_indexes as $index) {
             unset($json[$index]);
         }
 
@@ -171,6 +171,7 @@ class CMSController extends Controller
             switch ($type) {
                 case 'article':
                     $file = File::process($object['file']);
+                    $file->public = true;
                     $file->save();
                     $object['file_id'] = $file->id;
                     $object['link_id'] = $link->id;
@@ -179,16 +180,18 @@ class CMSController extends Controller
                     $data['articles'][] = $article;
                     break;
                 case 'card':
-                    foreach($object['items'] as $cardData) {
+                    foreach ($object['items'] as $cardData) {
                         $file = File::process($cardData['file']);
+                        $file->public = true;
                         $file->save();
                         $cardData['file_id'] = $file->id;
                         $data['cards']->items()->save(new CardListItem($cardData));
                     }
                     break;
                 case 'grid':
-                    foreach($object['items'] as $gridData) {
+                    foreach ($object['items'] as $gridData) {
                         $file = File::process($gridData['file']);
+                        $file->public = true;
                         $file->save();
                         $gridData['file_id'] = $file->id;
                         $data['grids']->items()->save(new GridListItem($gridData));
@@ -197,23 +200,23 @@ class CMSController extends Controller
                 case 'list':
                     $object['link_id'] = $link->id;
                     $list = LinkList::create($object);
-                    foreach($object['items'] as $listData) {
-                        if(is_string($listData)) {
+                    foreach ($object['items'] as $listData) {
+                        if (is_string($listData)) {
                             $list->items()->save(new ListItem([
                                 'body' => $listData
                             ]));
-                        }
-                        else if(isset($listData['body'])) {
+                        } else if (isset($listData['body'])) {
                             $list->items()->save(new ListItem($listData));
                         }
                     }
 
                     $list->load('items');
-                    
+
                     $data['lists'][] = $list;
                     break;
                 case 'media':
                     $file = File::process($object['file']);
+                    $file->public = true;
                     $file->save();
                     $mediaData['link_id'] = $link->id;
                     $mediaData['file_id'] = $file->id;
@@ -221,8 +224,9 @@ class CMSController extends Controller
                     $data['medias'][] = $media;
                     break;
                 case 'slider':
-                    foreach($object['items'] as $sliderData) {
+                    foreach ($object['items'] as $sliderData) {
                         $file = File::process($sliderData['file']);
+                        $file->public = true;
                         $file->save();
                         $sliderData['file_id'] = $file->id;
                         $data['sliders']
@@ -243,8 +247,8 @@ class CMSController extends Controller
             'sliders'
         ];
 
-        foreach($listingKeys as $key) {
-            if(isset($data[$key]) && $data[$key] instanceof Model) {
+        foreach ($listingKeys as $key) {
+            if (isset($data[$key]) && $data[$key] instanceof Model) {
                 $data[$key] = $data[$key]->items;
             }
         }
@@ -372,9 +376,10 @@ class CMSController extends Controller
         return Validator::make($data, $rules);
     }
 
-    protected function cleanArray($iterable) {
+    protected function cleanArray($iterable)
+    {
         $clean = [];
-        foreach($iterable as $element) {
+        foreach ($iterable as $element) {
             $clean[] = $element;
         }
         return $clean;

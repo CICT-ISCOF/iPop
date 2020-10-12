@@ -3,12 +3,13 @@
 namespace App\Models\CMS;
 
 use App\Models\File;
+use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class GridListItem extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
 
     protected $fillable = ['title', 'grid_list_id', 'file_id'];
     protected $with = ['file'];

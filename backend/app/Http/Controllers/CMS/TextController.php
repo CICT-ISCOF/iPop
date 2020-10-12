@@ -14,17 +14,7 @@ class TextController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Text::with('link')->get();
     }
 
     /**
@@ -35,29 +25,25 @@ class TextController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'body' => ['required', 'string'],
+            'link_id' => ['required', 'exists:App\Models\Link,id'],
+        ]);
+
+        return Text::create($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Text  $text
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Text $text)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Text  $text
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Text $text)
-    {
-        //
+        return Text::with('link')
+            ->findOrFail($id);
     }
 
     /**
@@ -69,7 +55,14 @@ class TextController extends Controller
      */
     public function update(Request $request, Text $text)
     {
-        //
+        $data = $request->validate([
+            'title' => ['nullable', 'string', 'max:255'],
+            'body' => ['nullable', 'string'],
+            'link_id' => ['nullable', 'exists:App\Models\Link,id'],
+        ]);
+
+        $text->update($data);
+        return $text;
     }
 
     /**
@@ -80,6 +73,7 @@ class TextController extends Controller
      */
     public function destroy(Text $text)
     {
-        //
+        $text->delete();
+        return response('', 204);
     }
 }

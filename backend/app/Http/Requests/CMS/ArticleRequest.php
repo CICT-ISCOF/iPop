@@ -26,6 +26,8 @@ class ArticleRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'link_id' => ['required', 'numeric', 'exists:App\CMS\Link,id'],
+            'file' => ['required', 'file'],
         ];
     }
 }

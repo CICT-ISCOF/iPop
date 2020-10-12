@@ -12,19 +12,14 @@ class ListItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $id = $request->validate([
+            'link_list_id' => ['required', 'exists:App\Models\CMS\LinkList,id'],
+        ])['link_list_id'];
+        return ListItem::where('link_list_id', $id)
+            ->with('list')
+            ->get();
     }
 
     /**
@@ -35,29 +30,23 @@ class ListItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'body' => ['required', 'string'],
+            'link_list_id' => ['required', 'exists:App\Models\CMS\LinkList,id'],
+        ]);
+        return ListItem::create($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ListItem  $listItem
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ListItem $listItem)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ListItem  $listItem
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ListItem $listItem)
-    {
-        //
+        return ListItem::with('list')
+            ->findOrFail($id);
     }
 
     /**
@@ -69,7 +58,12 @@ class ListItemController extends Controller
      */
     public function update(Request $request, ListItem $listItem)
     {
-        //
+        $data = $request->validate([
+            'body' => ['nullable', 'string'],
+            'link_list_id' => ['nullable', 'exists:App\Models\CMS\LinkList,id'],
+        ]);
+        $listItem->update($data);
+        return $listItem;
     }
 
     /**
@@ -80,6 +74,7 @@ class ListItemController extends Controller
      */
     public function destroy(ListItem $listItem)
     {
-        //
+        $listItem->delete();
+        return response('', 204);
     }
 }

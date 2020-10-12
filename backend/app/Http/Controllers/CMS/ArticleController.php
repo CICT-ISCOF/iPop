@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Requests\CMS\ArticleRequest;
 use App\Models\CMS\Article;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -15,7 +16,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return Article::with('link')->get();
+        return Article::with('link')
+            ->get();
     }
 
     /**
@@ -26,7 +28,14 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        return Article::create($request->validated());
+        $data = $request->validated();
+        $file = File::process($data['file']);
+        $file->public = true;
+        $file->save();
+        $data['file_id'] = $file->id;
+        $article = Article::create($data);
+        return Article::with('link')
+            ->findOrFail($article->id);;
     }
 
     /**
@@ -51,6 +60,15 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article)
     {
         $article->update($request->only(['title', 'description']));
+        if ($request->has('file')) {
+            $data = $request->validate([
+                'file' => ['isFile']
+            ]);
+            $file = File::process($data['file']);
+            $file->public = true;
+            $article->file->delete();
+            $article->file()->save($file);
+        }
         return $article;
     }
 

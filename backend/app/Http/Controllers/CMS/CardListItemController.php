@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Models\CMS\CardListItem;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class CardListItemController extends Controller
@@ -12,19 +13,14 @@ class CardListItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $id = $request->validate([
+            'card_list_id' => ['required', 'exists:App\Models\CMS\CardList,id'],
+        ])['card_list_id'];
+        return CardListItem::where('card_list_id', $id)
+            ->with('card')
+            ->get();
     }
 
     /**
@@ -35,29 +31,28 @@ class CardListItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'card_list_id' => ['required', 'exists:App\Models\CMS\CardList,id'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'file' => ['required', 'file']
+        ]);
+        $file = File::process($data['file']);
+        $file->public = true;
+        $file->save();
+        $data['file_id'] = $file->id;
+        return CardListItem::create($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CardListItem  $cardListItem
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(CardListItem $cardListItem)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\CardListItem  $cardListItem
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(CardListItem $cardListItem)
-    {
-        //
+        return CardListItem::with('card')->findOrFail($id);
     }
 
     /**
@@ -69,7 +64,20 @@ class CardListItemController extends Controller
      */
     public function update(Request $request, CardListItem $cardListItem)
     {
-        //
+        $data = $request->validate([
+            'title' => ['nullable', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'file' => ['nullable', 'file']
+        ]);
+        if (isset($data['file'])) {
+            $file = File::process($data['file']);
+            $file->public = true;
+            $file->save();
+            $data['file_id'] = $file->id;
+            $cardListItem->file->delete();
+        }
+        $cardListItem->update($data);
+        return $cardListItem;
     }
 
     /**
@@ -80,6 +88,7 @@ class CardListItemController extends Controller
      */
     public function destroy(CardListItem $cardListItem)
     {
-        //
+        $cardListItem->delete();
+        return response('', 204);
     }
 }

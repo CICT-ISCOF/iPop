@@ -9,7 +9,7 @@ class ListItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['body'];
+    protected $fillable = ['body', 'link_list_id'];
 
     public function list()
     {

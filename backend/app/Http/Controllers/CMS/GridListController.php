@@ -14,17 +14,9 @@ class GridListController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return GridList::with('link')
+            ->with('items')
+            ->get();
     }
 
     /**
@@ -35,29 +27,20 @@ class GridListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response('', 403);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\GridList  $gridList
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(GridList $gridList)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\GridList  $gridList
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(GridList $gridList)
-    {
-        //
+        return GridList::with('link')
+            ->with('items')
+            ->findOrFail($id);
     }
 
     /**
@@ -69,7 +52,7 @@ class GridListController extends Controller
      */
     public function update(Request $request, GridList $gridList)
     {
-        //
+        return response('', 403);
     }
 
     /**
@@ -80,6 +63,7 @@ class GridListController extends Controller
      */
     public function destroy(GridList $gridList)
     {
-        //
+        $gridList->delete();
+        return response('', 204);
     }
 }

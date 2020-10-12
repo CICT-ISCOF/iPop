@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Models\CMS\GridList;
 use App\Models\CMS\GridListItem;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class GridListItemController extends Controller
@@ -12,19 +14,14 @@ class GridListItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $id = $request->validate([
+            'grid_list_id' => ['required', 'exists:App\Models\CMS\GridList,id'],
+        ])['grid_list_id'];
+        return GridListItem::where('grid_list_id', $id)
+            ->with('grid')
+            ->get();
     }
 
     /**
@@ -35,29 +32,29 @@ class GridListItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'grid_list_id' => ['required', 'exists:App\Models\CMS\GridList,id'],
+            'file' => ['required', 'file'],
+        ]);
+
+        $file = File::process($data['file']);
+        $file->public = true;
+        $file->save();
+        $data['file_id'] = $file->id;
+        return GridListItem::create($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\GridListItem  $gridListItem
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(GridListItem $gridListItem)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\GridListItem  $gridListItem
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(GridListItem $gridListItem)
-    {
-        //
+        return GridListItem::with('grid')
+            ->findOrFail($id);
     }
 
     /**
@@ -69,7 +66,20 @@ class GridListItemController extends Controller
      */
     public function update(Request $request, GridListItem $gridListItem)
     {
-        //
+        $data = $request->validate([
+            'title' => ['nullable', 'string', 'max:255'],
+            'file' => ['nullable', 'file'],
+        ]);
+
+        if (isset($data['file'])) {
+            $file = File::process($data['file']);
+            $file->public = true;
+            $file->save();
+            $data['file_id'] = $file->id;
+            $gridListItem->file->delete();
+        }
+        $gridListItem->update($data);
+        return $gridListItem;
     }
 
     /**
@@ -80,6 +90,7 @@ class GridListItemController extends Controller
      */
     public function destroy(GridListItem $gridListItem)
     {
-        //
+        $gridListItem->delete();
+        return response('', 204);
     }
 }
