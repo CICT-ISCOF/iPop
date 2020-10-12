@@ -30,11 +30,11 @@ use App\Http\Controllers\OutMigrationController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\QuickLinkController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserController;
-use App\Models\CMS\GridListItem;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate']);
@@ -127,7 +127,7 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::get('/sockets/record', [ChannelController::class, 'record']);
 
     // CMS
-    Route::apiResource('cms/links', LinkController::class);
+    Route::apiResource('cms/quick-links', QuickLinkController::class);
     Route::post('/cms/array', [CMSController::class, 'array']);
     Route::post('/cms/object', [CMSController::class, 'object']);
 

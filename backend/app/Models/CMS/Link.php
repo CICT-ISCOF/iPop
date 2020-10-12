@@ -4,7 +4,7 @@ namespace App\Models\CMS;
 
 class Link extends Sluggable
 {
-    protected $fillable = ['title', 'sub_categories'];
+    protected $fillable = ['title'];
 
     protected static function booted()
     {
@@ -17,6 +17,11 @@ class Link extends Sluggable
             $link->medias->delete();
             $link->texts->delete();
         });
+    }
+
+    public function categories()
+    {
+        return $this->morphMany(self::class, 'parentable');
     }
 
     public function articles()

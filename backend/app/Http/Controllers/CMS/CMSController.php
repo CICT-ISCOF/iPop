@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Models\CMS\Link;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CMS\CMSRequest;
+use App\Models\CMS\LinkCategory;
 use App\Models\CMS\Article;
 use App\Models\CMS\CardList;
 use App\Models\CMS\CardListItem;
@@ -17,6 +16,8 @@ use App\Models\CMS\SliderList;
 use App\Models\CMS\SliderListItem;
 use App\Models\CMS\Text;
 use App\Models\File;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CMS\CMSRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +27,10 @@ class CMSController extends Controller
     protected $rules = [
         'link' => [
             'title' => ['required', 'string', 'max:255'],
-            'sub_categories' => ['nullable', 'json']
+        ],
+        'sub_category' => [
+            'sub_categories' => ['nullable', 'array'],
+            'sub_categories.*.title' => ['required', 'string', 'max:255'],
         ],
         'article' => [
             'title' => ['required', 'string', 'max:255'],
