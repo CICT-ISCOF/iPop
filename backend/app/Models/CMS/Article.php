@@ -3,14 +3,9 @@
 namespace App\Models\CMS;
 
 use App\Models\File;
-use App\Traits\HasSlug;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Article extends Model
+class Article extends Sluggable
 {
-    use HasFactory, HasSlug;
-
     protected $fillable = ['title', 'description', 'link_id', 'file_id'];
     protected $with = ['file'];
 

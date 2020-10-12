@@ -2,14 +2,8 @@
 
 namespace App\Models\CMS;
 
-use App\Traits\HasSlug;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class LinkList extends Model
+class LinkList extends Sluggable
 {
-    use HasFactory, HasSlug;
-
     protected $fillable = ['title', 'link_id'];
 
     protected static function booted()
