@@ -7,8 +7,19 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BirthController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\CMS\ArticleController;
+use App\Http\Controllers\CMS\CardListController;
+use App\Http\Controllers\CMS\CardListItemController;
 use App\Http\Controllers\CMS\CMSController;
+use App\Http\Controllers\CMS\GridListController;
+use App\Http\Controllers\CMS\GridListItemController;
 use App\Http\Controllers\CMS\LinkController;
+use App\Http\Controllers\CMS\LinkListController;
+use App\Http\Controllers\CMS\ListItemController;
+use App\Http\Controllers\CMS\MediaController;
+use App\Http\Controllers\CMS\SliderListController;
+use App\Http\Controllers\CMS\SliderListItemController;
+use App\Http\Controllers\CMS\TextController;
 use App\Http\Controllers\DeathController;
 use App\Http\Controllers\CPDBController;
 use App\Http\Controllers\CommentController;
@@ -23,6 +34,7 @@ use App\Http\Controllers\RecordController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserController;
+use App\Models\CMS\GridListItem;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate']);
@@ -115,9 +127,24 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::get('/sockets/record', [ChannelController::class, 'record']);
 
     // CMS
-    Route::apiResource('/cms/links', LinkController::class);
+    Route::apiResource('cms/links', LinkController::class);
     Route::post('/cms/array', [CMSController::class, 'array']);
     Route::post('/cms/object', [CMSController::class, 'object']);
+
+    Route::apiResources([
+        'cms/articles' => ArticleController::class,
+        'cms/cards' => CardListController::class,
+        'cms/cards/items' => CardListItemController::class,
+        'cms/grids' => GridListController::class,
+        'cms/grids/items' => GridListItemController::class,
+        'cms/links' => LinkController::class,
+        'cms/lists' => LinkListController::class,
+        'cms/lists/items' => ListItemController::class,
+        'cms/medias' => MediaController::class,
+        'cms/sliders' => SliderListController::class,
+        'cms/sliders/items' => SliderListItemController::class,
+        'cms/texts' => TextController::class,
+    ]);
 });
 
 // Public Files
