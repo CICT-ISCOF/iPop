@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     public function authenticate(Request $request)
-    {
+    {   
         $mode = $request->header('X-Auth-Mode');
         switch ($mode) {
             case 'Pin':
