@@ -7,7 +7,7 @@ export class BaseAPIService {
 
   constructor() { }
 
-  public baseURL = 'http://localhost:8000/api';
+  public baseURL = 'http://localhost:8000/api'
 
 
 }

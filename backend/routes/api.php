@@ -38,6 +38,7 @@ use App\Http\Controllers\UserController;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate']);
+    Route::post('/register/viewer', [RegisterController::class, 'viewer']);
 });
 
 Route::prefix('/location')->group(function () {

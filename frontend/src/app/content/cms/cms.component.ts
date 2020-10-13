@@ -46,11 +46,13 @@ export class CmsComponent implements OnInit {
 			this.preview = preview
 		})
 	}
-
+	
 	ngOnInit(): void {
-
+		if( localStorage.getItem('cms-tab') && localStorage.getItem('cms-tab') != undefined  ){
+			this.changeTab(localStorage.getItem('cms-tab'))
+		}
+		this.getParentLinks()
 	}
-
 
 	tabs = {
 		newContent:true,
@@ -58,30 +60,18 @@ export class CmsComponent implements OnInit {
 		newQuickLink:false,
 		quickLinks:false
 	}
-
 	
 	changeTab( item : string ){
-		this.removActiveTab()
+		for(let tab in this.tabs){
+			this.tabs[tab] = false
+		}
 		this.tabs[item] = true
+		localStorage.setItem('cms-tab',item)
 	}
-
-	removActiveTab(){
-		this.tabs = {
-			newContent:false,
-			contentList:false,
-			newQuickLink:false,
-			quickLinks:false
-		}	
-	}
-
-
 
 	subscription
-
 	preview = false
-
 	theme = localStorage.getItem('data-theme')
-
 
 
 	previewData(){
@@ -101,19 +91,18 @@ export class CmsComponent implements OnInit {
 
 	
 	submit(){	
-		for(let key in this.categories){
-			if(this.categories[key]== ''){
-				this.UtilityService.setAlert('Categories should not be left empty','error')
-				return
-			}
-		}
+		// for(let key in this.categories){
+		// 	if(this.categories[key]== ''){
+		// 		this.UtilityService.setAlert('Categories should not be left empty','error')
+		// 		return
+		// 	}
+		// }	
 		this.items.push(this.categories)
-		console.log(this.items)
+			
+		this.CmsService.save(this.items).subscribe(data => {
+			console.log(data)
+		})
 	}
-
-
-
-
 
 	// ----------------- content options --------------------------
 
@@ -135,15 +124,33 @@ export class CmsComponent implements OnInit {
 
 		
 	categories = {
-		title:'',
-		subcategory:''
+		title:'',		
+		type:'link',
+		sub_categories:[
+			{
+				title:'',
+				sub_categories:[],	
+			}
+		],	
 	}
+	titles:any = []	
 
 	newCategory = false
 	newSubCategory = false
-
 	items:any = []	
 
+	
+	
+
+
+
+
+
+	getParentLinks(){
+		this.CmsService.getLinks().subscribe(data => {
+			this.titles = data
+		})
+	}
 	
 	triggerMediaInput(id, index){	
 		document.getElementById(id + index).click()		
@@ -151,25 +158,28 @@ export class CmsComponent implements OnInit {
 		
 
 	readURL(files: FileList,event,index,type) {  	
-		this.items[index].Media.pdf  = ''
-		this.items[index].Media.video  = ''
-		this.items[index].Media.image  = ''		
+		this.items[index].pdf  = ''
+		this.items[index].video  = ''
+		this.items[index].image  = ''		
 		if (event.target.files && event.target.files[0]) {
 			const reader = new FileReader();   
 			reader.readAsDataURL(event.target.files[0]);   
 			reader.onload = (event) => {		
 				if(type == 'video'){		
-					this.items[index].Media.video  = (<FileReader>event.target).result;			
+					this.items[index].video  = (<FileReader>event.target).result;			
 				}	
 				else if (type == 'image'){
-					this.items[index].Media.image = (<FileReader>event.target).result;			
+					this.items[index].image = (<FileReader>event.target).result;			
 				}
 				else if (type == 'pdf'){					
-					this.items[index].Media.pdf  =  (<FileReader>event.target).result;	
+					this.items[index].pdf  =  (<FileReader>event.target).result;	
 				}			
+				const img = (<FileReader>event.target).result
+				const toBase64Img = img.toString().split(',')
+				this.items[index].file =  toBase64Img[1]	
 			}
 		}
-		this.items[index].Media.attachment = files.item(0)	
+		this.items[index].attachment = files.item(0)	
 	}
 
 
@@ -183,37 +193,44 @@ export class CmsComponent implements OnInit {
 			const reader = new FileReader();   
 			reader.readAsDataURL(event.target.files[0]);   
 			reader.onload = (event) => {	
-				this.items[index].Grids.griditems[gridIndex].image  = (<FileReader>event.target).result;			
+				const img = (<FileReader>event.target).result
+				this.items[index].items[gridIndex].image  =  img
+				const toBase64Img = img.toString().split(',')
+				this.items[index].items[gridIndex].file =  toBase64Img[1]	
+
+			
 			}
 		}
-		this.items[index].Grids.griditems[gridIndex].attachment = files.item(0)	
+		this.items[index].items[gridIndex].attachment = files.item(0)			
 	}
+
 
 	
 	addGrid(index){
-		this.items[index].Grids.griditems.push({
+		this.items[index].items.push({
 			image:'../../../assets/placeholders/image.jpg',	
 			title:'',
 			attachment:'',
-		})
-		
+		})		
 	}
-
 
 	readCardURL(files: FileList,event,index,cardIndex){
 		if (event.target.files && event.target.files[0]) {
 			const reader = new FileReader();   
 			reader.readAsDataURL(event.target.files[0]);   
 			reader.onload = (event) => {	
-				this.items[index].Cards.carditems[cardIndex].image  = (<FileReader>event.target).result;			
+				const img = (<FileReader>event.target).result
+				this.items[index].items[cardIndex].image  =  img
+				const toBase64Img = img.toString().split(',')
+				this.items[index].items[cardIndex].file =  toBase64Img[1]	
 			}
 		}
-		this.items[index].Cards.carditems[cardIndex].attachment = files.item(0)	
+		this.items[index].carditems[cardIndex].attachment = files.item(0)	
 	}
 
 	
 	addCard(index){		
-		this.items[index].Cards.carditems.push({
+		this.items[index].items.push({
 			image:'../../../assets/placeholders/image.jpg',	
 			title:'',
 			attachment:'',
@@ -225,32 +242,33 @@ export class CmsComponent implements OnInit {
 			Object.keys(files).forEach(i => {				
 				const reader = new FileReader();   
 				reader.readAsDataURL(event.target.files[i]);   		     
-				reader.onload = (event) => {			
+				reader.onload = (event) => {	
+					let img = (<FileReader>event.target).result		
+					const toBase64Img = img.toString().split(',')
 					if(type == 'video'){				
-						this.items[index].Sliders.videos.push( (<FileReader>event.target).result ) 											
+						this.items[index].videos.push( (<FileReader>event.target).result ) 
+						this.items[index].items.push({ file: toBase64Img[1] }) 												
 					}	
 					else{		
-						this.items[index].Sliders.images.push( (<FileReader>event.target).result )
+						this.items[index].images.push( (<FileReader>event.target).result )
+						this.items[index].items.push({ file: toBase64Img[1] }) 	
 					}
 				}	
-				this.items[index].Sliders.attachments.push(files.item(0)) 						
+				 						
 			})	
 		}	
 	}
 	
 	reload(){
 		this.items = []
-		this.categories = {
-			title:'',
-			subcategory:''
+		for(let item in this.categories){
+			this.categories[item] = ''
 		}
 	}
-
 
 	removeItem(index){
 		this.items.splice(index, 1)				
 	}
-
 
 	removeGrid(index, gridIndex){
 		this.items[index].Grids.griditems.splice(gridIndex, 1)
@@ -262,153 +280,134 @@ export class CmsComponent implements OnInit {
 	
 	addItem(item){	
 		if(item == 'Texts'){			
-			this.items.push({
-					Texts:{					
-						title:'',
-						body:'',						
-						position:'`',											
-					},
+			this.items.push({									
+					title:'',
+					body:'',						
+					position:'`',
+					type:'text'		
 				})
 		}
 		if(item == 'Media'){
-			this.items.push({
-				Media: {				
-					attachment:'',				
-					video:'',
-					image:'',	
-					pdf:'',							
-					position:'',
-				},
-				
+			this.items.push({						
+				attachment:'',				
+				video:'',
+				image:'',	
+				pdf:'',							
+				position:'',
+				type:'media'					
 			})		
 		}
 		if(item == 'Grids'){
-			this.items.push({
-				Grids: {	
-					griditems:[],								
-					position:'',					
-				},			
+			this.items.push({			
+				items:[],								
+				position:'',	
+				type:'grid'								
 			})		
 		}
 		if(item == 'Cards'){
-			this.items.push({
-				Cards: {	
-					carditems:[],					
-					position:'',					
-				},			
+			this.items.push({				
+				items:[],					
+				position:'',					
+				type:'card'				
 			})		
 		}
 		if(item == 'Sliders'){
-			this.items.push({
-				Sliders: {	
-					images:[],
-					videos:[],				
-					position:'',		
-					attachments:[]			
-				},			
+			this.items.push({				
+				images:[],
+				videos:[],				
+				position:'',		
+				items:[],		
+				type:'slider'	
 			})		
 		}
 
 		if(item == 'Articles'){
-			this.items.push({
-				Articles: {	
-					image:'../../../assets/placeholders/image.jpg',	
-					attachment:[],
-					title:'',
-					body:'',		
-				},			
+			this.items.push({				
+				image:'../../../assets/placeholders/image.jpg',	
+				attachment:[],
+				title:'',
+				body:'',		
+				type:'article'				
 			})		
 		}
 		if(item == 'Lists'){
-			this.items.push({
-				Lists: {	
-					listitems:[''],						
-					title:'',					
-				},			
+			this.items.push({			
+				items:[''],						
+				title:'',					
+				type:'list'		
 			})		
 		}
 	}
 
-
 	insertItem(item, index){		
-
 		if(item == 'Texts'){			
-			this.items.splice(index, 0, ({
-					Texts:{					
-						title:'',
-						body:'',						
-						position:'`',											
-					},
+			this.items.splice(index, 0, ({						
+					title:'',
+					body:'',						
+					position:'`',
+					type:'text'		
 				})
 			)
 		}
 
 		if(item == 'Media'){
-			this.items.splice(index, 0, ({
-					Media: {				
-						attachment:'',				
-						video:'',
-						image:'',	
-						pdf:'',							
-						position:'',
-					},
-					
+			this.items.splice(index, 0, ({						
+					attachment:'',				
+					video:'',
+					image:'',	
+					pdf:'',							
+					position:'',	
+					type:'media'		
 				})	
 			)	
 		}
 
 		if(item == 'Grids'){
-			this.items.splice(index, 0, ({
-					Grids: {	
-						griditems:[],								
-						position:'',					
-					},			
+			this.items.splice(index, 0, ({					
+					items:[],								
+					position:'',	
+					type:'grid'				
 				})	
 			)	
 		}
 
 		if(item == 'Cards'){
-			this.items.splice(index, 0, ({
-					Cards: {	
-						carditems:[],					
-						position:'',					
-					},			
+			this.items.splice(index, 0, ({				
+					items:[],					
+					position:'',	
+					type:'card'		
 				})	
 			)	
 		}
 		if(item == 'Sliders'){
-			this.items.splice(index, 0, ({
-					Sliders: {	
-						images:[],
-						videos:[],				
-						position:'',		
-						attachments:[]			
-					},			
+			this.items.splice(index, 0, ({				
+					images:[],
+					videos:[],				
+					position:'',		
+					items:[],
+					type:'slider'		
 				})	
 			)	
 		}
 
 		if(item == 'Articles'){
-			this.items.splice(index, 0, ({
-					Articles: {	
-						image:'../../../assets/placeholders/image.jpg',	
-						attachment:[],
-						title:'',
-						body:'',		
-					},			
+			this.items.splice(index, 0, ({				
+					image:'../../../assets/placeholders/image.jpg',	
+					attachment:[],
+					title:'',
+					body:'',
+					type:'article'		
 				})	
 			)	
 
 		}
 		if(item == 'Lists'){
-			this.items.splice(index, 0, ({
-					Lists: {	
-						listitems:[''],						
-						title:'',					
-					},			
+			this.items.splice(index, 0, ({					
+					items:[''],						
+					title:'',	
+					type:'list'						
 				})
-			)	
-
+			)
 		}
 		
 	}
@@ -418,29 +417,32 @@ export class CmsComponent implements OnInit {
 			const reader = new FileReader();   
 			reader.readAsDataURL(event.target.files[0])		     
 			reader.onload = (event) => {
-				this.items[index].Articles.image = event.target.result
-				this.items[index].Sliders.attachment.push(files.item(0)) 	
+				const img = (<FileReader>event.target).result
+				const toBase64Img = img.toString().split(',')
+				this.items[index].image = event.target.result
+				this.items[index].attachment.push(files.item(0)) 
+				this.items[index].file =  toBase64Img[1]	
 			}
 		}	
 	}
 
 	list =''
 	addList(index){	
-		this.items[index].Lists.listitems.push('')
+		this.items[index].items.push('')
 	}
 
 	clearList(index,listIndex){
-		this.items[index].Lists.listitems[listIndex] = ''
+		this.items[index].items[listIndex] = ''
 	}
 
 	pushList(index,listIndex){		
-		this.items[index].Lists.listitems[listIndex] = this.list
+		this.items[index].items[listIndex] = {body:this.list}
 		this.list = ''
 		this.addList(index)
 	}
 
 	popList(index, listIndex){
-		this.items[index].Lists.splice(listIndex, 1)
+		this.items[index].splice(listIndex, 1)
 	}
 
 
