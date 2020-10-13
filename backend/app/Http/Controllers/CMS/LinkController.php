@@ -15,7 +15,7 @@ class LinkController extends Controller
      */
     public function index()
     {
-        return Link::get();
+        return Link::where('parent_id', null)->get();
         // ->with('cards')
         // ->with('grids')
         // ->with('lists.items')
@@ -44,7 +44,8 @@ class LinkController extends Controller
      */
     public function show($id)
     {
-        return Link::with('articles')
+        return Link::where('parent_id', null)
+            ->with('articles')
             ->with('cards')
             ->with('grids')
             ->with('lists')

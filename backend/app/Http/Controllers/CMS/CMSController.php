@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Models\CMS\Link;
-use App\Models\CMS\LinkCategory;
 use App\Models\CMS\Article;
 use App\Models\CMS\CardList;
 use App\Models\CMS\CardListItem;
@@ -27,8 +26,6 @@ class CMSController extends Controller
     protected $rules = [
         'link' => [
             'title' => ['required', 'string', 'max:255'],
-        ],
-        'sub_category' => [
             'sub_categories' => ['nullable', 'array'],
             'sub_categories.*.title' => ['required', 'string', 'max:255'],
         ],
@@ -150,8 +147,10 @@ class CMSController extends Controller
 
         $json = $this->cleanArray($json);
 
-        $data['link'] = Link::create($json[$linkIndex]);
+        $data['link'] = $this->processLink($json[$linkIndex]);
+
         $link = $data['link'];
+
         unset($json[$linkIndex]);
 
         $json = $this->cleanArray($json);
@@ -365,6 +364,43 @@ class CMSController extends Controller
             'sliders' => $sliders,
             'texts' => $texts,
         ];
+    }
+
+    /**
+     * Create a parent link.
+     * 
+     * @param array|mixed $link
+     * 
+     * @return Link
+     */
+    protected function processLink($link)
+    {
+        $model = Link::create($link);
+        if (isset($link['sub_categories']) && !empty($link['sub_categories'])) {
+            $this->processLinkChildren($link['sub_categories'], $model);
+            $model->save();
+        }
+        return Link::find($model->id);
+    }
+
+    protected function processLinkChildren($children, $parent)
+    {
+
+        $results = [];
+        foreach ($children as $child) {
+            $validator = $this->makeValidator($child, $this->rules['link']);
+            if ($validator->fails()) {
+                continue;
+            }
+            $link = new Link($child);
+            $link->parent_id = $parent->id;
+            $link->save();
+            if (isset($child['sub_categories']) && !empty($child['sub_categories'])) {
+                $this->processLinkChildren($child['sub_categories'], $link);
+            }
+            $results[] = $link->id;
+        }
+        return $results;
     }
 
     /**

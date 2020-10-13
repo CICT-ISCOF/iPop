@@ -27,7 +27,10 @@ class GridListController extends Controller
      */
     public function store(Request $request)
     {
-        return response('', 403);
+        $data = $request->validate([
+            'link_id' => ['required', 'exists:App\Models\CMS\Link,id'],
+        ]);
+        return GridList::create($data);
     }
 
     /**
@@ -52,7 +55,11 @@ class GridListController extends Controller
      */
     public function update(Request $request, GridList $gridList)
     {
-        return response('', 403);
+        $data = $request->validate([
+            'link_id' => ['required', 'exists:App\Models\CMS\Link,id'],
+        ]);
+        $gridList->update($data);
+        return $gridList;
     }
 
     /**

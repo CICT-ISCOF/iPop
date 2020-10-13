@@ -5,6 +5,8 @@ namespace App\Models\CMS;
 class Link extends Sluggable
 {
     protected $fillable = ['title'];
+    protected $with = ['children'];
+    protected $appends = ['has_parent'];
 
     protected static function booted()
     {
@@ -19,9 +21,19 @@ class Link extends Sluggable
         });
     }
 
-    public function categories()
+    public function getHasParentAttribute()
     {
-        return $this->morphMany(self::class, 'parentable');
+        return isset($this->attributes['parent_id']) && $this->attributes['parent_id'] !== null;
+    }
+
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_id');
     }
 
     public function articles()

@@ -57,7 +57,7 @@
     "scripts": {
         "recharge": [
             "Composer\\Config::disableProcessTimeout",
-            "@php artisan migrate:fresh && @php artisan db:seed"
+            "@php artisan migrate:fresh && php artisan db:seed"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

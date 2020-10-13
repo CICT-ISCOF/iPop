@@ -127,25 +127,27 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::get('/sockets/record', [ChannelController::class, 'record']);
 
     // CMS
-    Route::apiResource('cms/quick-links', QuickLinkController::class);
     Route::post('/cms/array', [CMSController::class, 'array']);
     Route::post('/cms/object', [CMSController::class, 'object']);
-
-    Route::apiResources([
-        'cms/articles' => ArticleController::class,
-        'cms/cards' => CardListController::class,
-        'cms/cards/items' => CardListItemController::class,
-        'cms/grids' => GridListController::class,
-        'cms/grids/items' => GridListItemController::class,
-        'cms/links' => LinkController::class,
-        'cms/lists' => LinkListController::class,
-        'cms/lists/items' => ListItemController::class,
-        'cms/medias' => MediaController::class,
-        'cms/sliders' => SliderListController::class,
-        'cms/sliders/items' => SliderListItemController::class,
-        'cms/texts' => TextController::class,
-    ]);
 });
+
+Route::apiResources([
+    'cms/quick-links' => QuickLinkController::class,
+    'cms/articles' => ArticleController::class,
+    'cms/cards' => CardListController::class,
+    'cms/cards/items' => CardListItemController::class,
+    'cms/grids' => GridListController::class,
+    'cms/grids/items' => GridListItemController::class,
+    'cms/links' => LinkController::class,
+    'cms/lists' => LinkListController::class,
+    'cms/lists/items' => ListItemController::class,
+    'cms/medias' => MediaController::class,
+    'cms/sliders' => SliderListController::class,
+    'cms/sliders/items' => SliderListItemController::class,
+    'cms/texts' => TextController::class,
+]);
+
+
 
 // Public Files
 // Ex. http://localhost:8000/file/public/1
