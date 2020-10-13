@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { CmsService} from '../cms.service'
 @Component({
   selector: 'app-contents-list',
   templateUrl: './contents-list.component.html',
@@ -9,7 +9,9 @@ export class ContentsListComponent implements OnInit {
 
 
 
-	constructor() { }
+	constructor(
+		private CmsService : CmsService
+	) { }
 
 	ngOnInit(): void {
 		this.getContents()
@@ -18,7 +20,7 @@ export class ContentsListComponent implements OnInit {
 	active = {	}
 
 
-	contents :any = [1,2,3,4,5,6]
+	contents :any = []
 
 
 	getContents(){
@@ -27,6 +29,11 @@ export class ContentsListComponent implements OnInit {
 			count += 1
 			this.active[count] = false			
 		}
+
+		this.CmsService.getLinks().subscribe(data => {
+			this.contents = data
+			console.log(data)
+		})
 	}
 
 	showContent(content){		

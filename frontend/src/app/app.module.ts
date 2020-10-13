@@ -20,9 +20,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
 // import { AngularOpenlayersModule } from "ngx-openlayers";
 
 
-import { ResponsiveModule } from 'ngx-responsive';
+import { ResponsiveModule } from 'ngx-responsive'
 import 'ag-grid-enterprise';
-
+import { TreeNgxModule } from 'tree-ngx';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -132,6 +132,8 @@ const routes: Routes = [
 
 
   { path:'test', component:TestsComponent},  
+  { path:'search', component:SearchComponent},  
+
 
   
   { path:'home', component:HomeComponent},  
@@ -266,6 +268,7 @@ const routes: Routes = [
 
   ],
   imports: [
+    TreeNgxModule,
     NgxPaginationModule,
     ResponsiveModule,
     BrowserModule,

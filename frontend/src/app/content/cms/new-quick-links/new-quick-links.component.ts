@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CmsService } from '../cms.service'
 
 @Component({
   selector: 'app-new-quick-links',
@@ -7,17 +8,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewQuickLinksComponent implements OnInit {
 
-	constructor() { }
+	constructor(
+		private CmsService : CmsService
+	) { }
 
 	ngOnInit(): void {
+
 	}
+
+	src = '../../../../assets/avatars/girl-black.png'
 
 	readURL(file,event){
 
 	}
 
+	data = {
+		title:'',
+		body:'',
+		file:''
+	}
+
 	triggerInput(){
 		document.getElementById('quick-link-picture').click()
+	}
+
+	saveQuicLink(){
+		this.CmsService.saveQuickLinks(this.data).subscribe(data => {
+			console.log(data)
+		})
 	}
 
 }

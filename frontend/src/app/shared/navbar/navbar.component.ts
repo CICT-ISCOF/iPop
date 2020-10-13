@@ -16,6 +16,10 @@ export class NavbarComponent implements OnInit {
 		this.subscription = this.UtilityService.getDropDown().subscribe(value => {
 			this.dropdown = value
 		})
+
+		this.subscription =this.UtilityService.getNavText().subscribe(value => {
+			this.navText = value
+		})
 	}
 
 	
@@ -26,9 +30,23 @@ export class NavbarComponent implements OnInit {
 
 	dropdown = false
 
-	navText = this.UtilityService.getNavText()
+	navText = ''
 
-	ngOnInit(): void {
+	ngOnInit(): void {		
+		this.syncPathAndNavText()
+	}
+
+
+	syncPathAndNavText(){
+		let url = document.createElement('a');
+		url.href = window.location.href;
+		const path = url.pathname	
+
+		if(path == '/search'){
+			this.UtilityService.setSidebarItemasActive('Universal Search')
+			this.navText = 'Universal Search'
+		}
+		
 	}
 
 	account = JSON.parse(localStorage.getItem('user-data'))
@@ -42,5 +60,10 @@ export class NavbarComponent implements OnInit {
 
 	conversations(){
 		this.UtilityService.setSidebarItemasActive('Conversations')
+	}
+
+	handleClick(item){
+		this.UtilityService.setNavText(item)
+
 	}
 }

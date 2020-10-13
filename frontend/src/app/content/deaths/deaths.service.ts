@@ -134,4 +134,9 @@ export class DeathsService {
 		return this.http.get<any>(url,{headers:this.headers})
 	}
 
+	paginateSearch(page,keyword){
+		const url =  this.BaseAPIService.baseURL + '/search/records?type=Death&query='+ keyword +'&page=' + page
+		return this.http.get<any>(url,{headers:this.headers})
+	}
+
 }

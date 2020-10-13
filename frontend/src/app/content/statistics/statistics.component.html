@@ -227,7 +227,7 @@
                 <div class="col-md-6">
                     <br>
                     <p>
-                        <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i> &nbsp; Total Zones: <span>{{filteredCensusData.zones.length}}</span>
+                        <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i> &nbsp; Total Zones: <span> {{filteredCensusData.zones.length}}</span>
                     </p>
                 </div>
                 <hr>
@@ -251,7 +251,7 @@
                     <ul class="list-group" [@listAnimation]="5">
                         <li *ngFor="let zone of filteredCensusData.tops.zones" class="list-group-item barangays">
                             <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i>
-                            <p>{{zone.name}}</p>
+                            <p>Zone: {{zone.name}}</p>
                             <p>{{zone.total}}</p>
                             <p><span class="high">1%</span></p>
                         </li>
@@ -355,7 +355,7 @@
             <div class="row">
                 <div class="col-md-12"><br>
                     <p>
-                        <i style="font-size: 20px !important;color:pink;margin-right: 20px;" class="fas fa-people-carry"></i> &nbsp; Married <span>{{ filteredCensusData.married}} | <span class="mid">{{ filteredCensusData.married / filteredCensusData.population * 100 | number:'1.0-0'}}%</span>                        of Zarraga</span>
+                        <i style="font-size: 20px !important;color:pink;margin-right: 20px;" class="fas fa-people-carry"></i> &nbsp; Married <span>{{ filteredCensusData.married}} | <span class="mid">{{ filteredCensusData.married / filteredCensusData.population * 100 | number:'1.0-0'}}%</span> of {{filter.municipality}}</span>
                     </p>
                 </div>
             </div>
