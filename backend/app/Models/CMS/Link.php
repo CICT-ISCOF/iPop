@@ -4,7 +4,7 @@ namespace App\Models\CMS;
 
 class Link extends Sluggable
 {
-    protected $fillable = ['title'];
+    protected $fillable = ['title', 'parent_id'];
     protected $with = ['children'];
     protected $appends = ['has_parent'];
 

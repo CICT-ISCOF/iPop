@@ -130,6 +130,7 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     // CMS
     Route::post('/cms/array', [CMSController::class, 'array']);
     Route::post('/cms/object', [CMSController::class, 'object']);
+    Route::post('/cms/links/children', [LinkController::class, 'children']);
 });
 
 Route::apiResources([

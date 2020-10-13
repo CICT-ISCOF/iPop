@@ -64,7 +64,11 @@ class LinkController extends Controller
      */
     public function update(Request $request, Link $link)
     {
-        $link->update($request->only(['title', 'sub_categories']));
+        $data = $request->validate([
+            'parent_id' => ['nullable', 'exists:App\Models\CMS\Link,id'],
+            'title' => ['nullable', 'string', 'max:255'],
+        ]);
+        $link->update($data);
         return $link;
     }
 
@@ -78,5 +82,14 @@ class LinkController extends Controller
     {
         $link->delete();
         return response('', 204);
+    }
+
+    public function children(Request $request)
+    {
+        $data = $request->validate([
+            'parent_id' => ['required', 'exists:App\Models\CMS\Link,id'],
+            'title' => ['required', 'string', 'max:255'],
+        ]);
+        return Link::create($data);
     }
 }
