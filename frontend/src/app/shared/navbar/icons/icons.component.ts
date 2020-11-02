@@ -13,8 +13,10 @@ export class IconsComponent implements OnInit {
 	constructor(
 		private UtilityService : UtilityService
 	) {
-		this.subscription = 	this.UtilityService.getNavText().subscribe(classname =>{		
-			this.remvoeActiveIcons()		
+		this.subscription  = this.UtilityService.getNavText().subscribe(classname =>{		
+			for(let key in this.icons){
+				this.icons[key] = false
+			}
 			this.newNavbarText(classname)
 		})
 	 }
@@ -23,28 +25,21 @@ export class IconsComponent implements OnInit {
 		
 	}
 
-	cms = {
-		newContent:false,
-		contentList:false,
-		newQuickLink:false,
-		quickLinks:false
-	}
 
-	newNavbarText(classname){
-		if(classname == "Home"){
-			this.icons.Home = true
-		}
+	newNavbarText(classname){		
 
-		if(classname == "Statistics"){
+		this.icons[classname] = true
+
+		if(classname == "Population Data"){
 			this.icons.Statistics = true
 		}
 
+		if(classname == "Admin Accounts"){
+			this.icons.AdminAccounts = true
+		}
+
 		if(classname == "Content Management"){
-			// this.icons.CMS = true	
-			for(let tab in this.cms){
-				this.cms[tab] = false
-			}
-			this.cms[localStorage.getItem('cms-tab')] = true
+			this.icons.CMS = true				
 		}
 
 		if(classname == "Add CPDP Record"){
@@ -83,10 +78,7 @@ export class IconsComponent implements OnInit {
 		if ( classname == "Admin Accounts"){
 			this.icons.AdminAccounts = true
 		}
-
-		if ( classname == "Logs"){
-			this.icons.Logs = true
-		}			
+			
 		
 		if(classname == "Universal Search"){
 			this.icons.UniversalSearch = true
@@ -104,6 +96,16 @@ export class IconsComponent implements OnInit {
 			this.icons.HelpCenter = true
 		}
 
+		if(classname == "Adolescent Health Youth Development"){
+			this.icons.AHYD = true
+		}
+
+		if(classname == "Pre Marriage Counseling"){
+			this.icons.PMC = true
+		}
+
+
+
 		
 	}
 	
@@ -120,6 +122,9 @@ export class IconsComponent implements OnInit {
 		CMS:false,
 
 		Profiling:false,
+		PMC:false,
+		AHYD:false,
+		
 		
 		CPDB:false,
 		Deaths:false,
@@ -138,10 +143,6 @@ export class IconsComponent implements OnInit {
 
 	}
 
-	remvoeActiveIcons(){
-		for(let key in this.icons){
-			this.icons[key] = false
-		}
-	}
+	
 
 }

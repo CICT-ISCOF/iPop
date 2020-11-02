@@ -65,12 +65,13 @@ export class OutMigsTableComponent implements OnInit {
 		totalPages:[],
 	}
 
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.OutMigService.paginateAdminList(page).subscribe(response=>{
 			this.OutMigService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.OutMigService.setData(response.data)
 		})	
 	}

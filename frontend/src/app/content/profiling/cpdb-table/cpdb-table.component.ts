@@ -74,13 +74,14 @@ export class CpdbTableComponent implements OnInit {
 		lastPage:0,
 		totalPages:[],
 	}
-
+	
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.CpdbService.paginateAdminList(page).subscribe(response=>{
 			this.CpdbService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.CpdbService.setData(response.data)
 		})	
 	}

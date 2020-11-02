@@ -1,49 +1,53 @@
 .profiling-component {
-    width: 100%;
-    min-height: 100%;
-    padding: 10px 0px;
-    background: var(--bg);
-    margin-top: -15px;
+	width: 100%;
+	min-height: 100%;
+	padding: 10px 0px;
+	background: var(--bg1);
+	margin-top: -15px;
 }
 
 ul {
-    padding: 10px 30px;
+	padding: 10px 30px;
 }
 
 svg,
 i {
-    margin-right: 10px;
+	margin-right: 10px;
+}
+.container {
+	max-width: 100% !important;
 }
 
 .active svg,
 .active i {
-    fill: white;
-    color: white;
+	fill: white;
+	color: white;
 }
 
 .active {
-    background: var(--contrast);
-    color: white;
-    border-radius: 2px !important;
-    transition: none !important;
+	background: var(--contrast) !important;
+	background-color: var(--contrast) !important;
+	color: white;
+	border-radius: 2px !important;
+	transition: none !important;
 }
 
 .active:hover {
-    color: white !important;
-    opacity: 1;
-    transition: none !important;
+	color: white !important;
+	opacity: 1;
+	transition: none !important;
 }
 
 li {
-    border-radius: 2px !important;
-    margin-right: 20px;
-    transition: none !important;
+	border-radius: 2px !important;
+	margin-right: 20px;
+	transition: none !important;
 }
 
 li:hover {
-    background: var(--inputBg);
+	background: var(--inputBg);
 }
 
 .badge {
-    font-size: 9px;
+	font-size: 9px;
 }

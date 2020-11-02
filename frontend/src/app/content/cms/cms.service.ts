@@ -64,6 +64,11 @@ export class CmsService {
 		const url = this.baseURL + '/cms/quick-links'				
 		return this.http.post(url, data, {headers:this.headers} )
 	}
+
+	setChild(data){
+		const url = this.baseURL + '/cms/links/children'
+		return this.http.post(url, data, {headers:this.headers} )
+	}
 	
 
 	getQuickLinks(){

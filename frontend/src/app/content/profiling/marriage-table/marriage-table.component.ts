@@ -65,12 +65,13 @@ export class MarriageTableComponent implements OnInit {
 		totalPages:[],
 	}
 
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.MarriagesService.paginateAdminList(page).subscribe(response=>{
 			this.MarriagesService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.MarriagesService.setData(response.data)
 		})	
 	}

@@ -18,7 +18,7 @@ import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { Ng2OdometerModule } from 'ng2-odometer';
 import {NgxPaginationModule} from 'ngx-pagination';
 // import { AngularOpenlayersModule } from "ngx-openlayers";
-
+import { ChartsModule } from 'ng2-charts';
 
 import { ResponsiveModule } from 'ngx-responsive'
 import 'ag-grid-enterprise';
@@ -118,7 +118,10 @@ import { DropdownComponentMobile }  from './shared/devices/mobile/dropdown/dropd
 import { FileUploadComponent } from './content/profiling/file-upload/file-upload.component';
 import { MapsComponent } from './content/maps/maps.component';
 import { LocationComponent } from './content/admin-accounts/location/location.component';
-import { PreloaderComponent } from './shared/preloader/preloader.component'
+import { PreloaderComponent } from './shared/preloader/preloader.component';
+import { PmcComponent } from './content/pmc/pmc.component';
+import { AhydComponent } from './content/ahyd/ahyd.component';
+import { FooterComponent } from './content/footer/footer.component'
 
 
 const routes: Routes = [
@@ -156,6 +159,9 @@ const routes: Routes = [
   { path:'logs', component:LogsComponent},  
  
   { path:'profiling', component:ProfilingComponent},
+  { path:'pmc', component:PmcComponent}, 
+  { path:'ahyd', component:AhydComponent},  
+
 
   { path:'user-manual', component:UserManualComponent},
   { path:'conversations', component:ConversationsComponent },  
@@ -264,10 +270,14 @@ const routes: Routes = [
     MapsComponent,
     LocationComponent,
     PreloaderComponent,
+    PmcComponent,
+    AhydComponent,
+    FooterComponent,
     
 
   ],
   imports: [
+    ChartsModule,
     TreeNgxModule,
     NgxPaginationModule,
     ResponsiveModule,

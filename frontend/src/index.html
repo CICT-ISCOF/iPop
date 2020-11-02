@@ -1,5 +1,5 @@
 <!doctype html>
-<html id="html" lang="en" data-theme="">
+<html id="html" lang="en" data-theme="" color="">
 
 <head>
     <meta charset="utf-8">
@@ -29,11 +29,15 @@
 
     <script type="text/javascript">
         if (!(localStorage.getItem("data-theme") != null)) {
-            localStorage.setItem('data-theme', "light");
+            localStorage.setItem('data-theme', "light");   
+            localStorage.setItem('color', "dark1");            
             document.getElementById('html').setAttribute("data-theme", localStorage.getItem("data-theme"));
+            document.getElementById('html').setAttribute("color", localStorage.getItem("color"));
 
         } else {
             document.getElementById('html').setAttribute("data-theme", localStorage.getItem("data-theme"))
+            document.getElementById('html').setAttribute("color", localStorage.getItem("color"));
+
         }
     </script>
 

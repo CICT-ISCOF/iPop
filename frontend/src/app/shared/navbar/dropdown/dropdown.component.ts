@@ -71,6 +71,7 @@ export class DropdownComponent implements OnInit {
 	toggleBackground(e){
 		localStorage.setItem('sidebar-background',e+'')
 		this.UtilityService.seBackground(e+'')
+		location.reload()
 	}
 
 	logout(){
@@ -104,5 +105,6 @@ export class DropdownComponent implements OnInit {
 	ChangeFilter(color){	
 		localStorage.setItem('color',color)
 		this.UtilityService.seColor(color)
+		location.reload()
 	}
 }

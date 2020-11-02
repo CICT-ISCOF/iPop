@@ -69,12 +69,13 @@ export class DeathsTableComponent implements OnInit {
 		totalPages:[],
 	}
 
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.DeathsService.paginateAdminList(page).subscribe(response=>{
 			this.DeathsService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.DeathsService.setData(response.data)
 		})	
 	}

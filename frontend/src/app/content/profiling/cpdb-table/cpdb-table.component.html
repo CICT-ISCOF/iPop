@@ -60,6 +60,10 @@
         <pagination-controls (pageChange)="paginate($event)" maxSize="15" directionLinks="true" autoHide="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
         </pagination-controls>
     </nav>
-
+    <div class="loader-holder">
+        <div *ngIf="isPaginating" class="spinner-border text-light  spinner-border-sm fast" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
     <br>
 </div>

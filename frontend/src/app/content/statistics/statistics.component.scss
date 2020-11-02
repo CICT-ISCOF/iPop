@@ -1,155 +1,201 @@
 .statistics-component {
-    width: 100%;
-    min-height: 100%;
-    padding: 10px 50px;
-    background: var(--bg1);
-    display: flexbox;
-    font-family: Raleway;
+	width: 100%;
+	min-height: 100%;
+	padding: 10px 0px;
+	background: var(--bg1);
+	display: flexbox;
+	font-family: Raleway;
+	padding-left: 30px;
+}
+
+.container,
+.row {
+	width: 100%;
+	max-width: 100%;
 }
 
 .mobile-top-view {
-    display: none;
+	display: none;
 }
 
 .Caption {
-    background: var(--contrast);
-    color: white;
-    margin-bottom: 15px;
+	background: var(--contrast);
+	color: white;
+	margin-bottom: 15px;
 }
 
 h4 {
-    text-align: left;
-    font-weight: 500;
-    width: 100%;
-    padding: 10px 20px;
-    position: relative;
-    z-index: 9;
-    border-bottom: 1px solid rgba(150, 150, 150, .5);
+	text-align: left;
+	font-weight: 500;
+	width: 100%;
+	padding: 10px 20px;
+	position: relative;
+	z-index: 9;
+	border-bottom: 1px solid rgba(150, 150, 150, .5);
 }
 
 h4 span {
-    font-size: 16px;
+	font-size: 16px;
 }
 
 .high {
-    color: #00C34F !important;
-    font-weight: 900 !important;
+	color: #00c34f !important;
+	font-weight: 900 !important;
 }
 
 .mid {
-    color: orange !important;
-    font-weight: 900 !important;
+	color: orange !important;
+	font-weight: 900 !important;
 }
 
 .low {
-    color: red !important;
-    font-weight: 900 !important;
+	color: red !important;
+	font-weight: 900 !important;
 }
 
 ul,
 li {
-    width: 100% !important;
-    flex: 1;
+	width: 100% !important;
+	flex: 1;
+	border-bottom: 1px solid rgba(150, 150, 150, .2);
 }
 
 table {
-    width: 100%;
-    margin-top: -14px;
+	width: 100%;
+	margin-top: -14px;
 }
 
 thead {
-    border-bottom: 1px solid rgba(150, 150, 150, .5);
+	border-bottom: 1px solid rgba(150, 150, 150, .5);
 }
 
 tr {
-    height: 30px;
+	height: 30px;
 }
 
 td,
 th {
-    padding: 5px 10px;
+	padding: 5px 10px;
 }
 
 li {
-    background: var(--bg);
+	background: var(--bg);
 }
 
 .box {
-    margin-left: 5px;
-    display: flex;
-    overflow: hidden;
+	margin-left: 5px;
+	display: flex;
+	overflow: hidden;
+	flex: 1;
+	padding: 20px;
 }
 
 .icon {
-    margin-right: auto;
-    margin-right: auto!important;
-    height: 100%;
-    width: 25%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+	margin-right: auto;
+	margin-right: auto !important;
+	height: 100%;
+	width: 25%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
 }
 
 .texts {
-    text-align: right;
+	text-align: right;
+	p {
+		font-size: 14px;
+		color: #aab5bc;
+		font-weight: 600;
+		text-transform: uppercase;
+	}
 }
 
 .texts h2 {
-    margin-top: -15px;
-    font-weight: 500;
+	margin-top: -15px;
+	margin: 0 0 2px;
+	padding: 0;
+	font-size: 30px;
+	font-weight: 400;
 }
 
 .barangays {
-    display: flex;
-    border-left: none !important;
-    border-right: none !important;
+	display: flex;
+	border-left: none !important;
+	border-right: none !important;
 }
 
 .barangays p {
-    width: 30%;
-    text-align: right;
+	width: 30%;
+	text-align: right;
 }
 
 #death-and-birth,
 #male-and-female,
 #in-mig-and-Out-mig {
-    height: 107%;
-    margin-top: -57px;
-    width: 120% !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	height: 107%;
+	margin-top: -57px;
+	width: 120% !important;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--bg);
+	rect {
+		fill: transparent !important;
+	}
+}
+
+#marriedChart {
+	height: 50vh;
 }
 
 .chart-container {
-    height: 80vh;
-    overflow: hidden;
+	height: 80vh;
+	overflow: hidden;
 }
 
 .details-container {
-    padding-left: 50px;
+	padding-left: 50px;
 }
 
 .details-container p span {
-    color: #149EF8;
-    font-weight: bold;
+	color: #149ef8;
+	font-weight: bold;
 }
 
 .chart-container h4 {
-    display: flex;
-    .chart-details1 {
-        margin-left: auto;
-    }
-    .chart-details1,
-    .chart-details {
-        text-align: right;
-    }
+	display: flex;
+	.chart-details1 {
+		margin-left: auto;
+		font-weight: normal !important;
+		font-weight: normal !important;
+		color: gray !important;
+		font-size: 13px !important;
+	}
+	.chart-details1,
+	.chart-details {
+		text-align: right;
+		font-weight: normal !important;
+		color: gray !important;
+		font-size: 13px !important;
+	}
 }
 
 .flex-container {
-    height: 30vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	height: 30vh;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.title {
+	font-size: 16px;
+	text-transform: uppercase !important;
+	font-weight: 700;
+}
+
+.sub-title {
+	font-weight: 600;
+	text-transform: uppercase !important;
+	color: var(--colorPrimary) !important;
 }

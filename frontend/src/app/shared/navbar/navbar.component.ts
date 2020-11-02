@@ -19,6 +19,9 @@ export class NavbarComponent implements OnInit {
 
 		this.subscription =this.UtilityService.getNavText().subscribe(value => {
 			this.navText = value
+			if(value == 'AdminAccounts'){
+				this.navText = 'Admin Accounts'
+			}
 		})
 	}
 

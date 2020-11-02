@@ -20,18 +20,18 @@ export class ContentsListComponent implements OnInit {
 	active = {	}
 
 
-	contents :any = []
+	public list :any = []
 
 
 	getContents(){
 		let count = 0
-		for(let content of this.contents){
+		for(let content of this.list){
 			count += 1
 			this.active[count] = false			
 		}
 
 		this.CmsService.getLinks().subscribe(data => {
-			this.contents = data
+			this.list = data
 			console.log(data)
 		})
 	}
@@ -39,5 +39,7 @@ export class ContentsListComponent implements OnInit {
 	showContent(content){		
 		this.active[content] == true ?  this.active[content] = false : this.active[content] = true		
 	}
+
+	
 
 }

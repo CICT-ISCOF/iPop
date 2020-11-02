@@ -10,7 +10,7 @@
 
         <ngx-file-drop *ngIf="!isUploading" dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" (click)="triggerInput()" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
             <ng-template customstyle="empty" and class="filedrop" ngx-file-drop-content-tmp let-openFileSelector="openFileSelector" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                <h4>Drop your .xlsx file here</h4>
+                <h4>Drop your .xls or .xlsx file here</h4>
                 <input multiple (change)="readInputTypeFile($event)" id="fileUpload" type="file" change style="display: none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
             </ng-template>
         </ngx-file-drop>

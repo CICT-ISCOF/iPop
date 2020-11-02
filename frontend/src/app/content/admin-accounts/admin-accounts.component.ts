@@ -152,7 +152,7 @@ export class AdminAccountsComponent implements OnInit {
 	searchHandler(event){
 		if(event.target.value == '' ){
 			this.searched == false; 
-			this.ngOnInit()
+			this.paginate(1)
 		}
 		else{ 
 			this.searched == true

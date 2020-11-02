@@ -1,52 +1,55 @@
 .cpdpb-component {
-    margin-left: 40px;
-    width: 100%;
+	margin-left: 40px;
+	width: 100%;
 }
 
 .container {
-    padding: 40px;
-    box-shadow: none;
+	padding: 40px;
+	box-shadow: none;
 }
 
 @media only screen and (max-width: 600px) {
-    .cpdpb-component {
-        margin-left: 0 !important;
-    }
+	.cpdpb-component {
+		margin-left: 0 !important;
+	}
 }
 
 .file-type-container {
-    width: 50%;
-    align-items: flex-end;
-    margin-bottom: 30px;
+	width: 50%;
+	align-items: flex-end;
+	margin-bottom: 30px;
+}
+.spinner-border {
+	color: var(--contrast) !important;
 }
 
 .drag-and-drop-container:hover {
-    opacity: .8;
+	opacity: .8;
 }
 
 .button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 30px;
-    button {
-        margin: 20;
-    }
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 30px;
+	button {
+		margin: 20;
+	}
 }
 
 .progress {
-    width: 50%;
+	width: 50%;
 }
 
 .invalid {
-    color: red !important;
+	color: red !important;
 }
 
 svg {
-    margin-right: 15px;
-    margin-top: -2px;
+	margin-right: 15px;
+	margin-top: -2px;
 }
 
 .delete-row {
-    cursor: pointer;
+	cursor: pointer;
 }

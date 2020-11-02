@@ -28,7 +28,7 @@
 }
 
 .removeBackground {
-	background: black !important;
+	background: white !important;
 }
 
 .sidebar-component:hover {
@@ -70,14 +70,14 @@ h1 img {
 
 .filter {
 	width: 100%;
-	height: 110%;
+	height: 130%;
 	position: absolute;
-	opacity: .8;
+	opacity: .86;
 }
 
 .button {
-	background: rgba(50, 50, 50, .5);
-	opacity: .8;
+	background: transparent;
+	box-shadow: none;
 }
 
 .button-group * {
@@ -100,16 +100,10 @@ h1 img {
 	width: 100%;
 }
 
-.active {
-	// border: 1px solid rgba(250, 250, 250, .5);
-	border-left: 5px solid rgba(250, 250, 250, .5);
-	transition: .2s linear;
-}
-
 .active svg,
 i {
 	fill: white;
-	transition: .2s linear;
+
 	color: white;
 }
 
@@ -121,10 +115,9 @@ i {
 	padding-left: 5px;
 }
 
-.active svg,
-.active i {
-	transform: scale(1.01) translate(2px);
-	transition: .2s linear;
+.active {
+	color: white;
+	border-left: 7px solid transparent;
 }
 
 button {
@@ -134,9 +127,10 @@ button {
 }
 
 .icon {
-	width: 60px;
+	width: 40px;
 	color: #0675e7;
 	margin-left: -10px;
+	color: gray;
 }
 
 svg,
@@ -172,4 +166,34 @@ i {
 
 ::-webkit-scrollbar-thumb:hover {
 	background: var(--bg1);
+}
+
+button {
+	font-size: 13px;
+}
+
+.demographics {
+	background: rgba(0, 0, 0, 0.16);
+
+	* {
+		font-size: 14px !important;
+	}
+	.records {
+		background: rgba(0, 0, 0, 0.16);
+		* {
+			font-size: 12px !important;
+		}
+	}
+}
+
+.triangle {
+	margin-left: auto;
+	transform: translate(19px) rotate(-90deg);
+	svg {
+		fill: var(--bg1) !important;
+		width: 23px;
+		height: 23px;
+	}
+	-webkit-filter: drop-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12));
+	filter: drop-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12));
 }

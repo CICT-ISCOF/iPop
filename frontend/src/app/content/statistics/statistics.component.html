@@ -57,7 +57,7 @@
             <div class="texts">
                 <p>Registered Population Total</p>
                 <h2>
-                    <ng2-odometer [number]="population.total" [config]="{ animation: 'count', format: 'd', value: 0, auto: true }"></ng2-odometer>
+                    <ng2-odometer style="color:#57B894" [number]="population.total" [config]="{ animation: 'count', format: 'd', value: 0, auto: true }"></ng2-odometer>
                 </h2>
             </div>
         </div>
@@ -69,7 +69,7 @@
             <div class="texts">
                 <p>Number of Registered Municipalities</p>
                 <h2>
-                    <ng2-odometer [number]="totals.municipalities" [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>
+                    <ng2-odometer style="color:orange" [number]="totals.municipalities" [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>
                 </h2>
             </div>
         </div>
@@ -81,7 +81,7 @@
             <div class="texts">
                 <p>Number of Registered Barangays</p>
                 <h2>
-                    <ng2-odometer [number]="totals.barangays" [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>
+                    <ng2-odometer style="color:#2659D8" [number]="totals.barangays" [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }"></ng2-odometer>
                 </h2>
             </div>
         </div>
@@ -94,8 +94,8 @@
 
 
     <div class="row container">
-        <div class="form-group col-md-6">
-            <h3>Top Populated Municipalities</h3>
+        <div class="form-group col-md-12">
+            <h3 class="title">Top Populated Municipalities</h3>
             <p style="color:gray">All over Iloilo</p>
             <div *ngIf="population.top.length == 0 " class="flex-container">
                 <div class="spinner-border text-light fast" role="status">
@@ -103,6 +103,12 @@
                 </div>
             </div>
             <ul class="list-group" [@listAnimation]="population.top.length">
+                <li class="list-group-item barangays">
+                    <i style="color:transparent;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
+                    <p class="sub-title">MUNICIPALITY</p>
+                    <p class="sub-title">TOTAL POPULATION</p>
+                    <p class="sub-title">PERCENTAGE</p>
+                </li>
                 <li *ngFor="let municipality of population.top" class="list-group-item barangays">
                     <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
                     <p>{{municipality.name}}</p>
@@ -124,7 +130,7 @@
     <div class="row container">
         <div class="form-group col-md-12">
             <br>
-            <i style="font-size: 20px !important;color:gray" class="fas fa-cogs"></i> &nbsp; Filters
+            <i style="font-size: 20px !important;color:gray" class="fas fa-cogs"></i> &nbsp; <span class="title">Filters</span>
             <hr>
         </div>
         <div class="form-group col-md-6">
@@ -169,15 +175,20 @@
     </div>
 
     <div *ngIf="filter.municipality != ''" class="row container details-container">
-        <h4 style="display: flex;padding-left: 0;">
-            <i class="fa fa-university"></i> &nbsp; Municipality of {{filter.municipality}} &nbsp;
-            <svg *ngIf="filter.barangay != ''" width="30px" height="30px" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="gray" xmlns="http://www.w3.org/2000/svg">
+        <h4 style="display: flex;padding-left: 0;" class="title">
+            <i class="fa fa-university" style="margin-left: -10px;"></i> &nbsp; Municipality of {{filter.municipality}} &nbsp;
+            <svg *ngIf="filter.barangay != ''" width="15px" height="15px" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="gray" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
                 <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
             </svg> &nbsp;
             <P *ngIf="filter.barangay != ''">{{ filter.barangay }}</P>
             <span tooltip="Filters affects the data below" placement="left" show-delay="100" [theme]="theme" style="margin-left: auto;cursor: pointer;">
-                <i style="font-size: 30px;color:orange"  class="fas fa-info-circle"></i>
+                <i style="font-size: 15px;color:orange"  class="fas fa-info-circle"></i>
+            </span>
+            <span tooltip="Hide" placement="left" show-delay="100" [theme]="theme" (click)="filter.municipality = ''" style="margin-left:20px;cursor: pointer;">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                </svg>
             </span>
         </h4>
         <hr>
@@ -191,12 +202,12 @@
         <div class="row" *ngIf="filteredCensusData.hasResults">
             <div class="row">
                 <div class="col-md-6">
-                    <p>District : <span>{{filteredCensusData.district == null ? 'Not Avilable' : filteredCensusData.district}}</span></p>
+                    <p class="sub-title">District : <span>{{filteredCensusData.district == null ? 'Not Avilable' : filteredCensusData.district}}</span></p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <p>Population</p>
+                    <p class="sub-title">Population</p>
                     <ul class="list-group">
                         <li class="list-group-item barangays">
                             <i style="color:#32B0DF;font-size: 20px;" class="fas fa-user"></i>
@@ -206,7 +217,7 @@
                     </ul>
                 </div>
                 <div class="col-md-5">
-                    <p>Households</p>
+                    <p class="sub-title">Households</p>
                     <ul class="list-group">
                         <li class="list-group-item barangays">
                             <i style="color:#A448B1;font-size: 20px;" class="fas fa-home"></i>
@@ -233,7 +244,7 @@
                 <hr>
                 <div class="col-md-6 mt-20">
                     <br><br>
-                    <p> Barangay Lists: </p>
+                    <p class="sub-title" class="sub-title"> Barangay Lists: </p>
                     <div>
                         <ul class="list-group" [@listAnimation]="5">
                             <li *ngFor="let barangay of filteredCensusData.tops.barangays" class="list-group-item barangays">
@@ -247,7 +258,7 @@
                 </div>
                 <div class="col-md-6 mt-20">
                     <br><br>
-                    <p>Zones Lists:</p>
+                    <p class="sub-title">Zones Lists:</p>
                     <ul class="list-group" [@listAnimation]="5">
                         <li *ngFor="let zone of filteredCensusData.tops.zones" class="list-group-item barangays">
                             <i style="font-size: 20px !important;color:chocolate" class="fas fa-map-signs"></i>
@@ -263,7 +274,7 @@
                 <div class="col-md-12">
                     <br> <br>
                     <p>
-                        <i style="font-size: 20px !important;color:#81D340" class="fas fa-globe-africa"></i> &nbsp; Area
+                        <i class="sub-title" style="font-size: 20px !important;color:#81D340" class="fas fa-globe-africa"></i> &nbsp; <span class="sub-title">Area</span>
                         <span> 54.48 km2 (21.03 sq mi) </span>
                     </p> <br>
 
@@ -273,7 +284,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <p>
-                        <i style="font-size: 20px !important;color:wheat" class="fas fa-baby"></i> &nbsp; Births<span> - {{filteredCensusData.genders.birth.total}} | <span class="mid">{{filteredCensusData.genders.birth.total / filteredCensusData.population * 100 | number:'1.0-0'}}%</span></span>
+                        <i class="sub-title" style="font-size: 20px !important;color:wheat" class="fas fa-baby"></i> &nbsp; <span class="sub-title"> &nbsp;  Births</span> <span> - {{filteredCensusData.genders.birth.total}} | <span class="mid">{{filteredCensusData.genders.birth.total / filteredCensusData.population * 100 | number:'1.0-0'}}%</span></span>
                     </p>
                     <ul class="list-group">
                         <li class="list-group-item barangays">
@@ -292,7 +303,7 @@
                 </div>
                 <div class="col-md-6">
                     <p>
-                        <i style="font-size: 20px !important;color:red;margin-right: 20px;" class="fas fa-book-dead"></i> &nbsp; Deaths
+                        <i class="sub-title" style="font-size: 20px !important;color:red;margin-right: 20px;" class="fas fa-book-dead"></i> &nbsp; <span class="sub-title">Deaths</span>
                         <span> - {{filteredCensusData.genders.death.total}}  |<span class="mid">{{filteredCensusData.genders.death.total / filteredCensusData.population * 100 | number:'1.0-0'}}%</span></span>
                     </p>
                     <li class="list-group-item barangays">
@@ -314,7 +325,7 @@
             <div class="row">
                 <div class="col-md-6"><br> <br><br>
                     <p>
-                        <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-arrival"></i> &nbsp; Migrants <span> - {{filteredCensusData.genders.inmigration.total}}  | <span class="mid">{{filteredCensusData.genders.inmigration.total / filteredCensusData.population * 100 | number:'1.0-0'}}%</span></span>
+                        <i class="sub-title" style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-arrival"></i> &nbsp; <span class="sub-title">Migrants</span> <span> - {{filteredCensusData.genders.inmigration.total}}  | <span class="mid">{{filteredCensusData.genders.inmigration.total / filteredCensusData.population * 100 | number:'1.0-0'}}%</span></span>
                     </p>
                     <ul class="list-group">
                         <li class="list-group-item barangays">
@@ -333,7 +344,7 @@
                 </div>
                 <div class="col-md-6"><br> <br><br>
                     <p>
-                        <i style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-departure"></i> &nbsp; Out Migrants<span> - {{filteredCensusData.genders.outmigration.total}}  | <span class="mid">{{filteredCensusData.genders.outmigration.total / filteredCensusData.population * 100 | number:'1.0-0'}}%</span></span>
+                        <i class="sub-title" style="font-size: 20px !important;color:teal;margin-right: 20px;" class="fas fa-plane-departure"></i> &nbsp; <span class="sub-title">Out Migrants</span> <span> - {{filteredCensusData.genders.outmigration.total}}  | <span class="mid">{{filteredCensusData.genders.outmigration.total / filteredCensusData.population * 100 | number:'1.0-0'}}%</span></span>
                     </p>
                     <ul class="list-group">
                         <li class="list-group-item barangays">
@@ -355,7 +366,7 @@
             <div class="row">
                 <div class="col-md-12"><br>
                     <p>
-                        <i style="font-size: 20px !important;color:pink;margin-right: 20px;" class="fas fa-people-carry"></i> &nbsp; Married <span>{{ filteredCensusData.married}} | <span class="mid">{{ filteredCensusData.married / filteredCensusData.population * 100 | number:'1.0-0'}}%</span> of {{filter.municipality}}</span>
+                        <i style="font-size: 20px !important;color:pink;margin-right: 20px;" class="fas fa-people-carry"></i> &nbsp; <span class="sub-title" style="color:var(--colorPrimary) !important"> Married - </span> <span> {{ filteredCensusData.married }} | <span class="mid">{{ filteredCensusData.married / filteredCensusData.population * 100 | number:'1.0-0'}}%</span>                        of {{filter.municipality}}</span>
                     </p>
                 </div>
             </div>
@@ -369,7 +380,7 @@
 
 
         <div class="row container chart-container">
-            <h4>Age Distribution Male & Female <br>
+            <h4 class="title">Age Distribution Male & Female <br>
                 <span class="chart-details1"><span style="color:var(--colorPrimary) !important"> Male </span>
                 <span style="margin-left: 20px;">
                     {{sexs.male}}
@@ -394,7 +405,7 @@
 
 
         <div class="row container chart-container">
-            <h4>Deaths & Births<br>
+            <h4 class="title">Deaths & Births<br>
                 <span class="chart-details1"><span style="color:var(--colorPrimary) !important">Deaths </span>
                 <span style="margin-left: 20px;">{{ month.death.total }}</span>
                 <span style="margin-left: 20px;font-size: 11px;" [class.low]="month.death.total/ population.total * 100 > 50" [class.high]="month.death.total / population.total * 100 < 50">{{ month.death.total / population.total * 100 | number:'1.0-0' }}%</span>
@@ -413,7 +424,7 @@
         <br>
 
         <div class="row container chart-container">
-            <h4>In-Migrants & Out Migrants<br>
+            <h4 class="title">In-Migrants & Out Migrants<br>
                 <span class="chart-details1">
                 <span style="color:var(--colorPrimary) !important"> In-Migrants  </span>
                 <span style="margin-left: 20px;"> {{ month.inmigration.total }} </span>
@@ -432,18 +443,16 @@
         <br>
 
         <div class="row container chart-container">
-            <h4 class="marriage-total-population" style="height: 70px;display: block;">Married <br>
+            <h4 class="marriage-total-population title" style="height: 70px;display: block;">Married <br>
                 <span>Total couples:{{month.marriage.total}}</span> <br>
-                <span style="align-self: flex-end;" [class.low]="month.marriage.total/ population.total * 100 < 50" [class.high]="month.marriage.total / population.total * 100 > 50">{{ month.marriage.total / population.total * 100 | number:'1.0-0' }}% of total population</span>
+                <span style="align-self: flex-end;font-weight: 200 !important;" [class.low]="month.marriage.total/ population.total * 100 > 50" [class.high]="month.marriage.total / population.total * 100 < 50">{{ month.marriage.total / population.total * 100 | number:'1.0-0' }}% of total population</span>
             </h4>
             <div *ngIf="!marriageisLoading " class="flex-container">
                 <div class="spinner-border text-warning fast" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
-            <google-chart *ngIf="marriageisLoading || charts.married.length != 0" class="container1 w-100 " type='LineChart' [data]="charts.married " [options]="googleChartOptions.marriedOptions "></google-chart>
-
-
+            <canvas style="display: block;height: 70%;width: 100%;" id="marriedChart" #marriedChart></canvas>
         </div>
     </div>
 

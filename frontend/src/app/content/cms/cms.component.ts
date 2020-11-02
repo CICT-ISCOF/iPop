@@ -97,11 +97,23 @@ export class CmsComponent implements OnInit {
 		// 		return
 		// 	}
 		// }	
-		this.items.push(this.categories)
-			
-		this.CmsService.save(this.items).subscribe(data => {
-			console.log(data)
-		})
+		
+
+		if(this.existingCategory == false){	
+			this.items.push(this.categories)						
+			this.CmsService.save(this.items).subscribe(data => {
+				console.log(data)
+			})
+		}
+		else{			
+			this.CmsService.setChild(this.childParams).subscribe(data=>{
+				console.log(data)
+			})
+		}
+
+
+
+
 	}
 
 	// ----------------- content options --------------------------
@@ -122,33 +134,44 @@ export class CmsComponent implements OnInit {
 		}
 	}
 
-		
+	existingCategory
 	categories = {
 		title:'',		
 		type:'link',
-		sub_categories:[
-			{
-				title:'',
-				sub_categories:[],	
-			}
-		],	
+		sub_categories:[{
+			title:''
+		}],	
 	}
 	titles:any = []	
 
 	newCategory = false
 	newSubCategory = false
 	items:any = []	
+	newMainCategory = false
 
+	childParams = {
+		parent_id:'',
+		title:''
+	}
 	
-	
+	selectHandler(event){
+		if(event.target.value == 'New Main Category'){
+			this.newMainCategory = true
+		}			
+	}
+
+	parentIdHandler(event){		
+		this.childParams.parent_id = event.target.value
+	}
 
 
 
 
 
 	getParentLinks(){
-		this.CmsService.getLinks().subscribe(data => {
+		this.CmsService.getLinks().subscribe(data => {			
 			this.titles = data
+			console.log(data)
 		})
 	}
 	
@@ -261,6 +284,7 @@ export class CmsComponent implements OnInit {
 	
 	reload(){
 		this.items = []
+		this.existingCategory = undefined
 		for(let item in this.categories){
 			this.categories[item] = ''
 		}

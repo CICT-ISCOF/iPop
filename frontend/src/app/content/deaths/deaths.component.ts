@@ -29,12 +29,13 @@ export class DeathsComponent implements OnInit {
 		})
 	}
 
+	barangayIsLoading = false
 	getBarangays(event){
-		this.isLoading = true
+		this.barangayIsLoading = true
 		this.fields.municipality = event.target.options[event.target.options.selectedIndex].text;	
 		this.LocationService.getBarangays(event.target.value).subscribe(data => {
 			this.barangays = data	
-			this.isLoading = false
+			this.barangayIsLoading = false
 		})
 	}
 
@@ -146,8 +147,9 @@ export class DeathsComponent implements OnInit {
 			 
 			this.DeathsService.saveDeathRecord(this.fields).subscribe(data => {
 				this.UtilityService.setAlert('Death Record has been successfully saved','success')
+				this.isLoading = false
 			})
-			this.isLoading = false
+			
 		}else{			
 			this.isLoading = false
 		}

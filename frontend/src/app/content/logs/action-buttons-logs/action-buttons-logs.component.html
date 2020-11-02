@@ -1,7 +1,7 @@
 <div class="actions-container">
-    <img src="../../../assets/wallpapers/1.jpg" alt="">
+    <img [src]="params.user == null || params.user == undefined ? '../../../assets/avatars/boy-blue.png' : params.user.profile_picture.uri" alt="">
     <p>
-        {{ params.user == null || params.user == undefined ? 'Uknown user' : params.user.fullname}}
+        {{ params.user == null || params.user == undefined ? 'Uknown user' : params.user.fullname }}
 
 
     </p>

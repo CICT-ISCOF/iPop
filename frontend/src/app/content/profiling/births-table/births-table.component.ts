@@ -65,13 +65,13 @@ export class BirthsTableComponent implements OnInit {
 		lastPage:0,
 		totalPages:[],
 	}
-
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.BirthsService.paginateAdminList(page).subscribe(response=>{
 			this.BirthsService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.BirthsService.setData(response.data)
 		})	
 	}

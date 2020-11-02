@@ -66,12 +66,13 @@ export class InMigsTableComponent implements OnInit {
 		totalPages:[],
 	}
 
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.InMigService.paginateAdminList(page).subscribe(response=>{
 			this.InMigService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.InMigService.setData(response.data)
 		})	
 	}
