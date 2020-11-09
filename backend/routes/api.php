@@ -24,6 +24,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\StatisticNoteController;
+use App\Http\Controllers\TomtomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\UserRoleController;
@@ -42,6 +43,7 @@ Route::prefix('/location')->group(function () {
     ]);
     Route::get('/barangays', [LocationController::class, 'barangays']);
     Route::get('/search', [LocationController::class, 'search']);
+    Route::get('/search/geocode', [TomtomController::class, 'search']);
 });
 
 Route::options('/logs/visit', [LogController::class, 'visit']);
