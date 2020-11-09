@@ -7,19 +7,6 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BirthController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\ChannelController;
-use App\Http\Controllers\CMS\ArticleController;
-use App\Http\Controllers\CMS\CardListController;
-use App\Http\Controllers\CMS\CardListItemController;
-use App\Http\Controllers\CMS\CMSController;
-use App\Http\Controllers\CMS\GridListController;
-use App\Http\Controllers\CMS\GridListItemController;
-use App\Http\Controllers\CMS\LinkController;
-use App\Http\Controllers\CMS\LinkListController;
-use App\Http\Controllers\CMS\ListItemController;
-use App\Http\Controllers\CMS\MediaController;
-use App\Http\Controllers\CMS\SliderListController;
-use App\Http\Controllers\CMS\SliderListItemController;
-use App\Http\Controllers\CMS\TextController;
 use App\Http\Controllers\DeathController;
 use App\Http\Controllers\CPDBController;
 use App\Http\Controllers\CommentController;
@@ -83,7 +70,6 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::delete('/logs/{log}', [LogController::class, 'destroy']);
     Route::delete('/logs/clear', [LogController::class, 'clear']);
 
-    // Statistics
     Route::apiResource('births', BirthController::class);
     Route::apiResource('deaths', DeathController::class);
     Route::apiResource('in-migrations', InMigrationController::class);
@@ -94,22 +80,6 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
         'store',
         'destroy',
     ]);
-    Route::prefix('/statistics')->group(function () {
-        Route::get('/general', [StatisticsController::class, 'index']);
-        Route::get('/population', [StatisticsController::class, 'population']);
-        Route::get('/totals', [StatisticsController::class, 'totals']);
-        Route::get('/genders', [StatisticsController::class, 'genders']);
-        Route::get('/municipality', [
-            StatisticsController::class,
-            'municipality',
-        ]);
-        Route::get('/months', [StatisticsController::class, 'months']);
-        Route::get('/distributions', [
-            StatisticsController::class,
-            'distributions',
-        ]);
-        Route::get('/filter', [StatisticsController::class, 'filter']);
-    });
 
     Route::get('/counts', [CountController::class, 'count']);
     Route::get('/counts/type', [CountController::class, 'countByType']);
@@ -126,28 +96,7 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::get('/sockets/all', [ChannelController::class, 'index']);
     Route::get('/sockets/comments', [ChannelController::class, 'comments']);
     Route::get('/sockets/record', [ChannelController::class, 'record']);
-
-    // CMS
-    Route::post('/cms/array', [CMSController::class, 'array']);
-    Route::post('/cms/object', [CMSController::class, 'object']);
-    Route::post('/cms/links/children', [LinkController::class, 'children']);
 });
-
-Route::apiResources([
-    'cms/quick-links' => QuickLinkController::class,
-    'cms/articles' => ArticleController::class,
-    'cms/cards' => CardListController::class,
-    'cms/cards/items' => CardListItemController::class,
-    'cms/grids' => GridListController::class,
-    'cms/grids/items' => GridListItemController::class,
-    'cms/links' => LinkController::class,
-    'cms/lists' => LinkListController::class,
-    'cms/lists/items' => ListItemController::class,
-    'cms/medias' => MediaController::class,
-    'cms/sliders' => SliderListController::class,
-    'cms/sliders/items' => SliderListItemController::class,
-    'cms/texts' => TextController::class,
-]);
 
 
 
