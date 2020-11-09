@@ -23,15 +23,13 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        static $count = 1;
         return [
             'fullname' => $this->faker->name,
-            'username' => 'admin' . $count++,
-            'role' => 'Super Admin',
+            'username' => $this->faker->userName,
             'district' => '4',
             'municipality' => 'Barotac Nuevo',
             'barangay' => 'Lagubang',
-            'password' => Hash::make(123),
+            'password' => Hash::make('admin'),
         ];
     }
 }

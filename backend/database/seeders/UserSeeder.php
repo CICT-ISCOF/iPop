@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -15,15 +15,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'username' => 'admin',
-            'fullname' => 'admin',
-            'district' => '6',
-            'municipality' => 'Barotac Nuevo',
-            'barangay' => 'Main Poblacion',
-            'password' => Hash::make('admin'),
-            'role' => 'Super Admin',
-        ]);
-        factory(User::class, 10)->create();
+        $user = User::factory()->create();
+        $role = Role::findOrCreate('Super Admin');
+        $user->assignRole($role);
+        $user->save();
     }
 }

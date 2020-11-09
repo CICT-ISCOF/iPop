@@ -54,7 +54,6 @@ class RegisterRequest extends FormRequest
             'role' => [
                 'required',
                 'string',
-                Rule::in(['Super Admin', 'PPO', 'PPO1', 'BSPO', 'Viewer']),
             ],
             'profile_picture' => 'nullable',
         ];

@@ -8,7 +8,6 @@ use App\Models\Log;
 use App\Events\RecordSaved;
 use App\Http\Requests\BirthRequest;
 use App\Http\Requests\BirthUpdateRequest;
-use Illuminate\Http\Request;
 
 class BirthController extends Controller
 {
@@ -32,15 +31,27 @@ class BirthController extends Controller
      */
     public function store(BirthRequest $request)
     {
-        Log::record('Created new Birth record.');
+        $user = $this->user($request);
+
+        $permissions = Birth::getRequiredPermissions();
+
+        if (!$user->hasAllPermissions($permissions)) {
+            return response([
+                'errors' => [
+                    'account' => 'You do not have sufficient permissions.'
+                ]
+            ], 401);
+        }
+
         $birth = Birth::create($request->validated());
         $record = new Record([
-            'user_id' => $request->user()->id,
+            'user_id' => $user->id,
             'status' => 'Pending',
         ]);
         $birth->record()->save($record);
         $birth->record = $record;
         broadcast(new RecordSaved($birth))->toOthers();
+        Log::record('Created new Birth record.');
         return $birth;
     }
 
@@ -66,9 +77,21 @@ class BirthController extends Controller
      */
     public function update(BirthUpdateRequest $request, Birth $birth)
     {
-        Log::record('Updated a birth record.');
+        $user = $this->user($request);
+
+        $permissions = Birth::getRequiredPermissions();
+
+        if (!$user->hasAllPermissions($permissions)) {
+            return response([
+                'errors' => [
+                    'account' => 'You do not have sufficient permissions.'
+                ]
+            ], 401);
+        }
+
         $birth->update($request->validated());
         $birth->record->update(['status' => 'Requires Revalidation']);
+        Log::record('Updated a birth record.');
         return $birth;
     }
 
@@ -80,8 +103,16 @@ class BirthController extends Controller
      */
     public function destroy(Birth $birth)
     {
-        Log::record('Deleted a birth record.');
         $birth->delete();
+        Log::record('Deleted a birth record.');
         return response('', 204);
+    }
+
+    /**
+     * @return \App\Models\User
+     */
+    protected function user($request)
+    {
+        return $request->user();
     }
 }

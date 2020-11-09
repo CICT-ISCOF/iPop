@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     public function authenticate(Request $request)
-    {   
+    {
         $mode = $request->header('X-Auth-Mode');
         switch ($mode) {
             case 'Pin':
@@ -50,6 +50,8 @@ class LoginController extends Controller
         }
         $data = $request->all();
         $user = User::with('profilePicture')
+            ->with('roles.permissions')
+            ->with('permissions')
             ->where('pin', $data['pin'])
             ->where('question', $data['question'])
             ->first();
@@ -100,6 +102,8 @@ class LoginController extends Controller
         }
         $data = $request->all();
         $user = User::with('profilePicture')
+            ->with('roles.permissions')
+            ->with('permissions')
             ->where('username', $data['username'])
             ->first();
         if (!$user) {

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class MediaSeeder extends Seeder
+class StatisticSeeder extends Seeder
 {
     /**
      * Run the database seeds.

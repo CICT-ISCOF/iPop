@@ -17,10 +17,8 @@ use App\Http\Controllers\OutMigrationController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LogController;
-use App\Http\Controllers\QuickLinkController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserController;
 
 Route::prefix('/auth')->group(function () {

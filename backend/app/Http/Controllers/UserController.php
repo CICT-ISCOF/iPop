@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -20,7 +21,8 @@ class UserController extends Controller
     public function index()
     {
         return User::with('profilePicture')
-            ->orderBy('role')
+            ->with('roles.permissions')
+            ->with('permissions')
             ->paginate(10);
     }
 
@@ -33,7 +35,6 @@ class UserController extends Controller
     public function store(RegisterRequest $request)
     {
         $data = $request->validated();
-        Log::record('Created a new ' . $data['role'] . ' user.');
         $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
         if (isset($data['profile_picture'])) {
@@ -43,6 +44,10 @@ class UserController extends Controller
             $user->profile_picture_id = $file->id;
             $user->profilePicture = $file;
         }
+        $role = Role::findByName($data['role']);
+        $user->assignRole($role);
+        $user->save();
+        Log::record('Created a new ' . $role->name . ' user.');
         return $user;
     }
 
@@ -54,7 +59,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return User::with('profilePicture')->findOrFail($id);
+        return User::with('profilePicture')
+            ->with('roles.permissions')
+            ->with('permissions')
+            ->findOrFail($id);
     }
 
     /**
@@ -67,7 +75,6 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user)
     {
         $data = $request->validated();
-        $logMessage = 'Updated a ' . $user->role . ' user.';
         if (isset($data['blocked'])) {
             $data['iterations'] = $data['blocked'] ? 5 : 0;
         }
@@ -147,15 +154,8 @@ class UserController extends Controller
             }
             $data['pin'] = $data['new_pin'];
         }
-        if (isset($data['role'])) {
-            $logMessage =
-                'Updated a ' .
-                $user->role .
-                ' user and changed role to ' .
-                $data['role'] .
-                '.';
-        }
-        Log::record($logMessage);
+
+        Log::record("{$user->fullname}'s profile was updated.");
         unset($user->profilePicture);
         $user->update($data);
         return $user;
