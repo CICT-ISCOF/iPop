@@ -35,7 +35,7 @@ class BirthController extends Controller
 
         $permissions = Birth::getRequiredPermissions();
 
-        if (!$user->hasAllPermissions($permissions)) {
+        if (!$user->verifyPermissions($permissions)) {
             return response([
                 'errors' => [
                     'account' => 'You do not have sufficient permissions.'
@@ -81,7 +81,7 @@ class BirthController extends Controller
 
         $permissions = Birth::getRequiredPermissions();
 
-        if (!$user->hasAllPermissions($permissions)) {
+        if (!$user->verifyPermissions($permissions)) {
             return response([
                 'errors' => [
                     'account' => 'You do not have sufficient permissions.'

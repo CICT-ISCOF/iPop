@@ -83,34 +83,9 @@ class User extends Authenticatable
         return $this->role === 'Super Admin';
     }
 
-    /**
-     * Checks if the user is a PPO employee.
-     *
-     * @return boolean $isPPO
-     */
-    public function isPPO()
+    public function verifyPermissions($permissions)
     {
-        return $this->role === 'PPO';
-    }
-
-    /**
-     * Checks if the user is a PPO1 employee.
-     *
-     * @return boolean $isPPO1
-     */
-    public function isPPOOne()
-    {
-        return $this->role === 'PPO1';
-    }
-
-    /**
-     * Checks if the user is a BSPO employee.
-     *
-     * @return boolean $isBSPO
-     */
-    public function isBSPO()
-    {
-        return $this->role === 'BSPO';
+        return $this->hasRole('Super Admin') || $this->hasAllPermissions($permissions);
     }
 
     public function getBlockedAttribute()
