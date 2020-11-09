@@ -171,6 +171,8 @@ class User extends Authenticatable
             ->orWhere('fullname', 'LIKE', "%{$query}%")
             ->orderBy('role')
             ->with('profilePicture')
+            ->with('roles')
+            ->with('permissions')
             ->get();
         if ($collection->isEmpty()) {
             return response(

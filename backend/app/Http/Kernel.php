@@ -12,6 +12,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RestrictBlocked;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\PermissibleAssigneesOnly;
 use Fruitcake\Cors\HandleCors;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -92,5 +93,6 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
+        'permissible.assignees' => PermissibleAssigneesOnly::class,
     ];
 }
