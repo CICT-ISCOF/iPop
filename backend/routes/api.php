@@ -22,6 +22,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\StatisticNoteController;
 use App\Http\Controllers\TomtomController;
@@ -104,10 +105,6 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
     Route::get('/sockets/comments', [ChannelController::class, 'comments']);
     Route::get('/sockets/record', [ChannelController::class, 'record']);
 
-    // Statistics
-    Route::apiResource('statistics', StatisticController::class);
-    Route::prefix('/statistics')->apiResource('notes', StatisticNoteController::class);
-
     // Security
     Route::apiResource('roles', RoleController::class)->except('update');
     Route::prefix('/roles')->group(function () {
@@ -122,6 +119,14 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
         Route::post('/remove', [UserPermissionController::class, 'remove']);
     });
 });
+
+// CMS
+Route::apiResource('sliders', SliderController::class);
+
+// Statistics
+Route::apiResource('statistics', StatisticController::class);
+Route::prefix('/statistics')
+    ->apiResource('notes', StatisticNoteController::class);
 
 
 
