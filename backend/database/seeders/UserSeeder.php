@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['username' => 'admin']);
         $role = Role::findOrCreate('Super Admin');
         $permission = Permission::create(['name' => 'Assign Permissions']);
         $role->givePermissionTo($permission);
