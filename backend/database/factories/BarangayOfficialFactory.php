@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Statistic;
+use App\Models\BarangayOfficial;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class StatisticFactory extends Factory
+class BarangayOfficialFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Statistic::class;
+    protected $model = BarangayOfficial::class;
 
     /**
      * Define the model's default state.

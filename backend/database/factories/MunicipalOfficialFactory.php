@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\StatisticNote;
+use App\Models\MunicipalOfficial;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class StatisticNoteFactory extends Factory
+class MunicipalOfficialFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = StatisticNote::class;
+    protected $model = MunicipalOfficial::class;
 
     /**
      * Define the model's default state.

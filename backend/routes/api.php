@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\BarangayOfficialController;
 use App\Http\Controllers\BirthController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\ChannelController;
@@ -18,13 +19,13 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ModelPermissionController;
+use App\Http\Controllers\MunicipalOfficialController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SliderController;
-use App\Http\Controllers\StatisticController;
-use App\Http\Controllers\StatisticNoteController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TomtomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
@@ -89,6 +90,23 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
         'destroy',
     ]);
 
+    Route::prefix('/statistics')->group(function () {
+        Route::get('/general', [StatisticsController::class, 'index']);
+        Route::get('/population', [StatisticsController::class, 'population']);
+        Route::get('/totals', [StatisticsController::class, 'totals']);
+        Route::get('/genders', [StatisticsController::class, 'genders']);
+        Route::get('/municipality', [
+            StatisticsController::class,
+            'municipality',
+        ]);
+        Route::get('/months', [StatisticsController::class, 'months']);
+        Route::get('/distributions', [
+            StatisticsController::class,
+            'distributions',
+        ]);
+        Route::get('/filter', [StatisticsController::class, 'filter']);
+    });
+
     Route::get('/counts', [CountController::class, 'count']);
     Route::get('/counts/type', [CountController::class, 'countByType']);
 
@@ -112,6 +130,13 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
         Route::post('/remove', [UserRoleController::class, 'remove']);
     });
 
+    Route::prefix('/officials')->group(function () {
+        Route::apiResources([
+            'municipalities' => MunicipalOfficialController::class,
+            'barangays' => BarangayOfficialController::class,
+        ]);
+    });
+
     Route::apiResource('permissions', PermissionController::class)->except('update');
     Route::prefix('/permissions')->group(function () {
         Route::apiResource('models', ModelPermissionController::class)->except('update');
@@ -122,13 +147,6 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
 
 // CMS
 Route::apiResource('sliders', SliderController::class);
-
-// Statistics
-Route::apiResource('statistics', StatisticController::class);
-Route::prefix('/statistics')
-    ->apiResource('notes', StatisticNoteController::class);
-
-
 
 // Public Files
 // Ex. http://localhost:8000/file/public/1

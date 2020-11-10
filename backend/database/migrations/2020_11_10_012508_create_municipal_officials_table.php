@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatisticNotesTable extends Migration
+class CreateMunicipalOfficialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateStatisticNotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('statistic_notes', function (Blueprint $table) {
+        Schema::create('municipal_officials', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
+            $table->string('position')->nullable();
+            $table->string('municipality');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateStatisticNotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('statistic_notes');
+        Schema::dropIfExists('municipal_officials');
     }
 }

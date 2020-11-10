@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Statistic extends Model
+class BarangayOfficial extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'value'];
+    protected $fillable = ['name', 'position', 'barangay'];
 }

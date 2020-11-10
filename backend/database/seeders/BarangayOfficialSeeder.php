@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class StatisticSeeder extends Seeder
+class BarangayOfficialSeeder extends Seeder
 {
     /**
      * Run the database seeds.
