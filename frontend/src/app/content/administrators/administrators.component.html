@@ -1,0 +1,184 @@
+<div *ngIf="isLoading" class="flex-container">
+    <div class="spinner-border text-warning fast" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div *ngIf="!isLoading" class="new-administrator-component container">
+    <br>
+    <h4>Fields with asterisks <span style="color:red">* </span> &nbsp; are required</h4>
+    <div class="row">
+        <div class="col-md-4 mb-3" style="position: relative;">
+            <img [src]="image" alt="">
+            <div (click)="triggerInput()" class="icon-container">
+                <i style="font-size: 25px;" class="fas fa-camera"></i>
+                <input (change)="readURL($event.target.files,$event)" accept="image/*" type="file" class="hidden" id="profile-picture">
+            </div>
+            <br><br>
+            <div (click)="setRandomImage()" class="clickable">
+                Click here for random avatar
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="inputs">
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="username">Username
+                    <span>
+                        <svg width="9px" height="9px" viewBox="0 0 16 16" class="bi bi-asterisk" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
+                        </svg>
+                    </span>
+                </label>
+                <input [(ngModel)]="data.username" type="text" class="form-control" id="username" [class.is-invalid]="invalidData.username" required>
+                <div class="invalid-feedback">
+                    Username is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="password">Password
+                    <span>
+                        <svg width="9px" height="9px" viewBox="0 0 16 16" class="bi bi-asterisk" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
+                        </svg>
+                    </span>
+                </label>
+                <input [(ngModel)]="data.password" type="password" class="form-control" id="password" [class.is-invalid]="invalidData.password" required>
+                <div class="invalid-feedback">
+                    Password is requred
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="confrim-password">Confirm Password
+                    <span>
+                        <svg width="9px" height="9px" viewBox="0 0 16 16" class="bi bi-asterisk" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
+                        </svg>
+                    </span>
+                </label>
+                <input [(ngModel)]="data.confirmPassword" type="password" class="form-control" id="confrim-password" [class.is-invalid]="data.confirmPassword != data.password || invalidData.confirmPassword" required>
+                <div class="invalid-feedback" *ngIf="data.confirmPassword != data.password">
+                    Password should match
+                </div>
+                <div *ngIf="invalidData.confirmPassword" class="invalid-feedback">
+                    Password is required
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-5 mb-3">
+                <label for="role">Role
+                    <span>
+                        <svg width="9px" height="9px" viewBox="0 0 16 16" class="bi bi-asterisk" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
+                        </svg>
+                    </span>
+                </label>
+                <select [(ngModel)]="data.role" class="custom-select" id="role" [class.is-invalid]="invalidData.role" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option>Super Admin</option>
+                    <option>PPO1</option>
+                    <option>PPO</option>
+                    <option>BSPO</option>
+                </select>
+                <div class="invalid-feedback">
+                    Role is required
+                </div>
+            </div>
+
+            <div class="col-md-7 mb-3">
+                <label for="fullname">Fullname
+                    <span>
+                        <svg width="9px" height="9px" viewBox="0 0 16 16" class="bi bi-asterisk" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
+                        </svg>
+                    </span>
+                </label>
+                <input [(ngModel)]="data.fullname" type="text" class="form-control" id="fullname" [class.is-invalid]="invalidData.fullname" required>
+                <div class="invalid-feedback">
+                    Fullname is required
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label for="district">District<span>
+                    <svg width="9px" height="9px" viewBox="0 0 16 16" class="bi bi-asterisk" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
+                    </svg>
+                </span></label>
+                <select [(ngModel)]="data.district" class="custom-select" id="district" [class.is-invalid]="invalidData.district" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10,11]">{{number}}</option>
+                </select>
+                <div class="invalid-feedback">
+                    District is required
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-7 mb-3">
+                <label for="municipality">Municipality
+                    <span>
+                        <svg width="9px" height="9px" viewBox="0 0 16 16" class="bi bi-asterisk" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
+                        </svg>
+                    </span>
+                </label>
+                <select (change)="getBarangays($event)" class="custom-select " id="municipality" [class.is-invalid]="invalidData.municipality" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option style="text-transform:capitalize" *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Municipality is required
+                </div>
+            </div>
+
+            <div class="col-md-5 mb-3">
+                <label for="barangay">
+                    <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    Barangay
+                    <span>                       
+                        <svg width="9px" height="9px" viewBox="0 0 16 16" class="bi bi-asterisk" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
+                        </svg>
+                    </span>
+                </label>
+                <select [disabled]="barangays.length == 0" [(ngModel)]="data.barangay" class="custom-select" id="barangay" [class.is-invalid]="invalidData.barangay" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Barangay is required
+                </div>
+            </div>
+        </div>
+
+        <br> <br>
+
+        <div class="button-container">
+            <button *ngIf="!isSubmitting" (click)="register()" class="button">Create Admin</button>
+            <button *ngIf="isSubmitting" class="btn button" type="button" disabled>
+                <span class="spinner-border spinner-border-sm text-light fast" role="status" aria-hidden="true"></span>
+                Loading...
+            </button>
+        </div>
+
+        <br> <br>
+    </div>
+
+</div>

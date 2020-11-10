@@ -1,0 +1,29 @@
+h2 {
+    font-weight: 600
+}
+
+* {
+    word-break: break-word;
+    word-wrap: break-word;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    vertical-align: baseline;
+}
+
+p,
+li {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    font-weight: 200;
+}
+
+.center {
+    text-align: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}

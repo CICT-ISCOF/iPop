@@ -1,0 +1,164 @@
+<div class="container deaths-component">
+
+    <br>
+    <div class="inputs">
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="sorting_numberr">Sorting Number</label>
+                <input [class.is-invalid]="invalid.sorting_number" [(ngModel)]="fields.sorting_number" type="number" class="form-control" id="sorting_numberr" required>
+                <div class="invalid-feedback">
+                    Sorting Number is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>Location</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="municipality">Municipality</label>
+                <select (change)="getBarangays($event)" [class.is-invalid]="invalid.municipality" class="custom-select" id="municipality" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option style="text-transform:capitalize" *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Municipality is required
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="barangay">
+                    <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    Barangay                   
+                </label>
+                <select [class.is-invalid]="invalid.barangay" [(ngModel)]="fields.barangay" class="custom-select" id="barangay" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Barangay is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>Household Case</h5>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="household-number">Household Number</label>
+                <input [class.is-invalid]="invalid.household_number" [(ngModel)]="fields.household_number" type="number" class="form-control" id="household-number" required>
+                <div class="invalid-feedback">
+                    Household Number is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="total-cases">Total Cases</label>
+                <input [class.is-invalid]="invalid.total_cases" [(ngModel)]="fields.total_cases" type="number" class="form-control" id="total-cases" required>
+                <div class="invalid-feedback">
+                    Total Cases is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="case-number">Case Number</label>
+                <input [class.is-invalid]="invalid.number_of_cases" [(ngModel)]="fields.number_of_cases" type="number" class="form-control" id="case-number" required>
+                <div class="invalid-feedback">
+                    Case Number is required
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h5>Death Details</h5>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="month-of-death">Month of  Deceased Died</label>
+                <select [class.is-invalid]="invalid.month" [(ngModel)]="fields.month" class="custom-select" id="month-of-death" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let month of months">{{ month }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Month of Deceased Died is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="case-number">Name of the  Deceased</label>
+                <input [class.is-invalid]="invalid.name" [(ngModel)]="fields.name" type="text" class="form-control" id="deaceased-name" required>
+                <div class="invalid-feedback">
+                    Name of the Deceased is required
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label for="sex">Sex of the Deceased</label>
+                <select [class.is-invalid]="invalid.sex" [(ngModel)]="fields.sex" class="custom-select" id="sex" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let sex of sexs">{{ sex }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Sex of the Deceased is required
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="age-at-death">Age at Death</label>
+                <input [class.is-invalid]="invalid.age_at_death" [(ngModel)]="fields.age_at_death" type="text" class="form-control" id="age-at-death" required>
+                <div class="invalid-feedback">
+                    Age at Death is required
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="age-bracket">Age Bracket</label>
+                <select [class.is-invalid]="invalid.age_bracket" [(ngModel)]="fields.age_bracket" class="custom-select" id="age-bracket" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let ageBracket of ageBrackets">{{ ageBracket }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Age Bracke is required
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="place-of-death">Place of Death</label>
+                <select [class.is-invalid]="invalid.place_of_death" [(ngModel)]="fields.place_of_death" class="custom-select" id="place-of-death" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let placeOfDeath of placeOfDeaths">{{ placeOfDeath }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Place of Deathr is required
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="registered-lcr">Registered LCR</label>
+                <select [class.is-invalid]="invalid.registered_lcr" [(ngModel)]="fields.registered_lcr" class="custom-select" id="registered-lcr" required>
+                    <option selected disabled >Choose...</option>
+                    <option *ngFor="let registeredLCR of registeredLCRs">{{ registeredLCR }}</option>
+                </select>
+                <div class="invalid-feedback">
+                    Registered LCR is required
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <div class="button-container">
+            <button *ngIf="!isLoading" (click)="save()" class="button">
+                Submit Record                
+            </button>
+            <button *ngIf="isLoading" class="btn button" type="button" disabled>
+                <span class="spinner-border spinner-border-sm text-light fast" role="status" aria-hidden="true"></span>
+                Loading...
+            </button>
+        </div>
+        <br> <br>
+        <div *ngIf="isLoading" class="loader "></div>
+    </div>
+
+</div>

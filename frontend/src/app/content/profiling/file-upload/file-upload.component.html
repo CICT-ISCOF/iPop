@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="file-type-container">
+        <label for="category">Select Category</label>
+        <select (change)="clearFiles()" id="category" class="custom-select" [(ngModel)]="type" placeholder="Select category">             
+            <option *ngFor="let item of types" [value]="item">{{item  }}</option>
+        </select>
+    </div>
+    <br>
+    <div *ngIf="type != ''">
+
+        <ngx-file-drop *ngIf="!isUploading" dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" (click)="triggerInput()" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+            <ng-template customstyle="empty" and class="filedrop" ngx-file-drop-content-tmp let-openFileSelector="openFileSelector" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                <h4>Drop your .xls or .xlsx file here</h4>
+                <input multiple (change)="readInputTypeFile($event)" id="fileUpload" type="file" change style="display: none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+            </ng-template>
+        </ngx-file-drop>
+
+        <br>
+        <div class="upload-table" *ngIf="files.length != 0">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Size</th>
+                        <th>Last Modified</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="upload-name-style">
+                    <tr *ngFor="let item of tableFiles; let i=index">
+                        <td [class.invalid]="checkIfXlsx(item.name)">
+                            <svg tooltip="Invalid file format" placement="right" [theme]="theme" *ngIf="checkIfXlsx(item.name)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-shield-fill-exclamation" fill="red" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 .5c-.662 0-1.77.249-2.813.525a61.11 61.11 0 0 0-2.772.815 1.454 1.454 0 0 0-1.003 1.184c-.573 4.197.756 7.307 2.368 9.365a11.192 11.192 0 0 0 2.417 2.3c.371.256.715.451 1.007.586.27.124.558.225.796.225s.527-.101.796-.225c.292-.135.636-.33 1.007-.586a11.191 11.191 0 0 0 2.418-2.3c1.611-2.058 2.94-5.168 2.367-9.365a1.454 1.454 0 0 0-1.003-1.184 61.09 61.09 0 0 0-2.772-.815C9.77.749 8.663.5 8 .5zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.553.553 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                            </svg> {{ item.name }}
+                        </td>
+                        <td [class.invalid]="checkIfXlsx(item.name)"> {{ item.size | number:'1.0':'en-U' }}KB</td>
+                        <td [class.invalid]="checkIfXlsx(item.name)">{{ item.lastModified | date : 'MMMM dd, yyyy' }}</td>
+                        <td class="delete-row" [class.invalid]="checkIfXlsx(item.name)" (click)="removeItem(i)">
+                            <svg tooltip="Remove this file" placement="right" [theme]="theme" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="text-align: right;" *ngIf="tableFiles.length != 0">Total Files: {{tableFiles.length}}</p>
+
+        <br>
+        <div *ngIf="unUploadedFiles.length != 0 && uploadFinished">
+            <p>Filtered file types: <span *ngFor="let item of unUploadedFiles" class="invalid">{{item.name}}, &nbsp;</span></p>
+        </div>
+
+
+        <div *ngIf="isUploading || uploadFinished">
+            <div class="progress">
+                <div class="progress-bar" [class.bg-success]="uploadFinished" [class.bg-danger]="uploadError  ||  noValidFIle" [style.width]="progressWIDTH + '%'" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+
+        <div *ngIf="!uploadFinished && isUploading">
+            <br>
+            <p>Uploading please wait...
+                <span>{{progressWIDTH}}%</span>
+            </p>
+        </div>
+
+        <div *ngIf="uploadFinished && !noValidFIle">
+            <br>
+            <p style="color:#2DAE58;text-align: right;">Finished Uploading</p>
+            <p style="color:orange;text-align: right;">Please clear files</p>
+        </div>
+
+        <div *ngIf="noValidFIle">
+            <p style="color:red">Upload Failed no valid file types</p>
+        </div>
+        <div class="button-container">
+            <div *ngIf="tableFiles.length != 0" class="clickable" (click)="clearFiles()">Clear files</div>
+            <button [disabled]='isUploading || tableFiles.length == 0 ' [class.disabled]="isUploading || tableFiles.length == 0 " class="button" (click)="uploadFile()">Upload to database</button>
+        </div>
+    </div>

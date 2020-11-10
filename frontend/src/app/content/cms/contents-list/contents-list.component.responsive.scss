@@ -1,0 +1,10 @@
+@media only screen and (max-width: 600px) {
+    .content-lists {
+        background: var(--bg);
+        li {
+            div svg {
+                display: none;
+            }
+        }
+    }
+}

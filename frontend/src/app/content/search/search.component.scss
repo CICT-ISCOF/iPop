@@ -1,0 +1,120 @@
+.search-component {
+    display: flexbox;
+    padding: 5vh 15vw;
+    padding-left: 10vw;
+}
+
+h2 {
+    text-align: center;
+    color: gray;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.search-container {
+    width: 100%;
+    box-shadow: 0px 0px 4px lightgray;
+    border-radius: 30px;
+    position: relative;
+    background: var(--bg);
+    .suggestions-container {
+        position: absolute;
+        background: var(--bg);
+        width: 100%;
+        border-radius: 30px;
+        z-index: 8;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+        transform: translateY(-20px);
+        -webkit-box-shadow: 0 4px 4px -2px lightgray;
+        -moz-box-shadow: 0 4px 4px -2px lightgray;
+        box-shadow: 0 4px 4px -2px lightgray;
+    }
+    input {
+        border: none !important;
+        width: 100%;
+        height: 55px;
+        border-radius: 30px;
+        padding-left: 50px;
+        font-weight: 400;
+        font-size: 17px;
+        box-shadow: none;
+        z-index: 9;
+        position: relative;
+    }
+    input:focus {
+        outline: 0;
+    }
+    .icon-container {
+        position: absolute;
+        transform: translate(18px, 17px);
+        z-index: 10;
+    }
+    .go-container {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        cursor: pointer;
+    }
+    .go-container:hover {
+        svg {
+            opacity: .8;
+        }
+    }
+    .go-container:active {
+        svg {
+            opacity: .5;
+        }
+    }
+}
+
+.tabs-container {
+    padding: 20px;
+    display: flex;
+    .tab {
+        flex: 1;
+        height: 130px;
+        text-align: center;
+        .icon {
+            height: 70%;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            span {
+                border-radius: 50%;
+                background: rgba(150, 150, 150, .1);
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                height: 50px;
+                width: 50px;
+                svg,
+                i {
+                    font-size: 16px;
+                    height: 16px;
+                    width: 16px;
+                }
+            }
+        }
+    }
+    .tab:hover {
+        background: rgba(150, 150, 150, .2);
+        cursor: pointer;
+    }
+}
+
+.active {
+    background: rgba(150, 150, 250, .2);
+}
+
+.search-list {
+    display: flex;
+    cursor: pointer;
+    padding: 20px;
+    font-size: 15px;
+    font-weight: 400;
+    svg {
+        margin-right: 30px;
+    }
+}

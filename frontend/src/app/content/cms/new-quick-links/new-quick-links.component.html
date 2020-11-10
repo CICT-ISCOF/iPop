@@ -1,0 +1,25 @@
+<br>
+
+<div class="quick-links-componet">
+    <div class="container">
+        <div class="img-container">
+            <img [src]="src" alt="">
+            <div (click)="triggerInput()" class="icon-container">
+                <i style="font-size: 25px;" class="fas fa-camera"></i>
+                <input [(ngModel)]="data.file" (change)="readURL($event.target.files,$event)" accept="image/*" type="file" class="hidden" id="quick-link-picture" style="display: none;">
+            </div>
+        </div>
+        <div class="inputs-container">
+            <textarea [(ngModel)]="data.body" placeholder="Title..." autosize class="title"></textarea>
+
+            <textarea [(ngModel)]="data.title" placeholder="Body..." autosize class="body"></textarea>
+        </div>
+    </div>
+
+
+    <br>
+    <div class="button-container">
+        <button (click)="saveQuicLink()" class="button">Save Article</button>
+    </div>
+    <br> <br>
+</div>

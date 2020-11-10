@@ -1,0 +1,11 @@
+@media only screen and (max-width: 600px) {
+    .admin-status-component {
+        width: 100%;
+        min-height: 100%;
+        padding: 10px 20px;
+        padding-right: 40px !important;
+    }
+    .container {
+        box-shadow: none !important;
+    }
+}

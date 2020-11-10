@@ -1,0 +1,37 @@
+.app-component {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg1);
+    overflow-y: auto !important;
+    overflow-x: hidden;
+}
+
+.content {
+    float: right;
+    width: 100%;
+    min-height: 100%;
+    background: var(--bg1);
+    overflow-x: hidden;
+}
+
+.removePadding {
+    padding: 0px 5px;
+    background: var(--bg);
+}
+
+.mobile-600 {
+    overflow-y: auto;
+    position: relative;
+    background: var(--bg);
+    .content {
+        padding: 0 !important;
+        background: var(--bg);
+        overflow-y: auto;
+        position: relative;
+    }
+}
+
+.addPadding {
+    padding: 70px 5px;
+    padding-left: 230px;
+}

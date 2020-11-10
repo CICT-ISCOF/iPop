@@ -1,0 +1,111 @@
+@media only screen and (max-width: 600px) {
+    .statistics-component {
+        padding: 10px 50px;
+        padding-right: 15px;
+    }
+    .statistics-component::before {
+        width: 130%;
+        height: 100%;
+        padding: 10px 50px;
+        background: var(--bg);
+        position: absolute;
+        z-index: 0;
+        content: '';
+        top: -30px;
+        left: -100px;
+    }
+    .container {
+        position: relative;
+        z-index: 1;
+        border-radius: 20px;
+        padding-top: 20px;
+    }
+    .mobile-top-view {
+        display: inline-block;
+        white-space: nowrap;
+        width: 100vw;
+        padding-right: 80px;
+        overflow-x: auto;
+        margin-left: -10px;
+        margin-top: 20px;
+    }
+    .mobile-box {
+        .text-mobile {
+            width: 50%;
+            * {
+                color: white;
+                font-weight: 900;
+            }
+            p {
+                font-weight: 200;
+            }
+        }
+        box-shadow: 1px 1px 10px rgba(250, 250, 250, .9);
+        display: inline-block;
+        height: 150px;
+        width: 330px;
+        overflow: hidden;
+        margin-right: 20px;
+        .box-wrapper-mobile {
+            display: flex;
+            padding: 20px;
+        }
+        .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            i {
+                color: white;
+            }
+        }
+    }
+    .mobile-box:nth-child(1) {
+        background: var(--green1);
+    }
+    .mobile-box:nth-child(2) {
+        background: var(--orange1);
+    }
+    .mobile-box:nth-child(3) {
+        background: var(--blue1);
+    }
+    .details-container {
+        padding: 20px !important;
+        h4 {
+            font-size: 21px;
+        }
+        li {
+            border-bottom: none !important;
+        }
+    }
+    h4,
+    h1,
+    h2,
+    h5 {
+        font-size: 21px;
+    }
+    p,
+    span {
+        color: gray;
+        font-weight: normal !important;
+    }
+    hr {
+        display: none;
+    }
+    .inline {
+        display: inline-flex !important;
+        width: auto;
+        white-space: nowrap;
+        overflow-x: auto;
+        .chart-container {
+            height: 80vh;
+            overflow: hidden;
+            display: inline-flex !important;
+            width: 200px !important;
+            margin-right: 50px;
+        }
+    }
+    .marriage-total-population {
+        height: 90px !important;
+    }
+}

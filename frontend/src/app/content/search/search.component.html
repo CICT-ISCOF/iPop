@@ -1,0 +1,100 @@
+<div class="search-component" (click)="suggesting = false">
+    <h2>Iloilo Provincial Population Office</h2>
+    <div class="search-container">
+        <div class="icon-container">
+            <svg width="20px" height="20px" viewBox="0 0 16 16" class="bi bi-search" fill="gray" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+              </svg>
+        </div>
+        <input [(ngModel)]="keyword" (keypress)="inputHandler()" (keyup.enter)="search()" type="text" placeholder="Search in Population">
+        <div class="go-container" (click)="search()">
+            <svg width="25px" height="25px" viewBox="0 0 16 16" class="bi bi-arrow-right-short" fill="gray" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.793 8 8.146 5.354a.5.5 0 0 1 0-.708z"/>
+                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5H11a.5.5 0 0 1 0 1H4.5A.5.5 0 0 1 4 8z"/>
+          </svg>
+        </div>
+        <div *ngIf="suggesting" class="suggestions-container">
+            <br>
+            <div class="search-list" *ngFor="let item of [1,2,3,4,5]">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock-history" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+                    <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+                    <path fill-rule="evenodd" d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+                  </svg> tae
+            </div>
+        </div>
+
+    </div>
+
+    <div class="tabs-container">
+
+        <div (click)="changeTab('cpdb')" class="tab" [class.active]="tabs.cpdb">
+            <div class="icon">
+                <svg width="23px" height="23px" viewBox="0 0 16 16" class="bi bi-person-bounding-box" fill="#A448B1" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z"/>
+                    <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                  </svg>
+            </div>
+            <div class="title">Census</div>
+        </div>
+
+        <div (click)="changeTab('deaths')" class="tab" [class.active]="tabs.deaths">
+            <div class="icon">
+                <span>
+                    <i style="color:red" class="fas fa-skull-crossbones"></i>
+               </span>
+            </div>
+            <div class="title">Deaths</div>
+        </div>
+
+
+        <div (click)="changeTab('births')" class="tab" [class.active]="tabs.births">
+            <div class="icon">
+                <span>
+                    <i style="color:orange" class="fas fa-baby"></i>
+               </span>
+            </div>
+            <div class="title">Births</div>
+        </div>
+
+        <div (click)="changeTab('inmigration')" class="tab" [class.active]="tabs.inmigration">
+            <div class="icon">
+                <span>
+                    <i style="color:#0D84FE" class="fas fa-plane-arrival"></i>
+               </span>
+            </div>
+            <div class="title">In MIgratants</div>
+        </div>
+
+        <div (click)="changeTab('outmigration')" class="tab" [class.active]="tabs.outmigration">
+            <div class="icon">
+                <span>
+                    <i style="color:#008080" style="transform: scaleX(-1);" class="fas fa-plane-departure"></i>
+                </span>
+            </div>
+            <div class="title">Out MIgratants</div>
+        </div>
+
+
+        <div (click)="changeTab('marriages')" class="tab" [class.active]="tabs.marriages">
+            <div class="icon">
+                <span>
+                    <svg style="margin-left: -5px;" width="23PX" height="23PX" viewBox="0 0 16 16" class="bi bi-suit-heart-fill" fill="#BB1D4F" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+                    </svg>
+                </span>
+            </div>
+            <div class="title">Marriages</div>
+        </div>
+
+    </div>
+
+    <app-births-search *ngIf="tabs.births"></app-births-search>
+    <app-cpdb-search *ngIf="tabs.cpdb"></app-cpdb-search>
+    <app-deaths-search *ngIf="tabs.deaths"></app-deaths-search>
+    <app-in-migs-search *ngIf="tabs.inmigration"></app-in-migs-search>
+    <app-marriages-search *ngIf="tabs.marriages"></app-marriages-search>
+    <app-out-migs-search *ngIf="tabs.outmigration"></app-out-migs-search>
+
+</div>
