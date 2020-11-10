@@ -19,10 +19,12 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ModelPermissionController;
+use App\Http\Controllers\MTCMMembersController;
 use App\Http\Controllers\MunicipalOfficialController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SBMPTCController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StatisticsController;
@@ -30,6 +32,7 @@ use App\Http\Controllers\TomtomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\UserRoleController;
+use App\Models\SBMPTCTeam;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate']);
@@ -143,6 +146,12 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
         Route::post('/assign', [UserPermissionController::class, 'assign']);
         Route::post('/remove', [UserPermissionController::class, 'remove']);
     });
+
+    Route::apiResources([
+        'sbmptcs' => SBMPTCController::class,
+        'sbmptcs/teams' => SBMPTCTeam::class,
+        'mtcms' => MTCMMembersController::class,
+    ]);
 });
 
 // CMS

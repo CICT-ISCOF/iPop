@@ -17,13 +17,26 @@ class SBMPTC extends Model
         'services',
     ];
 
+    public static function booted()
+    {
+        static::deleting(function ($sbmptc) {
+            $sbmptc->members->each(function ($member) {
+                $member->delete();
+            });
+
+            $sbmptc->photos->each(function ($photo) {
+                $photo->delete();
+            });
+        });
+    }
+
     public function members()
     {
-        return $this->hasMany(MTCMMembers::class, 'sbmptc_id');
+        return $this->hasMany(MTCMMember::class, 'sbmptc_id');
     }
 
     public function photos()
     {
-        return $this->hasMany(SBMPTCPhoto::class)
+        return $this->hasMany(SBMPTCPhoto::class, 'sbmptc_id');
     }
 }

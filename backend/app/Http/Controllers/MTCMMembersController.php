@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MTCMMembers;
+use App\Models\MTCMMember;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class MTCMMembersController extends Controller
 {
@@ -14,7 +15,8 @@ class MTCMMembersController extends Controller
      */
     public function index()
     {
-        //
+        return MTCMMember::with('sbmptc')
+            ->paginate(10);
     }
 
     /**
@@ -25,40 +27,56 @@ class MTCMMembersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'position' => ['nullable', 'string', 'max:255'],
+            'municipality' => ['required', Rule::exists('municipalities', 'name')],
+            'sbmptc_id' => ['required', Rule::exists('s_b_m_p_t_c_s', 'id')]
+        ]);
+
+        return MTCMMember::create($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\MTCMMembers  $mTCMMembers
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(MTCMMembers $mTCMMembers)
+    public function show(int $id)
     {
-        //
+        return MTCMMember::with('sbmptc')->findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MTCMMembers  $mTCMMembers
+     * @param  \App\Models\MTCMMember $mtcm
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MTCMMembers $mTCMMembers)
+    public function update(Request $request, MTCMMember $mtcm)
     {
-        //
+        $data = $request->validate([
+            'name' => ['nullable', 'string', 'max:255'],
+            'position' => ['nullable', 'string', 'max:255'],
+            'municipality' => ['nullable', Rule::exists('municipalities', 'name')],
+            'sbmptc_id' => ['nullable', Rule::exists('s_b_m_p_t_c_s', 'id')]
+        ]);
+
+        $mtcm->update($data);
+        return $mtcm;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\MTCMMembers  $mTCMMembers
+     * @param  \App\Models\MTCMMember  $mtcm
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MTCMMembers $mTCMMembers)
+    public function destroy(MTCMMember $mtcm)
     {
-        //
+        $mtcm->delete();
+        return response('', 204);
     }
 }

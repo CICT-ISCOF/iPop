@@ -7,8 +7,14 @@ use Illuminate\Support\Facades\Http;
 
 class TomtomController extends Controller
 {
-    protected $key = env('TOMTOM_KEY');
-    protected $url = env('TOMTOM_URL');
+    protected $key;
+    protected $url;
+
+    public function __construct()
+    {
+        $this->key = env('TOMTOM_KEY');
+        $this->url = env('TOMTOM_URL');
+    }
 
     public function search(Request $request)
     {

@@ -14,7 +14,9 @@ class SBMPTCController extends Controller
      */
     public function index()
     {
-        //
+        return SBMPTC::with('members')
+            ->with('photos')
+            ->paginate(10);
     }
 
     /**
@@ -25,18 +27,28 @@ class SBMPTCController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'location' => ['required', 'string', 'max:255'],
+            'tc_coordinator_count' => ['required', 'numeric'],
+            'population' => ['required', 'numeric'],
+            'services' => ['required', 'string'],
+        ]);
+
+        return SBMPTC::create($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SBMPTC  $sBMPTC
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SBMPTC $sBMPTC)
+    public function show($id)
     {
-        //
+        return SBMPTC::with('members')
+            ->with('photos')
+            ->findOrFail($id);
     }
 
     /**
@@ -44,21 +56,31 @@ class SBMPTCController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\SBMPTC  $sBMPTC
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\sbmptc
      */
-    public function update(Request $request, SBMPTC $sBMPTC)
+    public function update(Request $request, SBMPTC $sbmptc)
     {
-        //
+        $data = $request->validate([
+            'name' => ['nullable', 'string', 'max:255'],
+            'location' => ['nullable', 'string', 'max:255'],
+            'tc_coordinator_count' => ['nullable', 'numeric'],
+            'population' => ['nullable', 'numeric'],
+            'services' => ['nullable', 'string'],
+        ]);
+
+        $sbmptc->update($data);
+        return $sbmptc;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SBMPTC  $sBMPTC
+     * @param  \App\Models\SBMPTC  $sbmptc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SBMPTC $sBMPTC)
+    public function destroy(SBMPTC $sbmptc)
     {
-        //
+        $sbmptc->delete();
+        return response('', 204);
     }
 }

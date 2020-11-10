@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\MTCMMembers;
+use App\Models\MTCMMember;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MTCMMembersFactory extends Factory
@@ -12,7 +12,7 @@ class MTCMMembersFactory extends Factory
      *
      * @var string
      */
-    protected $model = MTCMMembers::class;
+    protected $model = MTCMMember::class;
 
     /**
      * Define the model's default state.
