@@ -31,7 +31,7 @@ class Log extends Model
      * @param string $action
      * @return \App\Models\Log $log
      */
-    public static function record(string $action, $substituteID = null)
+    public static function record(string $action, $substituteID = null, $metadata = [])
     {
         $agent = new Agent();
         $request = request();
@@ -56,7 +56,9 @@ class Log extends Model
                 ->toArray(),
         ];
 
-        NativeLog::info(json_encode($data));
+        $nativeLog = $data;
+        $nativeLog['metadata'] = $metadata;
+        NativeLog::info(json_encode($nativeLog));
 
         $data['info'] = json_encode($data['info']);
 
