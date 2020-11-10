@@ -71,6 +71,7 @@ export class DropdownComponent implements OnInit {
 	toggleBackground(e){
 		localStorage.setItem('sidebar-background',e+'')
 		this.UtilityService.seBackground(e+'')
+		location.reload()
 	}
 
 	logout(){
@@ -83,13 +84,9 @@ export class DropdownComponent implements OnInit {
 		  }).then((result) => {
 			if (result.value) {
 				let theme =  localStorage.getItem('data-theme')
-				// localStorage.clear()
-					this.Router.navigate(['/'])
-				this.UtilityService.logout(true)				
-				setTimeout(() => {
-					location.reload()
-					localStorage.setItem('data-theme', theme)
-				}, 500);
+				localStorage.clear()
+				this.Router.navigate(['/'])
+				this.UtilityService.logout(true)
 				this.UtilityService.setDropDown(false)	
 				Swal.fire(
 					'Thank you',
@@ -108,5 +105,6 @@ export class DropdownComponent implements OnInit {
 	ChangeFilter(color){	
 		localStorage.setItem('color',color)
 		this.UtilityService.seColor(color)
+		location.reload()
 	}
 }

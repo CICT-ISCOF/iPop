@@ -2,21 +2,49 @@
 <div class="content-lists">
 
     <ul class="list-group">
-        <li (click)="showContent(i);$event.stopPropagation()" *ngFor="let cotent of contents;let i = index" class="list-group-item active">
-            <svg *ngIf="active[i]" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <li (click)="showContent(i);$event.stopPropagation()" *ngFor="let content of contents;let i = index" class="list-group-item active">
+            <svg *ngIf="!active[i]" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
             </svg>
-            <svg *ngIf="!active[i]" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+
+            <svg *ngIf="active[i]" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-            </svg>Services
-            <div (click)="$event.stopPropagation()" class="sub-category" *ngIf="active[i]">
-                <div *ngFor="let cotent of contents;let i = index" class="list-group-item active">
+            </svg>{{content.title}}
+
+            <div (click)="$event.stopPropagation()" [routerLink]="'/content/'+ content.slug + '/'+ content.sub_categories " class="sub-category" *ngIf="active[i]">
+                <div *ngFor="let children of content.children"  class="list-group-item active">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
                         <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                    </svg> Responsible Parenthood and Family Planning</div>
+                    </svg> {{children.title}} </div>
             </div>
+
         </li>
     </ul>
 
+  
+    <ul class="list-group">
+    <ng-template #recursiveList let-list>
+        <li  *ngFor="let item of list;let i = index" class="list-group-item active">
+
+            <!-- <svg *ngIf="active[i]" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+            </svg>
+
+            <svg *ngIf="!active[i]" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg> -->
+
+            {{item.title}}
+            <ul class="list-group" *ngIf="item.children.length > 0">
+                <div (click)="$event.stopPropagation()" [routerLink]="'/content/'+ list.slug + '/tae' " class="sub-category" >               
+                    <ng-container  *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children }" ></ng-container>
+                </div>                
+            </ul>
+        </li>
+    </ng-template>
+    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: list }"></ng-container>
+    </ul>
+
+    <!-- <tree-ngx [nodeItems]="contents"> </tree-ngx> -->
 </div>

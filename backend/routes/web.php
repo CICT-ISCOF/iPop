@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+<<<<<<< HEAD
+=======
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -99,3 +101,4 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->post('/bulk/one', [Bulk
 Route::fallback(function () {
     return response('', 404);
 });
+>>>>>>> 2717d2bb96eba48c25cf86155940be58e0eb98c6

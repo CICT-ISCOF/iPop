@@ -19,6 +19,7 @@ export class BirthsTableComponent implements OnInit {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.BirthsService.getRow().subscribe(data => {
@@ -54,8 +55,9 @@ export class BirthsTableComponent implements OnInit {
 				this.pagination.totalPages.push(i)
 			}			
 			this.isLoading = false			
-			console.log(response.data)	
+			this.pagination.totalPages.pop()
 		})
+		
 	}
 
 	pagination = {
@@ -63,13 +65,13 @@ export class BirthsTableComponent implements OnInit {
 		lastPage:0,
 		totalPages:[],
 	}
-
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.BirthsService.paginateAdminList(page).subscribe(response=>{
 			this.BirthsService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.BirthsService.setData(response.data)
 		})	
 	}

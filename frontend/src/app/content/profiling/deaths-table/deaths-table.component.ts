@@ -20,6 +20,7 @@ export class DeathsTableComponent implements OnInit {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.DeathsService.getRow().subscribe(data => {
@@ -57,7 +58,8 @@ export class DeathsTableComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false				
+			this.isLoading = false			
+			this.pagination.totalPages.pop()	
 		})
 	}
 
@@ -67,12 +69,13 @@ export class DeathsTableComponent implements OnInit {
 		totalPages:[],
 	}
 
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.DeathsService.paginateAdminList(page).subscribe(response=>{
 			this.DeathsService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.DeathsService.setData(response.data)
 		})	
 	}

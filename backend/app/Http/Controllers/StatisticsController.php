@@ -128,10 +128,9 @@ class StatisticsController extends Controller
                 if (
                     !isset($population['municipalities'][$record->municipality])
                 ) {
-                    $population['municipalities'][$record->municipality] = $model
-                        ::where('municipality', $record->municipality)
-                        ->count();
+                    $population['municipalities'][$record->municipality] = 0;
                 }
+                $population['municipalities'][$record->municipality] += $record->total;
             }
 
             $barangays = $model
@@ -141,14 +140,12 @@ class StatisticsController extends Controller
 
             foreach ($barangays as $record) {
                 if (!isset($population['barangays'][$record->barangay])) {
-                    $population['barangays'][$record->barangay] = $model
-                        ::where('municipality', $record->municipality)
-                        ->where('barangay', $record->barangay)
-                        ->count();
+                    $population['barangays'][$record->barangay] = 0;
                 }
+                $population['barangays'][$record->barangay] += $record->total;
             }
 
-            $population['total'] += $model::count();
+            $population['total'] += $model::all()->count();
         }
 
         $topMunicipalities = array_reverse(
@@ -441,38 +438,172 @@ class StatisticsController extends Controller
 
     public function filter(Request $request)
     {
-        $municipality = $request->input('municipality');
-        $barangay = $request->input('barangay');
-        $year = $request->input('year');
-        $month = $request->input('month');
-
         $models = [
             Birth::class => 'birth',
             Death::class => 'death',
             InMigration::class => 'inmigration',
             OutMigration::class => 'outmigration',
-            Marriage::class => 'marriage',
+            CPDB::class => 'cpdb',
         ];
 
-        $data = [];
+        $data = [
+            'genders' => [],
+        ];
 
-        foreach ($models as $modelName => $name) {
-            $model = new $modelName();
-            if ($municipality) {
-                $model->where('municipality', $municipality);
+        $data['married'] = $this->_applyFilters(
+            $request,
+            new Marriage()
+        )->count();
+        $data['district'] = null;
+        $data['population'] = 0;
+        $data['households'] = 0;
+        $data['barangays'] = 0;
+        $data['zones'] = 0;
+        $tops = [
+            'barangays' => [],
+            'zones' => [],
+        ];
+
+        foreach ($models as $model => $name) {
+            $data['genders'][$name] = [
+                'male' => $this->_applyFilters(
+                    $request,
+                    $model::where('sex', 'Male')
+                )->count(),
+                'female' => $this->_applyFilters(
+                    $request,
+                    $model::where('sex', 'Female')
+                )->count(),
+            ];
+
+            $genders = $data['genders'][$name];
+
+            $data['genders'][$name]['total'] = $genders['male'] + $genders['female'];
+
+            $sample = $this->_applyFilters($request, new $model())->first();
+            if ($sample && !$data['district']) {
+                $data['district'] = $sample->district;
             }
-            if ($barangay) {
-                $model->where('barangay', $barangay);
+
+            $data['households'] += $this->_applyFilters(
+                $request,
+                $model::selectRaw('household_number, COUNT(household_number) as total')->groupBy('household_number')
+            )->get()->count();
+
+            $barangays = $this->_applyFilters(
+                $request,
+                $model::selectRaw('barangay, COUNT(barangay) as total')->groupBy('barangay')
+            )->get();
+
+            $data['barangays'] += $barangays->count();
+
+            foreach ($barangays as $record) {
+                if (!isset($tops['barangays'][$record->barangay])) {
+                    $tops['barangays'][$record->barangay] = 0;
+                }
+                $tops['barangays'][$record->barangay] += $record->total;
             }
-            if ($year) {
-                $model->where('created_at', $year);
-            }
-            if ($month) {
-                $model->where('month', $month);
-            }
-            $data[$name] = $model->get();
         }
 
+        $data['zones'] += $this->_applyFilters(
+            $request,
+            CPDB::selectRaw('*')->groupBy('zone')
+        )->count();
+
+        foreach ($this->_applyFilters(
+            $request,
+            Marriage::selectRaw(
+                'barangay, COUNT(barangay) as total'
+            )->groupBy('barangay')
+        )->get()
+            as $record) {
+            if (!isset($tops['barangays'][$record->barangay])) {
+                $tops['barangays'][$record->barangay] = 0;
+            }
+            $tops['barangays'][$record->barangay] += $record->total;
+        }
+
+        foreach ($this->_applyFilters(
+            $request,
+            CPDB::selectRaw('zone, COUNT(zone) as total')->groupBy(
+                'zone'
+            )
+        )->get()
+            as $record) {
+            if (!isset($tops['zones'][$record->zone])) {
+                $tops['zones'][$record->zone] = 0;
+            }
+            $tops['zones'][$record->zone] += $record->total;
+        }
+
+        $final = [];
+        foreach (array_reverse(Arr::sort($tops['barangays'])) as $barangay => $count) {
+            $final[] = [
+                'name' => $barangay,
+                'total' => $count,
+            ];
+        }
+
+        $tops['barangays'] = [];
+
+        for ($x = 0; ($x < 5 && $x < count($final)); $x++) {
+            $tops['barangays'][] = $final[$x];
+        }
+
+        $final = [];
+        foreach (array_reverse(Arr::sort($tops['zones'])) as $zone => $count) {
+            $final[] = [
+                'name' => $zone,
+                'total' => $count
+            ];
+        }
+
+        $tops['zones'] = [];
+
+        for ($x = 0; ($x < 5 && $x < count($final)); $x++) {
+            $tops['zones'][] = $final[$x];
+        }
+
+        foreach ($data['genders'] as $gender) {
+            $data['population'] += $gender['total'];
+        }
+
+        $data['tops'] = $tops;
+
         return $data;
+    }
+
+    /**
+     * Apply filters to a model.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
+     * @return \Illuminate\Database\Eloquent\Model $model
+     */
+    protected function _applyFilters(Request $request, $model)
+    {
+        $municipality = $request->input('municipality');
+        $barangay = $request->input('barangay');
+        $year = $request->input('year');
+        $month = $request->input('month');
+
+        if ($municipality) {
+            $model->where('municipality', 'LIKE', '%' . $municipality . '%');
+        }
+
+        if ($barangay) {
+            $model->where('barangay', 'LIKE', '%' . $barangay . '%');
+        }
+
+        if ($year) {
+            $model->where('created_at', 'LIKE', '%' . $year . '%');
+        }
+
+        if ($month) {
+            $model->where('month', 'LIKE', '%' . $month . '%');
+        }
+
+        return $model;
     }
 }

@@ -6,6 +6,7 @@ import { NetworkStatusAngularService } from 'network-status-angular';
 import Swal from 'sweetalert2'
 import { MediaQueryService } from './media-query.service'
 import { DeviceService } from './device.service'
+import { MapService } from './content/maps/map.service'
 
 @Component({
 	selector: 'app-root',
@@ -13,14 +14,16 @@ import { DeviceService } from './device.service'
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'ipo-web';
+	title = 'ipo-web';
   
+	map = true
 
 	constructor(			
 		private UtilityService : UtilityService,
 		private	 NetworkStatusAngularService : NetworkStatusAngularService,	
 		private MediaQueryService : MediaQueryService,
-		private DeviceService : DeviceService
+		private DeviceService : DeviceService,
+		private MapService : MapService
 		
 	){
 		this.userRole = this.UtilityService.getUserROle().subscribe(role=>{
@@ -43,6 +46,13 @@ export class AppComponent implements OnInit {
 			this.media = media
 			
 		})
+
+		this.userRole = this.MapService.getMapToggler().subscribe(value => {
+			this.map = false
+			this.map = true
+		})
+
+	
 		
 	} 
 

@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3.0",
+        "beyondcode/laravel-websockets": "^1.8",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -19,6 +20,7 @@
         "laravel/scout": "^8.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
+        "spatie/laravel-permission": "^3.17",
         "teamtnt/laravel-scout-tntsearch-driver": "^10.0",
         "torann/geoip": "^1.2"
     },
@@ -56,7 +58,7 @@
     "scripts": {
         "recharge": [
             "Composer\\Config::disableProcessTimeout",
-            "@php artisan migrate:fresh & php artisan db:seed"
+            "@php artisan migrate:fresh && php artisan db:seed"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

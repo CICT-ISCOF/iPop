@@ -19,6 +19,7 @@ export class InMigsTableComponent implements OnInit {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.InMigService.getRow().subscribe(data => {
@@ -38,6 +39,7 @@ export class InMigsTableComponent implements OnInit {
 
 	theme = localStorage.getItem('data-theme')
 
+	tableData = []
 	getCPDBLists(){
 		this.pagination = {
 			currentPage:0,
@@ -48,6 +50,7 @@ export class InMigsTableComponent implements OnInit {
 		this.isLoading = true	
 		this.InMigService.getInMigrationLists().subscribe(response=>{				
 			this.InMigService.setData(response.data)
+			this.tableData = response.data
 			this.pagination.currentPage = response.current_page
 			this.pagination.lastPage = response.last_page
 			for(let i = 0; i <= response.last_page; i ++){
@@ -63,12 +66,13 @@ export class InMigsTableComponent implements OnInit {
 		totalPages:[],
 	}
 
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.InMigService.paginateAdminList(page).subscribe(response=>{
 			this.InMigService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.InMigService.setData(response.data)
 		})	
 	}
@@ -93,7 +97,8 @@ export class InMigsTableComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false		
+			this.isLoading = false
+			this.pagination.totalPages.pop()		
 		})
 		this.InMigService.getSearched(this.keyword).subscribe(data =>{
 			this.searchResults = data

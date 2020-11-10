@@ -29,6 +29,7 @@ export class CpdbComponent implements OnInit {
 	
 	isLoading = false
 
+	
 	getMuncipalities(){
 		this.isLoading = true
 		 this.LocationService.getMunicipalities().subscribe(data => {
@@ -37,12 +38,13 @@ export class CpdbComponent implements OnInit {
 		})
 	}
 
+	barangayIsLoading = false
 	getBarangays(event){
-		this.isLoading = true
+		this.barangayIsLoading = true
 		this.field.municipality = event.target.options[event.target.options.selectedIndex].text;	
 		this.LocationService.getBarangays(event.target.value).subscribe(data => {
 			this.barangays = data	
-			this.isLoading = false
+			this.barangayIsLoading = false
 		})
 	}
 

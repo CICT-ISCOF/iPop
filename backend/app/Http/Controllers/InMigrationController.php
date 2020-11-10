@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InMigration;
 use App\Models\Log;
 use App\Models\Record;
+use App\Events\RecordSaved;
 use App\Http\Requests\InMigrationRequest;
 use App\Http\Requests\InMigrationUpdateRequest;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ class InMigrationController extends Controller
         ]);
         $inMigration->record()->save($record);
         $inMigration->record = $record;
+        broadcast(new RecordSaved($inMigration))->toOthers();
         return $inMigration;
     }
 

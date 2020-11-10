@@ -26,7 +26,7 @@ class File extends Model
         $property = $this->attributes['public'];
         $scope = $property === 1 || $property === true ? "public" : "private";
         $id = $this->attributes['id'];
-        return url("/file/{$scope}/{$id}");
+        return url("/api/file/{$scope}/{$id}");
     }
 
     protected static function booted()
@@ -52,7 +52,7 @@ class File extends Model
             return self::processURL($file, $user);
         } else {
             throw new InvalidArgumentException(
-                'File must be either a string url or an instance of Illuminate\Http\UploadedFile'
+                'File must be either a string url, base64 encoded file or an instance of Illuminate\Http\UploadedFile'
             );
         }
     }
@@ -80,13 +80,22 @@ class File extends Model
      *
      * @param string $url
      * @param User|null $user
-     * @return File
+     * @return File|null
      */
     public static function processURL(string $url, $user = null)
     {
         $data = [];
 
-        $binary = file_get_contents($url);
+        $binary = @file_get_contents($url);
+
+        if($binary === false) {
+            if(base64_encode(base64_decode($url, true)) !== $url) {
+                throw new InvalidArgumentException(
+                    'File must be either a string url, base64 encoded file or an instance of Illuminate\Http\UploadedFile'
+                );
+            }
+            $binary = base64_decode($url);
+        }
 
         $data['type'] = (new finfo(FILEINFO_MIME_TYPE))->buffer($binary);
         $data['name'] = self::generateFileName($data['type']);

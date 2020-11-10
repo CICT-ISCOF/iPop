@@ -12,6 +12,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RestrictBlocked;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\PermissibleAssigneesOnly;
 use Fruitcake\Cors\HandleCors;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -56,24 +57,17 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            // API
-            EnsureFrontendRequestsAreStateful::class,
-            'throttle:60,1',
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            AuthenticateSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
             SubstituteBindings::class,
-            LogAPIActivity::class,
-
-            // Original
-            // EncryptCookies::class,
-            // AddQueuedCookiesToResponse::class,
-            // StartSession::class,
-            // AuthenticateSession::class,
-            // ShareErrorsFromSession::class,
-            // VerifyCsrfToken::class,
-            // SubstituteBindings::class,
         ],
 
         'api' => [
-            // EnsureFrontendRequestsAreStateful::class,
+            EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
             SubstituteBindings::class,
             LogAPIActivity::class,
@@ -99,5 +93,6 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
+        'permissible.assignees' => PermissibleAssigneesOnly::class,
     ];
 }

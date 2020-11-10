@@ -19,6 +19,7 @@ export class OutMigsTableComponent implements OnInit {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 		
 		this.reload = this.OutMigService.getRow().subscribe(data => {
@@ -53,7 +54,8 @@ export class OutMigsTableComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false				
+			this.isLoading = false		
+			this.pagination.totalPages.pop()		
 		})
 	}
 
@@ -63,12 +65,13 @@ export class OutMigsTableComponent implements OnInit {
 		totalPages:[],
 	}
 
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.OutMigService.paginateAdminList(page).subscribe(response=>{
 			this.OutMigService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.OutMigService.setData(response.data)
 		})	
 	}

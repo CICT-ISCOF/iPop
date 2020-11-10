@@ -19,6 +19,7 @@ export class MarriageTableComponent implements OnInit {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.MarriagesService.getRow().subscribe(data => {
@@ -54,6 +55,7 @@ export class MarriageTableComponent implements OnInit {
 				this.pagination.totalPages.push(i)
 			}			
 			this.isLoading = false				
+			this.pagination.totalPages.pop()
 		})
 	}
 
@@ -63,12 +65,13 @@ export class MarriageTableComponent implements OnInit {
 		totalPages:[],
 	}
 
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.MarriagesService.paginateAdminList(page).subscribe(response=>{
 			this.MarriagesService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.MarriagesService.setData(response.data)
 		})	
 	}

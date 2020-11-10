@@ -32,7 +32,6 @@ class CreateUsersTable extends Migration
                 ->string('pin')
                 ->unique()
                 ->nullable();
-            $table->enum('role', ['Super Admin', 'PPO', 'PPO1', 'BSPO']);
             $table->unsignedTinyInteger('iterations')->default(0);
             $table->foreignId('profile_picture_id')->nullable();
             $table->timestamps();

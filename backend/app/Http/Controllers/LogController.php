@@ -14,15 +14,21 @@ class LogController extends Controller
             ->paginate(10);
     }
 
-    public function destroy(Log $log)
+    public function destroy(Request $request, Log $log)
     {
+        if (!$request->user()->hasRole('Super Admin')) {
+            return response('', 403);
+        }
         $log->delete();
         Log::record('User cleared a log.');
         return response('', 204);
     }
 
-    public function clear()
+    public function clear(Request $request)
     {
+        if (!$request->user()->hasRole('Super Admin')) {
+            return response('', 403);
+        }
         Log::truncate();
         Log::record('User cleared all logs.');
         return response('', 204);

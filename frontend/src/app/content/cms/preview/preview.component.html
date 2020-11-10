@@ -19,7 +19,9 @@
 
         </div>
     </div>
+
     <br> <br> <br>
+
     <div class="navigation">
         <p>{{ !isLoading && categories.title == '' ? 'No selected Category': categories.title }}</p>
         <svg width="4em" height="2em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="white" xmlns="http://www.w3.org/2000/svg">
@@ -27,44 +29,42 @@
           </svg>
         <p>{{ categories.subcategory }}</p>
     </div>
+
     <br> <br> <br>
+
     <div *ngFor="let item of items" class="content row">
 
-        <div *ngIf="item.Articles != null" class="Sliders" style="min-height: 40vh;">
+        <div *ngIf="item.type == 'article'" class="Sliders" style="min-height: 40vh;">
             <br>
             <div class="container article-container">
                 <div class="img-container">
-                    <img style="min-height: 100%;" *ngIf="item.Articles.image.length !== ''" [src]="item.Articles.image " alt="">
+                    <img style="min-height: 100%;" *ngIf="item.image.length !== ''" [src]="item.image " alt="">
                 </div>
                 <div class="inputs-container">
-                    <h4>{{item.Articles.title}}</h4>
+                    <h4>{{item.title}}</h4>
                     <br>
-                    <p class="article-body">{{item.Articles.body}}</p>
+                    <p class="article-body">{{item.description}}</p>
                 </div>
             </div>
         </div>
 
-        <div *ngIf="item.Lists != null" class="Texts">
+        <div *ngIf="item.type == 'list'" class="Texts">
             <br>
-            <h4>{{item.Lists.title}}</h4>
-            <ul [@quickLinksAnimation]=[item.Lists.listitems.length]>
-                <li class="list-Items" *ngFor="let listitem of item.Lists.listitems;let j = index;">
-                    <p *ngIf="listitem != ''">{{listitem}}</p>
+            <h4>{{item.title}}</h4>
+            <ul [@quickLinksAnimation]=[item.items.length]>
+                <li class="list-Items" *ngFor="let listitem of item.items;let j = index;">
+                    <p *ngIf="listitem != ''">{{listitem.body}}</p>
                 </li>
             </ul>
         </div>
 
-
-
-
-
-        <div *ngIf="item.Sliders != null" class="Sliders">
+        <div *ngIf="item.type == 'slider'" class="Sliders">
             <div class="carousel-holder">
                 <owl-carousel-o [options]="customOptions">
-                    <ng-template carouselSlide *ngFor="let image of item.Sliders.images">
+                    <ng-template carouselSlide *ngFor="let image of item.images">
                         <img alt="" [style.background]="'url(' + image + ')'">
                     </ng-template>
-                    <ng-template carouselSlide *ngFor="let video of item.Sliders.videos ">
+                    <ng-template carouselSlide *ngFor="let video of item.videos ">
                         <video controls [src]="video " style="margin:0 !important;width:100% !important;height: 50vh !important;  object-fit: fill;    min-height: 40vh;"></video>
                     </ng-template>
                 </owl-carousel-o>
@@ -87,28 +87,23 @@
             </div><br>
         </div>
 
-
-        <div *ngIf="item.Texts != null" class="Texts">
+        <div *ngIf="item.type == 'text'" class="Texts">
             <br> <br>
-            <h4>{{item.Texts.title}}</h4>
+            <h4>{{item.title}}</h4>
             <hr>
-            <p>{{item.Texts.body}}</p>
+            <p>{{item.body}}</p>
         </div>
 
-
-
-        <div *ngIf="item.Media != null" class="media">
+        <div *ngIf="item.type == 'media'" class="media">
             <video controls [src]="item.Media.video " *ngIf="item.Media.video !='' "></video>
             <img [src]="item.Media.image " *ngIf="item.Media.image !='' " alt="">
             <object [data]="cleanURL(item.Media.pdf) " *ngIf="item.Media.pdf !='' "></object>
             <br>
         </div>
 
-
-
-        <div *ngIf="item.Grids != null" class="grids">
+        <div *ngIf="item.type == 'grid'" class="grids">
             <div class="inline">
-                <div *ngFor="let grid of item.Grids.griditems; let j=index; " class="card grid1 " style="width: 18rem; ">
+                <div *ngFor="let grid of item.items; let j=index; " class="card grid1 " style="width: 18rem; ">
                     <i *ngIf="grid.image=='' " class="fas fa-image "></i>
                     <img style="height: 35vh;" [src]="grid.image " class="card-img-top " alt=" ">
                     <div class="card-body ">
@@ -120,14 +115,14 @@
         </div>
 
 
-        <div *ngIf="item.Cards != null " class=" ">
+        <div *ngIf="item.type == 'card'" class=" ">
             <div class="inline ">
-                <div class="card card1 " *ngFor="let card of item.Cards.carditems; let j=index; ">
+                <div class="card card1 " *ngFor="let card of item.items; let j=index; ">
                     <i *ngIf="card.image=='' " class="fas fa-image "></i>
                     <img style="height: 40%;" [src]="card.image " class="card-img-top " alt=" ">
                     <div class="card-body ">
                         <h5 class="card-title ">{{card.title}}</h5>
-                        <p>{{card.body}}</p>
+                        <p>{{card.description}}</p>
 
                     </div>
                 </div>

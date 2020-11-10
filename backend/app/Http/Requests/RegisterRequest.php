@@ -29,7 +29,7 @@ class RegisterRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('users')->ignoreModel($this->user()),
+                'unique:App\Models\User',
             ],
             'fullname' => 'required|string|max:255',
             'district' => 'required|string|max:255',
@@ -49,12 +49,11 @@ class RegisterRequest extends FormRequest
                 'nullable',
                 'string',
                 'max:255',
-                Rule::unique('users')->ignoreModel($this->user()),
+                'unique:App\Models\User',
             ],
             'role' => [
                 'required',
                 'string',
-                Rule::in(['Super Admin', 'PPO', 'PPO1', 'BSPO']),
             ],
             'profile_picture' => 'nullable',
         ];

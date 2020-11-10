@@ -4,7 +4,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss','home.component.inherit.cms.responsive.scss']
+  styleUrls: ['./home.component.scss','home.component.inherit.cms.responsive.scss','home.tablet.scss']
 })
 export class HomeComponent implements OnInit {
 

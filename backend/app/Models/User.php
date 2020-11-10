@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles, HasFactory;
     use HasApiTokens {
         createToken as _sanctumCreateToken;
     }
@@ -27,7 +27,6 @@ class User extends Authenticatable
         'fullname',
         'barangay',
         'municipality',
-        'role',
         'pin',
         'question',
         'answer',
@@ -59,6 +58,21 @@ class User extends Authenticatable
         return $this->hasMany(File::class);
     }
 
+    public function records()
+    {
+        return $this->hasMany(Record::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function profilePicture()
+    {
+        return $this->belongsTo(File::class, 'profile_picture_id');
+    }
+
     /**
      * Checks if the user is a Super Admin.
      *
@@ -69,39 +83,9 @@ class User extends Authenticatable
         return $this->role === 'Super Admin';
     }
 
-    /**
-     * Checks if the user is a PPO employee.
-     *
-     * @return boolean $isPPO
-     */
-    public function isPPO()
+    public function verifyPermissions($permissions)
     {
-        return $this->role === 'PPO';
-    }
-
-    /**
-     * Checks if the user is a PPO1 employee.
-     *
-     * @return boolean $isPPO1
-     */
-    public function isPPOOne()
-    {
-        return $this->role === 'PPO1';
-    }
-
-    /**
-     * Checks if the user is a BSPO employee.
-     *
-     * @return boolean $isBSPO
-     */
-    public function isBSPO()
-    {
-        return $this->role === 'BSPO';
-    }
-
-    public function profilePicture()
-    {
-        return $this->belongsTo(File::class, 'profile_picture_id');
+        return $this->hasRole('Super Admin') || $this->hasAllPermissions($permissions);
     }
 
     public function getBlockedAttribute()
@@ -187,6 +171,8 @@ class User extends Authenticatable
             ->orWhere('fullname', 'LIKE', "%{$query}%")
             ->orderBy('role')
             ->with('profilePicture')
+            ->with('roles')
+            ->with('permissions')
             ->get();
         if ($collection->isEmpty()) {
             return response(

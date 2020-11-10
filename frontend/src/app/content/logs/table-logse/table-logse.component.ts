@@ -37,6 +37,7 @@ export class TableLogseComponent implements OnInit {
 			this.getSelectedRows()
 		})
 	}
+	
 
 	reload  : Subscription
 	
@@ -48,9 +49,9 @@ export class TableLogseComponent implements OnInit {
 	
    
     columnDefs = [	
-		{headerName: 'Fullname', field: 'user_id',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:260 },		
+		{headerName: 'Fullname', field: 'user_id',filter:false, checkboxSelection: false, cellRenderer: 'actionButtons',width:160 },		
 		{headerName: 'IP Address', field: 'ip_address', sortable: true, filter: 'agTextColumnFilter',width:150 },	{headerName: 'Location', field: 'info.city', sortable: true, filter: 'agTextColumnFilter',width:150 },	
-		{headerName: 'Coordinates', field: 'info.city', sortable: true, filter: 'agTextColumnFilter',width:150 ,cellRenderer: 'map' , },			
+		{headerName: 'Coordinates', field: 'info.city', sortable: true, filter: 'agTextColumnFilter',width:200 ,cellRenderer: 'map' , },			
 		{headerName: 'Device', field: 'user_agent', sortable: true, filter: 'agTextColumnFilter' ,cellRenderer: 'device' ,width:250  },
 		{headerName: 'Action', field: 'action', sortable: true, filter: 'agTextColumnFilter' ,width:300},
 		{headerName: 'Date Created', field: 'created_at', sortable: true, filter: 'agTextColumnFilter', cellRenderer: (data) => {

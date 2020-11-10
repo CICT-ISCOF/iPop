@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log as NativeLog;
 use Jenssegers\Agent\Agent;
-use Exception;
 
 class Log extends Model
 {
@@ -31,7 +29,7 @@ class Log extends Model
      * Records an activity to the database.
      *
      * @param string $action
-     * @return \App\Log $log
+     * @return \App\Models\Log $log
      */
     public static function record(string $action, $substituteID = null)
     {

@@ -50,6 +50,8 @@ class LoginController extends Controller
         }
         $data = $request->all();
         $user = User::with('profilePicture')
+            ->with('roles.permissions')
+            ->with('permissions')
             ->where('pin', $data['pin'])
             ->where('question', $data['question'])
             ->first();
@@ -100,6 +102,8 @@ class LoginController extends Controller
         }
         $data = $request->all();
         $user = User::with('profilePicture')
+            ->with('roles.permissions')
+            ->with('permissions')
             ->where('username', $data['username'])
             ->first();
         if (!$user) {

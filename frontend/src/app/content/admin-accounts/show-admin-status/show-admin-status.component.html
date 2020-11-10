@@ -1,11 +1,16 @@
 <div *ngIf="isLoading" class="loader"></div>
 <div class="admin-status-component">
-    <i [routerLink]="['/admin-accounts']" routerLinkActive="router-link-active" class="fa fa-chevron-left" style="font-size: 25px;margin-bottom: 30px;cursor: pointer;margin-left: 7px;transform: translateY(2px);"></i>
+    <i [routerLink]="['/admin-accounts']" routerLinkActive="router-link-active" class="fa fa-chevron-left" style="font-size: 25px;margin-bottom: 30px;cursor: pointer;margin-left: 7px;transform: translateY(2px);margin-bottom: -20px;"></i>
     <div class="row">
         <div class="col-md-4 container">
 
             <div class="image-container">
                 <img [src]="imgSrc" alt="" *ngIf="imgSrc != ''">
+                <div *ngIf="imgIsLoading" class="img-loader">
+                    <div class="spinner-border text-info" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
                 <div (click)="triggerInput()" class="icon-container">
                     <i style="font-size: 25px;" class="fas fa-camera"></i>
                     <input (change)="readURL($event.target.files,$event)" accept="image/*" type="file" class="hidden" id="profile-picture">
@@ -29,13 +34,70 @@
             <br>
             <p>Number of tries left <span class="badge badge-warning"> 3 </span> </p>
             <p>Administrator status <span class="badge" [class.badge-danger]="admin.blocked" [class.badge-success]="!admin.blocked"> {{ !admin.blocked ? "Active" : "Blocked" }} </span></p>
-            <p>Active status <span class="badge badge-light">Offline</span></p>
+            <p>Active status <span class="badge badge-success">Online</span></p>
             <hr>
-
-
-            <h4>Options</h4>
+            <div  class="role-container">
+                <br> <br>
+                <h4>Permissions</h4>
+                <br>
+                <div class="clickable non-hoverable">
+                    <i style="color:#00C34F" class="im im-thumb-up"></i> Approve
+                    <span class="ml-auto">
+                        <material-slide-toggle [name]="approveToggle.name" [id]="approveToggle.id" [checked]="approveToggle.checked" [disabled]="approveToggle.disabled" [aria-label]="approveToggle.label" [aria-labelledby]="approveToggle.labelledby" (change)="changePermissions('approve')">
+                        </material-slide-toggle>
+                    </span>
+                </div>
+                <div class="clickable non-hoverable">
+                    <i style="color:black" class="im im-thumb-down"></i> Disapprove
+                    <span class="ml-auto">
+                        <material-slide-toggle [name]="disApproveToggle.name" [id]="disApproveToggle.id" [checked]="disApproveToggle.checked" [disabled]="disApproveToggle.disabled" [aria-label]="disApproveToggle.label" [aria-labelledby]="disApproveToggle.labelledby" (change)="changePermissions('disapprove')">
+                        </material-slide-toggle>
+                    </span>
+                </div>
+                <div class="clickable non-hoverable">
+                    <span class="svg-holder">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bag-x" fill="red" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 1a2.5 2.5 0 0 0-2.5 2.5V4h5v-.5A2.5 2.5 0 0 0 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5H2z"/>
+                            <path fill-rule="evenodd" d="M6.146 8.146a.5.5 0 0 1 .708 0L8 9.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 10l1.147 1.146a.5.5 0 0 1-.708.708L8 10.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 10 6.146 8.854a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </span> Delete Data
+                    <span class="ml-auto">
+                        <material-slide-toggle [name]="deleteToggle.name" [id]="deleteToggle.id" [checked]="deleteToggle.checked" [disabled]="deleteToggle.disabled" [aria-label]="deleteToggle.label" [aria-labelledby]="deleteToggle.labelledby" (change)="changePermissions('delete')">
+                        </material-slide-toggle>
+                    </span>
+                </div>
+                <div class="clickable non-hoverable">
+                    <span class="svg-holder">
+                        <svg  width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-diamond-fill" fill="orange" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                        </svg>
+                    
+                    </span> Request to Edit
+                    <span class="ml-auto">
+                        <material-slide-toggle [name]="requestEditingToggle.name" [id]="requestEditingToggle.id" [checked]="requestEditingToggle.checked" [disabled]="requestEditingToggle.disabled" [aria-label]="requestEditingToggle.label" [aria-labelledby]="requestEditingToggle.labelledby" (change)="changePermissions('request_editing')">
+                        </material-slide-toggle>
+                    </span>
+                </div>
+                <div class="clickable non-hoverable">
+                    <span class="svg-holder">
+                        <svg  width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-diamond-fill" fill="orange" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                        </svg>
+                    
+                    </span> Edit Data
+                    <span class="ml-auto">
+                        <material-slide-toggle [name]="editingToggle.name" [id]="editingToggle.id" [checked]="editingToggle.checked" [disabled]="editingToggle.disabled" [aria-label]="editingToggle.label" [aria-labelledby]="editingToggle.labelledby" (change)="changePermissions('editData')">
+                        </material-slide-toggle>
+                    </span>
+                </div>
+            </div>
             <br>
-            <div *ngIf="!changeRole">
+            <br>  <br>
+            <h4>Settings</h4>
+            <div *ngIf="!changeRole">              
+                <p (click)="changeRole = true" class="clickable">
+                    <i style="color:orange " class="fa fa-users-cog"></i>Change Role
+                </p>
                 <p (click)="blockAdmin()" class="clickable" [class.disabled]="admin.blocked || admin.role == 'Super Admin'">
                     <i title="Block" class="fas fa-user-slash"></i> Block
                 </p>
@@ -44,10 +106,7 @@
                 </p>
                 <p (click)="reactivate()" [class.disabled]="!admin.blocked == true" class="clickable">
                     <i style="color:#81D340 " class="fas fa-sync-alt"></i>Reactivate
-                </p>
-                <p (click)="changeRole = true" class="clickable">
-                    <i style="color:orange " class="fa fa-users-cog"></i>Change Role
-                </p>
+                </p>               
             </div>
             <div *ngIf="changeRole" class="role-container">
                 <label>From {{ admin.role }} to</label>
@@ -62,7 +121,7 @@
                     <button (click)="saveChanges()" class="button">Save</button>
                     <button style="width:auto;;margin-left: 20px;" (click)="changeRole = false" class="clickable">Cancel</button>
                 </div>
-            </div>
+            </div>            
             <hr>
         </div>
     </div>

@@ -78,7 +78,6 @@ class UserUpdateRequest extends FormRequest
             'role' => [
                 'nullable',
                 'string',
-                Rule::in(['Super Admin', 'PPO', 'PPO1', 'BSPO']),
             ],
             'profile_picture' => [
                 Rule::requiredIf(function () {

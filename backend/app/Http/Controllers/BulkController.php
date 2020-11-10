@@ -19,6 +19,7 @@ class BulkController extends Controller
 
     public function insert(Request $request)
     {
+        set_time_limit(0);
         $type = $request->input('type');
         $data = $request->input('data');
 

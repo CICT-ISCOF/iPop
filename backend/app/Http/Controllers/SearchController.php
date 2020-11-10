@@ -92,4 +92,29 @@ class SearchController extends Controller
             ->load('user.profilePicture');
         return $data;
     }
+
+    public function logs(Request $request)
+    {
+        $query = $request->input('query');
+
+        $data = Log::search($query);
+
+        $paginate = $request->input('paginate') === 'true';
+        $data = $paginate ? $data->paginate(10) : $data->get();
+        if ($data->isEmpty()) {
+            return response(
+                [
+                    'errors' => [
+                        'query' => ['No results found.'],
+                    ],
+                ],
+                404
+            );
+        }
+        $data->load('user.profilePicture');
+
+        Log::record('User searched for logs. Query: ' . $query);
+
+        return $data;
+    }
 }

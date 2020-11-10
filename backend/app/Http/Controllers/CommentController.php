@@ -9,6 +9,7 @@ use App\Models\CPDB;
 use App\Models\Marriage;
 use App\Models\InMigration;
 use App\Models\OutMigration;
+use App\Events\CommentSaved;
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
 
@@ -48,6 +49,7 @@ class CommentController extends Controller
         $comment = new Comment($data);
         $comment->user_id = $request->user()->id;
         $model->comments()->save($comment);
+        broadcast(new CommentSaved($comment))->toOthers();
         return $comment;
     }
 

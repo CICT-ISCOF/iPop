@@ -23,9 +23,32 @@ abstract class Model extends BaseModel
         return $this->toArray();
     }
 
-    public function getColumns() {
+    public function getColumns()
+    {
         return $this->getConnection()
             ->getSchemaBuilder()
             ->getColumnListing($this->getTable());
+    }
+
+    public function getDistrictAttribute()
+    {
+        $user = User::where('municipality', 'LIKE', '%' . $this->municipality . '%')
+            ->first();
+        if ($user) {
+            return $user->district;
+        }
+        return null;
+    }
+
+    /**
+     * @return \Spatie\Permission\Models\Permission[]
+     */
+    public static function getRequiredPermissions()
+    {
+        return RequiredPermission::where('permissible', static::class)
+            ->get()
+            ->map(function ($requirement) {
+                return $requirement->permission;
+            });
     }
 }

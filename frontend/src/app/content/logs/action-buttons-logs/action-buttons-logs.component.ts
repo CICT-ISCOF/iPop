@@ -8,26 +8,28 @@ import { Component, OnInit } from '@angular/core';
 export class ActionButtonsLogsComponent implements OnInit {
 
 
-  constructor() { }
+	constructor() { }
 
-	theme = localStorage.getItem('data-theme')
+		theme = localStorage.getItem('data-theme')
 
-	ngOnInit(): void {
+		ngOnInit(): void {
 
-	}
+		}
 
-  log
-  params
 
-	agInit(params:any){
-    this.log = params.value
-    this.params  = params.data    
+	log
+	params
+
+	agInit(params:any){ 		
+		this.log = params.value
+		this.params  = params.data    
+		console.log(this.params)
 	}
 
 	refresh(params:any):boolean{
-  this.log = params.value
-  this.params = params.data
-		  return true
+		this.log = params.value
+		this.params = params.data
+		return true
 	}
 
 }
