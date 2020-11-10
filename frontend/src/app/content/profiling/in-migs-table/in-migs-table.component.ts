@@ -1,3 +1,4 @@
+import { MediaQueryService } from './../../../media-query.service';
 import { Component, OnInit } from '@angular/core';
 import { InMigService } from '../../in-mig/in-mig.service'
 import { UtilityService } from '../../../utility.service'
@@ -6,7 +7,7 @@ import { ExcelService } from '../../../excel.service'
 @Component({
   selector: 'app-in-migs-table',
   templateUrl: './in-migs-table.component.html',
-  styleUrls: ['./in-migs-table.component.scss']
+  styleUrls: ['./in-migs-table.component.scss','../profiling.tablet.scss']
 })
 export class InMigsTableComponent implements OnInit {
 
@@ -14,30 +15,61 @@ export class InMigsTableComponent implements OnInit {
 		private InMigService : InMigService,
 		private UtilityService : UtilityService,
 		private ExcelService : ExcelService,
+		private MediaQueryService : MediaQueryService,
 	) { 
 		this.reload = this.InMigService.getMultipleDelete().subscribe(array => {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.InMigService.getRow().subscribe(data => {
 			this.ngOnInit()
 		})
+		this.reload  = this.MediaQueryService.getSize().subscribe(screenSize => {
+			this.maxSize = this.processPaginationLength(screenSize)		
+		})
+	
+	 }
+
+		
+
+	maxSize = 7
+	reload
+	paginationLabel = {
+		Previous:'',
+		Next:''
 	}
 
-	reload
+	processPaginationLength(screenSize){		
+		if(screenSize <= 1024){	
+			this.paginationLabel = {
+				Previous:'',
+				Next:''
+			}
+			return 7
+		
+		}
+		this.paginationLabel = {
+			Previous:'Next',
+			Next:'Previous'
+		}		
+		return 15
+	}
 
 	ngOnInit(): void {
 		this.getCPDBLists()
 		this.searched = false
 		this.keyword = ''
+		this.MediaQueryService.setSize(window.innerWidth)
 	}
 
 	isLoading = false
 
 	theme = localStorage.getItem('data-theme')
 
+	tableData = []
 	getCPDBLists(){
 		this.pagination = {
 			currentPage:0,
@@ -48,6 +80,7 @@ export class InMigsTableComponent implements OnInit {
 		this.isLoading = true	
 		this.InMigService.getInMigrationLists().subscribe(response=>{				
 			this.InMigService.setData(response.data)
+			this.tableData = response.data
 			this.pagination.currentPage = response.current_page
 			this.pagination.lastPage = response.last_page
 			for(let i = 0; i <= response.last_page; i ++){
@@ -63,12 +96,13 @@ export class InMigsTableComponent implements OnInit {
 		totalPages:[],
 	}
 
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.InMigService.paginateAdminList(page).subscribe(response=>{
 			this.InMigService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.InMigService.setData(response.data)
 		})	
 	}
@@ -93,7 +127,8 @@ export class InMigsTableComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false		
+			this.isLoading = false
+			this.pagination.totalPages.pop()		
 		})
 		this.InMigService.getSearched(this.keyword).subscribe(data =>{
 			this.searchResults = data

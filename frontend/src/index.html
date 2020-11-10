@@ -1,5 +1,5 @@
 <!doctype html>
-<html id="html" lang="en" data-theme="">
+<html id="html" lang="en" data-theme="" color="">
 
 <head>
     <meta charset="utf-8">
@@ -21,16 +21,23 @@
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 
-    <!-- <link href="/yourDirectory/angular-ui-toggle-min.css" rel="stylesheet"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.8.1/echo.iife.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="./node_modules/leaflet/dist/leaflet.css"> -->
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/css/ol.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js"></script>
 
     <script type="text/javascript">
         if (!(localStorage.getItem("data-theme") != null)) {
-            localStorage.setItem('data-theme', "dark");
+            localStorage.setItem('data-theme', "light");
+            localStorage.setItem('color', "plain_blue2");
             document.getElementById('html').setAttribute("data-theme", localStorage.getItem("data-theme"));
+            document.getElementById('html').setAttribute("color", localStorage.getItem("color"));
 
         } else {
             document.getElementById('html').setAttribute("data-theme", localStorage.getItem("data-theme"))
+            document.getElementById('html').setAttribute("color", localStorage.getItem("color"));
+
         }
     </script>
 

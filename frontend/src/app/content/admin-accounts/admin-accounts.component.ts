@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../admin.service'
 import { UtilityService } from '../../utility.service'
 import Swal from 'sweetalert2'
+import { MapService } from '../maps/map.service'
 
 @Component({
   selector: 'app-admin-accounts',
@@ -13,9 +14,10 @@ export class AdminAccountsComponent implements OnInit {
 	constructor(
 		private  AdminService : AdminService,
 		private UtilityService : UtilityService,		
+		private MapService : MapService
 	) { 
 		this.reload = this.AdminService.getReload().subscribe(data => {
-			this.ngOnInit()
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.AdminService.getMultipleDelete().subscribe(array => {
@@ -71,16 +73,18 @@ export class AdminAccountsComponent implements OnInit {
 				this.pagination.totalPages.push(i)
 			}			
 			this.isLoading = false	
+			this.pagination.totalPages.pop()
 		})
 	}
-
-	paginate(page){
-		this.isLoading = true	
+	
+	isPaginating = false
+	paginate(page){		
+		this.isPaginating = true
 		this.pagination.currentPage = page
 		this.AdminService.paginateAdminList(page).subscribe(response=>{
-			this.admins = response.data
-			this.isLoading = false	
+			this.admins = response.data		
 			this.AdminService.setPage(response.data)
+			this.isPaginating = false
 		})	
 	}
 
@@ -125,7 +129,7 @@ export class AdminAccountsComponent implements OnInit {
 		this.AdminService.deleteAdmin( id ).subscribe(data => {		
 			this.UtilityService.setAlert('You have deleted an admin','info')		
 			this.isLoading = false	
-			this.UtilityService.setAlert('Refresh Page to see changes','info')
+			this.AdminService.setReload(true)
 		})
 	}
 
@@ -142,12 +146,13 @@ export class AdminAccountsComponent implements OnInit {
 		this.AdminService.search(this.keyword).subscribe(data => {
 			this.AdminService.setPage(data)			
 		})
+		
 	}
 
 	searchHandler(event){
 		if(event.target.value == '' ){
 			this.searched == false; 
-			this.ngOnInit()
+			this.paginate(1)
 		}
 		else{ 
 			this.searched == true

@@ -133,6 +133,11 @@ export class OutMigService {
 		return this.http.get<any>(url,{headers:this.headers})
 	}
 
+	paginateSearch(page,keyword){
+		const url =  this.BaseAPIService.baseURL + '/search/records?type=OutMigration&query='+ keyword +'&page=' + page
+		return this.http.get<any>(url,{headers:this.headers})
+	}
+
 
 	
   

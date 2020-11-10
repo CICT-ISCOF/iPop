@@ -43,13 +43,14 @@ reload
 		{headerName: 'Operations', field: 'id',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:350 },
 		{headerName: 'Status', field: 'id',cellRenderer: 'status' ,width:250},
 		{headerName: 'Sorting Number', field: 'barangay', sortable: true, filter: 'agTextColumnFilter' ,width:350 },
+		{headerName: 'Name of Household Member', field: 'name', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
 		{headerName: 'Municipality', field: 'municipality', sortable: true, filter: 'agTextColumnFilter',width:350 },	
 		{headerName: 'Barangay', field: 'barangay', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
 		{headerName: 'Household Number', field: '', sortable: true, filter: 'agTextColumnFilter' ,width:350},
 		{headerName: 'Total Cases', field: 'total_cases', sortable: true, filter: 'agTextColumnFilter',width:350 },		
 		{headerName: 'Case Number', field: 'case_number', sortable: true, filter: 'agTextColumnFilter' ,width:350},		
 		{headerName: 'Month OF Migration', field: 'month', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
-		{headerName: 'Name of Household Member', field: 'name', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
+		
 		{headerName: 'Sex of Outmigrant', field: 'sex', sortable: true, filter: 'agTextColumnFilter',width:350 },	
 		{headerName: 'Date of Birth', field: 'date_of_birth', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
 		{headerName: 'Age of HH Member', field: 'age', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
@@ -138,7 +139,7 @@ reload
 		}		
 		let names = fullnames.join(', ')
 		if(identifiers.length == 0){
-			this.UtilityService.setAlert('Please select data you want to delete','error')
+			// this.UtilityService.setAlert('Please select data you want to delete','error')
 			return
 		}
 		Swal.fire({

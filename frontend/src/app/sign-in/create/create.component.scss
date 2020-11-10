@@ -10,16 +10,28 @@
 .pin-panel {
     background: var(--bg);
     width: 50%;
-    height: 50%;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 10px;
+    height: 60vh;
+}
+
+label {
+    font-weight: 200 !important;
+}
+
+.flex-container {
+    height: 30vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .is-colored {
-    background: #2659D8 !important;
+    background: gray !important;
 }
 
 .header {

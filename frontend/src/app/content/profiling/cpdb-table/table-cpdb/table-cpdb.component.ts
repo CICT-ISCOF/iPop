@@ -41,6 +41,8 @@ export class TableCpdbComponent implements OnInit {
 	columnDefs = [	
 		{headerName: 'OPERATIONS', field: '',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:300 },
 		{headerName: 'STATUS', field: 'status',cellRenderer: 'status',width:150 },
+		{headerName: 'SORTING NUMBER', field: 'sorting_number',width:350 },
+		{headerName: 'NAME OF HOUSEHOLD MEMBERS', field: 'name_of_household_member', sortable: true, filter: 'agTextColumnFilter',width:350 },	
 		{headerName: 'MUNICIPALITY', field: 'municipality', sortable: true, filter: 'agTextColumnFilter',width:200 },	
 		{headerName: 'BARANGAY', field: 'barangay', sortable: true, filter: 'agTextColumnFilter',width:200 },	
 		{headerName: 'PUROK OR ZONE', field: 'zone', sortable: true, filter: 'agTextColumnFilter',width:200 },	
@@ -50,7 +52,7 @@ export class TableCpdbComponent implements OnInit {
 		{headerName: 'HOUSEHOLD SIZE BRACKET', field: 'household_size_bracket', sortable: true, filter: 'agTextColumnFilter' ,width:350},	
 		{headerName: 'NUMBER OF FAMILIES', field: 'number_of_families', sortable: true, filter: 'agTextColumnFilter',width:350 },	
 		{headerName: 'LINE NUMBER OF HOUSEHOLD MEMBER', field: 'line_number_of_household_member', sortable: true, filter: 'agTextColumnFilter',width:350 },	
-		{headerName: 'NAME OF HOUSEHOLD MEMBERS', field: 'name_of_household_member', sortable: true, filter: 'agTextColumnFilter',width:350 },		
+		
 		{headerName: 'RELATIONSHIP TO HOUSEHOLD HEAD', field: 'relationship_to_household_head', sortable: true, filter: 'agTextColumnFilter',width:350 },
 
 
@@ -170,7 +172,7 @@ export class TableCpdbComponent implements OnInit {
 			identifiers.push(selectedNodes[id].data.id)
 		}
 		if(identifiers.length == 0){
-			this.UtilityService.setAlert('Please select data you want to delete','error')
+			// this.UtilityService.setAlert('Please select data you want to delete','error')
 			return
 		}
 		for( let id in selectedNodes ){

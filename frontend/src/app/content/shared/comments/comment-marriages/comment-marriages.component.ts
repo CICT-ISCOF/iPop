@@ -133,6 +133,7 @@ export class CommentMarriagesComponent implements OnInit {
 				this.MarriagesService.updateRecord(this.fields,this.fields.id).subscribe(data => {
 					this.UtilityService.setAlert('Record has been successfully updated ', 'info')
 					this.fields = data
+					this.ngOnInit()
 				})
 			}		
 		})	

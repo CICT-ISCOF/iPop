@@ -1,0 +1,13 @@
+@media only screen and (min-device-width: 600px) and (max-device-width: 1024px) {
+    .container {
+        max-width: 100% !important;
+    }
+    .cpdpb-component {
+        margin-left: 0 !important;
+    }
+    nav {
+        display: block !important;
+        text-align: center !important;
+        transform: translateX(0px) !important;
+    }
+}

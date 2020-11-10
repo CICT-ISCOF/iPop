@@ -4,13 +4,45 @@
 }
 
 .container {
-    padding: 0;
+    max-width: 95% !important;
 }
 
 @media only screen and (max-width: 600px) {
     .cpdpb-component {
         margin-left: 0 !important;
     }
+    .container {
+        max-width: 100% !important;
+    }
+}
+
+.loader-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.container {
+    max-width: 95% !important;
+}
+
+.spinner-border {
+    color: var(--contrast) !important;
+}
+
+.hide {
+    opacity: 0;
+    height: 1px;
+    overflow: hidden;
+}
+
+.flex-container {
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 i,
@@ -26,7 +58,7 @@ i:focus {
 }
 
 i:hover {
-    opacity: .8 !important
+    opacity: .8 !important;
 }
 
 i:active {
@@ -36,8 +68,7 @@ i:active {
 nav {
     display: flex;
     justify-content: center;
-    text-align: center;
-    transform: translateX(-130px);
+    text-align: left;
 }
 
 .search-container {
@@ -47,7 +78,7 @@ nav {
 }
 
 .active a {
-    color: white !important
+    color: white !important;
 }
 
 *:focus {
@@ -55,7 +86,7 @@ nav {
 }
 
 button {
-    color: #00A663 !important;
+    color: #00a663 !important;
     border-radius: 50%;
     display: flex;
     box-shadow: none;
@@ -68,7 +99,7 @@ button {
 }
 
 button i {
-    color: #00A663 !important;
+    color: #00a663 !important;
     font-size: 20px;
     text-align: center;
     justify-content: center;

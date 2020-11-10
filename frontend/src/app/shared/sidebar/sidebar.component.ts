@@ -4,6 +4,8 @@ import { UtilityService }  from '../../utility.service'
 import Swal from 'sweetalert2'
 import { MediaQueryService } from '../../media-query.service'
 import { DeviceService }  from '../../device.service'
+import { CountService } from '../../services/count.service'
+
 
 @Component({
   selector: 'app-sidebar',
@@ -15,7 +17,8 @@ export class SidebarComponent implements OnInit {
 	constructor(
 		private UtilityService: UtilityService,
 		private MediaQueryService : MediaQueryService,
-		private DeviceService : DeviceService
+		private DeviceService : DeviceService,
+		private CountService : CountService
 	) {
 		this.findRoute()
 		this.sidebarColor = this.UtilityService.geColor().subscribe(color => {
@@ -30,26 +33,41 @@ export class SidebarComponent implements OnInit {
 			this.sidebar.backgroundImage = this.formatImage(image)
 		})
 
-		this.sidebarColor = this.MediaQueryService.getSize().subscribe(size => 			
-			{this.hide = this.processSize(size)}
+		this.sidebarColor = this.MediaQueryService.getSize().subscribe(size => {
+			this.hide = this.processSize(size)		
+		}
+			
 		) 
 
 		this.sidebarColor = this.DeviceService.sidebarState().subscribe(state=>{
 			this.hide = state
 		})
 	}
+
 	processSize(size){
-		if(size <= 600){
+		if(size <= 1024){
 			return false
 		}
 		return true
 	}
 
-	hide = false
-	
+	dropDown = { 
+		demographics:false,
+		addData:false,
+		RPFP:false,
+		AHYD:false
+	}
 
+	hide = false
 	ngOnInit(): void {
-		this.sidebarListener()		
+		this.sidebarListener()	
+		if(this.account || this.account != undefined){
+			this.getRecordCount()
+		}
+		
+		if(localStorage.getItem('sidebar-dropdwons') && localStorage.getItem('sidebar-dropdwons') != undefined){
+			this.dropDown = JSON.parse(localStorage.getItem('sidebar-dropdwons'))
+		}
 	}
  
 	sidebarColor : Subscription
@@ -60,8 +78,7 @@ export class SidebarComponent implements OnInit {
 		color : this.formatColorFromLocalStorage(localStorage.getItem('color')),	
 	}
 
-	account = JSON.parse(localStorage.getItem('user-data'))
-	
+	account = JSON.parse(localStorage.getItem('user-data'))	
 
 	formatImage(image){
 		if(image == null){
@@ -77,35 +94,11 @@ export class SidebarComponent implements OnInit {
 		return boolean
 	}
 
-	formatColorFromLocalStorage(color){	
-		if(color == 'dark'){
-			color = "var(--dark1)"
-		}
-		else if(color == 'green'){
-			color = "var(--green1)"
-		}
-		else if(color == 'blue'){
-			color = "var(--blue1)"
-		}
-		else if(color == 'orange'){
-			color = "var(--orange1)"
-		}
-		else if(color == 'red'){
-			color = "var(--red1)"
-		}
-		else if(color == 'violet'){
-			color = "var(--violet1)"
-		}
-		else{
-			color = "var(--blue1)"
-		}	
-		return color
+	formatColorFromLocalStorage(color){			
+		let sideBarColor =   "var(--" + color +")"		
+		return  sideBarColor
 	}
 	
-
-	
-
-
 	subscription : Subscription
 	
 	icons = {
@@ -118,7 +111,8 @@ export class SidebarComponent implements OnInit {
 		CMS:false,
 
 		Profiling:false,
-
+	
+	
 		CPDB:false,
 		Births:false,
 		Deaths:false,
@@ -126,72 +120,68 @@ export class SidebarComponent implements OnInit {
 		OutMig:false,
 		Marriages:false,
 
-	}
+		PMOC:false,
+		MPCFDC:false,
 
+		TeenCenters:false,
+		IssuesAndConerns:false,
+
+		Others:false,
+		Roles:false,
+
+	}
 	
-	removeActives(){		
+	active(classname){	
 		for(let key in this.icons){
 			this.icons[key] = false
 		}
 		this.DeviceService.showSidebar(false)	
-	}
+		this.icons[classname] = true
+		
 
-	active(classname){	
-		this.removeActives()
-		if(classname == "Home"){
-			this.icons.Home = true
-		}
-		else if(classname == "Statistics"){
-			this.icons.Statistics = true
-		}
-		else if(classname == "CMS"){
-			this.icons.CMS = true
+		if(classname == "CMS"){
 			classname = "Content Management"
 		}
-
-		else if(classname == "CPDB"){
-			this.icons.CPDB = true
+		if(classname == "Statistics"){
+			classname = "Population Data"
+		}
+		if(classname == "CPDB"){		
 			classname = "Add Census of Population Record"
 		}
-		else if(classname == "Deaths"){
-			this.icons.Deaths = true
+		if(classname == "Deaths"){			
 			classname = "Add Death Record"
 		}
-		else if(classname == "Births"){
-			this.icons.Births = true
+		if(classname == "Births"){			
 			classname = "Add Birth Record"
 		}
-		else if(classname == "InMig"){
-			this.icons.InMig = true
+		if(classname == "InMig"){			
 			classname = "Add In-Migration Record"
 		}
-		else if(classname == "OutMig"){
-			this.icons.OutMig = true
+		if(classname == "OutMig"){			
 			classname = "Add Out-Migration Record"
 		}
-		else if(classname == "Marriages"){
-			this.icons.Marriages = true
+		if(classname == "Marriages"){			
 			classname = "Add Marriage Record"
 		}
-
-		else if (classname == "Profiling"){
-			this.icons.Profiling = true
+		if (classname == "Profiling"){
 			classname = "Records"
 		}
-
-		else if ( classname == "Administrators"){
-			this.icons.Administrators = true
+		if (classname == "Administrators"){			
 			classname = "New Administrator"
-		}
+		}	
 
-		else if ( classname == "Admin Accounts"){
-			this.icons.AdminAccounts = true
-			classname = "Admin Accounts"
-		}
-		else if ( classname == "Logs"){
-			this.icons.Logs = true
-		}
+		if (classname == "PMC"){			
+			classname = "Pre Marriage Counseling"
+		}	
 
+		if (classname == "AHYD"){			
+			classname = "Adolescent Health Youth Development"
+		}	
+		
+		if( classname == 'AdminAccounts' ){
+			classname == 'Admin Accounts'
+		}
+		
 		this.UtilityService.setNavText(classname)
 	}
 
@@ -201,7 +191,7 @@ export class SidebarComponent implements OnInit {
 		const path = url.pathname	
 
 		if(path == '/admin-accounts'){
-			this.UtilityService.setSidebarItemasActive('Admin Accounts')
+			this.UtilityService.setSidebarItemasActive('AdminAccounts')
 		}
 		else if(path == '/logs'){
 			this.UtilityService.setSidebarItemasActive('Logs')		
@@ -264,15 +254,38 @@ export class SidebarComponent implements OnInit {
 			this.UtilityService.setSidebarItemasActive('Conversations')
 		
 		}	
+		else if(path == '/pmc'){
+			this.UtilityService.setSidebarItemasActive('PMC')
+		
+		}	
+		else if(path == '/ahyd'){
+			this.UtilityService.setSidebarItemasActive('AHYD')
+		
+		}	
+		
 
 	
 	}
 
-	
 	findRoute(){
 		this.subscription = this.UtilityService.getActiveItemonSidebar().subscribe(data =>{
+		
 			this.active(data)	
 		})
+	}
+
+	pendingCount = 0
+	getRecordCount(){		
+		this.CountService.getOverlAllCount().subscribe(data => {		
+			this.pendingCount = data
+		})
+	}
+
+	
+
+	showDropDown(item){		
+		this.dropDown[item] = this.dropDown[item] == true ? false :true
+		localStorage.setItem('sidebar-dropdwons',JSON.stringify(this.dropDown))
 	}
 
 

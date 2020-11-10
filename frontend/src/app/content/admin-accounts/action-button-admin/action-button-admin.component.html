@@ -30,6 +30,6 @@
       </svg>
 </span>
 
-
+<span *ngIf="params.id == myID" style="font-size: 75%;" class="badge badge-dark">You</span>
 
 <span tooltip="{{ params.fullname }}'s account has been blocked'" placement="right" show-delay="100" [theme]="theme" *ngIf="params.iterations >= 5" style="font-size: 75%;" class="badge badge-danger">Blocked</span>

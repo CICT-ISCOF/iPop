@@ -453,6 +453,7 @@ export class CommentCpdbComponent implements OnInit {
 				this.CpdbService.updateRecord(this.field,this.field.id).subscribe(data => {
 					this.UtilityService.setAlert('Record has been successfully updated ', 'info')
 					this.field = data
+					this.ngOnInit()
 				})
 			}		
 		})	

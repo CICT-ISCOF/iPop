@@ -40,7 +40,7 @@ export class ExcelService {
 		reader.readAsBinaryString(file);
 	}
 
-	getExcellData(){
+	getExceltoJSONlData(){
 		return this.JSON.asObservable();
 	}
 		

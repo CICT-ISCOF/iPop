@@ -42,13 +42,14 @@ export class TableMarriageComponent implements OnInit {
 		{headerName: 'Operations', field: '',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:350 },
 		{headerName: 'Status', field: '',cellRenderer: 'status' },
 		{headerName: 'Sorting Number', field: 'sorting_number', sortable: true, filter: 'agTextColumnFilter' },
+		{headerName: 'Name of Couple', field: 'couple_name', sortable: true, filter: 'agTextColumnFilter' },	
 		{headerName: 'Municipality', field: 'municipality', sortable: true, filter: 'agTextColumnFilter' },	
 		{headerName: 'Barangay', field: 'barangay', sortable: true, filter: 'agTextColumnFilter' },	
 		{headerName: 'Total Cases', field: 'total_cases', sortable: true, filter: 'agTextColumnFilter' },	
 		{headerName: 'Household Number', field: 'household_number', sortable: true, filter: 'agTextColumnFilter' },	
 		{headerName: 'Case Number', field: 'case_number', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'Month of Marriage', field: 'month', sortable: true, filter: 'agTextColumnFilter' },	
-		{headerName: 'Name of Couple', field: 'couple_name', sortable: true, filter: 'agTextColumnFilter' },	
+		{headerName: 'Month of Marriage', field: 'month', sortable: true, filter: 'agTextColumnFilter' },
+		
 		{headerName: 'Sex', field: 'sex', sortable: true, filter: 'agTextColumnFilter' },		
 		{headerName: 'Age', field: 'age', sortable: true, filter: 'agTextColumnFilter' },	
 		{headerName: 'Bracket Distribution', field: 'age_bracket', sortable: true, filter: 'agTextColumnFilter' },
@@ -132,7 +133,7 @@ export class TableMarriageComponent implements OnInit {
 		}		
 		let names = fullnames.join(', ')
 		if(identifiers.length == 0){
-			this.UtilityService.setAlert('Please select data you want to delete','error')
+			// this.UtilityService.setAlert('Please select data you want to delete','error')
 			return
 		}
 		Swal.fire({

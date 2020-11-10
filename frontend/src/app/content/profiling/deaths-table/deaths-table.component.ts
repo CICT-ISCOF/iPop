@@ -1,3 +1,4 @@
+import { MediaQueryService } from './../../../media-query.service';
 import { Component, OnInit } from '@angular/core';
 import { DeathsService } from '../../deaths/deaths.service'
 import { BirthsService } from '../../births/births.service'
@@ -7,19 +8,21 @@ import { ExcelService } from '../../../excel.service'
 @Component({
   selector: 'app-deaths-table',
   templateUrl: './deaths-table.component.html',
-  styleUrls: ['./deaths-table.component.scss']
+  styleUrls: ['./deaths-table.component.scss','../profiling.tablet.scss']
 })
 export class DeathsTableComponent implements OnInit {
 
 	constructor(
 		private DeathsService : DeathsService,
 		private UtilityService : UtilityService,
-		private ExcelService : ExcelService
+		private ExcelService : ExcelService,
+		private MediaQueryService : MediaQueryService
 	) { 
 		this.reload = this.DeathsService.getMultipleDelete().subscribe(array => {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.DeathsService.getRow().subscribe(data => {
@@ -27,15 +30,42 @@ export class DeathsTableComponent implements OnInit {
 		})
 
 		
+		this.reload  = this.MediaQueryService.getSize().subscribe(screenSize => {
+			this.maxSize = this.processPaginationLength(screenSize)		
+		})
+	
+	 }
+
+		
+
+	maxSize = 7
+	reload
+	paginationLabel = {
+		Previous:'',
+		Next:''
 	}
 
-	reload
+	processPaginationLength(screenSize){		
+		if(screenSize <= 1024){	
+			this.paginationLabel = {
+				Previous:'',
+				Next:''
+			}
+			return 7
+		
+		}
+		this.paginationLabel = {
+			Previous:'Next',
+			Next:'Previous'
+		}		
+		return 15
+	}
 
 	ngOnInit(): void {
 		this.getDeathsList()
 		this.searched = false
 		this.keyword = ''
-			
+		this.MediaQueryService.setSize(window.innerWidth)
 	}
 
 	isLoading = false
@@ -57,7 +87,8 @@ export class DeathsTableComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false				
+			this.isLoading = false			
+			this.pagination.totalPages.pop()	
 		})
 	}
 
@@ -67,12 +98,13 @@ export class DeathsTableComponent implements OnInit {
 		totalPages:[],
 	}
 
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.DeathsService.paginateAdminList(page).subscribe(response=>{
 			this.DeathsService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.DeathsService.setData(response.data)
 		})	
 	}

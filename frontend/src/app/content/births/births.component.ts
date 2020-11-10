@@ -29,12 +29,13 @@ export class BirthsComponent implements OnInit {
 		})
 	}
 
+	barangayIsLoading = false
 	getBarangays(event){
-		this.isLoading = true
+		this.barangayIsLoading = true
 		this.fields.municipality = event.target.options[event.target.options.selectedIndex].text;	
 		this.LocationService.getBarangays(event.target.value).subscribe(data => {
 			this.barangays = data	
-			this.isLoading = false
+			this.barangayIsLoading = false
 		})
 	}
 
@@ -163,21 +164,20 @@ export class BirthsComponent implements OnInit {
 	save(){
 		this.isLoading = true
 		let hasError = false
-		for(let key in this.fields){
-			if( this.fields[key] == '' || this.fields[key] == null){
-				this.invalid[key] = true
-				hasError = true
-				alert(JSON.stringify(this.fields[key]) + 'amo ni ang lantawa ho ' + key)
-			}
-			else{
-				this.invalid[key] = false
-			}
-		}
+		// for(let key in this.fields){
+		// 	if( this.fields[key] == '' || this.fields[key] == null){
+		// 		this.invalid[key] = true
+		// 		hasError = true				
+		// 	}
+		// 	else{
+		// 		this.invalid[key] = false
+		// 	}
+		// }
 		if(!hasError){
 			this.BirthsService.saveBirthRecord(this.fields).subscribe(data => {
 				this.UtilityService.setAlert('Birth Record has been successfully saved','success')
-			})
-			this.isLoading = false
+				this.isLoading = false
+			})			
 		}else{			
 			this.isLoading = false
 			

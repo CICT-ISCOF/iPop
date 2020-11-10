@@ -3,23 +3,23 @@
 <div class="quick-links-componet">
     <div class="container">
         <div class="img-container">
-            <img src="../../../../assets/avatars/girl-black.png" alt="">
+            <img [src]="src" alt="">
             <div (click)="triggerInput()" class="icon-container">
                 <i style="font-size: 25px;" class="fas fa-camera"></i>
-                <input (change)="readURL($event.target.files,$event)" accept="image/*" type="file" class="hidden" id="quick-link-picture" style="display: none;">
+                <input [(ngModel)]="data.file" (change)="readURL($event.target.files,$event)" accept="image/*" type="file" class="hidden" id="quick-link-picture" style="display: none;">
             </div>
         </div>
         <div class="inputs-container">
-            <textarea placeholder="Title..." autosize class="title"></textarea>
+            <textarea [(ngModel)]="data.body" placeholder="Title..." autosize class="title"></textarea>
 
-            <textarea placeholder="Body..." autosize class="body"></textarea>
+            <textarea [(ngModel)]="data.title" placeholder="Body..." autosize class="body"></textarea>
         </div>
     </div>
 
 
     <br>
     <div class="button-container">
-        <button class="button">Save quick link</button>
+        <button (click)="saveQuicLink()" class="button">Save Article</button>
     </div>
     <br> <br>
 </div>

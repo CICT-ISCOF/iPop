@@ -451,7 +451,7 @@ export class CommentBirthsComponent implements OnInit {
 			if (result.value) {		
 				this.BirthsService.updateRecord(this.fields,this.fields.id).subscribe(data => {
 					this.UtilityService.setAlert('Record has been successfully updated ', 'info')
-				
+					this.ngOnInit()
 				})
 			}		
 		})	

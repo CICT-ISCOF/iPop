@@ -3,11 +3,12 @@ import { CpdbService } from '../../cpdb/cpdb.service'
 import {   Subscription} from 'rxjs'
 import { UtilityService } from '../../../utility.service'
 import { ExcelService } from '../../../excel.service'
+import { MediaQueryService } from '../../../media-query.service'
 
 @Component({
   selector: 'app-cpdb-table',
   templateUrl: './cpdb-table.component.html',
-  styleUrls: ['./cpdb-table.component.scss']
+  styleUrls: ['./cpdb-table.component.scss','../profiling.tablet.scss']
 })
 export class CpdbTableComponent implements OnInit {
 
@@ -15,31 +16,56 @@ export class CpdbTableComponent implements OnInit {
 		private CpdbService : CpdbService,
 		private UtilityService : UtilityService,
 		private ExcelService : ExcelService,
-	
+		private MediaQueryService : MediaQueryService
 	) {
 		
 		this.reload = this.CpdbService.getMultipleDelete().subscribe(array => {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.CpdbService.getRow().subscribe(data => {
 			this.ngOnInit()
 		})
 
+		this.reload  = this.MediaQueryService.getSize().subscribe(screenSize => {
+			this.maxSize = this.processPaginationLength(screenSize)		
+		})
 	
 	 }
 
 		
 
-
+	maxSize = 7
 	reload: Subscription
+	paginationLabel = {
+		Previous:'',
+		Next:''
+	}
+
+	processPaginationLength(screenSize){		
+		if(screenSize <= 1024){	
+			this.paginationLabel = {
+				Previous:'',
+				Next:''
+			}
+			return 7
+		
+		}
+		this.paginationLabel = {
+			Previous:'Next',
+			Next:'Previous'
+		}		
+		return 15
+	}
 
 	ngOnInit(): void {
 		this.getCPDBLists()
 		this.searched = false
 		this.keyword = ''
+		this.MediaQueryService.setSize(window.innerWidth)
 	}
 	
 
@@ -63,7 +89,8 @@ export class CpdbTableComponent implements OnInit {
 			for(let i = 0; i <= response.last_page; i ++){
 				this.pagination.totalPages.push(i)
 			}			
-			this.isLoading = false		
+			this.isLoading = false	
+			this.pagination.totalPages.pop()	
 		})
 	}
 
@@ -72,13 +99,14 @@ export class CpdbTableComponent implements OnInit {
 		lastPage:0,
 		totalPages:[],
 	}
-
+	
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.CpdbService.paginateAdminList(page).subscribe(response=>{
 			this.CpdbService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.CpdbService.setData(response.data)
 		})	
 	}
@@ -124,11 +152,6 @@ export class CpdbTableComponent implements OnInit {
 			this.ngOnInit() 
 		}	
 	}
-
-
-
-
-
 
 
 	deleteRecord(id){

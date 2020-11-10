@@ -1,4 +1,4 @@
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1368px) {
     .cms-component {
         padding: 0px;
         background: var(--bg);
@@ -36,12 +36,12 @@
             }
         }
         .active {
-            border: 3px solid #199CF8 !important;
+            border: 3px solid #199cf8 !important;
             border-radius: 30px !important;
             background: none !important;
             background-color: none !important;
             a {
-                color: white !important
+                color: white !important;
             }
         }
     }

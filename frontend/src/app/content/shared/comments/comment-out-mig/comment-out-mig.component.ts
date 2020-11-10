@@ -131,6 +131,7 @@ export class CommentOutMigComponent implements OnInit {
 				this.OutMigService.updateRecord(this.fields,this.fields.id).subscribe(data => {
 					this.UtilityService.setAlert('Record has been successfully updated ', 'info')
 					this.fields = data
+					this.ngOnInit()
 				})
 			}		
 		})	

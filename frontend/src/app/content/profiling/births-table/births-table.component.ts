@@ -1,37 +1,69 @@
+import { MediaQueryService } from './../../../media-query.service';
 import { Component, OnInit } from '@angular/core';
 import { BirthsService } from '../../births/births.service'
 import { UtilityService } from '../../../utility.service'
 import { ExcelService } from '../../../excel.service'
 
+
 @Component({
   selector: 'app-births-table',
   templateUrl: './births-table.component.html',
-  styleUrls: ['./births-table.component.scss']
+  styleUrls: ['./births-table.component.scss','../profiling.tablet.scss']
 })
 export class BirthsTableComponent implements OnInit {
 
 	constructor(
 		private BirthsService : BirthsService,
 		private UtilityService : UtilityService,
-		private ExcelService : ExcelService
+		private ExcelService : ExcelService,
+		private MediaQueryService : MediaQueryService
 	) { 
 		this.reload = this.BirthsService.getMultipleDelete().subscribe(array => {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.BirthsService.getRow().subscribe(data => {
 			this.ngOnInit()
 		})
+		this.reload  = this.MediaQueryService.getSize().subscribe(screenSize => {
+			this.maxSize = this.processPaginationLength(screenSize)		
+		})
+	
+	 }
+
+		
+
+	maxSize = 7
+	reload
+	paginationLabel = {
+		Previous:'',
+		Next:''
 	}
 
-	reload
+	processPaginationLength(screenSize){		
+		if(screenSize <= 1024){	
+			this.paginationLabel = {
+				Previous:'',
+				Next:''
+			}
+			return 7
+		
+		}
+		this.paginationLabel = {
+			Previous:'Next',
+			Next:'Previous'
+		}		
+		return 15
+	}
 
 	ngOnInit(): void {
 		this.getCPDBLists()
 		this.searched = false
-		this.keyword = ''
+		this.keyword = ''		
+		this.MediaQueryService.setSize(window.innerWidth)
 	}
 
 	isLoading = false
@@ -54,8 +86,9 @@ export class BirthsTableComponent implements OnInit {
 				this.pagination.totalPages.push(i)
 			}			
 			this.isLoading = false			
-			console.log(response.data)	
+			this.pagination.totalPages.pop()
 		})
+		
 	}
 
 	pagination = {
@@ -63,13 +96,13 @@ export class BirthsTableComponent implements OnInit {
 		lastPage:0,
 		totalPages:[],
 	}
-
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.BirthsService.paginateAdminList(page).subscribe(response=>{
 			this.BirthsService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.BirthsService.setData(response.data)
 		})	
 	}

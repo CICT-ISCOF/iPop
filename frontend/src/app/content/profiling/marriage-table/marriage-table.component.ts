@@ -1,3 +1,4 @@
+import { MediaQueryService } from './../../../media-query.service';
 import { Component, OnInit } from '@angular/core';
 import { MarriagesService } from '../../marriages/marriages.service'
 import { UtilityService } from '../../../utility.service'
@@ -6,7 +7,7 @@ import { ExcelService } from '../../../excel.service'
 @Component({
   selector: 'app-marriage-table',
   templateUrl: './marriage-table.component.html',
-  styleUrls: ['./marriage-table.component.scss']
+  styleUrls: ['./marriage-table.component.scss','../profiling.tablet.scss']
 })
 export class MarriageTableComponent implements OnInit {
 
@@ -14,24 +15,54 @@ export class MarriageTableComponent implements OnInit {
 		private MarriagesService : MarriagesService,
 		private UtilityService : UtilityService,
 		private ExcelService : ExcelService,
+		private MediaQueryService : MediaQueryService
 	) { 
 		this.reload = this.MarriagesService.getMultipleDelete().subscribe(array => {
 			for(let id in array){
 				this.deleteRecord(array[id])
 			}
+			this.paginate(this.pagination.currentPage)
 		})
 
 		this.reload = this.MarriagesService.getRow().subscribe(data => {
 			this.ngOnInit()
 		})
+		this.reload  = this.MediaQueryService.getSize().subscribe(screenSize => {
+			this.maxSize = this.processPaginationLength(screenSize)		
+		})
+	
+	 }
+
+		
+
+	maxSize = 7
+	reload
+	paginationLabel = {
+		Previous:'',
+		Next:''
 	}
 
-	reload
+	processPaginationLength(screenSize){		
+		if(screenSize <= 1024){	
+			this.paginationLabel = {
+				Previous:'',
+				Next:''
+			}
+			return 7
+		
+		}
+		this.paginationLabel = {
+			Previous:'Next',
+			Next:'Previous'
+		}		
+		return 15
+	}
 
 	ngOnInit(): void {
 		this.searched = false
 		this.keyword = ''
 		this.getMarraigeRecord()
+		this.MediaQueryService.setSize(window.innerWidth)
 	}
 
 	isLoading = false
@@ -54,6 +85,7 @@ export class MarriageTableComponent implements OnInit {
 				this.pagination.totalPages.push(i)
 			}			
 			this.isLoading = false				
+			this.pagination.totalPages.pop()
 		})
 	}
 
@@ -63,12 +95,13 @@ export class MarriageTableComponent implements OnInit {
 		totalPages:[],
 	}
 
+	isPaginating = false
 	paginate(page){
-		this.isLoading = true	
+		this.isPaginating = true	
 		this.pagination.currentPage = page
 		this.MarriagesService.paginateAdminList(page).subscribe(response=>{
 			this.MarriagesService.setData(response.data)
-			this.isLoading = false	
+			this.isPaginating = false	
 			this.MarriagesService.setData(response.data)
 		})	
 	}

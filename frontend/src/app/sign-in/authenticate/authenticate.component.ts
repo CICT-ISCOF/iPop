@@ -35,7 +35,7 @@ export class AuthenticateComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		localStorage.clear()
+		// localStorage.clear()
 		this.SignInService.visit()
 		let user :any = localStorage.getItem('user-data')
 		if(user != null){

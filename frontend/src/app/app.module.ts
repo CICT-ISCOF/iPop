@@ -17,10 +17,12 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { Ng2OdometerModule } from 'ng2-odometer';
 import {NgxPaginationModule} from 'ngx-pagination';
+// import { AngularOpenlayersModule } from "ngx-openlayers";
+import { ChartsModule } from 'ng2-charts';
 
 import { ResponsiveModule } from 'ngx-responsive'
 import 'ag-grid-enterprise';
-
+import { TreeNgxModule } from 'tree-ngx';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -113,51 +115,110 @@ import { ShowQuickLinkComponent } from './content/cms/show-quick-link/show-quick
 import { MobileAuthenticationComponent } from './sign-in/mobile/mobile-authentication/mobile-authentication.component'
 import { NavbarMobileComponent } from './shared/devices/mobile/navbar-mobile/navbar-mobile.component'
 import { DropdownComponentMobile }  from './shared/devices/mobile/dropdown/dropdown.component';
-import { FileUploadComponent } from './content/profiling/file-upload/file-upload.component'
+import { FileUploadComponent } from './content/profiling/file-upload/file-upload.component';
+import { MapsComponent } from './content/maps/maps.component';
+import { LocationComponent } from './content/admin-accounts/location/location.component';
+import { PreloaderComponent } from './shared/preloader/preloader.component';
+import { PmcComponent } from './content/pmc/pmc.component';
+import { AhydComponent } from './content/ahyd/ahyd.component';
+import { FooterComponent } from './content/footer/footer.component';
+import { PmocComponent } from './content/pmoc/pmoc.component';
+import { MPCFDCComponent } from './content/mpc-fdc/mpc-fdc.component';
+import { TeenCentersComponent } from './content/teen-centers/teen-centers.component';
+import { IssuesAndConcernsComponent } from './content/issues-and-concerns/issues-and-concerns.component';
+import { OthersComponent } from './content/others/others.component';
+import { RolesComponent } from './content/roles/roles.component';
+import { PpoMandateComponent } from './content/general-public/about/ppo-mandate/ppo-mandate.component';
+import { VmgComponent } from './content/general-public/about/vmg/vmg.component';
+import { CoreValuesComponent } from './content/general-public/about/core-values/core-values.component';
+import { OrgStructureComponent } from './content/general-public/about/org-structure/org-structure.component';
+import { PersonnelDirectoryComponent } from './content/general-public/about/personnel-directory/personnel-directory.component';
+import { AwardsComponent } from './content/general-public/about/awards/awards.component';
+import { RPFPPComponent } from './content/general-public/program-areas/rpfpp/rpfpp.component';
+import { AHYDPComponent } from './content/general-public/program-areas/ahydp/ahydp.component';
+import { CPDBMPComponent } from './content/general-public/program-areas/cpdbmp/cpdbmp.component';
+import { PDIComponent } from './content/general-public/program-areas/pdi/pdi.component';
+import { RPFPPServicesComponent } from './content/general-public/services-offered/rpfpp-services/rpfpp-services.component';
+import { ADHYDPServicesComponent } from './content/general-public/services-offered/adhydp-services/adhydp-services.component';
+import { PDIServicesComponent } from './content/general-public/services-offered/pdi-services/pdi-services.component';
+import { PDMServicesComponent } from './content/general-public/services-offered/pdm-services/pdm-services.component';
+import { DynamicHomeComponent } from './content/dynamic-home/dynamic-home.component';
+import { ProvincialOfficialsComponent } from './content/provincial-officials/provincial-officials.component';
+import { PmocTeamComponent } from './content/pmoc-team/pmoc-team.component';
+import { AhydTeamComponent } from './content/ahyd-team/ahyd-team.component';
+import { MTCTeamComponent } from './content/mtc-team/mtc-team.component';
+import { GeneralComponent } from './content/population-data/general/general.component';
+import { MigrationsComponent } from './content/population-data/migrations/migrations.component';
+import { DeathsStatComponent } from './content/population-data/deaths-stat/deaths-stat.component';
+import { BirthsStatComponent } from './content/population-data/births-stat/births-stat.component';
+import { PMOCStatComponent } from './content/population-data/pmoc-stat/pmoc-stat.component';
+import { SBMTCStatComponent } from './content/population-data/sbmtc-stat/sbmtc-stat.component';
+import { SBMTCInfoComponent } from './content/population-data/sbmtc-info/sbmtc-info.component';
+import { MPCAndFDCComponent } from './content/population-data/mpc-and-fdc/mpc-and-fdc.component'
 
 
 const routes: Routes = [
-  
+  { path:'test', component:TestsComponent},
+  // COMMENTS 
   { path:'comments/cpdb/:id', component:CommentCpdbComponent},  
   { path:'comments/births/:id', component:CommentBirthsComponent},  
   { path:'comments/deaths/:id', component:CommentDeathsComponent},  
   { path:'comments/in-migration/:id', component:CommentInMigComponent},  
   { path:'comments/out-migration/:id', component:CommentOutMigComponent},  
   { path:'comments/marriages/:id', component:CommentMarriagesComponent},  
-
-
-  { path:'test', component:TestsComponent},  
-
-  
-  { path:'home', component:HomeComponent},  
+  // START-UP
+  { path:'', component:AuthenticateComponent},  
+  { path:'home', component:DynamicHomeComponent},  
   { path:'statistics', component:StatisticsComponent},  
-  { path:'cms', component:CmsComponent},  
-  { path:'content-lists', component:ContentsListComponent},   
-
-  { path:'content/:title/:id', component:ShowContentComponent},  
-
-   { path:'cpdb', component:CpdbComponent},  
+  // DEMOGRAPHIC DATA
+  { path:'profiling', component:ProfilingComponent},   
+  { path:'cpdb', component:CpdbComponent},  
   { path:'deaths', component:DeathsComponent},  
   { path:'births', component:BirthsComponent},  
   { path:'in-mig', component:InMigComponent},  
   { path:'out-mig', component:OutMigComponent},  
   { path:'marriages', component:MarriagesComponent},  
-
+  // RPFP
+  { path:'PMOC', component:PmcComponent},   
+  { path:'MPC-FDC', component:MPCFDCComponent}, 
+  // AHYD 
+  { path:'Teen-Centers', component:TeenCentersComponent}, 
+  { path:'Issues&Concerns', component:IssuesAndConcernsComponent},
+  // OTHERS
+  { path:'Others', component:OthersComponent}, 
+  // ABOUT 
+  { path:'ABOUT/PPO-MADATE', component:PpoMandateComponent}, 
+  { path:'ABOUT/VISION,MISSION,GOALS', component:VmgComponent},
+  { path:'ABOUT/CORE-VALUES', component:CoreValuesComponent},     
+  { path:'ABOUT/ORGANIZATIONAL-STRUCTURE', component:OrgStructureComponent},  
+  { path:'ABOUT/PERSONNEL-DIRECTORY', component:PersonnelDirectoryComponent},  
+  { path:'ABOUT/AWARDS', component:AwardsComponent},  
+  // PROGRAM AREAS 
+  { path:'PROGRAM-AREAS/Responsible-Parenthood-and-Family-Planning-Program', component:RPFPPComponent},
+  { path:'PROGRAM-AREAS/Adolscent-Health-&-Youth-Development-Program', component:AHYDPComponent},
+  { path:'PROGRAM-AREAS/Comprehensive-Population-Data-Banking-and-Management-Project', component:CPDBMPComponent},  
+  { path:'PROGRAM-AREAS/Population-and-Development-Integration', component:PDIComponent},
+  // SERVICES OFFERED 
+  { path:'SERVICES-OFFERED/Responsible-Parenthood-and-Family-Planning-Program', component:RPFPPServicesComponent},
+  { path:'SERVICES-OFFERED/Adolscent-Health-&-Youth-Development-Program', component:ADHYDPServicesComponent}, 
+  { path:'SERVICES-OFFERED/Population-and-Development-Integration', component:PDIServicesComponent},
+  { path:'SERVICES-OFFERED/Population Data Managment', component:PDMServicesComponent},  
+    // PROGRAM AREAS 
+  { path:'cms', component:CmsComponent},  
+  { path:'content-lists', component:ContentsListComponent},   
+  { path:'content/:title/:id', component:ShowContentComponent},  
   { path:'admin-accounts', component:AdminAccountsComponent},  
   { path:'admin/:id', component:ShowAdminStatusComponent}, 
   { path:'new-admin', component:AdministratorsComponent},  
   { path:'logs', component:LogsComponent},  
- 
-  { path:'profiling', component:ProfilingComponent},
-
+  { path:'roles', component:RoleComponent}, 
+  // /SEACRH AND WEB SERVICES
+  { path:'search', component:SearchComponent},  
   { path:'user-manual', component:UserManualComponent},
   { path:'conversations', component:ConversationsComponent },  
   { path:'account', component:AccountComponent},  
   { path:'backup-adn-restore', component:BackupAndRestoreComponent}, 
   { path:'aww-snap', component:PageNotFoundComponent},  
-
-
-  { path:'', component:AuthenticateComponent},  
 ];
 
 
@@ -254,10 +315,52 @@ const routes: Routes = [
     UpdateQuickLinkComponent,
     ShowQuickLinkComponent,
     FileUploadComponent,
-
+    MapsComponent,
+    LocationComponent,
+    PreloaderComponent,
+    PmcComponent,
+    AhydComponent,
+    FooterComponent,
+    PmocComponent,
+    MPCFDCComponent,
+    TeenCentersComponent,
+    IssuesAndConcernsComponent,
+    OthersComponent,
+    RolesComponent,
+    PpoMandateComponent,
+    VmgComponent,
+    CoreValuesComponent,
+    OrgStructureComponent,
+    PersonnelDirectoryComponent,
+    AwardsComponent,
+    RPFPPComponent,
+    AHYDPComponent,
+    CPDBMPComponent,
+    PDIComponent,
+    RPFPPServicesComponent,
+    ADHYDPServicesComponent,
+    PDIServicesComponent,
+    PDMServicesComponent,
+    DynamicHomeComponent,
+    ProvincialOfficialsComponent,
+    PmocTeamComponent,
+    AhydTeamComponent,
+    MTCTeamComponent,
+    GeneralComponent,
+    MigrationsComponent,
+    DeathsStatComponent,
+    BirthsStatComponent,
+    PMOCStatComponent,
+    SBMTCStatComponent,
+    SBMTCInfoComponent,
+    MPCAndFDCComponent,
+    
 
   ],
   imports: [
+    ChartsModule,
+    TreeNgxModule,
+    NgxPaginationModule,
     ResponsiveModule,
     BrowserModule,
     NgxFileDropModule,
@@ -281,6 +384,7 @@ const routes: Routes = [
       // -----admin----------------
       ActionButtonAdminComponent,
       RoleComponent,
+      LocationComponent,
 
       // -----logs----------------
       ActionButtonsLogsComponent,

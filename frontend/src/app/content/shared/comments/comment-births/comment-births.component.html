@@ -55,12 +55,13 @@
 
             </div>
             <br>
-            <span *ngIf="fields.record.status == 'Pending '" class="badge badge-danger ">{{ fields.record.status }}</span>
-            <span *ngIf="fields.record.status == 'Approved '" class="badge badge-success">{{fields.record.status }}</span>
-            <span *ngIf="fields.record.status == 'Needs Editing '" class="badge badge-warning">{{fields.record.status }}</span>
-            <span *ngIf="fields.record.status == 'Noted and will edit '" class="badge badge-primary">{{ fields.record.status }}</span>
-            <span *ngIf="fields.record.status == 'Disapproved '" class="badge badge-dark">{{ fields.record.status }}</span>
-            <span style="background: palevioletred !important;" *ngIf="fields.record.status == 'Requires Revalidation '" class="badge badge-dark">{{ fields.record.status }}!</span>
+            <span *ngIf="fields.record.status == 'Pending'" class="badge badge-danger ">{{ fields.record.status }}</span>
+            <span *ngIf="fields.record.status == 'Approved'" class="badge badge-success">{{fields.record.status }}</span>
+            <span *ngIf="fields.record.status == 'Needs Editing'" class="badge badge-warning">{{fields.record.status }}</span>
+            <span *ngIf="fields.record.status == 'Noted and will edit'" class="badge badge-primary">{{ fields.record.status }}</span>
+            <span *ngIf="fields.record.status == 'Imported'" style="background: gold !important;" class="badge">{{ fields.record.status }}</span>
+            <span *ngIf="fields.record.status == 'Disapproved'" class="badge badge-dark">{{ fields.record.status }}</span>
+            <span style="background: palevioletred !important;" *ngIf="fields.record.status == 'Requires Revalidation'" class="badge badge-dark">{{ fields.record.status }}!</span>
             <br>
             <p style="text-align: center;" *ngIf="comments.length == 0">No comments yet....</p>
             <br>

@@ -42,13 +42,14 @@ export class TableDeathsComponent implements OnInit {
 		{headerName: 'Operations', field: 'id',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:350 },
 		{headerName: 'Status', field: 'id', cellRenderer: 'status',width:200 },
 		{headerName: 'Sorting Number', field: 'sorting_number', sortable: true, filter: 'agTextColumnFilter',width:300 },
+		{headerName: 'Name of the Deceased', field: 'name', sortable: true, filter: 'agTextColumnFilter' ,width:300},
 		{headerName: 'Municipality', field: 'municipality', sortable: true, filter: 'agTextColumnFilter',width:300 },	
 		{headerName: 'Barangay', field: 'barangay', sortable: true, filter: 'agTextColumnFilter' ,width:300},	
 		{headerName: 'Total Cases', field: 'total_cases', sortable: true, filter: 'agTextColumnFilter',width:300 },			
 		{headerName: 'Case Number', field: 'number_of_cases', sortable: true, filter: 'agTextColumnFilter' ,width:300},	
 		{headerName: 'Household Number', field: 'household_number', sortable: true, filter: 'agTextColumnFilter' ,width:300},	
 		{headerName: 'Month of Deceased', field: 'month', sortable: true, filter: 'agTextColumnFilter' ,width:300},	
-		{headerName: 'Name of the Deceased', field: 'name', sortable: true, filter: 'agTextColumnFilter' ,width:300},	
+			
 		{headerName: 'Sex of Deacesed', field: 'sex', sortable: true, filter: 'agTextColumnFilter',width:300 },	
 		{headerName: 'Age at Death', field: 'age_at_death', sortable: true, filter: 'agTextColumnFilter',width:300 },		
 		{headerName: 'Age Bracket', field: 'age_bracket', sortable: true, filter: 'agTextColumnFilter' },		
@@ -74,7 +75,7 @@ export class TableDeathsComponent implements OnInit {
 		status: RecordStatusDeathsComponent
 	}
 
-    rowData: any;    
+    rowData = []
     
 
 	gridOptions = {
@@ -129,7 +130,7 @@ export class TableDeathsComponent implements OnInit {
 		}		
 		let names = fullnames.join(', ')
 		if(identifiers.length == 0){
-			this.UtilityService.setAlert('Please select data you want to delete','error')
+			// this.UtilityService.setAlert('Please select data you want to delete','error')
 			return
 		}
 		Swal.fire({

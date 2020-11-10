@@ -50,8 +50,29 @@ export class CmsService {
 	}
 
 	save(content){
-		const url = this.baseURL + '/links'				
+		const url = this.baseURL + '/cms/array'				
 		return this.http.post(url, content, {headers:this.headers})
+	}
+
+	getLinks(){
+		const url = this.baseURL + '/cms/links'	
+		return this.http.get(url, {headers:this.headers})		
+	}
+
+
+	saveQuickLinks(data){
+		const url = this.baseURL + '/cms/quick-links'				
+		return this.http.post(url, data, {headers:this.headers} )
+	}
+
+	setChild(data){
+		const url = this.baseURL + '/cms/links/children'
+		return this.http.post(url, data, {headers:this.headers} )
+	}
+	
+
+	getQuickLinks(){
+
 	}
 
 
