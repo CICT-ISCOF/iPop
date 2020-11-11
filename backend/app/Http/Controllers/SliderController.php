@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approval;
 use App\Models\File;
+use App\Models\Role;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        return Slider::all();
+        return Slider::getApproved()->all();
     }
 
     /**
@@ -39,7 +41,11 @@ class SliderController extends Controller
         $photo->public = true;
         $photo->save();
 
-        return Slider::create(['photo_id' => $photo->id]);
+        $slider = Slider::create(['photo_id' => $photo->id]);
+        $slider->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $slider->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        return $slider;
     }
 
     /**
@@ -72,6 +78,7 @@ class SliderController extends Controller
         $old = $slider->photo;
         $slider->photo()->save($photo);
         $old->delete();
+        $slider->setApproved($request->user()->hasRole(Role::ADMIN));
         return $slider;
     }
 

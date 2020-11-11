@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ApprovalController;
+use App\Http\Controllers\ArticleController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
@@ -25,6 +27,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SBMPTCController;
+use App\Http\Controllers\SBMPTCTeamController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StatisticsController;
@@ -32,7 +35,6 @@ use App\Http\Controllers\TomtomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\UserRoleController;
-use App\Models\SBMPTCTeam;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate']);
@@ -133,26 +135,28 @@ Route::middleware(['auth:sanctum', 'restrict.blocked'])->group(function () {
         Route::post('/remove', [UserRoleController::class, 'remove']);
     });
 
-    Route::prefix('/officials')->group(function () {
-        Route::apiResources([
-            'municipalities' => MunicipalOfficialController::class,
-            'barangays' => BarangayOfficialController::class,
-        ]);
-    });
-
     Route::apiResource('permissions', PermissionController::class)->except('update');
     Route::prefix('/permissions')->group(function () {
         Route::apiResource('models', ModelPermissionController::class)->except('update');
         Route::post('/assign', [UserPermissionController::class, 'assign']);
         Route::post('/remove', [UserPermissionController::class, 'remove']);
     });
+});
 
+Route::prefix('/officials')->group(function () {
     Route::apiResources([
-        'sbmptcs' => SBMPTCController::class,
-        'sbmptcs/teams' => SBMPTCTeam::class,
-        'mtcms' => MTCMMembersController::class,
+        'municipalities' => MunicipalOfficialController::class,
+        'barangays' => BarangayOfficialController::class,
     ]);
 });
+
+Route::apiResources([
+    'articles' => ArticleController::class,
+    'sbmptcs' => SBMPTCController::class,
+    'sbmptcs/teams' => SBMPTCTeamController::class,
+    'mtcms' => MTCMMembersController::class,
+    'approvals' => ApprovalController::class,
+]);
 
 // CMS
 Route::apiResource('sliders', SliderController::class);

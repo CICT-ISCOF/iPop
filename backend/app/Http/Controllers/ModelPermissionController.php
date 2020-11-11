@@ -10,7 +10,7 @@ use App\Models\OutMigration;
 use App\Models\RequiredPermission;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Permission;
+use App\Models\Permission;
 
 class ModelPermissionController extends Controller
 {

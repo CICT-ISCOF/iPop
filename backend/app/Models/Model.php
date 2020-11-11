@@ -41,7 +41,7 @@ abstract class Model extends BaseModel
     }
 
     /**
-     * @return \Spatie\Permission\Models\Permission[]
+     * @return \App\Models\Permission[]]
      */
     public static function getRequiredPermissions()
     {

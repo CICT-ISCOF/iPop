@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasApproval;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SBMPTC extends Model
 {
-    use HasFactory;
+    use HasFactory, HasApproval;
 
     protected $fillable = [
         'name',
@@ -15,6 +16,8 @@ class SBMPTC extends Model
         'tc_coordinator_count',
         'population',
         'services',
+        'municipality',
+        'district',
     ];
 
     public static function booted()

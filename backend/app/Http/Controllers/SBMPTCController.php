@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approval;
+use App\Models\Role;
 use App\Models\SBMPTC;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SBMPTCController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,8 @@ class SBMPTCController extends Controller
      */
     public function index()
     {
-        return SBMPTC::with('members')
+        return SBMPTC::getApproved()
+            ->with('members')
             ->with('photos')
             ->paginate(10);
     }
@@ -33,9 +42,15 @@ class SBMPTCController extends Controller
             'tc_coordinator_count' => ['required', 'numeric'],
             'population' => ['required', 'numeric'],
             'services' => ['required', 'string'],
+            'municipality' => ['required', Rule::exists('municipalities', 'name')],
+            'district' => ['required', 'string', 'max:255'],
         ]);
 
-        return SBMPTC::create($data);
+        $sbmptc = SBMPTC::create($data);
+        $sbmptc->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $sbmptc->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        return $sbmptc;
     }
 
     /**
@@ -46,9 +61,10 @@ class SBMPTCController extends Controller
      */
     public function show($id)
     {
-        return SBMPTC::with('members')
+        return SBMPTC::findApproved($id)
+            ->with('members')
             ->with('photos')
-            ->findOrFail($id);
+            ->first() || response('', 404);
     }
 
     /**
@@ -66,9 +82,13 @@ class SBMPTCController extends Controller
             'tc_coordinator_count' => ['nullable', 'numeric'],
             'population' => ['nullable', 'numeric'],
             'services' => ['nullable', 'string'],
+            'municipality' => ['nullable', Rule::exists('municipalities', 'name')],
+            'district' => ['nullable', 'string', 'max:255'],
         ]);
 
         $sbmptc->update($data);
+        $sbmptc->setApproved($request->user()->hasRole(Role::ADMIN));
+
         return $sbmptc;
     }
 

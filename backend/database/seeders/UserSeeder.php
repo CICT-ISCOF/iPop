@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Models\Permission;
+use App\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -17,11 +17,30 @@ class UserSeeder extends Seeder
     public function run()
     {
         $user = User::factory()->create(['username' => 'admin']);
-        $role = Role::findOrCreate('Super Admin');
-        $permission = Permission::create(['name' => 'Assign Permissions']);
-        $role->givePermissionTo($permission);
+
+        $this->bootRoles();
+        $this->bootPermissions();
+
+        $role = Role::findOrCreate(Role::ADMIN);
+        $role->givePermissionTo(Permission::ASSIGN);
         $role->save();
         $user->assignRole($role);
         $user->save();
+    }
+
+    protected function bootRoles()
+    {
+        collect(Role::DEFAULTS)
+            ->each(function ($role) {
+                Role::create(['name' => $role]);
+            });
+    }
+
+    protected function bootPermissions()
+    {
+        collect(Permission::DEFAULTS)
+            ->each(function ($permission) {
+                Permission::create(['name' => $permission]);
+            });
     }
 }

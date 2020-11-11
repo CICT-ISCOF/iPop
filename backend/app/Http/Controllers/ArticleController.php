@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approval;
 use App\Models\Article;
 use App\Models\ArticlePhoto;
 use App\Models\File;
 use App\Models\Log;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use InvalidArgumentException;
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +26,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return Article::all();
+        return Article::getApproved()->all();
     }
 
     /**
@@ -38,6 +45,9 @@ class ArticleController extends Controller
         ]);
 
         $article = Article::create($data);
+
+        $article->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $article->setApproved($request->user()->hasRole(Role::ADMIN));
 
         if (isset($data['files'])) {
             collect($data['files'])
@@ -66,9 +76,13 @@ class ArticleController extends Controller
      */
     public function show($article)
     {
-        return Article::where('slug', $article)
+        $article = Article::where('slug', $article)
             ->orWhere('id', $article)
-            ->first() || response('', 404);
+            ->first();
+        if (!$article) {
+            return response('', 404);
+        }
+        return Article::findApproved($article->id)->first() || response('', 404);
     }
 
     /**
@@ -113,6 +127,8 @@ class ArticleController extends Controller
                     }
                 });
         }
+
+        $article->setApproved($request->user()->hasRole(Role::ADMIN));
 
         return $article;
     }

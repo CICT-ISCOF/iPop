@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approval;
+use App\Models\Role;
 use App\Models\SBMPTCTeam;
 use Illuminate\Http\Request;
 
 class SBMPTCTeamController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,8 @@ class SBMPTCTeamController extends Controller
      */
     public function index()
     {
-        return SBMPTCTeam::paginate(10);
+        return SBMPTCTeam::getApproved()
+            ->paginate(10);
     }
 
     /**
@@ -30,7 +38,11 @@ class SBMPTCTeamController extends Controller
             'position' => ['nullable', 'string', 'max:255'],
         ]);
 
-        return SBMPTCTeam::create($data);
+        $team = SBMPTCTeam::create($data);
+        $team->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $team->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        return $team;
     }
 
     /**
@@ -41,7 +53,7 @@ class SBMPTCTeamController extends Controller
      */
     public function show(SBMPTCTeam $team)
     {
-        return $team;
+        return SBMPTCTeam::findApproved($team->id)->first() || response('', 404);
     }
 
     /**
@@ -59,6 +71,8 @@ class SBMPTCTeamController extends Controller
         ]);
 
         $team->update($data);
+        $team->setApproved($request->user()->hasRole(Role::ADMIN));
+
         return $team;
     }
 

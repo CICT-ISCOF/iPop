@@ -25,6 +25,7 @@ class CommentController extends Controller
     {
         $data = $request->validated();
         $models = [
+            'Approval' => Approval::class,
             'Birth' => Birth::class,
             'Death' => Death::class,
             'CPDB' => CPDB::class,

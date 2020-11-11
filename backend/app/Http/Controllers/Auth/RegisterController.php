@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest as Request;
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 
 class RegisterController extends Controller
 {

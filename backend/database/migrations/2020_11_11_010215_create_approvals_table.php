@@ -1,11 +1,11 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Permission;
 
-class CreateRequiredPermissionsTable extends Migration
+class CreateApprovalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,12 @@ class CreateRequiredPermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('required_permissions', function (Blueprint $table) {
+        Schema::create('approvals', function (Blueprint $table) {
             $table->id();
-            $table->string('permissible');
-            $table->foreignIdFor(new Permission());
+            $table->morphs('approvable');
+            $table->boolean('approved')->default(false);
+            $table->foreignIdFor(new User(), 'requester_id');
+            $table->foreignIdFor(new User(), 'approver_id')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateRequiredPermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('required_permissions');
+        Schema::dropIfExists('approvals');
     }
 }

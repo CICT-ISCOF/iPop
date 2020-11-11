@@ -27,12 +27,13 @@ class CommentRequest extends FormRequest
         return [
             'body' => ['required', 'string'],
             'type' => ['required', 'string', Rule::in([
+                'Approval',
                 'Birth',
                 'Death',
                 'CPDB',
                 'InMigration',
                 'OutMigration',
-                'Marriage'
+                'Marriage',
             ])],
             'commentable_id' => ['required', 'numeric'],
         ];
@@ -45,7 +46,7 @@ class CommentRequest extends FormRequest
             'body.string' => 'Body must be text.',
             'type.required' => 'Specify the record\'s type.',
             'type.string' => 'Specify the record\'s type.',
-            'type.in' => 'Invalid type. Valid types are Birth, Death, CPDB, InMigration, OutMigration and Marriage.',
+            'type.in' => 'Invalid type. Valid types are Approval, Birth, Death, CPDB, InMigration, OutMigration and Marriage.',
             'commentable_id.required' => 'The (Birth, Death, CPDB, InMigration, OutMigration or Marriage)\'s ID must be provided.',
             'commentable_id.numberic' => 'ID provided must be a numeric value.'
         ];

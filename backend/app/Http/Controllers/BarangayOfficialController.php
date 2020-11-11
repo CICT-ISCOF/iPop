@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approval;
 use App\Models\BarangayOfficial;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class BarangayOfficialController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,8 @@ class BarangayOfficialController extends Controller
      */
     public function index()
     {
-        return BarangayOfficial::sortBy('barangay')
+        return BarangayOfficial::getApproved()
+            ->sortBy('barangay')
             ->paginate(15);
     }
 
@@ -33,7 +41,10 @@ class BarangayOfficialController extends Controller
             'barangay' => ['required', 'string', Rule::exists('barangays', 'name')]
         ]);
 
-        return BarangayOfficial::create($data);
+        $barangayOfficial = BarangayOfficial::create($data);
+        $barangayOfficial->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $barangayOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
+        return $barangayOfficial;
     }
 
     /**
@@ -44,7 +55,7 @@ class BarangayOfficialController extends Controller
      */
     public function show(BarangayOfficial $barangayOfficial)
     {
-        return $barangayOfficial;
+        return BarangayOfficial::findApproved($barangayOfficial->id) || response('', 404);
     }
 
     /**
@@ -63,6 +74,7 @@ class BarangayOfficialController extends Controller
         ]);
 
         $barangayOfficial->update($data);
+        $barangayOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
 
         return $barangayOfficial;
     }
