@@ -8,11 +8,12 @@
 
 .container {
     display: flex;
+    flex-direction: column;
 }
 
 .img-container {
     height: 100%;
-    width: 30%;
+    width: 100%;
     position: relative;
     padding: 20px;
 }
@@ -34,7 +35,7 @@
 
 .inputs-container {
     display: flexbox;
-    width: 70%;
+    width: 100%;
     padding: 20px;
 }
 

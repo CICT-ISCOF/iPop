@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CmsService } from '../cms.service'
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-new-quick-links',
@@ -36,6 +37,23 @@ export class NewQuickLinksComponent implements OnInit {
 		this.CmsService.saveQuickLinks(this.data).subscribe(data => {
 			console.log(data)
 		})
+	}
+
+	
+	customOptions: OwlOptions = {	
+		center: true,
+		items:2,
+		loop:true,
+		margin:0,
+	   
+		navSpeed: 700,
+		autoplay:true,	
+		autoplayTimeout:2000,
+		responsive:{
+			600:{
+				items:1.3
+			}
+		}
 	}
 
 }

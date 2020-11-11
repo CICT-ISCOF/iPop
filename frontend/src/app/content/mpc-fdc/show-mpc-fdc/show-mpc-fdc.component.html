@@ -1,0 +1,41 @@
+<div class="mpc-component">
+    <div (click)="hideShow()" class="span" style="cursor: pointer;">
+        <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+        </svg>
+    </div>
+    <br>
+    <div class="front">
+        <h3>
+            BAROTAC NUEVO MPC-FDC
+        </h3>
+        <hr>
+        <br>
+        <app-dynamic-mapping></app-dynamic-mapping>
+        <br>
+        <h5>Images</h5>
+        <hr>
+        <owl-carousel-o [options]="customOptions">
+            <ng-template carouselSlide *ngFor="let image of [1,2]">
+                <img alt="" title="slide.title " src="../../../assets/home/3.jpg">
+            </ng-template>
+        </owl-carousel-o>
+        <br>
+        <h5>SERVICE OFFERED</h5>
+        <hr>
+        <br>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor a recusandae cumque voluptate, dolore sapiente similique quia numquam unde, pariatur inventore maxime saepe voluptas eaque? Quibusdam pariatur facere officiis enim.</p>
+    </div>
+    <div class="side">
+        <h3>
+            Personnel In-charge
+        </h3>
+        <hr>
+        <div class="picture">
+            <img src="../../../../assets/home/7.jpg" alt="">
+        </div>
+        <br>
+        <div class="person-name">JAMEL EID YASSIN</div>
+        <p>Provincial Teen Center Coordinator</p>
+    </div>
+</div>

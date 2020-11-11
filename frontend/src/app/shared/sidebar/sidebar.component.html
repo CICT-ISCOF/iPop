@@ -66,6 +66,7 @@
             </button>
         </div>
 
+        <!-- STATISTICS  -->
         <div class="demographics" *ngIf="dropDown.demographics">
             <!-- RECORDS  -->
             <div (click)="active('Profiling')" class=" sidebar-btn" [class.active]="icons.Profiling == true " [routerLink]="['/profiling']" routerLinkActive="router-link-active">
@@ -85,6 +86,79 @@
                     </span>
                 </button>
             </div>
+            <div (click)="showDropDown('Statistics')" class=" sidebar-btn">
+                <button [class.button]="!true" [class.clickable]="!false">                  
+                    <div class="icon ">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pie-chart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path fill-rule="evenodd" d="M7.5 7.793V1h1v6.5H15v1H8.207l-4.853 4.854-.708-.708L7.5 7.793z"/>
+                        </svg>
+                </div>
+                    Statistics                 
+                    <span *ngIf="!dropDown.Statistics" style="margin-left: auto;">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3.204 5L8 10.481 12.796 5H3.204zm-.753.659l4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
+                        </svg>
+                        
+                    </span>   
+                    <span *ngIf="dropDown.Statistics" style="margin-left: auto;">                   
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3.204 11L8 5.519 12.796 11H3.204zm-.753-.659l4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
+                        </svg>                        
+                    </span>   
+                </button>
+            </div>
+            <div class="records" *ngIf="dropDown.Statistics">
+                <!-- DEATHS  -->
+                <div (click)="active('Deaths Statistics')" class=" sidebar-btn" [class.active]="icons.DeathStat == true " [routerLink]="['/statistics/deaths']" routerLinkActive="router-link-active">
+                    <button [class.button]="icons.DeathStat == true" [class.clickable]="icons.DeathStat == false ">
+                        <div class="icon ">
+                            <i class="fas fa-skull-crossbones"></i>
+                    </div>
+                        Deaths
+                        <span *ngIf="icons.DeathStat == true" class="triangle">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-triangle-fill" fill="#EEF1F5" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M7.022 1.566a1.13 1.13 0 0 1 1.96 0l6.857 11.667c.457.778-.092 1.767-.98 1.767H1.144c-.889 0-1.437-.99-.98-1.767L7.022 1.566z"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <!-- BIRTHS  -->
+                <div (click)="active('Births  Statistics')" class=" sidebar-btn" [class.active]="icons.BirthStat == true " [routerLink]="['/statistics/births']" routerLinkActive="router-link-active">
+                    <button [class.button]="icons.BirthStat == true" [class.clickable]="icons.BirthStat == false ">
+                        <div class="icon ">
+                            <i class="fas fa-baby"></i>
+                    </div>
+                        Births
+                        <span *ngIf="icons.BirthStat == true" class="triangle">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-triangle-fill" fill="#EEF1F5" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M7.022 1.566a1.13 1.13 0 0 1 1.96 0l6.857 11.667c.457.778-.092 1.767-.98 1.767H1.144c-.889 0-1.437-.99-.98-1.767L7.022 1.566z"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <!-- MIGRATION  -->
+                <div (click)="active('Migration  Statistics')" class=" sidebar-btn" [class.active]="icons.MigrationStat == true " [routerLink]="['/statistics/migration']" routerLinkActive="router-link-active">
+                    <button [class.button]="icons.MigrationStat == true" [class.clickable]="icons.MigrationStat == false ">
+                        <div class="icon ">
+                            <i  class="fas fa-plane-arrival"></i>
+                    </div>
+                        In-Migration
+                        <span *ngIf="icons.MigrationStat == true" class="triangle">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-triangle-fill" fill="#EEF1F5" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M7.022 1.566a1.13 1.13 0 0 1 1.96 0l6.857 11.667c.457.778-.092 1.767-.98 1.767H1.144c-.889 0-1.437-.99-.98-1.767L7.022 1.566z"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+
+            </div>
+
+
+
+
+
+
             <div (click)="showDropDown('addData')" class=" sidebar-btn">
                 <button [class.button]="!true" [class.clickable]="!false">                  
                     <div class="icon ">
@@ -353,7 +427,7 @@
          </button>
         </div>
         <!-- ADMIN ACCOUNTS  -->
-        <div *ngIf="account.user.role == 'Super Admin'" (click)="active('AdminAccounts')" class=" sidebar-btn" [class.active]="icons.AdminAccounts == true " [routerLink]="['/admin-accounts']" routerLinkActive="router-link-active">
+        <div *ngIf="account.user.roles[0].name == 'Super Admin'" (click)="active('AdminAccounts')" class=" sidebar-btn" [class.active]="icons.AdminAccounts == true " [routerLink]="['/admin-accounts']" routerLinkActive="router-link-active">
             <button [class.button]="icons.AdminAccounts == true" [class.clickable]="icons.AdminAccounts == false ">
              <div class="icon ">
                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-lines-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -369,7 +443,7 @@
          </button>
         </div>
         <!-- NEW ADMINISTRATOR  -->
-        <div *ngIf="account.user.role == 'Super Admin'" (click)="active('Administrators')" class=" sidebar-btn" [class.active]="icons.Administrators == true " [routerLink]="['/new-admin']" routerLinkActive="router-link-active">
+        <div *ngIf="account.user.roles[0].name == 'Super Admin'" (click)="active('Administrators')" class=" sidebar-btn" [class.active]="icons.Administrators == true " [routerLink]="['/new-admin']" routerLinkActive="router-link-active">
             <button [class.button]="icons.Administrators == true" [class.clickable]="icons.Administrators == false ">
              <div class="icon ">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-shield-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -386,7 +460,7 @@
          </button>
         </div>
         <!--Roles  -->
-        <div *ngIf="account.user.role == 'Super Admin'" (click)="active('Roles')" class=" sidebar-btn" [class.active]="icons.Roles == true " [routerLink]="['/new-admin']" routerLinkActive="router-link-active">
+        <div *ngIf="account.user.roles[0].name == 'Super Admin'" (click)="active('Roles')" class=" sidebar-btn" [class.active]="icons.Roles == true " [routerLink]="['/new-admin']" routerLinkActive="router-link-active">
             <button [class.button]="icons.Roles == true" [class.clickable]="icons.Roles == false ">
              <div class="icon ">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-lock2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -403,7 +477,7 @@
          </button>
         </div>
         <!-- LOGS  -->
-        <div *ngIf="account.user.role == 'Super Admin'" (click)="active('Logs')" class=" sidebar-btn" [class.active]="icons.Logs == true" [routerLink]="['/logs']" routerLinkActive="router-link-active">
+        <div *ngIf="account.user.roles[0].name == 'Super Admin'" (click)="active('Logs')" class=" sidebar-btn" [class.active]="icons.Logs == true" [routerLink]="['/logs']" routerLinkActive="router-link-active">
             <button [class.button]="icons.Logs == true" [class.clickable]="icons.Logs == false ">
              <div class="icon ">
                  <svg width="23px" height="23px" viewBox="0 0 16 16" class="bi bi-watch" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

@@ -1,1 +1,83 @@
-<p>deaths-stat works!</p>
+<div class="birth-stat-component">
+    <div class="front">
+        <h3 class="tl-center">PROVINCE OF ILOILO</h3>
+        <h3 class="tl-center">(DEATHS)</h3>
+        <br>
+        <div class="filters">
+            <div class="row">
+                <div class="col-md-4">
+                    <select type="text" class="form-control">
+                        <option selected disabled>Select Municipality..</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select type="text" class="form-control">
+                        <option selected disabled>Select Barangay..</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select type="text" class="form-control">
+                        <option selected disabled>Select Year..</option>
+                    </select>
+                </div>
+            </div>
+        </div><br>
+        <app-dynamic-mapping></app-dynamic-mapping>
+        <br>
+        <div class="flex-container">
+            <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" id="defaultInline1">
+                <label class="custom-control-label" for="defaultInline1">Male</label>
+            </div>
+
+            <!-- Default inline 2-->
+            <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" id="defaultInline2">
+                <label class="custom-control-label" for="defaultInline2">Female</label>
+            </div>
+
+            <!-- Default inline 3-->
+            <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" id="defaultInline3">
+                <label class="custom-control-label" for="defaultInline3">Total</label>
+            </div>
+        </div>
+        <br><br>
+        <div class="chart">
+
+        </div>
+        <div class="tl-center">
+            <br><br>
+            <p>TOTAL POPULATION</p>
+            <h3>5</h3>
+            <br>
+            <p>TOTAL DEATHS</p>
+            <h3>5</h3>
+            <br>
+            <p>CRUDE DEATH RATE</p>
+            <h3>5</h3>
+
+
+            <br><br>
+            <div class="chart">
+
+            </div>
+            <p>CRUDE DEATH RATES</p>
+            <br><br>
+        </div>
+    </div>
+    <div class="side">
+        <h3>Provincial Officials</h3>
+        <div *ngFor="let item of [1,2]">
+            <h5>JAMEL EID YASSIN</h5>
+            <p>Governor</p>
+        </div>
+        <h3>SB MEMBERS</h3>
+        <div *ngFor="let item of [1,2,1,2,1,2,1,2]">
+            <h5>HON. JAMEL EID YASSIN</h5>
+        </div>
+        <br><br><br>
+        <h3>TECHNICAL NOTES</h3>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae, repudiandae perferendis sit aperiam vel quibusdam laudantium in! Dolore, animi quasi adipisci nisi perferendis odio dolorem tenetur, officia repudiandae ullam natus.</p>
+    </div>
+</div>

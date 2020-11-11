@@ -1,0 +1,22 @@
+<div *ngIf="!show">
+    <h5>Featured Articles</h5>
+    <hr>
+
+    <div class="article-container">
+        <div (click)="showArticle()" class="article" *ngFor="let item of [1,2,3,4,4,4,5]">
+            <h2>Covid-19 Provincial Advisories, Executive Orders and Guidelines</h2>
+            <p>March 30, 2020 - 11:26am -- <span>Duds Daquilanea</span></p>
+            <div class="body">
+                <div class="image">
+                    <img src="../../../assets/home/6.jpg" alt="">
+                </div>
+                <div class="text">
+                    All Provincial Advisories, Executive Orders and Guidelines on Quarantine Procedures, Disease Prevention and Control Measures Againts the Corona Virus Disease 2019 (Covid-19) are listed here. Please click on the document title to open a copy of the document.
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+
+<app-show-article *ngIf="show"></app-show-article>

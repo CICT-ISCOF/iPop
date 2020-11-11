@@ -1,0 +1,53 @@
+.mpc-fdc-component {
+    display: flex;
+    width: 100%;
+    padding: 40px;
+}
+
+.front {
+    width: 60%;
+}
+
+.side {
+    width: 30%;
+    padding: 1rem;
+    margin-left: 50px;
+}
+
+h3,
+h4 {
+    font-weight: 800;
+    text-align: center;
+}
+
+.district-container {
+    width: 100%;
+}
+
+.district {
+    width: 205px;
+    height: 125px;
+    float: left;
+    margin: 1rem;
+    cursor: pointer;
+    padding: 10px 20px;
+    text-align: center !important;
+    overflow: hidden;
+}
+
+.district:hover {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.number-of-teen-centers,
+.person-name {
+    font-weight: 600;
+}
+
+.list-group-item {
+    display: flex;
+    .municipality-name {
+        width: 70%;
+    }
+    cursor: pointer;
+}

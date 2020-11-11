@@ -154,7 +154,12 @@ import { BirthsStatComponent } from './content/population-data/births-stat/birth
 import { PMOCStatComponent } from './content/population-data/pmoc-stat/pmoc-stat.component';
 import { SBMTCStatComponent } from './content/population-data/sbmtc-stat/sbmtc-stat.component';
 import { SBMTCInfoComponent } from './content/population-data/sbmtc-info/sbmtc-info.component';
-import { MPCAndFDCComponent } from './content/population-data/mpc-and-fdc/mpc-and-fdc.component'
+import { MPCAndFDCComponent } from './content/population-data/mpc-and-fdc/mpc-and-fdc.component';
+import { DynamicMappingComponent } from './content/dynamic-mapping/dynamic-mapping.component';
+import { ShowMpcFdcComponent } from './content/mpc-fdc/show-mpc-fdc/show-mpc-fdc.component';
+import { ShowTeenCentersComponent } from './content/teen-centers/show-teen-centers/show-teen-centers.component';
+import { FeaturedArticlesComponent } from './content/featured-articles/featured-articles.component';
+import { ShowArticleComponent } from './content/featured-articles/show-article/show-article.component'
 
 
 const routes: Routes = [
@@ -169,7 +174,6 @@ const routes: Routes = [
   // START-UP
   { path:'', component:AuthenticateComponent},  
   { path:'home', component:DynamicHomeComponent},  
-  { path:'statistics', component:StatisticsComponent},  
   // DEMOGRAPHIC DATA
   { path:'profiling', component:ProfilingComponent},   
   { path:'cpdb', component:CpdbComponent},  
@@ -177,7 +181,12 @@ const routes: Routes = [
   { path:'births', component:BirthsComponent},  
   { path:'in-mig', component:InMigComponent},  
   { path:'out-mig', component:OutMigComponent},  
-  { path:'marriages', component:MarriagesComponent},  
+  { path:'marriages', component:MarriagesComponent}, 
+  // STATISITCS  
+  { path:'statistics', component:StatisticsComponent},  
+  { path:'statistics/births', component:BirthsStatComponent},
+  { path:'statistics/deaths', component:DeathsStatComponent},
+  { path:'statistics/migration', component:MigrationsComponent},
   // RPFP
   { path:'PMOC', component:PmcComponent},   
   { path:'MPC-FDC', component:MPCFDCComponent}, 
@@ -354,6 +363,11 @@ const routes: Routes = [
     SBMTCStatComponent,
     SBMTCInfoComponent,
     MPCAndFDCComponent,
+    DynamicMappingComponent,
+    ShowMpcFdcComponent,
+    ShowTeenCentersComponent,
+    FeaturedArticlesComponent,
+    ShowArticleComponent,
     
 
   ],

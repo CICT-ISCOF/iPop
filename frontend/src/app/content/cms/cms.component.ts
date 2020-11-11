@@ -55,9 +55,9 @@ export class CmsComponent implements OnInit {
 	}
 
 	tabs = {
-		newContent:true,
+		newContent:false,
 		contentList:false,
-		newQuickLink:false,
+		newQuickLink:true,
 		quickLinks:false
 	}
 	
