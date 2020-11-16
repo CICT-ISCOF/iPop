@@ -1,3 +1,4 @@
+import { TeenCentersService } from './teen-centers.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeenCentersComponent implements OnInit {
 
-  constructor() { }
+	constructor(
+		private TeenCentersService : TeenCentersService
+	) { 
+		this.listener = this.TeenCentersService.triggerListener().subscribe(value => {
+			this.show = value
+		})
+	}
 
-  ngOnInit(): void {
-  }
+	listener
+
+	ngOnInit(): void {
+
+	}
+	
+	show = false
+
+	showMPC(){
+		this.show = true
+	}
 
 }

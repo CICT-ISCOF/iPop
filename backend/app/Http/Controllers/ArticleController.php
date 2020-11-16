@@ -65,6 +65,7 @@ class ArticleController extends Controller
                     }
                 });
         }
+        $article->load('photos');
         return $article;
     }
 

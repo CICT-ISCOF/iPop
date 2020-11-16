@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MpcService } from './mpc.service'
 
 @Component({
   selector: 'app-mpc-fdc',
@@ -7,9 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MPCFDCComponent implements OnInit {
 
-  constructor() { }
+	constructor(
+		private MpcService : MpcService
+	) { 
+		this.listener = this.MpcService.triggerListener().subscribe(value => {
+			this.show = value
+		})
+	}
 
-  ngOnInit(): void {
-  }
+	listener
+
+		ngOnInit(): void {
+
+	}
+	
+	show = false
+
+	showMPC(){
+		this.show = true
+	}
+
+	
 
 }

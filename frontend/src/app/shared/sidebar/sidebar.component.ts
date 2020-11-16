@@ -55,7 +55,8 @@ export class SidebarComponent implements OnInit {
 		demographics:false,
 		addData:false,
 		RPFP:false,
-		AHYD:false
+		AHYD:false,
+		Statistics:false
 	}
 
 	hide = false
@@ -119,6 +120,10 @@ export class SidebarComponent implements OnInit {
 		InMig:false,
 		OutMig:false,
 		Marriages:false,
+
+		BirthStat:false,
+		DeathStat:false,
+		MigrationStat:false,
 
 		PMOC:false,
 		MPCFDC:false,

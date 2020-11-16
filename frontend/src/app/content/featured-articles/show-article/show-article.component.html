@@ -1,0 +1,18 @@
+<div (click)="back()" class="span" style="cursor: pointer;position: relative;z-index: 999;">
+    <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+    </svg>
+</div>
+<br><br>
+<h2>Covid-19 Provincial Advisories, Executive Orders and Guidelines</h2>
+<p>March 30, 2020 - 11:26am -- <span>Duds Daquilanea</span></p>
+
+<owl-carousel-o [options]="customOptions">
+    <ng-template carouselSlide *ngFor="let image of [1,2]">
+        <img alt="" title="slide.title " src="../../../assets/home/3.jpg">
+    </ng-template>
+</owl-carousel-o>
+
+<div class="text">
+    All Provincial Advisories, Executive Orders and Guidelines on Quarantine Procedures, Disease Prevention and Control Measures Againts the Corona Virus Disease 2019 (Covid-19) are listed here. Please click on the document title to open a copy of the document.
+</div>
