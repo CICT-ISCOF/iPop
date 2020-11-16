@@ -10,8 +10,10 @@ class Role extends Model
     use HasFactory;
 
     const ADMIN = 'Super-Admin';
+    const VIEWER = 'Viewer';
 
     const DEFAULTS = [
-        self::ADMIN,
+        static::ADMIN,
+        static::VIEWER,
     ];
 }
