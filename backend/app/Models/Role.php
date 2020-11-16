@@ -13,7 +13,7 @@ class Role extends Model
     const VIEWER = 'Viewer';
 
     const DEFAULTS = [
-        static::ADMIN,
-        static::VIEWER,
+        self::ADMIN,
+        self::VIEWER,
     ];
 }
