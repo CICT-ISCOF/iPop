@@ -1,3 +1,4 @@
+import { UserService } from './../../../../user.service';
 import { ProgramAreasService } from './../program-areas.service';
 import { UtilityService } from './../../../../utility.service';
 
@@ -14,12 +15,15 @@ export class RPFPPComponent implements OnInit {
 
 	constructor(
 		private ProgramAreasService : ProgramAreasService,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private UserService : UserService
 	) { }
 
 	ngOnInit(): void {
 
 	}
+
+	isAdmin = this.UserService.isUser()
 
 	rpfp = {
 		description:'The Responsible Parenthood and Family Planning Program is one of the key component of the Philippine Population Management Program. The province objective is to help couples/parents exercise responsible parenting to develop the total well-being of children for them to become responsible and capable in contributing to the betterment of society, through the establishment of the Multi-Purpose Counseling and Family Development Centers and Information, Education & Communication (IEC) Advocacies.',
@@ -80,7 +84,7 @@ export class RPFPPComponent implements OnInit {
 
 	acitveProgram = {}
 
-	toggleAward(program_id){		
+	toggleProgram(program_id){		
 		this.acitveProgram[program_id] == true ?  this.acitveProgram[program_id] = false : this.acitveProgram[program_id] = true	
 		console.log(this.acitveProgram[program_id])
 		this.clearSlider()
@@ -105,8 +109,7 @@ export class RPFPPComponent implements OnInit {
 				reader.onload = (event) => {	
 					let img = (<FileReader>event.target).result	
 					if(type == 'video'){		
-						this.files.videos.push(img) 
-						alert('ari')												
+						this.files.videos.push(img) 																
 					}	
 					else{	
 						this.files.images.push(img) 	
@@ -125,6 +128,13 @@ export class RPFPPComponent implements OnInit {
 	wantsToAddanAwardFunction(value : boolean){
 		this.clearSlider()
 		this.wantsToAddanAward = value
+	}
+
+	wantsToEditDescription = false
+
+	wantsToEditDescriptionFunction(){
+		this.clearSlider()
+		this.wantsToEditDescription = true
 	}
 
 	customOptions: OwlOptions = {	
