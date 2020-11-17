@@ -16,6 +16,13 @@ class PMOCTeam extends Model
         'priority',
     ];
 
+    public static function booted()
+    {
+        static::deleted(function ($pmocTeam) {
+            $pmocTeam->photo->delete();
+        });
+    }
+
     public function photo()
     {
         return $this->belongsTo(File::class, 'photo_id');
