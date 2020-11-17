@@ -35,6 +35,7 @@ use App\Http\Controllers\ProvincialOfficialController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SBMPTCController;
+use App\Http\Controllers\SBMPTCFocalPersonController;
 use App\Http\Controllers\SBMPTCTeamController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SliderController;
@@ -163,6 +164,7 @@ Route::apiResources([
     'articles' => ArticleController::class,
     'sbmptcs' => SBMPTCController::class,
     'sbmptcs/teams' => SBMPTCTeamController::class,
+    'sbmptcs/focal-persons' => SBMPTCFocalPersonController::class,
     'mtcms' => MTCMMembersController::class,
     'approvals' => ApprovalController::class,
     'birth-statistics' => BirthStatisticController::class,
