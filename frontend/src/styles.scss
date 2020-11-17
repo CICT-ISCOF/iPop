@@ -114,6 +114,10 @@ html[data-theme="dark"] {
     opacity: .3;
 }
 
+.list-group-item {
+    background: var(--bg);
+}
+
 .filedrop,
 .ngx-file-drop__drop-zone {
     height: 100px;

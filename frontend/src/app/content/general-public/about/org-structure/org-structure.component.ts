@@ -1,3 +1,5 @@
+import { UserService } from './../../../../user.service';
+import { AboutService } from './../about.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,54 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrgStructureComponent implements OnInit {
 
-  constructor() { }
+	constructor(
+		private AboutService : AboutService,
+		private UserService : UserService
+	) { }
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {	
+	}
 
+	isAdmin = this.UserService.isUser()
+
+	organizationalStructure : any = '../../../../../assets/org.jpg'
+
+
+	triggerInputTypeFile(){
+		document.getElementById('input-type-file').click()
+	}
+
+	readUrl(files: FileList,event,index,type){	
+		if (event.target.files && event.target.files[0]) {				
+			const reader = new FileReader()	
+			reader.readAsDataURL(event.target.files[0]);   		
+			reader.onload = (event) => {	
+				let img = (<FileReader>event.target).result		
+				const base64String = img.toString().split(',')
+				this.organizationalStructure = base64String
+				this.storeOrganizationalStructure(base64String)
+			}	
+		}	
+		
+	}
+
+
+	storeOrganizationalStructure(file){
+		console.log('store',file)
+		// this.AboutService.storeOrganizationalStructure(file).subscribe(data => {
+			
+		// })		
+	}
+
+	getOrganizationalStructure(){
+		// this.AboutService.getOrganizationalStructure().subscribe(data => {
+			
+		// })
+	}
+
+	updateOrganizationalStructure(file){
+		// this.AboutService.updateOrganizationalStructure(file).subscribe(data => {
+
+		// })
+	}
 }

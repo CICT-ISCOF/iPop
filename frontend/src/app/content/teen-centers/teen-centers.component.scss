@@ -14,10 +14,16 @@
     margin-left: 50px;
 }
 
+h5 {
+    font-size: .9rem;
+    font-weight: 300;
+}
+
 h3,
-h4 {
-    font-weight: 800;
-    text-align: center;
+h4,
+.person-name {
+    font-weight: 500;
+    font-size: 1.1rem;
 }
 
 .district-container {

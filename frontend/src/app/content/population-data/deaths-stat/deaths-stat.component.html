@@ -23,7 +23,7 @@
             </div>
         </div><br>
         <app-dynamic-mapping></app-dynamic-mapping>
-        <br>
+        <br><br><br>
         <div class="flex-container">
             <div class="custom-control custom-checkbox custom-control-inline">
                 <input type="checkbox" class="custom-control-input" id="defaultInline1">
@@ -68,16 +68,15 @@
     </div>
     <div class="side">
         <h3>Provincial Officials</h3>
-        <div *ngFor="let item of [1,2]">
-            <h5>JAMEL EID YASSIN</h5>
-            <p>Governor</p>
-        </div>
-        <h3>SB MEMBERS</h3>
-        <div *ngFor="let item of [1,2,1,2,1,2,1,2]">
-            <h5>HON. JAMEL EID YASSIN</h5>
-        </div>
+        <hr>
+        <app-provincial-officials></app-provincial-officials>
+        <br> <br>
+        <app-sb-members></app-sb-members>
         <br><br><br>
         <h3>TECHNICAL NOTES</h3>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae, repudiandae perferendis sit aperiam vel quibusdam laudantium in! Dolore, animi quasi adipisci nisi perferendis odio dolorem tenetur, officia repudiandae ullam natus.</p>
+        <hr>
+        <p><span class="fw-bold">Mortality</span> - refers to death within a population</p>
+
+        <p><span class="fw-bold">Crude Death Rate</span> - the number of deaths per 1,000 population in a given year</p>
     </div>
 </div>

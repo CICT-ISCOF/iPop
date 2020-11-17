@@ -12,19 +12,17 @@ export class FeaturedArticlesService {
   	constructor(
 		private http : HttpClient,
 		private BaseAPIService : BaseAPIService
-	) { }
+	) { 
 
-	user = JSON.parse(localStorage.getItem('user-data'))
-	token = this.user.token
+	}
 
-	baseURL = 	this.BaseAPIService.baseURL + '/users'
-	headers = 	new HttpHeaders({
-					'Accept':'application/json',
-					'Authorization' : 'Bearer '+ this.token,
-					'Content-Type':[]
-				})	
+	
 
-  	private show = new Subject<any>();
+	baseURL = 	this.BaseAPIService.baseURL 
+	
+
+	  private show = new Subject<any>();
+	  private article = new Subject<any>();
 
   	setToHidden(){
 		this.show.next(false)		
@@ -33,4 +31,21 @@ export class FeaturedArticlesService {
 	triggerListener(){
 		return this.show.asObservable();
 	}
+
+	passArticle(article){
+		this.article.next(article)		
+		
+	}
+
+	getArticle(){
+		
+		return this.article.asObservable();
+		
+	}
+
+	getFeautredArticles(){
+		const url = this.baseURL + '/articles'
+		return this.http.get(url)
+	}
 }
+ 

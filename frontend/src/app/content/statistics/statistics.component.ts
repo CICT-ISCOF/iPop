@@ -29,8 +29,8 @@ import { SingleDataSet, Label, Color } from 'ng2-charts';
 	]
 })
 export class StatisticsComponent implements OnInit {
-	@ViewChild('marriedChart') marriedChart: ElementRef;
-	context:CanvasRenderingContext2D;
+	// @ViewChild('marriedChart') marriedChart: ElementRef;
+	// context:CanvasRenderingContext2D;
 
 
 	constructor(	
@@ -69,29 +69,29 @@ export class StatisticsComponent implements OnInit {
 		this.getMonths()		
 	}
 
-	createMarriedChart(){		
-		const ctx = (<HTMLCanvasElement>this.marriedChart.nativeElement).getContext('2d');
-		const gradientStroke = ctx.createLinearGradient(500, 0, 100, 0)
-		const purple_orange_gradient = ctx.createLinearGradient(0, 0, 0, 600)
-		purple_orange_gradient.addColorStop(1, 'rgba(189, 29, 79, 0.1)')
-		purple_orange_gradient.addColorStop(0, 'rgba(189, 29, 79, 1)')
+	// createMarriedChart(){		
+	// 	const ctx = (<HTMLCanvasElement>this.marriedChart.nativeElement).getContext('2d');
+	// 	const gradientStroke = ctx.createLinearGradient(500, 0, 100, 0)
+	// 	const purple_orange_gradient = ctx.createLinearGradient(0, 0, 0, 600)
+	// 	purple_orange_gradient.addColorStop(1, 'rgba(189, 29, 79, 0.1)')
+	// 	purple_orange_gradient.addColorStop(0, 'rgba(189, 29, 79, 1)')
 
-		const bar_chart = new Chart(ctx, {
-			type: "line",
-			data: {labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-				datasets: [{
-					label: "Marriages",
-					data:  Object.values(this.charts.married),
-					backgroundColor: purple_orange_gradient,
-					hoverBackgroundColor: purple_orange_gradient,
-					hoverBorderWidth: 2,
-					hoverBorderColor: "purple",
-					borderWidth: 5,
-					borderColor: "#F70099"
-				}]
-			},
-		})
-	}
+	// 	const bar_chart = new Chart(ctx, {
+	// 		type: "line",
+	// 		data: {labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+	// 			datasets: [{
+	// 				label: "Marriages",
+	// 				data:  Object.values(this.charts.married),
+	// 				backgroundColor: purple_orange_gradient,
+	// 				hoverBackgroundColor: purple_orange_gradient,
+	// 				hoverBorderWidth: 2,
+	// 				hoverBorderColor: "purple",
+	// 				borderWidth: 5,
+	// 				borderColor: "#F70099"
+	// 			}]
+	// 		},
+	// 	})
+	// }
 
 
 	municipalities = []
@@ -224,7 +224,7 @@ export class StatisticsComponent implements OnInit {
 				this.charts.married.push(data.marriage[key])				
 			}		
 			this.charts.married.pop()	
-			this.createMarriedChart()					
+			// this.createMarriedChart()		`			
 			for(let key in data.birth){
 				this.charts.birthAndDeath.push([ key , data.birth[key]  ,-data.death[key]    ])
 				

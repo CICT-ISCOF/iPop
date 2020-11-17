@@ -5,21 +5,21 @@
         <div class="img-container">
             <br>
             <owl-carousel-o [options]="customOptions">
-                <ng-template carouselSlide *ngFor="let image of [1,2]">
-                    <img alt="" title="slide.title " src="../../../assets/home/3.jpg">
+                <ng-template carouselSlide *ngFor="let image of imagesToRender">
+                    <img alt="" title="slide.title " [src]="image">
                 </ng-template>
             </owl-carousel-o>
             <br>
             <br>
             <div (click)="triggerInput()" class="icon-container">
                 <i style="font-size: 25px;" class="fas fa-camera"></i>
-                <input [(ngModel)]="data.file" (change)="readURL($event.target.files,$event)" accept="image/*" type="file" class="hidden" id="quick-link-picture" style="display: none;">
+                <input (change)="readURL($event.target.files,$event)" accept="image/*" type="file" class="hidden" id="quick-link-picture" multiple style="display: none;">
             </div>
         </div>
         <div class="inputs-container">
-            <textarea [(ngModel)]="data.body" placeholder="Title..." autosize class="title"></textarea>
+            <textarea [(ngModel)]="article.title" placeholder="Title..." autosize class="title"></textarea>
 
-            <textarea [(ngModel)]="data.title" placeholder="Body..." autosize class="body"></textarea>
+            <textarea [(ngModel)]="article.body" placeholder="Body..." autosize class="body"></textarea>
         </div>
     </div>
 
