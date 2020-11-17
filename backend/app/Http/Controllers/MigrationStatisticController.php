@@ -56,7 +56,7 @@ class MigrationStatisticController extends Controller
      */
     public function show(MigrationStatistic $migrationStatistic)
     {
-        return MigrationStatistic::findApproved($migrationStatistic->id) || response('', 404);
+        return MigrationStatistic::findApproved($migrationStatistic->id)->first() || response('', 404);
     }
 
     /**

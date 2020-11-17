@@ -53,7 +53,7 @@ class MigrationRateController extends Controller
      */
     public function show(MigrationRate $migrationRate)
     {
-        return MigrationRate::findApproved($migrationRate->id) || response('', 404);
+        return MigrationRate::findApproved($migrationRate->id)->first() || response('', 404);
     }
 
     /**

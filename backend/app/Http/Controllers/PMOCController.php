@@ -59,7 +59,7 @@ class PMOCController extends Controller
      */
     public function show(PMOC $pMOC)
     {
-        return PMOC::findApproved($pMOC->id) || response('', 404);
+        return PMOC::findApproved($pMOC->id)->first() || response('', 404);
     }
 
     /**

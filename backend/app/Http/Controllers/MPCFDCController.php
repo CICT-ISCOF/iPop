@@ -57,7 +57,7 @@ class MPCFDCController extends Controller
      */
     public function show(MPCFDC $mPCFDC)
     {
-        return MPCFDC::findApproved($mPCFDC->id) || response('', 404);
+        return MPCFDC::findApproved($mPCFDC->id)->first() || response('', 404);
     }
 
     /**
