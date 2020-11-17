@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\File;
 use App\Models\PMOCTeam;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -36,10 +37,15 @@ class PMOCTeamController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
             'priority' => ['nullable', 'numeric'],
+            'photo' => ['required', 'isFile'],
         ]);
+
+        $file = File::process($data['photo']);
+        $file->public = true;
 
         $pMOCTeam = PMOCTeam::create($data);
         $pMOCTeam->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $pMOCTeam->photo()->save($file);
         $pMOCTeam->setApproved($request->user()->hasRole(Role::ADMIN));
 
         return $pMOCTeam;
@@ -69,7 +75,15 @@ class PMOCTeamController extends Controller
             'name' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
             'priority' => ['nullable', 'numeric'],
+            'photo' => ['nullable', 'isFile'],
         ]);
+
+        if (isset($data['photo'])) {
+            $file = File::process($data['photo']);
+            $old = $pmocTeam->photo;
+            $pmocTeam->photo()->save($file);
+            $old->delete();
+        }
 
         $pmocTeam->update($data);
         $pmocTeam->setApproved($request->user()->hasRole(Role::ADMIN));
