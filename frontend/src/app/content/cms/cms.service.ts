@@ -70,10 +70,11 @@ export class CmsService {
 		return this.http.post(url, data, {headers:this.headers} )
 	}
 	
+	// ---------------new--------------------
 
-	getQuickLinks(){
-
+	saveArticle(data){
+		const url = this.baseURL + '/articles'				
+		return this.http.post(url, data, {headers:this.headers} )
 	}
-
 
 }

@@ -1,7 +1,7 @@
 <div class="home-container">
     <br>
     <div class="sticky">
-        <div class="header">
+        <div class="header" *ngIf="!hide">
             <div *ngIf="role == 'user'">
                 <div class="overlay">
                     <img src="../../../assets/overlays/clouds.jpg">
@@ -18,7 +18,7 @@
             </div>
         </div>
         <br>
-        <div class="nav">
+        <div class="nav" [class.fixed]="hide">
 
             <div class="nav-list">
                 <div class="Item">

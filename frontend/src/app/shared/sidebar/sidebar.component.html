@@ -143,7 +143,7 @@
                         <div class="icon ">
                             <i  class="fas fa-plane-arrival"></i>
                     </div>
-                        In-Migration
+                        Migration
                         <span *ngIf="icons.MigrationStat == true" class="triangle">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-triangle-fill" fill="#EEF1F5" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M7.022 1.566a1.13 1.13 0 0 1 1.96 0l6.857 11.667c.457.778-.092 1.767-.98 1.767H1.144c-.889 0-1.437-.99-.98-1.767L7.022 1.566z"/>
@@ -427,7 +427,7 @@
          </button>
         </div>
         <!-- ADMIN ACCOUNTS  -->
-        <div *ngIf="account.user.roles[0].name == 'Super Admin'" (click)="active('AdminAccounts')" class=" sidebar-btn" [class.active]="icons.AdminAccounts == true " [routerLink]="['/admin-accounts']" routerLinkActive="router-link-active">
+        <div (click)="active('AdminAccounts')" class=" sidebar-btn" [class.active]="icons.AdminAccounts == true " [routerLink]="['/admin-accounts']" routerLinkActive="router-link-active">
             <button [class.button]="icons.AdminAccounts == true" [class.clickable]="icons.AdminAccounts == false ">
              <div class="icon ">
                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-lines-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -443,7 +443,7 @@
          </button>
         </div>
         <!-- NEW ADMINISTRATOR  -->
-        <div *ngIf="account.user.roles[0].name == 'Super Admin'" (click)="active('Administrators')" class=" sidebar-btn" [class.active]="icons.Administrators == true " [routerLink]="['/new-admin']" routerLinkActive="router-link-active">
+        <div (click)="active('Administrators')" class=" sidebar-btn" [class.active]="icons.Administrators == true " [routerLink]="['/new-admin']" routerLinkActive="router-link-active">
             <button [class.button]="icons.Administrators == true" [class.clickable]="icons.Administrators == false ">
              <div class="icon ">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-shield-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -460,7 +460,7 @@
          </button>
         </div>
         <!--Roles  -->
-        <div *ngIf="account.user.roles[0].name == 'Super Admin'" (click)="active('Roles')" class=" sidebar-btn" [class.active]="icons.Roles == true " [routerLink]="['/new-admin']" routerLinkActive="router-link-active">
+        <div (click)="active('Roles')" class=" sidebar-btn" [class.active]="icons.Roles == true " [routerLink]="['/new-admin']" routerLinkActive="router-link-active">
             <button [class.button]="icons.Roles == true" [class.clickable]="icons.Roles == false ">
              <div class="icon ">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-lock2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -477,7 +477,7 @@
          </button>
         </div>
         <!-- LOGS  -->
-        <div *ngIf="account.user.roles[0].name == 'Super Admin'" (click)="active('Logs')" class=" sidebar-btn" [class.active]="icons.Logs == true" [routerLink]="['/logs']" routerLinkActive="router-link-active">
+        <div (click)="active('Logs')" class=" sidebar-btn" [class.active]="icons.Logs == true" [routerLink]="['/logs']" routerLinkActive="router-link-active">
             <button [class.button]="icons.Logs == true" [class.clickable]="icons.Logs == false ">
              <div class="icon ">
                  <svg width="23px" height="23px" viewBox="0 0 16 16" class="bi bi-watch" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

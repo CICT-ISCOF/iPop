@@ -28,10 +28,16 @@
     margin-left: 50px;
 }
 
+h5 {
+    font-size: .9rem;
+    font-weight: 300;
+}
+
 h3,
 h4,
 .person-name {
-    font-weight: 800;
+    font-weight: 500;
+    font-size: 1.1rem;
 }
 
 .list-group-item {
@@ -54,6 +60,9 @@ h4,
         border-radius: 50%;
         align-self: center;
     }
+    .fw-bold {
+        font-weight: bold;
+    }
 }
 
 label {
@@ -62,4 +71,8 @@ label {
 
 .tl-center {
     text-align: center;
+}
+
+.fw-bold {
+    font-weight: bold;
 }

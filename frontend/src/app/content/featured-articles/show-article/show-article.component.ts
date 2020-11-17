@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { FeaturedArticlesService } from './../featured-articles.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
@@ -11,11 +12,26 @@ export class ShowArticleComponent implements OnInit {
 
 	constructor(
 		private FeaturedArticlesService : FeaturedArticlesService
-	) { }
-
-	ngOnInit(): void {
-
+	) { 
+		
 	}
+
+	subscription : Subscription
+	
+	ngOnInit(): void {
+		this.article = JSON.parse(localStorage.getItem('article'))
+		console.log(this.article)
+		
+		// console.log(JSON.parse(localStorage.getItem('article-photos')))
+	}
+
+	
+	article : any = {
+		title:'wew',
+		photos:[]
+	}
+
+	photos:any = [{uri:''}]
 
 	customOptions: OwlOptions = {	
 		center: true,

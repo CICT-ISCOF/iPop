@@ -1,0 +1,46 @@
+<h3>SB MEMBERS</h3>
+<hr>
+<div class="sb-member" *ngFor="let item of sbMembers;let i = index">
+    <h5 [class.selected]="activeSB[i]">
+        <div class="flex">
+            HON. Jamel Eid Yasssin
+            <span (click)="editMember(i)" class="close ml-auto">
+                <svg width="15px" height="15px" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+                    <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+                </svg>
+            </span>
+            <span (click)="deleteMember(i)" class="close ml-20">
+                <svg width="15px" height="15px" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                </svg>
+            </span>
+        </div>
+        <div>
+            <div class="row" [class.selected1]="activeSB[i]" *ngIf="activeSB[i]">
+                <div class="col-md-12" class="row">
+                    <div class="form-group">
+                        <label for="name">New Name</label>
+                        <input [(ngModel)]="sbMember.updateMember" type="text" id="name" class="form-control">
+                        <br>
+                        <div (click)="saveSBMemberChanges(i)" class="button">Save Changes</div>
+                        <br>
+                        <div (click)="editMember(i)" class="clickable">Cancel Editing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h5>
+</div>
+<div *ngIf="addMember" class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input [(ngModel)]="sbMember.name" type="text" id="name" class="form-control">
+        </div>
+    </div>
+</div>
+<div (click)="saveMember()" *ngIf="addMember" class="button">Save</div>
+<div (click)="addMember = true" *ngIf="!addMember" class="button">Add SB Member</div>
+<br *ngIf="addMember">
+<div (click)="addMember = false" *ngIf="addMember" class="clickable">Cancel</div>
