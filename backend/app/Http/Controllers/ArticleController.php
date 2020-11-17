@@ -26,7 +26,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return Article::getApproved()->all();
+        return Article::getApproved()->get();
     }
 
     /**
