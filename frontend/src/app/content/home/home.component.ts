@@ -1,3 +1,4 @@
+import { UserService } from './../../user.service';
 import { ScrollEventService } from './../../scroll-event.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,7 +11,8 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
 	constructor(
-		private ScrollEventService : ScrollEventService
+		private ScrollEventService : ScrollEventService,
+		private UserService : UserService
 	) { 
 		this.ScrollEventService.gethideHeaderValue().subscribe(value => {
 			this.hide = value	
@@ -20,6 +22,8 @@ export class HomeComponent implements OnInit {
 	role = localStorage.getItem('role')
 
 	hide = false
+
+	isUser = !this.UserService.isUser()
 
 	ngOnInit(): void {
 		if(window.pageYOffset > 150){
