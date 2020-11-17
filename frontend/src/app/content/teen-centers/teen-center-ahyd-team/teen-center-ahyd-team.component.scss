@@ -1,0 +1,46 @@
+.number-of-teen-centers,
+.person-name {
+    font-weight: 600;
+}
+
+.list-group-item {
+    display: flex;
+    .municipality-name {
+        width: 70%;
+    }
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.absolute {
+    position: absolute;
+    right: 0;
+}
+
+.remove,
+.edit {
+    align-self: flex-end;
+    margin: 10px;
+    cursor: pointer;
+    svg {
+        height: 20px;
+        width: 20px;
+    }
+}
+
+.remove:hover,
+.edit:hover {
+    opacity: .8;
+}
+
+.remove:active,
+.edit:active {
+    opacity: .5;
+}

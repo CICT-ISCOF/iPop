@@ -162,7 +162,10 @@ import { ShowMpcFdcComponent } from './content/mpc-fdc/show-mpc-fdc/show-mpc-fdc
 import { ShowTeenCentersComponent } from './content/teen-centers/show-teen-centers/show-teen-centers.component';
 import { FeaturedArticlesComponent } from './content/featured-articles/featured-articles.component';
 import { ShowArticleComponent } from './content/featured-articles/show-article/show-article.component';
-import { SbMembersComponent } from './content/provincial-officials/sb-members/sb-members.component'
+import { SbMembersComponent } from './content/provincial-officials/sb-members/sb-members.component';
+import { AddNewTeenCenterComponent } from './content/teen-centers/add-new-teen-center/add-new-teen-center.component';
+import { TeenCenterAhydTeamComponent } from './content/teen-centers/teen-center-ahyd-team/teen-center-ahyd-team.component';
+
 
 
 const routes: Routes = [
@@ -372,6 +375,9 @@ const routes: Routes = [
     FeaturedArticlesComponent,
     ShowArticleComponent,
     SbMembersComponent,
+    AddNewTeenCenterComponent,
+    TeenCenterAhydTeamComponent,
+  
     
 
   ],

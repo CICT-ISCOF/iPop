@@ -1,0 +1,28 @@
+<div class="add-new-teen-center-component">
+    <h2>Add New Teen Center</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="">Name</label>
+            <input [(ngModel)]="teenCenter.name" type="text" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label for="">District</label>
+            <input [(ngModel)]="teenCenter.district" type="text" class="form-control">
+        </div>
+    </div><br>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="">Muncipality</label>
+            <input [(ngModel)]="teenCenter.municipality" type="text" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label for="">Services Offered</label>
+            <textarea [(ngModel)]="teenCenter.services" autosize class="form-control"><textarea></textarea>
+        </div>
+        <div class="col-md-6">
+            <br> <br>
+            <button (click)="create()" class="button">Save Teen Center</button>
+            <button (click)="back()" class="clickable">Back</button>
+        </div>
+    </div>
+</div>
