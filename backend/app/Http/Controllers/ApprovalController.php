@@ -43,7 +43,16 @@ class ApprovalController extends Controller
      */
     public function update(Request $request, Approval $approval)
     {
-        $approval->update($request->only('approved'));
+        $data = $request->validate([
+            'approved' => ['required', 'boolean'],
+        ]);
+        $approval->update($data);
+
+        if ($data['approved']) {
+            $approval->approver_id = $request->user()->id;
+            $approval->save();
+            $approval->load('approver');
+        }
 
         return $approval;
     }

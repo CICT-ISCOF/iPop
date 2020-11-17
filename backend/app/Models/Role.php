@@ -9,7 +9,7 @@ class Role extends Model
 {
     use HasFactory;
 
-    const ADMIN = 'Super-Admin';
+    const ADMIN = 'Super Admin';
     const VIEWER = 'Viewer';
 
     const DEFAULTS = [

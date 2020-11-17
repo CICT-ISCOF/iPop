@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Log;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class LogController extends Controller
@@ -16,7 +17,7 @@ class LogController extends Controller
 
     public function destroy(Request $request, Log $log)
     {
-        if (!$request->user()->hasRole('Super Admin')) {
+        if (!$request->user()->hasRole(Role::ADMIN)) {
             return response('', 403);
         }
         $log->delete();
@@ -26,7 +27,7 @@ class LogController extends Controller
 
     public function clear(Request $request)
     {
-        if (!$request->user()->hasRole('Super Admin')) {
+        if (!$request->user()->hasRole(Role::ADMIN)) {
             return response('', 403);
         }
         Log::truncate();

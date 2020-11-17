@@ -6,6 +6,9 @@ use App\Models\Approval;
 
 trait HasApproval
 {
+    /**
+     * @return static
+     */
     public static function getApproved($mode = true)
     {
         $ids = Approval::where('approvable_type', static::class)
@@ -16,9 +19,13 @@ trait HasApproval
                 return $approval->approvable_id;
             })->all();
 
-        return static::whereIn('id', $ids);
+        return static::whereIn('id', $ids)
+            ->with('approval');
     }
 
+    /**
+     * @return static|null
+     */
     public static function findApproved($id, $mode = true)
     {
         $approval = Approval::where('approvable_type', static::class)
@@ -29,7 +36,8 @@ trait HasApproval
         if (!$approval) {
             return null;
         }
-        return static::where('id', $approval->approval->id);
+        return static::where('id', $approval->approvable->id)
+            ->with('approval');
     }
 
     public function approval()
@@ -43,9 +51,9 @@ trait HasApproval
     public function setApproved($mode)
     {
         $this->approval->approved = $mode;
-        if ($mode) {
-            $this->approval->approver_id = request()->user()->id;
-        }
+        $this->approval->approver_id = $mode
+            ? request()->user()->id
+            : null;
         $this->approval->save();
         $this->approval->load('approver');
         return $this;

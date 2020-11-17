@@ -84,14 +84,6 @@ class ModelPermissionController extends Controller
 
         $permission = Permission::findByName($data['permission']);
 
-        if (!$permission) {
-            return response([
-                'errors' => [
-                    'permission' => 'Permission does not exist.'
-                ]
-            ], 422);
-        }
-
         $data['permission_id'] = $permission->id;
 
         return RequiredPermission::create($data);

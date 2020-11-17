@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approval;
 use App\Models\PMOCTeam;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class PMOCTeamController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,7 @@ class PMOCTeamController extends Controller
      */
     public function index()
     {
-        //
+        return PMOCTeam::getApproved()->paginate(10);
     }
 
     /**
@@ -25,7 +32,17 @@ class PMOCTeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'position' => ['nullable', 'string', 'max:255'],
+            'priority' => ['nullable', 'numeric'],
+        ]);
+
+        $pMOCTeam = PMOCTeam::create($data);
+        $pMOCTeam->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $pMOCTeam->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        return $pMOCTeam;
     }
 
     /**
@@ -34,9 +51,9 @@ class PMOCTeamController extends Controller
      * @param  \App\Models\PMOCTeam  $pMOCTeam
      * @return \Illuminate\Http\Response
      */
-    public function show(PMOCTeam $pMOCTeam)
+    public function show(PMOCTeam $pmocTeam)
     {
-        //
+        return PMOCTeam::findApproved($pmocTeam->id) || response('', 404);
     }
 
     /**
@@ -46,9 +63,18 @@ class PMOCTeamController extends Controller
      * @param  \App\Models\PMOCTeam  $pMOCTeam
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PMOCTeam $pMOCTeam)
+    public function update(Request $request, PMOCTeam $pmocTeam)
     {
-        //
+        $data = $request->validate([
+            'name' => ['nullable', 'string', 'max:255'],
+            'position' => ['nullable', 'string', 'max:255'],
+            'priority' => ['nullable', 'numeric'],
+        ]);
+
+        $pmocTeam->update($data);
+        $pmocTeam->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        return $pmocTeam;
     }
 
     /**
@@ -59,6 +85,8 @@ class PMOCTeamController extends Controller
      */
     public function destroy(PMOCTeam $pMOCTeam)
     {
-        //
+        $pMOCTeam->delete();
+
+        return response('', 204);
     }
 }

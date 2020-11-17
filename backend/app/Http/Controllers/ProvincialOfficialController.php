@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approval;
 use App\Models\ProvincialOfficial;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class ProvincialOfficialController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,7 @@ class ProvincialOfficialController extends Controller
      */
     public function index()
     {
-        //
+        return ProvincialOfficial::getApproved()->paginate(10);
     }
 
     /**
@@ -25,7 +32,17 @@ class ProvincialOfficialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'position' => ['nullable', 'string', 'max:255'],
+            'priority' => ['nullable', 'numeric'],
+        ]);
+
+        $provincialOfficial = ProvincialOfficial::create($data);
+        $provincialOfficial->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $provincialOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        return $provincialOfficial;
     }
 
     /**
@@ -36,7 +53,7 @@ class ProvincialOfficialController extends Controller
      */
     public function show(ProvincialOfficial $provincialOfficial)
     {
-        //
+        return ProvincialOfficial::findApproved($provincialOfficial->id) || response('', 404);
     }
 
     /**
@@ -48,7 +65,16 @@ class ProvincialOfficialController extends Controller
      */
     public function update(Request $request, ProvincialOfficial $provincialOfficial)
     {
-        //
+        $data = $request->validate([
+            'name' => ['nullable', 'string', 'max:255'],
+            'position' => ['nullable', 'string', 'max:255'],
+            'priority' => ['nullable', 'numeric'],
+        ]);
+
+        $provincialOfficial->update($data);
+        $provincialOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        return $provincialOfficial;
     }
 
     /**
@@ -59,6 +85,8 @@ class ProvincialOfficialController extends Controller
      */
     public function destroy(ProvincialOfficial $provincialOfficial)
     {
-        //
+        $provincialOfficial->delete();
+
+        return response('', 204);
     }
 }
