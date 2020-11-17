@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { ScrollEventService } from './scroll-event.service';
 import { Component, OnInit,Directive, HostListener} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -29,7 +30,8 @@ export class AppComponent implements OnInit {
 		private MediaQueryService : MediaQueryService,
 		private DeviceService : DeviceService,
 		private MapService : MapService,
-		private ScrollEventService : ScrollEventService
+		private ScrollEventService : ScrollEventService,
+		private UserService : UserService
 	){
 		this.userRole = this.UtilityService.getUserROle().subscribe(role=>{
 			this.role = role
@@ -64,12 +66,15 @@ export class AppComponent implements OnInit {
 
 	media:number
 
-	
+	isUser = !this.UserService.isUser()
+
 	onWindowScroll(event){		
-		if(window.pageYOffset > 150){
-			this.ScrollEventService.hideHeader(true)
-		}else{
-			this.ScrollEventService.hideHeader(false)
+		if(this.isUser){		
+			if(window.pageYOffset > 150){
+				this.ScrollEventService.hideHeader(true)
+			}else{
+				this.ScrollEventService.hideHeader(false)
+			}
 		}
 	}
 

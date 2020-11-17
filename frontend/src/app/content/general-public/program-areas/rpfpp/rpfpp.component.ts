@@ -60,7 +60,7 @@ export class RPFPPComponent implements OnInit {
 		})
 	}
 
-	deleteAward(id){
+	deleteRPFP(id){
 		Swal.fire({
 			title: 'Are you sure you want to remove this Actiivity?',		
 			icon: 'warning',
@@ -74,7 +74,6 @@ export class RPFPPComponent implements OnInit {
 				})				
 			} 
 		})
-	
 	}
 
 
