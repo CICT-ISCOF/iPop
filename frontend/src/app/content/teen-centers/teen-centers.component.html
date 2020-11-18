@@ -1,28 +1,34 @@
 <div *ngIf="!show" class="mpc-fdc-component">
-    <div class="front">
+    <div class="front" *ngIf="addTeenCenter">
+        <app-add-new-teen-center></app-add-new-teen-center>
+    </div>
+
+    <div *ngIf="!addTeenCenter" class="front">
+        <button (click)="addTeenCenter = true" class="button">Add Teen Center</button>
+        <br> <br>
         <h4>
             SHCOOL BASE MULTI-PURPOSE TEEN CENTER
         </h4>
         <!-- <div class="filters">
-            <div class="row">
-                <div class="col-md-6">
-                    <select type="text" class="form-control">
-                        <option selected disabled>Select Municipality..</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <select type="text" class="form-control">
-                        <option selected disabled>Select Barangay..</option>
-                    </select>
+                <div class="row">
+                    <div class="col-md-6">
+                        <select type="text" class="form-control">
+                            <option selected disabled>Select Municipality..</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <select type="text" class="form-control">
+                            <option selected disabled>Select Barangay..</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <br> -->
+            <br> -->
         <app-dynamic-mapping></app-dynamic-mapping>
         <br>
         <div class="district-container">
             <div class="district container" *ngFor="let item of [1,2,3,4,5,6]">
-                <div class="district-name">DISTRICT I</div>
+                <div class="district-name">District I</div>
                 <br>
                 <h2 class="number-of-teen-centers" style="color:var(--contrast)">15</h2>
                 <p>Teen Centers</p>
@@ -41,18 +47,9 @@
         </div>
     </div>
     <div class="side">
-        <h3>
-            AHYD TEAM
-        </h3>
-        <hr>
-        <div class="person-name">JAMEL EID YASSIN</div>
-        <p>Provincial Teen Center Coordinator</p>
-        <br>
-        <p>AHYD Focal Persons</p>
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let item of [1,2,3,4,5,6]"> RYAN VILLANUEVA </li>
-        </ul>
+        <app-teen-center-ahyd-team></app-teen-center-ahyd-team>
     </div>
+
 </div>
 
 <app-show-teen-centers *ngIf="show"></app-show-teen-centers>

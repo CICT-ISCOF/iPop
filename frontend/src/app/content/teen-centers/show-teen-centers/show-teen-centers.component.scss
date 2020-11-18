@@ -1,7 +1,7 @@
 .mpc-component {
     display: flex;
     width: 100%;
-    padding: 40px;
+    padding: 50px;
 }
 
 .front {
@@ -13,10 +13,16 @@
     text-align: center;
 }
 
+h5 {
+    font-size: .9rem;
+    font-weight: 300;
+}
+
 h3,
+h4,
 .person-name {
-    font-weight: 800;
-    text-align: center;
+    font-weight: 500;
+    font-size: 1.1rem;
 }
 
 owl-carousel-o img {

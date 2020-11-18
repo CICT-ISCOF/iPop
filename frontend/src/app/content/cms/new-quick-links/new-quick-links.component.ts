@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../utility.service';
 import { Component, OnInit } from '@angular/core';
 import { CmsService } from '../cms.service'
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -10,7 +11,8 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 export class NewQuickLinksComponent implements OnInit {
 
 	constructor(
-		private CmsService : CmsService
+		private CmsService : CmsService,
+		private UtilityService : UtilityService
 	) { }
 
 	ngOnInit(): void {
@@ -19,23 +21,43 @@ export class NewQuickLinksComponent implements OnInit {
 
 	src = '../../../../assets/avatars/girl-black.png'
 
-	readURL(file,event){
-
-	}
-
-	data = {
+	article ={
+		files : [],
 		title:'',
-		body:'',
-		file:''
+		body:''
 	}
+
+	imagesToRender = []
+
+	readURL(files: FileList,event,index,type){	
+		this.article.files = []
+		if (event.target.files && event.target.files[0]) {	
+			Object.keys(files).forEach(i => {				
+				const reader = new FileReader();   
+				reader.readAsDataURL(event.target.files[i]);   		     
+				reader.onload = (event) => {	
+					let img = (<FileReader>event.target).result		
+					const toBase64Img = img.toString().split(',')	
+					this.article.files.push( toBase64Img[1] )					
+					this.imagesToRender.push( img )
+				}					 						
+			})	
+		}	
+	}
+	
 
 	triggerInput(){
 		document.getElementById('quick-link-picture').click()
 	}
 
 	saveQuicLink(){
-		this.CmsService.saveQuickLinks(this.data).subscribe(data => {
-			console.log(data)
+		this.CmsService.saveArticle(this.article).subscribe(data => {
+			this.article ={
+				files : [],
+				title:'',
+				body:''
+			}
+			this.UtilityService.setAlert('New Article will be posted soon!','success')
 		})
 	}
 
@@ -48,7 +70,7 @@ export class NewQuickLinksComponent implements OnInit {
 	   
 		navSpeed: 700,
 		autoplay:true,	
-		autoplayTimeout:2000,
+		autoplayTimeout:200000,
 		responsive:{
 			600:{
 				items:1.3

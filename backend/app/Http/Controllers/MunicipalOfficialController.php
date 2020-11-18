@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approval;
 use App\Models\MunicipalOfficial;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -20,7 +22,8 @@ class MunicipalOfficialController extends Controller
      */
     public function index()
     {
-        return MunicipalOfficial::sortBy('municipality')
+        return MunicipalOfficial::getApproved()
+            ->sortBy('municipality')
             ->paginate(15);
     }
 
@@ -38,7 +41,11 @@ class MunicipalOfficialController extends Controller
             'municipality' => ['required', 'string', Rule::exists('municipalities', 'name')]
         ]);
 
-        return MunicipalOfficial::create($data);
+        $municipalOfficial = MunicipalOfficial::create($data);
+        $municipalOfficial->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $municipalOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        return $municipalOfficial;
     }
 
     /**
@@ -49,7 +56,7 @@ class MunicipalOfficialController extends Controller
      */
     public function show(MunicipalOfficial $municipalOfficial)
     {
-        return $municipalOfficial;
+        return MunicipalOfficial::findApproved($municipalOfficial->id)->first() || response('', 404);
     }
 
     /**
@@ -68,6 +75,7 @@ class MunicipalOfficialController extends Controller
         ]);
 
         $municipalOfficial->update($data);
+        $municipalOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
 
         return $municipalOfficial;
     }

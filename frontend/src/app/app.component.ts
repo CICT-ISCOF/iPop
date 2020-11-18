@@ -1,4 +1,6 @@
-import { Component, OnInit,HostListener } from '@angular/core';
+import { UserService } from './user.service';
+import { ScrollEventService } from './scroll-event.service';
+import { Component, OnInit,Directive, HostListener} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from './utility.service'
 import { Subscription } from 'rxjs'
@@ -13,6 +15,10 @@ import { MapService } from './content/maps/map.service'
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })
+
+@Directive({
+	selector: '[scrollToTop]'
+})
 export class AppComponent implements OnInit {
 	title = 'ipo-web';
   
@@ -23,8 +29,9 @@ export class AppComponent implements OnInit {
 		private	 NetworkStatusAngularService : NetworkStatusAngularService,	
 		private MediaQueryService : MediaQueryService,
 		private DeviceService : DeviceService,
-		private MapService : MapService
-		
+		private MapService : MapService,
+		private ScrollEventService : ScrollEventService,
+		private UserService : UserService
 	){
 		this.userRole = this.UtilityService.getUserROle().subscribe(role=>{
 			this.role = role
@@ -51,9 +58,6 @@ export class AppComponent implements OnInit {
 			this.map = false
 			this.map = true
 		})
-
-	
-		
 	} 
 
 	userRole:Subscription
@@ -62,11 +66,19 @@ export class AppComponent implements OnInit {
 
 	media:number
 
-	ngOnInit(): void {
+	isUser = !this.UserService.isUser()
 
-		
+	onWindowScroll(event){		
+		if(this.isUser){		
+			if(window.pageYOffset > 150){
+				this.ScrollEventService.hideHeader(true)
+			}else{
+				this.ScrollEventService.hideHeader(false)
+			}
+		}
+	}
 
-	
+	ngOnInit(): void {	
 		this.validateRole(function(){
 			let url = document.createElement('a');
 			url.href = window.location.href;
@@ -98,7 +110,7 @@ export class AppComponent implements OnInit {
 
 	@HostListener("window:resize", [])
 	public onResize() {
-	  this.detectScreenSize();
+	  this.detectScreenSize();	  
 	}
 	
 	public ngAfterViewInit() {

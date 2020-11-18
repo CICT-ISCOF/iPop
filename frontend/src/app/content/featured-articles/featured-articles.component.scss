@@ -3,7 +3,9 @@
 }
 
 .image {
-    max-width: 20%;
+    max-width: 50%;
+    min-width: 30%;
+    min-height: 50%;
     margin-right: 20px;
     img {
         width: 100%;
@@ -26,4 +28,14 @@ h2 {
 
 .article {
     cursor: pointer;
+}
+
+span {
+    color: var(--contrast);
+    font-weight: 500;
+}
+
+.articles-wrapper {
+    padding: 0 10vw;
+    z-index: 2;
 }

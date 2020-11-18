@@ -17,7 +17,7 @@
         <hr>
         <owl-carousel-o [options]="customOptions">
             <ng-template carouselSlide *ngFor="let image of [1,2]">
-                <img alt="" title="slide.title " src="../../../assets/home/3.jpg">
+                <img alt="" title="slide.title " src="../../../assets/avatars/boy-blue.png">
             </ng-template>
         </owl-carousel-o>
         <br>
@@ -27,15 +27,40 @@
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor a recusandae cumque voluptate, dolore sapiente similique quia numquam unde, pariatur inventore maxime saepe voluptas eaque? Quibusdam pariatur facere officiis enim.</p>
     </div>
     <div class="side">
-        <h3>
-            Personnel In-charge
-        </h3>
-        <hr>
-        <div class="picture">
-            <img src="../../../../assets/home/7.jpg" alt="">
+        <button (click)="addPersnalInCharge = true" *ngIf="!addPersnalInCharge" class="button">Add Personal In-Charge</button>
+
+
+
+        <div *ngIf="!addPersnalInCharge">
+            <h3>
+                Personnel In-charge
+            </h3>
+            <hr>
+            <div class="picture">
+                <img src="../../../../assets/home/7.jpg" alt="">
+            </div>
+            <br>
+            <div class="person-name">JAMEL EID YASSIN</div>
+            <p>Provincial Teen Center Coordinator</p>
         </div>
-        <br>
-        <div class="person-name">JAMEL EID YASSIN</div>
-        <p>Provincial Teen Center Coordinator</p>
+
+        <div *ngIf="addPersnalInCharge" class="row">
+            <div class="form-group col-md-12">
+                <label for="Name">Name</label>
+                <input type="text" id="Name" class="form-control">
+            </div>
+            <div class="form-group col-md-12">
+                <label for="Position">Position</label>
+                <input type="text" id="Position" class="form-control">
+            </div>
+            <div class="col-md-12">
+                <button class="button">Add Image</button>
+                <br> <br> <br>
+            </div>
+            <div class="form-group col-md-12">
+                <button class="button">Save</button>
+                <button (click)="addPersnalInCharge = false" (click)="addTeam = false" class="clickable">Back</button>
+            </div>
+        </div>
     </div>
 </div>

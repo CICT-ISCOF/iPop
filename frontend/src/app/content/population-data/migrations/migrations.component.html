@@ -23,7 +23,7 @@
             </div>
         </div><br>
         <app-dynamic-mapping></app-dynamic-mapping>
-        <br>
+        <br><br><br>
         <div class="flex-container">
             <div class="custom-control custom-checkbox custom-control-inline">
                 <input type="checkbox" class="custom-control-input" id="defaultInline1">
@@ -51,32 +51,38 @@
             <p>TOTAL POPULATION</p>
             <h3>5</h3>
             <br>
-            <p>IN MIGRATION</p>
+            <p>TOTAL DEATHS</p>
             <h3>5</h3>
             <br>
-            <p>OUT MIGRATION</p>
+            <p>CRUDE DEATH RATE</p>
             <h3>5</h3>
-            <p>NET MIGRATION</p>
-            <h3>5</h3>
+
+
             <br><br>
             <div class="chart">
+
             </div>
-            <p>MIGRATION RATE 2017 2019</p>
+            <p>CRUDE DEATH RATES</p>
             <br><br>
         </div>
     </div>
     <div class="side">
         <h3>Provincial Officials</h3>
-        <div *ngFor="let item of [1,2]">
-            <h5>JAMEL EID YASSIN</h5>
-            <p>Governor</p>
-        </div>
-        <h3>SB MEMBERS</h3>
-        <div *ngFor="let item of [1,2,1,2,1,2,1,2]">
-            <h5>HON. JAMEL EID YASSIN</h5>
-        </div>
+        <hr>
+        <app-provincial-officials></app-provincial-officials>
+        <br> <br>
+        <app-sb-members></app-sb-members>
         <br><br><br>
         <h3>TECHNICAL NOTES</h3>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae, repudiandae perferendis sit aperiam vel quibusdam laudantium in! Dolore, animi quasi adipisci nisi perferendis odio dolorem tenetur, officia repudiandae ullam natus.</p>
+        <hr>
+        <p><span class="fw-bold">Migration</span> - tmovement of people form one place to another with the purpose of establishing a new residence</p>
+
+        <p><span class="fw-bold">In-migration Rate</span> - the number of migrants arriving at a destination per 1000 population at that destination in a given year</p>
+
+        <p><span class="fw-bold">Out-migration Rate</span> - the number of migrants departing from an area of origin per 1000 population at that area of origin in a given year</p>
+
+        <p><span class="fw-bold">Net Migration Rate</span> -the net effect of in-migration and out-migration on an area’s population, expressed as increase or decrease per 1000 population of the area in a given year</p>
+
+
     </div>
 </div>

@@ -73,12 +73,12 @@ class BulkController extends Controller
                 ->record()
                 ->save(new Record(array(
                     'user_id' => $request->user()->id,
-                    'status' => 'Imported'
+                    'status' => 'Imported, Pending Approval'
                 )));
         }
 
         Log::record('User imported bulk data of type: ' . $type);
-        return response('', 200);
+        return response('', 204);
     }
 
     private function _iterateSave($rows)

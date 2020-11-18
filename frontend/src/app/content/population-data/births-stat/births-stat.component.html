@@ -1,6 +1,7 @@
 <div class="birth-stat-component">
     <div class="front">
         <h3 class="tl-center">PROVINCE OF ILOILO</h3>
+
         <h3 class="tl-center">(BIRTHS)</h3>
         <br>
         <div class="filters">
@@ -23,7 +24,7 @@
             </div>
         </div><br>
         <app-dynamic-mapping></app-dynamic-mapping>
-        <br>
+        <br><br><br>
         <div class="flex-container">
             <div class="custom-control custom-checkbox custom-control-inline">
                 <input type="checkbox" class="custom-control-input" id="defaultInline1">
@@ -51,39 +52,35 @@
             <p>TOTAL POPULATION</p>
             <h3>5</h3>
             <br>
-            <p>TOTAL LIV BIRTHS</p>
+            <p>TOTAL DEATHS</p>
             <h3>5</h3>
             <br>
-            <p>CRUDE BIRTH RATE</p>
+            <p>CRUDE DEATH RATE</p>
             <h3>5</h3>
-            <br>
-            <p>GENERAL FERTILITY RATE</p>
-            <h3>5</h3>
+
+
             <br><br>
             <div class="chart">
 
             </div>
-            <p>INCIDENCE OF TEENAGE BIRTHS</p>
+            <p>CRUDE DEATH RATES</p>
             <br><br>
-
-            <div class="chart">
-
-            </div>
-            <p>INCIDENCE OF LEGITIMATE BIRTHS</p>
         </div>
     </div>
     <div class="side">
         <h3>Provincial Officials</h3>
-        <div *ngFor="let item of [1,2]">
-            <h5>JAMEL EID YASSIN</h5>
-            <p>Governor</p>
-        </div>
-        <h3>SB MEMBERS</h3>
-        <div *ngFor="let item of [1,2,1,2,1,2,1,2]">
-            <h5>HON. JAMEL EID YASSIN</h5>
-        </div>
+        <hr>
+        <app-provincial-officials></app-provincial-officials>
+        <br> <br>
+        <app-sb-members></app-sb-members>
         <br><br><br>
         <h3>TECHNICAL NOTES</h3>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae, repudiandae perferendis sit aperiam vel quibusdam laudantium in! Dolore, animi quasi adipisci nisi perferendis odio dolorem tenetur, officia repudiandae ullam natus.</p>
+        <hr>
+        <p><span class="fw-bold">Crude Birth Rate</span> - the number of live births per 1,000 population in a given year Teenage Births – the number of live births to women ages 19 and below per 100 live births in a given year Illegitimate Births – the
+            number of births to unmarried women per 100 live births in a given year</p>
+
+        <p><span class="fw-bold">General Fertility Rate</span> - the number of live births per 1,000 women ages 15-49 in a given year</p>
+
+
     </div>
 </div>

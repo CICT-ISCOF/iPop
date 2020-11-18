@@ -19,10 +19,12 @@ import { Ng2OdometerModule } from 'ng2-odometer';
 import {NgxPaginationModule} from 'ngx-pagination';
 // import { AngularOpenlayersModule } from "ngx-openlayers";
 import { ChartsModule } from 'ng2-charts';
-
+import { AgmCoreModule } from '@agm/core';
 import { ResponsiveModule } from 'ngx-responsive'
 import 'ag-grid-enterprise';
 import { TreeNgxModule } from 'tree-ngx';
+
+
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -159,7 +161,11 @@ import { DynamicMappingComponent } from './content/dynamic-mapping/dynamic-mappi
 import { ShowMpcFdcComponent } from './content/mpc-fdc/show-mpc-fdc/show-mpc-fdc.component';
 import { ShowTeenCentersComponent } from './content/teen-centers/show-teen-centers/show-teen-centers.component';
 import { FeaturedArticlesComponent } from './content/featured-articles/featured-articles.component';
-import { ShowArticleComponent } from './content/featured-articles/show-article/show-article.component'
+import { ShowArticleComponent } from './content/featured-articles/show-article/show-article.component';
+import { SbMembersComponent } from './content/provincial-officials/sb-members/sb-members.component';
+import { AddNewTeenCenterComponent } from './content/teen-centers/add-new-teen-center/add-new-teen-center.component';
+import { TeenCenterAhydTeamComponent } from './content/teen-centers/teen-center-ahyd-team/teen-center-ahyd-team.component';
+
 
 
 const routes: Routes = [
@@ -368,6 +374,10 @@ const routes: Routes = [
     ShowTeenCentersComponent,
     FeaturedArticlesComponent,
     ShowArticleComponent,
+    SbMembersComponent,
+    AddNewTeenCenterComponent,
+    TeenCenterAhydTeamComponent,
+  
     
 
   ],
@@ -377,6 +387,9 @@ const routes: Routes = [
     NgxPaginationModule,
     ResponsiveModule,
     BrowserModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDEVqvIlmnz4zLo8eIPDP3x2CuRyiHZpm8'
+    }),
     NgxFileDropModule,
     FormsModule,
     AppRoutingModule,

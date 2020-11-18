@@ -15,7 +15,10 @@ export class ShowTeenCentersComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
+
 	}
+
+	addPersnalInCharge = false
 
 	customOptions: OwlOptions = {	
 		center: true,

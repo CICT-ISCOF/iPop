@@ -20,7 +20,8 @@ class MTCMMembersController extends Controller
      */
     public function index()
     {
-        return MTCMMember::with('sbmptc')
+        return MTCMMember::getApproved()
+            ->with('sbmptc')
             ->paginate(10);
     }
 
@@ -50,7 +51,9 @@ class MTCMMembersController extends Controller
      */
     public function show(int $id)
     {
-        return MTCMMember::with('sbmptc')->findOrFail($id);
+        return MTCMMember::findApproved($id)
+            ->with('sbmptc')
+            ->findOrFail($id);
     }
 
     /**

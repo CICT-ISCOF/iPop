@@ -8,29 +8,39 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BarangayOfficialController;
 use App\Http\Controllers\BirthController;
+use App\Http\Controllers\BirthStatisticController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\DeathController;
 use App\Http\Controllers\CPDBController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CountController;
+use App\Http\Controllers\DeathStatisticController;
 use App\Http\Controllers\MarriageController;
 use App\Http\Controllers\InMigrationController;
 use App\Http\Controllers\OutMigrationController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\MigrationRateController;
+use App\Http\Controllers\MigrationStatisticController;
 use App\Http\Controllers\ModelPermissionController;
+use App\Http\Controllers\MPCFDCController;
 use App\Http\Controllers\MTCMMembersController;
 use App\Http\Controllers\MunicipalOfficialController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PMOCController;
+use App\Http\Controllers\PMOCTeamController;
+use App\Http\Controllers\ProvincialOfficialController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SBMPTCController;
+use App\Http\Controllers\SBMPTCFocalPersonController;
 use App\Http\Controllers\SBMPTCTeamController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StatisticsController;
+use App\Http\Controllers\TeenageBirthIncidenceGraphController;
 use App\Http\Controllers\TomtomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
@@ -154,8 +164,18 @@ Route::apiResources([
     'articles' => ArticleController::class,
     'sbmptcs' => SBMPTCController::class,
     'sbmptcs/teams' => SBMPTCTeamController::class,
+    'sbmptcs/focal-persons' => SBMPTCFocalPersonController::class,
     'mtcms' => MTCMMembersController::class,
     'approvals' => ApprovalController::class,
+    'birth-statistics' => BirthStatisticController::class,
+    'death-statistics' => DeathStatisticController::class,
+    'migration-rates' => MigrationRateController::class,
+    'migration-statistics' => MigrationStatisticController::class,
+    'mpcfdcs' => MPCFDCController::class,
+    'pmoccs' => PMOCController::class,
+    'pmocc-teams' => PMOCTeamController::class,
+    'provincial-officials' => ProvincialOfficialController::class,
+    'teenage-birth-incidence-graphs' => TeenageBirthIncidenceGraphController::class,
 ]);
 
 // CMS
