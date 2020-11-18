@@ -11,6 +11,13 @@ class SBMPTCPhoto extends Model
 
     protected $fillable = ['sbmptc_id', 'photo_id'];
 
+    public static function booted()
+    {
+        static::deleted(function ($file) {
+            $file->photo->delete();
+        });
+    }
+
     public function sbmptc()
     {
         return $this->belongsTo(SBMPTC::class, 'sbmptc_id');

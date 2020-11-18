@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\ArticleController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AwardController;
 use App\Http\Controllers\BarangayOfficialController;
 use App\Http\Controllers\BirthController;
 use App\Http\Controllers\BirthStatisticController;
@@ -31,6 +33,7 @@ use App\Http\Controllers\MunicipalOfficialController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PMOCController;
 use App\Http\Controllers\PMOCTeamController;
+use App\Http\Controllers\ProgramAreaController;
 use App\Http\Controllers\ProvincialOfficialController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\RoleController;
@@ -38,6 +41,8 @@ use App\Http\Controllers\SBMPTCController;
 use App\Http\Controllers\SBMPTCFocalPersonController;
 use App\Http\Controllers\SBMPTCTeamController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ServiceOfferController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TeenageBirthIncidenceGraphController;
@@ -176,6 +181,11 @@ Route::apiResources([
     'pmocc-teams' => PMOCTeamController::class,
     'provincial-officials' => ProvincialOfficialController::class,
     'teenage-birth-incidence-graphs' => TeenageBirthIncidenceGraphController::class,
+    'activities' => ActivityController::class,
+    'awards' => AwardController::class,
+    'program-areas' => ProgramAreaController::class,
+    'services' => ServiceController::class,
+    'service-offers' => ServiceOfferController::class,
 ]);
 
 // CMS
