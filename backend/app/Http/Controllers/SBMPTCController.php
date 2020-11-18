@@ -39,9 +39,9 @@ class SBMPTCController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
-            'tc_coordinator_count' => ['required', 'numeric'],
-            'population' => ['required', 'numeric'],
-            'services' => ['required', 'string'],
+            'tc_coordinator_count' => ['nullable', 'numeric'],
+            'population' => ['nullable', 'numeric'],
+            'services' => ['nullable', 'string'],
             'municipality' => ['required', Rule::exists('municipalities', 'name')],
             'district' => ['required', 'string', 'max:255'],
         ]);

@@ -37,9 +37,9 @@ class MPCFDCController extends Controller
             'location' => ['required', 'string', 'max:255'],
             'municipality' => ['required', 'string', 'max:255'],
             'district' => ['required', 'string', 'max:255'],
-            'tc_coordinator_count' => ['required', 'numeric'],
-            'population' => ['required', 'numeric'],
-            'services' => ['required', 'string'],
+            'tc_coordinator_count' => ['nullable', 'numeric'],
+            'population' => ['nullable', 'numeric'],
+            'services' => ['nullable', 'string'],
         ]);
 
         $mPCFDC = MPCFDC::create($data);

@@ -10,10 +10,5 @@ class SBMPTCFocalPerson extends Model
 {
     use HasFactory, HasApproval;
 
-    protected $fillable = ['name', 'sbmptc_id'];
-
-    public function sbmptc()
-    {
-        return $this->belongsTo(SBMPTC::class, 'sbmptc_id');
-    }
+    protected $fillable = ['name'];
 }

@@ -17,7 +17,6 @@ class CreateSBMPTCFocalPeopleTable extends Migration
         Schema::create('s_b_m_p_t_c_focal_people', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(new SBMPTC(), 'sbmptc_id');
             $table->timestamps();
         });
     }

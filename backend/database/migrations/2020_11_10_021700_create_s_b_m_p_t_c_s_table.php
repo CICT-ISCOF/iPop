@@ -19,9 +19,9 @@ class CreateSBMPTCSTable extends Migration
             $table->string('location');
             $table->string('municipality');
             $table->string('district');
-            $table->unsignedSmallInteger('tc_coordinator_count');
-            $table->unsignedBigInteger('population');
-            $table->text('services');
+            $table->unsignedSmallInteger('tc_coordinator_count')->nullable();
+            $table->unsignedBigInteger('population')->nullable();
+            $table->text('services')->nullable();
             $table->timestamps();
         });
     }
