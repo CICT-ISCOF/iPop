@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\CMS\Service;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ServiceSeeder extends Seeder
@@ -15,6 +17,19 @@ class ServiceSeeder extends Seeder
     public function run()
     {
         $rpfp = Service::create(['title' => 'Responsible Parenthood and Family Planning Program']);
-        $rpfp->offers()->create(['title' => 'Pre-Marriage Orientation and Counseling']);
+        $this->makeApproved($rpfp);
+        $this->makeApproved(
+            $rpfp->offers()->create(['title' => 'Pre-Marriage Orientation and Counseling'])
+        );
+    }
+
+    protected function makeApproved($model)
+    {
+        $admin = User::role(Role::ADMIN)->first();
+        $model->approval()->create([
+            'requester_id' => $admin->id,
+            'approver_id' => $admin->id,
+            'approved' => true,
+        ]);
     }
 }
