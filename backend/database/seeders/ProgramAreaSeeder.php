@@ -51,6 +51,12 @@ class ProgramAreaSeeder extends Seeder
                 'description' => 'The Responsible Parenthood and Family Planning Program is one of the key component of the Philippine Population Management Program. The province objective is to help couples/parents exercise responsible parenting to develop the total well-being of children for them to become responsible and capable in contributing to the betterment of society, through the establishment of the Multi-Purpose Counseling and Family Development Centers and Information, Education & Communication (IEC) Advocacies.',
             ])
         );
+
+        $pdi = ProgramArea::create([
+            'title' => 'Population and Development Integration',
+            'description' => 'The Population and Development Integration is one of the key component of the Philippine Population Management Program. The province’s objective is to contribute to policies that will assist the government to achieve a favorable balance between population growth and distribution, economic activities and the environment.',
+        ]);
+        $this->makeApproved($pdi);
     }
 
     protected function makeApproved($model)
