@@ -17,8 +17,8 @@ class CreateAwardMediaTable extends Migration
     {
         Schema::create('award_media', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(new Award());
-            $table->foreignIdFor(new File());
+            // $table->foreignIdFor(new Award());
+            // $table->foreignIdFor(new File());
             $table->timestamps();
         });
     }
