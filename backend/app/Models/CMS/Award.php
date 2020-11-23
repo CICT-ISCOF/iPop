@@ -15,11 +15,11 @@ class Award extends Model
 
     public static function booted()
     {
-        static::deleting(function($award) {
-            $award->medias->each(function($media) {
+        static::deleting(function ($award) {
+            $award->medias->each(function ($media) {
                 $media->delete();
             });
-        })
+        });
     }
 
     public function medias()
