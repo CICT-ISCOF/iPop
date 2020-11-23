@@ -31,7 +31,7 @@ class AwardController extends Controller
     {
         $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'url' => ['required', 'string', 'url'],
+            'url' => ['nullable', 'string', 'url'],
             'files' => ['nullable', 'array'],
             'files.*' => ['required', 'isFile'],
         ]);
