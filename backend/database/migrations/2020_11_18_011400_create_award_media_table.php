@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Award;
+use App\Models\CMS\Award;
 use App\Models\File;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
