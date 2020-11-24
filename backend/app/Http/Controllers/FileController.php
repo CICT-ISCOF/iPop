@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('streamPublic', 'downloadPublic');
+    }
+
     public function streamPublic(File $file)
     {
         if (!$file->public) {
