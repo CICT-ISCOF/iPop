@@ -10,6 +10,20 @@ export class TeenCentersComponent implements OnInit {
 
 	addTeenCenter = false
 
+	activeDistrict ={
+		I:true,
+		II:false,
+		III:false,
+		VI:false,
+	}
+
+	makeDistrictActive(item){
+		for(let district in this.activeDistrict){
+			this.activeDistrict[district] = false
+		}
+		this.activeDistrict[item] = true
+	}
+
 	constructor(
 		private TeenCentersService : TeenCentersService,
 	) { 
@@ -30,7 +44,12 @@ export class TeenCentersComponent implements OnInit {
 	
 	show = false
 
-	district = {}
+	district:any = {
+		I:{data:[]},
+		II:{data:[]},
+		III:{data:[]}
+		
+	}
 	getTeenCenters(){
 		this.TeenCentersService.getTeenCenters().subscribe(data =>{
 			console.log('teen center', data)

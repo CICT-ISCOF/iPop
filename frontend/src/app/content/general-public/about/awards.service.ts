@@ -51,4 +51,9 @@ export class AwardsService {
 		const url = this.baseURL + '/' +  id
 		return this.http.delete<any>(url ,{headers:this.headers})
 	}
+
+	deletePhoto(id){
+		const url = this.BaseAPIService.baseURL + '/awards/medias/' + id
+		return this.http.delete<any>(url ,{headers:this.headers})
+	}
 }

@@ -27,22 +27,69 @@
         <app-dynamic-mapping></app-dynamic-mapping>
         <br>
         <div class="district-container">
-            <div class="district container">
+            <div [class.active]="activeDistrict['I']" class="district container" (click)="makeDistrictActive('I')">
                 <div class="district-name">District I</div>
                 <br>
-                <h2 class="number-of-teen-centers" style="color:var(--contrast)">{{district.I.data.length}}</h2>
+                <h2 class="number-of-teen-centers" style="color:var(--contrast)">{{district.I.data.length + 0}}</h2>
                 <p>Teen Centers</p>
             </div>
+
+            <div [class.active]="activeDistrict['II']" class="district container" (click)="makeDistrictActive('II')">
+                <div class="district-name">District II</div>
+                <br>
+                <h2 class="number-of-teen-centers" style="color:var(--contrast)">{{district.II.data.length + 0}}</h2>
+                <p>Teen Centers</p>
+            </div>
+
+            <div [class.active]="activeDistrict['III']" class="district container" (click)="makeDistrictActive('III')">
+                <div class="district-name">District III</div>
+                <br>
+                <h2 class="number-of-teen-centers" style="color:var(--contrast)">{{district.III.data.length + 0}}</h2>
+                <p>Teen Centers</p>
+            </div>
+
+            <!-- <div class="district container" (click)="makeDistrictActive(IV)">
+                <div class="district-name">District IV</div>
+                <br>
+                <h2 class="number-of-teen-centers" style="color:var(--contrast)">{{district.IV.data.length + 0}}</h2>
+                <p>Teen Centers</p>
+            </div> -->
 
 
         </div>
 
         <div class="w-100" style="float: left;">
             <br> <br> <br>
-            <ul (click)="showMPC()" class="list-group">
-                <li class="list-group-item" *ngFor="let item of [1,2,3,4,5,6]">
-                    <p class="municipality-name">Barotac Nuevo </p>
-                    <h4>2</h4>
+            <ul *ngIf="activeDistrict['I']" (click)="showMPC()" class="list-group">
+                <li class="list-group-item" *ngFor="let municipality of district.I.municipalities">
+                    <p class="municipality-name">{{municipality.name}} </p>
+                    <h4>{{municipality.teen_center_count}}</h4>
+                </li>
+
+            </ul>
+
+            <ul *ngIf="activeDistrict['II']" (click)="showMPC()" class="list-group">
+                <li class="list-group-item" *ngFor="let municipality of district.II.municipalities">
+                    <p class="municipality-name">{{municipality.name}} </p>
+                    <h4>{{municipality.teen_center_count}}</h4>
+                </li>
+
+            </ul>
+
+
+            <ul *ngIf="activeDistrict['III']" (click)="showMPC()" class="list-group">
+                <li class="list-group-item" *ngFor="let municipality of district.III.municipalities">
+                    <p class="municipality-name">{{municipality.name}} </p>
+                    <h4>{{municipality.teen_center_count}}</h4>
+                </li>
+
+            </ul>
+
+
+            <ul *ngIf="activeDistrict['IV']" (click)="showMPC()" class="list-group">
+                <li class="list-group-item" *ngFor="let municipality of district.IV.municipalities">
+                    <p class="municipality-name">{{municipality.name}} </p>
+                    <h4>{{municipality.teen_center_count}}</h4>
                 </li>
 
             </ul>

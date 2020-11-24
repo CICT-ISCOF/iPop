@@ -4,7 +4,11 @@
     <div class="animated fadeInLeftBig">
         <br><br><br><br>
         <div *ngIf="!wantsToAddanAward">
-            <button (click)="wantsToAddanAwardFunction(true)" *ngIf="!wantsToAddanAward" class="button add-an-award ">Add an Award</button>
+            <button style="display: flex;" (click)="wantsToAddanAwardFunction(true)" *ngIf="!wantsToAddanAward" class="button add-an-award ">
+              Add an Award
+              <svg style="margin-right: 0;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="white" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg></button>
             <h2>AWARDS
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-award" fill="orange" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M9.669.864L8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193l-1.51-.229L8 1.126l-1.355.702-1.51.229-.684 1.365-1.086 1.072L3.614 6l-.25 1.506 1.087 1.072.684 1.365 1.51.229L8 10.874l1.356-.702 1.509-.229.684-1.365 1.086-1.072L12.387 6l.248-1.506-1.086-1.072-.684-1.365z"/>
@@ -65,7 +69,7 @@
                         <div class="flex">
 
                             <button (click)="readSliderURL" (click)="triggerMediaInput('slider',i)" class="clickable">Add an Image</button>
-                            <button (click)="readSliderURL" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Add a Video</button>
+                            <!-- <button (click)="readSliderURL" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Add a Video</button> -->
                             <button *ngIf="files.images.length != 0 || files.videos.length != 0" (click)="clearSlider()" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Clear Slider</button>
 
 
@@ -97,7 +101,7 @@
                             <div class="image" *ngFor="let media of award.medias">
                                 <div style="position: relative;">
                                     <div class="flex absolute">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="gray" xmlns="http://www.w3.org/2000/svg">
+                                        <svg (click)="deletePhoto(media.id)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="gray" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
                                         </svg>
                                     </div>

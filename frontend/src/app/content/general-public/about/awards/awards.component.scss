@@ -121,8 +121,15 @@ owl-carousel-o video {
 .absolute {
     position: absolute;
     right: 0;
-    transform: translate(150px, 0px) scale(1.2);
+    transform: translate(145px, 0px) scale(1.2);
     svg {
         cursor: pointer;
     }
+}
+
+.list-group-item {
+    background: transparent !important;
+    padding-left: 0;
+    border: none !important;
+    box-shadow: none !important;
 }
