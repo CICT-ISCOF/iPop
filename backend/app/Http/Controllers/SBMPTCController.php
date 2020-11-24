@@ -22,10 +22,32 @@ class SBMPTCController extends Controller
      */
     public function index()
     {
-        return SBMPTC::getApproved()
+        $data = [];
+        $rows = SBMPTC::getApproved()
             ->with('members')
             ->with('photos')
-            ->paginate(10);
+            ->get();
+
+        foreach ($rows as $row) {
+            if (!in_array($row->district, array_keys($data))) {
+                $data[$row->district] = [
+                    'data' => [],
+                    'municipalities' => [],
+                ];
+            }
+            $data[$row->district]['data'][] = $row;
+            if (!in_array($row->municipality, $data[$row->district]['municipalities'])) {
+                $data[$row->district]['municipalities'][] = $row->municipality;
+            }
+        }
+
+        return collect($data)->map(function ($row, $key) {
+            return [
+                'district' => $key,
+                'data' => $row['data'],
+                'municipalities' => $row['municipalities'],
+            ];
+        });
     }
 
     /**
