@@ -84,6 +84,17 @@ export class CPDBMPComponent implements OnInit {
 		let data = {}
 		data['title'] = program['title']
 		data['description'] = program['description']
+		data['files'] = []
+		if(this.files['images'].length != 0){
+			for(let images of this.files.images){
+				data['files'].push(images)
+			}			
+		}
+		if(this.files['videos'].length != 0){
+			for(let videos of this.files.videos){
+				data['files'].push(videos)
+			}			
+		}			
 		Swal.fire({
 			title: 'Are you sure you want to update this Actiivity?',		
 			icon: 'warning',

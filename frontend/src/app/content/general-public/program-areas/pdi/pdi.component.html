@@ -54,16 +54,20 @@
                     <p *ngIf="!acitveProgram[i]" class="description">
                         {{program.description}}
                     </p>
-                    <div>
-                        <owl-carousel-o *ngIf="program.files.length != 0" [options]=" customOptions">
-                            <ng-template carouselSlide *ngFor="let image of program.files">
-                                <img alt="" *ngIf="image.file.type.includes('image')" title="slide.title " [src]="image.file.uri">
-                                <video *ngIf="image.file.type.includes('video')" autoplay [src]="video.file.uri"></video>
+
+                    <div *ngIf="program.files.length != 0 && !acitveProgram[i]">
+                        <p *ngIf="acitveProgram[i]">Previous Images</p>
+                        <owl-carousel-o [options]=" customOptions">
+                            <ng-template [class.hide]="image.file.type.includes('video')" carouselSlide *ngFor="let image of program.files">
+                                <img alt="" title="slide.title " [src]="image.file.uri">
                             </ng-template>
                         </owl-carousel-o>
 
                     </div>
+
+
                     <div *ngIf="acitveProgram[i]">
+                        <hr>
                         <div class="form-group col-md-12">
                             <label for="title">New Actiivty Title</label>
                             <textarea autosize #textarea [(ngModel)]="program.title" id="title" class="form-control"></textarea>
@@ -74,13 +78,36 @@
                             <textarea autosize #textarea [(ngModel)]="program.description" id="link" class="form-control"></textarea>
                         </div>
 
+
+                        <div *ngIf="program.files.length != 0 && acitveProgram[i]">
+                            <p *ngIf="acitveProgram[i]">Previous Images</p>
+                            <div class="image-container" *ngIf="acitveProgram[i]">
+                                <div>
+                                    <div class="image" *ngFor="let image of program.files">
+                                        <div style="position: relative;">
+                                            <div class="flex absolute">
+                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="gray" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                            </svg>
+                                            </div>
+                                        </div>
+                                        <img [src]="image.file.uri" alt="" style="width: 100%;height: 100%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <br> <br>
+                        </div>
+
+
+
                         <div class="form-group col-md-12">
                             <button (click)="triggerMediaInput('slider','i')" class="clickable">Add an Image</button>
-                            <button (click)="triggerMediaInput('videoslider','i')" class="clickable ">Add a Video</button>
+                            <!-- <button (click)="triggerMediaInput('videoslider','i')" class="clickable ">Add a Video</button> -->
                             <button *ngIf="files.images.length != 0 || files.videos.length != 0" (click)="clearSlider()" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Clear Slider</button>
                             <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]=" 'slider' + 'i' ">
                             <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'video' )" accept="video/*" style="display:none " [id]=" 'videoslider' + 'i' ">
                         </div>
+                        <p *ngIf="files.images.length != 0 || files.videos.length != 0">Your New Images</p>
                         <owl-carousel-o *ngIf="files.images.length != 0 || files.videos.length != 0" [options]=" customOptions">
                             <ng-template carouselSlide *ngFor="let image of files.images">
                                 <img alt="" title="slide.title " [src]="image">
@@ -89,7 +116,7 @@
                                 <video autoplay [src]="video"></video>
                             </ng-template>
                         </owl-carousel-o>
-                        <div style="margin-left: 70px;">
+                        <div style="margin-left: 70px; margin-top: 30px;">
                             <button (click)="updateRPFP(program.id, program,i)" class="button ">Save</button> &nbsp;
                             <button (click)="toggleProgram(i)" class="clickable ">Cancel</button>
                         </div>
@@ -123,7 +150,7 @@
 
             <div class="form-group col-md-12">
                 <button (click)="triggerMediaInput('slider','i')" class="clickable">Add an Image</button>
-                <button (click)="triggerMediaInput('videoslider','i')" class="clickable ">Add a Video</button>
+                <!-- <button (click)="triggerMediaInput('videoslider','i')" class="clickable ">Add a Video</button> -->
                 <button *ngIf="files.images.length != 0 || files.videos.length != 0" (click)="clearSlider()" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Clear Slider</button>
                 <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]=" 'slider' + 'i' ">
                 <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'video' )" accept="video/*" style="display:none " [id]=" 'videoslider' + 'i' ">

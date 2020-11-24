@@ -1,5 +1,5 @@
 h2 {
-    font-weight: 600
+    font-weight: 600;
 }
 
 * {
@@ -43,7 +43,7 @@ textarea {
 
 .absolute {
     position: absolute;
-    right: 0;
+    right: -50px;
 }
 
 .close,
@@ -74,7 +74,8 @@ textarea {
 }
 
 .description {
-    color: gray
+    color: gray;
+    line-height: 1.7rem;
 }
 
 owl-carousel-o img,
@@ -94,4 +95,29 @@ owl-carousel-o video {
 .add-an-award {
     position: absolute;
     right: -0;
+}
+
+.hide {
+    display: none !important;
+}
+
+.image {
+    width: 150px;
+    height: 150px;
+    margin: 15px;
+    float: left;
+}
+
+.image-container {
+    width: 100%;
+    min-height: 50vh;
+}
+
+.image .absolute {
+    position: absolute;
+    left: 0 !important;
+    transform: translate(160px, 0px) scale(1.2);
+    svg {
+        cursor: pointer;
+    }
 }
