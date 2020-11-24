@@ -56,7 +56,8 @@ class DeathStatisticController extends Controller
      */
     public function show(DeathStatistic $deathStatistic)
     {
-        return DeathStatistic::findApproved($deathStatistic->id)->first() || response('', 404);
+        return DeathStatistic::findApproved($deathStatistic->id)->first()
+            ?: response('', 404);
     }
 
     /**

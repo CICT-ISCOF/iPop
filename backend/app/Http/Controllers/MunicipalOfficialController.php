@@ -56,7 +56,8 @@ class MunicipalOfficialController extends Controller
      */
     public function show(MunicipalOfficial $municipalOfficial)
     {
-        return MunicipalOfficial::findApproved($municipalOfficial->id)->first() || response('', 404);
+        return MunicipalOfficial::findApproved($municipalOfficial->id)->first()
+            ?: response('', 404);
     }
 
     /**

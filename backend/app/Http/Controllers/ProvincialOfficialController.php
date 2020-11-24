@@ -53,7 +53,8 @@ class ProvincialOfficialController extends Controller
      */
     public function show(ProvincialOfficial $provincialOfficial)
     {
-        return ProvincialOfficial::findApproved($provincialOfficial->id)->first() || response('', 404);
+        return ProvincialOfficial::findApproved($provincialOfficial->id)->first()
+            ?: response('', 404);
     }
 
     /**

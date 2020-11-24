@@ -48,7 +48,8 @@ class SBMPTCFocalPersonController extends Controller
      */
     public function show(SBMPTCFocalPerson $sBMPTCFocalPerson)
     {
-        return SBMPTCFocalPerson::findApproved($sBMPTCFocalPerson->id)->first() || response('', 404);
+        return SBMPTCFocalPerson::findApproved($sBMPTCFocalPerson->id)->first()
+            ?: response('', 404);
     }
 
     /**

@@ -86,7 +86,8 @@ class SBMPTCController extends Controller
         return SBMPTC::findApproved($id)
             ->with('members')
             ->with('photos')
-            ->first() || response('', 404);
+            ->first()
+            ?: response('', 404);
     }
 
     /**

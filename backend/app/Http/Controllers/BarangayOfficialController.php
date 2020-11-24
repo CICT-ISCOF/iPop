@@ -55,7 +55,8 @@ class BarangayOfficialController extends Controller
      */
     public function show(BarangayOfficial $barangayOfficial)
     {
-        return BarangayOfficial::findApproved($barangayOfficial->id)->first() || response('', 404);
+        return BarangayOfficial::findApproved($barangayOfficial->id)->first()
+            ?: response('', 404);
     }
 
     /**

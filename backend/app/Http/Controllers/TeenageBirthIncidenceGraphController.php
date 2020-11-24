@@ -55,7 +55,8 @@ class TeenageBirthIncidenceGraphController extends Controller
      */
     public function show(TeenageBirthIncidenceGraph $teenageBirthIncidenceGraph)
     {
-        return TeenageBirthIncidenceGraph::findApproved($teenageBirthIncidenceGraph->id)->first() || response('', 404);
+        return TeenageBirthIncidenceGraph::findApproved($teenageBirthIncidenceGraph->id)->first()
+            ?: response('', 404);
     }
 
     /**

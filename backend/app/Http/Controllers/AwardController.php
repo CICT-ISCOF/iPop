@@ -73,7 +73,8 @@ class AwardController extends Controller
      */
     public function show(Award $award)
     {
-        return Award::findApproved($award->id)->first() || response('', 404);
+        return Award::findApproved($award->id)->first()
+            ?: response('', 404);
     }
 
     /**

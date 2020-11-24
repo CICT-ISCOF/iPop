@@ -41,7 +41,8 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        return Service::findApproved($service->id)->first() || response('', 404);
+        return Service::findApproved($service->id)->first()
+            ?: response('', 404);
     }
 
     /**

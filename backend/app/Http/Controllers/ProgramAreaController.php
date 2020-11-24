@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CMS\ProgramArea;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProgramAreaController extends Controller
@@ -41,7 +42,8 @@ class ProgramAreaController extends Controller
      */
     public function show(ProgramArea $programArea)
     {
-        return ProgramArea::findApproved($programArea->id) || response('', 404);
+        return ProgramArea::findApproved($programArea->id)->first()
+            ?: response('', 404);
     }
 
     /**

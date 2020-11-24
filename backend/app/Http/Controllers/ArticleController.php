@@ -83,7 +83,8 @@ class ArticleController extends Controller
         if (!$article) {
             return response('', 404);
         }
-        return Article::findApproved($article->id)->first() || response('', 404);
+        return Article::findApproved($article->id)->first()
+            ?: response('', 404);
     }
 
     /**

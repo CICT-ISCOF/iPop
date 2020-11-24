@@ -58,7 +58,8 @@ class BirthStatisticController extends Controller
      */
     public function show(BirthStatistic $birthStatistic)
     {
-        return BirthStatistic::findApproved($birthStatistic->id)->first() || response('', 404);
+        return BirthStatistic::findApproved($birthStatistic->id)->first()
+            ?: response('', 404);
     }
 
     /**

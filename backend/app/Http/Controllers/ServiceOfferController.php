@@ -57,7 +57,8 @@ class ServiceOfferController extends Controller
      */
     public function show(ServiceOffer $serviceOffer)
     {
-        return ServiceOffer::findApproved($serviceOffer->id)->first() || response('', 404);
+        return ServiceOffer::findApproved($serviceOffer->id)->first()
+            ?: response('', 404);
     }
 
     /**

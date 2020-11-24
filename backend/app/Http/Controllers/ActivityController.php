@@ -79,7 +79,8 @@ class ActivityController extends Controller
      */
     public function show(Activity $activity)
     {
-        return Activity::findApproved($activity->id)->first() || response('', 404);
+        return Activity::findApproved($activity->id)->first()
+            ?: response('', 404);
     }
 
     /**

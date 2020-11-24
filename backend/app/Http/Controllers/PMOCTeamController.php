@@ -59,7 +59,8 @@ class PMOCTeamController extends Controller
      */
     public function show(PMOCTeam $pmocTeam)
     {
-        return PMOCTeam::findApproved($pmocTeam->id)->first() || response('', 404);
+        return PMOCTeam::findApproved($pmocTeam->id)->first()
+            ?: response('', 404);
     }
 
     /**

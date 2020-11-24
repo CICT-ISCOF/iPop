@@ -53,7 +53,8 @@ class SBMPTCTeamController extends Controller
      */
     public function show(SBMPTCTeam $team)
     {
-        return SBMPTCTeam::findApproved($team->id)->first() || response('', 404);
+        return SBMPTCTeam::findApproved($team->id)->first()
+            ?: response('', 404);
     }
 
     /**
