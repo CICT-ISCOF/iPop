@@ -15,6 +15,7 @@
 
             <ol type="I" class="list-group">
                 <div *ngFor="let award of awards;let i = index container">
+
                     <li class="list-group-item " *ngIf="!activeAward[i]">
                         <div>
                             <h5>
@@ -24,24 +25,26 @@
                         </div>
                         <div (click)="toggleAward(i)" class="change ml-auto">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                        <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                      </svg>
+                                <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+                                <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+                            </svg>
                         </div>
-                        <div (click)="deleteAward(i)" class="close">
+                        <div (click)="deleteAward(award.id)" class="close">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                      </svg>
+                                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
                         </div>
 
                     </li>
                     <br>
 
-                    <div *ngIf="award.medias.length != 0 ">
+                    <div *ngIf="award.medias.length != 0 && !activeAward[i]">
                         <owl-carousel-o [options]=" customOptions">
-                            <ng-template carouselSlide *ngFor="let media of award.medias">
-                                <img *ngIf="media.file.type.includes('image')" alt="" title="slide.title " [src]="media.file.uri">
-                                <video *ngIf="media.file.type.includes('video')" autoplay [src]="media.file.uri"></video>
+                            <ng-template [class.hide]="media.file.type.includes('video')" carouselSlide *ngFor="let media of award.medias">
+                                <img alt="" title="slide.title " [src]="media.file.uri">
+                            </ng-template>
+                            <ng-template [class.hide]="media.file.type.includes('image')" carouselSlide *ngFor="let video of files.videos">
+                                <video autoplay [src]="media.file.uri"></video>
                             </ng-template>
                         </owl-carousel-o> <br> <br> <br>
                     </div>
@@ -73,7 +76,7 @@
 
                         </div>
                         <br>
-                        <p>This File will be added to this award</p>
+                        <p *ngIf="files.images.length != 0 || files.videos.length != 0">This File will be added to this award</p>
                         <owl-carousel-o *ngIf="files.images.length != 0 || files.videos.length != 0" [options]=" customOptions">
                             <ng-template carouselSlide *ngFor="let image of files.images">
                                 <img alt="" title="slide.title " [src]="image">
@@ -86,6 +89,25 @@
                         <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]=" 'slider' + i ">
                         <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'video' )" accept="video/*" style="display:none " [id]=" 'videoslider' + i ">
                     </div>
+
+
+                    <div class="image-container" *ngIf="activeAward[i]">
+                        <p>Your Previous Images</p>
+                        <div>
+                            <div class="image" *ngFor="let media of award.medias">
+                                <div style="position: relative;">
+                                    <div class="flex absolute">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="gray" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <img [src]="media.file.uri" alt="" style="width: 100%;height: 100%;">
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </ol>
             <br>
