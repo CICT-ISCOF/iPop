@@ -133,4 +133,11 @@ class AwardController extends Controller
 
         return response('', 204);
     }
+
+    public function deleteAwardMedia(Request $request, AwardMedia $media)
+    {
+        $media->delete();
+
+        return response('', 204);
+    }
 }

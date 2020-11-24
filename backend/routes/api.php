@@ -177,6 +177,8 @@ Route::middleware('throttle:60,1')->group(function () {
         'service-offers' => ServiceOfferController::class,
     ]);
 
+    Route::delete('/awards/medias/{media}', [AwardController::class, 'deleteAwardMedia']);
+
     // CMS
     Route::apiResource('sliders', SliderController::class);
 });
