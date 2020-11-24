@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../../utility.service';
 import Swal from 'sweetalert2'
 import { ServicesOfferedService } from './../services-offered.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,35 +11,52 @@ import { Component, OnInit } from '@angular/core';
 export class RPFPPServicesComponent implements OnInit {
 
 	constructor(
-		private ServicesOfferedService : ServicesOfferedService
+		private ServicesOfferedService : ServicesOfferedService,
+		private UtilityService : UtilityService
 	) { }
 
 	ngOnInit(): void {
 		this.retrieve()
 	}
 
-	type = 'rpfp'
+	
 
-
+	data = {
+		service_id:1,
+		title:''
+	}
 
 	services = {}
 
 	create(){
-		this.ServicesOfferedService.create(this.data).subscribe(data => {
-
+		this.ServicesOfferedService.create(this.data).subscribe(data => {			
+			this.wantsToAdd = false
+			this.ngOnInit()
 		})
 	}
 
 	retrieve(){
-		this.ServicesOfferedService.retrieve(1).subscribe(data => {
-			console.log(data)
+		this.ServicesOfferedService.retrieve(1).subscribe(data => {			
 			this.services = data
 		})
 	}
 
-	update(id){
-		this.ServicesOfferedService.update(this.data.type, id).subscribe(data => {
-
+	update(id, service, index){
+		
+		Swal.fire({
+			title: 'Are you sure you want to update this Service?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Update Service',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.ServicesOfferedService.update(service, id).subscribe(data => {
+					this.UtilityService.setAlert('Changes has been saved', 'info')
+					this.ngOnInit()
+					this.toggleServices(index)
+				})
+			} 
 		})
 	}
 
@@ -51,8 +69,9 @@ export class RPFPPServicesComponent implements OnInit {
 			cancelButtonText: 'Nope'
 		  }).then((result) => {
 			if (result.value) {
-				this.ServicesOfferedService.delete(this.data.type, id).subscribe(data => {
-
+				this.ServicesOfferedService.delete(id).subscribe(data => {
+					this.UtilityService.setAlert('Service has been deleted', 'info')
+					this.ngOnInit()
 				})		
 			} 
 		})

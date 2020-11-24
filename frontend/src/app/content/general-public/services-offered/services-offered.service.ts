@@ -20,8 +20,8 @@ export class ServicesOfferedService {
 		}
 	 }
 
-	user:any = ''
-	token:any = ''
+	user:any = JSON.parse(localStorage.getItem('user-data'))
+	token:any = this.user.token
 
 	baseURL = 	this.BaseAPIService.baseURL + '/services'
 	headers = 	new HttpHeaders({
@@ -33,7 +33,7 @@ export class ServicesOfferedService {
 	private page = new Subject<any>();
 
 	create(string){
-		const url = this.baseURL
+		const url = this.BaseAPIService.baseURL + '/service-offers'
 		return this.http.post<any>(url, string , {headers:this.headers})
 	}
 
@@ -43,12 +43,12 @@ export class ServicesOfferedService {
 	}
 
 	update(string, id){
-		const url = this.baseURL + '/'+ id
+		const url = this.BaseAPIService.baseURL + '/service-offers/' + id
 		return this.http.put<any>(url, string ,{headers:this.headers})
 	}
 
-	delete(type, id){
-		const url = this.baseURL  + '/'+ id
+	delete(id){
+		const url = this.BaseAPIService.baseURL + '/service-offers/' + id
 		return this.http.delete<any>(url ,{headers:this.headers})
 	}
 }
