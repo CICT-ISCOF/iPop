@@ -13,6 +13,7 @@ use App\Http\Controllers\BirthController;
 use App\Http\Controllers\BirthStatisticController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DeathController;
 use App\Http\Controllers\CPDBController;
 use App\Http\Controllers\CommentController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\MunicipalOfficialController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PMOCController;
 use App\Http\Controllers\PMOCTeamController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramAreaController;
 use App\Http\Controllers\ProvincialOfficialController;
 use App\Http\Controllers\RecordController;
@@ -175,8 +177,11 @@ Route::middleware('throttle:60,1')->group(function () {
         'program-areas' => ProgramAreaController::class,
         'services' => ServiceController::class,
         'service-offers' => ServiceOfferController::class,
+        'statistic-profiles' => ProfileController::class,
+        'charts' => ChartController::class,
     ]);
 
+    // Delete 1 award media
     Route::delete('/awards/medias/{media}', [AwardController::class, 'deleteAwardMedia']);
 
     // CMS
