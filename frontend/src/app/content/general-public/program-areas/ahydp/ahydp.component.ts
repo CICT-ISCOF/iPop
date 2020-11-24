@@ -12,6 +12,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o'
   styleUrls: ['./ahydp.component.scss','../../../home/home.component.scss','../../../home/home.component.inherit.cms.responsive.scss','../../../home/home.tablet.scss','../../../home/home.tablet.scss','../../general-public.style.scss']
 })
 export class AHYDPComponent implements OnInit {
+
 	constructor(
 		private ProgramAreasService : ProgramAreasService,
 		private UtilityService : UtilityService,
@@ -19,47 +20,88 @@ export class AHYDPComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-
+		this.getProramArea()		
 	}
 
 	isAdmin = this.UserService.isUser()
 
-	ahyd = {
-		description:"The Adolescent Health and Youth Development Program is one of the key component of the Philippine Population Management Program. The province’s objective is to help in the development and growth of adolescents and youth for them to become responsible and productive members of the society, through the establishment of the School-Based Multi-Purpose Teen Centers and Information, Education & Communication (IEC) Advocacies.",
-		programs:[
-				{
-					title:
-					{
-						title:' School-Based Multi-Purpose TeenCenters',
-						description:'The Responsible Parenthood and Family Planning Program is one of the key component of the Philippine Population Management Program. The province objective is to help couples/parents exercise responsible parenting to develop the total well-being of children for them to become responsible and capable in contributing to the betterment of society, through the establishment of the Multi-Purpose Counseling and Family Development Centers and Information, Education & Communication (IEC) Advocacies.',
-					
-				}
-			}
-		]
+	programArea = {}
+
+	activity = {		
+		program_area_id:2,
+		title:'',
+		description:'',
+		files:[]
 	}
+
+	
 
 	programs = []
 
 
-	createAHYD(){
-		this.ProgramAreasService.createProgram(this.ahyd).subscribe(data => {
-
+	getProramArea(){
+		this.ProgramAreasService.getProgramArea().subscribe(data => {
+			this.programArea = data[1]
+			console.log(this.programArea )
 		})
 	}
 
-	retrieveAHYD(){
-		this.ProgramAreasService.retrieveProgram().subscribe(data => {
-
+	updateProgramArea(){
+		this.ProgramAreasService.updateProgramArea(this.activity, 2).subscribe(data => {
+			console.log('update', data)
+			this.activity = {		
+				program_area_id:2,
+				title:'',
+				description:'',
+				files:[]
+			}
 		})
 	}
 
-	updateAHYD(id){
-		this.ProgramAreasService.updateProgram(this.ahyd, id).subscribe(data => {
 
+	createRPFP(){		
+		let files = []
+		if(this.files['images'].length != 0){
+			for(let images of this.files.images){
+				this.activity.files.push(images)
+			}			
+		}
+		if(this.files['videos'].length != 0){
+			for(let videos of this.files.videos){
+				this.activity.files.push(videos)
+			}			
+		}		
+		this.ProgramAreasService.createProgram(this.activity).subscribe(data => {
+			this.ngOnInit()
+			this.wantsToAddanAward = false
 		})
 	}
 
-	deleteAHYD(id){
+	
+
+	updateRPFP(id, program : any, index){
+		let data = {}
+		data['title'] = program['title']
+		data['description'] = program['description']
+		Swal.fire({
+			title: 'Are you sure you want to update this Actiivity?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Update Actiivity',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.ProgramAreasService.updateProgram(data, id).subscribe(data => {
+					this.toggleProgram(index)
+					this.ngOnInit()
+				})			
+			} 
+		})
+	
+	}
+
+
+	deleteRPFP(id){
 		Swal.fire({
 			title: 'Are you sure you want to remove this Actiivity?',		
 			icon: 'warning',
@@ -70,10 +112,10 @@ export class AHYDPComponent implements OnInit {
 			if (result.value) {
 				this.ProgramAreasService.deleteProgram(id).subscribe(data => {
 					this.UtilityService.setAlert('Award has been removed','info')
+					this.ngOnInit()
 				})				
 			} 
 		})
-	
 	}
 
 

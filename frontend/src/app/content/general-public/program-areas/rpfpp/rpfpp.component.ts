@@ -20,8 +20,7 @@ export class RPFPPComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		this.getProramArea()
-		this.retrieveRPFP()
+		this.getProramArea()	
 	}
 
 	isAdmin = this.UserService.isUser()
@@ -35,7 +34,7 @@ export class RPFPPComponent implements OnInit {
 		files:[]
 	}
 
-	activities = []
+
 
 	programs = []
 
@@ -78,12 +77,7 @@ export class RPFPPComponent implements OnInit {
 		})
 	}
 
-	retrieveRPFP(){
-		this.ProgramAreasService.retrieveProgram().subscribe(data => {			
-			console.log(data)
-			this.activities = data
-		})
-	}
+	
 
 	updateRPFP(id, program : any, index){
 		let data = {}
