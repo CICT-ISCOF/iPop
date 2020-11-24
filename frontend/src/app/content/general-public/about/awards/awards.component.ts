@@ -22,7 +22,8 @@ export class AwardsComponent implements OnInit {
 
 	award = {		
 		url:'',
-		title:''
+		title:'',
+		files:[]
 	}
 
 	files = {
@@ -44,15 +45,27 @@ export class AwardsComponent implements OnInit {
 	}
 
 
-	createAward(){
+	createAward(){	
+		if(this.files['images'].length != 0){
+			for(let images of this.files.images){
+				this.award.files.push(images)
+			}			
+		}
+		if(this.files['videos'].length != 0){
+			for(let videos of this.files.videos){
+				this.award.files.push(videos)
+			}			
+		}		
 		this.isLoading = true
 		this.AwardsService.createAward(this.award).subscribe(data => {
 			this.UtilityService.setAlert('New Award has been added!','success')
 			this.award = {		
 				url:'',
-				title:''
+				title:'',
+				files:[]
 			}
 			this.isLoading = false
+			this.wantsToAddanAward = false
 			this.ngOnInit()
 		},error=>{
 			for(let message in error.error.errors){
@@ -103,6 +116,7 @@ export class AwardsComponent implements OnInit {
 			if (result.value) {
 				this.AwardsService.deleteAward(id).subscribe(data => {
 					this.UtilityService.setAlert('Award has been removed','info')
+					this.ngOnInit()
 				})				
 			} 
 		})
@@ -110,14 +124,13 @@ export class AwardsComponent implements OnInit {
 	}
 
 
-	addAnAward(){
-		
-	}
 
+	
 	toggleAward(award_id){		
 		this.activeAward[award_id] == true ?  this.activeAward[award_id] = false : this.activeAward[award_id] = true	
 		console.log(this.activeAward[award_id])
 		this.clearSlider()
+		
 	}
 
 	clearSlider(){
