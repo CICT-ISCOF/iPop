@@ -14,6 +14,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o'
 export class PDIComponent implements OnInit {
 
   
+	
 	constructor(
 		private ProgramAreasService : ProgramAreasService,
 		private UtilityService : UtilityService,
@@ -21,57 +22,99 @@ export class PDIComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-
+		this.getProramArea()	
 	}
 
 	isAdmin = this.UserService.isUser()
 
-	pdi = {
-		description:'The Population and Development Integration is one of the key component of the Philippine Population Management Program. The province’s objective is to contribute to policies that will assist the government to achieve a favorable balance between population growth and distribution, economic activities and the environment.',
-		programs:[
-				{
-					title:
-					{
-						title:'The Multi-Purpose Counselling and Family Development Centers',
-						description:'The Responsible Parenthood and Family Planning Program is one of the key component of the Philippine Population Management Program. The province objective is to help couples/parents exercise responsible parenting to develop the total well-being of children for them to become responsible and capable in contributing to the betterment of society, through the establishment of the Multi-Purpose Counseling and Family Development Centers and Information, Education & Communication (IEC) Advocacies.',
-					
-				}
-			}
-		]
+	programArea = {}
+
+	activity = {		
+		program_area_id:4,
+		title:'',
+		description:'',
+		files:[]
 	}
+
+
 
 	programs = []
 
 
-	createPDI(){
-		this.ProgramAreasService.createProgram(this.pdi).subscribe(data => {
-
+	getProramArea(){
+		this.ProgramAreasService.getProgramArea().subscribe(data => {
+			this.programArea = data[3]
+			console.log(this.programArea )
 		})
 	}
 
-	retrievePDI(){
-		this.ProgramAreasService.retrieveProgram().subscribe(data => {
-
+	updateProgramArea(){
+		this.ProgramAreasService.updateProgramArea(this.activity, 4).subscribe(data => {
+			console.log('update', data)
+			this.activity = {		
+				program_area_id:4,
+				title:'',
+				description:'',
+				files:[]
+			}
 		})
 	}
 
-	updatePDI(id){
-		this.ProgramAreasService.updateProgram(this.pdi, id).subscribe(data => {
 
+	createRPFP(){		
+		let files = []
+		if(this.files['images'].length != 0){
+			for(let images of this.files.images){
+				this.activity.files.push(images)
+			}			
+		}
+		if(this.files['videos'].length != 0){
+			for(let videos of this.files.videos){
+				this.activity.files.push(videos)
+			}			
+		}		
+		this.ProgramAreasService.createProgram(this.activity).subscribe(data => {
+			this.ngOnInit()
+			this.wantsToAddanAward = false
 		})
 	}
 
-	deletePDI(id){
+	
+
+	updateRPFP(id, program : any, index){
+		let data = {}
+		data['title'] = program['title']
+		data['description'] = program['description']
+		Swal.fire({
+			title: 'Are you sure you want to update this Actiivity?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Update Actiivity',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.ProgramAreasService.updateProgram(data, id).subscribe(data => {
+					this.toggleProgram(index)
+					this.ngOnInit()
+				})			
+			} 
+		})
+	
+	}
+
+
+	deleteRPFP(id){
 		Swal.fire({
 			title: 'Are you sure you want to remove this Actiivity?',		
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonText: 'Remove Actiivity',
 			cancelButtonText: 'Nope'
-		}).then((result) => {
+		  }).then((result) => {
 			if (result.value) {
 				this.ProgramAreasService.deleteProgram(id).subscribe(data => {
 					this.UtilityService.setAlert('Award has been removed','info')
+					this.ngOnInit()
 				})				
 			} 
 		})
@@ -89,7 +132,7 @@ export class PDIComponent implements OnInit {
 		console.log(this.acitveProgram[program_id])
 		this.clearSlider()
 	}
-
+	
 	files = {
 		images:[],
 		videos:[]
@@ -142,7 +185,7 @@ export class PDIComponent implements OnInit {
 		items:2,
 		loop:true,
 		margin:0,
-	
+	   
 		navSpeed: 700,
 		autoplay:true,	
 		autoplayTimeout:200000,

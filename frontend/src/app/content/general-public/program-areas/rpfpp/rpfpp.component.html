@@ -56,7 +56,6 @@
                     </p>
                     <div>
                         <owl-carousel-o *ngIf="program.files.length != 0" [options]=" customOptions">
-
                             <ng-template carouselSlide *ngFor="let image of program.files">
                                 <img alt="" *ngIf="image.file.type.includes('image')" title="slide.title " [src]="image.file.uri">
                                 <video *ngIf="image.file.type.includes('video')" autoplay [src]="video.file.uri"></video>
