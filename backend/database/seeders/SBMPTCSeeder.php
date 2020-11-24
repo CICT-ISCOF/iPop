@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\SBMPTC;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class SBMPTCSeeder extends Seeder
@@ -16,8 +18,18 @@ class SBMPTCSeeder extends Seeder
     {
         collect($this->defaults())
             ->each(function ($data) {
-                SBMPTC::create($data);
+                $this->makeApproved(SBMPTC::create($data));
             });
+    }
+
+    protected function makeApproved($model)
+    {
+        $admin = User::role(Role::ADMIN)->first();
+        $model->approval()->create([
+            'requester_id' => $admin->id,
+            'approver_id' => $admin->id,
+            'approved' => true,
+        ]);
     }
 
     protected function defaults()

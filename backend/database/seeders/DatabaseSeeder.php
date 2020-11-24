@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MunicipalitySeeder::class);
         $this->call(BarangaySeeder::class);
         $this->call(SBMPTCSeeder::class);
+        $this->call(ProgramAreaSeeder::class);
+        $this->call(ServiceSeeder::class);
     }
 }
