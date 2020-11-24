@@ -36,7 +36,7 @@
 
             <br> <br>
             <ul>
-                <li *ngFor="let program of activities; let i = index">
+                <li *ngFor="let program of programArea.activities; let i = index">
                     <div class="flex absolute" *ngIf="isAdmin">
                         <div *ngIf="!acitveProgram[i]" (click)="toggleProgram(i)" class="edit">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -54,6 +54,16 @@
                     <p *ngIf="!acitveProgram[i]" class="description">
                         {{program.description}}
                     </p>
+                    <div>
+                        <owl-carousel-o *ngIf="program.files.length != 0" [options]=" customOptions">
+
+                            <ng-template carouselSlide *ngFor="let image of program.files">
+                                <img alt="" *ngIf="image.file.type.includes('image')" title="slide.title " [src]="image.file.uri">
+                                <video *ngIf="image.file.type.includes('video')" autoplay [src]="video.file.uri"></video>
+                            </ng-template>
+                        </owl-carousel-o>
+
+                    </div>
                     <div *ngIf="acitveProgram[i]">
                         <div class="form-group col-md-12">
                             <label for="title">New Actiivty Title</label>
@@ -98,7 +108,7 @@
                 </div>
                 <div class="form-group col-md-12">
                     <label for="link">Actiivty Description</label>
-                    <textarea  [(ngModel)]="activity.description" autosize #textarea id="link" class="form-control"></textarea>
+                    <textarea [(ngModel)]="activity.description" autosize #textarea id="link" class="form-control"></textarea>
                 </div>
             </div>
             <br><br>
@@ -125,6 +135,6 @@
             </div>
         </div>
 
-     
+
     </div>
 </div>
