@@ -19,10 +19,10 @@ export class ProgramAreasService {
 		}
 	 }
 
-	user:any = ''
-	token:any = ''
+	user:any =  JSON.parse(localStorage.getItem('user-data'))
+	token:any = this.user.token
 
-	baseURL = 	this.BaseAPIService.baseURL + '/users'
+	baseURL = 	this.BaseAPIService.baseURL + '/activities'
 	headers = 	new HttpHeaders({
 					'Accept':'application/json',
 					'Authorization' : 'Bearer '+ this.token,
@@ -30,10 +30,22 @@ export class ProgramAreasService {
 				})	
 
 	private page = new Subject<any>();
+
+	getProgramArea(){
+		const url =	this.BaseAPIService.baseURL + '/program-areas'
+		return this.http.get<any>(url ,{headers:this.headers})
+	}
+	
+	updateProgramArea(activity, id){
+		const url =	this.BaseAPIService.baseURL + '/program-areas/' + id
+		return this.http.put<any>(url, activity ,{headers:this.headers})
+	}
+
+
   
-	createProgram(award){
+	createProgram(acitivity){
 		const url = this.baseURL
-		return this.http.post<any>(url,award ,{headers:this.headers})
+		return this.http.post<any>(url,acitivity ,{headers:this.headers})
 	}
 
 	retrieveProgram(){
@@ -41,13 +53,13 @@ export class ProgramAreasService {
 		return this.http.get<any>(url ,{headers:this.headers})
 	}
 
-	updateProgram(program, id){
-		const url = this.baseURL + id
-		return this.http.patch<any>(url, program ,{headers:this.headers})
+	updateProgram(acitivity, id){
+		const url = this.baseURL + '/' + id
+		return this.http.patch<any>(url, acitivity ,{headers:this.headers})
 	}
 
 	deleteProgram(id){
-		const url = this.baseURL + id
+		const url = this.baseURL + '/' + id
 		return this.http.delete<any>(url ,{headers:this.headers})
 	}
 }

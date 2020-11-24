@@ -20,10 +20,10 @@ export class AwardsService {
 		}
 	 }
 
-	user:any = ''
-	token:any = ''
+	user:any = JSON.parse(localStorage.getItem('user-data'))
+	token:any = this.user.token
 
-	baseURL = 	this.BaseAPIService.baseURL + '/users'
+	baseURL = 	this.BaseAPIService.baseURL + '/awards'
 	headers = 	new HttpHeaders({
 					'Accept':'application/json',
 					'Authorization' : 'Bearer '+ this.token,
@@ -43,12 +43,12 @@ export class AwardsService {
 	}
 
 	updateAward(award, id){
-		const url = this.baseURL + id
+		const url = this.baseURL + '/' +  id
 		return this.http.patch<any>(url, award ,{headers:this.headers})
 	}
 
 	deleteAward(id){
-		const url = this.baseURL + id
+		const url = this.baseURL + '/' +  id
 		return this.http.delete<any>(url ,{headers:this.headers})
 	}
 }

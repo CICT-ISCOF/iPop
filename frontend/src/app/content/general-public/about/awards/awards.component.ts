@@ -21,8 +21,9 @@ export class AwardsComponent implements OnInit {
 	}
 
 	award = {		
-		link:'',
-		title:''
+		url:'',
+		title:'',
+		files:[]
 	}
 
 	files = {
@@ -30,7 +31,7 @@ export class AwardsComponent implements OnInit {
 		videos:[]
 	}
 
-	awards:any = [1,2,3,4]
+	awards:any = []
 
 	createNewAward = false
 
@@ -44,16 +45,42 @@ export class AwardsComponent implements OnInit {
 	}
 
 
-	createAward(){
+	createAward(){	
+		if(this.files['images'].length != 0){
+			for(let images of this.files.images){
+				this.award.files.push(images)
+			}			
+		}
+		if(this.files['videos'].length != 0){
+			for(let videos of this.files.videos){
+				this.award.files.push(videos)
+			}			
+		}		
+		this.isLoading = true
 		this.AwardsService.createAward(this.award).subscribe(data => {
-
+			this.UtilityService.setAlert('New Award has been added!','success')
+			this.award = {		
+				url:'',
+				title:'',
+				files:[]
+			}
+			this.isLoading = false
+			this.wantsToAddanAward = false
+			this.ngOnInit()
+		},error=>{
+			for(let message in error.error.errors){
+				this.UtilityService.setAlert(error.error.errors[message],'error')
+			}	
+			this.isLoading = false
 		})
 	}
 
+	isLoading = false
 	retrieveAwards(){
-		// this.AwardsService.retrieveAwards().subscribe(data => {
-			
-		// })
+		this.AwardsService.retrieveAwards().subscribe(data => {
+			this.awards = data
+			console.log(data)
+		})
 		let count = 0
 		for(let award of this.awards){
 			count += 1
@@ -61,7 +88,7 @@ export class AwardsComponent implements OnInit {
 		}	
 	}
 
-	updateAward(id){
+	updateAward(id, award){
 		Swal.fire({
 			title: 'Are you sure you want to save changes for this award?',		
 			icon: 'warning',
@@ -70,7 +97,8 @@ export class AwardsComponent implements OnInit {
 			cancelButtonText: 'Nope'
 		  }).then((result) => {
 			if (result.value) {
-				this.AwardsService.updateAward(this.award, id).subscribe(data => {
+				this.AwardsService.updateAward(award, id).subscribe(data => {
+					this.ngOnInit()
 					this.UtilityService.setAlert('Changes saved!','success')
 				})				
 			} 
@@ -88,6 +116,7 @@ export class AwardsComponent implements OnInit {
 			if (result.value) {
 				this.AwardsService.deleteAward(id).subscribe(data => {
 					this.UtilityService.setAlert('Award has been removed','info')
+					this.ngOnInit()
 				})				
 			} 
 		})
@@ -95,14 +124,13 @@ export class AwardsComponent implements OnInit {
 	}
 
 
-	addAnAward(){
-		
-	}
 
+	
 	toggleAward(award_id){		
 		this.activeAward[award_id] == true ?  this.activeAward[award_id] = false : this.activeAward[award_id] = true	
 		console.log(this.activeAward[award_id])
 		this.clearSlider()
+		
 	}
 
 	clearSlider(){
