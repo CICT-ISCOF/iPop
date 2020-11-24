@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SBMPTCSeeder::class);
         $this->call(ProgramAreaSeeder::class);
         $this->call(ServiceSeeder::class);
+        $this->call(ProfileSeeder::class);
     }
 }

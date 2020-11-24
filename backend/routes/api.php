@@ -13,6 +13,7 @@ use App\Http\Controllers\BirthController;
 use App\Http\Controllers\BirthStatisticController;
 use App\Http\Controllers\BulkController;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DeathController;
 use App\Http\Controllers\CPDBController;
 use App\Http\Controllers\CommentController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\MunicipalOfficialController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PMOCController;
 use App\Http\Controllers\PMOCTeamController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramAreaController;
 use App\Http\Controllers\ProvincialOfficialController;
 use App\Http\Controllers\RecordController;
@@ -99,26 +101,6 @@ Route::middleware('throttle:60,1')->group(function () {
             'destroy',
         ]);
 
-        Route::prefix('/statistics')->group(function () {
-            Route::get('/general', [StatisticsController::class, 'index']);
-            Route::get('/population', [StatisticsController::class, 'population']);
-            Route::get('/totals', [StatisticsController::class, 'totals']);
-            Route::get('/genders', [StatisticsController::class, 'genders']);
-            Route::get('/municipality', [
-                StatisticsController::class,
-                'municipality',
-            ]);
-            Route::get('/months', [StatisticsController::class, 'months']);
-            Route::get('/distributions', [
-                StatisticsController::class,
-                'distributions',
-            ]);
-            Route::get('/filter', [StatisticsController::class, 'filter']);
-        });
-
-        Route::get('/counts', [CountController::class, 'count']);
-        Route::get('/counts/type', [CountController::class, 'countByType']);
-
         // Comments
         Route::apiResource('comments', CommentController::class)->except(['index']);
 
@@ -146,6 +128,26 @@ Route::middleware('throttle:60,1')->group(function () {
             Route::post('/remove', [UserPermissionController::class, 'remove']);
         });
     });
+
+    Route::prefix('/statistics')->group(function () {
+        Route::get('/general', [StatisticsController::class, 'index']);
+        Route::get('/population', [StatisticsController::class, 'population']);
+        Route::get('/totals', [StatisticsController::class, 'totals']);
+        Route::get('/genders', [StatisticsController::class, 'genders']);
+        Route::get('/municipality', [
+            StatisticsController::class,
+            'municipality',
+        ]);
+        Route::get('/months', [StatisticsController::class, 'months']);
+        Route::get('/distributions', [
+            StatisticsController::class,
+            'distributions',
+        ]);
+        Route::get('/filter', [StatisticsController::class, 'filter']);
+    });
+
+    Route::get('/counts', [CountController::class, 'count']);
+    Route::get('/counts/type', [CountController::class, 'countByType']);
 
     Route::prefix('/officials')->group(function () {
         Route::apiResources([
@@ -175,7 +177,12 @@ Route::middleware('throttle:60,1')->group(function () {
         'program-areas' => ProgramAreaController::class,
         'services' => ServiceController::class,
         'service-offers' => ServiceOfferController::class,
+        'statistic-profiles' => ProfileController::class,
+        'charts' => ChartController::class,
     ]);
+
+    // Delete 1 award media
+    Route::delete('/awards/medias/{media}', [AwardController::class, 'deleteAwardMedia']);
 
     // CMS
     Route::apiResource('sliders', SliderController::class);
