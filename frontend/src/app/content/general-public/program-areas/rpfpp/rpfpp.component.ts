@@ -20,45 +20,92 @@ export class RPFPPComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-
+		this.getProramArea()
+		this.retrieveRPFP()
 	}
 
 	isAdmin = this.UserService.isUser()
 
-	rpfp = {
-		description:'The Responsible Parenthood and Family Planning Program is one of the key component of the Philippine Population Management Program. The province objective is to help couples/parents exercise responsible parenting to develop the total well-being of children for them to become responsible and capable in contributing to the betterment of society, through the establishment of the Multi-Purpose Counseling and Family Development Centers and Information, Education & Communication (IEC) Advocacies.',
-		programs:[
-				{
-					title:
-					{
-						title:'The Multi-Purpose Counselling and Family Development Centers',
-						description:'The Responsible Parenthood and Family Planning Program is one of the key component of the Philippine Population Management Program. The province objective is to help couples/parents exercise responsible parenting to develop the total well-being of children for them to become responsible and capable in contributing to the betterment of society, through the establishment of the Multi-Purpose Counseling and Family Development Centers and Information, Education & Communication (IEC) Advocacies.',
-					
-				}
-			}
-		]
+	programArea = {}
+
+	activity = {		
+		program_area_id:1,
+		title:'',
+		description:'',
+		files:[]
 	}
+
+	activities = []
 
 	programs = []
 
 
-	createRPFP(){
-		this.ProgramAreasService.createProgram(this.rpfp).subscribe(data => {
+	getProramArea(){
+		this.ProgramAreasService.getProgramArea().subscribe(data => {
+			this.programArea = data[0]
+			console.log(this.programArea )
+		})
+	}
 
+	updateProgramArea(){
+		this.ProgramAreasService.updateProgramArea(this.activity, 1).subscribe(data => {
+			console.log('update', data)
+			this.activity = {		
+				program_area_id:1,
+				title:'',
+				description:'',
+				files:[]
+			}
+		})
+	}
+
+
+	createRPFP(){		
+		let files = []
+		if(this.files['images'].length != 0){
+			for(let images of this.files.images){
+				this.activity.files.push(images)
+			}			
+		}
+		if(this.files['videos'].length != 0){
+			for(let videos of this.files.videos){
+				this.activity.files.push(videos)
+			}			
+		}		
+		this.ProgramAreasService.createProgram(this.activity).subscribe(data => {
+			this.ngOnInit()
+			this.wantsToAddanAward = false
 		})
 	}
 
 	retrieveRPFP(){
-		this.ProgramAreasService.retrieveProgram().subscribe(data => {
-
+		this.ProgramAreasService.retrieveProgram().subscribe(data => {			
+			console.log(data)
+			this.activities = data
 		})
 	}
 
-	updateRPFP(id){
-		this.ProgramAreasService.updateProgram(this.rpfp, id).subscribe(data => {
-
+	updateRPFP(id, program : any, index){
+		let data = {}
+		data['title'] = program['title']
+		data['description'] = program['description']
+		Swal.fire({
+			title: 'Are you sure you want to update this Actiivity?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Update Actiivity',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.ProgramAreasService.updateProgram(data, id).subscribe(data => {
+					this.toggleProgram(index)
+					this.ngOnInit()
+				})			
+			} 
 		})
+	
 	}
+
 
 	deleteRPFP(id){
 		Swal.fire({
@@ -71,6 +118,7 @@ export class RPFPPComponent implements OnInit {
 			if (result.value) {
 				this.ProgramAreasService.deleteProgram(id).subscribe(data => {
 					this.UtilityService.setAlert('Award has been removed','info')
+					this.ngOnInit()
 				})				
 			} 
 		})

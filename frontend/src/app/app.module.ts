@@ -16,13 +16,14 @@ import { AgGridModule } from 'ag-grid-angular';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { Ng2OdometerModule } from 'ng2-odometer';
-import { NgxPaginationModule } from 'ngx-pagination';
+import {NgxPaginationModule} from 'ngx-pagination';
 // import { AngularOpenlayersModule } from "ngx-openlayers";
 import { ChartsModule } from 'ng2-charts';
 import { AgmCoreModule } from '@agm/core';
-import { ResponsiveModule } from 'ngx-responsive';
+import { ResponsiveModule } from 'ngx-responsive'
 import 'ag-grid-enterprise';
 import { TreeNgxModule } from 'tree-ngx';
+
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
@@ -113,9 +114,9 @@ import { QuickLinksListComponent } from './content/cms/quick-links-list/quick-li
 import { UpdateContentComponent } from './content/cms/update-content/update-content.component';
 import { UpdateQuickLinkComponent } from './content/cms/update-quick-link/update-quick-link.component';
 import { ShowQuickLinkComponent } from './content/cms/show-quick-link/show-quick-link.component';
-import { MobileAuthenticationComponent } from './sign-in/mobile/mobile-authentication/mobile-authentication.component';
-import { NavbarMobileComponent } from './shared/devices/mobile/navbar-mobile/navbar-mobile.component';
-import { DropdownComponentMobile } from './shared/devices/mobile/dropdown/dropdown.component';
+import { MobileAuthenticationComponent } from './sign-in/mobile/mobile-authentication/mobile-authentication.component'
+import { NavbarMobileComponent } from './shared/devices/mobile/navbar-mobile/navbar-mobile.component'
+import { DropdownComponentMobile }  from './shared/devices/mobile/dropdown/dropdown.component';
 import { FileUploadComponent } from './content/profiling/file-upload/file-upload.component';
 import { MapsComponent } from './content/maps/maps.component';
 import { LocationComponent } from './content/admin-accounts/location/location.component';
@@ -164,99 +165,78 @@ import { ShowArticleComponent } from './content/featured-articles/show-article/s
 import { SbMembersComponent } from './content/provincial-officials/sb-members/sb-members.component';
 import { AddNewTeenCenterComponent } from './content/teen-centers/add-new-teen-center/add-new-teen-center.component';
 import { TeenCenterAhydTeamComponent } from './content/teen-centers/teen-center-ahyd-team/teen-center-ahyd-team.component';
+import { MpcFdcTeamComponent } from './content/mpc-fdc/mpc-fdc-team/mpc-fdc-team.component';
+
+
 
 const routes: Routes = [
-  { path: 'test', component: TestsComponent },
-  // COMMENTS
-  { path: 'comments/cpdb/:id', component: CommentCpdbComponent },
-  { path: 'comments/births/:id', component: CommentBirthsComponent },
-  { path: 'comments/deaths/:id', component: CommentDeathsComponent },
-  { path: 'comments/in-migration/:id', component: CommentInMigComponent },
-  { path: 'comments/out-migration/:id', component: CommentOutMigComponent },
-  { path: 'comments/marriages/:id', component: CommentMarriagesComponent },
+  { path:'test', component:TestsComponent},
+  // COMMENTS 
+  { path:'comments/cpdb/:id', component:CommentCpdbComponent},  
+  { path:'comments/births/:id', component:CommentBirthsComponent},  
+  { path:'comments/deaths/:id', component:CommentDeathsComponent},  
+  { path:'comments/in-migration/:id', component:CommentInMigComponent},  
+  { path:'comments/out-migration/:id', component:CommentOutMigComponent},  
+  { path:'comments/marriages/:id', component:CommentMarriagesComponent},  
   // START-UP
-  { path: '', component: AuthenticateComponent },
-  { path: 'home', component: DynamicHomeComponent },
+  { path:'', component:AuthenticateComponent},  
+  { path:'home', component:DynamicHomeComponent},  
   // DEMOGRAPHIC DATA
-  { path: 'profiling', component: ProfilingComponent },
-  { path: 'cpdb', component: CpdbComponent },
-  { path: 'deaths', component: DeathsComponent },
-  { path: 'births', component: BirthsComponent },
-  { path: 'in-mig', component: InMigComponent },
-  { path: 'out-mig', component: OutMigComponent },
-  { path: 'marriages', component: MarriagesComponent },
-  // STATISITCS
-  { path: 'statistics', component: StatisticsComponent },
-  { path: 'statistics/births', component: BirthsStatComponent },
-  { path: 'statistics/deaths', component: DeathsStatComponent },
-  { path: 'statistics/migration', component: MigrationsComponent },
+  { path:'profiling', component:ProfilingComponent},   
+  { path:'cpdb', component:CpdbComponent},  
+  { path:'deaths', component:DeathsComponent},  
+  { path:'births', component:BirthsComponent},  
+  { path:'in-mig', component:InMigComponent},  
+  { path:'out-mig', component:OutMigComponent},  
+  { path:'marriages', component:MarriagesComponent}, 
+  // STATISITCS  
+  { path:'statistics', component:StatisticsComponent},  
+  { path:'statistics/births', component:BirthsStatComponent},
+  { path:'statistics/deaths', component:DeathsStatComponent},
+  { path:'statistics/migration', component:MigrationsComponent},
   // RPFP
-  { path: 'PMOC', component: PmcComponent },
-  { path: 'MPC-FDC', component: MPCFDCComponent },
-  // AHYD
-  { path: 'Teen-Centers', component: TeenCentersComponent },
-  { path: 'Issues&Concerns', component: IssuesAndConcernsComponent },
+  { path:'PMOC', component:PmcComponent},   
+  { path:'MPC-FDC', component:MPCFDCComponent}, 
+  // AHYD 
+  { path:'Teen-Centers', component:TeenCentersComponent}, 
+  { path:'Issues&Concerns', component:IssuesAndConcernsComponent},
   // OTHERS
-  { path: 'Others', component: OthersComponent },
-  // ABOUT
-  { path: 'ABOUT/PPO-MADATE', component: PpoMandateComponent },
-  { path: 'ABOUT/VISION,MISSION,GOALS', component: VmgComponent },
-  { path: 'ABOUT/CORE-VALUES', component: CoreValuesComponent },
-  { path: 'ABOUT/ORGANIZATIONAL-STRUCTURE', component: OrgStructureComponent },
-  { path: 'ABOUT/PERSONNEL-DIRECTORY', component: PersonnelDirectoryComponent },
-  { path: 'ABOUT/AWARDS', component: AwardsComponent },
-  // PROGRAM AREAS
-  {
-    path: 'PROGRAM-AREAS/Responsible-Parenthood-and-Family-Planning-Program',
-    component: RPFPPComponent,
-  },
-  {
-    path: 'PROGRAM-AREAS/Adolscent-Health-&-Youth-Development-Program',
-    component: AHYDPComponent,
-  },
-  {
-    path:
-      'PROGRAM-AREAS/Comprehensive-Population-Data-Banking-and-Management-Project',
-    component: CPDBMPComponent,
-  },
-  {
-    path: 'PROGRAM-AREAS/Population-and-Development-Integration',
-    component: PDIComponent,
-  },
-  // SERVICES OFFERED
-  {
-    path: 'SERVICES-OFFERED/Responsible-Parenthood-and-Family-Planning-Program',
-    component: RPFPPServicesComponent,
-  },
-  {
-    path: 'SERVICES-OFFERED/Adolscent-Health-&-Youth-Development-Program',
-    component: ADHYDPServicesComponent,
-  },
-  {
-    path: 'SERVICES-OFFERED/Population-and-Development-Integration',
-    component: PDIServicesComponent,
-  },
-  {
-    path: 'SERVICES-OFFERED/Population Data Managment',
-    component: PDMServicesComponent,
-  },
-  // PROGRAM AREAS
-  { path: 'cms', component: CmsComponent },
-  { path: 'content-lists', component: ContentsListComponent },
-  { path: 'content/:title/:id', component: ShowContentComponent },
-  { path: 'admin-accounts', component: AdminAccountsComponent },
-  { path: 'admin/:id', component: ShowAdminStatusComponent },
-  { path: 'new-admin', component: AdministratorsComponent },
-  { path: 'logs', component: LogsComponent },
-  { path: 'roles', component: RoleComponent },
+  { path:'Others', component:OthersComponent}, 
+  // ABOUT 
+  { path:'ABOUT/PPO-MADATE', component:PpoMandateComponent}, 
+  { path:'ABOUT/VISION,MISSION,GOALS', component:VmgComponent},
+  { path:'ABOUT/CORE-VALUES', component:CoreValuesComponent},     
+  { path:'ABOUT/ORGANIZATIONAL-STRUCTURE', component:OrgStructureComponent},  
+  { path:'ABOUT/PERSONNEL-DIRECTORY', component:PersonnelDirectoryComponent},  
+  { path:'ABOUT/AWARDS', component:AwardsComponent},  
+  // PROGRAM AREAS 
+  { path:'PROGRAM-AREAS/Responsible-Parenthood-and-Family-Planning-Program', component:RPFPPComponent},
+  { path:'PROGRAM-AREAS/Adolscent-Health-&-Youth-Development-Program', component:AHYDPComponent},
+  { path:'PROGRAM-AREAS/Comprehensive-Population-Data-Banking-and-Management-Project', component:CPDBMPComponent},  
+  { path:'PROGRAM-AREAS/Population-and-Development-Integration', component:PDIComponent},
+  // SERVICES OFFERED 
+  { path:'SERVICES-OFFERED/Responsible-Parenthood-and-Family-Planning-Program', component:RPFPPServicesComponent},
+  { path:'SERVICES-OFFERED/Adolscent-Health-&-Youth-Development-Program', component:ADHYDPServicesComponent}, 
+  { path:'SERVICES-OFFERED/Population-and-Development-Integration', component:PDIServicesComponent},
+  { path:'SERVICES-OFFERED/Population Data Managment', component:PDMServicesComponent},  
+    // PROGRAM AREAS 
+  { path:'cms', component:CmsComponent},  
+  { path:'content-lists', component:ContentsListComponent},   
+  { path:'content/:title/:id', component:ShowContentComponent},  
+  { path:'admin-accounts', component:AdminAccountsComponent},  
+  { path:'admin/:id', component:ShowAdminStatusComponent}, 
+  { path:'new-admin', component:AdministratorsComponent},  
+  { path:'logs', component:LogsComponent},  
+  { path:'roles', component:RoleComponent}, 
   // /SEACRH AND WEB SERVICES
-  { path: 'search', component: SearchComponent },
-  { path: 'user-manual', component: UserManualComponent },
-  { path: 'conversations', component: ConversationsComponent },
-  { path: 'account', component: AccountComponent },
-  { path: 'backup-adn-restore', component: BackupAndRestoreComponent },
-  { path: 'aww-snap', component: PageNotFoundComponent },
+  { path:'search', component:SearchComponent},  
+  { path:'user-manual', component:UserManualComponent},
+  { path:'conversations', component:ConversationsComponent },  
+  { path:'account', component:AccountComponent},  
+  { path:'backup-adn-restore', component:BackupAndRestoreComponent}, 
+  { path:'aww-snap', component:PageNotFoundComponent},  
 ];
+
 
 @NgModule({
   declarations: [
@@ -313,7 +293,7 @@ const routes: Routes = [
     ActionButtonsCpdbComponent,
     RecordStatusDeathsComponent,
     ActionButtonsDeathsComponent,
-    TableDeathsComponent,
+    TableDeathsComponent,  
     TableBirthsComponent,
     StatusBirthComponent,
     ActionButtonsBirthComponent,
@@ -398,6 +378,10 @@ const routes: Routes = [
     SbMembersComponent,
     AddNewTeenCenterComponent,
     TeenCenterAhydTeamComponent,
+    MpcFdcTeamComponent,
+  
+    
+
   ],
   imports: [
     ChartsModule,
@@ -406,13 +390,13 @@ const routes: Routes = [
     ResponsiveModule,
     BrowserModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDEVqvIlmnz4zLo8eIPDP3x2CuRyiHZpm8',
+      apiKey: 'AIzaSyDEVqvIlmnz4zLo8eIPDP3x2CuRyiHZpm8'
     }),
     NgxFileDropModule,
     FormsModule,
     AppRoutingModule,
     [RouterModule.forRoot(routes)],
-    CarouselModule,
+    CarouselModule ,
     BrowserAnimationsModule,
     GoogleChartsModule,
     LeafletModule,
@@ -425,6 +409,7 @@ const routes: Routes = [
     AgTableModule,
     NgxPaginationModule,
     AgGridModule.withComponents([
+
       // -----admin----------------
       ActionButtonAdminComponent,
       RoleComponent,
@@ -440,7 +425,7 @@ const routes: Routes = [
       ActionButtonsCpdbComponent,
       RecordStatusComponent,
 
-      // -----deaths----------------
+      // -----deaths----------------   
       ActionButtonsDeathsComponent,
       RecordStatusDeathsComponent,
 
@@ -455,20 +440,27 @@ const routes: Routes = [
       // -----out migration----------------
       ActionButtonsOutMigsComponent,
       StatusOutMigsComponent,
-
+      
       // -----marriages----------------
       ActionButtonsMarriageComponent,
       StatusMarriageComponent,
-    ]),
+
+
+
+      
+    
+    ])
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
-  ],
+
+    
+  ], 
   exports: [RouterModule],
-  providers: [
+  providers: [    
     {
       provide: AgTableCustomSettings,
-      useValue: { lang: 'en-US' }, // Default is 'en-US'
-    },
+      useValue: { lang: 'en-US' } // Default is 'en-US'
+    }
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
