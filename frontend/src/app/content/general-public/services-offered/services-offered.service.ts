@@ -23,7 +23,7 @@ export class ServicesOfferedService {
 	user:any = ''
 	token:any = ''
 
-	baseURL = 	this.BaseAPIService.baseURL + '/users'
+	baseURL = 	this.BaseAPIService.baseURL + '/services'
 	headers = 	new HttpHeaders({
 					'Accept':'application/json',
 					'Authorization' : 'Bearer '+ this.token,
@@ -37,18 +37,18 @@ export class ServicesOfferedService {
 		return this.http.post<any>(url, string , {headers:this.headers})
 	}
 
-	retrieve(type){
-		const url = this.baseURL 
+	retrieve(id){
+		const url = this.baseURL + '/' + id
 		return this.http.get<any>(url,{headers:this.headers})
 	}
 
 	update(string, id){
-		const url = this.baseURL + id
+		const url = this.baseURL + '/'+ id
 		return this.http.put<any>(url, string ,{headers:this.headers})
 	}
 
 	delete(type, id){
-		const url = this.baseURL + id
+		const url = this.baseURL  + '/'+ id
 		return this.http.delete<any>(url ,{headers:this.headers})
 	}
 }

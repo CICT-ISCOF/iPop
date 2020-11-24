@@ -27,12 +27,14 @@
         <app-dynamic-mapping></app-dynamic-mapping>
         <br>
         <div class="district-container">
-            <div class="district container" *ngFor="let item of [1,2,3,4,5,6]">
+            <div class="district container">
                 <div class="district-name">District I</div>
                 <br>
-                <h2 class="number-of-teen-centers" style="color:var(--contrast)">15</h2>
+                <h2 class="number-of-teen-centers" style="color:var(--contrast)">{{district.I.data.length}}</h2>
                 <p>Teen Centers</p>
             </div>
+
+
         </div>
 
         <div class="w-100" style="float: left;">

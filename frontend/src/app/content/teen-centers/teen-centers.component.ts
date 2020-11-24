@@ -30,9 +30,11 @@ export class TeenCentersComponent implements OnInit {
 	
 	show = false
 
+	district = {}
 	getTeenCenters(){
 		this.TeenCentersService.getTeenCenters().subscribe(data =>{
 			console.log('teen center', data)
+			this.district = data
 		})
 	}
 

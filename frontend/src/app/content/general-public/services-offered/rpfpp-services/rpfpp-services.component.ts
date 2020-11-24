@@ -14,22 +14,14 @@ export class RPFPPServicesComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-
+		this.retrieve()
 	}
 
 	type = 'rpfp'
 
-	data = {
-		service:'',
-		type:'rpfp'
-	}
 
-	services = [
-		'Pre-Marriage Orientation and Counseling',
-		'Establishment of Multi-Purpose Counselling and Family Development Centers',
-		'RP Lectures and Family Development Sessions',
-		'Training for Pre-Marriage Counselors',
-	]
+
+	services = {}
 
 	create(){
 		this.ServicesOfferedService.create(this.data).subscribe(data => {
@@ -38,8 +30,9 @@ export class RPFPPServicesComponent implements OnInit {
 	}
 
 	retrieve(){
-		this.ServicesOfferedService.retrieve(this.data.type).subscribe(data => {
-
+		this.ServicesOfferedService.retrieve(1).subscribe(data => {
+			console.log(data)
+			this.services = data
 		})
 	}
 
