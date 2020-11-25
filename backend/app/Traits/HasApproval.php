@@ -71,9 +71,6 @@ trait HasApproval
     public function makeDeleteRequest(): DeleteRequest
     {
         $user = request()->user();
-        /**
-         * @var DeleteRequest
-         */
         $request = $this->deleteRequest;
         if ($request === null) {
             $request = $this->deleteRequest()->create([
@@ -82,18 +79,17 @@ trait HasApproval
                 'appproved' => $user->hasRole(Role::ADMIN) ? true : null,
                 'metadata' => json_encode($this->toArray()),
             ]);
-        }
-        else {
+        } else {
             $request->update([
                 'requester_id' => $user->id,
                 'approver_id' => $user->hasRole(Role::ADMIN) ? $user->id : null,
                 'appproved' => $user->hasRole(Role::ADMIN) ? true : null,
-            ])
+            ]);
         }
-        if($request->approved === true) {
+        if ($request->approved === true) {
             Log::record("Approved deletion of a record.");
         }
-        if($request->approved === null) {
+        if ($request->approved === null) {
             Log::record("Made a delete request for a record.");
         }
         return $request;
