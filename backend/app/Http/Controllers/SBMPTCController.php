@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\Role;
 use App\Models\SBMPTC;
 use Illuminate\Http\Request;
@@ -77,6 +78,8 @@ class SBMPTCController extends Controller
         $sbmptc->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $sbmptc->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a SBMPTC.");
+
         return $sbmptc;
     }
 
@@ -117,6 +120,8 @@ class SBMPTCController extends Controller
         $sbmptc->update($data);
         $sbmptc->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a SBMPTC.");
+
         return $sbmptc;
     }
 
@@ -129,6 +134,9 @@ class SBMPTCController extends Controller
     public function destroy(SBMPTC $sbmptc)
     {
         $sbmptc->delete();
+
+        Log::record("Deleted a SBMPTC.");
+
         return response('', 204);
     }
 }

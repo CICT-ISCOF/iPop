@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -52,6 +53,9 @@ class ApprovalController extends Controller
             $approval->approver_id = $request->user()->id;
             $approval->save();
             $approval->load('approver');
+            Log::record("Admin has approved an approval.");
+        } else {
+            Log::record("Admin updated an approval.");
         }
 
         return $approval;
@@ -66,6 +70,7 @@ class ApprovalController extends Controller
     public function destroy(Approval $approval)
     {
         $approval->delete();
-        return response('', 404);
+        Log::record("Admin deleted an approval.");
+        return response('', 204);
     }
 }

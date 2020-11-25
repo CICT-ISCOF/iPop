@@ -6,6 +6,7 @@ use App\Models\Approval;
 use App\Models\CMS\Award;
 use App\Models\CMS\AwardMedia;
 use App\Models\File;
+use App\Models\Log;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -62,6 +63,7 @@ class AwardController extends Controller
         $award->setApproved($request->user()->hasRole(Role::ADMIN));
 
         $award->load('medias');
+        Log::record("User created an award.");
         return $award;
     }
 
@@ -118,6 +120,7 @@ class AwardController extends Controller
         $award->update($data);
         $award->load('medias');
         $award->setApproved($request->user()->hasRole(Role::ADMIN));
+        Log::record("User updated an award.");
         return $award;
     }
 
@@ -137,7 +140,7 @@ class AwardController extends Controller
     public function deleteAwardMedia(Request $request, AwardMedia $media)
     {
         $media->delete();
-
+        Log::record("User deleted an award.");
         return response('', 204);
     }
 }

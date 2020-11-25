@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Approval;
 use App\Models\File;
+use App\Models\Log;
 use App\Models\Role;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -45,6 +46,8 @@ class SliderController extends Controller
         $slider->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $slider->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a Slider Photo.");
+
         return $slider;
     }
 
@@ -79,6 +82,9 @@ class SliderController extends Controller
         $slider->photo()->save($photo);
         $old->delete();
         $slider->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        Log::record("Updated a Slider Photo.");
+
         return $slider;
     }
 
@@ -91,6 +97,9 @@ class SliderController extends Controller
     public function destroy(Slider $slider)
     {
         $slider->delete();
+
+        Log::record("Deleted a Slider Photo.");
+
         return response('', 204);
     }
 }

@@ -61,11 +61,11 @@ class ArticleController extends Controller
                         ]);
                         $article->photos()->save($photo);
                     } catch (InvalidArgumentException $e) {
-                        Log::record('User\'s attempt to upload file has failed.', null, $e->__toString());
                     }
                 });
         }
         $article->load('photos');
+        Log::record("User created an article.");
         return $article;
     }
 
@@ -131,6 +131,7 @@ class ArticleController extends Controller
         }
 
         $article->setApproved($request->user()->hasRole(Role::ADMIN));
+        Log::record("User updated an article.");
 
         return $article;
     }
@@ -144,6 +145,7 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
+        Log::record("User deleted an article.");
 
         return response('', 204);
     }

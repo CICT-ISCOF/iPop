@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\Role;
 use App\Models\Statistics\MigrationStatistic;
 use Illuminate\Http\Request;
@@ -45,6 +46,8 @@ class MigrationStatisticController extends Controller
         $migrationStatistic->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $migrationStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a migration statistic.");
+
         return $migrationStatistic;
     }
 
@@ -81,6 +84,8 @@ class MigrationStatisticController extends Controller
         $migrationStatistic->update($data);
         $migrationStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a migration statistic.");
+
         return $migrationStatistic;
     }
 
@@ -93,6 +98,8 @@ class MigrationStatisticController extends Controller
     public function destroy(MigrationStatistic $migrationStatistic)
     {
         $migrationStatistic->delete();
+
+        Log::record("Deleted a migration statistic.");
 
         return response('', 204);
     }

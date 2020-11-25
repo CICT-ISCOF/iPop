@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\Role;
 use App\Models\SBMPTCFocalPerson;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class SBMPTCFocalPersonController extends Controller
      */
     public function index()
     {
-        return SBMPTCFocalPerson::getApproved()->paginate(10)
+        return SBMPTCFocalPerson::getApproved()->paginate(10);
     }
 
     /**
@@ -36,6 +37,8 @@ class SBMPTCFocalPersonController extends Controller
         $sBMPTCFocalPerson = SBMPTCFocalPerson::create($data);
         $sBMPTCFocalPerson->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $sBMPTCFocalPerson->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        Log::record("Created a SBMPTC Focal Person.");
 
         return $sBMPTCFocalPerson;
     }
@@ -68,6 +71,8 @@ class SBMPTCFocalPersonController extends Controller
         $sBMPTCFocalPerson->update($data);
         $sBMPTCFocalPerson->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a SBMPTC Focal Person.");
+
         return $sBMPTCFocalPerson;
     }
 
@@ -80,6 +85,9 @@ class SBMPTCFocalPersonController extends Controller
     public function destroy(SBMPTCFocalPerson $sBMPTCFocalPerson)
     {
         $sBMPTCFocalPerson->delete();
+
+        Log::record("Deleted a SBMPTC Focal Person.");
+
         return response('', 204);
     }
 }

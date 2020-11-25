@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\Role;
 use App\Models\Statistics\MigrationRate;
 use Illuminate\Http\Request;
@@ -42,6 +43,8 @@ class MigrationRateController extends Controller
         $migrationRate->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $migrationRate->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a migration rate.");
+
         return $migrationRate;
     }
 
@@ -75,6 +78,8 @@ class MigrationRateController extends Controller
         $migrationRate->update($data);
         $migrationRate->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a migration rate.");
+
         return $migrationRate;
     }
 
@@ -87,6 +92,8 @@ class MigrationRateController extends Controller
     public function destroy(MigrationRate $migrationRate)
     {
         $migrationRate->delete();
+
+        Log::record("Deleted a migration rate.");
 
         return response('', 204);
     }

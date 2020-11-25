@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\Role;
 use App\Models\SBMPTCTeam;
 use Illuminate\Http\Request;
@@ -42,6 +43,8 @@ class SBMPTCTeamController extends Controller
         $team->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $team->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a SBMPTC Team.");
+
         return $team;
     }
 
@@ -74,6 +77,8 @@ class SBMPTCTeamController extends Controller
         $team->update($data);
         $team->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a SBMPTC Team.");
+
         return $team;
     }
 
@@ -86,6 +91,9 @@ class SBMPTCTeamController extends Controller
     public function destroy(SBMPTCTeam $team)
     {
         $team->delete();
+
+        Log::record("Deleted a SBMPTC Team.");
+
         return response('', 204);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Approval;
 use App\Models\File;
+use App\Models\Log;
 use App\Models\PMOCTeam;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -48,6 +49,8 @@ class PMOCTeamController extends Controller
         $pMOCTeam->photo()->save($file);
         $pMOCTeam->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a PMOC Team.");
+
         return $pMOCTeam;
     }
 
@@ -89,6 +92,8 @@ class PMOCTeamController extends Controller
         $pmocTeam->update($data);
         $pmocTeam->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a PMOC Team.");
+
         return $pmocTeam;
     }
 
@@ -101,6 +106,8 @@ class PMOCTeamController extends Controller
     public function destroy(PMOCTeam $pMOCTeam)
     {
         $pMOCTeam->delete();
+
+        Log::record("Deleted a PMOC Team.");
 
         return response('', 204);
     }
