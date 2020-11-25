@@ -89,6 +89,17 @@ export class AwardsComponent implements OnInit {
 	}
 
 	updateAward(id, award){
+		award['files'] = []
+		if(this.files['images'].length != 0){
+			for(let images of this.files.images){
+				award['files'].push(images)
+			}			
+		}
+		if(this.files['videos'].length != 0){
+			for(let videos of this.files.videos){
+				award['files'].push(videos)
+			}			
+		}				
 		Swal.fire({
 			title: 'Are you sure you want to save changes for this award?',		
 			icon: 'warning',
@@ -99,6 +110,11 @@ export class AwardsComponent implements OnInit {
 			if (result.value) {
 				this.AwardsService.updateAward(award, id).subscribe(data => {
 					this.ngOnInit()
+					this.award = {		
+						url:'',
+						title:'',
+						files:[]
+					}
 					this.UtilityService.setAlert('Changes saved!','success')
 				})				
 			} 
@@ -119,8 +135,24 @@ export class AwardsComponent implements OnInit {
 					this.ngOnInit()
 				})				
 			} 
-		})
-	
+		})	
+	}
+
+	deletePhoto(id){
+		Swal.fire({
+			title: 'Are you sure you want to remove this Photo?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Remove',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.AwardsService.deletePhoto(id).subscribe(data => {
+					this.ngOnInit()
+				})		
+			} 
+		})	
+		
 	}
 
 

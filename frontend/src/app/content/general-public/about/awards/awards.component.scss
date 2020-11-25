@@ -105,3 +105,31 @@ owl-carousel-o video {
     position: absolute;
     right: -0;
 }
+
+.image {
+    width: 150px;
+    height: 150px;
+    margin: 15px;
+    float: left;
+}
+
+.image-container {
+    width: 100%;
+    min-height: 50vh;
+}
+
+.absolute {
+    position: absolute;
+    right: 0;
+    transform: translate(145px, 0px) scale(1.2);
+    svg {
+        cursor: pointer;
+    }
+}
+
+.list-group-item {
+    background: transparent !important;
+    padding-left: 0;
+    border: none !important;
+    box-shadow: none !important;
+}

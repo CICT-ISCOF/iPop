@@ -4,7 +4,11 @@
     <div class="animated fadeInLeftBig">
         <br><br><br><br>
         <div *ngIf="!wantsToAddanAward">
-            <button (click)="wantsToAddanAwardFunction(true)" *ngIf="!wantsToAddanAward" class="button add-an-award ">Add an Award</button>
+            <button style="display: flex;" (click)="wantsToAddanAwardFunction(true)" *ngIf="!wantsToAddanAward" class="button add-an-award ">
+              Add an Award
+              <svg style="margin-right: 0;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="white" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg></button>
             <h2>AWARDS
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-award" fill="orange" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M9.669.864L8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193l-1.51-.229L8 1.126l-1.355.702-1.51.229-.684 1.365-1.086 1.072L3.614 6l-.25 1.506 1.087 1.072.684 1.365 1.51.229L8 10.874l1.356-.702 1.509-.229.684-1.365 1.086-1.072L12.387 6l.248-1.506-1.086-1.072-.684-1.365z"/>
@@ -13,28 +17,42 @@
             </h2>
             <hr>
 
-            <ul class="list-group">
-                <div *ngFor="let award of awards;let i = index">
-                    <li class="list-group-item" *ngIf="!activeAward[i]">
+            <ol type="I" class="list-group">
+                <div *ngFor="let award of awards;let i = index container">
+
+                    <li class="list-group-item " *ngIf="!activeAward[i]">
                         <div>
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check2" fill="#7ED03D" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-                        </svg>{{ award.title }}<br>
-                            <br> <a *ngIf="award.url != null" target="_blank" [href]="award.url">{{award.url}}</a>
+                            <h5>
+                                {{ award.title }}
+                            </h5>
+                            <a *ngIf="award.url != null" target="_blank" [href]="award.url">{{award.url}}</a>
                         </div>
                         <div (click)="toggleAward(i)" class="change ml-auto">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                        <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                      </svg>
+                                <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+                                <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+                            </svg>
                         </div>
-                        <div (click)="deleteAward(i)" class="close">
+                        <div (click)="deleteAward(award.id)" class="close">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                      </svg>
+                                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
                         </div>
+
                     </li>
                     <br>
+
+                    <div *ngIf="award.medias.length != 0 && !activeAward[i]">
+                        <owl-carousel-o [options]=" customOptions">
+                            <ng-template [class.hide]="media.file.type.includes('video')" carouselSlide *ngFor="let media of award.medias">
+                                <img alt="" title="slide.title " [src]="media.file.uri">
+                            </ng-template>
+                            <ng-template [class.hide]="media.file.type.includes('image')" carouselSlide *ngFor="let video of files.videos">
+                                <video autoplay [src]="media.file.uri"></video>
+                            </ng-template>
+                        </owl-carousel-o> <br> <br> <br>
+                    </div>
+
                     <div *ngIf="activeAward[i]" [class.selected]="activeAward[i]" class="row">
                         <div class="form-group col-md-6">
                             <label for="title">New Award Title</label>
@@ -51,7 +69,7 @@
                         <div class="flex">
 
                             <button (click)="readSliderURL" (click)="triggerMediaInput('slider',i)" class="clickable">Add an Image</button>
-                            <button (click)="readSliderURL" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Add a Video</button>
+                            <!-- <button (click)="readSliderURL" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Add a Video</button> -->
                             <button *ngIf="files.images.length != 0 || files.videos.length != 0" (click)="clearSlider()" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Clear Slider</button>
 
 
@@ -62,6 +80,7 @@
 
                         </div>
                         <br>
+                        <p *ngIf="files.images.length != 0 || files.videos.length != 0">This File will be added to this award</p>
                         <owl-carousel-o *ngIf="files.images.length != 0 || files.videos.length != 0" [options]=" customOptions">
                             <ng-template carouselSlide *ngFor="let image of files.images">
                                 <img alt="" title="slide.title " [src]="image">
@@ -74,8 +93,27 @@
                         <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]=" 'slider' + i ">
                         <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'video' )" accept="video/*" style="display:none " [id]=" 'videoslider' + i ">
                     </div>
+
+
+                    <div class="image-container" *ngIf="activeAward[i]">
+                        <p>Your Previous Images</p>
+                        <div>
+                            <div class="image" *ngFor="let media of award.medias">
+                                <div style="position: relative;">
+                                    <div class="flex absolute">
+                                        <svg (click)="deletePhoto(media.id)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="gray" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <img [src]="media.file.uri" alt="" style="width: 100%;height: 100%;">
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
-            </ul>
+            </ol>
             <br>
         </div>
         <div *ngIf="wantsToAddanAward" class="row">

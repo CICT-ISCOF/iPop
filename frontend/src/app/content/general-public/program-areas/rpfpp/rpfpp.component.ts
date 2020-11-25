@@ -47,8 +47,8 @@ export class RPFPPComponent implements OnInit {
 	}
 
 	updateProgramArea(){
-		this.ProgramAreasService.updateProgramArea(this.activity, 1).subscribe(data => {
-			console.log('update', data)
+		
+		this.ProgramAreasService.updateProgramArea(this.activity, 1).subscribe(data => {		
 			this.activity = {		
 				program_area_id:1,
 				title:'',
@@ -83,6 +83,17 @@ export class RPFPPComponent implements OnInit {
 		let data = {}
 		data['title'] = program['title']
 		data['description'] = program['description']
+		data['files'] = []
+		if(this.files['images'].length != 0){
+			for(let images of this.files.images){
+				data['files'].push(images)
+			}			
+		}
+		if(this.files['videos'].length != 0){
+			for(let videos of this.files.videos){
+				data['files'].push(videos)
+			}			
+		}			
 		Swal.fire({
 			title: 'Are you sure you want to update this Actiivity?',		
 			icon: 'warning',

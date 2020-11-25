@@ -1,13 +1,12 @@
 <app-home>
 </app-home>
 <div class="wrapper">
-    <div class="animated fadeInLeftBig">
-        <br><br><br><br>
-        <h2>POPULATION AND DEVELOPMENT INTEGRATION</h2>
+    <div class="animated fadeInLeftBig"> <br><br><br><br>
+        <h2>{{services.title}}</h2>
         <hr>
         <br>
         <ul>
-            <li *ngFor="let service of services; let i = index">
+            <li *ngFor="let service of services.offers; let i = index">
                 <div *ngIf="!acitveServices[i]" class="absolute flex">
                     <div (click)="toggleServices(i)" class="edit">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -15,19 +14,19 @@
                             <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
                           </svg>
                     </div>
-                    <div (click)="deleteService(i)" class="remove">
+                    <div (click)="deleteService(service.id)" class="remove">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                           </svg>
                     </div>
                 </div>
 
-                <p *ngIf="!acitveServices[i]"> {{service}}</p>
+                <p *ngIf="!acitveServices[i]"> {{service.title}}</p>
                 <div *ngIf="acitveServices[i]">
                     <label for="service">New Service Name</label>
-                    <textarea autosize [(ngModel)]="data.service" id="service" class="form-control"></textarea>
+                    <textarea autosize [(ngModel)]="service.title" id="service" class="form-control"></textarea>
                     <br>
-                    <button class="button">Save</button>
+                    <button (click)="update(service.id, service, i)" class="button">Save</button>
                     <button (click)="toggleServices(i)" class="clickable">Cancel</button>
                     <br> <br> <br>
                 </div>
@@ -35,9 +34,9 @@
             <button *ngIf="!wantsToAdd" (click)="wantsToAdd = true" class="button">Add Service</button>
             <div *ngIf="wantsToAdd">
                 <label for="service">New Service Name</label>
-                <textarea autosize [(ngModel)]="data.service" id="service" class="form-control"></textarea>
+                <textarea autosize [(ngModel)]="data.title" id="service" class="form-control"></textarea>
                 <br>
-                <button class="button">Save</button>
+                <button (click)="create()" class="button">Save</button>
                 <button (click)="wantsToAdd = false" class="clickable">Cancel</button>
                 <br> <br> <br>
             </div>

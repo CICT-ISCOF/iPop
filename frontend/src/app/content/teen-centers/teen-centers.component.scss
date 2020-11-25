@@ -57,3 +57,8 @@ h4,
     }
     cursor: pointer;
 }
+
+.active {
+    border-color: #149ef8 !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}

@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../../utility.service';
 import Swal from 'sweetalert2'
 import { ServicesOfferedService } from './../services-offered.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,39 +11,52 @@ import { Component, OnInit } from '@angular/core';
 export class PDMServicesComponent implements OnInit {
 
 	constructor(
-		private ServicesOfferedService : ServicesOfferedService
+		private ServicesOfferedService : ServicesOfferedService,
+		private UtilityService : UtilityService
 	) { }
 
+
 	ngOnInit(): void {
-
+		this.retrieve()
 	}
-
-	type = 'rpfp'
 
 	data = {
-		service:'',
-		type:'rpfp'
+		service_id:4,
+		title:''
 	}
 
-	services = [
-		'Provision of Population and Population-related Data',
-	]
+	services = {}
 
 	create(){
-		this.ServicesOfferedService.create(this.data).subscribe(data => {
-
+		this.ServicesOfferedService.create(this.data).subscribe(data => {			
+			this.wantsToAdd = false
+			this.ngOnInit()
 		})
 	}
 
 	retrieve(){
-		this.ServicesOfferedService.retrieve(this.data.type).subscribe(data => {
-
+		this.ServicesOfferedService.retrieve(4).subscribe(data => {			
+			this.services = data
 		})
 	}
 
-	update(id){
-		this.ServicesOfferedService.update(this.data.type, id).subscribe(data => {
-
+	
+	update(id, service, index){
+		
+		Swal.fire({
+			title: 'Are you sure you want to update this Service?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Update Service',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.ServicesOfferedService.update(service, id).subscribe(data => {
+					this.UtilityService.setAlert('Changes has been saved', 'info')
+					this.ngOnInit()
+					this.toggleServices(index)
+				})
+			} 
 		})
 	}
 
@@ -55,12 +69,14 @@ export class PDMServicesComponent implements OnInit {
 			cancelButtonText: 'Nope'
 		  }).then((result) => {
 			if (result.value) {
-				this.ServicesOfferedService.delete(this.data.type, id).subscribe(data => {
-
+				this.ServicesOfferedService.delete(id).subscribe(data => {
+					this.UtilityService.setAlert('Service has been deleted', 'info')
+					this.ngOnInit()
 				})		
 			} 
 		})
 	}
+
 
 
 	acitveServices = {}
