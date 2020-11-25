@@ -133,7 +133,7 @@ class SBMPTCController extends Controller
      */
     public function destroy(SBMPTC $sbmptc)
     {
-        $sbmptc->delete();
+        $sbmptc->makeDeleteRequest();
 
         Log::record("Deleted a SBMPTC.");
 

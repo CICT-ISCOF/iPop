@@ -99,7 +99,7 @@ class MPCFDCController extends Controller
      */
     public function destroy(MPCFDC $mPCFDC)
     {
-        $mPCFDC->delete();
+        $mPCFDC->makeDeleteRequest();
 
         Log::record("Deleted a MPCFDC.");
 

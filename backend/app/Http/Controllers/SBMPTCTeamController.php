@@ -90,7 +90,7 @@ class SBMPTCTeamController extends Controller
      */
     public function destroy(SBMPTCTeam $team)
     {
-        $team->delete();
+        $team->makeDeleteRequest();
 
         Log::record("Deleted a SBMPTC Team.");
 

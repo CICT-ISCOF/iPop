@@ -91,7 +91,7 @@ class MigrationRateController extends Controller
      */
     public function destroy(MigrationRate $migrationRate)
     {
-        $migrationRate->delete();
+        $migrationRate->makeDeleteRequest();
 
         Log::record("Deleted a migration rate.");
 

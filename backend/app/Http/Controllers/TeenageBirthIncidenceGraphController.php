@@ -95,9 +95,7 @@ class TeenageBirthIncidenceGraphController extends Controller
      */
     public function destroy(TeenageBirthIncidenceGraph $teenageBirthIncidenceGraph)
     {
-        $teenageBirthIncidenceGraph->delete();
-
-        Log::record("Deleted a Teenage Birth Incidence Graph.");
+        $teenageBirthIncidenceGraph->makeDeleteRequest();
 
         return response('', 204);
     }

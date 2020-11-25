@@ -144,7 +144,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        $article->delete();
+        $article->makeDeleteRequest();
         Log::record("User deleted an article.");
 
         return response('', 204);

@@ -93,7 +93,7 @@ class ServiceOfferController extends Controller
      */
     public function destroy(ServiceOffer $serviceOffer)
     {
-        $serviceOffer->delete();
+        $serviceOffer->makeDeleteRequest();
 
         Log::record("Deleted a Service Entry.");
 

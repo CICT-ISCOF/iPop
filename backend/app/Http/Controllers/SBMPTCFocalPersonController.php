@@ -84,7 +84,7 @@ class SBMPTCFocalPersonController extends Controller
      */
     public function destroy(SBMPTCFocalPerson $sBMPTCFocalPerson)
     {
-        $sBMPTCFocalPerson->delete();
+        $sBMPTCFocalPerson->makeDeleteRequest();
 
         Log::record("Deleted a SBMPTC Focal Person.");
 

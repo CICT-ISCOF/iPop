@@ -97,7 +97,7 @@ class DeathStatisticController extends Controller
      */
     public function destroy(DeathStatistic $deathStatistic)
     {
-        $deathStatistic->delete();
+        $deathStatistic->makeDeleteRequest();
 
         Log::record("Deleted a death statistic.");
 

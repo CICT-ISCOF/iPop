@@ -91,7 +91,7 @@ class ProvincialOfficialController extends Controller
      */
     public function destroy(ProvincialOfficial $provincialOfficial)
     {
-        $provincialOfficial->delete();
+        $provincialOfficial->makeDeleteRequest();
 
         Log::record("Deleted a Provincial Official.");
 

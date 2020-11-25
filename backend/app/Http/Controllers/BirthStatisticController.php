@@ -99,7 +99,7 @@ class BirthStatisticController extends Controller
      */
     public function destroy(BirthStatistic $birthStatistic)
     {
-        $birthStatistic->delete();
+        $birthStatistic->makeDeleteRequest();
 
         Log::record("Deleted a birth statistic.");
 

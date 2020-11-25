@@ -103,7 +103,7 @@ class PMOCController extends Controller
      */
     public function destroy(PMOC $pMOC)
     {
-        $pMOC->delete();
+        $pMOC->makeDeleteRequest();
 
         Log::record("Deleted a PMOC.");
 

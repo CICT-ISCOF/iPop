@@ -90,7 +90,7 @@ class MTCMMembersController extends Controller
      */
     public function destroy(MTCMMember $mtcm)
     {
-        $mtcm->delete();
+        $mtcm->makeDeleteRequest();
 
         Log::record("Deleted a MTCM Member.");
 

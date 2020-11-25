@@ -97,7 +97,7 @@ class MigrationStatisticController extends Controller
      */
     public function destroy(MigrationStatistic $migrationStatistic)
     {
-        $migrationStatistic->delete();
+        $migrationStatistic->makeDeleteRequest();
 
         Log::record("Deleted a migration statistic.");
 

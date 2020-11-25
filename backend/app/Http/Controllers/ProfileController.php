@@ -120,7 +120,7 @@ class ProfileController extends Controller
      */
     public function destroy(Profile $profile)
     {
-        $profile->delete();
+        $profile->makeDeleteRequest();
 
         Log::record("Deleted a Statistics Profile.");
 

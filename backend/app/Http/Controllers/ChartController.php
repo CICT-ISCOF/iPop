@@ -76,7 +76,7 @@ class ChartController extends Controller
      */
     public function destroy(Chart $chart)
     {
-        $chart->delete();
+        $chart->makeDeleteRequest();
         Log::record("Deleted a chart.");
         return response('', 204);
     }

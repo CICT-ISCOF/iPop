@@ -52,11 +52,13 @@ class AwardController extends Controller
                     $file->save();
                     return $file;
                 })
-                ->each(function ($file) use ($award) {
-                    AwardMedia::create([
+                ->each(function ($file) use ($award, $request) {
+                    $media = AwardMedia::create([
                         'award_id' => $award->id,
                         'file_id' => $file->id,
                     ]);
+                    $media->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+                    $media->setApproved($request->user()->hasRole(Role::ADMIN));
                 });
         }
         $award->approval()->save(new Approval(['requester_id' => $request->user()->id]));
@@ -98,7 +100,7 @@ class AwardController extends Controller
 
         if (isset($data['truncate_media'])) {
             $award->medias->each(function ($media) {
-                $media->delete();
+                $media->makeDeleteRequest();
             });
         }
 
@@ -132,15 +134,14 @@ class AwardController extends Controller
      */
     public function destroy(Award $award)
     {
-        $award->delete();
-
+        $award->makeDeleteRequest();
+        Log::record("User deleted an award.");
         return response('', 204);
     }
 
     public function deleteAwardMedia(Request $request, AwardMedia $media)
     {
-        $media->delete();
-        Log::record("User deleted an award.");
+        $media->makeDeleteRequest();
         return response('', 204);
     }
 }

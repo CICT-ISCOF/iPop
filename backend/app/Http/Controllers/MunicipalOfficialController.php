@@ -94,7 +94,7 @@ class MunicipalOfficialController extends Controller
      */
     public function destroy(MunicipalOfficial $municipalOfficial)
     {
-        $municipalOfficial->delete();
+        $municipalOfficial->makeDeleteRequest();
 
         Log::record("Deleted a Municipal Official.");
 

@@ -139,7 +139,9 @@ class ActivityController extends Controller
      */
     public function destroy(Activity $activity)
     {
-        $activity->delete();
+        $activity->makeDeleteRequest();
+
+        Log::record("Deleted an activity.");
 
         return response('', 204);
     }

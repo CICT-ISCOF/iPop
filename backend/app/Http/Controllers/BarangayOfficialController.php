@@ -90,7 +90,7 @@ class BarangayOfficialController extends Controller
      */
     public function destroy(BarangayOfficial $barangayOfficial)
     {
-        $barangayOfficial->delete();
+        $barangayOfficial->makeDeleteRequest();
         Log::record("User deleted a barangay official.");
         return response('', 204);
     }

@@ -96,7 +96,7 @@ class SliderController extends Controller
      */
     public function destroy(Slider $slider)
     {
-        $slider->delete();
+        $slider->makeDeleteRequest();
 
         Log::record("Deleted a Slider Photo.");
 
