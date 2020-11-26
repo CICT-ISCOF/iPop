@@ -37,8 +37,8 @@ class SBMPTCController extends Controller
                 ];
             }
             $data[$row->district]['data'][] = $row;
-            if (!in_array($row->municipality, $data[$row->district]['municipalities'])) {
-                $data[$row->district]['municipalities'][] = [
+            if (!in_array($row->municipality, array_keys($data[$row->district]['municipalities']))) {
+                $data[$row->district]['municipalities'][$row->municipality] = [
                     'name' => $row->municipality,
                     'teen_center_count' => SBMPTC::getApproved()
                         ->where('municipality', $row->municipality)

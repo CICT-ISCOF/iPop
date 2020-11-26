@@ -1,137 +1,228 @@
 <div class="statistics-component">
-
     <!-- filters  -->
     <div class="row container">
         <div class="form-group col-md-4">
             <label for="municipality">
-                <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                <div
+                    *ngIf="municipalityIsLoading"
+                    class="spinner-border text-light spinner-border-sm fast"
+                    role="status"
+                >
                     <span class="sr-only">Loading...</span>
                 </div>
-                Municipality</label>
-            <select (change)="getBarangays($event)" class="form-control" id="municipality">
+                Municipality</label
+            >
+            <select
+                (change)="getBarangays($event)"
+                class="form-control"
+                id="municipality"
+            >
                 <option selected disabled>Choose Municipality</option>
-                <option *ngFor="let municipality of municipalities" [value]="municipality.code">{{municipality.name}}</option>
+                <option
+                    *ngFor="let municipality of municipalities"
+                    [value]="municipality.code"
+                >
+                    {{ municipality.name }}
+                </option>
             </select>
         </div>
 
         <div class="form-group col-md-4">
             <label for="barangay">
-                <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                <div
+                    *ngIf="barangayIsLoading"
+                    class="spinner-border text-light spinner-border-sm fast"
+                    role="status"
+                >
                     <span class="sr-only">Loading...</span>
                 </div>
-                Barangay</label>
-            <select (change)="setBarangay($event)" class="form-control" id="barangay">
+                Barangay</label
+            >
+            <select
+                (change)="setBarangay($event)"
+                class="form-control"
+                id="barangay"
+            >
                 <option selected disabled>Choose Barangay</option>
-                <option *ngFor="let barangay of barangays">{{barangay.name}}</option>
-                </select>
+                <option *ngFor="let barangay of barangays">
+                    {{ barangay.name }}
+                </option>
+            </select>
         </div>
-        <hr>
+        <hr />
         <div class="form-group col-md-4">
             <label for="year">Year</label>
-            <select class="form-control " id="year">
+            <select class="form-control" id="year" (change)="setYear($event)">
                 <option selected disabled>Choose Year</option>
-                <option>2020</option>
-                </select>
+                <option
+                    *ngFor="let year of [2020, 2019, 2018, 2017, 2016, 2015]"
+                >
+                    {{ year }}
+                </option>
+            </select>
         </div>
-
     </div>
 
     <!-- map  -->
-    <br>
-    <div style="margin-left: -25px;">
+    <br />
+    <div style="margin-left: -25px">
         <app-dynamic-mapping></app-dynamic-mapping>
     </div>
-    <br><br><br>
+    <br /><br /><br />
 
     <!-- population profile  -->
-    <h2 style="text-align: center;">POPULATION PROFILE</h2>
-    <hr>
+    <h2 style="text-align: center">POPULATION PROFILE</h2>
+    <hr />
     <div class="container row">
-        <table class="table">
+        <div class="col-sm-12 col-md-6 mt-1">
+            <h5>Municipality: {{ profile.municipality }}</h5>
+        </div>
+        <div class="col-sm-12 col-md-6 mt-1">
+            <h5>Barangay: {{ profile.barangay }}</h5>
+        </div>
+        <table class="table mt-3">
             <tr>
                 <th>Coverage</th>
-                <td></td>
+                <td>
+                    {{ profile.coverage }}
+                </td>
             </tr>
             <tr>
                 <th>Total No. of Barangays</th>
-                <td>364</td>
+                <td>
+                    {{ profile.barangays }}
+                </td>
             </tr>
             <tr>
                 <th>Total Land Area</th>
-                <td>300,000 km²</td>
+                <td>
+                    {{ profile.land_area }}
+                </td>
             </tr>
             <tr>
                 <th>Total Household Population</th>
-                <td>100</td>
+                <td>
+                    {{ profile.household_population }}
+                </td>
             </tr>
             <tr>
                 <th>Male</th>
-                <td>100</td>
+                <td>
+                    {{ profile.males }}
+                </td>
             </tr>
             <tr>
                 <th>Female</th>
-                <td>100</td>
+                <td>
+                    {{ profile.females }}
+                </td>
             </tr>
             <tr>
                 <th>Sex Ratio</th>
-                <td>2:3</td>
+                <td>
+                    {{ profile.sex_ratio }}
+                </td>
             </tr>
             <tr>
                 <th>Median Age</th>
-                <td>65</td>
+                <td>
+                    {{ profile.median_age }}
+                </td>
             </tr>
             <tr>
                 <th>Doubling Time/Year</th>
-                <td>65</td>
+                <td>
+                    {{ profile.doubling }}
+                </td>
             </tr>
             <tr>
                 <th>Population Growth Rate</th>
-                <td>65</td>
+                <td>
+                    {{ profile.growth_rate }}
+                </td>
             </tr>
             <tr>
                 <th>No. of Households</th>
-                <td>65</td>
+                <td>
+                    {{ profile.households }}
+                </td>
             </tr>
             <tr>
                 <th>Average Household Size</th>
-                <td>65</td>
+                <td>
+                    {{ profile.average_household_size }}
+                </td>
             </tr>
             <tr>
                 <th>Population Density</th>
-                <td>358 people per square kilometer</td>
+                <td>
+                    {{ profile.density }}
+                </td>
             </tr>
             <tr>
                 <th>Age Dependency Ratio</th>
-                <td>55</td>
+                <td>
+                    {{ profile.age_dependency_ratio }}
+                </td>
             </tr>
             <tr>
                 <th>Child Dependency Ratio</th>
-                <td>55</td>
+                <td>
+                    {{ profile.child_dependency_ratio }}
+                </td>
             </tr>
             <tr>
                 <th>Old-Age Dependency Ratio</th>
-                <td>55</td>
+                <td>
+                    {{ profile.old_age_dependency_ratio }}
+                </td>
             </tr>
         </table>
     </div>
 
-
     <!-- age distribution  -->
     <div class="row container chart-container">
-        <h4 class="title">Age Distribution Male & Female <br>
-            <span class="chart-details1"><span style="color:var(--colorPrimary) !important"> Male </span>
-            <span style="margin-left: 20px;">
-                    {{sexs.male}}
+        <h4 class="title">
+            Age Distribution Male & Female <br />
+            <span class="chart-details1"
+                ><span style="color: var(--colorPrimary) !important">
+                    Male
                 </span>
-            <span style="margin-left: 20px;font-size: 11px;text-align: right;" [class.low]="sexs.male / population.total * 100 > 50" [class.high]="sexs.male / population.total * 100 < 50">
-                    {{ sexs.male / population.total * 100 | number:'1.0-0' }}%
+                <span style="margin-left: 20px">
+                    {{ sexs.male }}
                 </span>
-            <br>
-            <span class="chart-details" style="color:var(--colorPrimary) !important">Female</span>
-            <span style="margin-left: 20px;">
-                    {{sexs.female}}
+                <span
+                    style="
+                        margin-left: 20px;
+                        font-size: 11px;
+                        text-align: right;
+                    "
+                    [class.low]="(sexs.male / population.total) * 100 > 50"
+                    [class.high]="(sexs.male / population.total) * 100 < 50"
+                >
+                    {{
+                        (sexs.male / population.total) * 100 | number: "1.0-0"
+                    }}%
                 </span>
-            <span style="margin-left: 20px;font-size: 11px;" [class.low]="sexs.female / population.total * 100 > 50" [class.high]="sexs.female / population.total * 100 < 50">{{ sexs.female / population.total * 100 | number:'1.0-0' }}%</span> </span>
+                <br />
+                <span
+                    class="chart-details"
+                    style="color: var(--colorPrimary) !important"
+                    >Female</span
+                >
+                <span style="margin-left: 20px">
+                    {{ sexs.female }}
+                </span>
+                <span
+                    style="margin-left: 20px; font-size: 11px"
+                    [class.low]="(sexs.female / population.total) * 100 > 50"
+                    [class.high]="(sexs.female / population.total) * 100 < 50"
+                    >{{
+                        (sexs.female / population.total) * 100
+                            | number: "1.0-0"
+                    }}%</span
+                >
+            </span>
         </h4>
         <div id="male-and-female" class="w-100">
             <div class="spinner-border text-warning fast" role="status">
@@ -139,48 +230,70 @@
             </div>
         </div>
     </div>
-    <br>
+    <br />
 
     <!-- top populated  -->
     <div class="row container">
         <div class="form-group col-md-12">
             <h3 class="title">Top Populated Municipalities</h3>
-            <p style="color:gray">All over Iloilo</p>
-            <div *ngIf="population.top.length == 0 " class="flex-container">
+            <p style="color: gray">All over Iloilo</p>
+            <div *ngIf="population.top.length == 0" class="flex-container">
                 <div class="spinner-border text-light fast" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
             <ul class="list-group" [@listAnimation]="population.top.length">
                 <li class="list-group-item barangays">
-                    <i style="color:transparent;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
+                    <i
+                        style="color: transparent; font-size: 20px"
+                        class="fas fa-map-marker-alt mr-auto"
+                    ></i>
                     <p class="sub-title">MUNICIPALITY</p>
                     <p class="sub-title">TOTAL POPULATION</p>
                     <p class="sub-title">PERCENTAGE</p>
                 </li>
-                <li *ngFor="let municipality of population.top" class="list-group-item barangays">
-                    <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
-                    <p>{{municipality.name}}</p>
-                    <p>{{municipality.total}}</p>
+                <li
+                    *ngFor="let municipality of population.top"
+                    class="list-group-item barangays"
+                >
+                    <i
+                        style="color: orangered; font-size: 20px"
+                        class="fas fa-map-marker-alt mr-auto"
+                    ></i>
+                    <p>{{ municipality.name }}</p>
+                    <p>{{ municipality.total }}</p>
                     <p>
-                        <ng2-odometer class="low" [number]=" municipality.total / population.total * 100 | number:'1.0-0' " [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }">
-                        </ng2-odometer>%</p>
-
+                        <ng2-odometer
+                            class="low"
+                            [number]="
+                                (municipality.total / population.total) * 100
+                                    | number: '1.0-0'
+                            "
+                            [config]="{
+                                animation: 'slide',
+                                format: 'd',
+                                value: 0,
+                                auto: true
+                            }"
+                        >
+                        </ng2-odometer
+                        >%
+                    </p>
                 </li>
             </ul>
         </div>
 
         <div class="form-group col-md-6">
-            <div class="map w-100 col-md-12" #map id="map" style="height: 100%; ">
-            </div>
+            <div
+                class="map w-100 col-md-12"
+                #map
+                id="map"
+                style="height: 100%"
+            ></div>
         </div>
     </div>
 
-
-
-
-
-
-
-    <br> <br> <br>
+    <br />
+    <br />
+    <br />
 </div>

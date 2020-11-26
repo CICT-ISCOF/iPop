@@ -21,7 +21,26 @@ class ProfileController extends Controller
      */
     public function index(Request $request)
     {
-        return Profile::getApproved()->get();
+        $queries = $request->validate([
+            'municipality' => [
+                Rule::requiredIf(function () use ($request) {
+                    return $request->has('barangay');
+                }),
+                Rule::exists('municipalities', 'name')
+            ],
+            'barangay' => [
+                Rule::requiredIf(function () use ($request) {
+                    return $request->has('year');
+                }),
+                Rule::exists('barangays', 'name')
+            ],
+            'year' => ['nullable', 'date_format:Y'],
+        ]);
+        $builder = Profile::getApproved();
+        foreach ($queries as $key => $query) {
+            $builder->where($key, $query);
+        }
+        return $builder->get();
     }
 
     /**
@@ -46,6 +65,7 @@ class ProfileController extends Controller
             'median_age' => ['required', 'string', 'max:255'],
             'doubling' => ['required', 'string', 'max:255'],
             'growth_rate' => ['required', 'string', 'max:255'],
+            'households' => ['required', 'string', 'max:255'],
             'average_household_size' => ['required', 'string', 'max:255'],
             'density' => ['required', 'string', 'max:255'],
             'age_dependency_ratio' => ['required', 'string', 'max:255'],
@@ -97,6 +117,7 @@ class ProfileController extends Controller
             'median_age' => ['nullable', 'string', 'max:255'],
             'doubling' => ['nullable', 'string', 'max:255'],
             'growth_rate' => ['nullable', 'string', 'max:255'],
+            'households' => ['nullable', 'string', 'max:255'],
             'average_household_size' => ['nullable', 'string', 'max:255'],
             'density' => ['nullable', 'string', 'max:255'],
             'age_dependency_ratio' => ['nullable', 'string', 'max:255'],
