@@ -14,7 +14,7 @@ class Article extends Model
     protected $fillable = ['title', 'body'];
     protected $with = ['photos'];
 
-    protected static function booted()
+    public static function booted()
     {
         static::saving(function ($article) {
             $article->slug = Str::slug($article->title);

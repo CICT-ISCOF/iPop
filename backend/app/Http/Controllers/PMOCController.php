@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\PMOC;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -48,6 +49,8 @@ class PMOCController extends Controller
         $pMOC->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $pMOC->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a PMOC.");
+
         return $pMOC;
     }
 
@@ -87,6 +90,8 @@ class PMOCController extends Controller
         $pMOC->update($data);
         $pMOC->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a PMOC.");
+
         return $pMOC;
     }
 
@@ -98,7 +103,9 @@ class PMOCController extends Controller
      */
     public function destroy(PMOC $pMOC)
     {
-        $pMOC->delete();
+        $pMOC->makeDeleteRequest();
+
+        Log::record("Deleted a PMOC.");
 
         return response('', 204);
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\ProvincialOfficial;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -42,6 +43,8 @@ class ProvincialOfficialController extends Controller
         $provincialOfficial->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $provincialOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a Provincial Official.");
+
         return $provincialOfficial;
     }
 
@@ -75,6 +78,8 @@ class ProvincialOfficialController extends Controller
         $provincialOfficial->update($data);
         $provincialOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a Provincial Official.");
+
         return $provincialOfficial;
     }
 
@@ -86,7 +91,9 @@ class ProvincialOfficialController extends Controller
      */
     public function destroy(ProvincialOfficial $provincialOfficial)
     {
-        $provincialOfficial->delete();
+        $provincialOfficial->makeDeleteRequest();
+
+        Log::record("Deleted a Provincial Official.");
 
         return response('', 204);
     }

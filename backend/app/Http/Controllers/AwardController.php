@@ -6,6 +6,7 @@ use App\Models\Approval;
 use App\Models\CMS\Award;
 use App\Models\CMS\AwardMedia;
 use App\Models\File;
+use App\Models\Log;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -51,17 +52,20 @@ class AwardController extends Controller
                     $file->save();
                     return $file;
                 })
-                ->each(function ($file) use ($award) {
-                    AwardMedia::create([
+                ->each(function ($file) use ($award, $request) {
+                    $media = AwardMedia::create([
                         'award_id' => $award->id,
                         'file_id' => $file->id,
                     ]);
+                    $media->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+                    $media->setApproved($request->user()->hasRole(Role::ADMIN));
                 });
         }
         $award->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $award->setApproved($request->user()->hasRole(Role::ADMIN));
 
         $award->load('medias');
+        Log::record("User created an award.");
         return $award;
     }
 
@@ -96,7 +100,7 @@ class AwardController extends Controller
 
         if (isset($data['truncate_media'])) {
             $award->medias->each(function ($media) {
-                $media->delete();
+                $media->makeDeleteRequest();
             });
         }
 
@@ -118,6 +122,7 @@ class AwardController extends Controller
         $award->update($data);
         $award->load('medias');
         $award->setApproved($request->user()->hasRole(Role::ADMIN));
+        Log::record("User updated an award.");
         return $award;
     }
 
@@ -129,15 +134,14 @@ class AwardController extends Controller
      */
     public function destroy(Award $award)
     {
-        $award->delete();
-
+        $award->makeDeleteRequest();
+        Log::record("User deleted an award.");
         return response('', 204);
     }
 
     public function deleteAwardMedia(Request $request, AwardMedia $media)
     {
-        $media->delete();
-
+        $media->makeDeleteRequest();
         return response('', 204);
     }
 }

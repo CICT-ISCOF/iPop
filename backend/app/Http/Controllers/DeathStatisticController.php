@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\Role;
 use App\Models\Statistics\DeathStatistic;
 use Illuminate\Http\Request;
@@ -45,6 +46,8 @@ class DeathStatisticController extends Controller
         $deathStatistic->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $deathStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a death statistic.");
+
         return $deathStatistic;
     }
 
@@ -81,6 +84,8 @@ class DeathStatisticController extends Controller
         $deathStatistic->update($data);
         $deathStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a death statistic.");
+
         return $deathStatistic;
     }
 
@@ -92,7 +97,9 @@ class DeathStatisticController extends Controller
      */
     public function destroy(DeathStatistic $deathStatistic)
     {
-        $deathStatistic->delete();
+        $deathStatistic->makeDeleteRequest();
+
+        Log::record("Deleted a death statistic.");
 
         return response('', 204);
     }

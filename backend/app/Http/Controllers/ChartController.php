@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CMS\Chart;
 use App\Models\File;
+use App\Models\Log;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -37,6 +38,9 @@ class ChartController extends Controller
         $chart = Chart::create(['photo_id' => $file->id]);
         $chart->approval()->create(['requester_id' => $request->user()->id]);
         $chart->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        Log::record("Created a chart.");
+
         return $chart;
     }
 
@@ -72,7 +76,8 @@ class ChartController extends Controller
      */
     public function destroy(Chart $chart)
     {
-        $chart->delete();
+        $chart->makeDeleteRequest();
+        Log::record("Deleted a chart.");
         return response('', 204);
     }
 }

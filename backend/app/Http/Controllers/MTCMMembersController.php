@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\MTCMMember;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -40,6 +41,8 @@ class MTCMMembersController extends Controller
             'sbmptc_id' => ['required', Rule::exists('s_b_m_p_t_c_s', 'id')]
         ]);
 
+        Log::record("Created a MTCM Member.");
+
         return MTCMMember::create($data);
     }
 
@@ -73,6 +76,9 @@ class MTCMMembersController extends Controller
         ]);
 
         $mtcm->update($data);
+
+        Log::record("Updated a MTCM Member.");
+
         return $mtcm;
     }
 
@@ -84,7 +90,10 @@ class MTCMMembersController extends Controller
      */
     public function destroy(MTCMMember $mtcm)
     {
-        $mtcm->delete();
+        $mtcm->makeDeleteRequest();
+
+        Log::record("Deleted a MTCM Member.");
+
         return response('', 204);
     }
 }

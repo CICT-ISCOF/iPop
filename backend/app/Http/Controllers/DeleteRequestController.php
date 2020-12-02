@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CMS\ProgramArea;
+use App\Models\DeleteRequest;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
-class ProgramAreaController extends Controller
+class DeleteRequestController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index', 'show');
+        $this->middleware(['auth:sanctum', 'role:' . Role::ADMIN]);
     }
 
     /**
@@ -19,7 +21,7 @@ class ProgramAreaController extends Controller
      */
     public function index()
     {
-        return ProgramArea::getApproved()->get();
+        return DeleteRequest::paginate(20);
     }
 
     /**
@@ -30,41 +32,46 @@ class ProgramAreaController extends Controller
      */
     public function store(Request $request)
     {
-        return response('', 404);
+        return response('', 403);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CMS\ProgramArea  $programArea
+     * @param  \App\Models\DeleteRequest  $deleteRequest
      * @return \Illuminate\Http\Response
      */
-    public function show(ProgramArea $programArea)
+    public function show(DeleteRequest $deleteRequest)
     {
-        return ProgramArea::findApproved($programArea->id)->first()
-            ?: response('', 404);
+        return $deleteRequest;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CMS\ProgramArea  $programArea
+     * @param  \App\Models\DeleteRequest  $deleteRequest
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProgramArea $programArea)
+    public function update(Request $request, DeleteRequest $deleteRequest)
     {
-        return response('', 404);
+        $deleteRequest->update($request->validate([
+            'approved' => [Rule::in([null, true, false])]
+        ]));
+
+        return $deleteRequest;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CMS\ProgramArea  $programArea
+     * @param  \App\Models\DeleteRequest  $deleteRequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProgramArea $programArea)
+    public function destroy(DeleteRequest $deleteRequest)
     {
-        return response('', 404);
+        $deleteRequest->delete();
+
+        return response('', 204);
     }
 }

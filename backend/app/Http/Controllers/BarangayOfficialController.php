@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Approval;
 use App\Models\BarangayOfficial;
+use App\Models\Log;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -44,6 +45,7 @@ class BarangayOfficialController extends Controller
         $barangayOfficial = BarangayOfficial::create($data);
         $barangayOfficial->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $barangayOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
+        Log::record("User created a barangay official.");
         return $barangayOfficial;
     }
 
@@ -76,7 +78,7 @@ class BarangayOfficialController extends Controller
 
         $barangayOfficial->update($data);
         $barangayOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
-
+        Log::record("User updated a barangay official.");
         return $barangayOfficial;
     }
 
@@ -88,8 +90,8 @@ class BarangayOfficialController extends Controller
      */
     public function destroy(BarangayOfficial $barangayOfficial)
     {
-        $barangayOfficial->delete();
-
+        $barangayOfficial->makeDeleteRequest();
+        Log::record("User deleted a barangay official.");
         return response('', 204);
     }
 }

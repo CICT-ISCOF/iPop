@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\Role;
 use App\Models\Statistics\BirthStatistic;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class BirthStatisticController extends Controller
         $birthStatistic = BirthStatistic::create($data);
         $birthStatistic->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $birthStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
-
+        Log::record("Created a birth statistic.");
         return $birthStatistic;
     }
 
@@ -85,6 +86,8 @@ class BirthStatisticController extends Controller
         $birthStatistic->update($data);
         $birthStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a birth statistic.");
+
         return $birthStatistic;
     }
 
@@ -96,7 +99,9 @@ class BirthStatisticController extends Controller
      */
     public function destroy(BirthStatistic $birthStatistic)
     {
-        $birthStatistic->delete();
+        $birthStatistic->makeDeleteRequest();
+
+        Log::record("Deleted a birth statistic.");
 
         return response('', 204);
     }

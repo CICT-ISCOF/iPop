@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\Role;
 use App\Models\Statistics\Profile;
 use Illuminate\Http\Request;
@@ -9,6 +10,10 @@ use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -51,6 +56,8 @@ class ProfileController extends Controller
         $profile = Profile::create($data);
         $profile->approval()->create(['requester_id' => $request->user()->id]);
         $profile->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        Log::record("Created a Statistics Profile.");
 
         return $profile;
     }
@@ -100,6 +107,8 @@ class ProfileController extends Controller
         $profile->update($data);
         $profile->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a Statistics Profile.");
+
         return $profile;
     }
 
@@ -111,7 +120,9 @@ class ProfileController extends Controller
      */
     public function destroy(Profile $profile)
     {
-        $profile->delete();
+        $profile->makeDeleteRequest();
+
+        Log::record("Deleted a Statistics Profile.");
 
         return response('', 204);
     }

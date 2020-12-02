@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\MunicipalOfficial;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -45,6 +46,8 @@ class MunicipalOfficialController extends Controller
         $municipalOfficial->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $municipalOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a Municipal Official.");
+
         return $municipalOfficial;
     }
 
@@ -78,6 +81,8 @@ class MunicipalOfficialController extends Controller
         $municipalOfficial->update($data);
         $municipalOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a Municipal Official.");
+
         return $municipalOfficial;
     }
 
@@ -89,7 +94,10 @@ class MunicipalOfficialController extends Controller
      */
     public function destroy(MunicipalOfficial $municipalOfficial)
     {
-        $municipalOfficial->delete();
+        $municipalOfficial->makeDeleteRequest();
+
+        Log::record("Deleted a Municipal Official.");
+
         return response('', 204);
     }
 }

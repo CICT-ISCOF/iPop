@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\Role;
 use App\Models\Statistics\TeenageBirthIncidenceGraph;
 use Illuminate\Http\Request;
@@ -44,6 +45,8 @@ class TeenageBirthIncidenceGraphController extends Controller
         $teenageBirthIncidenceGraph->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $teenageBirthIncidenceGraph->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a Teenage Birth Incidence Graph.");
+
         return $teenageBirthIncidenceGraph;
     }
 
@@ -79,6 +82,8 @@ class TeenageBirthIncidenceGraphController extends Controller
         $teenageBirthIncidenceGraph->update($data);
         $teenageBirthIncidenceGraph->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a Teenage Birth Incidence Graph.");
+
         return $teenageBirthIncidenceGraph;
     }
 
@@ -90,7 +95,7 @@ class TeenageBirthIncidenceGraphController extends Controller
      */
     public function destroy(TeenageBirthIncidenceGraph $teenageBirthIncidenceGraph)
     {
-        $teenageBirthIncidenceGraph->delete();
+        $teenageBirthIncidenceGraph->makeDeleteRequest();
 
         return response('', 204);
     }

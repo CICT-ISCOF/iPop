@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Approval;
 use App\Models\CMS\Service;
 use App\Models\CMS\ServiceOffer;
+use App\Models\Log;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -46,6 +47,8 @@ class ServiceOfferController extends Controller
         $offer->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $offer->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a Service Entry.");
+
         return $offer;
     }
 
@@ -77,6 +80,8 @@ class ServiceOfferController extends Controller
         $serviceOffer->update($data);
         $serviceOffer->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a Service Entry.");
+
         return $serviceOffer;
     }
 
@@ -88,7 +93,9 @@ class ServiceOfferController extends Controller
      */
     public function destroy(ServiceOffer $serviceOffer)
     {
-        $serviceOffer->delete();
+        $serviceOffer->makeDeleteRequest();
+
+        Log::record("Deleted a Service Entry.");
 
         return response('', 204);
     }

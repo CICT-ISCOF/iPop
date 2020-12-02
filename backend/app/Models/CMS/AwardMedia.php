@@ -3,12 +3,13 @@
 namespace App\Models\CMS;
 
 use App\Models\File;
+use App\Traits\HasApproval;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AwardMedia extends Model
 {
-    use HasFactory;
+    use HasFactory, HasApproval;
 
     protected $fillable = ['award_id', 'file_id'];
     protected $with = ['file'];

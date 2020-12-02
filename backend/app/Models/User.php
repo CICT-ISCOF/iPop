@@ -85,7 +85,7 @@ class User extends Authenticatable
 
     public function verifyPermissions($permissions)
     {
-        return $this->hasRole('Super Admin') || $this->hasAllPermissions($permissions);
+        return $this->hasRole(Role::ADMIN) || $this->hasAllPermissions($permissions);
     }
 
     public function getBlockedAttribute()

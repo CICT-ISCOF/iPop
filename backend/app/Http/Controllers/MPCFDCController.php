@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Log;
 use App\Models\MPCFDC;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -46,6 +47,8 @@ class MPCFDCController extends Controller
         $mPCFDC->approval()->save(new Approval(['requester_id' => $request->user()->id]));
         $mPCFDC->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Created a MPCFDC.");
+
         return $mPCFDC;
     }
 
@@ -83,6 +86,8 @@ class MPCFDCController extends Controller
         $mPCFDC->update($data);
         $mPCFDC->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("Updated a MPCFDC.");
+
         return $mPCFDC;
     }
 
@@ -94,7 +99,9 @@ class MPCFDCController extends Controller
      */
     public function destroy(MPCFDC $mPCFDC)
     {
-        $mPCFDC->delete();
+        $mPCFDC->makeDeleteRequest();
+
+        Log::record("Deleted a MPCFDC.");
 
         return response('', 404);
     }

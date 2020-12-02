@@ -158,6 +158,11 @@ class UserController extends Controller
         Log::record("{$user->fullname}'s profile was updated.");
         unset($user->profilePicture);
         $user->update($data);
+        if ($user->isBlocked()) {
+            $user->tokens->each(function ($token) {
+                $token->delete();
+            });
+        }
         return $user;
     }
 

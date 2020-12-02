@@ -7,6 +7,7 @@ use App\Models\CMS\Activity;
 use App\Models\CMS\ActivityFile;
 use App\Models\CMS\ProgramArea;
 use App\Models\File;
+use App\Models\Log;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -68,6 +69,8 @@ class ActivityController extends Controller
 
         $activity->load('files');
 
+        Log::record("User created a new activity for {$programArea->title}");
+
         return $activity;
     }
 
@@ -123,6 +126,8 @@ class ActivityController extends Controller
         }
         $activity->setApproved($request->user()->hasRole(Role::ADMIN));
 
+        Log::record("User updated an activity.");
+
         return $activity;
     }
 
@@ -134,7 +139,9 @@ class ActivityController extends Controller
      */
     public function destroy(Activity $activity)
     {
-        $activity->delete();
+        $activity->makeDeleteRequest();
+
+        Log::record("Deleted an activity.");
 
         return response('', 204);
     }
