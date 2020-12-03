@@ -145,4 +145,11 @@ class ActivityController extends Controller
 
         return response('', 204);
     }
+
+    public function deleteActivityFile(ActivityFile $file)
+    {
+        $file->delete();
+
+        return response('', 204);
+    }
 }

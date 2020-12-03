@@ -184,6 +184,9 @@ Route::middleware('throttle:60,1')->group(function () {
     // Delete 1 award media
     Route::delete('/awards/medias/{media}', [AwardController::class, 'deleteAwardMedia']);
 
+    // Delete 1 program area file
+    Route::delete('/program-areas/activity-files/{file}', [ActivityController::class, 'deleteActivityFile']);
+
     // CMS
     Route::apiResource('sliders', SliderController::class);
 });
