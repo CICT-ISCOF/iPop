@@ -22,7 +22,9 @@
                 </div>
             </div>
         </div><br>
-        <app-dynamic-mapping></app-dynamic-mapping>
+        <button (click)="showMap = true" *ngIf="!showMap" class="button">Show Map</button>
+        <button (click)="showMap = false" *ngIf="showMap" class="button">Hide Map</button>
+        <app-dynamic-mapping *ngIf="showMap"></app-dynamic-mapping>
         <br><br><br>
         <div class="flex-container">
             <div class="custom-control custom-checkbox custom-control-inline">
@@ -43,30 +45,163 @@
             </div>
         </div>
         <br><br>
-        <div class="chart">
-
+        <div class="chart" *ngIf="!editChartData">
+            <canvas baseChart [datasets]="MONTHbarChartData" [labels]="MONTHbarChartLabels" [options]="MONTHbarChartOptions" [legend]="MONTHbarChartLegend" [chartType]="MONTHbarChartType">
+            </canvas>
         </div>
-        <div class="tl-center">
-            <br><br>
-            <p>TOTAL POPULATION</p>
-            <h3>5</h3>
+        <br>
+        <button (click)="editChartData = true" *ngIf="!editChartData" class="button">Edit Chart Data</button>
+        <div *ngIf="editChartData" class="row" style="padding-top: 30px;">
             <br>
-            <p>TOTAL DEATHS</p>
-            <h3>5</h3>
-            <br>
-            <p>CRUDE DEATH RATE</p>
-            <h3>5</h3>
-
-
-            <br><br>
-            <div class="chart">
-
+            <div class="form-group col-md-6">
+                <label for="January">January</label>
+                <input type="text" class="form-control" id="January">
             </div>
-            <p>CRUDE DEATH RATES</p>
+            <div class="form-group col-md-6">
+                <label for="February">February</label>
+                <input type="text" class="form-control" id="February">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="March">March</label>
+                <input type="text" class="form-control" id="March">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="April">April</label>
+                <input type="text" class="form-control" id="April">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="May">May</label>
+                <input type="text" class="form-control" id="May">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="June">June</label>
+                <input type="text" class="form-control" id="June">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="July">July</label>
+                <input type="text" class="form-control" id="July">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="August">August</label>
+                <input type="text" class="form-control" id="August">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="September">September</label>
+                <input type="text" class="form-control" id="September">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="October">October</label>
+                <input type="text" class="form-control" id="October">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="November">November</label>
+                <input type="text" class="form-control" id="November">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="December">December</label>
+                <input type="text" class="form-control" id="December">
+            </div>
+            <div style="display: flex;
+            align-items: center;justify-content: center;padding-left: 20px;">
+                <button class="button">Save</button> &nbsp;
+                <button (click)="editChartData = false" *ngIf="editChartData" class="clickable">Cancel</button>
+            </div>
+        </div>
+        <div style="padding-left: 20px;">
+            <br><br>
+            <div>
+                <p>TOTAL POPULATION</p>
+                <h3>5</h3>
+            </div>
+
+            <br>
+            <div *ngIf="!inMigrations">
+                <p style="display: flex;">IN MIGRATIONS
+                    <span style="margin-left: auto;cursor: pointer;" *ngIf="!inMigrations" (click)="inMigrations = true" class=" btn-sm">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+                            <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+                        </svg>
+                    </span>
+                </p>
+                <h3>5</h3>
+            </div>
+            <div *ngIf="inMigrations" class="row">
+                <div class="form-group col-md-6">
+                    <label for="CRUDE DEATH RATE">CRUDE DEATH RATE</label>
+                    <input type="text" class="form-control" id="CRUDE DEATH RATE">
+                </div>
+                <div class="row">
+                    <div style="display: flex;
+                align-items: center;justify-content: center;padding-left: 30px;">
+                        <button class="button">Save</button> &nbsp;
+                        <button (click)="inMigrations = false" class="clickable">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div *ngIf="!outMigration">
+                <p style="display: flex;">OUT MIGRATIONS
+                    <span style="margin-left: auto;cursor: pointer;" *ngIf="!outMigration" (click)="outMigration = true" class=" btn-sm">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+                            <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+                        </svg>
+                    </span>
+                </p>
+                <h3>5</h3>
+            </div>
+            <div *ngIf="outMigration" class="row">
+                <div class="form-group col-md-6">
+                    <label for="CRUDE DEATH RATE">CRUDE DEATH RATE</label>
+                    <input type="text" class="form-control" id="CRUDE DEATH RATE">
+                </div>
+                <div class="row">
+                    <div style="display: flex;
+                align-items: center;justify-content: center;padding-left: 30px;">
+                        <button class="button">Save</button> &nbsp;
+                        <button (click)="outMigration = false" class="clickable">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div *ngIf="!netMigration">
+                <p style="display: flex;">NET MIGRATIONS
+                    <span style="margin-left: auto;cursor: pointer;" *ngIf="!netMigration" (click)="netMigration = true" class=" btn-sm">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+                            <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+                        </svg>
+                    </span>
+                </p>
+                <h3>5</h3>
+            </div>
+            <div *ngIf="netMigration" class="row">
+                <div class="form-group col-md-6">
+                    <label for="CRUDE DEATH RATE">CRUDE DEATH RATE</label>
+                    <input type="text" class="form-control" id="CRUDE DEATH RATE">
+                </div>
+                <div class="row">
+                    <div style="display: flex;
+                align-items: center;justify-content: center;padding-left: 30px;">
+                        <button class="button">Save</button> &nbsp;
+                        <button (click)="netMigration = false" class="clickable">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <br><br>
+            <div class="chart" *ngIf="!migrationData">
+                <canvas baseChart [datasets]="MIGRATIONbarChartData " [labels]="MIGRATIONChartLabels " [options]="MIGRATIONbarChartOptions " [legend]="MIGRATIONbarChartLegend " [chartType]="MIGRATIONbarChartType ">
+                </canvas>
+            </div>
+
+
             <br><br>
         </div>
     </div>
-    <div class="side">
+    <div class="side ">
         <h3>Provincial Officials</h3>
         <hr>
         <app-provincial-officials></app-provincial-officials>
@@ -75,13 +210,13 @@
         <br><br><br>
         <h3>TECHNICAL NOTES</h3>
         <hr>
-        <p><span class="fw-bold">Migration</span> - tmovement of people form one place to another with the purpose of establishing a new residence</p>
+        <p><span class="fw-bold ">Migration</span> - tmovement of people form one place to another with the purpose of establishing a new residence</p>
 
-        <p><span class="fw-bold">In-migration Rate</span> - the number of migrants arriving at a destination per 1000 population at that destination in a given year</p>
+        <p><span class="fw-bold ">In-migration Rate</span> - the number of migrants arriving at a destination per 1000 population at that destination in a given year</p>
 
-        <p><span class="fw-bold">Out-migration Rate</span> - the number of migrants departing from an area of origin per 1000 population at that area of origin in a given year</p>
+        <p><span class="fw-bold ">Out-migration Rate</span> - the number of migrants departing from an area of origin per 1000 population at that area of origin in a given year</p>
 
-        <p><span class="fw-bold">Net Migration Rate</span> -the net effect of in-migration and out-migration on an area’s population, expressed as increase or decrease per 1000 population of the area in a given year</p>
+        <p><span class="fw-bold ">Net Migration Rate</span> -the net effect of in-migration and out-migration on an area’s population, expressed as increase or decrease per 1000 population of the area in a given year</p>
 
 
     </div>

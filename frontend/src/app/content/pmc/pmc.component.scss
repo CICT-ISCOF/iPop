@@ -5,10 +5,10 @@
 }
 
 .chart {
-    height: 40vh;
     width: 100%;
     border-radius: 5px;
-    background: lightgray;
+    background: var(--bg) !important;
+    padding: 40px
 }
 
 .front {
@@ -34,6 +34,21 @@ h4,
     text-align: center;
 }
 
+.flex {
+    position: relative;
+    svg {
+        position: absolute;
+        right: 0;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+}
+
+.bottom {
+    margin-bottom: 50px;
+    max-width: 100px;
+}
+
 .list-group-item {
     display: flex;
     .municipality-name {
@@ -54,4 +69,8 @@ h4,
         border-radius: 50%;
         align-self: center;
     }
+}
+
+.municipality-name {
+    display: flex;
 }
