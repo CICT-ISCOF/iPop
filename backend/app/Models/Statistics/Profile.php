@@ -24,6 +24,7 @@ class Profile extends Model
         'median_age',
         'doubling',
         'growth_rate',
+        'households',
         'average_household_size',
         'density',
         'age_dependency_ratio',

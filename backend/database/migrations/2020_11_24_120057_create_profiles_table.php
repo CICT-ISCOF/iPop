@@ -28,6 +28,7 @@ class CreateProfilesTable extends Migration
             $table->string('median_age');
             $table->string('doubling');
             $table->string('growth_rate');
+            $table->string('households');
             $table->string('average_household_size');
             $table->string('density');
             $table->string('age_dependency_ratio');

@@ -25,7 +25,9 @@ class ProfileFactory extends Factory
      */
     public function definition()
     {
-        $municipality = Municipality::all()->random(1)[0];
+        $municipality = Municipality::where('province_code', '0630')
+            ->get()
+            ->random(1)[0];
         return [
             'municipality' => $municipality->name,
             'barangay' => Barangay::where('municipality_code', $municipality->code)
@@ -43,6 +45,7 @@ class ProfileFactory extends Factory
             'median_age' => '24',
             'doubling' => 'N\A',
             'growth_rate' => '5%',
+            'households' => 25,
             'average_household_size' => 2,
             'density' => 'N\A',
             'age_dependency_ratio' => '3:1',
