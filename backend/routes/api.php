@@ -29,6 +29,7 @@ use App\Http\Controllers\MigrationRateController;
 use App\Http\Controllers\MigrationStatisticController;
 use App\Http\Controllers\ModelPermissionController;
 use App\Http\Controllers\MPCFDCController;
+use App\Http\Controllers\MPCFDCTeamController;
 use App\Http\Controllers\MTCMMembersController;
 use App\Http\Controllers\MunicipalOfficialController;
 use App\Http\Controllers\PermissionController;
@@ -168,6 +169,7 @@ Route::middleware('throttle:60,1')->group(function () {
         'migration-rates' => MigrationRateController::class,
         'migration-statistics' => MigrationStatisticController::class,
         'mpcfdcs' => MPCFDCController::class,
+        'mpcfdc-teams' => MPCFDCTeamController::class,
         'pmoccs' => PMOCController::class,
         'pmocc-teams' => PMOCTeamController::class,
         'provincial-officials' => ProvincialOfficialController::class,
