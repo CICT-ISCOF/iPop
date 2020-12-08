@@ -23,7 +23,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        return Slider::getApproved()->all();
+        return Slider::getApproved()->get();
     }
 
     /**
