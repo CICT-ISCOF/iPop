@@ -35,23 +35,28 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'photo' => ['required', 'isFile'],
+            'photos' => ['required', 'array'],
+            'photos.*' => ['required', 'isFile']
         ]);
 
-        $photo = File::process($data['photo']);
-        $photo->public = true;
-        $photo->save();
 
-        $slider = Slider::create(['photo_id' => $photo->id]);
-        $slider->approval()->save(new Approval([
-            'requester_id' => $request->user()->id,
-            'message' => $request->user()->makeMessage('wants to add a slider photo.')
-        ]));
-        $slider->setApproved($request->user()->hasRole(Role::ADMIN));
+        return collect($data['photos'])
+            ->map(function ($photo) use ($request) {
+                $photo = File::process($photo);
+                $photo->public = true;
+                $photo->save();
 
-        Log::record("Created a Slider Photo.");
+                $slider = Slider::create(['photo_id' => $photo->id]);
+                $slider->approval()->save(new Approval([
+                    'requester_id' => $request->user()->id,
+                    'message' => $request->user()->makeMessage('wants to add a slider photo.')
+                ]));
+                $slider->setApproved($request->user()->hasRole(Role::ADMIN));
 
-        return $slider;
+                Log::record("Created a Slider Photo.");
+
+                return $slider;
+            });
     }
 
     /**
