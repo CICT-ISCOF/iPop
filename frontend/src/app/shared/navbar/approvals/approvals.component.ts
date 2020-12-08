@@ -1,3 +1,4 @@
+import { ApprovalsService } from './approvals.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApprovalsComponent implements OnInit {
 
-  constructor() { }
+	constructor(
+		private ApprovalsService : ApprovalsService
+	) { }
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {
+		this.getApprovals()
+	}
+
+	appendedPages = 1
+	approvals = []
+
+	getApprovals(){
+		this.ApprovalsService.getApprovals().subscribe(data =>{
+			this.approvals = data.data
+		})
+	}
+
+	paginate(){
+		this.appendedPages += 1
+		this.ApprovalsService.paginate(	this.appendedPages ).subscribe(data => {
+			this.approvals.push(data.data)
+		})
+	}
 
 }

@@ -18,7 +18,7 @@
             </div>
             <p class="name">{{ admin.fullname }} <br>
                 <span class="role">
-                    <i class="fa fa-user-cog"></i>&nbsp;&nbsp;{{ admin.role }}
+                    <i class="fa fa-user-cog"></i>&nbsp;&nbsp;{{ admin.roles[0].name }}
                 </span>
             </p>
 
@@ -36,7 +36,7 @@
             <p>Administrator status <span class="badge" [class.badge-danger]="admin.blocked" [class.badge-success]="!admin.blocked"> {{ !admin.blocked ? "Active" : "Blocked" }} </span></p>
             <p>Active status <span class="badge badge-success">Online</span></p>
             <hr>
-            <div class="role-container">
+            <!-- <div class="role-container">
                 <br> <br>
                 <h4>Permissions</h4>
                 <br>
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <br>
-            <br> <br>
+            <br> <br> -->
             <h4>Settings</h4>
             <div *ngIf="!changeRole">
                 <p (click)="changeRole = true" class="clickable">

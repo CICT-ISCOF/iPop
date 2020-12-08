@@ -85,6 +85,7 @@ export class DropdownComponent implements OnInit {
 			if (result.value) {
 				let theme =  localStorage.getItem('data-theme')
 				localStorage.clear()
+				localStorage.setItem('data-theme',theme)
 				this.Router.navigate(['/'])
 				this.UtilityService.logout(true)
 				this.UtilityService.setDropDown(false)	

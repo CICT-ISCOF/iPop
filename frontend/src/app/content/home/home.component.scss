@@ -106,7 +106,7 @@ input:focus {
 }
 
 .carousel-holder {
-    width: 100%;
+    width: 75%;
     height: 50vh;
     background: black;
 }
@@ -151,7 +151,7 @@ input:focus {
 .placeholder-line {
     height: 5px;
     border-radius: 30px;
-    background: var(--contrast);
+    background: var(--bg);
     margin-bottom: 10px;
 }
 

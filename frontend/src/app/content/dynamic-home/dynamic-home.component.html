@@ -1,7 +1,7 @@
 <app-home>
 </app-home>
 <div class="wrapper" style="padding: 0;">
-    <div class="content">
+    <div class="content" *ngIf="!wantsToadAnImage">
         <div class="carousel-holder">
             <owl-carousel-o [options]="customOptions">
                 <ng-template carouselSlide>
@@ -31,7 +31,24 @@
         </div>
     </div>
     <hr>
+    <div class="row" *ngIf="wantsToadAnImage">
+        <owl-carousel-o *ngIf="newImages != 0" [options]=" customOptions">
+            <ng-template carouselSlide *ngFor="let image of newImages">
+                <img alt="" title="slide.title " [src]="image">
+            </ng-template>
+        </owl-carousel-o>
+    </div>
+    <br> <br> <br><br> <br> <br>
+    <div class="row" *ngIf="wantsToadAnImage">
 
+        <button (click)="save()" class="button">Save</button>
+        <button *ngIf="newImages != 0" (click)="clearSlider()" class="clickable">Clear Slider</button>
+        <button *ngIf="newImages == 0" (click)="triggerImage()" class="clickable">Add Images</button>
+    </div>
+
+    <input multiple type="file" (change)="readURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]="'slider'">
+    <button *ngIf="!wantsToadAnImage && slide.length == 0" (click)="triggerImage()" class="button">Add Images</button>
+    <button *ngIf="!wantsToadAnImage" class="button">Edit Slider</button>
 </div>
 <div class="wrapper">
 

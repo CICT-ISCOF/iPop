@@ -1,16 +1,17 @@
 <div class="dropdown-component container">
     <div class="title">Approval Requests</div>
 
-    <div class="approval new " *ngFor="let item of [1,1,1,1,1,1,1,1,1,1,1] ">
+    <div class="approval new " *ngFor="let approval of approvals">
         <div class="approval-container">
             <div class="icon">
-                <img src="../../../../assets/avatars/boy-blue.png">
+                <img [src]="approval.requester.profile_picture == null ? '../../../../assets/avatars/boy-blue.png' : approval.requester.profile_picture.uri ">
             </div>
             <div class="message">
-                <p> <span style="font-weight: 900;">Daniel Padilla</span> wants to add data in CPDB</p>
+                <p> <span style="font-weight: 900;">{{approval.requester.fullname}}</span> {{approval.message}}</p>
             </div>
         </div>
-        <div class="approval-actions">
+
+        <div class="approval-actions" *ngIf="!approval.approved">
             <div class="approve">
                 <button class="button btn-primary">Approve</button>
             </div>
@@ -19,5 +20,8 @@
             </div>
         </div>
     </div>
+    <br> <br>
+    <br>
+    <p (click)="paginate()" *ngIf="approvals.length != 0" style="text-align: center;cursor: pointer;">View more..</p>
 
 </div>
