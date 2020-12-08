@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Models\Role as Model;
 
 class Role extends Model
@@ -24,4 +25,9 @@ class Role extends Model
         self::FOD,
         self::TRD,
     ];
+
+    public static function findByName(string $name, $guardName = null): RoleContract
+    {
+        return parent::findByName($name, 'web');
+    }
 }
