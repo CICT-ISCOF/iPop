@@ -32,18 +32,21 @@ class ValidatorServiceProvider extends ServiceProvider
             $parameters,
             $validator
         ) {
-            if($value instanceof UploadedFile) {
+            if (base64_encode(base64_decode($value, true)) === $value) {
+                return true;
+            }
+            if ($value instanceof UploadedFile) {
                 return true;
             }
             try {
                 file_get_contents($value);
                 return true;
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 return false;
             }
         });
 
-        Validator::extend('base64', function($attribute, $value, $parameters, $validator) {
+        Validator::extend('base64', function ($attribute, $value, $parameters, $validator) {
             return base64_encode(base64_decode($value, true)) === $value;
         });
     }
