@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -54,6 +55,7 @@ class RegisterRequest extends FormRequest
             'role' => [
                 'required',
                 'string',
+                Rule::in(Role::DEFAULTS)
             ],
             'profile_picture' => 'nullable',
         ];
