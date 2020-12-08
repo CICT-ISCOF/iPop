@@ -104,8 +104,11 @@ owl-carousel-o video {
 .image {
     width: 150px;
     height: 150px;
-    margin: 15px;
-    float: left;
+    margin-bottom: 20px;
+    img {
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, .5);
+        border-radius: 3px;
+    }
 }
 
 .image-container {
@@ -116,8 +119,9 @@ owl-carousel-o video {
 .image .absolute {
     position: absolute;
     left: 0 !important;
-    transform: translate(160px, 0px) scale(1.2);
+    transform: translate(180px, -10px) scale(1.2);
     svg {
         cursor: pointer;
+        fill: red;
     }
 }

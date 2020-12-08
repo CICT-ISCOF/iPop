@@ -1,3 +1,4 @@
+import { UserService } from './../../../../user.service';
 import { UtilityService } from './../../../../utility.service';
 import { AwardsService } from './../awards.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,9 +12,12 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class AwardsComponent implements OnInit {
 
+	isUser = !this.UserService.isUser()
+	theme = localStorage.getItem('data-theme')
 	constructor(
 		private AwardsService : AwardsService,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private UserService : UserService
 	) { }
 
 	ngOnInit(): void {

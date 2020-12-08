@@ -22,6 +22,7 @@ export class RPFPPComponent implements OnInit {
 	ngOnInit(): void {
 		this.getProramArea()	
 	}
+	theme = localStorage.getItem('data-theme')
 
 	isAdmin = this.UserService.isUser()
 
@@ -41,8 +42,7 @@ export class RPFPPComponent implements OnInit {
 
 	getProramArea(){
 		this.ProgramAreasService.getProgramArea().subscribe(data => {
-			this.programArea = data[0]
-			console.log(this.programArea )
+			this.programArea = data[0]		
 		})
 	}
 
@@ -111,6 +111,22 @@ export class RPFPPComponent implements OnInit {
 	
 	}
 
+	deletePhoto(id){
+		Swal.fire({
+			title: 'Are you sure you want to remove this Photo?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Remove',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.ProgramAreasService.deletePhoto(id).subscribe(data => {
+					this.ngOnInit()
+				})		
+			} 
+		})	
+	}
+
 
 	deleteRPFP(id){
 		Swal.fire({
@@ -137,8 +153,7 @@ export class RPFPPComponent implements OnInit {
 	acitveProgram = {}
 
 	toggleProgram(program_id){		
-		this.acitveProgram[program_id] == true ?  this.acitveProgram[program_id] = false : this.acitveProgram[program_id] = true	
-		console.log(this.acitveProgram[program_id])
+		this.acitveProgram[program_id] == true ?  this.acitveProgram[program_id] = false : this.acitveProgram[program_id] = true
 		this.clearSlider()
 	}
 	

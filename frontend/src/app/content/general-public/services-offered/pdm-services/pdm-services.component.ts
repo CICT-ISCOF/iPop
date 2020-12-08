@@ -1,3 +1,4 @@
+import { UserService } from './../../../../user.service';
 import { UtilityService } from './../../../../utility.service';
 import Swal from 'sweetalert2'
 import { ServicesOfferedService } from './../services-offered.service';
@@ -10,9 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PDMServicesComponent implements OnInit {
 
+	isUser = !this.UserService.isUser()
 	constructor(
 		private ServicesOfferedService : ServicesOfferedService,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private UserService : UserService
+
 	) { }
 
 
