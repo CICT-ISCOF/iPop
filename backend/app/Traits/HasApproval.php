@@ -6,7 +6,6 @@ use App\Models\Approval;
 use App\Models\DeleteRequest;
 use App\Models\Log;
 use App\Models\Role;
-use Illuminate\Http\Request;
 
 trait HasApproval
 {
@@ -21,6 +20,14 @@ trait HasApproval
                 return $approval->approved === $mode;
             })->map(function ($approval) {
                 return $approval->approvable_id;
+            })->all();
+
+        $ids = DeleteRequest::where('deleteable_type', static::class)
+            ->where('approved', $mode)
+            ->whereNotIn('deleteable_id', $ids)
+            ->get()
+            ->map(function ($request) {
+                return $request->deleteable_id;
             })->all();
 
         return static::whereIn('id', $ids)
@@ -40,6 +47,16 @@ trait HasApproval
         if (!$approval) {
             return null;
         }
+
+        $request = DeleteRequest::where('deleteable_type', static::class)
+            ->where('deletable_id', $id)
+            ->where('approved', $mode)
+            ->first();
+
+        if ($request) {
+            return null;
+        }
+
         return static::where('id', $approval->approvable->id)
             ->with('approval');
     }
@@ -84,6 +101,7 @@ trait HasApproval
                 'requester_id' => $user->id,
                 'approver_id' => $user->hasRole(Role::ADMIN) ? $user->id : null,
                 'appproved' => $user->hasRole(Role::ADMIN) ? true : null,
+                'metadata' => json_encode($this->toArray()),
             ]);
         }
         if ($request->approved === true) {
