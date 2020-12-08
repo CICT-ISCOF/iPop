@@ -11,9 +11,17 @@ class Role extends Model
 
     const ADMIN = 'Super Admin';
     const VIEWER = 'Viewer';
+    const PPO_ONE = 'PPOI';
+    const PPO_TWO = 'PPOII';
+    const FOD = 'FOD';
+    const TRD = 'TRD';
 
     const DEFAULTS = [
         self::ADMIN,
         self::VIEWER,
+        self::PPO_ONE,
+        self::PPO_TWO,
+        self::FOD,
+        self::TRD,
     ];
 }

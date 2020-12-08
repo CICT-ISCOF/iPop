@@ -16,7 +16,7 @@ class CreateDeleteRequestsTable extends Migration
     {
         Schema::create('delete_requests', function (Blueprint $table) {
             $table->id();
-            $table->morphs('deletable');
+            $table->morphs('deleteable');
             $table->text('metadata');
             $table->boolean('approved')
                 ->nullable();
