@@ -15,7 +15,7 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $data = $request->validated();
-        $role = Role::findByName($data['role']);
+        $role = Role::findOrCreate($data['role']);
         $data['password'] = Hash::make($data['password']);
         $user = $this->create($data);
         if (isset($data['profile_picture'])) {
