@@ -43,7 +43,10 @@ class SliderController extends Controller
         $photo->save();
 
         $slider = Slider::create(['photo_id' => $photo->id]);
-        $slider->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $slider->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a slider photo.')
+        ]));
         $slider->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a Slider Photo.");
@@ -81,7 +84,8 @@ class SliderController extends Controller
         $old = $slider->photo;
         $slider->photo()->save($photo);
         $old->delete();
-        $slider->setApproved($request->user()->hasRole(Role::ADMIN));
+        $slider->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a slider photo'));
 
         Log::record("Updated a Slider Photo.");
 

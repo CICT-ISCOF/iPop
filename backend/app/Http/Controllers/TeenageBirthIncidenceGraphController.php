@@ -42,7 +42,10 @@ class TeenageBirthIncidenceGraphController extends Controller
         ]);
 
         $teenageBirthIncidenceGraph = TeenageBirthIncidenceGraph::create($data);
-        $teenageBirthIncidenceGraph->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $teenageBirthIncidenceGraph->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a teenage birth incidence graph.')
+        ]));
         $teenageBirthIncidenceGraph->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a Teenage Birth Incidence Graph.");
@@ -80,7 +83,8 @@ class TeenageBirthIncidenceGraphController extends Controller
         ]);
 
         $teenageBirthIncidenceGraph->update($data);
-        $teenageBirthIncidenceGraph->setApproved($request->user()->hasRole(Role::ADMIN));
+        $teenageBirthIncidenceGraph->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a teenage birth incidence graph.'));
 
         Log::record("Updated a Teenage Birth Incidence Graph.");
 

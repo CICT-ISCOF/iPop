@@ -75,7 +75,10 @@ class SBMPTCController extends Controller
         ]);
 
         $sbmptc = SBMPTC::create($data);
-        $sbmptc->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $sbmptc->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a SBMPTC.')
+        ]));
         $sbmptc->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a SBMPTC.");
@@ -118,7 +121,8 @@ class SBMPTCController extends Controller
         ]);
 
         $sbmptc->update($data);
-        $sbmptc->setApproved($request->user()->hasRole(Role::ADMIN));
+        $sbmptc->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a SBMPTC.'));
 
         Log::record("Updated a SBMPTC.");
 

@@ -46,7 +46,10 @@ class PMOCController extends Controller
         ]);
 
         $pMOC = PMOC::create($data);
-        $pMOC->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $pMOC->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a PMOC.')
+        ]));
         $pMOC->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a PMOC.");
@@ -88,7 +91,8 @@ class PMOCController extends Controller
         ]);
 
         $pMOC->update($data);
-        $pMOC->setApproved($request->user()->hasRole(Role::ADMIN));
+        $pMOC->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a PMOC'));
 
         Log::record("Updated a PMOC.");
 

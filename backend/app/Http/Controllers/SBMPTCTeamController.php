@@ -40,7 +40,10 @@ class SBMPTCTeamController extends Controller
         ]);
 
         $team = SBMPTCTeam::create($data);
-        $team->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $team->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a SBMPTC Team.')
+        ]));
         $team->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a SBMPTC Team.");
@@ -75,7 +78,8 @@ class SBMPTCTeamController extends Controller
         ]);
 
         $team->update($data);
-        $team->setApproved($request->user()->hasRole(Role::ADMIN));
+        $team->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a SBMPTC Team.'));
 
         Log::record("Updated a SBMPTC Team.");
 

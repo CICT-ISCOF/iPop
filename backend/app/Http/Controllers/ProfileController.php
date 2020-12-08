@@ -74,7 +74,10 @@ class ProfileController extends Controller
         ]);
 
         $profile = Profile::create($data);
-        $profile->approval()->create(['requester_id' => $request->user()->id]);
+        $profile->approval()->create([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a statistic profile.')
+        ]);
         $profile->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a Statistics Profile.");
@@ -126,7 +129,8 @@ class ProfileController extends Controller
         ]);
 
         $profile->update($data);
-        $profile->setApproved($request->user()->hasRole(Role::ADMIN));
+        $profile->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a statistic profile.'));
 
         Log::record("Updated a Statistics Profile.");
 

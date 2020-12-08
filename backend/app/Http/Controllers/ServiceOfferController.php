@@ -44,7 +44,10 @@ class ServiceOfferController extends Controller
 
         $service = Service::find($data['service_id']);
         $service->offers()->save($offer);
-        $offer->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $offer->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a service offer.')
+        ]));
         $offer->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a Service Entry.");
@@ -78,7 +81,8 @@ class ServiceOfferController extends Controller
         ]);
 
         $serviceOffer->update($data);
-        $serviceOffer->setApproved($request->user()->hasRole(Role::ADMIN));
+        $serviceOffer->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a service offer.'));
 
         Log::record("Updated a Service Entry.");
 

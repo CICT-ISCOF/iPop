@@ -45,7 +45,10 @@ class PMOCTeamController extends Controller
         $file->public = true;
 
         $pMOCTeam = PMOCTeam::create($data);
-        $pMOCTeam->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $pMOCTeam->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a PMOC Team.')
+        ]));
         $pMOCTeam->photo()->save($file);
         $pMOCTeam->setApproved($request->user()->hasRole(Role::ADMIN));
 
@@ -90,7 +93,8 @@ class PMOCTeamController extends Controller
         }
 
         $pmocTeam->update($data);
-        $pmocTeam->setApproved($request->user()->hasRole(Role::ADMIN));
+        $pmocTeam->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a PMOC Team.'));
 
         Log::record("Updated a PMOC Team.");
 

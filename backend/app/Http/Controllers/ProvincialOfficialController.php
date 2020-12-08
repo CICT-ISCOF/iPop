@@ -40,7 +40,10 @@ class ProvincialOfficialController extends Controller
         ]);
 
         $provincialOfficial = ProvincialOfficial::create($data);
-        $provincialOfficial->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $provincialOfficial->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a provincial offical.')
+        ]));
         $provincialOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a Provincial Official.");
@@ -76,7 +79,8 @@ class ProvincialOfficialController extends Controller
         ]);
 
         $provincialOfficial->update($data);
-        $provincialOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
+        $provincialOfficial->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a provincial official.'));
 
         Log::record("Updated a Provincial Official.");
 

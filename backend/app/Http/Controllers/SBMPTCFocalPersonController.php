@@ -35,7 +35,10 @@ class SBMPTCFocalPersonController extends Controller
         ]);
 
         $sBMPTCFocalPerson = SBMPTCFocalPerson::create($data);
-        $sBMPTCFocalPerson->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $sBMPTCFocalPerson->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a SBMPTC Focal Person.')
+        ]));
         $sBMPTCFocalPerson->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a SBMPTC Focal Person.");
@@ -69,7 +72,8 @@ class SBMPTCFocalPersonController extends Controller
         ]);
 
         $sBMPTCFocalPerson->update($data);
-        $sBMPTCFocalPerson->setApproved($request->user()->hasRole(Role::ADMIN));
+        $sBMPTCFocalPerson->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a SBMPTC Focal Person.'));
 
         Log::record("Updated a SBMPTC Focal Person.");
 

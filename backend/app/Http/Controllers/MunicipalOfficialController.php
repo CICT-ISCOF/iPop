@@ -43,7 +43,10 @@ class MunicipalOfficialController extends Controller
         ]);
 
         $municipalOfficial = MunicipalOfficial::create($data);
-        $municipalOfficial->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $municipalOfficial->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a municipal official.')
+        ]));
         $municipalOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a Municipal Official.");
@@ -79,7 +82,8 @@ class MunicipalOfficialController extends Controller
         ]);
 
         $municipalOfficial->update($data);
-        $municipalOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
+        $municipalOfficial->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a municipal official.'));
 
         Log::record("Updated a Municipal Official.");
 
