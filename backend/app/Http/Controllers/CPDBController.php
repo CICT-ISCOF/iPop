@@ -6,6 +6,7 @@ use App\Models\CPDB;
 use App\Models\Log;
 use App\Models\Record;
 use App\Events\RecordSaved;
+use App\Models\Role;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -16,11 +17,16 @@ class CPDBController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return CPDB::with('record.user.profilePicture')
-            ->with('comments.user.profilePicture')
-            ->paginate(10);
+        $builder = CPDB::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture');
+        if ($request->user()->hasRole(Role::PPO_ONE)) {
+            $user = $request->user();
+            $builder = $builder->where('municipality', $user->municipality)
+                ->where('barangay', $user->barangay);
+        }
+        return $builder->paginate(10);
     }
 
     /**
@@ -49,11 +55,16 @@ class CPDBController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        return CPDB::with('record.user.profilePicture')
-            ->with('comments.user.profilePicture')
-            ->findOrFail($id);
+        $builder = CPDB::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture');
+        if ($request->user()->hasRole(Role::PPO_ONE)) {
+            $user = $request->user();
+            $builder = $builder->where('municipality', $user->municipality)
+                ->where('barangay', $user->barangay);
+        }
+        return $builder->findOrFail($id);
     }
 
     /**

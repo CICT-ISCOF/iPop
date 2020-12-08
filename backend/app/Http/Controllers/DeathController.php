@@ -8,6 +8,7 @@ use App\Models\Record;
 use App\Events\RecordSaved;
 use App\Http\Requests\DeathRequest;
 use App\Http\Requests\DeathUpdateRequest;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class DeathController extends Controller
@@ -17,11 +18,16 @@ class DeathController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Death::with('record.user.profilePicture')
-            ->with('comments.user.profilePicture')
-            ->paginate(10);
+        $builder = Death::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture');
+        if ($request->user()->hasRole(Role::PPO_ONE)) {
+            $user = $request->user();
+            $builder = $builder->where('municipality', $user->municipality)
+                ->where('barangay', $user->barangay);
+        }
+        return $builder->paginate(10);
     }
 
     /**
@@ -50,11 +56,16 @@ class DeathController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        return Death::with('record.user.profilePicture')
-            ->with('comments.user.profilePicture')
-            ->findOrFail($id);
+        $builder = Death::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture');
+        if ($request->user()->hasRole(Role::PPO_ONE)) {
+            $user = $request->user();
+            $builder = $builder->where('municipality', $user->municipality)
+                ->where('barangay', $user->barangay);
+        }
+        return $builder->findOrFail($id);
     }
 
     /**

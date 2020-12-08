@@ -8,6 +8,7 @@ use App\Models\Record;
 use App\Events\RecordSaved;
 use App\Http\Requests\InMigrationRequest;
 use App\Http\Requests\InMigrationUpdateRequest;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class InMigrationController extends Controller
@@ -17,11 +18,16 @@ class InMigrationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return InMigration::with('record.user.profilePicture')
-            ->with('comments.user.profilePicture')
-            ->paginate(10);
+        $builder = InMigration::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture');
+        if ($request->user()->hasRole(Role::PPO_ONE)) {
+            $user = $request->user();
+            $builder = $builder->where('municipality', $user->municipality)
+                ->where('barangay', $user->barangay);
+        }
+        return $builder->paginate(10);
     }
 
     /**
@@ -50,11 +56,16 @@ class InMigrationController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        return InMigration::with('record.user.profilePicture')
-            ->with('comments.user.profilePicture')
-            ->findOrFail($id);
+        $builder = InMigration::with('record.user.profilePicture')
+            ->with('comments.user.profilePicture');
+        if ($request->user()->hasRole(Role::PPO_ONE)) {
+            $user = $request->user();
+            $builder = $builder->where('municipality', $user->municipality)
+                ->where('barangay', $user->barangay);
+        }
+        return $builder->findOrFail($id);
     }
 
     /**

@@ -32,6 +32,7 @@ use App\Http\Controllers\MPCFDCController;
 use App\Http\Controllers\MPCFDCTeamController;
 use App\Http\Controllers\MTCMMembersController;
 use App\Http\Controllers\MunicipalOfficialController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PMOCController;
 use App\Http\Controllers\PMOCTeamController;
@@ -191,6 +192,10 @@ Route::middleware('throttle:60,1')->group(function () {
 
     // CMS
     Route::apiResource('sliders', SliderController::class);
+
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'all']);
+    Route::post('/notifications/{notification}', [NotificationController::class, 'markAsRead']);
 });
 
 // Public Files

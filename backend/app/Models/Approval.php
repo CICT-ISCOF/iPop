@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Notifications\PendingApproval;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Notification;
 
 class Approval extends Model
 {
@@ -19,6 +21,11 @@ class Approval extends Model
 
     public static function booted()
     {
+        static::created(function ($approval) {
+            $admins = User::role(Role::ADMIN)->get();
+            Notification::send($admins, new PendingApproval($approval));
+        });
+
         static::deleted(function ($approval) {
             $approval->approvable->delete();
         });
