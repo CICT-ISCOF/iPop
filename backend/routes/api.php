@@ -196,6 +196,7 @@ Route::middleware('throttle:60,1')->group(function () {
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'all']);
     Route::post('/notifications/{notification}', [NotificationController::class, 'markAsRead']);
+    Route::post('/notifications/all', [NotificationController::class, 'markAllAsRead']);
 });
 
 // Public Files

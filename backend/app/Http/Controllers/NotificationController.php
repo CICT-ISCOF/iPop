@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+
 class NotificationController extends Controller
 {
     public function __construct()
@@ -25,7 +27,13 @@ class NotificationController extends Controller
         return response('', 204);
     }
 
-    protected function user()
+    public function markAllAsRead()
+    {
+        $this->user()->unreadNotifications()->update(['read_at' => now()]);
+        return response('', 204);
+    }
+
+    protected function user(): User
     {
         return request()->user();
     }
