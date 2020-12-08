@@ -21,7 +21,9 @@ class ApprovalController extends Controller
      */
     public function index()
     {
-        return Approval::paginate(10);
+        return Approval::with(['approvable', 'comments'])
+            ->sortBy('approved', 'ASC')
+            ->paginate(10);
     }
 
     /**
