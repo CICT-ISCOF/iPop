@@ -15,7 +15,7 @@ class Approval extends Model
         'approved' => 'boolean'
     ];
 
-    protected $with = ['requester', 'approver'];
+    protected $with = ['requester.profilePicture', 'approver.profilePicture'];
 
     public static function booted()
     {
