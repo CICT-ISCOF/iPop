@@ -1,0 +1,101 @@
+.dropdown-component {
+    width: 360px;
+    height: auto;
+    background: var(--bg);
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 9999999;
+    backdrop-filter: blur(100px);
+    box-shadow: var(--shadow);
+    max-height: 600px;
+    overflow: auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center !important;
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(150, 150, 150, .5);
+    text-transform: uppercase;
+    font-weight: 400;
+    border-radius: 0 !important;
+    display: block !important;
+    margin-bottom: 10px;
+}
+
+.approval-container,
+.approval-actions {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    .icon {
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+    }
+    .message {
+        display: flex;
+        justify-content: center;
+    }
+    button {
+        margin: 20px;
+        margin-top: 0;
+        margin-bottom: 0;
+        flex: 1;
+        padding: 7px 30px;
+        color: white !important
+    }
+}
+
+.approval {
+    width: 100%;
+    padding: 10px;
+    background: var(--inputBg);
+    border-radius: 7px;
+    margin-bottom: 20px;
+    border-left: 5px solid transparent;
+}
+
+.new {
+    border-left: 5px solid #066C90;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background: #C1C1C1;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg1);
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    // border: 1px solid rgba(150, 150, 150, .7);
+}
+
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bg1);
+}
