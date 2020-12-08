@@ -45,7 +45,10 @@ class BirthStatisticController extends Controller
         ]);
 
         $birthStatistic = BirthStatistic::create($data);
-        $birthStatistic->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $birthStatistic->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add an a birth statistic.'),
+        ]));
         $birthStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
         Log::record("Created a birth statistic.");
         return $birthStatistic;
@@ -84,7 +87,8 @@ class BirthStatisticController extends Controller
         ]);
 
         $birthStatistic->update($data);
-        $birthStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
+        $birthStatistic->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a birth statistic.'));
 
         Log::record("Updated a birth statistic.");
 

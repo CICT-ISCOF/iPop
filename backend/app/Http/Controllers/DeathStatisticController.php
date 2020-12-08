@@ -43,7 +43,10 @@ class DeathStatisticController extends Controller
         ]);
 
         $deathStatistic = DeathStatistic::create($data);
-        $deathStatistic->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $deathStatistic->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a death statistic.'),
+        ]));
         $deathStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a death statistic.");
@@ -82,7 +85,8 @@ class DeathStatisticController extends Controller
         ]);
 
         $deathStatistic->update($data);
-        $deathStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
+        $deathStatistic->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a death statistic.'));
 
         Log::record("Updated a death statistic.");
 

@@ -49,7 +49,10 @@ class ActivityController extends Controller
 
         $programArea = ProgramArea::find($data['program_area_id']);
         $programArea->activities()->save($activity);
-        $activity->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $activity->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a program area activity.'),
+        ]));
         $activity->setApproved($request->user()->hasRole(Role::ADMIN));
 
         if (isset($data['files'])) {
@@ -124,7 +127,8 @@ class ActivityController extends Controller
                     ]));
                 });
         }
-        $activity->setApproved($request->user()->hasRole(Role::ADMIN));
+        $activity->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a program area activity.'));
 
         Log::record("User updated an activity.");
 

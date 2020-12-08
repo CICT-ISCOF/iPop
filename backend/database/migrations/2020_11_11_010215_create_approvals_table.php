@@ -18,6 +18,7 @@ class CreateApprovalsTable extends Migration
             $table->id();
             $table->morphs('approvable');
             $table->boolean('approved')->default(false);
+            $table->text('message');
             $table->foreignIdFor(new User(), 'requester_id');
             $table->foreignIdFor(new User(), 'approver_id')->nullable();
             $table->timestamps();

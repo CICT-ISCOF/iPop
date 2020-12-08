@@ -9,7 +9,7 @@ class Approval extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['approved', 'requester_id', 'approver_id'];
+    protected $fillable = ['approved', 'requester_id', 'approver_id', 'message'];
 
     protected $casts = [
         'approved' => 'boolean'

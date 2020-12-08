@@ -53,6 +53,11 @@ class User extends Authenticatable
         });
     }
 
+    public function makeMessage($message)
+    {
+        return $this->fullname . ' ' . $message;
+    }
+
     public function files()
     {
         return $this->hasMany(File::class);

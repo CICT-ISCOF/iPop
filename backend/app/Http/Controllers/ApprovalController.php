@@ -11,7 +11,7 @@ class ApprovalController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'role:' . Role::ADMIN])->except('index', 'show');
+        $this->middleware(['auth:sanctum', 'role:' . Role::ADMIN]);
     }
 
     /**

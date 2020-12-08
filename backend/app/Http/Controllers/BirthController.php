@@ -33,15 +33,15 @@ class BirthController extends Controller
     {
         $user = $this->user($request);
 
-        $permissions = Birth::getRequiredPermissions();
+        // $permissions = Birth::getRequiredPermissions();
 
-        if (!$user->verifyPermissions($permissions)) {
-            return response([
-                'errors' => [
-                    'account' => 'You do not have sufficient permissions.'
-                ]
-            ], 401);
-        }
+        // if (!$user->verifyPermissions($permissions)) {
+        //     return response([
+        //         'errors' => [
+        //             'account' => 'You do not have sufficient permissions.'
+        //         ]
+        //     ], 401);
+        // }
 
         $birth = Birth::create($request->validated());
         $record = new Record([
@@ -79,15 +79,15 @@ class BirthController extends Controller
     {
         $user = $this->user($request);
 
-        $permissions = Birth::getRequiredPermissions();
+        // $permissions = Birth::getRequiredPermissions();
 
-        if (!$user->verifyPermissions($permissions)) {
-            return response([
-                'errors' => [
-                    'account' => 'You do not have sufficient permissions.'
-                ]
-            ], 401);
-        }
+        // if (!$user->verifyPermissions($permissions)) {
+        //     return response([
+        //         'errors' => [
+        //             'account' => 'You do not have sufficient permissions.'
+        //         ]
+        //     ], 401);
+        // }
 
         $birth->update($request->validated());
         $birth->record->update(['status' => 'Requires Revalidation']);

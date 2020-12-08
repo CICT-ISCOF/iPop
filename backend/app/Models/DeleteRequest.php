@@ -55,8 +55,7 @@ class DeleteRequest extends Model
 
     public function isGone()
     {
-        return get_class($this->deleteable) !== $this->deletable_type
-            || $this->deleteable === null;
+        return $this->deleteable === null || get_class($this->deleteable) !== $this->deletable_type;
     }
 
     public function setMetadataAttribute($value)

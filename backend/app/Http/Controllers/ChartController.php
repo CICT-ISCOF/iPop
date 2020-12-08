@@ -36,7 +36,10 @@ class ChartController extends Controller
         $file->public = true;
         $file->save();
         $chart = Chart::create(['photo_id' => $file->id]);
-        $chart->approval()->create(['requester_id' => $request->user()->id]);
+        $chart->approval()->create([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a chart.'),
+        ]);
         $chart->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a chart.");

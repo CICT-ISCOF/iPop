@@ -43,7 +43,10 @@ class MigrationStatisticController extends Controller
         ]);
 
         $migrationStatistic = MigrationStatistic::create($data);
-        $migrationStatistic->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $migrationStatistic->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add migration statistic.'),
+        ]));
         $migrationStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a migration statistic.");
@@ -82,7 +85,8 @@ class MigrationStatisticController extends Controller
         ]);
 
         $migrationStatistic->update($data);
-        $migrationStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
+        $migrationStatistic->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a migration statistic.'));
 
         Log::record("Updated a migration statistic.");
 

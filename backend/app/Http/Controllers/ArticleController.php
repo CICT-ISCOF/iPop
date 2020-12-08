@@ -46,7 +46,10 @@ class ArticleController extends Controller
 
         $article = Article::create($data);
 
-        $article->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $article->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add an article.'),
+        ]));
         $article->setApproved($request->user()->hasRole(Role::ADMIN));
 
         if (isset($data['files'])) {
@@ -130,7 +133,9 @@ class ArticleController extends Controller
                 });
         }
 
-        $article->setApproved($request->user()->hasRole(Role::ADMIN));
+        $article->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update an article.'));
+
         Log::record("User updated an article.");
 
         return $article;

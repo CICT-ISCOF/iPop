@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Log;
 use App\Models\MTCMMember;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -43,7 +44,16 @@ class MTCMMembersController extends Controller
 
         Log::record("Created a MTCM Member.");
 
-        return MTCMMember::create($data);
+        $member = MTCMMember::create($data);
+        $member->approval()->create([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a MTCM Member.'),
+        ]);
+        $member->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        Log::record('User created a MTCM Member.');
+
+        return $member;
     }
 
     /**
@@ -76,6 +86,8 @@ class MTCMMembersController extends Controller
         ]);
 
         $mtcm->update($data);
+        $mtcm->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a MTCM Member.'));
 
         Log::record("Updated a MTCM Member.");
 

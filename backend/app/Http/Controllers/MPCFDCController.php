@@ -44,7 +44,10 @@ class MPCFDCController extends Controller
         ]);
 
         $mPCFDC = MPCFDC::create($data);
-        $mPCFDC->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $mPCFDC->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a MPCFDC.'),
+        ]));
         $mPCFDC->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a MPCFDC.");
@@ -84,7 +87,8 @@ class MPCFDCController extends Controller
         ]);
 
         $mPCFDC->update($data);
-        $mPCFDC->setApproved($request->user()->hasRole(Role::ADMIN));
+        $mPCFDC->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a MPCFDC.'));
 
         Log::record("Updated a MPCFDC.");
 

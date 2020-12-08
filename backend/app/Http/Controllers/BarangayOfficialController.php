@@ -43,7 +43,10 @@ class BarangayOfficialController extends Controller
         ]);
 
         $barangayOfficial = BarangayOfficial::create($data);
-        $barangayOfficial->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $barangayOfficial->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add an a barangay official.'),
+        ]));
         $barangayOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
         Log::record("User created a barangay official.");
         return $barangayOfficial;
@@ -77,7 +80,8 @@ class BarangayOfficialController extends Controller
         ]);
 
         $barangayOfficial->update($data);
-        $barangayOfficial->setApproved($request->user()->hasRole(Role::ADMIN));
+        $barangayOfficial->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a barangay official.'));
         Log::record("User updated a barangay official.");
         return $barangayOfficial;
     }

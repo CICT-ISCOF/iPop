@@ -40,7 +40,10 @@ class MigrationRateController extends Controller
         ]);
 
         $migrationRate = MigrationRate::create($data);
-        $migrationRate->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $migrationRate->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a migration rate.'),
+        ]));
         $migrationRate->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a migration rate.");
@@ -76,7 +79,8 @@ class MigrationRateController extends Controller
         ]);
 
         $migrationRate->update($data);
-        $migrationRate->setApproved($request->user()->hasRole(Role::ADMIN));
+        $migrationRate->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a migration rate.'));
 
         Log::record("Updated a migration rate.");
 

@@ -22,13 +22,13 @@ trait HasApproval
                 return $approval->approvable_id;
             })->all();
 
-        $ids = DeleteRequest::where('deleteable_type', static::class)
-            ->where('approved', $mode)
-            ->whereNotIn('deleteable_id', $ids)
-            ->get()
-            ->map(function ($request) {
-                return $request->deleteable_id;
-            })->all();
+        // $ids = DeleteRequest::where('deleteable_type', static::class)
+        //     ->where('approved', $mode)
+        //     ->whereNotIn('deleteable_id', $ids)
+        //     ->get()
+        //     ->map(function ($request) {
+        //         return $request->deleteable_id;
+        //     })->all();
 
         return static::whereIn('id', $ids)
             ->with('approval');
@@ -48,14 +48,14 @@ trait HasApproval
             return null;
         }
 
-        $request = DeleteRequest::where('deleteable_type', static::class)
-            ->where('deletable_id', $id)
-            ->where('approved', $mode)
-            ->first();
+        // $request = DeleteRequest::where('deleteable_type', static::class)
+        //     ->where('deletable_id', $id)
+        //     ->where('approved', $mode)
+        //     ->first();
 
-        if ($request) {
-            return null;
-        }
+        // if ($request) {
+        //     return null;
+        // }
 
         return static::where('id', $approval->approvable->id)
             ->with('approval');
@@ -80,6 +80,13 @@ trait HasApproval
         return $this;
     }
 
+    public function setApprovalMessage($message)
+    {
+        $this->approval->message = $message;
+        $this->approval->save();
+        return $this;
+    }
+
     public function deleteRequest()
     {
         return $this->morphOne(DeleteRequest::class, 'deleteable');
@@ -94,14 +101,14 @@ trait HasApproval
                 'requester_id' => $user->id,
                 'approver_id' => $user->hasRole(Role::ADMIN) ? $user->id : null,
                 'appproved' => $user->hasRole(Role::ADMIN) ? true : null,
-                'metadata' => json_encode($this->toArray()),
+                'metadata' => $this->toArray(),
             ]);
         } else {
             $request->update([
                 'requester_id' => $user->id,
                 'approver_id' => $user->hasRole(Role::ADMIN) ? $user->id : null,
                 'appproved' => $user->hasRole(Role::ADMIN) ? true : null,
-                'metadata' => json_encode($this->toArray()),
+                'metadata' => $this->toArray(),
             ]);
         }
         if ($request->approved === true) {

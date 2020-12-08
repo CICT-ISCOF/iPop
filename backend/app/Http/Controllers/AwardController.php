@@ -57,11 +57,17 @@ class AwardController extends Controller
                         'award_id' => $award->id,
                         'file_id' => $file->id,
                     ]);
-                    $media->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+                    $media->approval()->save(new Approval([
+                        'requester_id' => $request->user()->id,
+                        'message' => $request->user()->makeMessage('wants to add an award media.'),
+                    ]));
                     $media->setApproved($request->user()->hasRole(Role::ADMIN));
                 });
         }
-        $award->approval()->save(new Approval(['requester_id' => $request->user()->id]));
+        $award->approval()->save(new Approval([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add an award.')
+        ]));
         $award->setApproved($request->user()->hasRole(Role::ADMIN));
 
         $award->load('medias');
@@ -112,16 +118,21 @@ class AwardController extends Controller
                     $file->save();
                     return $file;
                 })
-                ->each(function ($file) use ($award) {
-                    AwardMedia::create([
+                ->each(function ($file) use ($award, $request) {
+                    $media = AwardMedia::create([
                         'award_id' => $award->id,
                         'file_id' => $file->id,
                     ]);
+                    $media->approval()->save(new Approval([
+                        'requester_id' => $request->user()->id,
+                        'message' => $request->user()->makeMessage('wants to add an award media to an existing award.'),
+                    ]));
                 });
         }
         $award->update($data);
         $award->load('medias');
-        $award->setApproved($request->user()->hasRole(Role::ADMIN));
+        $award->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a media.'));
         Log::record("User updated an award.");
         return $award;
     }
