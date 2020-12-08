@@ -39,7 +39,7 @@ export class AboutService {
 
 	getOrganizationalStructure(){
 		const url = this.baseURL 
-		return this.http.get<any>(url,{headers:this.headers})
+		return this.http.get<any>(url)
 	}
 
 	updateOrganizationalStructure(file){

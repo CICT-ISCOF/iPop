@@ -20,8 +20,8 @@ export class ServicesOfferedService {
 		}
 	 }
 
-	user:any = JSON.parse(localStorage.getItem('user-data'))
-	token:any = this.user.token
+	user:any =''
+	token:any =''
 
 	baseURL = 	this.BaseAPIService.baseURL + '/services'
 	headers = 	new HttpHeaders({
@@ -34,7 +34,7 @@ export class ServicesOfferedService {
 
 	create(string){
 		const url = this.BaseAPIService.baseURL + '/service-offers'
-		return this.http.post<any>(url, string , {headers:this.headers})
+		return this.http.post<any>(url, string )
 	}
 
 	retrieve(id){

@@ -1,491 +1,402 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { StatisticsService } from './statistics.service';
+import { StatisticsService } from  './statistics.service'
 import { Console } from 'console';
-import { LocationService } from '../../location.service';
-import {
-    trigger,
-    transition,
-    style,
-    animate,
-    query,
-    stagger,
-    keyframes,
-} from '@angular/animations';
+import { LocationService } from '../../location.service'
+import {trigger, transition, style, animate, query, stagger, keyframes} from '@angular/animations'
 import { Chart } from 'chart.js';
 import { ChartType } from 'chart.js';
 import { SingleDataSet, Label, Color } from 'ng2-charts';
 
-@Component({
-    selector: 'app-statistics',
-    templateUrl: './statistics.component.html',
-    styleUrls: [
-        './statistics.component.scss',
-        'statistics.component.responsive.scss',
-    ],
-    animations: [
-        trigger('listAnimation', [
-            transition('* => *', [
-                query(':enter', style({ opacity: 0 }), { optional: true }),
 
-                query(
-                    ':enter',
-                    stagger('300ms', [
-                        animate(
-                            '.6s ease-in',
-                            keyframes([
-                                style({
-                                    opacity: 0,
-                                    transform: 'translateY(-75%)',
-                                    offset: 0,
-                                }),
-                                style({
-                                    opacity: 0.5,
-                                    transform: 'translateY(30px)',
-                                    offset: 0.3,
-                                }),
-                                style({
-                                    opacity: 1,
-                                    transform: 'translateY(0)',
-                                    offset: 1,
-                                }),
-                            ])
-                        ),
-                    ])
-                ),
-            ]),
-        ]),
-    ],
+@Component({
+	selector: 'app-statistics',
+	templateUrl: './statistics.component.html',
+	styleUrls: ['./statistics.component.scss','statistics.component.responsive.scss'],
+	animations: [
+		trigger('listAnimation', [
+			transition('* => *',[
+				query(':enter', style({opacity:0}),{optional:true}),
+
+				query(':enter', stagger('300ms',[
+					animate('.6s ease-in', keyframes([
+						style({opacity:0,transform: 'translateY(-75%)', offset:0}),
+						style({opacity:.5,transform: 'translateY(30px)', offset:0.3}),
+						style({opacity:1,transform: 'translateY(0)', offset:1})
+					]))
+				]))
+			])
+		])
+	]
 })
 export class StatisticsComponent implements OnInit {
-    // @ViewChild('marriedChart') marriedChart: ElementRef;
-    // context:CanvasRenderingContext2D;
+	// @ViewChild('marriedChart') marriedChart: ElementRef;
+	// context:CanvasRenderingContext2D;
 
-    profile = {} as any;
 
-    constructor(
-        private StatisticsService: StatisticsService,
-        private LocationService: LocationService
-    ) {}
+	constructor(	
+		private StatisticsService : StatisticsService,
+		private LocationService : LocationService
+	) { }
 
-    // -------------- formaters ----------------
+		
+	// -------------- formaters ----------------
 
-    formatChartBackground() {
-        return this.theme == 'dark' ? '#282C34' : 'white';
-    }
+	formatChartBackground(){
+		return this.theme == 'dark' ?   '#282C34' : 'white'		
+	}
 
-    formatChatColor() {
-        return this.theme == 'dark' ? 'white' : 'black';
-    }
+	formatChatColor(){
+		return this.theme == 'dark' ?   'white' : 'black'
+	}
 
-    theme = localStorage.getItem('data-theme');
-    isLoading = false;
+	
 
-    filter = {
-        municipality: '',
-        barangay: '',
-        year: '',
-        month: '',
-    };
+	theme = localStorage.getItem('data-theme')
+	isLoading = false
 
-    ngOnInit(): void {
-        this.getPopulation();
-        this.getTotals();
-        this.getMunicipality();
-        this.getMuncipalities();
-        this.getMonths();
-        this.resetProfile(this.filter);
-    }
+	filter = {
+		municipality:'',
+		barangay:'',
+		year:'',
+		month:''
+	}
 
-    // createMarriedChart(){
-    // 	const ctx = (<HTMLCanvasElement>this.marriedChart.nativeElement).getContext('2d');
-    // 	const gradientStroke = ctx.createLinearGradient(500, 0, 100, 0)
-    // 	const purple_orange_gradient = ctx.createLinearGradient(0, 0, 0, 600)
-    // 	purple_orange_gradient.addColorStop(1, 'rgba(189, 29, 79, 0.1)')
-    // 	purple_orange_gradient.addColorStop(0, 'rgba(189, 29, 79, 1)')
+	ngOnInit(): void {	
+		this.getPopulation()
+		this.getTotals()		
+		this.getMunicipality()		
+		this.getMuncipalities()
+		this.getMonths()		
+	}
 
-    // 	const bar_chart = new Chart(ctx, {
-    // 		type: "line",
-    // 		data: {labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-    // 			datasets: [{
-    // 				label: "Marriages",
-    // 				data:  Object.values(this.charts.married),
-    // 				backgroundColor: purple_orange_gradient,
-    // 				hoverBackgroundColor: purple_orange_gradient,
-    // 				hoverBorderWidth: 2,
-    // 				hoverBorderColor: "purple",
-    // 				borderWidth: 5,
-    // 				borderColor: "#F70099"
-    // 			}]
-    // 		},
-    // 	})
-    // }
+	// createMarriedChart(){		
+	// 	const ctx = (<HTMLCanvasElement>this.marriedChart.nativeElement).getContext('2d');
+	// 	const gradientStroke = ctx.createLinearGradient(500, 0, 100, 0)
+	// 	const purple_orange_gradient = ctx.createLinearGradient(0, 0, 0, 600)
+	// 	purple_orange_gradient.addColorStop(1, 'rgba(189, 29, 79, 0.1)')
+	// 	purple_orange_gradient.addColorStop(0, 'rgba(189, 29, 79, 1)')
 
-    resetProfile({ municipality, barangay, year }) {
-        this.profile = {
-            id: null,
-            municipality: municipality.length > 0 ? municipality : 'N\\A',
-            barangay: barangay.length > 0 ? barangay : 'N\\A',
-            year: year.length > 0 ? year : 'N\\A',
-            coverage: 'N\\A',
-            barangays: 'N\\A',
-            land_area: 'N\\A',
-            household_population: 'N\\A',
-            males: 'N\\A',
-            females: 'N\\A',
-            sex_ratio: 'N\\A',
-            median_age: 'N\\A',
-            doubling: 'N\\A',
-            growth_rate: 'N\\A',
-            households: 'N\\A',
-            average_household_size: 'N\\A',
-            density: 'N\\A',
-            age_dependency_ratio: 'N\\A',
-            child_dependency_ratio: 'N\\A',
-            old_age_dependency_ratio: 'N\\A',
-        };
-    }
+	// 	const bar_chart = new Chart(ctx, {
+	// 		type: "line",
+	// 		data: {labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+	// 			datasets: [{
+	// 				label: "Marriages",
+	// 				data:  Object.values(this.charts.married),
+	// 				backgroundColor: purple_orange_gradient,
+	// 				hoverBackgroundColor: purple_orange_gradient,
+	// 				hoverBorderWidth: 2,
+	// 				hoverBorderColor: "purple",
+	// 				borderWidth: 5,
+	// 				borderColor: "#F70099"
+	// 			}]
+	// 		},
+	// 	})
+	// }
 
-    setYear(event) {
-        this.profile.year = event.target.value;
-        this.listenForQuery();
-    }
 
-    listenForQuery() {
-        this.StatisticsService.profile(this.filter).subscribe((profiles) => {
-            if (profiles.length > 0) {
-                this.profile = profiles[0];
-            } else {
-                this.resetProfile(this.filter);
-            }
-        });
-    }
+	municipalities = []
+	municipalityIsLoading = false
+	getMuncipalities(){
+		this.municipalityIsLoading = true
+		this.LocationService.getMunicipalities().subscribe(data => {
+			this.municipalities = data	
+			this.municipalityIsLoading = false			
+		})		
+	}
 
-    municipalities = [];
-    municipalityIsLoading = false;
-    getMuncipalities() {
-        this.municipalityIsLoading = true;
-        this.LocationService.getMunicipalities().subscribe((data) => {
-            this.municipalities = data;
-            this.municipalityIsLoading = false;
-        });
-    }
+	barangays = []
+	barangayIsLoading
+	filteredCensusData:any = {		
+		barangays:'',
+		zones:[],
+		genders:{
+			birth:{
+				male:'',
+				female:''
+			},
+			cpdb:{
+				male:'',
+				female:''
+			},
+			death:{
+				male:'',
+				female:''
+			},
+			inmigration:{
+				male:'',
+				female:''
+			},
+			household:{
+				male:'',
+				female:''
+			},
+		},
+		tops:{
+			barangays:[]
+		},
+		hasResults:false
+	}
+	getBarangays(event){	
+		this.filteredCensusData.hasResults = false
+		this.barangayIsLoading = true
+		this.filter.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.filter.barangay = ''
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data	
+			this.barangayIsLoading = false
+		})
 
-    barangays = [];
-    barangayIsLoading;
-    filteredCensusData: any = {
-        barangays: '',
-        zones: [],
-        genders: {
-            birth: {
-                male: '',
-                female: '',
-            },
-            cpdb: {
-                male: '',
-                female: '',
-            },
-            death: {
-                male: '',
-                female: '',
-            },
-            inmigration: {
-                male: '',
-                female: '',
-            },
-            household: {
-                male: '',
-                female: '',
-            },
-        },
-        tops: {
-            barangays: [],
-        },
-        hasResults: false,
-    };
-    getBarangays(event) {
-        this.filteredCensusData.hasResults = false;
-        this.barangayIsLoading = true;
-        this.filter.municipality =
-            event.target.options[event.target.options.selectedIndex].text;
-        this.profile.municipality = this.filter.municipality;
-        this.filter.barangay = '';
-        this.LocationService.getBarangays(event.target.value).subscribe(
-            (data) => {
-                this.barangays = data;
-                this.barangayIsLoading = false;
-                this.listenForQuery();
-            }
-        );
+		this.StatisticsService.getMunicipality(this.filter.municipality).subscribe(data => {
+			console.log('filters', data)
+			this.filteredCensusData = data
+			this.filteredCensusData.hasResults = true
+		})
+	}
 
-        this.StatisticsService.getMunicipality(
-            this.filter.municipality
-        ).subscribe((data) => {
-            console.log('filters', data);
-            this.filteredCensusData = data;
-            this.filteredCensusData.hasResults = true;
-            this.listenForQuery();
-        });
-    }
+	setBarangay(event){
+		this.filter.barangay = event.target.options[event.target.options.selectedIndex].text;	
+	}
+	
 
-    setBarangay(event) {
-        this.filter.barangay =
-            event.target.options[event.target.options.selectedIndex].text;
-        this.profile.barangay = this.filter.barangay;
-        this.listenForQuery();
-    }
+	general
+	population = {
+		top:[],
+		total:0
+	}
+	totals
+	genders
+	municipality
 
-    general;
-    population = {
-        top: [],
-        total: 0,
-    };
-    totals;
-    genders;
-    municipality;
+	
+	getPopulation(){
+		this.StatisticsService.population().subscribe(data => {		
+			this.population = data		
+			console.log(data)
+		})
+	}
 
-    getPopulation() {
-        this.StatisticsService.population().subscribe((data) => {
-            this.population = data;
-            console.log(data);
-        });
-    }
+	getTotals(){
+		this.totals = this.StatisticsService.totals().subscribe(data => {			
+			this.totals = data
+		})
+	}
 
-    getTotals() {
-        this.totals = this.StatisticsService.totals().subscribe((data) => {
-            this.totals = data;
-        });
-    }
+	getMunicipality(){
+		this.municipality = this.StatisticsService.municipality().subscribe(data => {
+			
+		})
+	}
 
-    getMunicipality() {
-        this.municipality = this.StatisticsService.municipality().subscribe(
-            (data) => {}
-        );
-    }
+	monthsisLoading = true
+	month:any = {
+		death:{total:''},
+		birth:{total:''},
+		marriage:{total:''},
+		inmigration:{total:''},
+		outmigration:{total:''},	
+	}
 
-    monthsisLoading = true;
-    month: any = {
-        death: { total: '' },
-        birth: { total: '' },
-        marriage: { total: '' },
-        inmigration: { total: '' },
-        outmigration: { total: '' },
-    };
+	sexs = {
+		male:0,
+		female:0
+	}
 
-    sexs = {
-        male: 0,
-        female: 0,
-    };
+	marriageisLoading = false
+	getMonths(){
+		this.monthsisLoading = true
+		this.StatisticsService.ageDistribution().subscribe(data => {			
+			this.charts.ageDistribution = data
+			for(let value in data){
+				if(Number.isInteger(data[value][1]) ){
+					this.sexs.male += data[value][1]
+					this.sexs.female -= data[value][2]
+				}
+			}
+		})
+		this.StatisticsService.months().subscribe(data => {
+			this.marriageisLoading = true
+	 		this.month = data
+			const  truncate = (month) => {
+				return month.substring(0, 3);
+			}
+			this.charts.married = []
+			for(let key in data.marriage){
+				this.charts.married.push(data.marriage[key])				
+			}		
+			this.charts.married.pop()	
+			// this.createMarriedChart()		`			
+			for(let key in data.birth){
+				this.charts.birthAndDeath.push([ key , data.birth[key]  ,-data.death[key]    ])
+				
+			}	
+			for(let key in data.inmigration){
+				this.charts.inMigAndOutMig.push([ key , data.inmigration[key]  ,-data.outmigration[key]    ])			
+			}		
+			this.charts.birthAndDeath.pop()
+			this.charts.inMigAndOutMig.pop()
+			this.monthsisLoading = false
+			
+			this.callCharts()	
+		})
+		
+	}
 
-    marriageisLoading = false;
-    getMonths() {
-        this.monthsisLoading = true;
-        this.StatisticsService.ageDistribution().subscribe((data) => {
-            this.charts.ageDistribution = data;
-            for (let value in data) {
-                if (Number.isInteger(data[value][1])) {
-                    this.sexs.male += data[value][1];
-                    this.sexs.female -= data[value][2];
-                }
-            }
-        });
-        this.StatisticsService.months().subscribe((data) => {
-            this.marriageisLoading = true;
-            this.month = data;
-            const truncate = (month) => {
-                return month.substring(0, 3);
-            };
-            this.charts.married = [];
-            for (let key in data.marriage) {
-                this.charts.married.push(data.marriage[key]);
-            }
-            this.charts.married.pop();
-            // this.createMarriedChart()		`
-            for (let key in data.birth) {
-                this.charts.birthAndDeath.push([
-                    key,
-                    data.birth[key],
-                    -data.death[key],
-                ]);
-            }
-            for (let key in data.inmigration) {
-                this.charts.inMigAndOutMig.push([
-                    key,
-                    data.inmigration[key],
-                    -data.outmigration[key],
-                ]);
-            }
-            this.charts.birthAndDeath.pop();
-            this.charts.inMigAndOutMig.pop();
-            this.monthsisLoading = false;
 
-            this.callCharts();
-        });
-    }
+	// ----------------- charts -----------------------------
+	
 
-    // ----------------- charts -----------------------------
+	charts = {		
+		ageDistribution : [
+			['Age', 'Male', 'Female'],		
+		],
+				
+		birthAndDeath:[			
+			['Age', 'Births', 'Deaths'],	
+					
+		],
 
-    charts = {
-        ageDistribution: [['Age', 'Male', 'Female']],
+		inMigAndOutMig:[
+			['Age', 'In-Migrants', 'Out-Migrants'],	
+					
+		],
+		married:[			
+		]
+	}
 
-        birthAndDeath: [['Age', 'Births', 'Deaths']],
 
-        inMigAndOutMig: [['Age', 'In-Migrants', 'Out-Migrants']],
-        married: [],
-    };
+	polarAreaChartType: ChartType = 'line'
+	polarAreaLegend : true
+	bgColor: Color[] = [
+		{
+			backgroundColor:
+			'linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1))',
+			borderColor: 'purple',
+			pointBackgroundColor: 'rgba(148,159,177,1)',
+			pointBorderColor: '#fff',
+			pointHoverBackgroundColor: '#fff',
+			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+		}
+	]
 
-    polarAreaChartType: ChartType = 'line';
-    polarAreaLegend: true;
-    bgColor: Color[] = [
-        {
-            backgroundColor:
-                'linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1))',
-            borderColor: 'purple',
-            pointBackgroundColor: 'rgba(148,159,177,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-        },
-    ];
-
-    googleChartOptions = {
-        pyramidChartOptions: {
-            backgroundColor: {
-                fill: 'transparent',
-                opacity: 0,
-            },
-            title: '',
-            titleTextStyle: {
-                color: 'blue',
-                fontSize: 16,
-                align: 'center',
-                bold: true,
-            },
-            colors: ['#09B2E7', '#F30091'],
-            chartArea: {
-                backgroundColor: 'transparent',
-                height: '70%',
-                top: '10%',
-            },
-            isStacked: true,
+	googleChartOptions = {			
+		pyramidChartOptions :{
+			backgroundColor: {
+				'fill': 'transparent',
+				'opacity': 0
+			},		
+			title: '',
+            titleTextStyle: {color: 'blue', fontSize: 16, align: 'center', bold: true},
+            colors: ['#09B2E7','#F30091', ],
+            chartArea: { backgroundColor: 'transparent', height: '70%', top: '10%' },
+            isStacked: true,        
             hAxis: {
                 textPosition: 'none',
                 format: ';',
-                title: '',
-                textStyle: {
-                    color: this.formatChatColor(),
-                },
+				title: '',
+				textStyle: {
+					color: this.formatChatColor()
+				},
             },
             vAxis: {
                 direction: 1,
-                title: '',
-                textStyle: {
-                    color: this.formatChatColor(),
-                },
-            },
-            legend: { textStyle: { color: this.formatChatColor() } },
-        },
-        birthsAndDeaths: {
-            backgroundColor: {
-                fill: 'transparent',
-                opacity: 0,
-            },
-            title: '',
-            titleTextStyle: {
-                color: 'blue',
-                fontSize: 16,
-                align: 'center',
-                bold: true,
-            },
-            colors: ['red', '#81D340'],
-            chartArea: {
-                backgroundColor: 'transparent',
-                height: '70%',
-                top: '10%',
-                color: this.formatChatColor(),
-            },
-            isStacked: true,
-            hAxis: {
+				title: '',
+				textStyle: {
+					color: this.formatChatColor()
+				},
+            },			
+			legend: {textStyle: {color: this.formatChatColor()}}			
+					
+		},
+		birthsAndDeaths :{
+			backgroundColor: {
+				'fill': 'transparent',
+				'opacity': 0
+			},
+			title: '',
+            titleTextStyle: {color: 'blue', fontSize: 16, align: 'center', bold: true},
+            colors: ['red','#81D340', ],
+            chartArea: { backgroundColor: 'transparent', height: '70%', top: '10%', color:this.formatChatColor() },
+            isStacked: true,           
+			hAxis: {
                 textPosition: 'none',
                 format: ';',
-                title: '',
-                textStyle: {
-                    color: this.formatChatColor(),
-                },
+				title: '',
+				textStyle: {
+					color: this.formatChatColor()
+				},
             },
             vAxis: {
                 direction: 1,
-                title: '',
-                textStyle: {
-                    color: this.formatChatColor(),
-                },
-            },
-            legend: { textStyle: { color: this.formatChatColor() } },
-        },
-        inMIgsandOutMigs: {
-            backgroundColor: {
-                fill: 'transparent',
-                opacity: 0,
-            },
-            title: '',
-            titleTextStyle: {
-                color: 'blue',
-                fontSize: 16,
-                align: 'center',
-                bold: true,
-            },
-            colors: ['#F2C30D', '#59B8B3'],
-            chartArea: {
-                backgroundColor: 'transparent',
-                height: '70%',
-                top: '10%',
-                color: this.formatChatColor(),
-            },
-            isStacked: true,
-            hAxis: {
+				title: '',
+				textStyle: {
+					color: this.formatChatColor()
+				},
+			},			
+			legend: {textStyle: {color: this.formatChatColor()}}			
+		},
+		inMIgsandOutMigs :{
+			backgroundColor: {
+				'fill': 'transparent',
+				'opacity': 0
+			},
+			title: '',
+            titleTextStyle: {color: 'blue', fontSize: 16, align: 'center', bold: true},
+            colors: ['#F2C30D','#59B8B3', ],
+            chartArea: { backgroundColor: 'transparent', height: '70%', top: '10%', color:this.formatChatColor()},
+            isStacked: true,          
+			hAxis: {
                 textPosition: 'none',
                 format: ';',
-                title: '',
-                textStyle: {
-                    color: this.formatChatColor(),
-                },
+				title: '',
+				textStyle: {
+					color: this.formatChatColor()
+				},
             },
             vAxis: {
                 direction: 1,
-                title: '',
-                textStyle: {
-                    color: this.formatChatColor(),
-                },
-            },
-            legend: { textStyle: { color: this.formatChatColor() } },
-        },
-    };
+				title: '',
+				textStyle: {
+					color: this.formatChatColor()
+				},
+			},	
+			legend: {textStyle: {color: this.formatChatColor()}}			
+		}
+	}
 
-    callCharts() {
-        this.drawChart('male-and-female', this.charts.ageDistribution);
-        this.drawChart('death-and-birth', this.charts.birthAndDeath);
-        this.drawChart('in-mig-and-Out-mig', this.charts.inMigAndOutMig);
-    }
+	callCharts(){
+		this.drawChart('male-and-female',this.charts.ageDistribution)
+		this.drawChart('death-and-birth',this.charts.birthAndDeath)
+		this.drawChart('in-mig-and-Out-mig',this.charts.inMigAndOutMig)
+		
+	}
 
-    drawChart(chartId, chartData) {
-        let style = this.googleChartOptions.pyramidChartOptions;
-        if (chartId == 'death-and-birth') {
-            style = this.googleChartOptions.birthsAndDeaths;
-        }
-        if (chartId == 'in-mig-and-Out-mig') {
-            style = this.googleChartOptions.inMIgsandOutMigs;
-        }
-        const chart = () => {
-            var data = google.visualization.arrayToDataTable(chartData);
-            var chart = new google.visualization.BarChart(
-                document.getElementById(chartId)
-            );
-            var formatter = new google.visualization.NumberFormat({
-                pattern: ';',
-            });
-            formatter.format(data, 2);
-            chart.draw(data, style);
-        };
-        google.load('visualization', '1', { packages: ['corechart'] });
-        google.setOnLoadCallback(chart);
-    }
+	drawChart(chartId,chartData){
+		let style = this.googleChartOptions.pyramidChartOptions
+		if( chartId == 'death-and-birth'){
+		    style = this.googleChartOptions.birthsAndDeaths
+		}
+		if( chartId == 'in-mig-and-Out-mig'){
+			style = this.googleChartOptions.inMIgsandOutMigs
+		}
+		const chart = () => {
+			var data = google.visualization.arrayToDataTable(chartData)
+			var chart = new google.visualization.BarChart(document.getElementById(chartId))			
+			var formatter = new google.visualization.NumberFormat({
+				pattern: ';'
+			})
+			formatter.format(data, 2)
+			chart.draw(data, style )
+		}
+		google.load("visualization", "1", {packages:["corechart"]})
+		google.setOnLoadCallback(chart)
+		
+	}
+
+	
+
+
+
+
+	
+
 }

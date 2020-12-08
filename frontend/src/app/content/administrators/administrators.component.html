@@ -81,11 +81,12 @@
                     </span>
                 </label>
                 <select [(ngModel)]="data.role" class="custom-select" id="role" [class.is-invalid]="invalidData.role" required>
-                    <option selected disabled value="">Choose...</option>
+                    <option selected disabled value="">Choose...</option>                  
+                    <option>PPOI</option>
+                    <option>PPOII</option>
+                    <option>FOD</option>
+                    <option>TRD</option>
                     <option>Super Admin</option>
-                    <option>PPO1</option>
-                    <option>PPO</option>
-                    <option>BSPO</option>
                 </select>
                 <div class="invalid-feedback">
                     Role is required

@@ -323,10 +323,22 @@ video {
     .Item {
         color: white !important
     }
-    opacity: .8;
+    opacity: .99;
     padding: 0 5vw;
     backdrop-filter: blur(51px);
     padding-top: 5px;
     transform: translate(-5vw);
     width: 105vw;
+    .nav-list div:hover {
+        color: white !important;
+        font-weight: 900;
+        input {
+            color: var(--contrast) !important
+        }
+    }
+    .Item:hover {
+        .drop-down-container {
+            opacity: .8;
+        }
+    }
 }

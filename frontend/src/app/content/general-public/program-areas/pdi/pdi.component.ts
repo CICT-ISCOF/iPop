@@ -113,6 +113,22 @@ export class PDIComponent implements OnInit {
 	
 	}
 
+	deletePhoto(id){
+		Swal.fire({
+			title: 'Are you sure you want to remove this Photo?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Remove',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.ProgramAreasService.deletePhoto(id).subscribe(data => {
+					this.ngOnInit()
+				})		
+			} 
+		})	
+	}
+
 
 	deleteRPFP(id){
 		Swal.fire({
@@ -153,7 +169,10 @@ export class PDIComponent implements OnInit {
 			images:[],
 			videos:[]
 		}
-	}
+	}	
+	
+	theme = localStorage.getItem('data-theme')
+
 
 	readSliderURL(files: FileList,event,type){	
 		if (event.target.files && event.target.files[0]) {	

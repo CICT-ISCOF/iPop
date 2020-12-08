@@ -129,9 +129,22 @@ export class AHYDPComponent implements OnInit {
 		})
 	}
 
+	theme = localStorage.getItem('data-theme')
 
-	addAnAward(){
-		
+	deletePhoto(id){
+		Swal.fire({
+			title: 'Are you sure you want to remove this Photo?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Remove',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.ProgramAreasService.deletePhoto(id).subscribe(data => {
+					this.ngOnInit()
+				})		
+			} 
+		})	
 	}
 
 	acitveProgram = {}

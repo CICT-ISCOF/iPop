@@ -14,14 +14,11 @@ export class AwardsService {
 		private http : HttpClient,
 		private BaseAPIService : BaseAPIService
 	) {
-		if(localStorage.getItem('user-data') && localStorage.getItem('user-data') != undefined){
-			this.user = JSON.parse(localStorage.getItem('user-data'))
-			this.token = this.user.token
-		}
-	 }
+		
+	}
 
-	user:any = JSON.parse(localStorage.getItem('user-data'))
-	token:any = this.user.token
+	user:any = ''
+	token:any = ''
 
 	baseURL = 	this.BaseAPIService.baseURL + '/awards'
 	headers = 	new HttpHeaders({
@@ -31,29 +28,39 @@ export class AwardsService {
 				})	
 
 	private page = new Subject<any>();
+
+	getHeaders(){
+		this.user = JSON.parse(localStorage.getItem('user-data'))
+		this.token = this.user.token	
+		return new HttpHeaders({
+			'Accept':'application/json',
+			'Authorization' : 'Bearer '+ this.token,
+			'Content-Type':[]
+		})	
+	}
   
 	createAward(award){
 		const url = this.baseURL
-		return this.http.post<any>(url,award ,{headers:this.headers})
+		return this.http.post<any>(url,award ,{headers:this.getHeaders()})
 	}
 
 	retrieveAwards(){
 		const url = this.baseURL
-		return this.http.get<any>(url ,{headers:this.headers})
+		return this.http.get<any>(url )
 	}
 
 	updateAward(award, id){
 		const url = this.baseURL + '/' +  id
-		return this.http.patch<any>(url, award ,{headers:this.headers})
+		return this.http.patch<any>(url, award ,{headers:this.getHeaders()})
 	}
 
 	deleteAward(id){
 		const url = this.baseURL + '/' +  id
-		return this.http.delete<any>(url ,{headers:this.headers})
+		return this.http.delete<any>(url ,{headers:this.getHeaders()})
 	}
 
 	deletePhoto(id){
 		const url = this.BaseAPIService.baseURL + '/awards/medias/' + id
-		return this.http.delete<any>(url ,{headers:this.headers})
+		return this.http.delete<any>(url ,{headers:this.getHeaders()})
 	}
 }
