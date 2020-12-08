@@ -35,7 +35,7 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'photo' => ['required', 'file'],
+            'photo' => ['required', 'isFile'],
         ]);
 
         $photo = File::process($data['photo']);
