@@ -22,6 +22,6 @@ class Slider extends Model
 
     public function photo()
     {
-        return $this->belongsTo(File::class);
+        return $this->belongsTo(File::class, 'photo_id');
     }
 }
