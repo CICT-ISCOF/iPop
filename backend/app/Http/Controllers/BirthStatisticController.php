@@ -20,9 +20,15 @@ class BirthStatisticController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return BirthStatistic::getApproved()->paginate(10);
+        $builder = BirthStatistic::getApproved();
+        if ($request->user()->hasRole(Role::PPO_ONE)) {
+            $user = $request->user();
+            $builder = $builder->where('municipality', $user->municipality)
+                ->where('barangay', $user->barangay);
+        }
+        return $builder->paginate(10);
     }
 
     /**
@@ -60,10 +66,15 @@ class BirthStatisticController extends Controller
      * @param  \App\Models\Statistics\BirthStatistic  $birthStatistic
      * @return \Illuminate\Http\Response
      */
-    public function show(BirthStatistic $birthStatistic)
+    public function show(Request $request, BirthStatistic $birthStatistic)
     {
-        return BirthStatistic::findApproved($birthStatistic->id)->first()
-            ?: response('', 404);
+        $builder = BirthStatistic::findApproved($birthStatistic->id);
+        if ($request->user()->hasRole(Role::PPO_ONE)) {
+            $user = $request->user();
+            $builder = $builder->where('municipality', $user->municipality)
+                ->where('barangay', $user->barangay);
+        }
+        return $builder->first() ?: response('', 404);
     }
 
     /**
