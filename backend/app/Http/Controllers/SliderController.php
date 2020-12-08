@@ -23,7 +23,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        return Slider::getApproved()->get();
+        return Slider::getApproved()->with('photo')->get();
     }
 
     /**
@@ -67,7 +67,9 @@ class SliderController extends Controller
      */
     public function show(Slider $slider)
     {
-        return $slider;
+        return Slider::findApproved($slider->id)
+            ->with('photo')
+            ->first() ?: response('', 404);
     }
 
     /**
