@@ -166,6 +166,7 @@ import { SbMembersComponent } from './content/provincial-officials/sb-members/sb
 import { AddNewTeenCenterComponent } from './content/teen-centers/add-new-teen-center/add-new-teen-center.component';
 import { TeenCenterAhydTeamComponent } from './content/teen-centers/teen-center-ahyd-team/teen-center-ahyd-team.component';
 import { MpcFdcTeamComponent } from './content/mpc-fdc/mpc-fdc-team/mpc-fdc-team.component';
+import { ApprovalsComponent } from './shared/navbar/approvals/approvals.component';
 
 
 
@@ -379,6 +380,7 @@ const routes: Routes = [
     AddNewTeenCenterComponent,
     TeenCenterAhydTeamComponent,
     MpcFdcTeamComponent,
+    ApprovalsComponent,
   
     
 

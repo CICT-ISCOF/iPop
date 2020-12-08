@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
 	) { 
 		this.subscription = this.UtilityService.getDropDown().subscribe(value => {
 			this.dropdown = value
+			this.approval = value
 		})
 
 		this.subscription =this.UtilityService.getNavText().subscribe(value => {
@@ -32,6 +33,7 @@ export class NavbarComponent implements OnInit {
 	subscription : Subscription
 
 	dropdown = false
+	approval = false
 
 	navText = ''
 

@@ -10,7 +10,7 @@ import { Observable, Subject } from 'rxjs';
 })
 export class AboutService {
 
-  constructor(
+	constructor(
 		private http : HttpClient,
 		private BaseAPIService : BaseAPIService
 	) {

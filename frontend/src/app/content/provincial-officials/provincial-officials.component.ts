@@ -1,3 +1,4 @@
+import { OfficialsService } from './officials.service';
 import { UtilityService } from './../../utility.service';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'
@@ -10,23 +11,23 @@ import Swal from 'sweetalert2'
 export class ProvincialOfficialsComponent implements OnInit {
 
     constructor(
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private OfficialsService : OfficialsService
 	) { }
 
     ngOnInit(): void {
+		this.getOfficials()
     }
     
-	officials = [1,2]
+	officials = []
 	
 
 	activeOfficials = {	}
 	
 	getOfficials(){
-		let count = 0
-		for(let content of this.officials){
-			count += 1
-			this.activeOfficials[count] = false			
-		}
+		this.OfficialsService.getOfficials().subscribe(data => {
+			this.officials = data.data
+		})	
 	}
 	
 	official = {
@@ -51,16 +52,23 @@ export class ProvincialOfficialsComponent implements OnInit {
 			cancelButtonText: 'Nope'
 		  }).then((result) => {
 			if (result.value) {
-				this.UtilityService.setAlert('official has been removed','success')
+				this.OfficialsService.deleteOfficial(official_id).subscribe(data =>{
+					this.UtilityService.setAlert('official has been removed','success')
+					this.ngOnInit()
+				})				
 			} 
 		})
 	}
 
 	saveOfficial(){
-		this.UtilityService.setAlert('New Official Added','success')
+		this.OfficialsService.storeOfficials(this.official).subscribe(data => {
+			this.UtilityService.setAlert('New Official Added','success')
+			this.addOfficial = false
+			this.ngOnInit()
+		})	
 	}
 
-	saveOfficialChanges(official_id){
+	saveOfficialChanges(official_id,official){
 		Swal.fire({
 			title: 'Are you sure you want to update existing Official data?',		
 			icon: 'warning',
@@ -69,10 +77,15 @@ export class ProvincialOfficialsComponent implements OnInit {
 			cancelButtonText: 'Nope'
 		  }).then((result) => {
 			if (result.value) {
-				this.UtilityService.setAlert('Changes Saved','success')
+				this.OfficialsService.updateOfficial(official_id,official).subscribe(data =>{
+					this.UtilityService.setAlert('Changes Saved','success')
+					this.editOfficial(official_id)
+					this.ngOnInit()
+				})				
 			} 
 		})	
 	}
+	
 
 	editOfficial(official_id){
 		this.activeOfficials[official_id] == true ?  this.activeOfficials[official_id] = false : this.activeOfficials[official_id] = true	
