@@ -1,10 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\ArticleController;
-use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AwardController;
@@ -41,6 +41,7 @@ use App\Http\Controllers\ProgramAreaController;
 use App\Http\Controllers\ProvincialOfficialController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SBMemberController;
 use App\Http\Controllers\SBMPTCController;
 use App\Http\Controllers\SBMPTCFocalPersonController;
 use App\Http\Controllers\SBMPTCTeamController;
@@ -174,6 +175,7 @@ Route::middleware('throttle:60,1')->group(function () {
         'pmoccs' => PMOCController::class,
         'pmocc-teams' => PMOCTeamController::class,
         'provincial-officials' => ProvincialOfficialController::class,
+        'sb-members' => SBMemberController::class,
         'teenage-birth-incidence-graphs' => TeenageBirthIncidenceGraphController::class,
         'activities' => ActivityController::class,
         'awards' => AwardController::class,

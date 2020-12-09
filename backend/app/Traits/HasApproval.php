@@ -15,11 +15,10 @@ trait HasApproval
     public static function getApproved($mode = true)
     {
         $ids = Approval::where('approvable_type', static::class)
+            ->where('approved', $mode)
             ->get()
-            ->filter(function ($approval) use ($mode) {
-                return $approval->approved === $mode;
-            })->map(function ($approval) {
-                return $approval->approvable_id;
+            ->map(function ($approval) {
+                return (int)$approval->approvable_id;
             })->all();
 
         // $ids = DeleteRequest::where('deleteable_type', static::class)
