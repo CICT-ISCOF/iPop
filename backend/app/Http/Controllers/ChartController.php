@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class ChartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,17 +37,31 @@ class ChartController extends Controller
             'photo' => ['required', 'isFile'],
         ]);
 
-        $file = File::process($data['photo']);
-        $file->public = true;
-        $file->save();
-        $chart = Chart::create(['photo_id' => $file->id]);
-        $chart->approval()->create([
-            'requester_id' => $request->user()->id,
-            'message' => $request->user()->makeMessage('wants to add a chart.'),
-        ]);
-        $chart->setApproved($request->user()->hasRole(Role::ADMIN));
-
-        Log::record("Created a chart.");
+        if (Chart::count() === 0) {
+            $file = File::process($data['photo']);
+            $file->public = true;
+            $file->save();
+            $chart = Chart::create(['photo_id' => $file->id]);
+            $chart->approval()->create([
+                'requester_id' => $request->user()->id,
+                'message' => $request->user()->makeMessage('wants to add a chart organization photo.'),
+            ]);
+            $chart->setApproved($request->user()->hasRole(Role::ADMIN));
+            Log::record("Created a chart organization photo.");
+        } else {
+            $oldChart = Chart::first();
+            $oldChart->delete();
+            $file = File::process($data['photo']);
+            $file->public = true;
+            $file->save();
+            $chart = Chart::create(['photo_id' => $file->id]);
+            $chart->approval()->create([
+                'requester_id' => $request->user()->id,
+                'message' => $request->user()->makeMessage('wants to update the chart organization photo.'),
+            ]);
+            $chart->setApproved($request->user()->hasRole(Role::ADMIN));
+            Log::record("Update a chart organization photo.");
+        }
 
         return $chart;
     }
