@@ -18,8 +18,7 @@ class CreateBirthStatisticsTable extends Migration
             $table->string('municipality');
             $table->string('barangay');
             $table->year('year');
-            $table->unsignedBigInteger('male')->default(0);
-            $table->unsignedBigInteger('female')->default(0);
+            $table->string('gender');
             $table->unsignedBigInteger('total_live_births');
             $table->string('crude_birth_rate');
             $table->string('general_fertility_rate');
