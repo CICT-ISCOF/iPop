@@ -22,7 +22,7 @@ class ChartController extends Controller
      */
     public function index()
     {
-        return Chart::getApproved()->get();
+        return Chart::getApproved()->first();
     }
 
     /**

@@ -50,7 +50,7 @@ class DeleteRequest extends Model
 
     public function isPending()
     {
-        return $this->attributes['approved'] === null;
+        return $this->approved === null;
     }
 
     public function isGone()

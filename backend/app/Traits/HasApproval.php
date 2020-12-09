@@ -70,10 +70,13 @@ trait HasApproval
      */
     public function setApproved($mode)
     {
-        $this->approval->approved = $mode;
-        $this->approval->approver_id = $mode
-            ? request()->user()->id
-            : null;
+        $this->load('approval');
+        $this->approval->forceFill([
+            'approved' => $mode,
+            'approver_id' => $mode
+                ? request()->user()->id
+                : null
+        ]);
         $this->approval->save();
         $this->approval->load('approver');
         return $this;
@@ -81,6 +84,7 @@ trait HasApproval
 
     public function setApprovalMessage($message)
     {
+        $this->load('approval');
         $this->approval->fill(['message' => $message]);
         $this->approval->save();
         return $this;
