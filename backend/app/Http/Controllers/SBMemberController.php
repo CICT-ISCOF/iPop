@@ -39,7 +39,8 @@ class SBMemberController extends Controller
             'priority' => ['nullable', 'numeric'],
         ]);
 
-        $SBMember = SBMember::create($data);
+        $SBMember = new SBMember($data);
+        $SBMember->save();
         $SBMember->approval()->save(new Approval([
             'requester_id' => $request->user()->id,
             'message' => $request->user()->makeMessage('wants to add a SB Member.')

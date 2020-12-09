@@ -81,7 +81,7 @@ trait HasApproval
 
     public function setApprovalMessage($message)
     {
-        $this->approval->message = $message;
+        $this->approval->fill(['message' => $message]);
         $this->approval->save();
         return $this;
     }
