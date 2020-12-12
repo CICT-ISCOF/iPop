@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../../utility.service';
 import { UserService } from './../../../../user.service';
 import { AboutService } from './../about.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,10 +12,14 @@ export class OrgStructureComponent implements OnInit {
 
 	constructor(
 		private AboutService : AboutService,
-		private UserService : UserService
+		private UserService : UserService,
+		private UtilityService : UtilityService
 	) { }
 
 	ngOnInit(): void {	
+		this.AboutService.getOrganizationalStructure().subscribe(data => {
+		
+		})
 	}
 
 	isAdmin = this.UserService.isUser()
@@ -31,21 +36,19 @@ export class OrgStructureComponent implements OnInit {
 			const reader = new FileReader()	
 			reader.readAsDataURL(event.target.files[0]);   		
 			reader.onload = (event) => {	
-				let img = (<FileReader>event.target).result		
-				const base64String = img.toString().split(',')
-				this.organizationalStructure = base64String
-				this.storeOrganizationalStructure(base64String)
+				this.storeOrganizationalStructure((<FileReader>event.target).result		)
 			}	
 		}	
 		
 	}
 
 
-	storeOrganizationalStructure(file){
-		console.log('store',file)
-		// this.AboutService.storeOrganizationalStructure(file).subscribe(data => {
-			
-		// })		
+	storeOrganizationalStructure(file : any){
+		let data = {}
+		data['photo'] = file
+		this.AboutService.storeOrganizationalStructure(data).subscribe(data => {
+			this.UtilityService.setAlert('Oranizational Structure has been changed','success')
+		})		
 	}
 
 	getOrganizationalStructure(){

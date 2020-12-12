@@ -1,17 +1,12 @@
 <app-home>
 </app-home>
 <div class="wrapper" style="padding: 0;">
+
     <div class="content" *ngIf="!wantsToadAnImage">
         <div class="carousel-holder">
             <owl-carousel-o [options]="customOptions">
-                <ng-template carouselSlide>
-                    <img alt="" title="slide.title" style="	background-image: url('./../../assets/home/1.jpg')">
-                </ng-template>
-                <ng-template carouselSlide>
-                    <img alt="" title="slide.title" style="	background-image: url('./../../assets/home/2.jpg')">
-                </ng-template>
-                <ng-template carouselSlide>
-                    <img alt="" title="slide.title" style="	background-image: url('./../../assets/home/3.jpg')">
+                <ng-template carouselSlide *ngFor="let image of slides">
+                    <img alt="" [style]="'background-image: url('+ image.photo.uri + ')'">
                 </ng-template>
             </owl-carousel-o>
         </div>
@@ -38,7 +33,7 @@
             </ng-template>
         </owl-carousel-o>
     </div>
-    <br> <br> <br><br> <br> <br>
+    <br> <br> <br>
     <div class="row" *ngIf="wantsToadAnImage">
 
         <button (click)="save()" class="button">Save</button>
@@ -47,8 +42,14 @@
     </div>
 
     <input multiple type="file" (change)="readURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]="'slider'">
-    <button *ngIf="!wantsToadAnImage && slide.length == 0" (click)="triggerImage()" class="button">Add Images</button>
-    <button *ngIf="!wantsToadAnImage" class="button">Edit Slider</button>
+    <button *ngIf="newImages.length == 0" (click)="triggerImage()" class="button">Add Images</button>
+    <div *ngIf="wantsToEdit" class="row">
+        <div class="col-md-2" *ngFor="let image of slides">
+            <img (click)="deletePhoto(image.id)" alt="" tooltip="Click to delete this image" placement="top" show-delay="100" [theme]="theme" [src]="image.photo.uri">
+        </div>
+    </div>
+    <button (click)="editSlider()" *ngIf="!wantsToEdit && newImages.length == 0" class="button">Edit Slider</button>
+    <button (click)="wantsToEdit = false" *ngIf="wantsToEdit" class="clickable">Cancel Editing</button>
 </div>
 <div class="wrapper">
 

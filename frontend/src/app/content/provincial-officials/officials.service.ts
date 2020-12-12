@@ -59,5 +59,31 @@ export class OfficialsService {
 		return this.http.delete<any>(url ,{headers:this.getHeaders()})
 	}
 
+
+	// ----------------sb members --------------------
+
+	sbMemberUrl = this.BaseAPIService.baseURL + '/sb-members'
+
+	create(officials){
+		const url  = this.sbMemberUrl
+		return this.http.post<any>(url,officials ,{headers:this.getHeaders()})
+	}
+
+	retrieve(){
+		const url  = this.sbMemberUrl
+		return this.http.get<any>(url)
+	}
+
+	update(id, member){
+		const url = this.sbMemberUrl + '/' +  id
+		return this.http.put<any>(url,member ,{headers:this.getHeaders()})
+	}
+
+	deleteSB(id){
+		const url = this.sbMemberUrl + '/' +  id
+		return this.http.delete<any>(url ,{headers:this.getHeaders()})
+	}
+
+
 }
  

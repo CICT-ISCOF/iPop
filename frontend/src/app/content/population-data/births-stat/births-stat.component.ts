@@ -1,3 +1,5 @@
+import { BirthStatService } from './birth-stat.service';
+import { LocationService } from './../../../location.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,8 +9,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BirthsStatComponent implements OnInit {
 
-	constructor() { }
+	constructor(
+		private LocationService : LocationService,
+		private BirthStatService : BirthStatService
+	) { }
+	
+	municipalities:any = [] 
+	barangays:any = [] 
+	hasData = true
+	
+	isLoading = false
 
+	data = {
+		municipality:'Select Municipality',
+		barangay: '',
+		year:'',
+		male: '',
+		female:'',
+		total_live_births:'',
+		crude_death_rate: '',
+		general_fertility_rate:'',
+	}
+
+	years = []
+	
+	getMuncipalities(){
+		this.isLoading = true
+		 this.LocationService.getMunicipalities().subscribe(data => {
+			this.municipalities = data	
+			this.isLoading = false			
+		})
+	}
+
+	barangayIsLoading = false
+	getBarangays(event){
+		this.barangayIsLoading = true
+		this.data.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data	
+			this.barangayIsLoading = false
+		})
+	}
 
 
 	MONTHbarChartOptions = {
@@ -53,6 +94,17 @@ export class BirthsStatComponent implements OnInit {
 
 
 	ngOnInit(): void {
+		for(let i = 2020 ; i <= 2050; i ++){
+			this.years.push(i)
+		}
+		this.getMuncipalities()
+	}
+
+
+	save(){
+		this.BirthStatService.create(this.data).subscribe(data => {
+			console.log(data)
+		})
 	}
 
 }

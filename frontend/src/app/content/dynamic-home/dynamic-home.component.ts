@@ -1,6 +1,8 @@
+import { UtilityService } from './../../utility.service';
 import { SlideService } from './slide.service';
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import Swal from 'sweetalert2' 
 
 @Component({
   selector: 'app-dynamic-home',
@@ -9,8 +11,10 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class DynamicHomeComponent implements OnInit {
 
+	theme = localStorage.getItem('data-theme')
 	constructor(
-		private SlideService : SlideService
+		private SlideService : SlideService,
+		private UtilityService : UtilityService
 	) { }
 
 	ngOnInit(): void {
@@ -49,23 +53,45 @@ export class DynamicHomeComponent implements OnInit {
 		}			
 	}
 
-	slide = []
+	slides = []
 	getSlide(){
 		this.SlideService.retrieve().subscribe(data => {
-			this.slide = data
+			this.slides = data
 		})
+	}
+
+	wantsToEdit = false
+
+	editSlider(){
+		this.wantsToEdit = true
 	}
 
 	save(){
 		let data = {}
 		data['photos'] = this.newImages
 		this.SlideService.create(data).subscribe(data => {
+			this.UtilityService.setAlert('Added an Images to slider', 'success')
 			this.clearSlider()
 			this.wantsToadAnImage = false
+			this.ngOnInit()
 		})	
 	}
 
-
+	deletePhoto(id){		
+		Swal.fire({
+			title: 'Are you sure you want to delete this photo?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Delete',
+			cancelButtonText: 'Later'
+		  }).then((result) => {
+			if (result.value) {
+				this.SlideService.deletePhoto(id).subscribe(data => {
+					this.UtilityService.setAlert('Photo has been deleted','info')
+				})
+			}
+		})	
+	}
 
 
 

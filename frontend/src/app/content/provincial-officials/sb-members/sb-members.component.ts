@@ -1,3 +1,4 @@
+import { OfficialsService } from './../officials.service';
 import { UtilityService } from './../../../utility.service';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'
@@ -10,22 +11,22 @@ import Swal from 'sweetalert2'
 export class SbMembersComponent implements OnInit {
 
 	constructor(
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private OfficialsService : OfficialsService
 	) { }
 
 	ngOnInit(): void {
+		this.getSBMembers()
 	}
 
 	
-	sbMembers = [1,2,1,2,1,2,1,2]
+	sbMembers = []
 	activeSB = {	}
 
 	getSBMembers(){
-		let count = 0
-		for(let content of this.sbMembers){
-			count += 1
-			this.activeSB[count] = false			
-		}
+		this.OfficialsService.retrieve().subscribe(data => {
+			this.sbMembers = data.data
+		})
 	}
 
 	sbMember = {
@@ -38,7 +39,7 @@ export class SbMembersComponent implements OnInit {
 			id:''
 		}	
 
-	deleteMember(member_id){	
+	deleteMember(id){	
 		Swal.fire({
 			title: 'Are you sure you want to remove this SB Member?',		
 			icon: 'warning',
@@ -46,17 +47,24 @@ export class SbMembersComponent implements OnInit {
 			confirmButtonText: 'Remove',
 			cancelButtonText: 'Nope'
 		  }).then((result) => {
-			if (result.value) {
-				this.UtilityService.setAlert('official has been removed','success')
+			if (result.value) {				
+				this.OfficialsService.deleteSB(id).subscribe(data =>{
+					this.UtilityService.setAlert(' SB Member has been removed','info')
+					this.ngOnInit()
+				})
 			} 
 		})	
 	}
 
 	saveMember(){
-		this.UtilityService.setAlert('New SB Member Added','success')
+		this.OfficialsService.create(this.sbMember).subscribe(data =>{
+			this.UtilityService.setAlert('new SB Member Added','success')
+			this.ngOnInit()
+			this.addMember = false
+		})
 	}
 
-	saveSBMemberChanges(member_id){
+	saveSBMemberChanges(id, member){		
 		Swal.fire({
 			title: 'Are you sure you want to update existing SB Member data?',		
 			icon: 'warning',
@@ -65,10 +73,15 @@ export class SbMembersComponent implements OnInit {
 			cancelButtonText: 'Nope'
 		  }).then((result) => {
 			if (result.value) {
-				this.UtilityService.setAlert('Changes Saved','success')
+				this.OfficialsService.update(id, member).subscribe(data =>{
+					this.UtilityService.setAlert('Changes has been saved','success')
+					this.ngOnInit()		
+					this.editMember(id)		
+				})
 			} 
 		})	
 	}
+	
 
 	editMember(member_id){
 		this.activeSB[member_id] == true ?  this.activeSB[member_id] = false : this.activeSB[member_id] = true	
