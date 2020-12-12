@@ -49,18 +49,18 @@ class ChartController extends Controller
             $chart->setApproved($request->user()->hasRole(Role::ADMIN));
             Log::record("Created a chart organization photo.");
         } else {
-            $oldChart = Chart::first();
+            $oldChart = Chart::with('approval')->first();
             $oldChart->delete();
             $file = File::process($data['photo']);
             $file->public = true;
             $file->save();
             $chart = Chart::create(['photo_id' => $file->id]);
-            $chart->approval()->create([
+            $chart->approval->update([
                 'requester_id' => $request->user()->id,
                 'message' => $request->user()->makeMessage('wants to update the chart organization photo.'),
             ]);
             $chart->setApproved($request->user()->hasRole(Role::ADMIN));
-            Log::record("Update a chart organization photo.");
+            Log::record("Update the chart organization photo.");
         }
 
         return $chart;

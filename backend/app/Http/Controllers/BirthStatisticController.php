@@ -45,7 +45,7 @@ class BirthStatisticController extends Controller
             'year' => ['required', 'date_format:Y'],
             'gender' => ['required', 'string'],
             'total_live_births' => ['nullable', 'numeric'],
-            'crude_death_rate' => ['required', 'string', 'max:255'],
+            'crude_birth_rate' => ['required', 'string', 'max:255'],
             'general_fertility_rate' => ['required', 'string', 'max:255'],
         ]);
 
@@ -91,7 +91,7 @@ class BirthStatisticController extends Controller
             'year' => ['nullable', 'date_format:Y'],
             'gender' => ['nullable', 'string'],
             'total_live_births' => ['nullable', 'numeric'],
-            'crude_death_rate' => ['nullable', 'string', 'max:255'],
+            'crude_birth_rate' => ['nullable', 'string', 'max:255'],
             'general_fertility_rate' => ['nullable', 'string', 'max:255'],
         ]);
 

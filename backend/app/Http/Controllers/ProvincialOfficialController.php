@@ -70,8 +70,9 @@ class ProvincialOfficialController extends Controller
      * @param  \App\Models\ProvincialOfficial  $provincialOfficial
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProvincialOfficial $provincialOfficial)
+    public function update(Request $request, $id)
     {
+        $provincialOfficial = ProvincialOfficial::findOrFail($id);
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
@@ -93,8 +94,9 @@ class ProvincialOfficialController extends Controller
      * @param  \App\Models\ProvincialOfficial  $provincialOfficial
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProvincialOfficial $provincialOfficial)
+    public function destroy($id)
     {
+        $provincialOfficial = ProvincialOfficial::findOrFail($id);
         $provincialOfficial->makeDeleteRequest();
 
         Log::record("Deleted a Provincial Official.");

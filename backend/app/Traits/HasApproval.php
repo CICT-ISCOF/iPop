@@ -70,23 +70,23 @@ trait HasApproval
      */
     public function setApproved($mode)
     {
-        $this->load('approval');
-        $this->approval->forceFill([
-            'approved' => $mode,
-            'approver_id' => $mode
-                ? request()->user()->id
-                : null
-        ]);
-        $this->approval->save();
-        $this->approval->load('approver');
+        if ($this->approval !== null) {
+            $this->approval->update([
+                'approved' => $mode,
+                'approver_id' => $mode
+                    ? request()->user()->id
+                    : null
+            ]);
+            $this->approval->load('approver');
+        }
         return $this;
     }
 
     public function setApprovalMessage($message)
     {
-        $this->load('approval');
-        $this->approval->fill(['message' => $message]);
-        $this->approval->save();
+        if ($this->approval !== null) {
+            $this->approval->update(['message' => $message]);
+        }
         return $this;
     }
 
@@ -95,7 +95,7 @@ trait HasApproval
         return $this->morphOne(DeleteRequest::class, 'deleteable');
     }
 
-    public function makeDeleteRequest(): DeleteRequest
+    public function makeDeleteRequest()
     {
         $user = request()->user();
         $request = $this->deleteRequest;

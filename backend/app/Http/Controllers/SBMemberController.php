@@ -71,15 +71,18 @@ class SBMemberController extends Controller
      * @param  \App\Models\SBMember  $SBMember
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SBMember $SBMember)
+    public function update(Request $request, $id)
     {
+        $SBMember = SBMember::findOrFail($id);
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
             'priority' => ['nullable', 'numeric'],
         ]);
 
-        $SBMember->update($data);
+        $SBMember->fill($data);
+
+        $SBMember->save();
         $SBMember->setApproved($request->user()->hasRole(Role::ADMIN))
             ->setApprovalMessage($request->user()->makeMessage('wants to update a SB Member.'));
 
@@ -94,8 +97,9 @@ class SBMemberController extends Controller
      * @param  \App\Models\SBMember  $SBMember
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SBMember $SBMember)
+    public function destroy($id)
     {
+        $SBMember = SBMember::findOrFail($id);
         $SBMember->makeDeleteRequest();
 
         Log::record("Deleted a SB Member.");

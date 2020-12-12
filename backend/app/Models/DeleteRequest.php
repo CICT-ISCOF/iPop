@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\JSON;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,11 +15,15 @@ class DeleteRequest extends Model
         'approved',
         'approver_id',
         'requester_id',
-        'metadata'
+        'metadata',
+        'deleteable_id',
     ];
 
     protected $with = ['deleteable'];
-
+    protected $casts = [
+        'metadata' => JSON::class,
+        'approved' => 'boolean',
+    ];
     protected $appends = ['pending'];
 
     public static function booted()
@@ -34,7 +39,10 @@ class DeleteRequest extends Model
             if (($request->isPending() || $request->approved === false) && $request->isGone()) {
                 $model = $request->deleteable_type;
                 $entity = new $model();
-                $entity->forceFill($request->metadata);
+                $data = (array)$request->metadata;
+                $entity->fill($data);
+                $entity->id = $data['id'];
+                $entity->created_at = $data['created_at'];
                 $entity->save();
                 $class = explode('\\', $request->deletable_type);
                 $class = $class[count($class) - 1];
@@ -55,17 +63,7 @@ class DeleteRequest extends Model
 
     public function isGone()
     {
-        return $this->deleteable === null || get_class($this->deleteable) !== $this->deletable_type;
-    }
-
-    public function setMetadataAttribute($value)
-    {
-        return json_encode($value);
-    }
-
-    public function getMetadataAttribute()
-    {
-        return json_decode($this->attributes['metadata']);
+        return $this->deleteable === null;
     }
 
     public function deleteable()
