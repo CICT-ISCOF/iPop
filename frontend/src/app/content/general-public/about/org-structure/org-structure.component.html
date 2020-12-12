@@ -5,6 +5,6 @@
     <button *ngIf="isAdmin" (click)="triggerInputTypeFile()" class="button">Change Image</button>
     <input type="file" (change)="readUrl($event.target.files, $event) " accept="image/*" style="display: none;" id="input-type-file">
     <br><br>
-    <img [src]="organizationalStructure" alt="" style="width: 100%;min-height: 100vh;">
+    <img *ngIf="img != null" [src]="img" alt="" style="width: 100%;min-height: 100vh;">
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

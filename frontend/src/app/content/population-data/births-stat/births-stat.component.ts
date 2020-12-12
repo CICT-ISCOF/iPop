@@ -18,36 +18,31 @@ export class BirthsStatComponent implements OnInit {
 	barangays:any = [] 
 	hasData = true
 	
-	isLoading = false
+
 
 	data = {
 		municipality:'Select Municipality',
 		barangay: '',
 		year:'',
-		male: '',
-		female:'',
+		gender:''	,
 		total_live_births:'',
 		crude_death_rate: '',
 		general_fertility_rate:'',
 	}
-
+ 
 	years = []
 	
-	getMuncipalities(){
-		this.isLoading = true
+	getMuncipalities(){		
 		 this.LocationService.getMunicipalities().subscribe(data => {
-			this.municipalities = data	
-			this.isLoading = false			
+			this.municipalities = data			
 		})
 	}
 
 	barangayIsLoading = false
-	getBarangays(event){
-		this.barangayIsLoading = true
+	getBarangays(event){	
 		this.data.municipality = event.target.options[event.target.options.selectedIndex].text;	
 		this.LocationService.getBarangays(event.target.value).subscribe(data => {
-			this.barangays = data	
-			this.barangayIsLoading = false
+			this.barangays = data		
 		})
 	}
 

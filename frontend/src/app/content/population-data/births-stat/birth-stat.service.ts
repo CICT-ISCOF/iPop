@@ -20,7 +20,7 @@ export class BirthStatService {
 	user:any = ''
 	token:any = ''
 
-	baseURL = 	this.BaseAPIService.baseURL + '/awards'
+	baseURL = 	this.BaseAPIService.baseURL + '/birth-statistics'
 	headers = 	new HttpHeaders({
 					'Accept':'application/json',
 					'Authorization' : 'Bearer '+ this.token,

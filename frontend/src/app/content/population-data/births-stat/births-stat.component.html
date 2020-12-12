@@ -35,7 +35,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="">Gender</label>
-                        <select type="text" class="form-control">                       
+                        <select [(ngModel)]="data.gender" type="text" class="form-control">                       
                             <option >Male</option>
                             <option >Female</option>
                         </select>
@@ -45,19 +45,19 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="">Total Live Births</label>
-                        <input [(ngModel)]="data.total_live_births" type="number" class="form-control">
+                        <input [(ngModel)]="data.total_live_births" type="text" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="">Crud Death Rate</label>
-                        <input [(ngModel)]="data.crude_death_rate" type="number" class="form-control">
+                        <input [(ngModel)]="data.crude_death_rate" type="text" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="">General Fertility Rate</label>
-                        <input [(ngModel)]="data.general_fertility_rate" type="number" class="form-control">
+                        <input [(ngModel)]="data.general_fertility_rate" type="text" class="form-control">
                     </div>
                 </div><br><br>
                 <div style="display:flex;align-items: center;justify-content: center;">
-                    <button class="button">Save</button>
+                    <button (click)="save()" class="button">Save</button>
                 </div>
             </div><br>
         </div>
