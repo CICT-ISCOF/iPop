@@ -102,4 +102,40 @@ export class BirthsStatComponent implements OnInit {
 		})
 	}
 
+
+	getDataParams = {
+		barangay:'',
+		municipality:'',
+		year:'',
+		gender:''
+	}
+
+	chartData = {
+		january:'',
+		february:'',
+		march:'',
+		april:'',
+		may:'',
+		jun:'',
+		july:'',
+		august:'',
+		september:'',
+		october:'',
+		november:'',
+		december:'',
+		birth_stat_id:''
+	}
+
+	teenAgeBirth = {
+		first:'',
+		second:'',
+		third:''
+	}
+
+	legitimateBIrth = {
+		first:'',
+		second:'',
+		third:''
+	}
+
 }
