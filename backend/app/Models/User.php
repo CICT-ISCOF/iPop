@@ -11,9 +11,12 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles, HasFactory;
+    use Notifiable, HasFactory;
     use HasApiTokens {
         createToken as _sanctumCreateToken;
+    }
+    use HasRoles {
+        hasRole as _parentHasRole;
     }
 
     /**
@@ -51,6 +54,11 @@ class User extends Authenticatable
                 $user->profilePicture->delete();
             }
         });
+    }
+
+    public function hasRole($roles, ?string $guard = null): bool
+    {
+        return $this->_parentHasRole($roles, 'web');
     }
 
     public function makeMessage($message)

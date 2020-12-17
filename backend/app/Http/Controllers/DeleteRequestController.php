@@ -56,7 +56,8 @@ class DeleteRequestController extends Controller
     public function update(Request $request, DeleteRequest $deleteRequest)
     {
         $deleteRequest->update($request->validate([
-            'approved' => [Rule::in([null, true, false])]
+            'approved' => ['required', 'boolean'],
+            'pending' => ['required', 'boolean'],
         ]));
 
         return $deleteRequest;

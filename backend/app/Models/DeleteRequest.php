@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Boolean;
 use App\Casts\JSON;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,26 +18,27 @@ class DeleteRequest extends Model
         'requester_id',
         'metadata',
         'deleteable_id',
+        'pending',
     ];
 
     protected $with = ['deleteable'];
     protected $casts = [
         'metadata' => JSON::class,
-        'approved' => 'boolean',
+        'approved' => Boolean::class,
+        'pending' => Boolean::class,
     ];
-    protected $appends = ['pending'];
 
     public static function booted()
     {
         static::saved(function ($request) {
-            if ($request->approved === true && !$request->isGone()) {
+            if ($request->isApproved() && !$request->isGone()) {
                 $class = explode('\\', $request->deletable_type);
                 $class = $class[count($class) - 1];
                 $request->deleteable->delete();
                 Log::record("Deleted a {$class}.");
                 $request->delete();
             }
-            if (($request->isPending() || $request->approved === false) && $request->isGone()) {
+            if ($request->isPending() && $request->isGone()) {
                 $model = $request->deleteable_type;
                 $entity = new $model();
                 $data = (array)$request->metadata;
@@ -51,14 +53,14 @@ class DeleteRequest extends Model
         });
     }
 
-    public function getPendingAttribute()
-    {
-        return $this->isPending();
-    }
-
     public function isPending()
     {
-        return $this->approved === null;
+        return $this->pending === true;
+    }
+
+    public function isApproved()
+    {
+        return $this->approved === true && !$this->isPending();
     }
 
     public function isGone()

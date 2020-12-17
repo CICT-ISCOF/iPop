@@ -18,8 +18,8 @@ class CreateDeleteRequestsTable extends Migration
             $table->id();
             $table->morphs('deleteable');
             $table->text('metadata');
-            $table->boolean('approved')
-                ->nullable();
+            $table->boolean('approved');
+            $table->boolean('pending')->default(true);
             $table->foreignIdFor(new User(), 'requester_id');
             $table->foreignIdFor(new User(), 'approver_id')->nullable();
             $table->softDeletes();

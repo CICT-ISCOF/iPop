@@ -6,6 +6,7 @@ use App\Models\Approval;
 use App\Models\DeleteRequest;
 use App\Models\Log;
 use App\Models\Role;
+use App\Models\User;
 
 trait HasApproval
 {
@@ -90,28 +91,30 @@ trait HasApproval
         return $this;
     }
 
-    public function deleteRequest()
+    public function deleteable()
     {
         return $this->morphOne(DeleteRequest::class, 'deleteable');
     }
 
     public function makeDeleteRequest()
     {
-        $user = request()->user();
-        $request = $this->deleteRequest;
+        $user = User::find(request()->user()->id);
+        $request = $this->deleteable;
         if ($request === null) {
-            $request = $this->deleteRequest()->create([
+            $request = $this->deleteable()->create([
                 'requester_id' => $user->id,
                 'approver_id' => $user->hasRole(Role::ADMIN) ? $user->id : null,
-                'appproved' => $user->hasRole(Role::ADMIN) ? true : null,
+                'approved' => $user->hasRole(Role::ADMIN),
+                'pending' => !$user->hasRole(Role::ADMIN),
                 'metadata' => $this->toArray(),
             ]);
         } else {
             $request->update([
                 'requester_id' => $user->id,
                 'approver_id' => $user->hasRole(Role::ADMIN) ? $user->id : null,
-                'appproved' => $user->hasRole(Role::ADMIN) ? true : null,
+                'approved' => $user->hasRole(Role::ADMIN),
                 'metadata' => $this->toArray(),
+                'pending' => !$user->hasRole(Role::ADMIN),
             ]);
         }
         if ($request->approved === true) {
