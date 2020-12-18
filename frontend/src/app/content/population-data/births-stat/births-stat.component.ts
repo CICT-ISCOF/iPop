@@ -26,7 +26,7 @@ export class BirthsStatComponent implements OnInit {
 		year:'',
 		gender:''	,
 		total_live_births:'',
-		crude_death_rate: '',
+		crude_birth_rate: '',
 		general_fertility_rate:'',
 	}
  
@@ -37,8 +37,7 @@ export class BirthsStatComponent implements OnInit {
 			this.municipalities = data			
 		})
 	}
-
-	barangayIsLoading = false
+	
 	getBarangays(event){	
 		this.data.municipality = event.target.options[event.target.options.selectedIndex].text;	
 		this.LocationService.getBarangays(event.target.value).subscribe(data => {
@@ -110,6 +109,27 @@ export class BirthsStatComponent implements OnInit {
 		gender:''
 	}
 
+	getBarangaysandGet(event){	
+		this.getDataParams.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data		
+		})
+	}
+
+	checked = {
+		male:false,
+		female:false,
+		all:false
+	}
+
+	check(item){
+		for(let checkbox in this.checked){
+			this.checked[checkbox] = false
+		}
+		this.checked[item] = true
+		this.getDataParams.gender = item	
+	}
+
 	chartData = {
 		january:'',
 		february:'',
@@ -136,6 +156,22 @@ export class BirthsStatComponent implements OnInit {
 		first:'',
 		second:'',
 		third:''
+	}
+
+	hasSelectedData = false
+	fetchData(){
+		let data = {}
+		for(let key in this.getDataParams){
+			data[key] = this.getDataParams[key]
+		}
+		for(let key in this.checked){
+			data[key] = this.checked[key]
+		}
+		this.hasSelectedData = true
+		// this.BirthStatService.show( data['municipality'] ).subscribe(data => {
+
+		// })
+		
 	}
 
 }

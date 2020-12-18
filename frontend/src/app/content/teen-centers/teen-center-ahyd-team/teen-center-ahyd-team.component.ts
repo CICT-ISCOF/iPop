@@ -1,3 +1,5 @@
+import { UtilityService } from './../../../utility.service';
+import { TeenCentersService } from './../teen-centers.service';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'
 
@@ -8,10 +10,15 @@ import Swal from 'sweetalert2'
 })
 export class TeenCenterAhydTeamComponent implements OnInit {
 
-	constructor() { }
+	constructor(
+		private TeenCentersService : TeenCentersService,
+		private UtilityService : UtilityService
+	) { }
 
 	ngOnInit(): void {
-
+	
+		this.getTeams()
+		this.getFocalPerson()
 	}
 
 	addTeam = false
@@ -21,57 +28,103 @@ export class TeenCenterAhydTeamComponent implements OnInit {
 		name:''
 	}
 
+	focalPersons = []
 	createFocalPerson(){
-
+		this.TeenCentersService.create(this.focalPerson).subscribe(data => {
+			this.UtilityService.setAlert('New Focal Person has been added','success')
+			this.ngOnInit()
+		})
 	}
 
-	getFocalPerson(){
-
+	getFocalPerson(){	
+		this.TeenCentersService.retrieve().subscribe(data => {
+			this.focalPersons = data
+		})
 	}
 
-	updateTFocalPerson(){
+	updateTFocalPerson(focalPerson){
+		Swal.fire({
+			title: 'Are you sure you want to update this focal Person?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Update',
+			cancelButtonText: 'Later'
+			}).then((result) => {
+			if (result.value) {
+				this.TeenCentersService.update(focalPerson,focalPerson['id']).subscribe(data => {
+					this.ngOnInit()
+				})
+			} 
+		})
 
 	}
 	
-	deleteFocalPerson(){
+	deleteFocalPerson(id){
 		Swal.fire({
 			title: 'Are you sure you want to this Focal Person?',		
 			icon: 'warning',
 			showCancelButton: true,
-			confirmButtonText: 'Remove Service',
+			confirmButtonText: 'Remove',
 			cancelButtonText: 'Nope'
-		  }).then((result) => {
+			}).then((result) => {
 			if (result.value) {
-				//butang di ya code ja,m
+				this.TeenCentersService.deleteFocalPerson(id).subscribe(data => {
+					this.ngOnInit()
+				})
 			} 
 		})
 	}
 
 
+	ahydTeam = {
+		name:'',
+		posotion:'',
+	}
+
+	ahydTeams = []
 
 	createTeam(){
-
+		this.TeenCentersService.createTeam(this.ahydTeam).subscribe(data => {
+			this.ngOnInit()
+			this.UtilityService.setAlert('New AHYD Team has been added','success')
+		})
 	}
 
 	getTeams(){
-
+		this.TeenCentersService.retrieveTeam().subscribe(data => {
+			this.ahydTeams = data			
+		})
 	}
 
-	updateTeam(){
-
-	}
-	
-	deleteTeam(){
+	updateTeam(team){
 		Swal.fire({
-			title: 'Are you sure you want to this Team Member?',		
+			title: 'Are you sure you want Update this data?',		
 			icon: 'warning',
 			showCancelButton: true,
-			confirmButtonText: 'Remove Team MemberFocalPerson',
+			confirmButtonText: 'Update',
 			cancelButtonText: 'Nope'
-		  }).then((result) => {
+			}).then((result) => {
 			if (result.value) {
-				//butang di ya code ja,m
+				this.TeenCentersService.updateTeam(team).subscribe(data => {
+					this.ngOnInit()		
+				})
 			} 
+		})		
+	}
+	
+	deleteTeam(id){
+		Swal.fire({
+			title: 'Are you sure you want to remove this data?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Remove',
+			cancelButtonText: 'Nope'
+			}).then((result) => {
+				if (result.value) {
+					this.TeenCentersService.deleteAHYDTeam(id).subscribe(data => {
+					this.ngOnInit()		
+				})
+			}
 		})
 	}
 

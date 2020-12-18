@@ -55,13 +55,13 @@ export class BirthStatService {
 		return this.http.patch<any>(url,data ,{headers:this.getHeaders()})
 	}
 	
-	deleteBirthStat(){
+	deleteBirthStat(id){
 		const url = this.baseURL + '/' +  id
 		return this.http.delete<any>(url ,{headers:this.getHeaders()})
 	}
 
-	show(){
-		const url = this.baseURL + '/' +  id
+	show(data){
+		const url =  this.baseURL + '/' + data
 		return this.http.get<any>(url ,{headers:this.getHeaders()})
 	}
 }

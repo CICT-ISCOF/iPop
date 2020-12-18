@@ -1,3 +1,5 @@
+import { UtilityService } from './../../../utility.service';
+import { LocationService } from './../../../location.service';
 import { TeenCentersService } from './../teen-centers.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,10 +11,13 @@ import { Component, OnInit } from '@angular/core';
 export class AddNewTeenCenterComponent implements OnInit {
 
 	constructor(
-		private TeenCentersService : TeenCentersService
+		private TeenCentersService : TeenCentersService,
+		private LocationService : LocationService,
+		private UtilityService : UtilityService
 	) { }
 
 	ngOnInit(): void {
+		this.getMuncipalities()
 	}
 
 	teenCenter = {
@@ -25,10 +30,19 @@ export class AddNewTeenCenterComponent implements OnInit {
 		name:''
 	}
 
-	create(){
+	districtS = ['II','II','III','IV']
+
+	municipalities = []
+	getMuncipalities(){			
+		this.LocationService.getMunicipalities().subscribe(data => {
+		   this.municipalities = data			
+	   })
+   }
+
+	create(){	
 		this.teenCenter.location = this.teenCenter.municipality
 		this.TeenCentersService.addTeencenter(this.teenCenter).subscribe(data => {
-			console.log(data)
+			this.UtilityService.setAlert('New Teen Center Added','success')
 		})
 	}
 
