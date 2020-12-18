@@ -7,13 +7,17 @@
         </div>
         <div class="col-md-6">
             <label for="">District</label>
-            <input [(ngModel)]="teenCenter.district" type="text" class="form-control">
+            <select [(ngModel)]="teenCenter.district" type="text" class="form-control">
+                <option [value]="district" *ngFor="let district of districtS">{{district}}</option>
+            </select>
         </div>
     </div><br>
     <div class="row">
         <div class="col-md-6">
             <label for="">Muncipality</label>
-            <input [(ngModel)]="teenCenter.municipality" type="text" class="form-control">
+            <select [(ngModel)]="teenCenter.municipality" type="text" class="form-control">
+                <option [value]="municipality.name" *ngFor="let municipality of municipalities">{{municipality.name}}</option>
+                </select>
         </div>
         <div class="col-md-6">
             <label for="">Services Offered</label>

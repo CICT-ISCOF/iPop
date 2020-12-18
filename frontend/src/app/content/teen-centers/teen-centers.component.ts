@@ -47,8 +47,7 @@ export class TeenCentersComponent implements OnInit {
 	district:any = {
 		I:{data:[]},
 		II:{data:[]},
-		III:{data:[]}
-		
+		III:{data:[]}		
 	}
 	getTeenCenters(){
 		this.TeenCentersService.getTeenCenters().subscribe(data =>{

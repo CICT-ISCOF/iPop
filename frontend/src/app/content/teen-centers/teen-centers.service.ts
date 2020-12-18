@@ -57,4 +57,47 @@ export class TeenCentersService {
 		const url = this.baseURL
 		return this.http.post<any>(url, teenCenter , {headers:this.headers})
 	}
+
+	// ---------- focal Persons ------------------
+
+	create(focalPerson){
+		const url = this.BaseAPIService.baseURL + '/sbmptcs/focal-persons'
+		return this.http.post<any>(url, focalPerson , {headers:this.headers})
+	}
+	
+	retrieve(){
+		const url = this.BaseAPIService.baseURL + '/sbmptcs/focal-persons'
+		return this.http.get<any>(url,)
+	}
+	
+	update (focalPerson, id){
+		const url = this.BaseAPIService.baseURL + '/sbmptcs/focal-persons/' + id
+		return this.http.patch<any>(url, focalPerson , {headers:this.headers})
+	}
+	
+	deleteFocalPerson(id){
+		const url = this.BaseAPIService.baseURL + '/sbmptcs/focal-persons/' + id
+		return this.http.delete<any>(url,  {headers:this.headers})
+	}
+
+	// ---------------- AHYD TEAM ----------------
+
+
+	createTeam( ahyd ){
+		const url = this. BaseAPIService.baseURL + '/sbmptcs/teams'
+		return this.http.post<any>(url, ahyd ,  {headers:this.headers})
+	} 
+	retrieveTeam(){
+		const url = this. BaseAPIService.baseURL + '/sbmptcs/teams'
+		return this.http.get<any>(url,  {headers:this.headers})
+	} 
+	updateTeam(ahyd){
+		const url = this. BaseAPIService.baseURL + '/sbmptcs/teams/' + ahyd['id']
+		return this.http.patch<any>(url, ahyd , {headers:this.headers})
+	} 
+	deleteAHYDTeam(id){
+		const url = this. BaseAPIService.baseURL + '/sbmptcs/teams/' + id
+		return this.http.delete<any>(url,  {headers:this.headers})
+	}
+	
 }
