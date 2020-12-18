@@ -42,11 +42,18 @@ class MigrationStatisticController extends Controller
             'net_migrations' => ['nullable', 'numeric'],
         ]);
 
-        $migrationStatistic = MigrationStatistic::create($data);
-        $migrationStatistic->approval()->save(new Approval([
-            'requester_id' => $request->user()->id,
-            'message' => $request->user()->makeMessage('wants to add migration statistic.'),
-        ]));
+        $migrationStatistic = MigrationStatistic::first();
+
+        if ($migrationStatistic) {
+            $migrationStatistic->update($data);
+        } else {
+            $migrationStatistic = MigrationStatistic::create($data);
+            $migrationStatistic->approval()->save(new Approval([
+                'requester_id' => $request->user()->id,
+                'message' => $request->user()->makeMessage('wants to add migration statistic.'),
+            ]));
+        }
+
         $migrationStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a migration statistic.");

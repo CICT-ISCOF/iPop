@@ -42,11 +42,18 @@ class DeathStatisticController extends Controller
             'crude_death_rate' => ['required', 'string', 'max:255'],
         ]);
 
-        $deathStatistic = DeathStatistic::create($data);
-        $deathStatistic->approval()->save(new Approval([
-            'requester_id' => $request->user()->id,
-            'message' => $request->user()->makeMessage('wants to add a death statistic.'),
-        ]));
+        $deathStatistic = DeathStatistic::first();
+
+        if ($deathStatistic) {
+            $deathStatistic->update($data);
+        } else {
+            $deathStatistic = DeathStatistic::create($data);
+            $deathStatistic->approval()->save(new Approval([
+                'requester_id' => $request->user()->id,
+                'message' => $request->user()->makeMessage('wants to add a death statistic.'),
+            ]));
+        }
+
         $deathStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a death statistic.");

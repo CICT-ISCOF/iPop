@@ -31,7 +31,6 @@ class SBMPTCFocalPersonController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'sbmptc_id' => ['required', Rule::exists('s_b_m_p_t_c_s', 'id')],
         ]);
 
         $sBMPTCFocalPerson = SBMPTCFocalPerson::create($data);

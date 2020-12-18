@@ -49,13 +49,21 @@ class BirthStatisticController extends Controller
             'general_fertility_rate' => ['required', 'string', 'max:255'],
         ]);
 
-        $birthStatistic = BirthStatistic::create($data);
-        $birthStatistic->approval()->save(new Approval([
-            'requester_id' => $request->user()->id,
-            'message' => $request->user()->makeMessage('wants to add an a birth statistic.'),
-        ]));
+        $birthStatistic = BirthStatistic::first();
+
+        if ($birthStatistic) {
+            $birthStatistic->update($data);
+            $birthStatistic->setApprovalMessage($request->user()->makeMessage('wants to update a birth statistic.'));
+            Log::record("Updated a birth statistic.");
+        } else {
+            $birthStatistic = BirthStatistic::create($data);
+            $birthStatistic->approval()->save(new Approval([
+                'requester_id' => $request->user()->id,
+                'message' => $request->user()->makeMessage('wants to add an a birth statistic.'),
+            ]));
+            Log::record("Created a birth statistic.");
+        }
         $birthStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
-        Log::record("Created a birth statistic.");
         return $birthStatistic;
     }
 
@@ -68,10 +76,9 @@ class BirthStatisticController extends Controller
     public function show(Request $request, BirthStatistic $birthStatistic)
     {
         $builder = BirthStatistic::findApproved($birthStatistic->id);
-        if ($request->user()->hasRole(Role::PPO_ONE)) {
-            $user = $request->user();
-            $builder = $builder->where('municipality', $user->municipality)
-                ->where('barangay', $user->barangay);
+        $params = $request->only(['municipality', 'barangay', 'year']);
+        foreach ($params as $key => $value) {
+            $builder = $builder->where($key, $value);
         }
         return $builder->first() ?: response('', 404);
     }

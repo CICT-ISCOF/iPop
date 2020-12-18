@@ -45,7 +45,8 @@ trait HasApproval
             ->first();
 
         if (!$approval) {
-            return null;
+            return static::where('id', 0)
+                ->with('approval');
         }
 
         // $request = DeleteRequest::where('deleteable_type', static::class)
@@ -71,6 +72,7 @@ trait HasApproval
      */
     public function setApproved($mode)
     {
+        $this->load('approval');
         if ($this->approval !== null) {
             $this->approval->update([
                 'approved' => $mode,
