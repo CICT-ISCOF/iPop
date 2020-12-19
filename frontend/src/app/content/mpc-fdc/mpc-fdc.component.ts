@@ -24,8 +24,11 @@ export class MPCFDCComponent implements OnInit {
 	
 	show = false
 
-	showMPC(){
-		this.show = true
+	showMPC(id){
+		this.MpcService.showMPC(id).subscribe(data => {
+			console.log(data)
+		})
+		this.show = true 
 	}
 
 	mpcs = []

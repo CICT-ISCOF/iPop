@@ -24,7 +24,7 @@ export class RecordStatusComponent implements OnInit {
   status = ''
 
   agInit(params: any) {
-    this.status = params.data.record.statusw
+    this.status = params.data.record.status
   }
 
   refresh(params: any): boolean {

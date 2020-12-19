@@ -5,7 +5,7 @@
     <div class="article-container">
         <div (click)="showArticle(article)" class="article" *ngFor="let article of articles">
             <h2>{{article.title}}</h2>
-            <p>{{article.created_at | date: 'MMMM dd, yyyy - h:ma'}} -- <span>Duds Daquilanea</span></p>
+            <p>{{article.created_at | date: 'MMMM dd, yyyy - h:ma'}} </p>
             <div class="body">
                 <div *ngIf="article.photos.length != 0" class="image">
                     <img [src]="article.photos[0].file.uri" alt="">

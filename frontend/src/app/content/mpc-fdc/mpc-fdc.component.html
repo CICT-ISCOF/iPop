@@ -15,8 +15,8 @@
 
             <div class="w-100" style="float: left;">
                 <br> <br> <br>
-                <ul (click)="showMPC()" class="list-group">
-                    <li class="list-group-item" *ngFor="let mpc of mpcs">
+                <ul class="list-group">
+                    <li (click)="showMPC(mpc.id)" class="list-group-item" *ngFor="let mpc of mpcs">
                         <p class="municipality-name">{{ mpc.name }}</p>
                         <h4>{{ mpc.location }}</h4>
                     </li>

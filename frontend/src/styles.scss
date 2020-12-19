@@ -28,6 +28,16 @@ html {
     --plain_blue4: #2d5c80;
     --plainorange: #d44206;
     --plainorange1: #f97206;
+    --contrast: #04759d;
+    --bg: white;
+    --bg1: #eef1f5;
+    --inputBg: #e3e5e8;
+    --shadow: 0 2px 5px 0 rgba(150, 150, 150, 0.16), 0 2px 5px 0 rgba(50, 50, 150, 0.12);
+    --colorPrimary: black;
+    --colorSecondary: gray;
+    --absolute: black;
+    --sidebar: linear-gradient(180deg, gray, #111);
+    --hover: #282c34;
 }
 
 html[color="dark1"] {
@@ -279,11 +289,12 @@ label {
 
 .button {
     padding: 10px 12px;
-    border-radius: 2px;
+    border-radius: 4px;
     color: white;
     box-shadow: var(--shadow);
     background: var(--contrast);
     border: none;
+    margin: .5rem;
 }
 
 button {
@@ -330,11 +341,6 @@ div:focus {
     background: #149ef8;
     animation: loader 1s linear infinite;
     margin-top: -10px;
-}
-
-.button:focus {
-    border: 1px solid #149ef8 !important;
-    box-shadow: 0px 0px 13px #149ef8 !important;
 }
 
 .material-switch>input[type="checkbox"]:checked+label::before {
@@ -400,5 +406,30 @@ div:focus {
     100% {
         transform: translateY(-0px);
         opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .side {
+        display: none;
+    }
+    .birth-stat-component {
+        padding: 0 20px;
+    }
+    .front {
+        width: 100% !important;
+    }
+}
+
+// tablet
+@media only screen and (min-device-width: 600px) and (max-device-width: 1024px) {
+    .side {
+        display: none;
+    }
+    .birth-stat-component {
+        padding: 0 20px;
+    }
+    .front {
+        width: 100% !important;
     }
 }

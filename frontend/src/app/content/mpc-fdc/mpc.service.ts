@@ -76,6 +76,10 @@ export class MpcService {
 		const url = this.BaseAPIService.baseURL + '/mpcfdcs'
 		return this.http.get<any>(url )
 	} 
+	showMPC( id ){
+		const url = this.BaseAPIService.baseURL + '/mpcfdcs/' + id 
+		return this.http.get<any>(url )
+	} 
 	updateMPC(data){
 		const url = this.BaseAPIService.baseURL + '/mpcfdcs/' + data['id']
 		return this.http.patch<any>(url,data ,{headers:this.getHeaders()})

@@ -33,22 +33,22 @@
             </ng-template>
         </owl-carousel-o>
     </div>
-    <br> <br> <br>
+
     <div class="row" *ngIf="wantsToadAnImage">
 
         <button (click)="save()" class="button">Save</button>
         <button *ngIf="newImages != 0" (click)="clearSlider()" class="clickable">Clear Slider</button>
-        <button *ngIf="newImages == 0" (click)="triggerImage()" class="clickable">Add Images</button>
+        <button *ngIf="newImages == 0 && !isUser" (click)="triggerImage()" class="clickable">Add Images</button>
     </div>
 
     <input multiple type="file" (change)="readURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]="'slider'">
-    <button *ngIf="newImages.length == 0" (click)="triggerImage()" class="button">Add Images</button>
+    <button *ngIf="newImages.length == 0 && !isUser" (click)="triggerImage()" class="button">Add Images</button>
     <div *ngIf="wantsToEdit" class="row">
         <div class="col-md-2" *ngFor="let image of slides">
             <img (click)="deletePhoto(image.id)" alt="" tooltip="Click to delete this image" placement="top" show-delay="100" [theme]="theme" [src]="image.photo.uri">
         </div>
     </div>
-    <button (click)="editSlider()" *ngIf="!wantsToEdit && newImages.length == 0" class="button">Edit Slider</button>
+    <button (click)="editSlider()" *ngIf="!wantsToEdit && newImages.length == 0 && !isUser" class="button">Edit Slider</button>
     <button (click)="wantsToEdit = false" *ngIf="wantsToEdit" class="clickable">Cancel Editing</button>
 </div>
 <div class="wrapper">

@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../utility.service';
 import { MigrationStatService } from './migration-stat.service';
 import { LocationService } from './../../../location.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +12,8 @@ export class MigrationsComponent implements OnInit {
 
 	constructor(
 		private LocationService : LocationService,
-		private  MigrationStatService : MigrationStatService
+		private  MigrationStatService : MigrationStatService,
+		private UtilityService : UtilityService
 	) { }
 
 	municipalities:any = [] 
@@ -84,8 +86,8 @@ export class MigrationsComponent implements OnInit {
 
 	
 	save(){
-		this.DeathStatService.create(this.data).subscribe(data => {
-			console.log(data)
+		this.MigrationStatService.create(this.data).subscribe(data => {
+			this.UtilityService.setAlert('New Migration data has been Added', 'success')
 		})
 	}
 
