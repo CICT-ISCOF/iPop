@@ -6,3 +6,6 @@
 <span style="background: palevioletred !important;" *ngIf="status == 'Requires Revalidation'" class="badge badge-dark">{{ status }}!</span>
 
 <span style="background: gold !important;" *ngIf="status == 'Imported' || status == 'imported'" class="badge badge-dark">{{ status }}</span>
+
+
+<span style="background: black !important;color:gold !important" *ngIf="status == 'Imported, Pending Approval'" class="badge badge-dark">{{ status }}</span>
