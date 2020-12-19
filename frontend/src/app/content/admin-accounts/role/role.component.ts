@@ -15,14 +15,16 @@ export class RoleComponent implements OnInit {
 
 	}
 
-	role
+	data:any
 
 	agInit(params:any){
-		this.role = params.value
+		this.data = params.data
+		
 	}
 
 	refresh(params:any):boolean{
-	this.role = params.value
+		this.data = params.data
+		
 		return true
 	}
 

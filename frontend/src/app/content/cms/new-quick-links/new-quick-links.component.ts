@@ -27,6 +27,16 @@ export class NewQuickLinksComponent implements OnInit {
 		body:''
 	}
 
+	clearEverything(){
+		this.
+		article ={
+			files : [],
+			title:'',
+			body:''
+		}
+		this.imagesToRender = []
+	}
+
 	imagesToRender = []
 
 	readURL(files: FileList,event,index,type){	

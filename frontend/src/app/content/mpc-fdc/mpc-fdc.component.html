@@ -3,45 +3,30 @@
         <h4>
             MULTI-PURPOSE CONSELLING AND FAMILY DEVELOPMENT CENTER
         </h4>
-        <!-- <div class="filters">
-            <div class="row">
-                <div class="col-md-6">
-                    <select type="text" class="form-control">
-                        <option selected disabled>Select Municipality..</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <select type="text" class="form-control">
-                        <option selected disabled>Select Barangay..</option>
-                    </select>
-                </div>
-            </div>
+        <div class="front" *ngIf="addMPCFDC">
+            <app-add-mpc-fdc></app-add-mpc-fdc>
         </div>
-        <br> -->
-        <app-dynamic-mapping></app-dynamic-mapping>
-        <br>
-        <div class="district-container">
-            <div class="district container" *ngFor="let item of [1,2,3,4,5,6]">
-                <div class="district-name">District I</div>
-                <br>
-                <h2 class="number-of-teen-centers" style="color:var(--contrast)">15</h2>
-                <p>Teen Centers</p>
+        <div *ngIf="!addMPCFDC">
+            <button (click)="addMPCFDC = true" class="button">Add MPC-FDC</button>
+
+            <app-dynamic-mapping></app-dynamic-mapping>
+            <br>
+
+
+            <div class="w-100" style="float: left;">
+                <br> <br> <br>
+                <ul (click)="showMPC()" class="list-group">
+                    <li class="list-group-item" *ngFor="let mpc of mpcs">
+                        <p class="municipality-name">{{ mpc.name }}</p>
+                        <h4>{{ mpc.location }}</h4>
+                    </li>
+
+                </ul>
             </div>
-        </div>
-
-        <div class="w-100" style="float: left;">
-            <br> <br> <br>
-            <ul (click)="showMPC()" class="list-group">
-                <li class="list-group-item" *ngFor="let item of [1,2,3,4,5,6]">
-                    <p class="municipality-name">Barotac Nuevo </p>
-                    <h4>2</h4>
-                </li>
-
-            </ul>
         </div>
     </div>
     <div class="side">
-        <app-mpc-fdc-team></app-mpc-fdc-team>     
+        <app-mpc-fdc-team></app-mpc-fdc-team>
     </div>
 </div>
 

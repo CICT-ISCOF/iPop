@@ -40,7 +40,7 @@ export class TableCpdbComponent implements OnInit {
 
 	columnDefs = [	
 		{headerName: 'OPERATIONS', field: '',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:300 },
-		{headerName: 'STATUS', field: 'status',cellRenderer: 'status',width:150 },
+		{headerName: 'STATUS', field: 'status',cellRenderer: 'status',width:250 },
 		{headerName: 'SORTING NUMBER', field: 'sorting_number',width:350 },
 		{headerName: 'NAME OF HOUSEHOLD MEMBERS', field: 'name_of_household_member', sortable: true, filter: 'agTextColumnFilter',width:350 },	
 		{headerName: 'MUNICIPALITY', field: 'municipality', sortable: true, filter: 'agTextColumnFilter',width:200 },	

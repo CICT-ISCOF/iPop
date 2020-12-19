@@ -1,101 +1,88 @@
 .quick-links-component {
-	width: 100%;
-	height: 110%;
-	padding: 10px 30px;
-	background: var(--bg1);
-	padding-left: 10px;
+    width: 100%;
+    height: 110%;
+    padding: 10px 30px;
+    background: var(--bg1);
+    padding-left: 10px;
 }
 
 .container {
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .img-container {
-	height: 100%;
-	width: 100%;
-	position: relative;
-	padding: 20px;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    padding: 20px;
 }
 
 .img-container img {
-	width: 100%;
+    width: 100%;
 }
 
 .title {
-	min-height: 20px;
-	font-weight: bold;
-	font-size: 20px;
-	margin-bottom: 20px;
+    min-height: 20px;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
 }
 
 .body {
-	min-height: 150px;
+    min-height: 150px;
 }
 
 .inputs-container {
-	display: flexbox;
-	width: 100%;
-	padding: 20px;
+    display: flexbox;
+    width: 100%;
+    padding: 20px;
 }
 
 .inputs-container textarea {
-	width: 100%;
-	padding: 20px 20px;
+    width: 100%;
+    padding: 20px 20px;
 }
 
 textarea:focus {
-	outline: 0;
-	border-color: #149ef8 !important;
-	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+    outline: 0;
+    border-color: #149ef8 !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
 }
 
 .icon-container {
-	display: none;
-	width: 50px;
-	height: 50px;
-	right: 0;
-	bottom: 0;
-	background: var(--inputBg);
-	border-radius: 50px;
-	position: absolute;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .button-container {
-	width: 100%;
-	align-items: center;
-	justify-content: center;
-	display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 
-.button {
-	margin: auto;
-}
+.button {}
 
 .button:hover {
-	opacity: .6;
+    opacity: .6;
 }
 
 .button:active {
-	opacity: .4;
+    opacity: .4;
 }
 
 owl-carousel-o img {
-	height: 40vh;
-	min-width: 100%;
-	background-repeat: no-repeat !important;
-	background-size: fill !important;
-	background-position: center !important;
-	background-size: 100% 100% !important;
+    height: 40vh;
+    min-width: 100%;
+    background-repeat: no-repeat !important;
+    background-size: fill !important;
+    background-position: center !important;
+    background-size: 100% 100% !important;
 }
 
 .owl-carousel .owl-item img {
-	width: 100%;
-	height: 40vh;
-	object-fit: cover;
-	max-width: initial;
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
+    max-width: initial;
 }

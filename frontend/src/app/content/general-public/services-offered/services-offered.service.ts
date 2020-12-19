@@ -32,23 +32,34 @@ export class ServicesOfferedService {
 
 	private page = new Subject<any>();
 
+	
+	getHeaders(){
+		this.user = JSON.parse(localStorage.getItem('user-data'))
+		this.token = this.user.token	
+		return new HttpHeaders({
+			'Accept':'application/json',
+			'Authorization' : 'Bearer '+ this.token,
+			'Content-Type':[]
+		})	
+	}
+
 	create(string){
 		const url = this.BaseAPIService.baseURL + '/service-offers'
-		return this.http.post<any>(url, string )
+		return this.http.post<any>(url, string,{headers:this.	getHeaders()} )
 	}
 
 	retrieve(id){
 		const url = this.baseURL + '/' + id
-		return this.http.get<any>(url,{headers:this.headers})
+		return this.http.get<any>(url)
 	}
 
 	update(string, id){
 		const url = this.BaseAPIService.baseURL + '/service-offers/' + id
-		return this.http.put<any>(url, string ,{headers:this.headers})
+		return this.http.put<any>(url, string ,{headers:this.	getHeaders()})
 	}
 
 	delete(id){
 		const url = this.BaseAPIService.baseURL + '/service-offers/' + id
-		return this.http.delete<any>(url ,{headers:this.headers})
+		return this.http.delete<any>(url ,{headers:this.	getHeaders()})
 	}
 }

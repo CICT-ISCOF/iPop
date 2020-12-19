@@ -18,14 +18,21 @@ export class MPCFDCComponent implements OnInit {
 
 	listener
 
-		ngOnInit(): void {
-
+	ngOnInit(): void {
+		this.getMPCFDC()
 	}
 	
 	show = false
 
 	showMPC(){
 		this.show = true
+	}
+
+	mpcs = []
+	getMPCFDC(){		
+		this.MpcService.retrieveMPC().subscribe(response => {
+			this.mpcs = response.data
+		})
 	}
 
 	
