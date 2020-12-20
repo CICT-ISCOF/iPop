@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { MediaQueryService } from './media-query.service';
 import { DeviceService } from './device.service';
 import { MapService } from './content/maps/map.service';
+import { groupBy } from './helpers';
 
 @Component({
   selector: 'app-root',
@@ -88,6 +89,19 @@ export class AppComponent implements OnInit {
       return path;
     });
     this.checkLocalStorage();
+    console.log(
+      groupBy(
+        [
+          { type: 'Birth', value: 1 },
+          {
+            type: 'Birth',
+            value: 5,
+          },
+          { type: 'Death', value: 2 },
+        ],
+        'type'
+      )
+    );
   }
 
   checkLocalStorage() {

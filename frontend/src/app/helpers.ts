@@ -11,5 +11,5 @@ export function groupBy(data: Array<any>, property: string) {
     temp[key].push(item);
   });
 
-  return Object.values(temp);
+  return Object.keys(temp).map((key) => temp[key]);
 }
