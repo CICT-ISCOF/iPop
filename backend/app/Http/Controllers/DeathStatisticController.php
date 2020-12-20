@@ -30,12 +30,13 @@ class DeathStatisticController extends Controller
             ->where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
             ->with('approval')
-            ->first();
+            ->get();
         $incidence = Incidence::where('year', $data['year'])
             ->where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
             ->with('approval')
-            ->first();
+            ->orderBy('year', 'ASC')
+            ->get();
         $result = tap($builder, function ($builder) use ($request) {
             foreach ($request->all() as $parameter => $value) {
                 $builder = $builder->where($parameter, $value);
@@ -45,7 +46,7 @@ class DeathStatisticController extends Controller
         return [
             'data' => $result,
             'month' => $monthChart,
-            'incidence' => $incidence
+            'incidence' => $incidence,
         ];
     }
 

@@ -39,6 +39,7 @@ class MonthChartController extends Controller
         $monthChart = MonthChart::where('year', $data['year'])
             ->where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
+            ->where('month', $data['month'])
             ->with('approval')
             ->first();
 
