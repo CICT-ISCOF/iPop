@@ -20,9 +20,7 @@ export class PmcComponent implements OnInit {
 	
 	municipalities:any = [] 
 	barangays:any = [] 
-	
-	
-
+	hasData = true	
 	data:any = {
 		municipality:'',
 		barangay:'',
@@ -33,44 +31,57 @@ export class PmcComponent implements OnInit {
 		applicants_by_employment_status:'',
 		applicants_by_income_class:'',
 		applicants_by_knowledge_on_fp:'',
+		months:{
+			January:0,
+			February:0,
+			March:0,
+			April:0,
+			May:0,
+			June:0,
+			July:0,
+			August:0,
+			September:0,
+			October:0,
+			November:0,
+			December:0,
+		},	
+		type:'PMOC'
 	}
- 
-	
-	
-	getMuncipalities(){		
-		 this.LocationService.getMunicipalities().subscribe(data => {
-			this.municipalities = data			
-		})
+	getDataParams = {
+		barangay:'',
+		municipality:'',
+		year:'',
+		gender:''
 	}
-	
-	getBarangays(event){	
-		this.data.municipality = event.target.options[event.target.options.selectedIndex].text
-		this.fetch.municipality = event.target.options[event.target.options.selectedIndex].text		
-		this.LocationService.getBarangays(event.target.value).subscribe(data => {
-			this.barangays = data		
-		})
-	}
+	checked = {
+		male:false,
+		female:false,
+		all:true
+	}		
 
+	hasSelectedData = false
+	pmCData = {}
 	MONTHbarChartOptions = {
 		scaleShowVerticalLines: false,
 		responsive: true
 	};
-	MONTHbarChartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	MONTHbarChartLabels = [];
 	MONTHbarChartType = 'bar';
 	MONTHbarChartLegend = true;
 	MONTHbarChartData = [
-		{data: [65, 59, 80, 81, 14, 55, 61, 11, 14, 55, 61, 61], label: 'Number of Couples'},
+		{data: [], label: 'No of Couples'},
 	
 	]
-
 	wantsToAddPMCTeam = false
 
-	triggerFileInput(id){
-		document.getElementById(id).click()
+	ngOnInit(): void {
+		this.getMuncipalities()
+		this.retrieveTeams()
 	}
 
-	
-
+		triggerFileInput(id){
+		document.getElementById(id).click()
+	}
 	activePMCTEAM = {}
 
 	toggleProgram(id){		
@@ -87,71 +98,93 @@ export class PmcComponent implements OnInit {
 				this.pmcTeam.file =  (<FileReader>event.target).result
 			}
 		}		
-	}
+	}	
+		 
+	getMuncipalities(){		
+		this.LocationService.getMunicipalities().subscribe(data => {
+		   this.municipalities = data			
+	   })
+   }
+   
+   getBarangays(event){	
+	   this.data.municipality = event.target.options[event.target.options.selectedIndex].text
+	   this.fetch.municipality = event.target.options[event.target.options.selectedIndex].text		
+	   this.LocationService.getBarangays(event.target.value).subscribe(data => {
+		   this.barangays = data		
+	   })
+   }
 
-	ngOnInit(): void {
-		this.getMuncipalities()
-		this.retrieveTeams()
-	}
-
-
-
-	save(){		
-		this.PmcService.create(this.data).subscribe(data => {
-			
-			this.UtilityService.setAlert(`New PMOC in municipality of ${this.data['municipality']} barangay ${this.data['barangay']} has been added`,'success')
-			for(let key in this.data){
-				this.data[key]= ""
-			}
+   save(){		
+		this.PmcService.postToMOnthController(this.data).subscribe(data => {
+			this.PmcService.create(this.data).subscribe(data => {			
+				this.UtilityService.setAlert('New Death Statistics Data has been added', 'success')
+			})
 		})
 	}
 
-	hasData = false
-	fetch ={
+	fetch = {
 		municipality:'',
 		barangay:''
 	}
 
+	editChartData = false
+	updateChart(){
+		this.data['barangay'] = this.fetch.barangay
+		this.data['municipality'] = this.fetch.municipality	
+		this.PmcService.postToMOnthController(this.data).subscribe(data => {	
+			this.editChartData = false		
+			this.MONTHbarChartLabels = []
+			this.MONTHbarChartData[0].data = []
+			this.fetchData()
+			this.UtilityService.setAlert('Chart has been updated','success')			
+		})
+	}
+
 	pmcStat:any
+	getBarangaysandGet(event){	
+		this.getDataParams.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data		
+		})
+	}
+
+	PMCData = {}
 	fetchData(){
-		this.hasData = true
-		this.PmcService.retrieve(this.fetch.municipality, this.fetch.barangay).subscribe(data=>{
-			this.pmcStat = data.data[0]
-		})
+		this.PmcService.showPMC(
+			this.getDataParams.municipality,
+			this.getDataParams.barangay		
+		).subscribe(data => {
+			this.hasSelectedData = true
+			this.PMCData = data.data	
+			// data.incidence.forEach(element => {				
+			// 	if(!this.DEATHRATEbarChartLabels.includes(element.year)){
+			// 		this.DEATHRATEbarChartLabels.push(element.year)
+			// 	}
+			// 	this.DEATHRATEbarChartData[0].data.push(element.value)				
+			// })
+			data.month.forEach(element => {
+				if(!this.MONTHbarChartLabels.includes(element.month)){
+					this.MONTHbarChartLabels.push(element.month)					
+				}
+				if(this.checked.male){
+					this.MONTHbarChartData[0].data.push(element.males)
+	 				this.data.months[element.month] = element.males				
+				}
+				if(this.checked.female){
+					this.MONTHbarChartData[0].data.push(element.females)
+					this.data.months[element.month] = element.females				
+				}
+				if(this.checked.all){
+					this.MONTHbarChartData[0].data.push(element.total)
+					this.data.months[element.month] = element.total					
+				}
+			})
+		},error =>{
+			this.hasSelectedData = false
+			this.UtilityService.setAlert('No data on this particular filter yet','info')
+		})		
 	}
 
-	update(){
-		this.PmcService.create(this.pmcStat).subscribe(data=>{
-			this.ngOnInit()
-		})
-	}
-
-
-	
-	chartData = {
-		january:'',
-		february:'',
-		march:'',
-		april:'',
-		may:'',
-		jun:'',
-		july:'',
-		august:'',
-		september:'',
-		october:'',
-		november:'',
-		december:'',
-		birth_stat_id:''
-	}
-
-
-	// --------- pmc Team -------
-
-	pmcTeam:any = {
-		name:'',
-		position:'',
-		file:'',
-	}
 	savePMCTEAM(){
 		this.pmcTeam['photo'] = this.pmcTeam.file
 		this.PmcService.createTeams(this.pmcTeam).subscribe(data => {

@@ -45,12 +45,16 @@
                 <br>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="">Total Deaths</label>
-                        <input [(ngModel)]="data.total" type="text" class="form-control">
+                        <label for="">Total Live Births</label>
+                        <input [(ngModel)]="data.total_live_births" type="text" class="form-control">
                     </div>
                     <div class="col-md-4">
-                        <label for="">Crud Death Rate</label>
-                        <input [(ngModel)]="data.crude_death_rate" type="text" class="form-control">
+                        <label for="">Crud Births Rate</label>
+                        <input [(ngModel)]="data.crude_birth_rate" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">General Fertility Rate</label>
+                        <input [(ngModel)]="data.general_fertility_rate" type="text" class="form-control">
                     </div>
                 </div><br><br>
                 <div style="display:flex;align-items: center;justify-content: center;">
@@ -190,7 +194,7 @@
                     </div>
                     <div *ngIf="totalLiveBirths" class="row">
                         <div class="form-group col-md-6">
-                            <label for="Total Deaths">Total Deaths</label>
+                            <label for="Total Deaths">TOTAL LIVE BIRTHS</label>
                             <input type="text" class="form-control" id="Total Deaths">
                         </div>
                         <div class="row">
@@ -215,7 +219,7 @@
                     </div>
                     <div *ngIf="birthRates" class="row">
                         <div class="form-group col-md-6">
-                            <label for="Total Deaths">Total Deaths</label>
+                            <label for="Total Deaths">CRUD BIRTH RATE</label>
                             <input type="text" class="form-control" id="Total Deaths">
                         </div>
                         <div class="row">
@@ -239,7 +243,7 @@
                     </div>
                     <div *ngIf="generaLFirtilityRate" class="row">
                         <div class="form-group col-md-6">
-                            <label for="Total Deaths">Total Deaths</label>
+                            <label for="Total Deaths">GENERAL FERTILITY RATE</label>
                             <input type="text" class="form-control" id="Total Deaths">
                         </div>
                         <div class="row">
