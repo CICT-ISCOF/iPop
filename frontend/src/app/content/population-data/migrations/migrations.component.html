@@ -13,15 +13,15 @@
             <div class="filters">
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="">{{data.municipality}}</label>
-                        <select (change)="getBarangays($event)" type="text" class="form-control">                       
+                        <label for="">Select Muncipality</label>
+                        <select (load)="getBarangays($event)" (change)="getBarangays($event)" type="text" class="form-control">                       
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label for="">Select Barangay</label>
                         <select [(ngModel)]="data.barangay" type="text" class="form-control">                       
-                            <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
+                            <option *ngFor="let barangay of barangays" [value]="barangay.name">{{ barangay.name }}</option>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -44,16 +44,16 @@
                 <br>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="">Total Live Births</label>
-                        <input [(ngModel)]="data.total_live_births" type="text" class="form-control">
+                        <label for="">Total In Migration</label>
+                        <input [(ngModel)]="data.total_in_migrations" type="text" class="form-control">
                     </div>
                     <div class="col-md-4">
-                        <label for="">Crud Death Rate</label>
-                        <input [(ngModel)]="data.crude_birth_rate" type="text" class="form-control">
+                        <label for="">Total Out Migration</label>
+                        <input [(ngModel)]="data.total_out_migrations" type="text" class="form-control">
                     </div>
                     <div class="col-md-4">
-                        <label for="">General Fertility Rate</label>
-                        <input [(ngModel)]="data.general_fertility_rate" type="text" class="form-control">
+                        <label for="">Total Net Migration</label>
+                        <input [(ngModel)]="data.net_migrations" type="text" class="form-control">
                     </div>
                 </div><br><br>
                 <div style="display:flex;align-items: center;justify-content: center;">
@@ -65,7 +65,7 @@
             <div class="filters">
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="">{{getDataParams.municipality || 'Select Muncipality'}}</label>
+                        <label for="">Select Muncipality</label>
                         <select (change)="getBarangaysandGet($event)" type="text" class="form-control">                       
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
@@ -84,8 +84,8 @@
                     </div>
                 </div>
             </div><br>
-
-            <div class="showAfterFilter" *ngIf="hasSelectedData">
+            <p *ngIf="migrationStatistics == null" style="text-align: center;">No data to show....</p>
+            <div class="showAfterFilter" *ngIf="hasSelectedData && migrationStatistics != null">
                 <button (click)="showMap = true" *ngIf="!showMap" class="button">Show Map</button>
                 <button (click)="showMap = false" *ngIf="showMap" class="button">Hide Map</button>
                 <app-dynamic-mapping *ngIf="showMap"></app-dynamic-mapping>
@@ -111,7 +111,7 @@
                 <br><br>
                 <div class="chart" *ngIf="!editChartData">
                     <canvas baseChart [datasets]="MONTHbarChartData" [labels]="MONTHbarChartLabels" [options]="MONTHbarChartOptions" [legend]="MONTHbarChartLegend" [chartType]="MONTHbarChartType">
-            </canvas>
+                    </canvas>
                 </div>
                 <br>
                 <button (click)="editChartData = true" *ngIf="!editChartData" class="button">Edit Chart Data</button>
@@ -119,63 +119,64 @@
                     <br>
                     <div class="form-group col-md-6">
                         <label for="January">January</label>
-                        <input type="text" class="form-control" id="January">
+                        <input [(ngModel)]="data.months.January" type="text" class="form-control" id="January">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="February">February</label>
-                        <input type="text" class="form-control" id="February">
+                        <input [(ngModel)]="data.months.February" type="text" class="form-control" id="February">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="March">March</label>
-                        <input type="text" class="form-control" id="March">
+                        <input [(ngModel)]="data.months.March" type="text" class="form-control" id="March">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="April">April</label>
-                        <input type="text" class="form-control" id="April">
+                        <input [(ngModel)]="data.months.April" type="text" class="form-control" id="April">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="May">May</label>
-                        <input type="text" class="form-control" id="May">
+                        <input [(ngModel)]="data.months.May" type="text" class="form-control" id="May">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="June">June</label>
-                        <input type="text" class="form-control" id="June">
+                        <input [(ngModel)]="data.months.June" type="text" class="form-control" id="June">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="July">July</label>
-                        <input type="text" class="form-control" id="July">
+                        <input [(ngModel)]="data.months.July" type="text" class="form-control" id="July">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="August">August</label>
-                        <input type="text" class="form-control" id="August">
+                        <input [(ngModel)]="data.months.August" type="text" class="form-control" id="August">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="September">September</label>
-                        <input type="text" class="form-control" id="September">
+                        <input [(ngModel)]="data.months.September" type="text" class="form-control" id="September">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="October">October</label>
-                        <input type="text" class="form-control" id="October">
+                        <input [(ngModel)]="data.months.October" type="text" class="form-control" id="October">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="November">November</label>
-                        <input type="text" class="form-control" id="November">
+                        <input [(ngModel)]="data.months.November" type="text" class="form-control" id="November">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="December">December</label>
-                        <input type="text" class="form-control" id="December">
+                        <input [(ngModel)]="data.months.December" type="text" class="form-control" id="December">
                     </div>
                     <div style="display: flex;
             align-items: center;justify-content: center;padding-left: 20px;">
-                        <button class="button">Save</button> &nbsp;
+                        <button (click)="updateChart()" class="button">Save</button> &nbsp;
                         <button (click)="editChartData = false" *ngIf="editChartData" class="clickable">Cancel</button>
                     </div>
                 </div>
+
                 <div style="padding-left: 20px;">
                     <br><br>
                     <div>
                         <p>TOTAL POPULATION</p>
-                        <h3>5</h3>
+                        <h3>{{migrationStatistics.profile || 0}}</h3>
                     </div>
 
                     <br>
@@ -188,11 +189,11 @@
                         </svg>
                     </span>
                         </p>
-                        <h3>5</h3>
+                        <h3>{{migrationStatistics.total_in_migrations}}</h3>
                     </div>
                     <div *ngIf="inMigrations" class="row">
                         <div class="form-group col-md-6">
-                            <label for="CRUDE DEATH RATE">CRUDE DEATH RATE</label>
+                            <label for="CRUDE DEATH RATE">In Migration</label>
                             <input type="text" class="form-control" id="CRUDE DEATH RATE">
                         </div>
                         <div class="row">
@@ -213,7 +214,7 @@
                         </svg>
                     </span>
                         </p>
-                        <h3>5</h3>
+                        <h3>{{migrationStatistics.total_out_migrations}}</h3>
                     </div>
                     <div *ngIf="outMigration" class="row">
                         <div class="form-group col-md-6">
@@ -238,7 +239,7 @@
                         </svg>
                     </span>
                         </p>
-                        <h3>5</h3>
+                        <h3>{{migrationStatistics.net_migrations}}</h3>
                     </div>
                     <div *ngIf="netMigration" class="row">
                         <div class="form-group col-md-6">

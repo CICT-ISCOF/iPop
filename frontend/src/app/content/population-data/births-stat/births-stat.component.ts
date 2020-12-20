@@ -218,7 +218,7 @@ export class BirthsStatComponent implements OnInit {
 		this.bottomChartData['gender'] = this.getDataParams.gender
 		this.BirthStatService.postToinsidence(this.bottomChartData).subscribe(data =>{
 			this.DeathRateData = true
-			this.UtilityService.setAlert('Crude Death Rate has been Updated','success')
+			this.UtilityService.setAlert(title + ' has been Updated','success')
 			this.TEENAGEBIRTHRATEbarChartLabels = []
 			this.TEENAGEBIRTHRATEbarChartData[0].data = []
 			this.ILLEGITIMATEBIRTHbarChartLabels = []

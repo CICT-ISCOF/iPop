@@ -92,6 +92,22 @@ export class PmcService {
 		return this.http.get<any>(url ,{headers:this.getHeaders()})
 	}
 
+	showPMC(municipality, barangay){
+		const url =  this.baseURL + `?municipality=${municipality}&barangay=${barangay}}`
+		return this.http.get<any>(url ,{headers:this.getHeaders()})
+	}
+
+
+	postToMOnthController(data){
+		const url = this.BaseAPIService.baseURL + '/month-charts'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
+	postToinsidence(data){		
+		const url = this.BaseAPIService.baseURL + '/incidences'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
 
 
 }
