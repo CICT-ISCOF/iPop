@@ -50,6 +50,7 @@ class PMOCController extends Controller
         $data = $request->validate([
             'municipality' => ['required', 'string', 'max:255'],
             'barangay' => ['required', 'string', 'max:255'],
+            'year' => ['required'],
             'sessions' => ['nullable', 'numeric'],
             'oriented_couples' => ['nullable', 'numeric'],
             'individuals_interviewed' => ['nullable', 'numeric'],
@@ -95,6 +96,7 @@ class PMOCController extends Controller
         $data = $request->validate([
             'municipality' => ['nullable', 'string', 'max:255'],
             'barangay' => ['nullable', 'string', 'max:255'],
+            'year' => ['required'],
             'sessions' => ['nullable', 'numeric'],
             'oriented_couples' => ['nullable', 'numeric'],
             'individuals_interviewed' => ['nullable', 'numeric'],
@@ -119,8 +121,10 @@ class PMOCController extends Controller
      * @param  \App\Models\PMOC  $pMOC
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PMOC $pMOC)
+    public function destroy($id)
     {
+        $pMOC = PMOC::findOrFail($id);
+
         $pMOC->makeDeleteRequest();
 
         Log::record("Deleted a PMOC.");

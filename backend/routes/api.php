@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AgeDistributionController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\LoginController;
@@ -54,6 +55,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TeenageBirthIncidenceGraphController;
 use App\Http\Controllers\TomtomController;
+use App\Http\Controllers\TopPopulationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\UserRoleController;
@@ -188,6 +190,8 @@ Route::middleware('throttle:60,1')->group(function () {
         'charts' => ChartController::class,
         'incidences' => IncidenceController::class,
         'month-charts' => MonthChartController::class,
+        'age-distribution-statistics' => AgeDistributionController::class,
+        'top-populations' => TopPopulationController::class,
     ]);
 
     // Delete 1 award media

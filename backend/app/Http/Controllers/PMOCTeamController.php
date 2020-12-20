@@ -117,8 +117,9 @@ class PMOCTeamController extends Controller
      * @param  \App\Models\PMOCTeam  $pMOCTeam
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PMOCTeam $pMOCTeam)
+    public function destroy($id)
     {
+        $pMOCTeam = PMOCTeam::findOrFail($id);
         $pMOCTeam->makeDeleteRequest();
 
         Log::record("Deleted a PMOC Team.");

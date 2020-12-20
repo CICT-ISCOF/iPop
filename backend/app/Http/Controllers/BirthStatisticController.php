@@ -35,7 +35,7 @@ class BirthStatisticController extends Controller
 
         $incidence = Incidence::where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
-            ->where('type', 'Death')
+            ->where('type', 'Birth')
             ->orderBy('year', 'ASC')
             ->with('approval')
             ->get();
