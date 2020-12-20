@@ -93,10 +93,7 @@ export class AppComponent implements OnInit {
       groupBy(
         [
           { type: 'Birth', value: 1 },
-          {
-            type: 'Birth',
-            value: 5,
-          },
+          { type: 'Birth', value: 5 },
           { type: 'Death', value: 2 },
         ],
         'type'
