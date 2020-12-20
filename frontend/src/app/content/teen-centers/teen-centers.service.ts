@@ -99,4 +99,10 @@ export class TeenCentersService {
     const url = this.BaseAPIService.baseURL + '/sbmptcs-teams/' + id;
     return this.http.delete<any>(url, { headers: this.headers });
   }
+
+
+  showTeenCenter(id){
+      const url = this.BaseAPIService.baseURL + '/sbmptcs/' + id;
+      return this.http.get<any>(url, { headers: this.headers });
+  }
 }

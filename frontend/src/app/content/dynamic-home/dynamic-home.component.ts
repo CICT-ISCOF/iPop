@@ -92,6 +92,7 @@ export class DynamicHomeComponent implements OnInit {
 			if (result.value) {
 				this.SlideService.deletePhoto(id).subscribe(data => {
 					this.UtilityService.setAlert('Photo has been deleted','info')
+					this.ngOnInit()
 				})
 			}
 		})	

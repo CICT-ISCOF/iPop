@@ -56,8 +56,11 @@ export class TeenCentersComponent implements OnInit {
 		})
 	}
 
-	showMPC(){
+	showMPC(id){
 		this.show = true
+		this.TeenCentersService.showTeenCenter(id).subscribe(data => {
+
+		})
 	}
 
 }

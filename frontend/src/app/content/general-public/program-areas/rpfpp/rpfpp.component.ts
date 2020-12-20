@@ -36,7 +36,7 @@ export class RPFPPComponent implements OnInit {
 	}
 
 
-
+ 
 	programs = []
 
 
@@ -46,9 +46,9 @@ export class RPFPPComponent implements OnInit {
 		})
 	}
 
-	updateProgramArea(){
+	updateProgramArea(programArea){
 		
-		this.ProgramAreasService.updateProgramArea(this.activity, 1).subscribe(data => {		
+		this.ProgramAreasService.updateProgramArea(programArea, 1).subscribe(data => {		
 			this.activity = {		
 				program_area_id:1,
 				title:'',

@@ -20,7 +20,7 @@ export class OrgStructureComponent implements OnInit {
 	ngOnInit(): void {	
 		this.AboutService.getOrganizationalStructure().subscribe(data => {		
 			this.img = data.photo.uri
-			this.ngOnInit()
+		
 		})
 	}
 

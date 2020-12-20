@@ -78,8 +78,8 @@
                     </div>
                 </div>
             </div><br>
-
-            <div class="showAfterFilter" *ngIf="hasSelectedData">
+            <p *ngIf="deathStatistics == null" style="text-align: center;">No data to show....</p>
+            <div class="showAfterFilter" *ngIf="hasSelectedData && deathStatistics != null">
                 <button (click)="showMap = true" *ngIf="!showMap" class="button">Show Map</button>
                 <button (click)="showMap = false" *ngIf="showMap" class="button">Hide Map</button>
                 <app-dynamic-mapping *ngIf="showMap"></app-dynamic-mapping>
@@ -193,7 +193,7 @@
                         <div class="row">
                             <div style="display: flex;
                 align-items: center;justify-content: center;padding-left: 30px;">
-                                <button (click)="update()" class="button">Save</button> &nbsp;
+                                <button (click)="save()" class="button">Save</button> &nbsp;
                                 <button (click)="totalDeaths = false" class="clickable">Cancel</button>
                             </div>
                         </div>
