@@ -67,16 +67,7 @@ export class DeathsStatComponent implements OnInit {
 
 	// -------------
 
-	DEATHRATEbarChartOptions = {
-		scaleShowVerticalLines: false,
-		responsive: true
-	};
-	DEATHRATEbarChartLabels = ['2018', '2019', '2020',];
-	DEATHRATEbarChartType = 'line';
-	DEATHRATEbarChartLegend = true;
-	DEATHRATEbarChartData = [
-		{data: [65, 59, 80], label: 'Crud Death Rate'},		
-	];
+	
 
 	
 	ngOnInit(): void {
@@ -175,6 +166,12 @@ export class DeathsStatComponent implements OnInit {
 		).subscribe(data => {
 			this.hasSelectedData = true
 			this.deathStatistics = data.data	
+			data.incidence.forEach(element => {
+				if(!this.DEATHRATEbarChartLabels.includes(element.year)){
+					this.DEATHRATEbarChartLabels.push(element.year)
+				}
+				this.DEATHRATEbarChartData[0].data.push(element.value)				
+			})
 			data.month.forEach(element => {
 				if(!this.MONTHbarChartLabels.includes(element.month)){
 					this.MONTHbarChartLabels.push(element.month)
@@ -188,19 +185,13 @@ export class DeathsStatComponent implements OnInit {
 				if(this.checked.all){
 					this.MONTHbarChartData[0].data.push(element.total)
 				}
+				
 			});
-
 		},error =>{
 			this.hasSelectedData = false
 			this.UtilityService.setAlert('No data on this particular filter yet','info')
 		})
 		
-	}
-
-	update(deathStatisticsData){
-		this.DeathStatService.updateBirthStat(deathStatisticsData).subscribe(data => {
-
-		})
 	}
 
 
@@ -210,13 +201,27 @@ export class DeathsStatComponent implements OnInit {
 		value:0,
 		years:[]
 	}
+	DEATHRATEbarChartOptions = {
+		scaleShowVerticalLines: false,
+		responsive: true
+	};
+	DEATHRATEbarChartLabels = [];
+	DEATHRATEbarChartType = 'line';
+	DEATHRATEbarChartLegend = true;
+	DEATHRATEbarChartData = [
+		{data: [], label: 'Crude Death Rate'},		
+	];
 	saveCrudDEathRate(){
 		this.crudeDeathRateData['barangay'] = this.getDataParams.barangay
-		this.crudeDeathRateData['municipality'] = this.getDataParams.municipality
-		this.crudeDeathRateData['year'] = this.getDataParams.year
+		this.crudeDeathRateData['municipality'] = this.getDataParams.municipality	
 		this.crudeDeathRateData['gender'] = this.getDataParams.gender
 		this.DeathStatService.postToinsidence(this.crudeDeathRateData).subscribe(data =>{
-
+			data.forEach(element => {
+				if(!this.DEATHRATEbarChartLabels.includes(element.year)){
+					this.DEATHRATEbarChartLabels.push(element.year)
+				}
+				this.DEATHRATEbarChartData[0].data.push(element.value)
+			})
 		})
 	}
 

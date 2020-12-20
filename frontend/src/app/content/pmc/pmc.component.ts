@@ -91,6 +91,7 @@ export class PmcComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getMuncipalities()
+		this.retrieveTeams()
 	}
 
 
@@ -157,5 +158,14 @@ export class PmcComponent implements OnInit {
 
 		})
 	}
+
+	teams = []
+	retrieveTeams(){
+		this.PmcService.retrieveTeams().subscribe(data => {
+			this.teams = data
+		})
+	}
+
+
 
 }
