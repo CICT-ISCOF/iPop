@@ -54,7 +54,8 @@ class ProgramAreaController extends Controller
      */
     public function update(Request $request, ProgramArea $programArea)
     {
-        return response('', 404);
+         $programArea->update($request->all());
+         return $programArea;
     }
 
     /**

@@ -178,7 +178,7 @@
                     <br><br>
                     <div>
                         <p>TOTAL POPULATION</p>
-                        <h3>5</h3>
+                        <h3>{{birthSatistics.profile || 0}}</h3>
                     </div>
                     <br>
                     <div *ngIf="!totalLiveBirths">
@@ -190,7 +190,7 @@
                             </svg>
                         </span>
                         </p>
-                        <h3>{{birthSatistics.profile || 0}}</h3>
+                        <h3>{{birthSatistics.total_live_births}}</h3>
                     </div>
                     <div *ngIf="totalLiveBirths" class="row">
                         <div class="form-group col-md-6">
@@ -239,7 +239,7 @@
                                 <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
                             </svg>
                         </span></p>
-                        <h3>{{birthSatistics.general_fertility_rate || 0}}</h3>
+                        <h3>{{birthSatistics.general_fertility_rate}}</h3>
                     </div>
                     <div *ngIf="generaLFirtilityRate" class="row">
                         <div class="form-group col-md-6">

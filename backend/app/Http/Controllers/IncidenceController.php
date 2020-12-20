@@ -8,12 +8,20 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 
 class IncidenceController extends Controller
+<<<<<<< HEAD
+{   
+
+    public function __construct(){
+        $this->middleware('auth:sanctum');
+    }
+=======
 {
     public function __construct()
     {
         $this->middleware('auth:sanctum')->except('index', 'show');
     }
 
+>>>>>>> 3c55ebfd795bcdb104fb1743578fe9be300c5899
     /**
      * Display a listing of the resource.
      *

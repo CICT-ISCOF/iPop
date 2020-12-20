@@ -78,12 +78,12 @@ export class PmcService {
 	}
 
 	updateTeams(data, id){
-		const url = this.BaseAPIService.baseURL + '/pmocc-teams'
+		const url = this.BaseAPIService.baseURL + '/pmocc-teams/' + id
 		return this.http.patch<any>(url,data ,{headers:this.getHeaders()})
 	}
 	
 	deletePMCTeams(id){
-		const url = this.BaseAPIService.baseURL + '/pmocc-teams'
+		const url = this.BaseAPIService.baseURL + '/pmocc-teams/' + id
 		return this.http.delete<any>(url ,{headers:this.getHeaders()})
 	}
 

@@ -17,10 +17,10 @@ export class PmcComponent implements OnInit {
 		private UtilityService : UtilityService
 	
 	) { }
-	
+	numberOfSessions = false
 	municipalities:any = [] 
 	barangays:any = [] 
-	hasData = true	
+	hasData = false	
 	data:any = {
 		municipality:'',
 		barangay:'',
@@ -47,6 +47,7 @@ export class PmcComponent implements OnInit {
 		},	
 		type:'PMOC'
 	}
+	pmcStat = this.data
 	getDataParams = {
 		barangay:'',
 		municipality:'',
@@ -110,7 +111,8 @@ export class PmcComponent implements OnInit {
 	   this.data.municipality = event.target.options[event.target.options.selectedIndex].text
 	   this.fetch.municipality = event.target.options[event.target.options.selectedIndex].text		
 	   this.LocationService.getBarangays(event.target.value).subscribe(data => {
-		   this.barangays = data		
+		   this.barangays = data
+		   this.hasData = true	
 	   })
    }
 
@@ -140,7 +142,7 @@ export class PmcComponent implements OnInit {
 		})
 	}
 
-	pmcStat:any
+
 	getBarangaysandGet(event){	
 		this.getDataParams.municipality = event.target.options[event.target.options.selectedIndex].text;	
 		this.LocationService.getBarangays(event.target.value).subscribe(data => {
@@ -184,7 +186,7 @@ export class PmcComponent implements OnInit {
 			this.UtilityService.setAlert('No data on this particular filter yet','info')
 		})		
 	}
-
+	pmcTeam:any = {}
 	savePMCTEAM(){
 		this.pmcTeam['photo'] = this.pmcTeam.file
 		this.PmcService.createTeams(this.pmcTeam).subscribe(data => {
@@ -196,6 +198,19 @@ export class PmcComponent implements OnInit {
 	retrieveTeams(){
 		this.PmcService.retrieveTeams().subscribe(data => {
 			this.teams = data
+		})
+	}
+
+	updatePMTeam(team){	
+		delete team["photo"];
+		this.PmcService.updateTeams(team, team['id']).subscribe(data => {
+			this.UtilityService.setAlert(team['name'] + ' has been updated','success')
+		})
+	}
+
+	deleteTeam(id){
+		this.PmcService.deletePMCTeams(id).subscribe(data => {
+			this.UtilityService.setAlert('You have deleted a team member','info')
 		})
 	}
 
