@@ -24,7 +24,7 @@ class MonthChartController extends Controller
             }
             return $builder;
         });
-        return $builder->first();
+        return $builder->get();
     }
 
     /**
