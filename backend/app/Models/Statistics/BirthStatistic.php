@@ -19,4 +19,15 @@ class BirthStatistic extends Model
         'crude_death_rate',
         'general_fertility_rate',
     ];
+
+    protected $appends = ['profile'];
+
+    public function getProfileAttribute()
+    {
+        return Profile::getApproved()
+            ->where('year', $this->year)
+            ->where('barangay', $this->barangay)
+            ->where('municipality', $this->municipality)
+            ->first();
+    }
 }

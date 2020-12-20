@@ -18,4 +18,15 @@ class MigrationStatistic extends Model
         'total_out_migrations',
         'net_migrations',
     ];
+
+    protected $appends = ['profile'];
+
+    public function getProfileAttribute()
+    {
+        return Profile::getApproved()
+            ->where('year', $this->year)
+            ->where('barangay', $this->barangay)
+            ->where('municipality', $this->municipality)
+            ->first();
+    }
 }

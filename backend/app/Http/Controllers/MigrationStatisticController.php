@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Incidence;
 use App\Models\Log;
+use App\Models\MonthChart;
 use App\Models\Role;
 use App\Models\Statistics\MigrationStatistic;
 use Illuminate\Http\Request;
@@ -20,9 +22,31 @@ class MigrationStatisticController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return MigrationStatistic::getApproved()->paginate(10);
+        $data = $request->all();
+        $builder = MigrationStatistic::getApproved();
+        $monthChart = MonthChart::where('year', $data['year'])
+            ->where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->with('approval')
+            ->first();
+        $incidence = Incidence::where('year', $data['year'])
+            ->where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->with('approval')
+            ->first();
+        $result = tap($builder, function ($builder) use ($request) {
+            foreach ($request->all() as $parameter => $value) {
+                $builder = $builder->where($parameter, $value);
+            }
+            return $builder;
+        })->first();
+        return [
+            'data' => $result,
+            'month' => $monthChart,
+            'incidence' => $incidence
+        ];
     }
 
     /**

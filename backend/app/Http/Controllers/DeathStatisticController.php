@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Incidence;
 use App\Models\Log;
+use App\Models\MonthChart;
 use App\Models\Role;
 use App\Models\Statistics\DeathStatistic;
 use Illuminate\Http\Request;
@@ -20,9 +22,31 @@ class DeathStatisticController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return DeathStatistic::getApproved()->paginate(10);
+        $data = $request->all();
+        $builder = DeathStatistic::getApproved();
+        $monthChart = MonthChart::where('year', $data['year'])
+            ->where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->with('approval')
+            ->first();
+        $incidence = Incidence::where('year', $data['year'])
+            ->where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->with('approval')
+            ->first();
+        $result = tap($builder, function ($builder) use ($request) {
+            foreach ($request->all() as $parameter => $value) {
+                $builder = $builder->where($parameter, $value);
+            }
+            return $builder;
+        })->first();
+        return [
+            'data' => $result,
+            'month' => $monthChart,
+            'incidence' => $incidence
+        ];
     }
 
     /**
@@ -40,6 +64,7 @@ class DeathStatisticController extends Controller
             'male' => ['nullable', 'numeric'],
             'female' => ['nullable', 'numeric'],
             'crude_death_rate' => ['required', 'string', 'max:255'],
+            'total' => ['required', 'string', 'max:255'],
         ]);
 
         $deathStatistic = DeathStatistic::first();
@@ -89,6 +114,7 @@ class DeathStatisticController extends Controller
             'male' => ['nullable', 'numeric'],
             'female' => ['nullable', 'numeric'],
             'crude_death_rate' => ['nullable', 'string', 'max:255'],
+            'total' => ['nullable', 'string', 'max:255'],
         ]);
 
         $deathStatistic->update($data);

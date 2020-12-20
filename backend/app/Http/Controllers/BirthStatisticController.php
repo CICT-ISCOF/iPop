@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\Incidence;
 use App\Models\Log;
+use App\Models\MonthChart;
 use App\Models\Role;
 use App\Models\Statistics\BirthStatistic;
 use Illuminate\Http\Request;
@@ -22,13 +24,29 @@ class BirthStatisticController extends Controller
      */
     public function index(Request $request)
     {
+        $data = $request->all();
         $builder = BirthStatistic::getApproved();
-        if ($request->user()->hasRole(Role::PPO_ONE)) {
-            $user = $request->user();
-            $builder = $builder->where('municipality', $user->municipality)
-                ->where('barangay', $user->barangay);
-        }
-        return $builder->paginate(10);
+        $monthChart = MonthChart::where('year', $data['year'])
+            ->where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->with('approval')
+            ->first();
+        $incidence = Incidence::where('year', $data['year'])
+            ->where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->with('approval')
+            ->first();
+        $result = tap($builder, function ($builder) use ($request) {
+            foreach ($request->all() as $parameter => $value) {
+                $builder = $builder->where($parameter, $value);
+            }
+            return $builder;
+        })->first();
+        return [
+            'data' => $result,
+            'month' => $monthChart,
+            'incidence' => $incidence
+        ];
     }
 
     /**

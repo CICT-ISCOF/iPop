@@ -21,6 +21,7 @@ class CreateDeathStatisticsTable extends Migration
             $table->unsignedBigInteger('male');
             $table->unsignedBigInteger('female');
             $table->string('crude_death_rate');
+            $table->string('total');
             $table->timestamps();
         });
     }
