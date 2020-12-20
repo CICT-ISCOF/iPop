@@ -36,9 +36,9 @@ class BirthStatisticController extends Controller
         $incidence = Incidence::where('year', $data['year'])
             ->where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
+            ->where('type', 'Death')
             ->with('approval')
             ->orderBy('year', 'ASC')
-            ->groupBy('title')
             ->get();
         $result = tap($builder, function ($builder) use ($request) {
             foreach ($request->all() as $parameter => $value) {
