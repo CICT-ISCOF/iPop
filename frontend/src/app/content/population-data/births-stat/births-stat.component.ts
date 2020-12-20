@@ -174,6 +174,7 @@ export class BirthsStatComponent implements OnInit {
         this.hasSelectedData = true;
         this.birthSatistics = data.data;
         const incidences = groupBy(data.incidence, 'title');
+        console.log(incidences);
         this.teenageBirth = [];
         this.legitimateBirth = [];
         console.log('this.legitimateBirth', this.legitimateBirth);
