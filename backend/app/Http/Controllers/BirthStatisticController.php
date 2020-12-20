@@ -29,6 +29,7 @@ class BirthStatisticController extends Controller
         $monthChart = MonthChart::where('year', $data['year'])
             ->where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
+            ->where('type', 'Birth')
             ->with('approval')
             ->get();
 

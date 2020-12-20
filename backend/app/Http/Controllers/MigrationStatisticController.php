@@ -29,6 +29,7 @@ class MigrationStatisticController extends Controller
         $monthChart = MonthChart::where('year', $data['year'])
             ->where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
+            ->where('type', 'Migration')
             ->with('approval')
             ->get();
 
