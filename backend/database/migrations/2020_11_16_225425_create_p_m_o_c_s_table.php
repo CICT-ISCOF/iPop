@@ -17,6 +17,7 @@ class CreatePMOCSTable extends Migration
             $table->id();
             $table->string('municipality');
             $table->string('barangay');
+            $table->year('year');
             $table->unsignedBigInteger('sessions')->default(0);
             $table->unsignedBigInteger('oriented_couples')->default(0);
             $table->unsignedBigInteger('individuals_interviewed')->default(0);

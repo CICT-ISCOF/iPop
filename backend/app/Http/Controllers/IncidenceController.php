@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Approval;
 use App\Models\Incidence;
 use App\Models\Log;
 use App\Models\Role;
@@ -10,6 +9,11 @@ use Illuminate\Http\Request;
 
 class IncidenceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
+
     /**
      * Display a listing of the resource.
      *

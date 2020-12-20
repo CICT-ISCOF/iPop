@@ -20,5 +20,6 @@ class PMOC extends Model
         'applicants_by_employment_status',
         'applicants_by_income_class',
         'applicants_by_knowledge_on_fp',
+        'year',
     ];
 }
