@@ -27,6 +27,7 @@ class SBMPTCController extends Controller
         $rows = SBMPTC::getApproved()
             ->with('members')
             ->with('photos')
+            ->orderBy('updated_at', 'DESC')
             ->get();
 
         foreach ($rows as $row) {
@@ -72,7 +73,12 @@ class SBMPTCController extends Controller
             'services' => ['nullable', 'string'],
             'municipality' => ['required', Rule::exists('municipalities', 'name')],
             'district' => ['required', 'string', 'max:255'],
+            'photos' => ['nullable', 'array'],
+            'photos.*' => ['required', 'isFile'],
         ]);
+
+        if (isset($data['photos'])) {
+        }
 
         $sbmptc = SBMPTC::create($data);
         $sbmptc->approval()->save(new Approval([
