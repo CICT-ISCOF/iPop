@@ -209,7 +209,7 @@ export class BirthsStatComponent implements OnInit {
 		years:[]
 	}
 	DeathRateData = false
-	saveCrudDEathRate(title){
+	saveBottomCharts(title){
 		// INCIDENCE OF TEENAGE BIRTHS
 		// INCIDENCE OF ILLEGITIMATE BIRTHS
 		this.bottomChartData.title = title
