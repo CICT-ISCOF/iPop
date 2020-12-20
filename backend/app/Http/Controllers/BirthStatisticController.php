@@ -37,6 +37,7 @@ class BirthStatisticController extends Controller
             ->where('barangay', $data['barangay'])
             ->with('approval')
             ->orderBy('year', 'ASC')
+            ->groupBy('title')
             ->get();
         $result = tap($builder, function ($builder) use ($request) {
             foreach ($request->all() as $parameter => $value) {

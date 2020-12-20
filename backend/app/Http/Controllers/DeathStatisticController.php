@@ -36,6 +36,7 @@ class DeathStatisticController extends Controller
             ->where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
             ->with('approval')
+            ->groupBy('title')
             ->orderBy('year', 'ASC')
             ->get();
         $result = tap($builder, function ($builder) use ($request) {
