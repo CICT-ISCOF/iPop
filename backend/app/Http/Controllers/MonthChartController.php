@@ -24,7 +24,7 @@ class MonthChartController extends Controller
             }
             return $builder;
         });
-        return $builder->get();
+        return $builder->first();
     }
 
     /**
@@ -35,11 +35,23 @@ class MonthChartController extends Controller
      */
     public function store(Request $request)
     {
-        $monthChart = MonthChart::create($request->all());
-        $monthChart->approval()->create([
-            'requester_id' => $request->user()->id,
-            'message' => $request->user()->makeMessage('wants to add a month chart.'),
-        ]);
+        $data = $request->all();
+        $monthChart = MonthChart::where('year', $data['year'])
+            ->where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->with('approval')
+            ->first();
+
+        if ($monthChart) {
+            $monthChart->update($data);
+        } else {
+            $monthChart = MonthChart::create($data);
+            $monthChart->approval()->create([
+                'requester_id' => $request->user()->id,
+                'message' => $request->user()->makeMessage('wants to add a month chart.'),
+            ]);
+        }
+
         $monthChart->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a month chart.");

@@ -35,11 +35,22 @@ class IncidenceController extends Controller
      */
     public function store(Request $request)
     {
-        $incidence = Incidence::create($request->all());
-        $incidence->approval()->save(new Approval([
-            'requester_id' => $request->user()->id,
-            'message' => $request->user()->makeMessage('wants to add an incidence entry.'),
-        ]));
+        $data = $request->all();
+        $incidence = Incidence::where('year', $data['year'])
+            ->where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->with('approval')
+            ->first();
+
+        if ($incidence) {
+            $incidence->update($data);
+        } else {
+            $incidence = Incidence::create($data);
+            $incidence->approval()->create([
+                'requester_id' => $request->user()->id,
+                'message' => $request->user()->makeMessage('wants to add an incidence entry.'),
+            ]);
+        }
         $incidence->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created an incidence entry.");
