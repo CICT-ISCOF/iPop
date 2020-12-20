@@ -260,7 +260,7 @@
         </h4>
         <hr>
         <div *ngIf="!wantsToAddPMCTeam">
-            <div *ngFor="let item of [1,2];let i = index">
+            <div *ngFor="let team of teams; let i = index">
                 <div *ngIf="!activePMCTEAM[i]">
                     <div class="flex">
                         <span (click)="toggleProgram(i)" class="edit" style="margin-right: 20px;">
@@ -269,13 +269,13 @@
                                     <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
                                   </svg>
                             </span>
-                        <span class="delete">
+                        <span (click)="deleteTeam(team.id)" class="delete">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                     <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                                   </svg>
                             </span>
                     </div>
-                    <div *ngFor="let team of teams">
+                    <div>
                         <div class="picture">
                             <img [src]="team.photo.uri" alt="">
                         </div>
@@ -293,14 +293,14 @@
                     </div>
                     <div class="col-md-12 form-group">
                         <label for="Full Name">Full Name</label>
-                        <input type="text" id="Full Name" class="form-control">
+                        <input [(ngModel)]="team.name" type="text" id="Full Name" class="form-control">
                     </div>
                     <div class="col-md-12 form-group">
                         <label for="Position">Position</label>
-                        <input type="text" id="Position" class="form-control">
+                        <input [(ngModel)]="team.position" type="text" id="Position" class="form-control">
                     </div>
                     <div class="flex col-md-12">
-                        <button class="button">Save</button>
+                        <button (click)="updatePMTeam(team)" class="button">Save</button>
                         <button (click)="toggleProgram(i)" class="clickable">Cancel</button>
                     </div>
                     <br> <br> <br>
