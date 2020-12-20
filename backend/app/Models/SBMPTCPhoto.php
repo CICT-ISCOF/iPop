@@ -10,6 +10,7 @@ class SBMPTCPhoto extends Model
     use HasFactory;
 
     protected $fillable = ['sbmptc_id', 'photo_id'];
+    protected $with = ['photo'];
 
     public static function booted()
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approval;
+use App\Models\File;
 use App\Models\Log;
 use App\Models\Role;
 use App\Models\SBMPTC;
@@ -77,15 +78,23 @@ class SBMPTCController extends Controller
             'photos.*' => ['required', 'isFile'],
         ]);
 
-        if (isset($data['photos'])) {
-        }
-
         $sbmptc = SBMPTC::create($data);
         $sbmptc->approval()->save(new Approval([
             'requester_id' => $request->user()->id,
             'message' => $request->user()->makeMessage('wants to add a SBMPTC.')
         ]));
         $sbmptc->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        if (isset($data['photos'])) {
+            collect($data['photos'])->each(function ($binary) use ($sbmptc) {
+                $file = File::process($binary);
+                $file->public = true;
+                $file->save();
+                $sbmptc->photos()->create([
+                    'photo_id' => $file->id,
+                ]);
+            });
+        }
 
         Log::record("Created a SBMPTC.");
 
