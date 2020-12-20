@@ -13,3 +13,7 @@ export function groupBy(data: Array<any>, property: string) {
 
   return Object.keys(temp).map((key) => temp[key]);
 }
+
+export function where(data: Array<any>, key: string, value: any) {
+  return data.filter((item) => item[key] === value);
+}
