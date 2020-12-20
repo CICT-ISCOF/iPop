@@ -38,7 +38,6 @@ class MigrationStatisticController extends Controller
             ->where('barangay', $data['barangay'])
             ->where('type', 'Migration')
             ->with('approval')
-            ->orderBy('year', 'ASC')
             ->get();
 
         $result = tap($builder, function ($builder) use ($request) {

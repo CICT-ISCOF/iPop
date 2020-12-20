@@ -38,7 +38,6 @@ class DeathStatisticController extends Controller
             ->where('barangay', $data['barangay'])
             ->where('type', 'Death')
             ->with('approval')
-            ->orderBy('year', 'ASC')
             ->get();
         $result = tap($builder, function ($builder) use ($request) {
             foreach ($request->all() as $parameter => $value) {
