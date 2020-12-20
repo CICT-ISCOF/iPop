@@ -177,6 +177,19 @@ export class BirthsStatComponent implements OnInit {
         console.log(incidences);
         this.teenageBirth = [];
         this.legitimateBirth = [];
+
+        if (incidences[0][0].title === 'INCIDENCE OF TEENAGE BIRTHS') {
+          this.teenageBirth = incidences[0];
+        }
+        if (incidences[1][0].title === 'INCIDENCE OF ILLEGITIMATE BIRTHS') {
+          this.legitimateBirth = incidences[1];
+        }
+        if (incidences[1][0].title === 'INCIDENCE OF TEENAGE BIRTHS') {
+          this.teenageBirth = incidences[0];
+        }
+        if (incidences[0][0].title === 'INCIDENCE OF ILLEGITIMATE BIRTHS') {
+          this.legitimateBirth = incidences[1];
+        }
         console.log('this.legitimateBirth', this.legitimateBirth);
         // data.incidence.forEach(element => {
         // 	if(!this.TEENAGEBIRTHRATEbarChartLabels.includes(element.year)){
