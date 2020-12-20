@@ -2,7 +2,7 @@
 </app-home>
 <div class="wrapper" style="padding: 0;">
 
-    <div class="content" *ngIf="!wantsToadAnImage">
+    <div class="content" *ngIf="!wantsToadAnImage && slides.length != 0 ">
         <div class="carousel-holder">
             <owl-carousel-o [options]="customOptions">
                 <ng-template carouselSlide *ngFor="let image of slides">
@@ -48,7 +48,7 @@
             <img (click)="deletePhoto(image.id)" alt="" tooltip="Click to delete this image" placement="top" show-delay="100" [theme]="theme" [src]="image.photo.uri">
         </div>
     </div>
-    <button (click)="editSlider()" *ngIf="!wantsToEdit && newImages.length == 0 && !isUser" class="button">Edit Slider</button>
+    <button (click)="editSlider()" *ngIf="!wantsToEdit && newImages.length == 0 && !isUser && slides.length != 0 " class="button">Edit Slider</button>
     <button (click)="wantsToEdit = false" *ngIf="wantsToEdit" class="clickable">Cancel Editing</button>
 </div>
 <div class="wrapper">

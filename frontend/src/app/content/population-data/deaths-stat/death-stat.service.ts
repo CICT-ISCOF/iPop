@@ -50,8 +50,8 @@ export class DeathStatService {
 		return this.http.get<any>(url ,{headers:this.getHeaders()})
 	}
 
-	update(data, id){
-		const url = this.baseURL + '/' +  id
+	updateBirthStat(data){
+		const url = this.baseURL + '/' +  data['id']
 		return this.http.patch<any>(url,data ,{headers:this.getHeaders()})
 	}
 	
@@ -60,8 +60,22 @@ export class DeathStatService {
 		return this.http.delete<any>(url ,{headers:this.getHeaders()})
 	}
 
-	show(data){
-		const url =  this.baseURL + '/' + data
+	show(municipality, barangay, year, gender){
+		const url =  this.baseURL + `?municipality=${municipality}&barangay=${barangay}&year=${year}$gender=${gender}`
 		return this.http.get<any>(url ,{headers:this.getHeaders()})
 	}
+
+
+	postToMOnthController(data){
+		const url = this.BaseAPIService.baseURL + '/month-charts'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
+	postToinsidence(data){		
+		const url = this.BaseAPIService.baseURL + '/incidences'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
+
+
 }

@@ -1,3 +1,5 @@
+import { DeathsService } from './../../deaths/deaths.service';
+import { utils } from 'xlsx';
 import { UtilityService } from './../../../utility.service';
 import { DeathStatService } from './death-stat.service';
 import { LocationService } from './../../../location.service';
@@ -28,6 +30,21 @@ export class DeathsStatComponent implements OnInit {
 		total_live_births:'',
 		crude_death_rate: '',
 		general_fertility_rate:'',
+		months:{
+			January:0,
+			February:0,
+			March:0,
+			April:0,
+			May:0,
+			June:0,
+			July:0,
+			August:0,
+			September:0,
+			October:0,
+			November:0,
+			December:0,
+		},	
+		type:'Death'
 	}
 
 	years = []
@@ -45,17 +62,7 @@ export class DeathsStatComponent implements OnInit {
 		})
 	}
   
-	MONTHbarChartOptions = {
-		scaleShowVerticalLines: false,
-		responsive: true
-	};
-	MONTHbarChartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	MONTHbarChartType = 'bar';
-	MONTHbarChartLegend = true;
-	MONTHbarChartData = [
-		{data: [65, 59, 80, 81, 14, 55, 61, 11, 14, 55, 61, 61], label: 'Deaths By Months'},
-	
-	];
+
 
 
 	// -------------
@@ -71,13 +78,7 @@ export class DeathsStatComponent implements OnInit {
 		{data: [65, 59, 80], label: 'Crud Death Rate'},		
 	];
 
-	// DEATHRATEbarChartData = [
-	// 	{data: [65, 59, 80], label: 'Total Population'},
-	// 	{data: [28, 48, 40], label: 'Total Deaths'},
-	// 	{data: [28, 48, 40], label: 'Crud Death Rate'}
-	// ];
-
-
+	
 	ngOnInit(): void {
 		for(let i = 2020 ; i <= 2050; i ++){
 			this.years.push(i)
@@ -86,9 +87,24 @@ export class DeathsStatComponent implements OnInit {
 	}
 
 	
-	save(){
-		this.DeathStatService.create(this.data).subscribe(data => {
-			this.UtilityService.setAlert('New Death Statistics Data has been added', 'success')
+	save(){		
+		this.DeathStatService.postToMOnthController(this.data).subscribe(data => {
+			this.DeathStatService.create(this.data).subscribe(data => {			
+				this.UtilityService.setAlert('New Death Statistics Data has been added', 'success')
+			})
+		})
+	}
+
+	editChartData = false
+	updateChart(){
+		this.data['barangay'] = this.getDataParams.barangay
+		this.data['municipality'] = this.getDataParams.municipality
+		this.data['year'] = this.getDataParams.year
+		this.data['gender'] = this.getDataParams.gender
+		this.DeathStatService.postToMOnthController(this.data).subscribe(data => {	
+			this.editChartData = false		
+			this.fetchData()
+			this.UtilityService.setAlert('Chart has been updated','success')
 		})
 	}
 
@@ -110,7 +126,7 @@ export class DeathsStatComponent implements OnInit {
 	checked = {
 		male:false,
 		female:false,
-		all:false
+		all:true
 	}
 
 	check(item){
@@ -119,24 +135,10 @@ export class DeathsStatComponent implements OnInit {
 		}
 		this.checked[item] = true
 		this.getDataParams.gender = item	
+		this.fetchData()
 	}
 
-	chartData = {
-		january:'',
-		february:'',
-		march:'',
-		april:'',
-		may:'',
-		jun:'',
-		july:'',
-		august:'',
-		september:'',
-		october:'',
-		november:'',
-		december:'',
-		birth_stat_id:''
-	}
-
+	
 	teenAgeBirth = {
 		first:'',
 		second:'',
@@ -150,20 +152,79 @@ export class DeathsStatComponent implements OnInit {
 	}
 
 	hasSelectedData = false
-	fetchData(){
-		let data = {}
-		for(let key in this.getDataParams){
-			data[key] = this.getDataParams[key]
-		}
-		for(let key in this.checked){
-			data[key] = this.checked[key]
-		}
-		this.hasSelectedData = true
-		// this.BirthStatService.show( data['municipality'] ).subscribe(data => {
+	deathStatistics = {}
 
-		// })
+	MONTHbarChartOptions = {
+		scaleShowVerticalLines: false,
+		responsive: true
+	};
+	MONTHbarChartLabels = [];
+	MONTHbarChartType = 'bar';
+	MONTHbarChartLegend = true;
+	MONTHbarChartData = [
+		{data: [], label: 'Deaths By Months'},
+	
+	]
+
+	fetchData(){
+		this.DeathStatService.show(
+			this.getDataParams.municipality,
+			this.getDataParams.barangay,
+			this.getDataParams.year,
+			this.getDataParams.gender,
+		).subscribe(data => {
+			this.hasSelectedData = true
+			this.deathStatistics = data.data	
+			data.month.forEach(element => {
+				if(!this.MONTHbarChartLabels.includes(element.month)){
+					this.MONTHbarChartLabels.push(element.month)
+				}
+				if(this.checked.male){
+					this.MONTHbarChartData[0].data.push(element.males)
+				}
+				if(this.checked.female){
+					this.MONTHbarChartData[0].data.push(element.females)
+				}
+				if(this.checked.all){
+					this.MONTHbarChartData[0].data.push(element.total)
+				}
+			});
+
+		},error =>{
+			this.hasSelectedData = false
+			this.UtilityService.setAlert('No data on this particular filter yet','info')
+		})
 		
 	}
+
+	update(deathStatisticsData){
+		this.DeathStatService.updateBirthStat(deathStatisticsData).subscribe(data => {
+
+		})
+	}
+
+
+	crudeDeathRateData = {
+		title:'Crude Death Rate',
+		type:'Death',
+		value:0,
+		years:[]
+	}
+	saveCrudDEathRate(){
+		this.crudeDeathRateData['barangay'] = this.getDataParams.barangay
+		this.crudeDeathRateData['municipality'] = this.getDataParams.municipality
+		this.crudeDeathRateData['year'] = this.getDataParams.year
+		this.crudeDeathRateData['gender'] = this.getDataParams.gender
+		this.DeathStatService.postToinsidence(this.crudeDeathRateData).subscribe(data =>{
+
+		})
+	}
+
+
+
+	
+
+	
 
 
 }
