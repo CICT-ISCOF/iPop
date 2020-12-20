@@ -36,28 +36,35 @@ class MonthChartController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $monthChart = MonthChart::where('year', $data['year'])
-            ->where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
-            ->where('month', $data['month'])
-            ->with('approval')
-            ->first();
+        $results = [];
 
-        if ($monthChart) {
-            $monthChart->update($data);
-        } else {
-            $monthChart = MonthChart::create($data);
-            $monthChart->approval()->create([
-                'requester_id' => $request->user()->id,
-                'message' => $request->user()->makeMessage('wants to add a month chart.'),
-            ]);
+        foreach ($data['months'] as $month => $value) {
+            $temp = $data;
+            $temp['month'] = $month;
+            $temp[strtolower($data['gender']) + 's'] = $value;
+            $monthChart = MonthChart::where('year', $data['year'])
+                ->where('municipality', $temp['municipality'])
+                ->where('barangay', $temp['barangay'])
+                ->where('month', $month)
+                ->with('approval')
+                ->first();
+
+            if ($monthChart) {
+                $monthChart->update($temp);
+            } else {
+                $monthChart = MonthChart::create($temp);
+                $monthChart->approval()->create([
+                    'requester_id' => $request->user()->id,
+                    'message' => $request->user()->makeMessage('wants to add a month chart.'),
+                ]);
+            }
+
+            $monthChart->setApproved($request->user()->hasRole(Role::ADMIN));
+
+            Log::record("Created a month chart.");
         }
 
-        $monthChart->setApproved($request->user()->hasRole(Role::ADMIN));
-
-        Log::record("Created a month chart.");
-
-        return $monthChart;
+        return $results;
     }
 
     /**
