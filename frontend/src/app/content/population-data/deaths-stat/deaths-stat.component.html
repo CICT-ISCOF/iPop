@@ -5,19 +5,20 @@
         <button *ngIf="hasData" (click)="hasData = false; hasSelectedData = false" class="button" style="margin-bottom: 20px;">Add Data</button>
         <button *ngIf="!hasData" (click)="hasData = true" class="clickable" style="margin-bottom: 20px;">Cancel</button>
         <div *ngIf="!hasData" class="!hasData">
-            <h2>Add Birth Statistics Data</h2>
+            <h2>Add Death Statistics Data</h2>
+            <hr>
             <div class="filters">
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="">{{data.municipality}}</label>
-                        <select (change)="getBarangays($event)" [(ngModel)]="data.municipality" type="text" class="form-control">                       
+                        <label for="">Select Muncipality</label>
+                        <select (load)="getBarangays($event)" (change)="getBarangays($event)" type="text" class="form-control">                       
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label for="">Select Barangay</label>
                         <select [(ngModel)]="data.barangay" type="text" class="form-control">                       
-                            <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
+                            <option *ngFor="let barangay of barangays" [value]="barangay.name">{{ barangay.name }}</option>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -45,7 +46,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="">Crud Death Rate</label>
-                        <input [(ngModel)]="data.crude_birth_rate" type="text" class="form-control">
+                        <input [(ngModel)]="data.crude_death_rate" type="text" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="">General Fertility Rate</label>
@@ -62,8 +63,8 @@
             <div class="filters">
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="">{{getDataParams.municipality || 'Select Muncipality'}}</label>
-                        <select (change)="getBarangaysandGet($event)" [(ngModel)]="getDataParams.municipality" type="text" class="form-control">                       
+                        <label for="">Select Muncipality</label>
+                        <select (load)="getBarangays($event)" (change)="getBarangaysandGet($event)" type="text" class="form-control">                       
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
                     </div>

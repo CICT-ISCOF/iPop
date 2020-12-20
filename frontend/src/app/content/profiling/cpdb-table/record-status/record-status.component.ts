@@ -10,9 +10,9 @@ import { Subject } from 'rxjs'
 export class RecordStatusComponent implements OnInit {
 
   constructor(
-    private CpdbService : CpdbService
-  ) { 
-    
+    private CpdbService: CpdbService
+  ) {
+
   }
   reload
 
@@ -23,14 +23,14 @@ export class RecordStatusComponent implements OnInit {
 
   status = ''
 
-	agInit(params:any){
-		this.status = params.data.record.status
-	}
+  agInit(params: any) {
+    this.status = params.data.record.status
+  }
 
-	refresh(params:any):boolean{
-	this.status = params.data.record.status
-		return true
-	}
+  refresh(params: any): boolean {
+    this.status = params.data.record.status
+    return true
+  }
 
 
 }

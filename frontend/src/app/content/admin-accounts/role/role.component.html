@@ -1,4 +1,6 @@
-<span *ngIf="role == 'Super Admin'" class="badge badge-success"> {{ role }} </span>
-<span *ngIf="role == 'PPO1'" class="badge badge-danger"> {{ role }} </span>
-<span *ngIf="role == 'PPO'" class="badge badge-warning"> {{ role }} </span>
-<span *ngIf="role == 'BSPO'" class="badge badge-primary"> {{ role }} </span>
+<span *ngIf="data.roles[0].name == 'Super Admin'" class="badge badge-success"> {{ data.roles[0].name  }} </span>
+<span *ngIf="data.roles[0].name == 'PPOI'" class="badge badge-danger"> {{ data.roles[0].name  }} </span>
+<span *ngIf="data.roles[0].name == 'PPOII'" class="badge badge-warning"> {{ data.roles[0].name  }} </span>
+<span *ngIf="data.roles[0].name == 'FOD'" class="badge badge-primary"> {{ data.roles[0].name  }} </span>
+
+<span *ngIf="data.roles[0].name == 'TRD'" class="badge badge-dark"> {{ data.roles[0].name  }} </span>

@@ -167,6 +167,7 @@ import { AddNewTeenCenterComponent } from './content/teen-centers/add-new-teen-c
 import { TeenCenterAhydTeamComponent } from './content/teen-centers/teen-center-ahyd-team/teen-center-ahyd-team.component';
 import { MpcFdcTeamComponent } from './content/mpc-fdc/mpc-fdc-team/mpc-fdc-team.component';
 import { ApprovalsComponent } from './shared/navbar/approvals/approvals.component';
+import { AddMpcFdcComponent } from './content/mpc-fdc/add-mpc-fdc/add-mpc-fdc.component';
 
 
 
@@ -381,6 +382,7 @@ const routes: Routes = [
     TeenCenterAhydTeamComponent,
     MpcFdcTeamComponent,
     ApprovalsComponent,
+    AddMpcFdcComponent,
   
     
 

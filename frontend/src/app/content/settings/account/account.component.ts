@@ -19,7 +19,7 @@ export class AccountComponent implements OnInit {
 	) { }
 
 
-
+	myAccount = JSON.parse(localStorage.getItem('user-data'))
 
 	
 	isLoading  = false

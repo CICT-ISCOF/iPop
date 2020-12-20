@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../utility.service';
 import { BirthStatService } from './birth-stat.service';
 import { LocationService } from './../../../location.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +12,8 @@ export class BirthsStatComponent implements OnInit {
 
 	constructor(
 		private LocationService : LocationService,
-		private BirthStatService : BirthStatService
+		private BirthStatService : BirthStatService,
+		private UtilityService : UtilityService
 	) { }
 	
 	municipalities:any = [] 
@@ -97,7 +99,7 @@ export class BirthsStatComponent implements OnInit {
 
 	save(){
 		this.BirthStatService.create(this.data).subscribe(data => {
-			console.log(data)
+			this.UtilityService.setAlert('New Birth data has been Added', 'success')
 		})
 	}
 

@@ -1,0 +1,32 @@
+<div class="add-new-teen-center-component">
+    <h2>Add New Teen Center</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="">Name</label>
+            <input [(ngModel)]="teenCenter.name" type="text" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label for="">District</label>
+            <select [(ngModel)]="teenCenter.district" type="text" class="form-control">
+                <option [value]="district" *ngFor="let district of districtS">{{district}}</option>
+            </select>
+        </div>
+    </div><br>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="">Muncipality</label>
+            <select [(ngModel)]="teenCenter.municipality" type="text" class="form-control">
+                <option [value]="municipality.name" *ngFor="let municipality of municipalities">{{municipality.name}}</option>
+                </select>
+        </div>
+        <div class="col-md-6">
+            <label for="">Services Offered</label>
+            <textarea [(ngModel)]="teenCenter.services" autosize class="form-control"></textarea>
+        </div>
+        <div class="col-md-6">
+            <br> <br>
+            <button (click)="create()" class="button">Save MPC-FDC</button>
+            <button (click)="back()" class="clickable">Back</button>
+        </div>
+    </div>
+</div>

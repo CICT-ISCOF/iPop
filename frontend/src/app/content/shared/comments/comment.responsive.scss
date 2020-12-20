@@ -70,3 +70,14 @@
 .textarea-container {
     display: none;
 }
+
+@media only screen and (min-device-width: 600px) and (max-device-width: 1024px) {
+    .encoder,
+    .encoder-wrapper {
+        display: none;
+    }
+}
+
+.textarea-container {
+    display: none;
+}

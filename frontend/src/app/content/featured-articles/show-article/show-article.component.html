@@ -7,7 +7,7 @@
     </div>
     <br><br>
     <h2>{{ article.title }}</h2>
-    <p>March 30, 2020 - 11:26am -- <span>Duds Daquilanea</span></p>
+    <p>March 30, 2020 - 11:26am</p>
 
     <owl-carousel-o *ngIf="article.photos.length != 0" [options]="customOptions">
         <ng-template carouselSlide *ngFor="let image of article.photos">

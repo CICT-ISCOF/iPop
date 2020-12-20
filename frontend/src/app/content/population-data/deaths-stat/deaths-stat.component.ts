@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../utility.service';
 import { DeathStatService } from './death-stat.service';
 import { LocationService } from './../../../location.service';
 import { Component, OnInit } from '@angular/core';
@@ -5,28 +6,27 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-deaths-stat',
   templateUrl: './deaths-stat.component.html',
-  styleUrls: ['./deaths-stat.component.scss']
+  styleUrls: ['./deaths-stat.component.scss','./death-stat.responsive.scss']
 })
 export class DeathsStatComponent implements OnInit {
 
 	constructor(
 		private LocationService : LocationService,
-		private DeathStatService : DeathStatService
+		private DeathStatService : DeathStatService,
+		private UtilityService : UtilityService
 	) { }
 
 	municipalities:any = [] 
 	barangays:any = [] 
 	hasData = true
 	
-
-
 	data = {
 		municipality:'Select Municipality',
 		barangay: '',
 		year:'',
 		gender:''	,
 		total_live_births:'',
-		crude_birth_rate: '',
+		crude_death_rate: '',
 		general_fertility_rate:'',
 	}
 
@@ -44,8 +44,6 @@ export class DeathsStatComponent implements OnInit {
 			this.barangays = data		
 		})
 	}
-
-
   
 	MONTHbarChartOptions = {
 		scaleShowVerticalLines: false,
@@ -90,7 +88,7 @@ export class DeathsStatComponent implements OnInit {
 	
 	save(){
 		this.DeathStatService.create(this.data).subscribe(data => {
-			console.log(data)
+			this.UtilityService.setAlert('New Death Statistics Data has been added', 'success')
 		})
 	}
 

@@ -51,7 +51,7 @@ export class TableAdministratorComponent implements OnInit {
     columnDefs = [	
 		{headerName: 'Operations', field: 'id',filter:false, checkboxSelection: true, cellRenderer: 'actionButtons',width:260 },
 		{headerName: 'Fullname', field: 'fullname', sortable: true, filter: 'agTextColumnFilter',width:350 },
-		{headerName: 'Role', field: 'role', sortable: true, filter: 'agTextColumnFilter' ,cellRenderer: 'role' },
+		{headerName: 'Role', field: 'fullname', sortable: true, filter: 'agTextColumnFilter' ,cellRenderer: 'role' },
 		{headerName: 'District', field: 'district', sortable: 'district', filter: 'agTextColumnFilter',width:130},
 		{headerName: 'Muncipality', field: 'municipality', sortable: 'municipality', filter: 'agTextColumnFilter'},
 		{headerName: 'Barangay', field: 'barangay',sortable: true, filter: 'agTextColumnFilter' ,cellRenderer: 'location' },

@@ -4,7 +4,7 @@
     <div *ngIf="mySecurityQuestion == null" class="set-up-account container">
         <div *ngIf="isLoading" class="loader"></div>
         <br>
-        <h4>Let us set up your security question and pin</h4>
+        <h4>Hi {{myAccount.user.fullname}}! Let us set up your security question and pin</h4>
         <hr>
         <br>
         <div class="col-md-12 mb-3 input-container">

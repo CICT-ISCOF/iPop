@@ -11,7 +11,7 @@
             </owl-carousel-o>
             <br>
             <br>
-            <div (click)="triggerInput()" class="icon-container">
+            <div (click)="triggerInput()" class="icon-container" style="display: flex;align-items: center;justify-content: center;">
                 <i style="font-size: 25px;" class="fas fa-camera"></i>
                 <input (change)="readURL($event.target.files,$event)" accept="image/*" type="file" class="hidden" id="quick-link-picture" multiple style="display: none;">
             </div>
@@ -19,7 +19,7 @@
         <div class="inputs-container">
             <textarea [(ngModel)]="article.title" class="form-control" placeholder="Title..." autosize class="title"></textarea>
 
-            <textarea [(ngModel)]="article.body" class="form-control"  placeholder="Body..." autosize class="body"></textarea>
+            <textarea [(ngModel)]="article.body" class="form-control" placeholder="Body..." autosize class="body"></textarea>
         </div>
     </div>
 
@@ -27,6 +27,7 @@
     <br>
     <div class="button-container">
         <button (click)="saveQuicLink()" class="button">Save Article</button>
+        <button (click)="clearEverything()" class="clickable">Clear</button>
     </div>
     <br> <br>
 </div>

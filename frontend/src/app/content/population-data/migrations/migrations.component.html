@@ -8,12 +8,13 @@
         <button *ngIf="!hasData" (click)="hasData = true" class="clickable">Cancel</button>
         <br><br><br>
         <div *ngIf="!hasData" class="!hasData">
-            <h2>Add Birth Statistics Data</h2>
+            <h2>Add Migration Statistics Data</h2>
+            <hr>
             <div class="filters">
                 <div class="row">
                     <div class="col-md-4">
                         <label for="">{{data.municipality}}</label>
-                        <select (change)="getBarangays($event)" [(ngModel)]="data.municipality" type="text" class="form-control">                       
+                        <select (change)="getBarangays($event)" type="text" class="form-control">                       
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
                     </div>
@@ -65,7 +66,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="">{{getDataParams.municipality || 'Select Muncipality'}}</label>
-                        <select (change)="getBarangaysandGet($event)" [(ngModel)]="getDataParams.municipality" type="text" class="form-control">                       
+                        <select (change)="getBarangaysandGet($event)" type="text" class="form-control">                       
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
                     </div>
