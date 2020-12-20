@@ -5,12 +5,18 @@
     display: flexbox;
     position: relative;
     z-index: 2;
+    background-color: var(--contrast);
 }
 
 .header {
+    min-height: 25vh;
     height: auto;
     display: flex;
     padding: 0 3vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo-container {
@@ -28,9 +34,8 @@ img {
 }
 
 .small {
-    width: 70px;
-    height: 70px;
-    margin-top: 30px;
+    width: 100px;
+    height: 100px;
 }
 
 .texts {
@@ -81,12 +86,14 @@ img {
     flex: 1;
 }
 
-.Item {
+.Item,
+a {
     padding: 10px 25px;
     cursor: pointer;
-    color: var(--contrast) !important;
+    color: white !important;
     flex: 1;
     font-weight: 500;
+    text-decoration: none;
 }
 
 input {
@@ -251,7 +258,7 @@ video {
 }
 
 .nav-list .Item:hover {
-    color: var(--contrast) !important;
+    color: white !important;
 }
 
 .drop-down-item:hover {
@@ -270,7 +277,7 @@ video {
     background: var(--contrast);
     width: 60px;
     height: 60px;
-    right: 2%;
+    right: -15%;
     z-index: 9;
     cursor: pointer;
 }
@@ -329,7 +336,7 @@ video {
     transform: translate(-5vw);
     width: 105vw;
     .nav-list div:hover {
-        color: white !important;
+        color: var(--colorPrimary) !important;
         font-weight: 900;
         input {
             color: var(--contrast) !important
