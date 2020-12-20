@@ -33,10 +33,10 @@ class MigrationStatisticController extends Controller
             ->with('approval')
             ->get();
 
-        $incidence = Incidence::where('year', $data['year'])
-            ->where('municipality', $data['municipality'])
+        $incidence = Incidence::where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
             ->where('type', 'Migration')
+            ->orderBy('year', 'ASC')
             ->with('approval')
             ->get();
 

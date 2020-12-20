@@ -33,10 +33,10 @@ class DeathStatisticController extends Controller
             ->with('approval')
             ->get();
 
-        $incidence = Incidence::where('year', $data['year'])
-            ->where('municipality', $data['municipality'])
+        $incidence = Incidence::where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
             ->where('type', 'Death')
+            ->orderBy('year', 'ASC')
             ->with('approval')
             ->get();
         $result = tap($builder, function ($builder) use ($request) {
