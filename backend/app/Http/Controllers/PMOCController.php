@@ -121,8 +121,10 @@ class PMOCController extends Controller
      * @param  \App\Models\PMOC  $pMOC
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PMOC $pMOC)
+    public function destroy($id)
     {
+        $pMOC = PMOC::findOrFail($id);
+
         $pMOC->makeDeleteRequest();
 
         Log::record("Deleted a PMOC.");
