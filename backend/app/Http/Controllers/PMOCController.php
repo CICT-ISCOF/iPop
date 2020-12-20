@@ -60,7 +60,7 @@ class PMOCController extends Controller
         ]);
 
         $pMOC = PMOC::create($data);
-        $pMOC->approval()->save([
+        $pMOC->approval()->create([
             'requester_id' => $request->user()->id,
             'message' => $request->user()->makeMessage('wants to add a PMOC.')
         ]);
