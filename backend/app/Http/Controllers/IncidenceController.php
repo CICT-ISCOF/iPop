@@ -36,27 +36,34 @@ class IncidenceController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $incidence = Incidence::where('year', $data['year'])
-            ->where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
-            ->where('title', $data['title'])
-            ->with('approval')
-            ->first();
+        $results = [];
 
-        if ($incidence) {
-            $incidence->update($data);
-        } else {
-            $incidence = Incidence::create($data);
-            $incidence->approval()->create([
-                'requester_id' => $request->user()->id,
-                'message' => $request->user()->makeMessage('wants to add an incidence entry.'),
-            ]);
+        foreach ($data['years'] as $year) {
+            $temp = $data;
+            $temp['year'] = $year;
+            $incidence = Incidence::where('year', $temp['year'])
+                ->where('municipality', $temp['municipality'])
+                ->where('barangay', $temp['barangay'])
+                ->where('title', $temp['title'])
+                ->with('approval')
+                ->first();
+
+            if ($incidence) {
+                $incidence->update($temp);
+            } else {
+                $incidence = Incidence::create($temp);
+                $incidence->approval()->create([
+                    'requester_id' => $request->user()->id,
+                    'message' => $request->user()->makeMessage('wants to add an incidence entry.'),
+                ]);
+            }
+            $incidence->setApproved($request->user()->hasRole(Role::ADMIN));
+
+            Log::record("Created an incidence entry.");
+            $results[] = $incidence;
         }
-        $incidence->setApproved($request->user()->hasRole(Role::ADMIN));
 
-        Log::record("Created an incidence entry.");
-
-        return $incidence;
+        return $results;
     }
 
     /**
