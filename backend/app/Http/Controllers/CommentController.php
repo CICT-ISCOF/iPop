@@ -50,7 +50,7 @@ class CommentController extends Controller
         $comment = new Comment($data);
         $comment->user_id = $request->user()->id;
         $model->comments()->save($comment);
-        broadcast(new CommentSaved($comment))->toOthers();
+        // broadcast(new CommentSaved($comment))->toOthers();
         return $comment;
     }
 

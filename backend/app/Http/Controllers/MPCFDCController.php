@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Approval;
 use App\Models\Log;
 use App\Models\MPCFDC;
 use App\Models\Role;
@@ -44,10 +43,10 @@ class MPCFDCController extends Controller
         ]);
 
         $mPCFDC = MPCFDC::create($data);
-        $mPCFDC->approval()->save(new Approval([
+        $mPCFDC->approval()->create([
             'requester_id' => $request->user()->id,
             'message' => $request->user()->makeMessage('wants to add a MPCFDC.'),
-        ]));
+        ]);
         $mPCFDC->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a MPCFDC.");
@@ -101,8 +100,9 @@ class MPCFDCController extends Controller
      * @param  \App\Models\MPCFDC  $mPCFDC
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MPCFDC $mPCFDC)
+    public function destroy($id)
     {
+        $mPCFDC = MPCFDC::findOrFail($id);
         $mPCFDC->makeDeleteRequest();
 
         Log::record("Deleted a MPCFDC.");

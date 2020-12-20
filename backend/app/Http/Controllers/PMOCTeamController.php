@@ -21,9 +21,16 @@ class PMOCTeamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return PMOCTeam::getApproved()->paginate(10);
+        $builder = PMOCTeam::getApproved();
+        $builder = tap($builder, function ($builder) use ($request) {
+            foreach ($request->all() as $parameter => $value) {
+                $builder = $builder->where($parameter, $value);
+            }
+            return $builder;
+        });
+        return $builder->get();
     }
 
     /**
@@ -45,10 +52,10 @@ class PMOCTeamController extends Controller
         $file->public = true;
 
         $pMOCTeam = PMOCTeam::create($data);
-        $pMOCTeam->approval()->save(new Approval([
+        $pMOCTeam->approval()->create([
             'requester_id' => $request->user()->id,
             'message' => $request->user()->makeMessage('wants to add a PMOC Team.')
-        ]));
+        ]);
         $pMOCTeam->photo()->save($file);
         $pMOCTeam->setApproved($request->user()->hasRole(Role::ADMIN));
 

@@ -55,7 +55,7 @@ class ChartController extends Controller
             $file->public = true;
             $file->save();
             $chart = Chart::create(['photo_id' => $file->id]);
-            $chart->approval->update([
+            $chart->approval()->create([
                 'requester_id' => $request->user()->id,
                 'message' => $request->user()->makeMessage('wants to update the chart organization photo.'),
             ]);

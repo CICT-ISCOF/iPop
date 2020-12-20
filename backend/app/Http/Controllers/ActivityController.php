@@ -112,7 +112,6 @@ class ActivityController extends Controller
             });
         }
 
-        $activity->update($data);
         if (isset($data['files'])) {
             collect($data['files'])
                 ->map(function ($file) {
@@ -129,6 +128,8 @@ class ActivityController extends Controller
         }
         $activity->setApproved($request->user()->hasRole(Role::ADMIN))
             ->setApprovalMessage($request->user()->makeMessage('wants to update a program area activity.'));
+
+        $activity->update($data);
 
         Log::record("User updated an activity.");
 
