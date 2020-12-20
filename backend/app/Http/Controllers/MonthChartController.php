@@ -42,7 +42,7 @@ class MonthChartController extends Controller
             $temp = $data;
             $temp['month'] = $month;
             $temp[strtolower($data['gender']) + 's'] = $value;
-            $monthChart = MonthChart::where('year', $data['year'])
+            $monthChart = MonthChart::where('year', $temp['year'])
                 ->where('municipality', $temp['municipality'])
                 ->where('barangay', $temp['barangay'])
                 ->where('month', $month)
@@ -60,7 +60,7 @@ class MonthChartController extends Controller
             }
 
             $monthChart->setApproved($request->user()->hasRole(Role::ADMIN));
-
+            $results[] = $monthChart;
             Log::record("Created a month chart.");
         }
 
