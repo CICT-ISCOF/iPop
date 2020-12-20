@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Log;
+use App\Models\MonthChart;
 use App\Models\PMOC;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ class PMOCController extends Controller
      */
     public function index(Request $request)
     {
+        $data = $request->all();
         $builder = PMOC::getApproved();
         $builder = tap($builder, function ($builder) use ($request) {
             foreach ($request->all() as $parameter => $value) {
@@ -28,7 +30,13 @@ class PMOCController extends Controller
             }
             return $builder;
         });
-        return $builder->get();
+        $monthChart = MonthChart::where('year', $data['year'])
+            ->where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->where('type', 'PMOC')
+            ->with('approval')
+            ->get();
+        return ['data' => $builder->get(), 'month' => $monthChart];
     }
 
     /**
