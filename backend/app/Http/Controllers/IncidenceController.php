@@ -39,6 +39,7 @@ class IncidenceController extends Controller
         $incidence = Incidence::where('year', $data['year'])
             ->where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
+            ->where('title', $data['title'])
             ->with('approval')
             ->first();
 
