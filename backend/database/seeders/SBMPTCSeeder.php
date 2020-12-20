@@ -259,7 +259,7 @@ class SBMPTCSeeder extends Seeder
                 'tc_coordinator_count' => 0,
                 'population' => 0,
                 'services' => '',
-                'municipality' => 'san Joaquin',
+                'municipality' => 'San Joaquin',
                 'district' => 'I',
             ],
             [

@@ -162,8 +162,8 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::apiResources([
         'articles' => ArticleController::class,
         'sbmptcs' => SBMPTCController::class,
-        'sbmptcs/teams' => SBMPTCTeamController::class,
-        'sbmptcs/focal-persons' => SBMPTCFocalPersonController::class,
+        'sbmptcs-teams' => SBMPTCTeamController::class,
+        'sbmptcs-focal-persons' => SBMPTCFocalPersonController::class,
         'mtcms' => MTCMMembersController::class,
         'approvals' => ApprovalController::class,
         'birth-statistics' => BirthStatisticController::class,

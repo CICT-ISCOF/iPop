@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Approval;
 use App\Models\Log;
 use App\Models\PMOC;
 use App\Models\Role;
@@ -20,9 +19,16 @@ class PMOCController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return PMOC::getApproved()->paginate(10);
+        $builder = PMOC::getApproved();
+        $builder = tap($builder, function ($builder) use ($request) {
+            foreach ($request->all() as $parameter => $value) {
+                $builder = $builder->where($parameter, $value);
+            }
+            return $builder;
+        });
+        return $builder->get();
     }
 
     /**
@@ -46,10 +52,10 @@ class PMOCController extends Controller
         ]);
 
         $pMOC = PMOC::create($data);
-        $pMOC->approval()->save(new Approval([
+        $pMOC->approval()->save([
             'requester_id' => $request->user()->id,
             'message' => $request->user()->makeMessage('wants to add a PMOC.')
-        ]));
+        ]);
         $pMOC->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a PMOC.");

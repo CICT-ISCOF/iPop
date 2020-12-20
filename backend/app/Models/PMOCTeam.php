@@ -14,6 +14,7 @@ class PMOCTeam extends Model
         'name',
         'position',
         'priority',
+        'photo_id',
     ];
 
     public static function booted()

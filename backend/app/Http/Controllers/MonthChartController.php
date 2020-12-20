@@ -36,10 +36,10 @@ class MonthChartController extends Controller
     public function store(Request $request)
     {
         $monthChart = MonthChart::create($request->all());
-        $monthChart->approval()->save(new Approval([
+        $monthChart->approval()->create([
             'requester_id' => $request->user()->id,
             'message' => $request->user()->makeMessage('wants to add a month chart.'),
-        ]));
+        ]);
         $monthChart->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a month chart.");

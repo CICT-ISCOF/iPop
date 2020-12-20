@@ -19,10 +19,13 @@ class ApprovalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $user = $request->user();
         return Approval::with(['approvable', 'comments'])
-            ->sortBy('approved', 'ASC')
+            ->where('requester_id', '!=', $user->id)
+            ->where('approved', false)
+            ->orderBy('approved', 'ASC')
             ->paginate(10);
     }
 

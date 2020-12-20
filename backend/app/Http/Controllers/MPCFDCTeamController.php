@@ -43,13 +43,14 @@ class MPCFDCTeamController extends Controller
 
         $file = File::process($data['photo']);
         $file->public = true;
+        $file->save();
+        $data['photo_id'] = $file->id;
 
         $MPCFDCTeam = MPCFDCTeam::create($data);
         $MPCFDCTeam->approval()->save(new Approval([
             'requester_id' => $request->user()->id,
-            'message' => $request->user()->makeMessage('wants to add a MPCFDC Team.')
+            'message' => $request->user()->makeMessage('wants to add a MPCFDC Team.'),
         ]));
-        $MPCFDCTeam->photo()->save($file);
         $MPCFDCTeam->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a MPCFDC Team.");
@@ -87,8 +88,10 @@ class MPCFDCTeamController extends Controller
 
         if (isset($data['photo'])) {
             $file = File::process($data['photo']);
+            $file->public = true;
+            $file->save();
             $old = $MPCFDCTeam->photo;
-            $MPCFDCTeam->photo()->save($file);
+            $MPCFDCTeam->update(['photo_id' => $file->id]);
             $old->delete();
         }
 

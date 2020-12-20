@@ -19,9 +19,16 @@ class MPCFDCController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return MPCFDC::getApproved()->paginate(10);
+        $builder = MPCFDC::getApproved();
+        $builder = tap($builder, function ($builder) use ($request) {
+            foreach ($request->all() as $parameter => $value) {
+                $builder = $builder->where($parameter, $value);
+            }
+            return $builder;
+        });
+        return $builder->get();
     }
 
     /**

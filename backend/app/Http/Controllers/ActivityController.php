@@ -45,14 +45,12 @@ class ActivityController extends Controller
             'files.*' => ['required', 'isFile'],
         ]);
 
-        $activity = new Activity($data);
-
         $programArea = ProgramArea::find($data['program_area_id']);
-        $programArea->activities()->save($activity);
-        $activity->approval()->save(new Approval([
+        $activity = $programArea->activities()->create($data);
+        $activity->approval()->create([
             'requester_id' => $request->user()->id,
             'message' => $request->user()->makeMessage('wants to add a program area activity.'),
-        ]));
+        ]);
         $activity->setApproved($request->user()->hasRole(Role::ADMIN));
 
         if (isset($data['files'])) {

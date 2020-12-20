@@ -62,7 +62,7 @@ class File extends Model
      *
      * @param Illuminate\Http\UploadedFile $file
      * @param User $user
-     * @return File|null $user
+     * @return File $user
      */
     public static function processFile(UploadedFile $file, $user = null)
     {
@@ -80,7 +80,7 @@ class File extends Model
      *
      * @param string $url
      * @param User|null $user
-     * @return File|null
+     * @return File|
      */
     public static function processURL(string $url, $user = null)
     {
@@ -88,8 +88,8 @@ class File extends Model
 
         $binary = @file_get_contents($url);
 
-        if($binary === false) {
-            if(base64_encode(base64_decode($url, true)) !== $url) {
+        if ($binary === false) {
+            if (base64_encode(base64_decode($url, true)) !== $url) {
                 throw new InvalidArgumentException(
                     'File must be either a string url, base64 encoded file or an instance of Illuminate\Http\UploadedFile'
                 );
@@ -179,7 +179,7 @@ class File extends Model
             'application/vnd.msexcel' => 'csv',
             'application/x-director' => 'dcr',
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document' =>
-                'docx',
+            'docx',
             'application/x-dvi' => 'dvi',
             'message/rfc822' => 'eml',
             'application/x-msdownload' => 'exe',
@@ -258,7 +258,7 @@ class File extends Model
             'application/vnd.ms-office' => 'ppt',
             'application/msword' => 'ppt',
             'application/vnd.openxmlformats-officedocument.presentationml.presentation' =>
-                'pptx',
+            'pptx',
             'application/x-photoshop' => 'psd',
             'image/vnd.adobe.photoshop' => 'psd',
             'audio/x-realaudio' => 'ra',
@@ -306,7 +306,7 @@ class File extends Model
             'application/xls' => 'xls',
             'application/x-xls' => 'xls',
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' =>
-                'xlsx',
+            'xlsx',
             'application/vnd.ms-excel' => 'xlsx',
             'application/xml' => 'xml',
             'text/xml' => 'xml',

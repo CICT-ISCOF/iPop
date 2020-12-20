@@ -50,13 +50,14 @@ class PMOCTeamController extends Controller
 
         $file = File::process($data['photo']);
         $file->public = true;
+        $file->save();
+        $data['photo_id'] = $file->id;
 
         $pMOCTeam = PMOCTeam::create($data);
         $pMOCTeam->approval()->create([
             'requester_id' => $request->user()->id,
-            'message' => $request->user()->makeMessage('wants to add a PMOC Team.')
+            'message' => $request->user()->makeMessage('wants to add a PMOC Team.'),
         ]);
-        $pMOCTeam->photo()->save($file);
         $pMOCTeam->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record("Created a PMOC Team.");
@@ -94,8 +95,10 @@ class PMOCTeamController extends Controller
 
         if (isset($data['photo'])) {
             $file = File::process($data['photo']);
+            $file->public = true;
+            $file->save();
             $old = $pmocTeam->photo;
-            $pmocTeam->photo()->save($file);
+            $pmocTeam->update(['photo_id' => $file->id]);
             $old->delete();
         }
 
