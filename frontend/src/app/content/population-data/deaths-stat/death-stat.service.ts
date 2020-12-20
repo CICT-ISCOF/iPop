@@ -61,7 +61,7 @@ export class DeathStatService {
 	}
 
 	show(municipality, barangay, year, gender){
-		const url =  this.baseURL + `?municipality=${municipality}&barangay=${barangay}&year=${year}$gender=${gender}`
+		const url =  this.baseURL + `?municipality=${municipality}&barangay=${barangay}&year=${year}`
 		return this.http.get<any>(url ,{headers:this.getHeaders()})
 	}
 

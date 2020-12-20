@@ -275,12 +275,15 @@
                                   </svg>
                             </span>
                     </div>
-                    <div class="picture">
-                        <img src="../../../../assets/avatars/boy-blue.png" alt="">
+                    <div *ngFor="let team of teams">
+                        <div class="picture">
+                            <img [src]="team.photo.uri" alt="">
+                        </div>
+                        <br>
+
+                        <div class="person-name">{{team.name}}</div>
+                        <p style="text-align: center;">{{team.position}}</p>
                     </div>
-                    <br>
-                    <div class="person-name">JAMEL EID YASSIN</div>
-                    <p style="text-align: center;">Progam Officer 1</p>
                     <hr>
                 </div>
                 <div class="row" *ngIf="activePMCTEAM[i]">
