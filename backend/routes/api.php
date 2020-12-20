@@ -23,11 +23,13 @@ use App\Http\Controllers\MarriageController;
 use App\Http\Controllers\InMigrationController;
 use App\Http\Controllers\OutMigrationController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\IncidenceController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\MigrationRateController;
 use App\Http\Controllers\MigrationStatisticController;
 use App\Http\Controllers\ModelPermissionController;
+use App\Http\Controllers\MonthChartController;
 use App\Http\Controllers\MPCFDCController;
 use App\Http\Controllers\MPCFDCTeamController;
 use App\Http\Controllers\MTCMMembersController;
@@ -184,6 +186,8 @@ Route::middleware('throttle:60,1')->group(function () {
         'service-offers' => ServiceOfferController::class,
         'statistic-profiles' => ProfileController::class,
         'charts' => ChartController::class,
+        'incidences' => IncidenceController::class,
+        'month-charts' => MonthChartController::class,
     ]);
 
     // Delete 1 award media
