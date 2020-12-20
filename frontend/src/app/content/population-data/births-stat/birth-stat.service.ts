@@ -15,7 +15,7 @@ export class BirthStatService {
 		private BaseAPIService : BaseAPIService
 	) {
 		
-	}
+	} 
 
 	user:any = ''
 	token:any = ''
@@ -60,8 +60,19 @@ export class BirthStatService {
 		return this.http.delete<any>(url ,{headers:this.getHeaders()})
 	}
 
-	show(data){
-		const url =  this.baseURL + '/' + data
+	showData(municipality, barangay, year, gender){
+		const url =  this.baseURL + `?municipality=${municipality}&barangay=${barangay}&year=${year}`
 		return this.http.get<any>(url ,{headers:this.getHeaders()})
+	}
+
+
+	postToMOnthController(data){
+		const url = this.BaseAPIService.baseURL + '/month-charts'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
+	postToinsidence(data){		
+		const url = this.BaseAPIService.baseURL + '/incidences'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
 	}
 }

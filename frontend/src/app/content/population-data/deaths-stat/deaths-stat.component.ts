@@ -20,8 +20,7 @@ export class DeathsStatComponent implements OnInit {
 
 	municipalities:any = [] 
 	barangays:any = [] 
-	hasData = true
-	
+	hasData = true	
 	data = {
 		municipality:'Select Municipality',
 		barangay: '',
@@ -46,24 +45,19 @@ export class DeathsStatComponent implements OnInit {
 		},	
 		type:'Death'
 	}
-
 	getDataParams = {
 		barangay:'',
 		municipality:'',
 		year:'',
 		gender:''
 	}
-
 	checked = {
 		male:false,
 		female:false,
 		all:true
-	}
-
-	
+	}	
 	hasSelectedData = false
 	deathStatistics = {}
-
 	MONTHbarChartOptions = {
 		scaleShowVerticalLines: false,
 		responsive: true
@@ -75,7 +69,6 @@ export class DeathsStatComponent implements OnInit {
 		{data: [], label: 'Deaths By Months'},
 	
 	]
-
 	crudeDeathRateData = {
 		title:'Crude Death Rate',
 		type:'Death',
@@ -91,12 +84,8 @@ export class DeathsStatComponent implements OnInit {
 	DEATHRATEbarChartLegend = true;
 	DEATHRATEbarChartData = [
 		{data: [], label: 'Crude Death Rate'},		
-	];
-
-
-
-	years = []
-	
+	]
+	years = []	
 	getMuncipalities(){		
 		this.LocationService.getMunicipalities().subscribe(data => {
 			this.municipalities = data			
@@ -109,8 +98,7 @@ export class DeathsStatComponent implements OnInit {
 			this.barangays = data		
 		})
 	}
-  
-	
+  	
 	ngOnInit(): void {
 		for(let i = 2020 ; i <= 2050; i ++){
 			this.years.push(i)
@@ -183,7 +171,7 @@ export class DeathsStatComponent implements OnInit {
 				}
 				if(this.checked.male){
 					this.MONTHbarChartData[0].data.push(element.males)
-					this.data.months[element.month] = element.males				
+	 				this.data.months[element.month] = element.males				
 				}
 				if(this.checked.female){
 					this.MONTHbarChartData[0].data.push(element.females)

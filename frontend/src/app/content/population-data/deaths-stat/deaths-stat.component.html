@@ -105,7 +105,7 @@
                 <br><br>
                 <div class="chart" *ngIf="!editChartData">
                     <canvas baseChart [datasets]="MONTHbarChartData" [labels]="MONTHbarChartLabels" [options]="MONTHbarChartOptions" [legend]="MONTHbarChartLegend" [chartType]="MONTHbarChartType">
-            </canvas>
+                    </canvas>
                 </div>
                 <br>
                 <button (click)="editChartData = true" *ngIf="!editChartData" class="button">Edit Chart Data</button>
@@ -192,7 +192,7 @@
                         </div>
                         <div class="row">
                             <div style="display: flex;
-                align-items: center;justify-content: center;padding-left: 30px;">
+                                align-items: center;justify-content: center;padding-left: 30px;">
                                 <button (click)="save()" class="button">Save</button> &nbsp;
                                 <button (click)="totalDeaths = false" class="clickable">Cancel</button>
                             </div>
