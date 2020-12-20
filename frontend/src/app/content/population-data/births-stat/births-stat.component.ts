@@ -2,6 +2,7 @@ import { UtilityService } from './../../../utility.service';
 import { BirthStatService } from './birth-stat.service';
 import { LocationService } from './../../../location.service';
 import { Component, OnInit } from '@angular/core';
+import { groupBy } from '../../../helpers'
 
 @Component({
   selector: 'app-births-stat',
@@ -163,6 +164,8 @@ export class BirthsStatComponent implements OnInit {
 
 	birthSatistics = {}
 	hasSelectedData = false
+	teenageBirth = []
+	legitimateBirth = []
 	fetchData(){
 		this.BirthStatService.showData(
 			this.getDataParams.municipality,
@@ -172,12 +175,15 @@ export class BirthsStatComponent implements OnInit {
 		).subscribe(data => {
 			this.hasSelectedData = true
 			this.birthSatistics = data.data	
-			data.incidence.forEach(element => {				
-				if(!this.TEENAGEBIRTHRATEbarChartLabels.includes(element.year)){
-					this.TEENAGEBIRTHRATEbarChartLabels.push(element.year)
-				}
-				this.TEENAGEBIRTHRATEbarChartData[0].data.push(element.value)				
-			})
+			this.teenageBirth = groupBy(data.incidence,'INCIDENCE OF TEENAGE BIRTHS')
+			this.legitimateBirth = groupBy(data.incidence,'INCIDENCE OF ILLEGITIMATE BIRTHS')
+			console.log('this.legitimateBirth',this.legitimateBirth)
+			// data.incidence.forEach(element => {				
+			// 	if(!this.TEENAGEBIRTHRATEbarChartLabels.includes(element.year)){
+			// 		this.TEENAGEBIRTHRATEbarChartLabels.push(element.year)
+			// 	}
+			// 	this.TEENAGEBIRTHRATEbarChartData[0].data.push(element.value)				
+			// })
 			data.month.forEach(element => {
 				if(!this.MONTHbarChartLabels.includes(element.month)){
 					this.MONTHbarChartLabels.push(element.month)					
