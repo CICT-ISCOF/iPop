@@ -31,6 +31,7 @@ class DeathStatisticController extends Controller
             ->where('barangay', $data['barangay'])
             ->with('approval')
             ->get();
+
         $incidence = Incidence::where('year', $data['year'])
             ->where('municipality', $data['municipality'])
             ->where('barangay', $data['barangay'])
@@ -46,7 +47,7 @@ class DeathStatisticController extends Controller
         return [
             'data' => $result,
             'month' => $monthChart,
-            'incidence' => $incidence,
+            'incidence' => $incidence
         ];
     }
 
