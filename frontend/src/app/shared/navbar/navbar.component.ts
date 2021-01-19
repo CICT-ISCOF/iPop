@@ -1,74 +1,65 @@
 import { Component, OnInit } from '@angular/core';
-import { UtilityService }  from '../../utility.service'
-import {  Subscription } from 'rxjs'
-
+import { UtilityService } from '../../utility.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  constructor(private UtilityService: UtilityService) {
+    this.subscription = this.UtilityService.getDropDown().subscribe((value) => {
+      this.dropdown = value;
+      this.approval = value;
+    });
 
-	constructor(
-		private UtilityService : UtilityService
-	) { 
-		this.subscription = this.UtilityService.getDropDown().subscribe(value => {
-			this.dropdown = value
-			this.approval = value
-		})
+    this.subscription = this.UtilityService.getNavText().subscribe((value) => {
+      this.navText = value;
+      if (value == 'AdminAccounts') {
+        this.navText = 'Admin Accounts';
+      }
+    });
+  }
 
-		this.subscription =this.UtilityService.getNavText().subscribe(value => {
-			this.navText = value
-			if(value == 'AdminAccounts'){
-				this.navText = 'Admin Accounts'
-			}
-		})
-	}
+  theme = localStorage.getItem('data-theme');
 
-	
+  subscription: Subscription;
 
-	theme = localStorage.getItem('data-theme')
+  dropdown = false;
+  approval = true;
 
-	subscription : Subscription
+  navText = '';
 
-	dropdown = false
-	approval = false
+  ngOnInit(): void {
+    this.syncPathAndNavText();
+  }
 
-	navText = ''
+  syncPathAndNavText() {
+    let url = document.createElement('a');
+    url.href = window.location.href;
+    const path = url.pathname;
 
-	ngOnInit(): void {		
-		this.syncPathAndNavText()
-	}
+    if (path == '/search') {
+      this.UtilityService.setSidebarItemasActive('Universal Search');
+      this.navText = 'Universal Search';
+    }
+  }
 
+  account = JSON.parse(localStorage.getItem('user-data'));
 
-	syncPathAndNavText(){
-		let url = document.createElement('a');
-		url.href = window.location.href;
-		const path = url.pathname	
+  name = this.formatName(this.account.user.fullname);
 
-		if(path == '/search'){
-			this.UtilityService.setSidebarItemasActive('Universal Search')
-			this.navText = 'Universal Search'
-		}
-		
-	}
+  formatName(fullname) {
+    let name = fullname.split(' ');
+    return name[0];
+  }
 
-	account = JSON.parse(localStorage.getItem('user-data'))
+  conversations() {
+    this.UtilityService.setSidebarItemasActive('Conversations');
+  }
 
-	name = this.formatName(this.account.user.fullname)
-
-	formatName(fullname){
-		let name = fullname.split(" ")
-		return name[0]
-	}
-
-	conversations(){
-		this.UtilityService.setSidebarItemasActive('Conversations')
-	}
-
-	handleClick(item){
-		this.UtilityService.setNavText(item)
-
-	}
+  handleClick(item) {
+    this.UtilityService.setNavText(item);
+  }
 }

@@ -197,11 +197,11 @@ Route::middleware('throttle:60,1')->group(function () {
         'month-charts' => MonthChartController::class,
         'age-distribution-statistics' => AgeDistributionController::class,
         'top-populations' => TopPopulationController::class,
-        'pmc-applicants-by-age-group' => PMCAgeGroupController::class,
-        'pmc-applicants-by-employment-status-and-sex' => PMCESSController::class,
-        'pmc-applicants-average-monthly-income-and-sex' => PMCAMISController::class,
-        'pmc-applicants-knowledge-on-family-planning' => PMCKFPController::class,
-        'pmc-applicants-by-civil-status' => PMCCSController::class,
+        'pmc-age-group' => PMCAgeGroupController::class,
+        'pmc-ess' => PMCESSController::class,
+        'pmc-amis' => PMCAMISController::class,
+        'pmc-kfp' => PMCKFPController::class,
+        'pmc-ccs' => PMCCSController::class,
     ]);
 
     // Delete 1 award media
