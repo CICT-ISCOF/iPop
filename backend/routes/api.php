@@ -37,6 +37,11 @@ use App\Http\Controllers\MTCMMembersController;
 use App\Http\Controllers\MunicipalOfficialController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PMCAgeGroupController;
+use App\Http\Controllers\PMCAMISController;
+use App\Http\Controllers\PMCCSController;
+use App\Http\Controllers\PMCESSController;
+use App\Http\Controllers\PMCKFPController;
 use App\Http\Controllers\PMOCController;
 use App\Http\Controllers\PMOCTeamController;
 use App\Http\Controllers\ProfileController;
@@ -192,6 +197,11 @@ Route::middleware('throttle:60,1')->group(function () {
         'month-charts' => MonthChartController::class,
         'age-distribution-statistics' => AgeDistributionController::class,
         'top-populations' => TopPopulationController::class,
+        'pmc-applicants-by-age-group' => PMCAgeGroupController::class,
+        'pmc-applicants-by-employment-status-and-sex' => PMCESSController::class,
+        'pmc-applicants-average-monthly-income-and-sex' => PMCAMISController::class,
+        'pmc-applicants-knowledge-on-family-planning' => PMCKFPController::class,
+        'pmc-applicants-by-civil-status' => PMCCSController::class,
     ]);
 
     // Delete 1 award media
