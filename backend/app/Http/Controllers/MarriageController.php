@@ -46,7 +46,7 @@ class MarriageController extends Controller
         ]);
         $marriage->record()->save($record);
         $marriage->record = $record;
-        broadcast(new RecordSaved($marriage))->toOthers();
+        // broadcast(new RecordSaved($marriage))->toOthers();
         return $marriage;
     }
 

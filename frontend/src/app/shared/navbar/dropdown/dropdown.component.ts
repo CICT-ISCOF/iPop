@@ -56,11 +56,6 @@ export class DropdownComponent implements OnInit {
 
 	changeTheme(e){	
 		e == true ? localStorage.setItem('data-theme','dark') : localStorage.setItem('data-theme','light')
-		location.reload()
-	}
-
-	changeSidebar(e){
-
 	}
 
 	changeBackground(image){
@@ -71,7 +66,7 @@ export class DropdownComponent implements OnInit {
 	toggleBackground(e){
 		localStorage.setItem('sidebar-background',e+'')
 		this.UtilityService.seBackground(e+'')
-		location.reload()
+	
 	}
 
 	logout(){
@@ -83,9 +78,7 @@ export class DropdownComponent implements OnInit {
 			cancelButtonText: 'Later'
 		  }).then((result) => {
 			if (result.value) {
-				let theme =  localStorage.getItem('data-theme')
 				localStorage.clear()
-				localStorage.setItem('data-theme',theme)
 				this.Router.navigate(['/'])
 				this.UtilityService.logout(true)
 				this.UtilityService.setDropDown(false)	
@@ -106,6 +99,6 @@ export class DropdownComponent implements OnInit {
 	ChangeFilter(color){	
 		localStorage.setItem('color',color)
 		this.UtilityService.seColor(color)
-		location.reload()
+		
 	}
 }

@@ -46,7 +46,7 @@ class DeathController extends Controller
         ]);
         $death->record()->save($record);
         $death->record = $record;
-        broadcast(new RecordSaved($death))->toOthers();
+        // broadcast(new RecordSaved($death))->toOthers();
         return $death;
     }
 

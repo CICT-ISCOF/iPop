@@ -197,6 +197,7 @@ export class BirthsStatComponent implements OnInit {
         // 	}
         // 	this.TEENAGEBIRTHRATEbarChartData[0].data.push(element.value)
         // })
+        console.log(data.month)
         data.month.forEach((element) => {
           if (!this.MONTHbarChartLabels.includes(element.month)) {
             this.MONTHbarChartLabels.push(element.month);

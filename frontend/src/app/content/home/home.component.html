@@ -2,23 +2,18 @@
     <br>
     <div>
         <div class="header" *ngIf="!hide">
-            <div *ngIf="role == 'user'">
-                <div class="overlay">
-                    <img src="../../../assets/overlays/clouds.jpg">
-                </div>
-            </div>
             <div>
                 <div class="logo-container">
                     <img src="../../../assets/iloilo-seal.png" class="province-logo" style="margin-right: 20px">
-                    <img class="small" src="../../../assets/ipo-logo.png">
+                    <img style="width: 70px;height: 70px;margin-top: 30px;" class="small" src="../../../assets/ipo-logo.png">
                     <div class="texts">
-                        <P style="font-size: 1.4rem;color:white;font-family: Pacifico;">Republic of the Philippines Province of Iloilo
+                        <P style="font-family: raleway;">Republic of the Philippines
                         </P>
+                        <p style="font-family: raleway;">Province of Iloilo</p>
 
-                        <h2 style=" color:white !important;font-weight: 900;font-family: raleway;">PROVINCIAL POPULATION OFFICE</h2>
+                        <h2 style=" color:var(--contrast) !important;font-weight: 900;font-family: raleway;">PROVINCIAL POPULATION OFFICE</h2>
                     </div>
                 </div>
-
             </div>
         </div>
         <br>
@@ -96,7 +91,53 @@
                         </div>
                     </div>
                 </div>
-                <input type="search" placeholder="Search..." class="hide-on-mobile Item" style="cursor: default;">
+                <div [routerLink]="['/population-data']" class="Item">POPULATION DATA</div>
+                <div class="Item">
+                    DEMOGRAPHIC DATA
+                    <div class="drop-down-container" style="position: relative;">
+                        <div class="drop-down">
+                            <div routerLink="/demographic-data/births" class="drop-down-item">
+                                Births
+                            </div>
+                            <div routerLink="/demographic-data/deaths" class="drop-down-item">
+                                Deaths
+                            </div>
+                            <div routerLink="demographic-data/migrations" class="drop-down-item">
+                                Migrations
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="Item">
+                    RPFP DATA
+                    <div class="drop-down-container" style="position: relative;">
+                        <div class="drop-down">
+                            <div routerLink="/PMOC" class="drop-down-item">
+                                PRE-MARRIAGE ORIENTATION AND COUNSELLING
+                            </div>
+                            <div routerLink="/MPC-FDC" class="drop-down-item">
+                                MULTI-PURPOSE CONSELLING AND FAMILY DEVELOPMENT CENTER
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="Item">
+                    RPFP DATA
+                    <div class="drop-down-container" style="position: relative;">
+                        <div class="drop-down">
+                            <div routerLink="/Teen-Centers" class="drop-down-item">
+                                TEEN CENTERS
+                            </div>
+                            <div routerLink="/Issues&Concerns" class="drop-down-item">
+                                ISSUES AND CONCERNS
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div [routerLink]="['/Others']" class="Item">OTHERS</div>
+                <div class=" Item">
+                    <input type="search" placeholder="Search..." class="hide-on-mobile from-control" style="cursor: default;">
+                </div>
             </div>
         </div>
     </div>

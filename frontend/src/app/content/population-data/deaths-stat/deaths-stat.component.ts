@@ -62,9 +62,11 @@ export class DeathsStatComponent implements OnInit {
     responsive: true,
   };
   MONTHbarChartLabels = [];
+  MONTHbarChartData = [{ data: [], label: 'Deaths By Months' }];
+  DEATHRATEbarChartLabels = [];
+  DEATHRATEbarChartData = [{ data: [], label: 'Crude Death Rate' }];
   MONTHbarChartType = 'bar';
   MONTHbarChartLegend = true;
-  MONTHbarChartData = [{ data: [], label: 'Deaths By Months' }];
   crudeDeathRateData = {
     title: 'Crude Death Rate',
     type: 'Death',
@@ -75,10 +77,8 @@ export class DeathsStatComponent implements OnInit {
     scaleShowVerticalLines: false,
     responsive: true,
   };
-  DEATHRATEbarChartLabels = [];
   DEATHRATEbarChartType = 'line';
   DEATHRATEbarChartLegend = true;
-  DEATHRATEbarChartData = [{ data: [], label: 'Crude Death Rate' }];
   years = [];
   getMuncipalities() {
     this.LocationService.getMunicipalities().subscribe((data) => {
@@ -95,7 +95,7 @@ export class DeathsStatComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    for (let i = 2020; i <= 2050; i++) {
+    for (let i = 2015; i <= 2050; i++) {
       this.years.push(i);
     }
     this.getMuncipalities();
@@ -118,6 +118,11 @@ export class DeathsStatComponent implements OnInit {
     this.data['municipality'] = this.getDataParams.municipality;
     this.data['year'] = this.getDataParams.year;
     this.data['gender'] = this.getDataParams.gender;
+    
+  this.MONTHbarChartLabels = [];
+  this.MONTHbarChartData = [{ data: [], label: 'Deaths By Months' }];
+  this.DEATHRATEbarChartLabels = [];
+  this.DEATHRATEbarChartData = [{ data: [], label: 'Crude Death Rate' }];
     this.DeathStatService.postToMOnthController(this.data).subscribe((data) => {
       this.editChartData = false;
       this.MONTHbarChartLabels = [];
@@ -145,6 +150,10 @@ export class DeathsStatComponent implements OnInit {
   }
 
   fetchData() {
+    this.MONTHbarChartLabels = [];
+    this.MONTHbarChartData = [{ data: [], label: 'Deaths By Months' }];
+    this.DEATHRATEbarChartLabels = [];
+    this.DEATHRATEbarChartData = [{ data: [], label: 'Crude Death Rate' }];
     this.DeathStatService.show(
       this.getDataParams.municipality,
       this.getDataParams.barangay,

@@ -57,7 +57,7 @@ class BirthController extends Controller
         ]);
         $birth->record()->save($record);
         $birth->record = $record;
-        broadcast(new RecordSaved($birth))->toOthers();
+        // broadcast(new RecordSaved($birth))->toOthers();
         Log::record('Created new Birth record.');
         return $birth;
     }
