@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
   subscription: Subscription;
 
   dropdown = false;
-  approval = true;
+  approval = false;
 
   navText = '';
 

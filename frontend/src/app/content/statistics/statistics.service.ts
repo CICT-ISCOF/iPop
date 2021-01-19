@@ -33,6 +33,13 @@ export class StatisticsService {
 		return this.http.post(this.statURL, data , {headers:this.getHeaders()})
 	}
 
+	filterData(filter){
+		const url = this.statURL + `?municipality=${filter['municipality']}&barangay=${filter['barangay']}&year=${filter['year']}`
+		return this.http.get(url)
+	}
+
+
+
 	general(){
 		const url = this.baseURL + '/general'
 		return this.http.get<any>(url)

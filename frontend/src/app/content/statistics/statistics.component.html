@@ -1,11 +1,21 @@
 <div class="statistics-component">
-    <button (click)="addData = true" *ngIf="!addData" class="button">Add Data</button>
-    <button (click)="addData = false" *ngIf="addData" class="clickable">Cancel</button>
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-5">
+            <button (click)="addData = true" *ngIf="!addData" class="button rounded"><i class="fa fa-plus"></i></button>
+            <button (click)="addData = false" *ngIf="addData" class="button rounded"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+
     <div class="row">
 
         <div *ngIf="addData" class="front col-md-8">
             <div class="container row">
-                <div class="form-group col-md-4">
+
+                <h2 class="pop2 col-md-12" style="text-transform: uppercase;">Add a Population Profile</h2>
+
+
+                <div class="form-group col-md-4 mt-5">
                     <label for="municipality">
                     <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
                         <span class="sr-only">Loading...</span>
@@ -17,7 +27,7 @@
                     </select>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-4 mt-5">
                     <label for="barangay">
                     <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
                         <span class="sr-only">Loading...</span>
@@ -29,11 +39,11 @@
                     </select>
                 </div>
                 <hr>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-4 mt-5">
                     <label for="year">Year</label>
                     <select [(ngModel)]="data.year" class="form-control " id="year">
                         <option selected disabled>Choose Year</option>
-                        <option>2020</option>
+                        <option *ngFor="let year of years">{{year}}</option>
                     </select>
                 </div>
                 <div class="col-md-4 mb-3">
@@ -93,10 +103,10 @@
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="municipality">Doubling</label>
+                    <label for="municipality">Doubling Time/Year</label>
                     <input [(ngModel)]="data.doubling" type="text" class="form-control" id="municipality" required>
                     <div class="invalid-feedback">
-                        Doubling is required
+                        Doubling Time/Year is required
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
@@ -129,10 +139,10 @@
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="municipality">Child Dependency Ratio</label>
+                    <label for="municipality">Child Age Dependency Ratio</label>
                     <input [(ngModel)]="data.child_dependency_ratio" type="text" class="form-control" id="municipality" required>
                     <div class="invalid-feedback">
-                        Child Dependency Ratio is required
+                        Child Age Dependency Ratio is required
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
@@ -142,19 +152,12 @@
                         Old Age Dependency Ratio is required
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <label for="municipality"> Age Dependency Ratio</label>
-                    <input [(ngModel)]="data.age_dependency_ratio" type="text" class="form-control" id="municipality" required>
-                    <div class="invalid-feedback">
-                        Age Dependency Ratio is required
-                    </div>
-                </div>
-                <div class="col-md-12 mb-3 d-flex align-items-center">
-                    <button class="button" (click)="saveData()">Save</button>
+
+                <div class="col-md-12 mb-3 d-flex align-items-center" style="align-items: center;justify-content: center;">
+                    <button style="min-width: 150px;" class="button" (click)="saveData()">Save</button>
                 </div>
             </div>
         </div>
-
 
         <div *ngIf="!addData" class="front col-md-8">
             <!-- filters  -->
@@ -183,115 +186,282 @@
                     </select>
                 </div>
                 <hr>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="year">Year</label>
-                    <select class="form-control " id="year">
-                    <option selected disabled>Choose Year</option>
-                    <option>2020</option>
+                    <select [(ngModel)]="filter.year" class="form-control " id="year">
+                        <option selected disabled>Choose Year</option>
+                        <option *ngFor="let year of years">{{year}}</option>
                     </select>
+                </div>
+                <div class="col-md-1 mt-3">
+                    <button (click)="setFilter()" class="button rounded">
+                        <i class="fa fa-search"></i>
+                    </button>
                 </div>
 
             </div>
 
-            <!-- map  -->
+            <!-- maps  -->
             <!-- <br>
-        <div style="margin-left: -25px;">
-            <app-dynamic-mapping></app-dynamic-mapping>
-        </div>
-        <br><br><br> -->
+            <div style="margin-left: -25px;">
+                <app-dynamic-mapping></app-dynamic-mapping>
+            </div>
+            <br><br><br> -->
 
             <!-- population profile  -->
 
 
             <div class="container row" style="position: relative;">
                 <h2 class="pop">POPULATION PROFILE</h2>
-                br
-                <table class="table mt-4">
+
+                <table class="table ">
                     <tr>
                         <th>Coverage</th>
-                        <td></td>
+                        <td *ngIf="!coverage">{{filteredData.coverage || 'N/A'}}</td>
+                        <td *ngIf="coverage"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.coverage"></td>
+                        <div>
+                            <span *ngIf="!coverage" (click)="coverage == true ? coverage = false : coverage = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="coverage" (click)="coverage == true ? coverage = false : coverage = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="coverage" (click)="updateFiltered(coverage == true ? coverage = false : coverage = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Total No. of Barangays</th>
-                        <td>364</td>
+                        <td>{{filteredData.barangays || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!barangaysno" (click)="barangaysno == true ? barangaysno = false : barangaysno = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="barangaysno" (click)="barangaysno == true ? barangaysno = false : barangaysno = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span *ngIf="barangaysno" style="margin-top: 20px;" (click)="updateFiltered(barangaysno == true ? barangaysno = false : barangaysno = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Total Land Area</th>
-                        <td>300,000 km²</td>
+                        <td>{{filteredData.land_area || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!land_area" (click)="land_area == true ? land_area = false : land_area = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="land_area" (click)="land_area == true ? land_area = false : land_area = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="land_area" (click)="updateFiltered(land_area == true ? land_area = false : land_area = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Total Household Population</th>
-                        <td>100</td>
+                        <td>{{filteredData.household_population || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!household_population" (click)="household_population == true ? household_population = false : household_population = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="household_population" (click)="household_population == true ? household_population = false : household_population = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="household_population" (click)="updateFiltered(household_population == true ? household_population = false : household_population = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Male</th>
-                        <td>100</td>
+                        <td>{{filteredData.males || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!males" (click)="males == true ? males = false : males = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="males" (click)="males == true ? males = false : males = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="males" (click)="updateFiltered(males == true ? males = false : males = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Female</th>
-                        <td>100</td>
+                        <td>{{filteredData.females || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!females" (click)="females == true ? females = false : females = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="females" (click)="females == true ? females = false : females = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="females" (click)="updateFiltered(females == true ? females = false : females = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Sex Ratio</th>
-                        <td>2:3</td>
+                        <td>{{filteredData.sax_ration || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!sax_ration" (click)="sax_ration == true ? sax_ration = false : sax_ration = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="sax_ration" (click)="sax_ration == true ? sax_ration = false : sax_ration = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="sax_ration" (click)="updateFiltered(sax_ration == true ? sax_ration = false : sax_ration = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Median Age</th>
-                        <td>65</td>
+                        <td>{{filteredData.median_age || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!median_age" (click)="median_age == true ? median_age = false : median_age = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="median_age" (click)="median_age == true ? median_age = false : median_age = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="median_age" (click)="updateFiltered(median_age == true ? median_age = false : median_age = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Doubling Time/Year</th>
-                        <td>65</td>
+                        <td>{{filteredData.doubling || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!doubling" (click)="doubling == true ? doubling = false : doubling = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="doubling" (click)="doubling == true ? doubling = false : doubling = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="doubling" (click)="updateFiltered(doubling == true ? doubling = false : doubling = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Population Growth Rate</th>
-                        <td>65</td>
+                        <td>{{filteredData.growth_rate || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!growth_rate" (click)="growth_rate == true ? growth_rate = false : growth_rate = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="growth_rate" (click)="growth_rate == true ? growth_rate = false : growth_rate = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="growth_rate" (click)="updateFiltered(growth_rate == true ? growth_rate = false : growth_rate = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>No. of Households</th>
-                        <td>65</td>
+                        <td>{{filteredData.households || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!households" (click)="households == true ? households = false : households = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="households" (click)="households == true ? households = false : households = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="households" (click)="updateFiltered(households == true ? households = false : households = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Average Household Size</th>
-                        <td>65</td>
+                        <td>{{filteredData.average_household_size || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!average_household_size" (click)="average_household_size == true ? average_household_size = false : average_household_size = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="average_household_size" (click)="average_household_size == true ? average_household_size = false : average_household_size = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="average_household_size" (click)="updateFiltered(average_household_size == true ? average_household_size = false : average_household_size = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Population Density</th>
-                        <td>358 people per square kilometer</td>
+                        <td>{{filteredData.density || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!density" (click)="density == true ? density = false : density = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="density" (click)="density == true ? density = false : density = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="density" (click)="updateFiltered(density == true ? density = false : density = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Age Dependency Ratio</th>
-                        <td>55</td>
+                        <td>{{filteredData.age_dependency_ratio || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!age_dependency_ratio" (click)="age_dependency_ratio == true ? age_dependency_ratio = false : age_dependency_ratio = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="age_dependency_ratio" (click)="age_dependency_ratio == true ? age_dependency_ratio = false : density = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="age_dependency_ratio" (click)="updateFiltered(age_dependency_ratio == true ? age_dependency_ratio = false : age_dependency_ratio = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Child Dependency Ratio</th>
-                        <td>55</td>
+                        <td>{{filteredData.child_dependency_ratio || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!child_dependency_ratio" (click)="child_dependency_ratio == true ? child_dependency_ratio = false : child_dependency_ratio = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="child_dependency_ratio" (click)="child_dependency_ratio == true ? child_dependency_ratio = false : child_dependency_ratio = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="child_dependency_ratio" (click)="updateFiltered(child_dependency_ratio == true ? child_dependency_ratio = false : child_dependency_ratio = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                     <tr>
                         <th>Old-Age Dependency Ratio</th>
-                        <td>55</td>
+                        <td>{{filteredData.old_age_dependency_ratio || 'N/A'}}</td>
+                        <div>
+                            <span *ngIf="!old_age_dependency_ratio" (click)="old_age_dependency_ratio == true ? old_age_dependency_ratio = false : old_age_dependency_ratio = true">
+                                <i class="fa fa-pen"></i>
+                            </span>
+                            <span *ngIf="old_age_dependency_ratio" (click)="old_age_dependency_ratio == true ? old_age_dependency_ratio = false : old_age_dependency_ratio = true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span style="margin-top: 20px;" *ngIf="old_age_dependency_ratio" (click)="updateFiltered(old_age_dependency_ratio == true ? old_age_dependency_ratio = false : old_age_dependency_ratio = true)">
+                                <i class="fa fa-check text-success"></i>
+                            </span>
+                        </div>
                     </tr>
                 </table>
             </div>
 
-
             <!-- age distribution  -->
             <div class="row container chart-container">
-                <h4 class="title">Population Pyramind <br>
-                    <span class="chart-details1"><span style="color:var(--colorPrimary) !important"> Male </span>
-                    <span style="margin-left: 20px;">
-                        {{sexs.male}}
-                    </span>
-                    <span style="margin-left: 20px;font-size: 11px;text-align: right;" [class.low]="sexs.male / population.total * 100 > 50" [class.high]="sexs.male / population.total * 100 < 50">
-                        {{ sexs.male / population.total * 100 | number:'1.0-0' }}%
-                    </span>
-                    <br>
-                    <span class="chart-details" style="color:var(--colorPrimary) !important">Female</span>
-                    <span style="margin-left: 20px;">
-                        {{sexs.female}}
-                    </span>
-                    <span style="margin-left: 20px;font-size: 11px;" [class.low]="sexs.female / population.total * 100 > 50" [class.high]="sexs.female / population.total * 100 < 50">{{ sexs.female / population.total * 100 | number:'1.0-0' }}%</span> </span>
-                </h4>
+                <h2 class="pop2 col-md-12">POPULATION PYRAMID</h2>
                 <div id="male-and-female" class="w-100">
                     <div class="spinner-border text-warning fast" role="status">
                         <span class="sr-only">Loading...</span>
@@ -303,7 +473,7 @@
             <!-- top populated  -->
             <div class="row container">
                 <div class="form-group col-md-12">
-                    <h3 class="title">Top Populated Municipalities</h3>
+                    <h2 class="pop">TOP POPULATED MUNCIPALITIES</h2>
                     <p style="color:gray">All over Iloilo</p>
                     <div *ngIf="population.top.length == 0 " class="flex-container">
                         <div class="spinner-border text-light fast" role="status">
@@ -336,19 +506,12 @@
             </div>
         </div>
 
-
         <div class="side col-md-4">
             <h3>Provincial Officials</h3>
             <hr>
             <app-provincial-officials></app-provincial-officials>
             <br>
-
             <app-sb-members></app-sb-members>
         </div>
-
-
-
-
     </div>
-    <br> <br> <br>
 </div>

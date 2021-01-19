@@ -99,23 +99,13 @@ hr {
     width: 100%;
 }
 
-.active svg,
-i {
-    fill: white;
-    color: white;
-}
-
 .active * {
     color: white !important;
 }
 
-.active button {
-    padding-left: 5px;
-}
-
 .active {
+    background: rgba($color: black, $alpha: .4);
     color: white;
-    border-left: 7px solid transparent;
 }
 
 button {
@@ -133,8 +123,8 @@ button {
 
 svg,
 i {
-    color: white;
-    fill: white;
+    fill: rgba($color: white, $alpha: .6) !important;
+    color: rgba($color: white, $alpha: .6) !important;
     font-size: 20px !important;
 }
 

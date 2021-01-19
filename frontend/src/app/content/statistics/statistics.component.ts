@@ -42,6 +42,7 @@ export class StatisticsComponent implements OnInit {
 		(data) => {
 			this.addData = false
 			this.UtilityService.setAlert('Population Profile Added Successfully for ' + this.data.municipality,'success')
+			this.ngOnInit()
 		},
 		(error) => {
 			for (let message in error.error.errors) {
@@ -51,8 +52,28 @@ export class StatisticsComponent implements OnInit {
 		})
 	}
 
+	filteredData = {}
+	setFilter(){
+		this.StatisticsService.filterData(this.filter).subscribe(
+			(data) => {	
+				if(data[0] == null || undefined){
+					this.filteredData = {}
+					return
+				}		
+				this.filteredData = data[0]
+			}
+		)
+	}
+
+	updateFiltered(callback){
+		callback()
+	}
 
 
+
+
+
+	years = []
 
 	constructor(	
 		private StatisticsService : StatisticsService,
@@ -81,6 +102,9 @@ export class StatisticsComponent implements OnInit {
 	}
 
 	ngOnInit(): void {	
+		for(let year = 2015; year < 2100; year++){
+			this.years.push(year)
+		}
 		this.getPopulation()
 		this.getTotals()		
 		this.getMunicipality()		
