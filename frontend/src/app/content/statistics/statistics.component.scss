@@ -8,6 +8,18 @@
     padding-left: 30px;
 }
 
+.pop {
+    text-align: center;
+    background: var(--contrast);
+    color: white;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    font-weight: 900;
+}
+
 .container,
 .row {
     width: 100%;
