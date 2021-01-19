@@ -1,11 +1,11 @@
 <div class="birth-stat-component">
     <div class="front">
-        <h3 class="tl-center">PROVINCE OF ILOILO</h3>
-        <h3 class="tl-center">(DEATHS)</h3>
+        <h3 class="tl-center pop2">PROVINCE OF ILOILO (DEATHS)</h3>
+
         <button *ngIf="hasData" (click)="hasData = false; hasSelectedData = false" class="button" style="margin-bottom: 20px;">Add Data</button>
         <button *ngIf="!hasData" (click)="hasData = true" class="clickable" style="margin-bottom: 20px;">Cancel</button>
-        <div *ngIf="!hasData" class="!hasData">
-            <h2>Add Death Statistics Data</h2>
+        <div *ngIf="!hasData" class="!hasData container">
+            <h2 class="pop2">Add Death Statistics Data</h2>
             <hr>
             <div class="filters">
                 <div class="row">
@@ -259,13 +259,13 @@
         </div>
     </div>
     <div class="side">
-        <h3>Provincial Officials</h3>
-        <hr>
+        <h3 class="pop2">Provincial Officials</h3>
+
         <app-provincial-officials></app-provincial-officials>
         <br> <br>
         <app-sb-members></app-sb-members>
         <br><br><br>
-        <h3>TECHNICAL NOTES</h3>
+        <h3 class="pop2">TECHNICAL NOTES</h3>
         <hr>
         <p><span class="fw-bold">Mortality</span> - refers to death within a population</p>
 

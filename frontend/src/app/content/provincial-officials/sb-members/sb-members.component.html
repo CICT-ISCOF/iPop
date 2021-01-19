@@ -1,4 +1,4 @@
-<h3>SB MEMBERS</h3>
+<h3 class="pop2">SB MEMBERS</h3>
 <hr>
 <div class="sb-member" *ngFor="let member of sbMembers;let i = index">
     <h5 [class.selected]="activeSB[i]">
@@ -41,6 +41,6 @@
     </div>
 </div>
 <div (click)="saveMember()" *ngIf="addMember" class="button center">Save</div>
-<div (click)="addMember = true" *ngIf="!addMember" class="button center">Add SB Member</div>
+<div (click)="addMember = true" *ngIf="!addMember" class="button center" style="width: 150px !important;">Add SB Member</div>
 <br *ngIf="addMember">
 <div (click)="addMember = false" *ngIf="addMember" class="clickable center">Cancel</div>

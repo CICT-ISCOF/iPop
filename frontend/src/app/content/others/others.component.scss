@@ -1,5 +1,26 @@
 .wrapper {
     padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    * {
+        text-align: center;
+    }
+    a {
+        color: var(--contrast);
+        text-align: center !important;
+        width: 100%;
+        text-decoration: underline;
+    }
+    a:hover {
+        color: #2D5C80 !important
+    }
+    h5 {
+        background: var(--contrast);
+        color: white;
+        padding: 5px 20px;
+    }
 }
 
 h2 {
