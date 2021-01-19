@@ -113,8 +113,10 @@ class ProfileController extends Controller
      * @param  \App\Models\Statistics\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(Request $request, $id)
     {
+        $profile = Profile::findOrFail($id);
+
         $data = $request->validate([
             'municipality' => ['nullable', Rule::exists('municipalities', 'name')],
             'barangay' => ['nullable', Rule::exists('barangays', 'name')],
@@ -152,8 +154,9 @@ class ProfileController extends Controller
      * @param  \App\Models\Statistics\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Profile $profile)
+    public function destroy($id)
     {
+        $profile = Profile::findOrFail($id);
         $profile->makeDeleteRequest();
 
         Log::record("Deleted a Statistics Profile.");
