@@ -66,25 +66,19 @@ export class StatisticsComponent implements OnInit {
 	}
 
 	updateFiltered(callback){
-		for(let key in this.filter){
-			if(
-				this.filter[key] == "Choose Municipality" || 
-				this.filter[key] == "Choose Barangay" ||
-				this.filter[key] == "Choose Year"
-			){
-				return Swal.fire(
-					`Can't Update Unfiltered Data`,
-					"Municipality, Barangay or Year should not be empty",
-					'error'
-				)
-			}
-		}
+		
 		if(this.isEmpty(this.filteredData)){
 			return Swal.fire(
 				`Trying to Updated Empty Data`,
-				"Utililize filters to choose desired population data to update",
+				"Utililize filters to choose your desired unempty Population Data you want to update",
 				'error'
-			)
+			).then(()=>{
+				Swal.fire(
+					`Remember`,
+					"You could always add Population Data by clicking the plus button at the top",
+					'info'
+				)
+			})
 		}
 		this.StatisticsService.updateData(this.filteredData).subscribe((data)=>{
 			this.UtilityService.setAlert('Data has been updated','info')
