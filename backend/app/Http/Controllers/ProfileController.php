@@ -73,12 +73,21 @@ class ProfileController extends Controller
             'old_age_dependency_ratio' => ['required', 'string', 'max:255'],
         ]);
 
-        $profile = Profile::create($data);
-        $profile->approval()->create([
-            'requester_id' => $request->user()->id,
-            'message' => $request->user()->makeMessage('wants to add a statistic profile.')
-        ]);
+        $profile = Profile::where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->where('year', $data['year'])
+            ->first();
+        if (!$profile) {
+            $profile = Profile::create($data);
+            $profile->approval()->create([
+                'requester_id' => $request->user()->id,
+                'message' => $request->user()->makeMessage('wants to add a statistic profile.')
+            ]);
+        } else {
+            $profile->update($data);
+        }
         $profile->setApproved($request->user()->hasRole(Role::ADMIN));
+
 
         Log::record("Created a Statistics Profile.");
 

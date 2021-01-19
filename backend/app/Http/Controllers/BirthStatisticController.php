@@ -70,7 +70,10 @@ class BirthStatisticController extends Controller
             'general_fertility_rate' => ['required', 'string', 'max:255'],
         ]);
 
-        $birthStatistic = BirthStatistic::first();
+        $birthStatistic = BirthStatistic::where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->where('year', $data['year'])
+            ->first();
 
         if ($birthStatistic) {
             $birthStatistic->update($data);

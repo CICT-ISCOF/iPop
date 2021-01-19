@@ -70,7 +70,10 @@ class MigrationStatisticController extends Controller
             'net_migrations' => ['nullable', 'numeric'],
         ]);
 
-        $migrationStatistic = MigrationStatistic::first();
+        $migrationStatistic = MigrationStatistic::where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->where('year', $data['year'])
+            ->first();
 
         if ($migrationStatistic) {
             $migrationStatistic->update($data);
