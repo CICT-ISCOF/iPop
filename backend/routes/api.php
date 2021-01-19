@@ -34,6 +34,7 @@ use App\Http\Controllers\MonthChartController;
 use App\Http\Controllers\MPCFDCController;
 use App\Http\Controllers\MPCFDCTeamController;
 use App\Http\Controllers\MTCMMembersController;
+use App\Http\Controllers\MunicipalityADController;
 use App\Http\Controllers\MunicipalOfficialController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
@@ -202,6 +203,8 @@ Route::middleware('throttle:60,1')->group(function () {
         'pmc-amis' => PMCAMISController::class,
         'pmc-kfp' => PMCKFPController::class,
         'pmc-ccs' => PMCCSController::class,
+        // Municipality Age Distribution and Age Dependency
+        'm-ad' => MunicipalityADController::class,
     ]);
 
     // Delete 1 award media
