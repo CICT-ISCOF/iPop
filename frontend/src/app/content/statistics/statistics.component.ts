@@ -7,27 +7,27 @@ import {trigger, transition, style, animate, query, stagger, keyframes} from '@a
 import { Chart } from 'chart.js';
 import { ChartType } from 'chart.js';
 import { SingleDataSet, Label, Color } from 'ng2-charts';
-
+import Swal from 'sweetalert2'
 
 @Component({
 	selector: 'app-statistics',
 	templateUrl: './statistics.component.html',
 	styleUrls: ['./statistics.component.scss','statistics.component.responsive.scss'],
-	animations: [
-		trigger('listAnimation', [
-			transition('* => *',[
-				query(':enter', style({opacity:0}),{optional:true}),
+	// animations: [
+	// 	trigger('listAnimation', [
+	// 		transition('* => *',[
+	// 			query(':enter', style({opacity:0}),{optional:true}),
 
-				query(':enter', stagger('300ms',[
-					animate('.6s ease-in', keyframes([
-						style({opacity:0,transform: 'translateY(-75%)', offset:0}),
-						style({opacity:.5,transform: 'translateY(30px)', offset:0.3}),
-						style({opacity:1,transform: 'translateY(0)', offset:1})
-					]))
-				]))
-			])
-		])
-	]
+	// 			query(':enter', stagger('300ms',[
+	// 				animate('.6s ease-in', keyframes([
+	// 					style({opacity:0,transform: 'translateY(-75%)', offset:0}),
+	// 					style({opacity:.5,transform: 'translateY(30px)', offset:0.3}),
+	// 					style({opacity:1,transform: 'translateY(0)', offset:1})
+	// 				]))
+	// 			]))
+	// 		])
+	// 	])
+	// ]
 })
 export class StatisticsComponent implements OnInit {
 
@@ -66,9 +66,40 @@ export class StatisticsComponent implements OnInit {
 	}
 
 	updateFiltered(callback){
-		callback()
+		for(let key in this.filter){
+			if(
+				this.filter[key] == "Choose Municipality" || 
+				this.filter[key] == "Choose Barangay" ||
+				this.filter[key] == "Choose Year"
+			){
+				return Swal.fire(
+					`Can't Update Unfiltered Data`,
+					"Municipality, Barangay or Year should not be empty",
+					'error'
+				)
+			}
+		}
+		if(this.isEmpty(this.filteredData)){
+			return Swal.fire(
+				`Trying to Updated Empty Data`,
+				"Utililize filters to choose desired population data to update",
+				'error'
+			)
+		}
+		this.StatisticsService.updateData(this.filteredData).subscribe((data)=>{
+			this.UtilityService.setAlert('Data has been updated','info')
+			callback()
+		})
+		
 	}
 
+	isEmpty(JSONObject) {
+		for(var prop in JSONObject) {
+			if(JSONObject.hasOwnProperty(prop))
+				return false;
+		}
+		return true;
+	}
 
 
 

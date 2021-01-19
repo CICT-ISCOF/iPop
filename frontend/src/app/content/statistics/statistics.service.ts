@@ -38,6 +38,10 @@ export class StatisticsService {
 		return this.http.get(url)
 	}
 
+	updateData(data){
+		const url = this.statURL + `/${data['id']}`
+		return this.http.patch(url,data, {headers:this.getHeaders()})
+	}
 
 
 	general(){

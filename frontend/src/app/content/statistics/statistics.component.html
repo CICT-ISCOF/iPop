@@ -194,10 +194,10 @@
                     </select>
                 </div>
                 <div class="col-md-2 mt-3 d-flex">
-                    <button (click)="setFilter()" class="button rounded">
+                    <button (click)="setFilter()" class="button rounded" style="height: 40px;">
                         <i class="fa fa-search"></i>
                     </button>
-                    <button (click)="setFilter()" class="button rounded">
+                    <button (click)="setFilter()" class="button rounded" style="height: 40px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-wide" viewBox="0 0 16 16">
                             <path d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434L8.932.727zM8 12.997a4.998 4.998 0 1 1 0-9.995 4.998 4.998 0 0 1 0 9.996z"/>
                           </svg>
@@ -238,7 +238,8 @@
                     </tr>
                     <tr>
                         <th>Total No. of Barangays</th>
-                        <td>{{filteredData.barangays || 'N/A'}}</td>
+                        <td *ngIf="!barangaysno">{{filteredData.barangays || 'N/A'}}</td>
+                        <td *ngIf="barangaysno"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.barangays"></td>
                         <div>
                             <span *ngIf="!barangaysno" (click)="barangaysno == true ? barangaysno = false : barangaysno = true">
                                 <i class="fa fa-pen"></i>
@@ -253,7 +254,8 @@
                     </tr>
                     <tr>
                         <th>Total Land Area</th>
-                        <td>{{filteredData.land_area || 'N/A'}}</td>
+                        <td *ngIf="!land_area">{{filteredData.land_area || 'N/A'}}</td>
+                        <td *ngIf="land_area"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.land_area"></td>
                         <div>
                             <span *ngIf="!land_area" (click)="land_area == true ? land_area = false : land_area = true">
                                 <i class="fa fa-pen"></i>
@@ -268,7 +270,8 @@
                     </tr>
                     <tr>
                         <th>Total Household Population</th>
-                        <td>{{filteredData.household_population || 'N/A'}}</td>
+                        <td *ngIf="!household_population">{{filteredData.household_population || 'N/A'}}</td>
+                        <td *ngIf="household_population"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.household_population"></td>
                         <div>
                             <span *ngIf="!household_population" (click)="household_population == true ? household_population = false : household_population = true">
                                 <i class="fa fa-pen"></i>
@@ -283,7 +286,8 @@
                     </tr>
                     <tr>
                         <th>Male</th>
-                        <td>{{filteredData.males || 'N/A'}}</td>
+                        <td *ngIf="!males">{{filteredData.males || 'N/A'}}</td>
+                        <td *ngIf="males"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.males"></td>
                         <div>
                             <span *ngIf="!males" (click)="males == true ? males = false : males = true">
                                 <i class="fa fa-pen"></i>
@@ -298,7 +302,8 @@
                     </tr>
                     <tr>
                         <th>Female</th>
-                        <td>{{filteredData.females || 'N/A'}}</td>
+                        <td *ngIf="!females">{{filteredData.females || 'N/A'}}</td>
+                        <td *ngIf="females"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.females"></td>
                         <div>
                             <span *ngIf="!females" (click)="females == true ? females = false : females = true">
                                 <i class="fa fa-pen"></i>
@@ -313,7 +318,8 @@
                     </tr>
                     <tr>
                         <th>Sex Ratio</th>
-                        <td>{{filteredData.sax_ration || 'N/A'}}</td>
+                        <td *ngIf="!sax_ration">{{filteredData.sax_ration || 'N/A'}}</td>
+                        <td *ngIf="sax_ration"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.sax_ration"></td>
                         <div>
                             <span *ngIf="!sax_ration" (click)="sax_ration == true ? sax_ration = false : sax_ration = true">
                                 <i class="fa fa-pen"></i>
@@ -328,7 +334,8 @@
                     </tr>
                     <tr>
                         <th>Median Age</th>
-                        <td>{{filteredData.median_age || 'N/A'}}</td>
+                        <td *ngIf="!median_age">{{filteredData.median_age || 'N/A'}}</td>
+                        <td *ngIf="median_age"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.median_age"></td>
                         <div>
                             <span *ngIf="!median_age" (click)="median_age == true ? median_age = false : median_age = true">
                                 <i class="fa fa-pen"></i>
@@ -343,7 +350,8 @@
                     </tr>
                     <tr>
                         <th>Doubling Time/Year</th>
-                        <td>{{filteredData.doubling || 'N/A'}}</td>
+                        <td *ngIf="!doubling">{{filteredData.doubling || 'N/A'}}</td>
+                        <td *ngIf="doubling"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.doubling"></td>
                         <div>
                             <span *ngIf="!doubling" (click)="doubling == true ? doubling = false : doubling = true">
                                 <i class="fa fa-pen"></i>
@@ -358,7 +366,8 @@
                     </tr>
                     <tr>
                         <th>Population Growth Rate</th>
-                        <td>{{filteredData.growth_rate || 'N/A'}}</td>
+                        <td *ngIf="!growth_rate">{{filteredData.growth_rate || 'N/A'}}</td>
+                        <td *ngIf="growth_rate"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.growth_rate"></td>
                         <div>
                             <span *ngIf="!growth_rate" (click)="growth_rate == true ? growth_rate = false : growth_rate = true">
                                 <i class="fa fa-pen"></i>
@@ -373,7 +382,8 @@
                     </tr>
                     <tr>
                         <th>No. of Households</th>
-                        <td>{{filteredData.households || 'N/A'}}</td>
+                        <td *ngIf="!households">{{filteredData.households || 'N/A'}}</td>
+                        <td *ngIf="households"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.households"></td>
                         <div>
                             <span *ngIf="!households" (click)="households == true ? households = false : households = true">
                                 <i class="fa fa-pen"></i>
@@ -388,7 +398,8 @@
                     </tr>
                     <tr>
                         <th>Average Household Size</th>
-                        <td>{{filteredData.average_household_size || 'N/A'}}</td>
+                        <td *ngIf="!average_household_size">{{filteredData.average_household_size || 'N/A'}}</td>
+                        <td *ngIf="average_household_size"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.average_household_size"></td>
                         <div>
                             <span *ngIf="!average_household_size" (click)="average_household_size == true ? average_household_size = false : average_household_size = true">
                                 <i class="fa fa-pen"></i>
@@ -403,7 +414,8 @@
                     </tr>
                     <tr>
                         <th>Population Density</th>
-                        <td>{{filteredData.density || 'N/A'}}</td>
+                        <td *ngIf="!density">{{filteredData.density || 'N/A'}}</td>
+                        <td *ngIf="density"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.density"></td>
                         <div>
                             <span *ngIf="!density" (click)="density == true ? density = false : density = true">
                                 <i class="fa fa-pen"></i>
@@ -418,7 +430,8 @@
                     </tr>
                     <tr>
                         <th>Age Dependency Ratio</th>
-                        <td>{{filteredData.age_dependency_ratio || 'N/A'}}</td>
+                        <td *ngIf="!age_dependency_ratio">{{filteredData.age_dependency_ratio || 'N/A'}}</td>
+                        <td *ngIf="age_dependency_ratio"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.age_dependency_ratio"></td>
                         <div>
                             <span *ngIf="!age_dependency_ratio" (click)="age_dependency_ratio == true ? age_dependency_ratio = false : age_dependency_ratio = true">
                                 <i class="fa fa-pen"></i>
@@ -433,7 +446,8 @@
                     </tr>
                     <tr>
                         <th>Child Dependency Ratio</th>
-                        <td>{{filteredData.child_dependency_ratio || 'N/A'}}</td>
+                        <td *ngIf="!child_dependency_ratio">{{filteredData.child_dependency_ratio || 'N/A'}}</td>
+                        <td *ngIf="child_dependency_ratio"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.child_dependency_ratio"></td>
                         <div>
                             <span *ngIf="!child_dependency_ratio" (click)="child_dependency_ratio == true ? child_dependency_ratio = false : child_dependency_ratio = true">
                                 <i class="fa fa-pen"></i>
@@ -448,7 +462,8 @@
                     </tr>
                     <tr>
                         <th>Old-Age Dependency Ratio</th>
-                        <td>{{filteredData.old_age_dependency_ratio || 'N/A'}}</td>
+                        <td *ngIf="!old_age_dependency_ratio">{{filteredData.old_age_dependency_ratio || 'N/A'}}</td>
+                        <td *ngIf="old_age_dependency_ratio"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.old_age_dependency_ratio"></td>
                         <div>
                             <span *ngIf="!old_age_dependency_ratio" (click)="old_age_dependency_ratio == true ? old_age_dependency_ratio = false : old_age_dependency_ratio = true">
                                 <i class="fa fa-pen"></i>
