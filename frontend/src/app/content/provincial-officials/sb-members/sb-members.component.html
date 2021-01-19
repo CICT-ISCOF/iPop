@@ -23,9 +23,9 @@
                         <label for="name">HON</label>
                         <input [(ngModel)]="member.name" type="text" id="name" class="form-control">
                         <br>
-                        <div (click)="saveSBMemberChanges(member.id,member)" class="button">Save Changes</div>
+                        <div (click)="saveSBMemberChanges(member.id,member)" class="button center">Save Changes</div>
                         <br>
-                        <div (click)="editMember(i)" class="clickable">Cancel Editing</div>
+                        <div (click)="editMember(i)" class="clickable center">Cancel Editing</div>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
         </div>
     </div>
 </div>
-<div (click)="saveMember()" *ngIf="addMember" class="button">Save</div>
-<div (click)="addMember = true" *ngIf="!addMember" class="button">Add SB Member</div>
+<div (click)="saveMember()" *ngIf="addMember" class="button center">Save</div>
+<div (click)="addMember = true" *ngIf="!addMember" class="button center">Add SB Member</div>
 <br *ngIf="addMember">
-<div (click)="addMember = false" *ngIf="addMember" class="clickable">Cancel</div>
+<div (click)="addMember = false" *ngIf="addMember" class="clickable center">Cancel</div>

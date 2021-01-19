@@ -12,9 +12,9 @@
                     <label for="name">New Position</label>
                     <input [(ngModel)]="provincialOfficial.position" type="text" id="name" class="form-control">
                 </div>
-                <div (click)="saveOfficialChanges(provincialOfficial.id,provincialOfficial)" class="button">Save Changes</div>
+                <div (click)="saveOfficialChanges(provincialOfficial.id,provincialOfficial)" class="button center">Save Changes</div>
                 <br>
-                <div (click)="editOfficial(provincialOfficial.id)" class="clickable">Cancel Editing</div>
+                <div (click)="editOfficial(provincialOfficial.id)" class="clickable center">Cancel Editing</div>
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
         </div>
     </div>
 </div>
-<div (click)="saveOfficial()" *ngIf="addOfficial" class="button">Save</div>
-<div (click)="addOfficial = true" *ngIf="!addOfficial" class="button">Add Official</div>
+<div (click)="saveOfficial()" *ngIf="addOfficial" class="button center">Save</div>
+<div (click)="addOfficial = true" *ngIf="!addOfficial" class="button center">Add Official</div>
 <br>
-<div (click)="addOfficial = false" *ngIf="addOfficial" class="clickable">Cancel</div>
+<div (click)="addOfficial = false" *ngIf="addOfficial" class="clickable center">Cancel</div>
