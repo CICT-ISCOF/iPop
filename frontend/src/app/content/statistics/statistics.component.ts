@@ -1,3 +1,4 @@
+import { UtilityService } from './../../utility.service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { StatisticsService } from  './statistics.service'
 import { Console } from 'console';
@@ -29,16 +30,36 @@ import { SingleDataSet, Label, Color } from 'ng2-charts';
 	]
 })
 export class StatisticsComponent implements OnInit {
-	// @ViewChild('marriedChart') marriedChart: ElementRef;
-	// context:CanvasRenderingContext2D;
+
+	// --------- new ------------
+	
+	addData = false
+
+	data:any = {}
+
+	saveData(){
+		this.StatisticsService.addPopulationProfileData(this.data).subscribe(
+		(data) => {
+			this.addData = false
+			this.UtilityService.setAlert('Population Profile Added Successfully for ' + this.data.municipality,'success')
+		},
+		(error) => {
+			for (let message in error.error.errors) {
+				this.UtilityService.setAlert(error.error.errors[message], 'error');
+			}
+			this.isLoading = false;
+		})
+	}
+
+
 
 
 	constructor(	
 		private StatisticsService : StatisticsService,
-		private LocationService : LocationService
+		private LocationService : LocationService,
+		private UtilityService : UtilityService
 	) { }
 
-		
 	// -------------- formaters ----------------
 
 	formatChartBackground(){
@@ -48,8 +69,6 @@ export class StatisticsComponent implements OnInit {
 	formatChatColor(){
 		return this.theme == 'dark' ?   'white' : 'black'
 	}
-
-	
 
 	theme = localStorage.getItem('data-theme')
 	isLoading = false
@@ -69,31 +88,6 @@ export class StatisticsComponent implements OnInit {
 		this.getMonths()		
 	}
 
-	// createMarriedChart(){		
-	// 	const ctx = (<HTMLCanvasElement>this.marriedChart.nativeElement).getContext('2d');
-	// 	const gradientStroke = ctx.createLinearGradient(500, 0, 100, 0)
-	// 	const purple_orange_gradient = ctx.createLinearGradient(0, 0, 0, 600)
-	// 	purple_orange_gradient.addColorStop(1, 'rgba(189, 29, 79, 0.1)')
-	// 	purple_orange_gradient.addColorStop(0, 'rgba(189, 29, 79, 1)')
-
-	// 	const bar_chart = new Chart(ctx, {
-	// 		type: "line",
-	// 		data: {labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-	// 			datasets: [{
-	// 				label: "Marriages",
-	// 				data:  Object.values(this.charts.married),
-	// 				backgroundColor: purple_orange_gradient,
-	// 				hoverBackgroundColor: purple_orange_gradient,
-	// 				hoverBorderWidth: 2,
-	// 				hoverBorderColor: "purple",
-	// 				borderWidth: 5,
-	// 				borderColor: "#F70099"
-	// 			}]
-	// 		},
-	// 	})
-	// }
-
-
 	municipalities = []
 	municipalityIsLoading = false
 	getMuncipalities(){
@@ -106,57 +100,22 @@ export class StatisticsComponent implements OnInit {
 
 	barangays = []
 	barangayIsLoading
-	filteredCensusData:any = {		
-		barangays:'',
-		zones:[],
-		genders:{
-			birth:{
-				male:'',
-				female:''
-			},
-			cpdb:{
-				male:'',
-				female:''
-			},
-			death:{
-				male:'',
-				female:''
-			},
-			inmigration:{
-				male:'',
-				female:''
-			},
-			household:{
-				male:'',
-				female:''
-			},
-		},
-		tops:{
-			barangays:[]
-		},
-		hasResults:false
-	}
+	
 	getBarangays(event){	
-		this.filteredCensusData.hasResults = false
 		this.barangayIsLoading = true
 		this.filter.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.data['municipality'] = event.target.options[event.target.options.selectedIndex].text;	
 		this.filter.barangay = ''
 		this.LocationService.getBarangays(event.target.value).subscribe(data => {
 			this.barangays = data	
 			this.barangayIsLoading = false
 		})
-
-		this.StatisticsService.getMunicipality(this.filter.municipality).subscribe(data => {
-			console.log('filters', data)
-			this.filteredCensusData = data
-			this.filteredCensusData.hasResults = true
-		})
 	}
 
 	setBarangay(event){
 		this.filter.barangay = event.target.options[event.target.options.selectedIndex].text;	
+		this.data['barangay'] = event.target.options[event.target.options.selectedIndex].text;	
 	}
-	
 
 	general
 	population = {
@@ -167,7 +126,6 @@ export class StatisticsComponent implements OnInit {
 	genders
 	municipality
 
-	
 	getPopulation(){
 		this.StatisticsService.population().subscribe(data => {		
 			this.population = data		
@@ -241,10 +199,8 @@ export class StatisticsComponent implements OnInit {
 		
 	}
 
-
 	// ----------------- charts -----------------------------
 	
-
 	charts = {		
 		ageDistribution : [
 			['Age', 'Male', 'Female'],		
@@ -262,7 +218,6 @@ export class StatisticsComponent implements OnInit {
 		married:[			
 		]
 	}
-
 
 	polarAreaChartType: ChartType = 'line'
 	polarAreaLegend : true
@@ -391,9 +346,6 @@ export class StatisticsComponent implements OnInit {
 		google.setOnLoadCallback(chart)
 		
 	}
-
-	
-
 
 
 

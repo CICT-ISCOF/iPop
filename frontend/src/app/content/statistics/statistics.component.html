@@ -1,188 +1,354 @@
 <div class="statistics-component">
+    <button (click)="addData = true" *ngIf="!addData" class="button">Add Data</button>
+    <button (click)="addData = false" *ngIf="addData" class="clickable">Cancel</button>
+    <div class="row">
 
-    <!-- filters  -->
-    <div class="row container">
-        <div class="form-group col-md-4">
-            <label for="municipality">
-                <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
-                    <span class="sr-only">Loading...</span>
+        <div *ngIf="addData" class="front col-md-8">
+            <div class="container row">
+                <div class="form-group col-md-4">
+                    <label for="municipality">
+                    <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    Municipality</label>
+                    <select (change)="getBarangays($event)" class="form-control" id="municipality">
+                        <option selected disabled>Choose Municipality</option>
+                        <option *ngFor="let municipality of municipalities" [value]="municipality.code">{{municipality.name}}</option>
+                    </select>
                 </div>
-                Municipality</label>
-            <select (change)="getBarangays($event)" class="form-control" id="municipality">
-                <option selected disabled>Choose Municipality</option>
-                <option *ngFor="let municipality of municipalities" [value]="municipality.code">{{municipality.name}}</option>
-            </select>
-        </div>
 
-        <div class="form-group col-md-4">
-            <label for="barangay">
-                <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
-                    <span class="sr-only">Loading...</span>
+                <div class="form-group col-md-4">
+                    <label for="barangay">
+                    <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    Barangay</label>
+                    <select (change)="setBarangay($event)" class="form-control" id="barangay">
+                        <option selected disabled>Choose Barangay</option>
+                        <option *ngFor="let barangay of barangays">{{barangay.name}}</option>
+                    </select>
                 </div>
-                Barangay</label>
-            <select (change)="setBarangay($event)" class="form-control" id="barangay">
-                <option selected disabled>Choose Barangay</option>
-                <option *ngFor="let barangay of barangays">{{barangay.name}}</option>
-                </select>
+                <hr>
+                <div class="form-group col-md-4">
+                    <label for="year">Year</label>
+                    <select [(ngModel)]="data.year" class="form-control " id="year">
+                        <option selected disabled>Choose Year</option>
+                        <option>2020</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Coverage</label>
+                    <input [(ngModel)]="data.coverage" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Coverage is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Number of Barangays</label>
+                    <input [(ngModel)]="data.barangays" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Number of Barangays is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Land Area</label>
+                    <input [(ngModel)]="data.land_area" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Land Area is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Household Population</label>
+                    <input [(ngModel)]="data.household_population" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Household Population is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Males</label>
+                    <input [(ngModel)]="data.males" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Males is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Females</label>
+                    <input [(ngModel)]="data.females" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Females is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Sex Ratio</label>
+                    <input [(ngModel)]="data.sex_ratio" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Sex Ratio is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Median Age</label>
+                    <input [(ngModel)]="data.median_age" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Median Age is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Doubling</label>
+                    <input [(ngModel)]="data.doubling" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Doubling is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Growth Rate</label>
+                    <input [(ngModel)]="data.growth_rate" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Growth Rate is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Households</label>
+                    <input [(ngModel)]="data.households" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Households is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Average Household Size</label>
+                    <input [(ngModel)]="data.average_household_size" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Average Household Size is required
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Density</label>
+                    <input [(ngModel)]="data.density" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Density is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Child Dependency Ratio</label>
+                    <input [(ngModel)]="data.child_dependency_ratio" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Child Dependency Ratio is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality">Old Age Dependency Ratio</label>
+                    <input [(ngModel)]="data.old_age_dependency_ratio" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Old Age Dependency Ratio is required
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="municipality"> Age Dependency Ratio</label>
+                    <input [(ngModel)]="data.age_dependency_ratio" type="text" class="form-control" id="municipality" required>
+                    <div class="invalid-feedback">
+                        Age Dependency Ratio is required
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3 d-flex align-items-center">
+                    <button class="button" (click)="saveData()">Save</button>
+                </div>
+            </div>
         </div>
-        <hr>
-        <div class="form-group col-md-4">
-            <label for="year">Year</label>
-            <select class="form-control " id="year">
-                <option selected disabled>Choose Year</option>
-                <option>2020</option>
+
+
+        <div *ngIf="!addData" class="front col-md-8">
+            <!-- filters  -->
+            <div class="row container">
+                <div class="form-group col-md-4">
+                    <label for="municipality">
+                    <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    Municipality</label>
+                    <select (change)="getBarangays($event)" class="form-control" id="municipality">
+                    <option selected disabled>Choose Municipality</option>
+                    <option *ngFor="let municipality of municipalities" [value]="municipality.code">{{municipality.name}}</option>
                 </select>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="barangay">
+                    <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    Barangay</label>
+                    <select (change)="setBarangay($event)" class="form-control" id="barangay">
+                    <option selected disabled>Choose Barangay</option>
+                    <option *ngFor="let barangay of barangays">{{barangay.name}}</option>
+                    </select>
+                </div>
+                <hr>
+                <div class="form-group col-md-4">
+                    <label for="year">Year</label>
+                    <select class="form-control " id="year">
+                    <option selected disabled>Choose Year</option>
+                    <option>2020</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- map  -->
+            <!-- <br>
+        <div style="margin-left: -25px;">
+            <app-dynamic-mapping></app-dynamic-mapping>
         </div>
+        <br><br><br> -->
 
-    </div>
-
-    <!-- map  -->
-    <!-- <br>
-    <div style="margin-left: -25px;">
-        <app-dynamic-mapping></app-dynamic-mapping>
-    </div>
-    <br><br><br> -->
-
-    <!-- population profile  -->
+            <!-- population profile  -->
 
 
-    <div class="container row" style="position: relative;">
-        <h2 class="pop">POPULATION PROFILE</h2>
-        br
-        <table class="table mt-4">
-            <tr>
-                <th>Coverage</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>Total No. of Barangays</th>
-                <td>364</td>
-            </tr>
-            <tr>
-                <th>Total Land Area</th>
-                <td>300,000 km²</td>
-            </tr>
-            <tr>
-                <th>Total Household Population</th>
-                <td>100</td>
-            </tr>
-            <tr>
-                <th>Male</th>
-                <td>100</td>
-            </tr>
-            <tr>
-                <th>Female</th>
-                <td>100</td>
-            </tr>
-            <tr>
-                <th>Sex Ratio</th>
-                <td>2:3</td>
-            </tr>
-            <tr>
-                <th>Median Age</th>
-                <td>65</td>
-            </tr>
-            <tr>
-                <th>Doubling Time/Year</th>
-                <td>65</td>
-            </tr>
-            <tr>
-                <th>Population Growth Rate</th>
-                <td>65</td>
-            </tr>
-            <tr>
-                <th>No. of Households</th>
-                <td>65</td>
-            </tr>
-            <tr>
-                <th>Average Household Size</th>
-                <td>65</td>
-            </tr>
-            <tr>
-                <th>Population Density</th>
-                <td>358 people per square kilometer</td>
-            </tr>
-            <tr>
-                <th>Age Dependency Ratio</th>
-                <td>55</td>
-            </tr>
-            <tr>
-                <th>Child Dependency Ratio</th>
-                <td>55</td>
-            </tr>
-            <tr>
-                <th>Old-Age Dependency Ratio</th>
-                <td>55</td>
-            </tr>
-        </table>
-    </div>
+            <div class="container row" style="position: relative;">
+                <h2 class="pop">POPULATION PROFILE</h2>
+                br
+                <table class="table mt-4">
+                    <tr>
+                        <th>Coverage</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Total No. of Barangays</th>
+                        <td>364</td>
+                    </tr>
+                    <tr>
+                        <th>Total Land Area</th>
+                        <td>300,000 km²</td>
+                    </tr>
+                    <tr>
+                        <th>Total Household Population</th>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <th>Male</th>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <th>Female</th>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <th>Sex Ratio</th>
+                        <td>2:3</td>
+                    </tr>
+                    <tr>
+                        <th>Median Age</th>
+                        <td>65</td>
+                    </tr>
+                    <tr>
+                        <th>Doubling Time/Year</th>
+                        <td>65</td>
+                    </tr>
+                    <tr>
+                        <th>Population Growth Rate</th>
+                        <td>65</td>
+                    </tr>
+                    <tr>
+                        <th>No. of Households</th>
+                        <td>65</td>
+                    </tr>
+                    <tr>
+                        <th>Average Household Size</th>
+                        <td>65</td>
+                    </tr>
+                    <tr>
+                        <th>Population Density</th>
+                        <td>358 people per square kilometer</td>
+                    </tr>
+                    <tr>
+                        <th>Age Dependency Ratio</th>
+                        <td>55</td>
+                    </tr>
+                    <tr>
+                        <th>Child Dependency Ratio</th>
+                        <td>55</td>
+                    </tr>
+                    <tr>
+                        <th>Old-Age Dependency Ratio</th>
+                        <td>55</td>
+                    </tr>
+                </table>
+            </div>
 
 
-    <!-- age distribution  -->
-    <div class="row container chart-container">
-        <h4 class="title">Population Pyramind <br>
-            <span class="chart-details1"><span style="color:var(--colorPrimary) !important"> Male </span>
-            <span style="margin-left: 20px;">
-                    {{sexs.male}}
-                </span>
-            <span style="margin-left: 20px;font-size: 11px;text-align: right;" [class.low]="sexs.male / population.total * 100 > 50" [class.high]="sexs.male / population.total * 100 < 50">
-                    {{ sexs.male / population.total * 100 | number:'1.0-0' }}%
-                </span>
+            <!-- age distribution  -->
+            <div class="row container chart-container">
+                <h4 class="title">Population Pyramind <br>
+                    <span class="chart-details1"><span style="color:var(--colorPrimary) !important"> Male </span>
+                    <span style="margin-left: 20px;">
+                        {{sexs.male}}
+                    </span>
+                    <span style="margin-left: 20px;font-size: 11px;text-align: right;" [class.low]="sexs.male / population.total * 100 > 50" [class.high]="sexs.male / population.total * 100 < 50">
+                        {{ sexs.male / population.total * 100 | number:'1.0-0' }}%
+                    </span>
+                    <br>
+                    <span class="chart-details" style="color:var(--colorPrimary) !important">Female</span>
+                    <span style="margin-left: 20px;">
+                        {{sexs.female}}
+                    </span>
+                    <span style="margin-left: 20px;font-size: 11px;" [class.low]="sexs.female / population.total * 100 > 50" [class.high]="sexs.female / population.total * 100 < 50">{{ sexs.female / population.total * 100 | number:'1.0-0' }}%</span> </span>
+                </h4>
+                <div id="male-and-female" class="w-100">
+                    <div class="spinner-border text-warning fast" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
             <br>
-            <span class="chart-details" style="color:var(--colorPrimary) !important">Female</span>
-            <span style="margin-left: 20px;">
-                    {{sexs.female}}
-                </span>
-            <span style="margin-left: 20px;font-size: 11px;" [class.low]="sexs.female / population.total * 100 > 50" [class.high]="sexs.female / population.total * 100 < 50">{{ sexs.female / population.total * 100 | number:'1.0-0' }}%</span> </span>
-        </h4>
-        <div id="male-and-female" class="w-100">
-            <div class="spinner-border text-warning fast" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-    </div>
-    <br>
 
-    <!-- top populated  -->
-    <div class="row container">
-        <div class="form-group col-md-12">
-            <h3 class="title">Top Populated Municipalities</h3>
-            <p style="color:gray">All over Iloilo</p>
-            <div *ngIf="population.top.length == 0 " class="flex-container">
-                <div class="spinner-border text-light fast" role="status">
-                    <span class="sr-only">Loading...</span>
+            <!-- top populated  -->
+            <div class="row container">
+                <div class="form-group col-md-12">
+                    <h3 class="title">Top Populated Municipalities</h3>
+                    <p style="color:gray">All over Iloilo</p>
+                    <div *ngIf="population.top.length == 0 " class="flex-container">
+                        <div class="spinner-border text-light fast" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <ul class="list-group" [@listAnimation]="population.top.length">
+                        <li class="list-group-item barangays">
+                            <i style="color:transparent;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
+                            <p class="sub-title">MUNICIPALITY</p>
+                            <p class="sub-title">TOTAL POPULATION</p>
+                            <p class="sub-title">PERCENTAGE</p>
+                        </li>
+                        <li *ngFor="let municipality of population.top" class="list-group-item barangays">
+                            <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
+                            <p>{{municipality.name}}</p>
+                            <p>{{municipality.total}}</p>
+                            <p>
+                                <ng2-odometer class="low" [number]=" municipality.total / population.total * 100 | number:'1.0-0' " [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }">
+                                </ng2-odometer>%</p>
+
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <div class="map w-100 col-md-12" #map id="map" style="height: 100%; ">
+                    </div>
                 </div>
             </div>
-            <ul class="list-group" [@listAnimation]="population.top.length">
-                <li class="list-group-item barangays">
-                    <i style="color:transparent;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
-                    <p class="sub-title">MUNICIPALITY</p>
-                    <p class="sub-title">TOTAL POPULATION</p>
-                    <p class="sub-title">PERCENTAGE</p>
-                </li>
-                <li *ngFor="let municipality of population.top" class="list-group-item barangays">
-                    <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
-                    <p>{{municipality.name}}</p>
-                    <p>{{municipality.total}}</p>
-                    <p>
-                        <ng2-odometer class="low" [number]=" municipality.total / population.total * 100 | number:'1.0-0' " [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }">
-                        </ng2-odometer>%</p>
-
-                </li>
-            </ul>
         </div>
 
-        <div class="form-group col-md-6">
-            <div class="map w-100 col-md-12" #map id="map" style="height: 100%; ">
-            </div>
+
+        <div class="side col-md-4">
+            <h3>Provincial Officials</h3>
+            <hr>
+            <app-provincial-officials></app-provincial-officials>
+            <br>
+
+            <app-sb-members></app-sb-members>
         </div>
+
+
+
+
     </div>
-
-
-
-
-
-
-
     <br> <br> <br>
 </div>
