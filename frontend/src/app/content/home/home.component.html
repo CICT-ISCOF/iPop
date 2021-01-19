@@ -134,7 +134,22 @@
                         </div>
                     </div>
                 </div>
-                <div [routerLink]="['/Others']" class="Item">OTHERS</div>
+                <div class="Item">
+                    OTHERS
+                    <div class="drop-down-container" style="position: relative;">
+                        <div class="drop-down">
+                            <div routerLink="/Others" class="drop-down-item">
+                                Links
+                            </div>
+                            <div routerLink="/population-profile-by-municipality" class="drop-down-item">
+                                Population Profile By Municipality
+                            </div>
+                            <div routerLink="/age-distribution-by-municipality" class="drop-down-item">
+                                Age Distribution by Municipality
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class=" Item">
                     <input type="search" placeholder="Search..." class="hide-on-mobile from-control" style="cursor: default;">
                 </div>

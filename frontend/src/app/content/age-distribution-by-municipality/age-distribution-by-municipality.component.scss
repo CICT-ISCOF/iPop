@@ -1,0 +1,25 @@
+h2 {
+    text-align: center;
+    background: var(--contrast);
+    color: white;
+    width: 100%;
+    padding: 10px;
+    font-weight: 900;
+}
+
+th {
+    border: 1px solid rgba($color: black, $alpha: .5);
+}
+
+.tech-notes {
+    padding: 20px;
+    background-color: rgba($color: lightgray, $alpha: .5);
+    * {
+        font-style: italic;
+        color: #0B79A0;
+        h3,
+        span {
+            font-weight: 700;
+        }
+    }
+}

@@ -168,6 +168,8 @@ import { TeenCenterAhydTeamComponent } from './content/teen-centers/teen-center-
 import { MpcFdcTeamComponent } from './content/mpc-fdc/mpc-fdc-team/mpc-fdc-team.component';
 import { ApprovalsComponent } from './shared/navbar/approvals/approvals.component';
 import { AddMpcFdcComponent } from './content/mpc-fdc/add-mpc-fdc/add-mpc-fdc.component';
+import { PopulationProfileByMunicipalityComponent } from './content/population-profile-by-municipality/population-profile-by-municipality.component';
+import { AgeDistributionByMunicipalityComponent } from './content/age-distribution-by-municipality/age-distribution-by-municipality.component';
 
 
 
@@ -237,6 +239,8 @@ const routes: Routes = [
   { path:'account', component:AccountComponent},  
   { path:'backup-adn-restore', component:BackupAndRestoreComponent}, 
   { path:'aww-snap', component:PageNotFoundComponent},  
+  { path:'population-profile-by-municipality', component:PopulationProfileByMunicipalityComponent}, 
+  { path:'age-distribution-by-municipality', component:AgeDistributionByMunicipalityComponent},  
 ];
 
 
@@ -383,6 +387,8 @@ const routes: Routes = [
     MpcFdcTeamComponent,
     ApprovalsComponent,
     AddMpcFdcComponent,
+    PopulationProfileByMunicipalityComponent,
+    AgeDistributionByMunicipalityComponent,
   
     
 
