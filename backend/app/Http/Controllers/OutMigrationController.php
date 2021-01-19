@@ -45,7 +45,7 @@ class OutMigrationController extends Controller
             'status' => 'Pending'
         ]);
         $outMigration->record()->save($record);
-        broadcast(new RecordSaved($outMigration))->toOthers();
+        // broadcast(new RecordSaved($outMigration))->toOthers();
         return $outMigration;
     }
 

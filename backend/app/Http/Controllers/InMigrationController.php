@@ -46,7 +46,7 @@ class InMigrationController extends Controller
         ]);
         $inMigration->record()->save($record);
         $inMigration->record = $record;
-        broadcast(new RecordSaved($inMigration))->toOthers();
+        // broadcast(new RecordSaved($inMigration))->toOthers();
         return $inMigration;
     }
 

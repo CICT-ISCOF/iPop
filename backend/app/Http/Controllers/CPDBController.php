@@ -45,7 +45,7 @@ class CPDBController extends Controller
         ]);
         $cpdb->record()->save($record);
         $cpdb->record = $record;
-        broadcast(new RecordSaved($cpdb))->toOthers();
+        // broadcast(new RecordSaved($cpdb))->toOthers();
         return $cpdb;
     }
 
