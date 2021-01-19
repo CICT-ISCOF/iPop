@@ -70,7 +70,10 @@ class DeathStatisticController extends Controller
             'total' => ['required', 'string', 'max:255'],
         ]);
 
-        $deathStatistic = DeathStatistic::first();
+        $deathStatistic = DeathStatistic::where('municipality', $data['municipality'])
+            ->where('barangay', $data['barangay'])
+            ->where('year', $data['year'])
+            ->first();
 
         if ($deathStatistic) {
             $deathStatistic->update($data);
