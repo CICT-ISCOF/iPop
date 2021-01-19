@@ -1,7 +1,6 @@
 <app-home>
 </app-home>
 <div class="wrapper" style="padding: 0;">
-
     <div class="content" *ngIf="!wantsToadAnImage && slides.length != 0 ">
         <div class="carousel-holder">
             <owl-carousel-o [options]="customOptions">
@@ -10,7 +9,7 @@
                 </ng-template>
             </owl-carousel-o>
         </div>
-        <div class="quick-links">
+        <div class="quick-links" style=" background: var(--bg);">
             <p>Quick Links</p>
             <br>
             <div *ngFor="let number of [0,1,2,3]" class="links">
@@ -54,4 +53,5 @@
 <div class="wrapper">
 
     <app-featured-articles></app-featured-articles>
+    <br><br><br><br><br><br><br><br>
 </div>

@@ -192,10 +192,10 @@ const routes: Routes = [
   { path:'out-mig', component:OutMigComponent},  
   { path:'marriages', component:MarriagesComponent}, 
   // STATISITCS  
-  { path:'statistics', component:StatisticsComponent},  
-  { path:'statistics/births', component:BirthsStatComponent},
-  { path:'statistics/deaths', component:DeathsStatComponent},
-  { path:'statistics/migration', component:MigrationsComponent},
+  { path:'population-data', component:StatisticsComponent},  
+  { path:'demographic-data/births', component:BirthsStatComponent},
+  { path:'demographic-data/deaths', component:DeathsStatComponent},
+  { path:'demographic-data/migration', component:MigrationsComponent},
   // RPFP
   { path:'PMOC', component:PmcComponent},   
   { path:'MPC-FDC', component:MPCFDCComponent}, 
