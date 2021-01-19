@@ -41,13 +41,13 @@
             } else {
                 document.getElementById('html').setAttribute("data-theme", localStorage.getItem("data-theme"))
                 document.getElementById('html').setAttribute("color", localStorage.getItem("color"))
-
             }
+
         }
 
-        setTimeout(() => {
+        setInterval(() => {
             setTheme()
-        }, 200)
+        }, 100);
     </script>
 
 

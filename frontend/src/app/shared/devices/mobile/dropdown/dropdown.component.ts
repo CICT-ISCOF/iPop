@@ -67,7 +67,7 @@ export class DropdownComponentMobile implements OnInit {
 
 	changeTheme(e){	
 		e == true ? localStorage.setItem('data-theme','dark') : localStorage.setItem('data-theme','light')
-		location.reload()
+		e == true ? this.darkMode.checked = true : this.darkMode.checked = false
 	}
 
 	changeSidebar(e){
@@ -97,10 +97,10 @@ export class DropdownComponentMobile implements OnInit {
 				// localStorage.clear()
 					this.Router.navigate(['/'])
 				this.UtilityService.logout(true)				
-				setTimeout(() => {
-					location.reload()
-					localStorage.setItem('data-theme', theme)
-				}, 500);
+				// setTimeout(() => {
+				// 	location.reload()
+				// 	localStorage.setItem('data-theme', theme)
+				// }, 500);
 				this.UtilityService.setDropDown(false)	
 				Swal.fire(
 					'Thank you',

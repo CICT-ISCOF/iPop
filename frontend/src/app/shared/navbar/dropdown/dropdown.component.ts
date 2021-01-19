@@ -33,7 +33,7 @@ export class DropdownComponent implements OnInit {
 	darkMode = {
 		name : 'slideToggle',
 		id :'darkMode',
-		checked :  localStorage.getItem('data-theme') == 'dark' ? true : false,
+		checked :   localStorage.getItem('data-theme') == 'dark' ? true : false,
 		disabled  : false,
 		label  : 'On/Off',
 		labelledby : 'Some Other Text',
@@ -54,8 +54,10 @@ export class DropdownComponent implements OnInit {
 	}
 
 
-	changeTheme(e){	
+	changeTheme1(e){	
 		e == true ? localStorage.setItem('data-theme','dark') : localStorage.setItem('data-theme','light')
+		e == true ? this.darkMode.checked = true : this.darkMode.checked = false
+
 	}
 
 	changeBackground(image){
