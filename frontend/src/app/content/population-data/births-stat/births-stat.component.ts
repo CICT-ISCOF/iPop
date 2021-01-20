@@ -236,28 +236,26 @@ export class BirthsStatComponent implements OnInit {
 			this.teenageBirth = [];
 			this.legitimateBirth = [];
 
-			// if (incidences[0][0].title === 'INCIDENCE OF TEENAGE BIRTHS') {
-			// 	this.teenageBirth = incidences[0];
-			// }
-			// if (incidences[1][0].title === 'INCIDENCE OF ILLEGITIMATE BIRTHS') {
-			// 	this.legitimateBirth = incidences[1];
-			// }
-			// if (incidences[1][0].title === 'INCIDENCE OF TEENAGE BIRTHS') {
-			// 	this.teenageBirth = incidences[0];
-			// }
-			// if (incidences[0][0].title === 'INCIDENCE OF ILLEGITIMATE BIRTHS') {
-			// 	this.legitimateBirth = incidences[1];
-			// }
-		
-			// data.data.incidence.forEach(element => {
-			// 	if(!this.TEENAGEBIRTHRATEbarChartLabels.includes(element.year)){
-			// 		this.TEENAGEBIRTHRATEbarChartLabels.push(element.year)
-			// 	}
-			// 	this.TEENAGEBIRTHRATEbarChartData[0].data.push(element.value)
-			// })
-			
+			if (incidences[0][0].title === 'INCIDENCE OF TEENAGE BIRTHS') {
+				this.teenageBirth = incidences[0];
+			}
+			if (incidences[1][0].title === 'INCIDENCE OF ILLEGITIMATE BIRTHS') {
+				this.legitimateBirth = incidences[1];
+			}
+			if (incidences[1][0].title === 'INCIDENCE OF TEENAGE BIRTHS') {
+				this.teenageBirth = incidences[0];
+			}
+			if (incidences[0][0].title === 'INCIDENCE OF ILLEGITIMATE BIRTHS') {
+				this.legitimateBirth = incidences[1];
+			}
+
+			for(let index in data.incidence){		
+				if(!this.TEENAGEBIRTHRATEbarChartLabels.includes(data.incidence[index].year)){
+					this.TEENAGEBIRTHRATEbarChartLabels.push(data.incidence[index].year)
+				}
+				this.TEENAGEBIRTHRATEbarChartData[0].data.push(data.incidence[index].value)
+			}
 			for(let index in data.month){		
-				console.log(data.month[index].total)			
 				if (!this.MONTHbarChartLabels.includes(data.month[index].month)) {
 					this.MONTHbarChartLabels.push(data.month[index].month);
 				}
