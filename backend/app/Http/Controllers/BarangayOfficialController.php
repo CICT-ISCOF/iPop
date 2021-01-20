@@ -21,11 +21,15 @@ class BarangayOfficialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return BarangayOfficial::getApproved()
-            ->sortBy('barangay')
-            ->paginate(15);
+        $builder = BarangayOfficial::getApproved();
+
+        foreach ($request->all() as $key => $value) {
+            $builder = $builder->where($key, $value);
+        }
+
+        return $builder->get();
     }
 
     /**

@@ -21,11 +21,15 @@ class MunicipalOfficialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return MunicipalOfficial::getApproved()
-            ->sortBy('municipality')
-            ->paginate(15);
+        $builder = MunicipalOfficial::getApproved();
+
+        foreach ($request->all() as $key => $value) {
+            $builder = $builder->where($key, $value);
+        }
+
+        return $builder->get();
     }
 
     /**
