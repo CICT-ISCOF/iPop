@@ -41,6 +41,7 @@
         </svg>
     </span>
 </div>
+<br>
 <div *ngIf="addOfficial" class="row flex-container" style="flex-direction: column;">
     <div class="form-group col-md-12">
         <label for="name">Name</label>
@@ -51,6 +52,7 @@
         <input [(ngModel)]="official.position" type="text" id="position" class="form-control">
     </div>
 </div>
+<br>
 <div class="flex-containr">
     <div (click)="saveOfficial()" *ngIf="addOfficial" class="button center">Save</div>
 </div>
