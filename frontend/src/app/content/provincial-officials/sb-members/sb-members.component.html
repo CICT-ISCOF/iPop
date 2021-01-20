@@ -1,35 +1,45 @@
-<h3 class="pop2">SB MEMBERS</h3>
-<hr>
+<h3 class="pop2">
+    SB MEMBERS</h3>
 <div class="sb-member" *ngFor="let member of sbMembers;let i = index">
-    <h5 [class.selected]="activeSB[i]">
-        <div class="flex">
-            <p *ngIf="!activeSB[i]"> HON. {{member.name}}</p>
-            <span (click)="editMember(i)" class="close ml-auto">
-                <svg width="15px" height="15px" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                    <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                </svg>
-            </span>
-            <span (click)="deleteMember(member.id)" class="close ml-20">
-                <svg width="15px" height="15px" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-                </svg>
-            </span>
-        </div>
-        <div>
-            <div class="row" [class.selected1]="activeSB[i]" *ngIf="activeSB[i]">
-                <div class="col-md-12" class="row">
-                    <div class="form-group">
-                        <label for="name">HON</label>
-                        <input [(ngModel)]="member.name" type="text" id="name" class="form-control">
-                        <br>
-                        <div (click)="saveSBMemberChanges(member.id,member)" class="button center">Save Changes</div>
-                        <br>
-                        <div (click)="editMember(i)" class="clickable center">Cancel Editing</div>
-                    </div>
-                </div>
+    <h5>
+        <div class="flex container" *ngIf="!activeSB[i]" style="margin-bottom: -10px;">
+            <div class="flex-container">
+                <img class="sideImag" src="../../../../assets//avatars/girl-orange.png" alt="">
+                <p style="font-weight: 900;margin-top: 10px;" *ngIf="!activeSB[i]"> HON. {{member.name}}</p>
             </div>
+            <span (click)="editMember(i)" class="close ml-auto">
+                    <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                    </svg>
+                </span>
+            <span (click)="deleteMember(member.id)" class="close ml-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-minus" viewBox="0 0 16 16">
+                        <path d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
+                        <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                    </svg>
+                </span>
         </div>
+
+        <div class="row container" [class.selected1]="activeSB[i]" *ngIf="activeSB[i]">
+            <div class="cole-md-2">
+                <label style="margin:10px" for="name">HON</label>
+            </div>
+            <div class="form-group col-md-6flex-container">
+
+                <input [(ngModel)]="member.name" type="text" id="name" class="form-control">
+            </div>
+
+            <div (click)="saveSBMemberChanges(member.id,member)" class="clickable center col-md-1">
+                <i class="fa fa-check text-success"></i>
+            </div>
+
+            <div (click)="editMember(i)" class="clickable center col-md-1">
+                <i class="fa fa-times"></i>
+            </div>
+
+        </div>
+
     </h5>
 </div>
 <div *ngIf="addMember" class="row">
@@ -40,7 +50,11 @@
         </div>
     </div>
 </div>
-<div (click)="saveMember()" *ngIf="addMember" class="button center">Save</div>
-<div (click)="addMember = true" *ngIf="!addMember" class="button center" style="width: 150px !important;">Add SB Member</div>
-<br *ngIf="addMember">
-<div (click)="addMember = false" *ngIf="addMember" class="clickable center">Cancel</div>
+<div class="flex-container">
+    <div (click)="saveMember()" *ngIf="addMember" class="button center">Save</div>
+    <div (click)="addMember = false" *ngIf="addMember" class="clickable center">Cancel</div>
+</div>
+<div class="flex-container">
+    <div (click)="addMember = true" *ngIf="!addMember" class="button center" style="width: 150px !important;">Add SB Member</div>
+
+</div>

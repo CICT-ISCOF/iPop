@@ -57,7 +57,7 @@
                     </div>
                 </div><br><br>
                 <div style="display:flex;align-items: center;justify-content: center;">
-                    <button (click)="save()" class="button">Save</button>
+                    <button (click)="hasData = false; hasSelectedData = false;save()" class="button">Save</button>
                 </div>
             </div><br>
         </div>
@@ -218,11 +218,11 @@
                     <div *ngIf="totalLiveBirths" class="row flex-container">
                         <div class="form-group col-md-6">
                             <label for="Total Deaths">TOTAL LIVE BIRTHS</label>
-                            <input type="text" class="form-control" id="Total Deaths">
+                            <input [(ngModel)]="birthSatistics.total_live_births" type="text" class="form-control" id="Total Deaths">
                         </div>
                         <div class="flex-container">
                             <div class=" flex-container">
-                                <button class="button">Save</button> &nbsp;
+                                <button (click)="update()" class="button">Save</button> &nbsp;
                                 <button (click)="totalLiveBirths = false" class="clickable">Cancel</button>
                             </div>
                         </div>
@@ -242,11 +242,11 @@
                     <div *ngIf="birthRates" class="row  flex-container">
                         <div class="form-group col-md-6">
                             <label for="Total Deaths">CRUD BIRTH RATE</label>
-                            <input type="text" class="form-control" id="Total Deaths">
+                            <input [(ngModel)]="birthSatistics.crude_birth_rate" type="text" class="form-control" id="Total Deaths">
                         </div>
                         <div class="flex-container">
                             <div class=" flex-container">
-                                <button class="button">Save</button> &nbsp;
+                                <button (click)="update()" class="button">Save</button> &nbsp;
                                 <button (click)="birthRates = false" class="clickable">Cancel</button>
                             </div>
                         </div>
@@ -266,11 +266,11 @@
                     <div *ngIf="generaLFirtilityRate" class="row  flex-container">
                         <div class="form-group col-md-6">
                             <label for="Total Deaths">GENERAL FERTILITY RATE</label>
-                            <input type="text" class="form-control" id="Total Deaths">
+                            <input [(ngModel)]="birthSatistics.general_fertility_rate" type="text" class="form-control" id="Total Deaths">
                         </div>
                         <div class="flex-container">
                             <div class=" flex-container">
-                                <button (click)="save()" class="button">Save</button> &nbsp;
+                                <button (click)="update()" class="button">Save</button> &nbsp;
                                 <button (click)="generaLFirtilityRate = false" class="clickable">Cancel</button>
                             </div>
                         </div>
@@ -298,7 +298,7 @@
                         </div>
 
                         <div class="flex-container  col-md-12">
-                            <button (click)="saveBottomCharts('INCIDENCE OF TEENAGE BIRTHS')" class="button">Save</button> &nbsp;
+                            <button (click)="saveBottomCharts('INCIDENCE OF TEENAGE BIRTHS');teenagBirth = false" class="button">Save</button> &nbsp;
                             <button (click)="teenagBirth = false" class="clickable">Cancel</button>
                         </div>
 
@@ -328,7 +328,7 @@
                             <input [(ngModel)]="bottomChartData.value" type="number" class="form-control" id="Second">
                         </div>
                         <div class="flex-container col-md-12">
-                            <button (click)="saveBottomCharts('INCIDENCE OF ILLEGITIMATE BIRTHS')" class="button">Save</button> &nbsp;
+                            <button (click)="saveBottomCharts('INCIDENCE OF ILLEGITIMATE BIRTHS');IllegitimateBirth = false" class="button">Save</button> &nbsp;
                             <button (click)="IllegitimateBirth = false" class="clickable">Cancel</button>
                         </div>
                     </div>

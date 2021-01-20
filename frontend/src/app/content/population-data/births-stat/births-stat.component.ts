@@ -152,7 +152,31 @@ export class BirthsStatComponent implements OnInit {
 		});
 	}
 
+	update(){
+		this.BirthStatService.create(this.birthSatistics).subscribe((data) => {
+			Swal.fire(
+				'Data has been updated',
+				`Data on ${this.birthSatistics['barangay']}, ${this.birthSatistics['municipality']}  at year ${this.birthSatistics['year']} has been updated`,
+				'success'
+			)
+		})
+	}
+
 	save() {
+		this.data['months'] = []
+		for(let key in this.checked){
+			if(this.checked[key]){
+				if(key == 'male'){
+					this.data['months'] = this.data['monthsMale']
+				}
+				if(key == 'female'){
+					this.data['months'] = this.data['monthsFemale']
+				}
+				if(key == 'all'){
+					this.data['months'] = this.data['monthsTotal']
+				}
+			}
+		}
 		this.BirthStatService.postToMOnthController(this.data).subscribe((data) => {
 			this.BirthStatService.create(this.data).subscribe((data) => {
 				Swal.fire(
@@ -210,7 +234,6 @@ export class BirthsStatComponent implements OnInit {
 		}
 		this.checked[item] = true;
 		this.getDataParams.gender = item;
-		// this.fetchData();
 	}
 
 	birthSatistics = {};
@@ -229,31 +252,28 @@ export class BirthsStatComponent implements OnInit {
 			this.getDataParams.gender
 		).subscribe(
 		(data) => {
-			console.log(data)
 			this.hasSelectedData = true;
 			this.birthSatistics = data.data;
 			const incidences = groupBy(data.incidence, 'title');
-			this.teenageBirth = [];
-			this.legitimateBirth = [];
-
-			if (incidences[0][0].title === 'INCIDENCE OF TEENAGE BIRTHS') {
+			// if (incidences[0][0].title == 'INCIDENCE OF TEENAGE BIRTHS') {
 				this.teenageBirth = incidences[0];
-			}
-			if (incidences[1][0].title === 'INCIDENCE OF ILLEGITIMATE BIRTHS') {
 				this.legitimateBirth = incidences[1];
-			}
-			if (incidences[1][0].title === 'INCIDENCE OF TEENAGE BIRTHS') {
-				this.teenageBirth = incidences[0];
-			}
-			if (incidences[0][0].title === 'INCIDENCE OF ILLEGITIMATE BIRTHS') {
-				this.legitimateBirth = incidences[1];
-			}
-
-			for(let index in data.incidence){		
-				if(!this.TEENAGEBIRTHRATEbarChartLabels.includes(data.incidence[index].year)){
-					this.TEENAGEBIRTHRATEbarChartLabels.push(data.incidence[index].year)
+			// }
+			// else{
+				// this.teenageBirth = incidences[1];
+				// this.legitimateBirth = incidences[1];
+			// }
+			for(let index in this.teenageBirth){		
+				if(!this.TEENAGEBIRTHRATEbarChartLabels.includes(this.teenageBirth[index].year)){
+					this.TEENAGEBIRTHRATEbarChartLabels.push(this.teenageBirth[index].year)
 				}
-				this.TEENAGEBIRTHRATEbarChartData[0].data.push(data.incidence[index].value)
+				this.TEENAGEBIRTHRATEbarChartData[0].data.push(this.teenageBirth[index].value)
+			}
+			for(let index in this.legitimateBirth){		
+				if(!this.ILLEGITIMATEBIRTHbarChartLabels.includes(this.legitimateBirth[index].year)){
+					this.ILLEGITIMATEBIRTHbarChartLabels.push(this.legitimateBirth[index].year)
+				}
+				this.ILLEGITIMATEBIRTHbarChartData[0].data.push(this.legitimateBirth[index].value)
 			}
 			for(let index in data.month){		
 				if (!this.MONTHbarChartLabels.includes(data.month[index].month)) {
@@ -310,16 +330,17 @@ export class BirthsStatComponent implements OnInit {
 		this.bottomChartData['barangay'] = this.getDataParams.barangay;
 		this.bottomChartData['municipality'] = this.getDataParams.municipality;
 		this.bottomChartData['gender'] = this.getDataParams.gender;
-		this.BirthStatService.postToinsidence(this.bottomChartData).subscribe(
-		(data) => {
-			this.DeathRateData = true;
-			this.UtilityService.setAlert(title + ' has been Updated', 'success');
-			this.TEENAGEBIRTHRATEbarChartLabels = [];
-			this.TEENAGEBIRTHRATEbarChartData[0].data = [];
-			this.ILLEGITIMATEBIRTHbarChartLabels = [];
-			this.ILLEGITIMATEBIRTHbarChartData[0].data = [];
-			this.fetchData();
-		}
+			this.BirthStatService.postToinsidence(this.bottomChartData).subscribe(
+			(data) => {
+				this.DeathRateData = true;
+				this.UtilityService.setAlert(title + ' has been Updated', 'success');
+				this.TEENAGEBIRTHRATEbarChartLabels = [];
+				this.TEENAGEBIRTHRATEbarChartData[0].data = [];
+				this.ILLEGITIMATEBIRTHbarChartLabels = [];
+				this.ILLEGITIMATEBIRTHbarChartData[0].data = [];
+				this.fetchData();
+			}
 		);
+		
 	}
 }
