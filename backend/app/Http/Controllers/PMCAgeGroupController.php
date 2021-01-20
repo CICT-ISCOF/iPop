@@ -9,7 +9,7 @@ class PMCAgeGroupController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum');
+        $this->middleware('auth:sanctum')->except(['index', 'show']);
     }
 
     public function index(Request $request)
