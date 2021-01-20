@@ -16,7 +16,7 @@ class BirthStatistic extends Model
         'year',
         'gender',
         'total_live_births',
-        'crude_death_rate',
+        'crude_birth_rate',
         'general_fertility_rate',
     ];
 
