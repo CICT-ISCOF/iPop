@@ -97,8 +97,9 @@ class BirthStatisticController extends Controller
      * @param  \App\Models\Statistics\BirthStatistic  $birthStatistic
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, BirthStatistic $birthStatistic)
+    public function show(Request $request, $id)
     {
+        $birthStatistic = BirthStatistic::findOrFail($id);
         $builder = BirthStatistic::findApproved($birthStatistic->id);
         $params = $request->only(['municipality', 'barangay', 'year']);
         foreach ($params as $key => $value) {
@@ -114,8 +115,9 @@ class BirthStatisticController extends Controller
      * @param  \App\Models\Statistics\BirthStatistic  $birthStatistic
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BirthStatistic $birthStatistic)
+    public function update(Request $request, $id)
     {
+        $birthStatistic = BirthStatistic::findOrFail($id);
         $data = $request->validate([
             'municipality' => ['nullable', 'string', 'max:255'],
             'barangay' => ['nullable', 'string', 'max:255'],
@@ -141,8 +143,9 @@ class BirthStatisticController extends Controller
      * @param  \App\Models\Statistics\BirthStatistic  $birthStatistic
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BirthStatistic $birthStatistic)
+    public function destroy($id)
     {
+        $birthStatistic = BirthStatistic::findOrFail($id);
         $birthStatistic->makeDeleteRequest();
 
         Log::record("Deleted a birth statistic.");
