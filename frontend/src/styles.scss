@@ -20,15 +20,16 @@
     }
     
     html {
-        --dark1: linear-gradient(180deg, #121418, #111);
+        --dark1: #3C4043;
         --blue1: #23c8ea;
         --plain_blue1: #5bd1ed;
         --plain_blue2: #15b1d7;
         --plain_blue3: #04759d;
-        --plain_blue4: #2C308B;
+        --plain_blue4: #194363;
         --plainorange: #d44206;
         --plainorange1: #f97206;
         --contrast: #04759d;
+        --plain_green: #83D341;
         --bg: white;
         --bg1: #eef1f5;
         --inputBg: #e3e5e8;
@@ -70,6 +71,10 @@
     
     html[color="plainorange1"] {
         --contrast: #f97206;
+    }
+    
+    html[color="plain_green"] {
+        --contrast: #83D341;
     }
     
     html[data-theme="light"] {
@@ -363,6 +368,13 @@
         color: white;
         width: 100%;
         padding: 10px;
+    }
+    
+    .rounded {
+        * {
+            color: white !important;
+            fill: white !important;
+        }
     }
     
     // -----------------animations--------------------

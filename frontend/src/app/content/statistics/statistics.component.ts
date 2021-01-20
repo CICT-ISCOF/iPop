@@ -1,3 +1,4 @@
+import { OfficialsService } from './../provincial-officials/officials.service';
 import { UtilityService } from './../../utility.service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { StatisticsService } from  './statistics.service'
@@ -63,10 +64,10 @@ export class StatisticsComponent implements OnInit {
 				this.filteredData = data[0]
 			}
 		)
+		this.OfficialsService.setOfficialsFilter(this.filter)
 	}
 
 	updateFiltered(callback){
-		
 		if(this.isEmpty(this.filteredData)){
 			return Swal.fire(
 				`Trying to Updated Empty Data`,
@@ -103,7 +104,8 @@ export class StatisticsComponent implements OnInit {
 	constructor(	
 		private StatisticsService : StatisticsService,
 		private LocationService : LocationService,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private OfficialsService : OfficialsService
 	) { }
 
 	// -------------- formaters ----------------

@@ -27,7 +27,7 @@ export class OfficialsService {
 					'Content-Type':[]
 				})	
 
-	private page = new Subject<any>();
+	private officials = new Subject<any>();
 
 	getHeaders(){
 		this.user = JSON.parse(localStorage.getItem('user-data'))
@@ -38,6 +38,18 @@ export class OfficialsService {
 			'Content-Type':[]
 		})	
 	}
+
+	setOfficialsFilter(filter){
+		const url = ""  + `?municipality=${filter['municipality']}&barangay=${filter['barangay']}&year=${filter['year']}`
+		const officials = this.http.get(url)
+		this.officials.next(officials)
+	}
+
+	getOfficialsFilter(){
+		return this.officials
+	}
+
+
 
 	getOfficials(){
 		const url  = this.baseURL
