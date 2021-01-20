@@ -45,6 +45,8 @@ use App\Http\Controllers\PMCESSController;
 use App\Http\Controllers\PMCKFPController;
 use App\Http\Controllers\PMOCController;
 use App\Http\Controllers\PMOCTeamController;
+use App\Http\Controllers\PopulationChartController;
+use App\Http\Controllers\PopulationPyramidController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramAreaController;
 use App\Http\Controllers\ProvincialOfficialController;
@@ -205,6 +207,8 @@ Route::middleware('throttle:60,1')->group(function () {
         'pmc-ccs' => PMCCSController::class,
         // Municipality Age Distribution and Age Dependency
         'm-ad' => MunicipalityADController::class,
+        'population-chart' => PopulationChartController::class,
+        'population-pyramid' => PopulationPyramidController::class,
     ]);
 
     // Delete 1 award media
