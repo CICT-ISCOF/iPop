@@ -1,10 +1,17 @@
 <h3 class="pop2">
     SB MEMBERS</h3>
-<span style="position: absolute;right: 0;transform: translate(-30px,-40px);" (click)="addMember = true" *ngIf="!addMember">
+<span style="position: absolute;right: 0;transform: translate(-30px,-40px);;cursor: pointer;" (click)="addMember = true" *ngIf="!addMember">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-file-plus-fill" viewBox="0 0 16 16">
             <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
         </svg>
     </span>
+
+<span style="position: absolute;right: 0;transform: translate(-30px,-40px);cursor: pointer;" (click)="addMember = false" *ngIf="addMember">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+          </svg>
+    </span>
+
 <div class="sb-member" *ngFor="let member of sbMembers;let i = index" style="position: relative;">
 
     <h5>
@@ -47,16 +54,13 @@
 </div>
 <div *ngIf="addMember" class="row container" style="margin-left: 0px;">
 
-    <div class="form-group col-md-8 flex-container">
+    <div class="form-group col-md-9 flex-container">
         <label for="name" class="mr-2">Honorable </label>
         <input [(ngModel)]="sbMember.name" type="text" id="name" class="form-control">
     </div>
     <div class="flex-container col-md-2">
         <div (click)="saveMember()" *ngIf="addMember" class="button center" style="margin-top: -10px;">
             <i class="fa fa-check text-success"></i>
-        </div>
-        <div (click)="addMember = false" *ngIf="addMember" class="clickable center" style="margin-top: -10px;">
-            <i class="fa fa-times"></i>
         </div>
     </div>
 
