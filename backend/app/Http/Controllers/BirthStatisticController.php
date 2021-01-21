@@ -25,12 +25,22 @@ class BirthStatisticController extends Controller
             'total_live_births' => 0,
             'crude_birth_rate' => 0,
             'general_fertility_rate' => 0,
+            'incidences' => [],
         ];
 
         foreach ($stats as $stat) {
             $data['total_live_births'] += (int)$stat->total_live_births;
             $data['crude_birth_rate'] += (int)$stat->crude_birth_rate;
             $data['general_fertility_rate'] += (int)$stat->general_fertility_rate;
+        }
+
+        $incidences = Incidence::where('type', 'Birth')->get();
+
+        foreach ($incidences as $incidence) {
+            if (!in_array($incidence->title, array_keys($data['incidences']))) {
+                $data['incidences'][$incidence->title] = 0;
+            }
+            $data['incidences'][$incidence->title] += (int)$incidence->value;
         }
 
         return $data;

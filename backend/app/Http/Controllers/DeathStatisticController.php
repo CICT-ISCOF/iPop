@@ -26,6 +26,7 @@ class DeathStatisticController extends Controller
             'female' => 0,
             'crude_death_rate' => 0,
             'total' => 0,
+            'incidences' => [],
         ];
 
         foreach ($stats as $stat) {
@@ -33,6 +34,15 @@ class DeathStatisticController extends Controller
             $data['female'] += (int)$stat->female;
             $data['crude_death_rate'] += (int)$stat->crude_death_rate;
             $data['total'] += (int)$stat->total;
+        }
+
+        $incidences = Incidence::where('type', 'Death')->get();
+
+        foreach ($incidences as $incidence) {
+            if (!in_array($incidence->title, array_keys($data['incidences']))) {
+                $data['incidences'][$incidence->title] = 0;
+            }
+            $data['incidences'][$incidence->title] += (int)$incidence->value;
         }
 
         return $data;

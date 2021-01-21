@@ -25,12 +25,22 @@ class MigrationStatisticController extends Controller
             'total_in_migrations',
             'total_out_migrations',
             'net_migrations',
+            'incidences' => [],
         ];
 
         foreach ($stats as $stat) {
             $data['total_in_migrations'] += (int)$stat->total_in_migrations;
             $data['total_out_migrations'] += (int)$stat->total_out_migrations;
             $data['net_migrations'] += (int)$stat->net_migrations;
+        }
+
+        $incidences = Incidence::where('type', 'Migration')->get();
+
+        foreach ($incidences as $incidence) {
+            if (!in_array($incidence->title, array_keys($data['incidences']))) {
+                $data['incidences'][$incidence->title] = 0;
+            }
+            $data['incidences'][$incidence->title] += (int)$incidence->value;
         }
 
         return $data;
