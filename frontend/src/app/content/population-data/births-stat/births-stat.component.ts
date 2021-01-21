@@ -49,7 +49,7 @@ export class BirthsStatComponent implements OnInit {
 			March: 0,
 			April: 0,
 			May: 0,
-			June: 0,
+	 		June: 0,
 			July: 0,
 			August: 0,
 			September: 0,
@@ -132,25 +132,38 @@ export class BirthsStatComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		for (let i = 2020; i <= 2050; i++) {
-		this.years.push(i);
+		for (let i = 2015; i <= 2050; i++) {
+			this.years.push(i);
 		}
 		this.getMuncipalities();
 	}
 
-	getMuncipalities() {
-		this.LocationService.getMunicipalities().subscribe((data) => {
-		this.municipalities = data;
-		});
+	municipalityIsLoading = false
+	getMuncipalities(){		
+		this.municipalityIsLoading = true
+		this.LocationService.getMunicipalities().subscribe(data => {
+			this.municipalityIsLoading = false
+			this.municipalities = data			
+		})
+	}
+	barangayIsLoading = false
+	getBarangaysandGet(event) {
+		this.barangayIsLoading = true	
+		this.getDataParams.municipality = event.target.options[event.target.options.selectedIndex].text;
+		this.LocationService.getBarangays(event.target.value).subscribe((data) => {
+			this.barangays = data
+			this.barangayIsLoading = false
+		})
 	}
 
-	getBarangays(event) {
-		this.data.municipality =
-		event.target.options[event.target.options.selectedIndex].text;
-		this.LocationService.getBarangays(event.target.value).subscribe((data) => {
-		this.barangays = data;
-		});
-	}
+	getBarangays(event){	
+		this.barangayIsLoading = true	
+		this.data.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data		
+			this.barangayIsLoading = false
+		})
+	} 
 
 	update(){
 		this.BirthStatService.create(this.birthSatistics).subscribe((data) => {
@@ -180,7 +193,7 @@ export class BirthsStatComponent implements OnInit {
 		this.BirthStatService.postToMOnthController(this.data).subscribe((data) => {
 			this.BirthStatService.create(this.data).subscribe((data) => {
 				Swal.fire(
-					'New Death Statistics Data has been added',
+					'New Birth Statistics Data has been added',
 					'',
 					'success'
 				)
@@ -217,16 +230,10 @@ export class BirthsStatComponent implements OnInit {
 			this.MONTHbarChartData[0].data = [];
 			this.fetchData();
 			Swal.fire('Chart has been updated','', 'success');
-		});
+		})
 	}
 
-	getBarangaysandGet(event) {
-		this.getDataParams.municipality =
-		event.target.options[event.target.options.selectedIndex].text;
-		this.LocationService.getBarangays(event.target.value).subscribe((data) => {
-			this.barangays = data;
-		});
-	}
+	
 
 	check(item) {
 		for (let checkbox in this.checked) {
@@ -295,9 +302,8 @@ export class BirthsStatComponent implements OnInit {
 				'Empty Data',
 				'No data on this particular filter yet',
 				'info'
-			);
-		}
-		);
+			)
+		})
 	}
 
 	getChecked(){

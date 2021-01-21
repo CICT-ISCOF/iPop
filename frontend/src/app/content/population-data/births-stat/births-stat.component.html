@@ -13,13 +13,22 @@
             <div class="filters">
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="">Select Muncipality</label>
+                        <label for="municipality">
+                            <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Municipality
+                        </label>
                         <select (load)="getBarangays($event)" (change)="getBarangays($event)" type="text" class="form-control">                       
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label for="">Select Barangay</label>
+                        <label for="barangay">
+                            <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Barangay</label>
                         <select [(ngModel)]="data.barangay" type="text" class="form-control">                       
                             <option *ngFor="let barangay of barangays" [value]="barangay.name">{{ barangay.name }}</option>
                         </select>
@@ -65,13 +74,22 @@
         <div *ngIf="hasData" class="hasData ">
             <div class="row container" style="margin-left: 0px;">
                 <div class="col-md-4">
-                    <label for="">Select Muncipality</label>
+                    <label for="municipality">
+                        <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        Municipality
+                    </label>
                     <select (change)="getBarangaysandGet($event)" type="text" class="form-control">                       
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
                 </div>
                 <div class="col-md-4">
-                    <label for="">Select Barangay</label>
+                    <label for="barangay">
+                        <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        Barangay</label>
                     <select [(ngModel)]="getDataParams.barangay" type="text" class="form-control">                       
                             <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
                         </select>
@@ -193,85 +211,98 @@
                 <div style="padding-left: 20px;">
                     <br><br> <br><br> <br><br>
                     <div>
-                        <p style="display: flex;" class="pop2 center"><span style="margin-left: auto;color:white;font-weight: 900;">TOTAL POPULATION</span>
+                        <p style="display: flex;" class="center "><span style="margin-left: auto;font-weight: 900;">TOTAL POPULATION</span>
                             <span style="margin-left: auto;opacity: 0;pointer-events: none;" *ngIf="!totalLiveBirths" (click)="totalLiveBirths = true" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                 </svg>
                             </span>
                         </p>
-                        <h3 class="center">{{birthSatistics.profile == null ? 0 : birthSatistics.profile}}</h3>
+                        <h1 class="center text-primary">{{birthSatistics.profile == null ? 0 : birthSatistics.profile}}</h1>
                     </div>
                     <br>
                     <div *ngIf="!totalLiveBirths">
-                        <p style="display: flex;" class="pop2 center"><span style="margin-left: auto;color:white;font-weight: 900;">TOTAL LIVE BIRTHS</span>
+                        <p style="display: flex;" class=" center"><span style="margin-left: auto;font-weight: 900;">TOTAL LIVE BIRTHS</span>
                             <span style="margin-left: auto;cursor: pointer;" *ngIf="!totalLiveBirths" (click)="totalLiveBirths = true" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                 </svg>
                         </span>
                         </p>
-                        <h3 class="center">{{birthSatistics.total_live_births}}</h3>
+
+                        <h1 class="center text-primary">{{birthSatistics.total_live_births}}</h1>
                     </div>
                     <div *ngIf="totalLiveBirths" class="row flex-container">
                         <div class="form-group col-md-6">
-                            <label for="Total Deaths">TOTAL LIVE BIRTHS</label>
-                            <input [(ngModel)]="birthSatistics.total_live_births" type="text" class="form-control" id="Total Deaths">
+                            <label style="font-weight: 900;text-align: center !important;width: 100%;margin-left: 25px;" for="Total Deaths">TOTAL LIVE BIRTHS</label>
+                            <input style="margin-left: 30px;" [(ngModel)]="birthSatistics.total_live_births" type="text" class="form-control" id="Total Deaths">
                         </div>
-                        <div class="flex-container">
+                        <div class="flex-container" style="margin-left: 30px;margin-top:10px">
                             <div class=" flex-container">
-                                <button (click)="update()" class="button">Save</button> &nbsp;
-                                <button (click)="totalLiveBirths = false" class="clickable">Cancel</button>
+                                <button (click)="update()" class="clickable">
+                                    <i class="fa fa-check text-success"></i>
+                                </button> &nbsp;
+                                <button (click)="totalLiveBirths = false" class="clickable">
+                                    <i class="fa fa-times"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                     <br>
                     <div *ngIf="!birthRates">
-                        <p style="display: flex;" class="pop2 center"><span style="margin-left: auto;color:white;font-weight: 900;">CRUD BIRTH RATE</span>
+                        <p style="display: flex;" class="center"><span style="margin-left: auto;;font-weight: 900;">CRUD BIRTH RATE</span>
                             <span style="margin-left: auto;cursor: pointer;" *ngIf="!birthRates" (click)="birthRates = true" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="cuurentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                 </svg>
                             </span>
                         </p>
-                        <h3 class="center">{{birthSatistics.crude_birth_rate || 0}}</h3>
+                        <h1 class="center text-primary">{{birthSatistics.crude_birth_rate || 0}}</h1>
                     </div>
                     <div *ngIf="birthRates" class="row  flex-container">
                         <div class="form-group col-md-6">
-                            <label for="Total Deaths">CRUD BIRTH RATE</label>
-                            <input [(ngModel)]="birthSatistics.crude_birth_rate" type="text" class="form-control" id="Total Deaths">
+                            <label style="font-weight: 900;text-align: center !important;width: 100%;margin-left: 25px;" for="Total Deaths">CRUD BIRTH RATE</label>
+                            <input style="margin-left: 30px;" [(ngModel)]="birthSatistics.crude_birth_rate" type="text" class="form-control" id="Total Deaths">
                         </div>
-                        <div class="flex-container">
+                        <div class="flex-container" style="margin-left: 30px;margin-top:10px">
                             <div class=" flex-container">
-                                <button (click)="update()" class="button">Save</button> &nbsp;
-                                <button (click)="birthRates = false" class="clickable">Cancel</button>
+                                <button (click)="update()" class="clickable">
+                                    <i class="fa fa-check text-success"></i>
+                                </button> &nbsp;
+                                <button (click)="birthRates = false" class="clickable">
+                                    <i class="fa fa-times"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                     <br>
                     <div *ngIf="!generaLFirtilityRate">
-                        <p style="display: flex;" class="pop2 center"><span style="margin-left: auto;color:white;font-weight: 900;">GENERAL FERTILITY RATE</span>
+                        <p style="display: flex;" class="center"><span style="margin-left: auto;font-weight: 900;">GENERAL FERTILITY RATE</span>
                             <span style="margin-left: auto;cursor: pointer;" *ngIf="!generaLFirtilityRate" (click)="generaLFirtilityRate = true" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="cuurentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                 </svg>
                             </span>
                         </p>
-                        <h3 class="center">{{birthSatistics.general_fertility_rate}}</h3>
+                        <h1 class="center text-primary">{{birthSatistics.general_fertility_rate}}</h1>
                     </div>
                     <div *ngIf="generaLFirtilityRate" class="row  flex-container">
                         <div class="form-group col-md-6">
-                            <label for="Total Deaths">GENERAL FERTILITY RATE</label>
-                            <input [(ngModel)]="birthSatistics.general_fertility_rate" type="text" class="form-control" id="Total Deaths">
+                            <label style="font-weight: 900;text-align: center !important;width: 100%;margin-left: 25px;" for="Total Deaths">GENERAL FERTILITY RATE</label>
+                            <input style="margin-left: 30px;" [(ngModel)]="birthSatistics.general_fertility_rate" type="text" class="form-control" id="Total Deaths">
                         </div>
-                        <div class="flex-container">
+                        <div class="flex-container" style="margin-left: 30px;margin-top:10px">
                             <div class=" flex-container">
-                                <button (click)="update()" class="button">Save</button> &nbsp;
-                                <button (click)="generaLFirtilityRate = false" class="clickable">Cancel</button>
+                                <button (click)="update()" class="clickable">
+                                    <i class="fa fa-check text-success"></i>
+                                </button> &nbsp;
+                                <button (click)="generaLFirtilityRate = false" class="clickable">
+                                    <i class="fa fa-times"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
