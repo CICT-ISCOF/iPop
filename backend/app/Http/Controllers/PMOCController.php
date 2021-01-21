@@ -47,18 +47,7 @@ class PMOCController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'municipality' => ['required', 'string', 'max:255'],
-            'barangay' => ['required', 'string', 'max:255'],
-            'year' => ['required'],
-            'sessions' => ['nullable', 'numeric'],
-            'oriented_couples' => ['nullable', 'numeric'],
-            'individuals_interviewed' => ['nullable', 'numeric'],
-            'applicants_by_age_group' => ['nullable', 'numeric'],
-            'applicants_by_employment_status' => ['nullable', 'numeric'],
-            'applicants_by_income_class' => ['nullable', 'numeric'],
-            'applicants_by_knowledge_on_fp' => ['nullable', 'numeric'],
-        ]);
+        $data = $request->all();
 
         $pMOC = PMOC::create($data);
         $pMOC->approval()->create([
@@ -93,18 +82,7 @@ class PMOCController extends Controller
      */
     public function update(Request $request, PMOC $pMOC)
     {
-        $data = $request->validate([
-            'municipality' => ['nullable', 'string', 'max:255'],
-            'barangay' => ['nullable', 'string', 'max:255'],
-            'year' => ['required'],
-            'sessions' => ['nullable', 'numeric'],
-            'oriented_couples' => ['nullable', 'numeric'],
-            'individuals_interviewed' => ['nullable', 'numeric'],
-            'applicants_by_age_group' => ['nullable', 'numeric'],
-            'applicants_by_employment_status' => ['nullable', 'numeric'],
-            'applicants_by_income_class' => ['nullable', 'numeric'],
-            'applicants_by_knowledge_on_fp' => ['nullable', 'numeric'],
-        ]);
+        $data = $request->all();
 
         $pMOC->update($data);
         $pMOC->setApproved($request->user()->hasRole(Role::ADMIN))
