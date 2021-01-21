@@ -19,17 +19,21 @@ class BirthStatisticController extends Controller
 
     public function summary()
     {
-        $profiles = BirthStatistic::getApproved()->get();
+        $stats = BirthStatistic::getApproved()->get();
 
-        $data = [];
+        $data = [
+            'total_live_births' => 0,
+            'crude_birth_rate' => 0,
+            'general_fertility_rate' => 0,
+        ];
 
-        foreach ($profiles as $profile) {
-            if (!in_array($profile->municipality, array_keys($data))) {
-                $data[$profile->municipality] = [];
-            }
-            $data[$profile->municipality][] = $profile;
+        foreach ($stats as $stat) {
+            $data['total_live_births'] += (int)$stat->total_live_births;
+            $data['crude_birth_rate'] += (int)$stat->crude_birth_rate;
+            $data['general_fertility_rate'] += (int)$stat->general_fertility_rate;
         }
-        return array_values($data);
+
+        return $data;
     }
 
     /**

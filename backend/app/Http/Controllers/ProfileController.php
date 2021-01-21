@@ -15,7 +15,7 @@ class ProfileController extends Controller
         $this->middleware('auth:sanctum')->except('index', 'show', 'summary');
     }
 
-    public function summary()
+    public function byMunicipality()
     {
         $profiles = Profile::getApproved()->get();
 
