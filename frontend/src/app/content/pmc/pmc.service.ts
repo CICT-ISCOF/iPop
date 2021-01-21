@@ -92,8 +92,8 @@ export class PmcService {
 		return this.http.get<any>(url ,{headers:this.getHeaders()})
 	}
 
-	showPMC(municipality, barangay){
-		const url =  this.baseURL + `?municipality=${municipality}&barangay=${barangay}}`
+	showPMC(municipality, year){
+		const url =  this.baseURL + `?municipality=${municipality}&year=${year}}&barangay=''`
 		return this.http.get<any>(url ,{headers:this.getHeaders()})
 	}
 
