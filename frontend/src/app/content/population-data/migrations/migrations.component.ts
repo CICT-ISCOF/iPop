@@ -273,6 +273,17 @@ export class MigrationsComponent implements OnInit {
 		}
 	}
 
+	
+	update(){
+		this.MigrationStatService.create(this.migrationStatistics).subscribe((data) => {
+			Swal.fire(
+				'Data has been updated',
+				`Data on ${this.migrationStatistics['barangay']}, ${this.migrationStatistics['municipality']}  at year ${this.migrationStatistics['year']} has been updated`,
+				'success'
+			)
+		})
+	}
+
 
 	DeathRateData = false
 	// saveBottomCharts(title){
