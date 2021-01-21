@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class PMCKFP extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'municipality',
+        'barangay',
+        'year',
+        'males',
+        'females',
+    ];
 }
