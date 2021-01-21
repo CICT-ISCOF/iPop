@@ -1,267 +1,557 @@
-<div class="pmc-component">
-    <div class="front">
-        <h4 class="pop2">
-            PRE-MARRIAGE ORIENTATION AND COUNSELLING
-        </h4>
-        <hr>
-        <br>
-        <button (click)="wantsToAdd = true" *ngIf="!wantsToAdd" class="button">Add Data</button>
+<div class="pmc-component row">
+    <div class="row">
+        <div class="col-md-7"></div>
+        <div class="col-md-2">
+            <button (click)="wantsToAdd = true" *ngIf="!wantsToAdd" class="button rounded"><i class="fa fa-plus"></i></button>
+            <button (click)="wantsToAdd = false" *ngIf="wantsToAdd" class="button rounded"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
 
-        <br>
-        <br>
+    <br>
+    <div class="col-md-8">
+        <h4 class="pop2">PRE-MARRIAGE ORIENTATION AND COUNSELLING</h4>
         <div class="wantsToAdd" *ngIf="wantsToAdd ">
-
-            <div class="row container">
-                <h5 class="pop2">ADD PRE-MARRIAGE ORIENTATION AND COUNSELLING RECORD</h5>
+            <div class="row container" style="margin-left: 0 !important;">
+                <h5 class="pop2" style="font-weight: 900;">ADD PRE-MARRIAGE ORIENTATION AND COUNSELLING RECORD</h5>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="">Select Municipality</label>
+                        <label for="">Municipality</label>
                         <select (change)="getBarangays($event)" type="text" class="form-control">                      
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="">Select Barangay</label>
+                        <label for="">Year</label>
                         <select [(ngModel)]="data.barangay" type="text" class="form-control">                       
-                            <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
+                            <option *ngFor="let year of years">{{ year }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="">Number of Sessions Conducted</label>
                         <input [(ngModel)]="data.sessions" type="text" class="form-control">
 
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="">Number of Couples Oriented</label>
                         <input [(ngModel)]="data.oriented_couples" type="text" class="form-control">
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="">Number of Individuals Interview</label>
                         <input [(ngModel)]="data.individuals_interviewed" type="text" class="form-control">
                     </div>
-                    <div class="col-md-6">
-                        <label for="">PMOC APPLICANTS BY AGE GROUP</label>
-                        <input [(ngModel)]="data.applicants_by_age_group" type="text" class="form-control">
-                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <label for="">PMOC APPLICANTS BY EMPLOYMENT STATUS</label>
-                        <input [(ngModel)]="data.applicants_by_employment_status" type="text" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="">PMOC APPLICANTS BY INCOME CLASS</label>
-                        <input [(ngModel)]="data.applicants_by_income_class" type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="">PMOC APPLICANTS BY KNOWLEDGE ON FP</label>
-                        <input [(ngModel)]="data.applicants_by_knowledge_on_fp" type="text" class="form-control">
+                    <div class="col-md-12 flex-container">
+                        <button (click)="save()" class="button">Save</button>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <button (click)="save()" class="button">Save</button>
-                    <button (click)="wantsToAdd = false" *ngIf="wantsToAdd" class="clickable">Cancel</button>
-                </div>
-            </div>
+
         </div>
+
         <div class="!wantsToAdd" *ngIf="!wantsToAdd">
+            <br>
             <div class="filters">
-                <div class="row">
+                <div class="row container" style="margin-left: 0 !important;">
                     <div class="col-md-6">
-                        <label for="">Select Municipality</label>
+                        <label for="">Municipality</label>
                         <select (change)="getBarangays($event)" type="text" class="form-control">                      
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <label for="">Select Barangay</label>
-                        <select (change)="fetchData()" [(ngModel)]="fetch.barangay" type="text" class="form-control">                       
-                            <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
+                    <div class="col-md-4">
+                        <label for="year">Year</label>
+                        <select [(ngModel)]="data.year" class="form-control " id="year">
+                            <option selected disabled>Choose Year</option>
+                            <option *ngFor="let year of years">{{year}}</option>
                         </select>
+                    </div>
+                    <div class="col-md-2  d-flex" style="margin-top: 2rem;">
+                        <button (click)="setFilter()" class="button rounded" style="height: 40px;">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <button (click)="setFilter()" class="button rounded" style="height: 40px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-wide" viewBox="0 0 16 16">
+                                <path d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434L8.932.727zM8 12.997a4.998 4.998 0 1 1 0-9.995 4.998 4.998 0 0 1 0 9.996z"/>
+                              </svg>
+                        </button>
                     </div>
                 </div>
             </div>
-            <br>
-            <div class="hasData" *ngIf="hasData">
 
+            <!-- paslak diri sa dalom -->
+            <div class="hasData">
                 <ul class="list-group">
                     <li class="list-group-item">
                         <p class="municipality-name">
-                            <svg *ngIf="!numberOfSessions" (click)="numberOfSessions = true" class="ml-auto" style="cursor: pointer;margin-right:20px;margin-top:5px" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                                <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                            </svg>Number of Sessions Conducted
+                            <svg style="margin-right: 20px;" *ngIf="!numberOfSessions" (click)="numberOfSessions = true" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                            <svg style="margin-right: 20px;" *ngIf="numberOfSessions" (click)="numberOfSessions = false" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                            </svg> Number of Sessions Conducted
                         </p>
                         <h4 *ngIf="!numberOfSessions">{{pmcStat.sessions}}</h4> <input [(ngModel)]="pmcStat.sessions" (keyup.enter)="numberOfSessions = false;update()" *ngIf="numberOfSessions" type="text"> &nbsp;
-                        <svg *ngIf="numberOfSessions" (click)="numberOfSessions = false" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="numberOfSessions" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                                <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                             </svg>
                     </li>
                     <li class="list-group-item">
                         <p class="municipality-name">
-                            <svg (click)="couplesOrriented = true" class="ml-auto" style="cursor:pointer ;margin-right:20px;margin-top:5px" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                            <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                          </svg>Number of Couples Oriented
+                            <svg style="margin-right: 20px;" *ngIf="!couplesOrriented" (click)="couplesOrriented = true" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                            <svg style="margin-right: 20px;" *ngIf="couplesOrriented" (click)="couplesOrriented = false" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                            </svg> Number of Couples Oriented
                         </p>
                         <h4 *ngIf="!couplesOrriented">{{pmcStat.oriented_couples}}</h4> <input [(ngModel)]="pmcStat.oriented_couples" (keyup.enter)="couplesOrriented = false;update()" *ngIf="couplesOrriented" type="text">&nbsp;
-                        <svg *ngIf="couplesOrriented" (click)="couplesOrriented = false" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="couplesOrriented" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                                <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                             </svg>
                     </li>
                     <li class="list-group-item">
                         <p class="municipality-name">
-                            <svg *ngIf="!individualInterview" (click)="individualInterview = true" class="ml-auto" style="cursor:pointer ;margin-right:20px;margin-top:5px" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                                <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                              </svg>Number of Individuals Interview
+                            <svg style="margin-right: 20px;" *ngIf="!individualInterview" (click)="individualInterview = true" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                            <svg style="margin-right: 20px;" *ngIf="individualInterview" (click)="individualInterview = false" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                            </svg> Number of Individuals Interview
                         </p>
                         <h4 *ngIf="!individualInterview">{{pmcStat.individuals_interviewed}}</h4> <input [(ngModel)]="pmcStat.individuals_interviewed" (keyup.enter)="individualInterview = false;update()" *ngIf="individualInterview" type="text">&nbsp;
-                        <svg *ngIf="individualInterview" (click)="individualInterview = false" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                            </svg>
+                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="individualInterview" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                            <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
+                        </svg>
                     </li>
                 </ul>
                 <br>
-                <div class="chart" *ngIf="!editChartData">
+                <div class="container" *ngIf="!editChartData">
+                    <h4 class="d-flex">
+                        <span class="ml-auto" style="transform: translate(15px);"> Number of Couples</span>
+                        <span (click)="editChartData = true" *ngIf="!editChartData" class="ml-auto">
+                            <svg style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                        </span>
+                    </h4>
                     <canvas baseChart [datasets]="MONTHbarChartData" [labels]="MONTHbarChartLabels" [options]="MONTHbarChartOptions" [legend]="MONTHbarChartLegend" [chartType]="MONTHbarChartType">
                     </canvas>
                 </div>
-                <button (click)="editChartData = true" *ngIf="!editChartData" class="button">Edit Chart Data</button>
-                <div *ngIf="editChartData" class="row" style="padding-top: 30px;">
+                <div class="flex-container">
+
+                </div>
+                <div *ngIf="editChartData" class="row container" style="padding-top: 30px;margin-left: 0;">
                     <br>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="January">January</label>
                         <input type="text" class="form-control" id="January">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="February">February</label>
                         <input type="text" class="form-control" id="February">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="March">March</label>
                         <input type="text" class="form-control" id="March">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="April">April</label>
                         <input type="text" class="form-control" id="April">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="May">May</label>
                         <input type="text" class="form-control" id="May">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="June">June</label>
                         <input type="text" class="form-control" id="June">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="July">July</label>
                         <input type="text" class="form-control" id="July">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="August">August</label>
                         <input type="text" class="form-control" id="August">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="September">September</label>
                         <input type="text" class="form-control" id="September">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="October">October</label>
                         <input type="text" class="form-control" id="October">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="November">November</label>
                         <input type="text" class="form-control" id="November">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="December">December</label>
                         <input type="text" class="form-control" id="December">
                     </div>
-                    <div style="display: flex;
-                    align-items: center;justify-content: center;padding-left: 20px;">
+                    <div class="flex-container col-md-12">
                         <button class="button">Save</button> &nbsp;
                         <button (click)="editChartData = false;update()" *ngIf="editChartData" class="clickable">Cancel</button>
                     </div>
                 </div>
-                <br><br>
-                <div style="text-align: center;">
-                    <p class="flex">PMOC APPLICANTS BY AGE GROUP
-                        <svg (click)="ageByGroup = true" *ngIf="!ageByGroup" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                            <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                          </svg>
 
-                        <svg (click)="ageByGroup = false" *ngIf="ageByGroup" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                          </svg>
-                    </p>
-                    <h3 *ngIf="!ageByGroup">{{pmcStat.applicants_by_age_group}}</h3>
-                    <input [(ngModel)]="pmcStat.applicants_by_age_group" class=" bottom" type="number" (keyup.enter)="ageByGroup =false;update()" *ngIf="ageByGroup">
-                    <br>
-                    <p class="flex">PMOC APPLICANTS BY EMPLOYMENT STATUS
-                        <svg (click)="employmentStatus = true" *ngIf="!employmentStatus" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                            <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                          </svg>
 
-                        <svg (click)="employmentStatus = false" *ngIf="employmentStatus" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                          </svg>
-                    </p>
-                    <h3 *ngIf="!employmentStatus">{{pmcStat.applicants_by_employment_status}}</h3>
-                    <input [(ngModel)]="pmcStat.applicants_by_employment_status" class=" bottom" type="number" (keyup.enter)="employmentStatus =false;update()" *ngIf="employmentStatus">
-                    <br>
-                    <p class="flex">PMOC APPLICANTS BY INCOME CLASS
-                        <svg (click)="incomeClass = true" *ngIf="!incomeClass" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                            <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                          </svg>
+            </div>
 
-                        <svg (click)="incomeClass = false" *ngIf="incomeClass" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                          </svg>
-                    </p>
-                    <h3 *ngIf="!incomeClass">{{pmcStat.applicants_by_income_class}}</h3>
-                    <input [(ngModel)]="pmcStat.applicants_by_income_class" class=" bottom" type="number" (keyup.enter)="incomeClass =false;update()" *ngIf="incomeClass">
-                    <br>
-                    <p class="flex">PMOC APPLICANTS BY KNOWLEDGE ON FP
-                        <svg (click)="knowledgeOn = true" *ngIf="!knowledgeOn" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                            <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                          </svg>
 
-                        <svg (click)="knowledgeOn = false" *ngIf="knowledgeOn" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            <div class="container">
+                <h4></h4>
+                <h4 class="d-flex">
+                    <span class="ml-auto" style="transform: translate(15px);">PMC Couple Applicants by Age Group (%)</span>
+                    <span (click)="coupleByAgeGroupEdit = true" *ngIf="!coupleByAgeGroupEdit" class="ml-auto">
+                        <svg  style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                    </span>
+                    <span (click)="coupleByAgeGroupEdit = false" *ngIf="coupleByAgeGroupEdit" class="ml-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                           </svg>
-                    </p>
-                    <h3 *ngIf="!knowledgeOn FP">{{pmcStat.applicants_by_knowledge_on_fp}}</h3>
-                    <input class="bottom" [(ngModel)]="pmcStat.applicants_by_knowledge_on_fp" type="number" (keyup.enter)="knowledgeOn =false;update()" *ngIf="knowledgeOn FP">
+                    </span>
+                </h4>
+                <canvas *ngIf="!coupleByAgeGroupEdit" baseChart [datasets]="coupleByAgeGroup.data" [labels]="coupleByAgeGroup.labels" [options]="coupleByAgeGroup.options" [legend]="coupleByAgeGroup.legend" [chartType]="coupleByAgeGroup.type">
+                </canvas>
+                <div *ngIf="coupleByAgeGroupEdit" class="row flex-container">
+                    <div class="col-md-12">
+                        <div class="flex-container">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
+                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
+                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br> <br>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="January">15-19</label>
+                        <input type="text" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="January">20-24</label>
+                        <input type="text" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="January">25-29</label>
+                        <input type="text" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="January">30-34</label>
+                        <input type="text" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="January">35-39</label>
+                        <input type="text" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="January">40-44</label>
+                        <input type="text" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="January">45 & UP</label>
+                        <input type="text" class="form-control" id="January">
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="flex-container">
+                            <button class="button">Save</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="container">
+                <h4 class="d-flex">
+                    <span class="ml-auto" style="transform: translate(15px);">PMC Applicants by Employment Status and Sex (%)</span>
+                    <span (click)="employmentStatusEdit = true" *ngIf="!employmentStatusEdit" class="ml-auto">
+                        <svg style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                    </span>
+                    <span (click)="employmentStatusEdit = false" *ngIf="employmentStatusEdit" class="ml-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                          </svg>
+                    </span>
+                </h4>
+                <canvas *ngIf="!employmentStatusEdit" baseChart [datasets]="applicantsByEmploymentStatus.data" [labels]="applicantsByEmploymentStatus.labels" [options]="applicantsByEmploymentStatus.options" [legend]="applicantsByEmploymentStatus.legend" [chartType]="applicantsByEmploymentStatus.type">
+                </canvas>
+                <div *ngIf="employmentStatusEdit" class="row flex-container">
+                    <div class="col-md-12">
+                        <div class="flex-container">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
+                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
+                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br> <br>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="Student">Student</label>
+                        <input type="text" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="Employed">Employed</label>
+                        <input type="text" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="Not Employed">Not Employed</label>
+                        <input type="text" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="flex-container">
+                            <button class="button">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <h4 class="d-flex">
+                    <span class="ml-auto" style="transform: translate(15px);">Knowledge on Family Planning among PMC Applicants (%)</span>
+                    <span (click)="knowledgeInFP = true" *ngIf="!knowledgeInFP" class="ml-auto">
+                        <svg style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                    </span>
+                    <span (click)="knowledgeInFP = false" *ngIf="knowledgeInFP" class="ml-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                          </svg>
+                    </span>
+                </h4>
+                <canvas *ngIf="!knowledgeInFP" baseChart [datasets]="knowLedgeOnFP.data" [labels]="knowLedgeOnFP.labels" [options]="knowLedgeOnFP.options" [legend]="knowLedgeOnFP.legend" [chartType]="knowLedgeOnFP.type">
+                </canvas>
+                <div *ngIf="knowledgeInFP" class="row flex-container">
+                    <div class="col-md-12">
+                        <div class="flex-container">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
+                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
+                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br> <br>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="Student">Year</label>
+                        <input type="text" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-5">
+                        <label for="Employed">Value</label>
+                        <input type="text" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="col-md-2">
+                        <button style="margin-top: 25px;" class="button">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <h4 class="d-flex">
+                    <span class="ml-auto" style="transform: translate(15px);">Percentage Distribution of PMC Applicants by Civil Status</span>
+                    <span (click)="byCivilStatusEdit = true" *ngIf="!byCivilStatusEdit" class="ml-auto">
+                        <svg style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                    </span>
+                    <span (click)="byCivilStatusEdit = false" *ngIf="byCivilStatusEdit" class="ml-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                          </svg>
+                    </span>
+                </h4>
+                <canvas *ngIf="!byCivilStatusEdit" baseChart [datasets]="byCivilStatus.data" [labels]="byCivilStatus.labels" [options]="byCivilStatus.options" [legend]="byCivilStatus.legend" [chartType]="byCivilStatus.type">
+                </canvas>
+                <div *ngIf="byCivilStatusEdit" class="row flex-container">
+                    <div class="col-md-12">
+                        <div class="flex-container">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
+                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
+                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br> <br>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="Student">Single</label>
+                        <input type="text" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="Employed">Co-Habiting/Live-in</label>
+                        <input type="text" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="Not Employed">Widow/er</label>
+                        <input type="text" class="form-control" id="Not Employed">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="Not Employed">Divorced/Separated</label>
+                        <input type="text" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="flex-container">
+                            <button class="button">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="container">
+                <h4 class="d-flex">
+                    <span class="ml-auto" style="transform: translate(15px);">PMC Applicants by Average Monthly Income and Sex (%)</span>
+                    <span (click)="averageMonthlyIncomeEdit = true" *ngIf="!averageMonthlyIncomeEdit" class="ml-auto">
+                        <svg style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                    </span>
+                    <span (click)="averageMonthlyIncomeEdit = false" *ngIf="averageMonthlyIncomeEdit" class="ml-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                          </svg>
+                    </span>
+                </h4>
+                <canvas *ngIf="!averageMonthlyIncomeEdit" baseChart [datasets]="averageMonthlyIncome.data" [labels]="averageMonthlyIncome.labels" [options]="averageMonthlyIncome.options" [legend]="averageMonthlyIncome.legend" [chartType]="averageMonthlyIncome.type">
+                </canvas>
+                <div *ngIf="averageMonthlyIncomeEdit" class="row flex-container">
+                    <div class="col-md-12">
+                        <div class="flex-container">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
+                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
+                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br> <br>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="Student">No Income</label>
+                        <input type="text" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="Employed">Under ₱ 5,000</label>
+                        <input type="text" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="Not Employed">₱ 5,000 - ₱ 9,999</label>
+                        <input type="text" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="Not Employed">₱ 10,000 - ₱ 14,999</label>
+                        <input type="text" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="Not Employed">₱ 15,000 - ₱ 19,999</label>
+                        <input type="text" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="Not Employed">₱ 20,000 - ₱ 24,999</label>
+                        <input type="text" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="Not Employed">₱ 25,000 Up</label>
+                        <input type="text" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="flex-container">
+                            <button class="button">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-    <div class="side">
+
+
+
+
+
+
+    <div class="col-md-4">
         <h4 class="pop2">
             PMC Team
         </h4>
-        <hr>
+
         <div *ngIf="!wantsToAddPMCTeam">
             <div *ngFor="let team of teams; let i = index">
                 <div *ngIf="!activePMCTEAM[i]">
@@ -333,6 +623,7 @@
                 <button (click)="wantsToAddPMCTeam = false" class="clickable">Cancel</button>
             </div>
         </div>
+
 
     </div>
 
