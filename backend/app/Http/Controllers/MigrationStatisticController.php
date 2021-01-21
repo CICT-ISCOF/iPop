@@ -19,17 +19,21 @@ class MigrationStatisticController extends Controller
 
     public function summary()
     {
-        $profiles = MigrationStatistic::getApproved()->get();
+        $stats = MigrationStatistic::getApproved()->get();
 
-        $data = [];
+        $data = [
+            'total_in_migrations',
+            'total_out_migrations',
+            'net_migrations',
+        ];
 
-        foreach ($profiles as $profile) {
-            if (!in_array($profile->municipality, array_keys($data))) {
-                $data[$profile->municipality] = [];
-            }
-            $data[$profile->municipality][] = $profile;
+        foreach ($stats as $stat) {
+            $data['total_in_migrations'] += (int)$stat->total_in_migrations;
+            $data['total_out_migrations'] += (int)$stat->total_out_migrations;
+            $data['net_migrations'] += (int)$stat->net_migrations;
         }
-        return array_values($data);
+
+        return $data;
     }
 
     /**

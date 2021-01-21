@@ -12,7 +12,6 @@ class PMOC extends Model
 
     protected $fillable = [
         'municipality',
-        'barangay',
         'sessions',
         'oriented_couples',
         'individuals_interviewed',

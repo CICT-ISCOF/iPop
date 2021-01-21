@@ -16,7 +16,6 @@ class CreatePMOCSTable extends Migration
         Schema::create('p_m_o_c_s', function (Blueprint $table) {
             $table->id();
             $table->string('municipality');
-            $table->string('barangay');
             $table->year('year');
             $table->string('sessions')->default(0);
             $table->string('oriented_couples')->default(0);

@@ -30,12 +30,13 @@ class PMOCController extends Controller
             }
             return $builder;
         });
+
         $monthChart = MonthChart::where('year', $data['year'])
             ->where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
             ->where('type', 'PMOC')
             ->with('approval')
             ->get();
+
         return ['data' => $builder->get(), 'month' => $monthChart];
     }
 

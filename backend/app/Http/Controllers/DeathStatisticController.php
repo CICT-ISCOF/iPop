@@ -19,17 +19,23 @@ class DeathStatisticController extends Controller
 
     public function summary()
     {
-        $profiles = DeathStatistic::getApproved()->get();
+        $stats = DeathStatistic::getApproved()->get();
 
-        $data = [];
+        $data = [
+            'male' => 0,
+            'female' => 0,
+            'crude_death_rate' => 0,
+            'total' => 0,
+        ];
 
-        foreach ($profiles as $profile) {
-            if (!in_array($profile->municipality, array_keys($data))) {
-                $data[$profile->municipality] = [];
-            }
-            $data[$profile->municipality][] = $profile;
+        foreach ($stats as $stat) {
+            $data['male'] += (int)$stat->male;
+            $data['female'] += (int)$stat->female;
+            $data['crude_death_rate'] += (int)$stat->crude_death_rate;
+            $data['total'] += (int)$stat->total;
         }
-        return array_values($data);
+
+        return $data;
     }
 
     /**
