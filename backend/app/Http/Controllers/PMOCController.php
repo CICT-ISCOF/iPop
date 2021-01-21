@@ -80,10 +80,11 @@ class PMOCController extends Controller
      * @param  \App\Models\PMOC  $pMOC
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PMOC $pMOC)
+    public function update(Request $request, $id)
     {
         $data = $request->all();
 
+        $pMOC = PMOC::findOrFail($id);
         $pMOC->update($data);
         $pMOC->setApproved($request->user()->hasRole(Role::ADMIN))
             ->setApprovalMessage($request->user()->makeMessage('wants to update a PMOC'));
