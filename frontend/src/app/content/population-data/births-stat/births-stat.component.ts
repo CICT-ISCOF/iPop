@@ -25,7 +25,7 @@ export class BirthsStatComponent implements OnInit {
 		municipality: 'Select Municipality',
 		barangay: '',
 		year: '',
-		gender: '',
+		gender: 'Male',
 		total_live_births: '',
 		crude_birth_rate: '',
 		general_fertility_rate: '',

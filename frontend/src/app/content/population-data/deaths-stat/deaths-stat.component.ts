@@ -24,7 +24,7 @@ export class DeathsStatComponent implements OnInit {
 		municipality: 'Select Municipality',
 		barangay: '',
 		year: '',
-		gender: '',
+		gender: 'Male',
 		total_live_births: '',
 		crude_death_rate: '',
 		general_fertility_rate: '',

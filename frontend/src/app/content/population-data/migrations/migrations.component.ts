@@ -25,7 +25,7 @@ export class MigrationsComponent implements OnInit {
 		municipality:'Select Municipality',
 		barangay: '',
 		year:'',
-		gender:''	,
+		gender: 'Male',
 		total_in_migrations:'',
 		total_out_migrations: '',
 		net_migrations:'',
