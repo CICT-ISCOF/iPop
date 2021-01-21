@@ -12,8 +12,24 @@ class ProfileController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index', 'show');
+        $this->middleware('auth:sanctum')->except('index', 'show', 'summary');
     }
+
+    public function summary()
+    {
+        $profiles = Profile::getApproved()->get();
+
+        $data = [];
+
+        foreach ($profiles as $profile) {
+            if (!in_array($profile->municipality, array_keys($data))) {
+                $data[$profile->municipality] = [];
+            }
+            $data[$profile->municipality][] = $profile;
+        }
+        return array_values($data);
+    }
+
     /**
      * Display a listing of the resource.
      *

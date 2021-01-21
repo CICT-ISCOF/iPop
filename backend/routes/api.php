@@ -171,6 +171,11 @@ Route::middleware('throttle:60,1')->group(function () {
         ]);
     });
 
+    Route::get('/statistic-profiles/summary', [ProfileController::class, 'summary']);
+    Route::get('/birth-statistics/summary', [BirthStatisticController::class, 'summary']);
+    Route::get('/death-statistics/summary', [DeathStatisticController::class, 'summary']);
+    Route::get('/migration-statistics/summary', [MigrationStatisticController::class, 'summary']);
+
     Route::apiResources([
         'articles' => ArticleController::class,
         'sbmptcs' => SBMPTCController::class,
