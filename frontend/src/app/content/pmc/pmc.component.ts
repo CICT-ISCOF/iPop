@@ -95,6 +95,28 @@ export class PmcComponent implements OnInit {
 		}
 	}
 
+	coupleByAgeGroupData:any = {
+		data:{}
+	}
+
+	coupleByAgeGroupDataSave(){
+		
+		this.coupleByAgeGroupData['barangay'] = 'test'
+		this.coupleByAgeGroupData['year'] = this.data.year	
+		this.coupleByAgeGroupData['year'] = this.data.year	
+		this.coupleByAgeGroupData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
+		console.log(this.coupleByAgeGroupData.data )
+		console.log('jam lantawa ', this.coupleByAgeGroupData['data'])
+		console.log(this.coupleByAgeGroupData)
+		this.PmcService.storeCoupleByAgeGroup(this.coupleByAgeGroupData).subscribe(data =>{
+			// Swal.fire('New PMC Couple Applicants by Age Group Data has been Added','','success')
+			// this.fetchData()
+		})
+	}
+
+
+
+
 	applicantsByEmploymentStatus = {
 		labels:[],
 		type:'bar',
@@ -190,7 +212,6 @@ export class PmcComponent implements OnInit {
    
    getBarangays(event){	
 	   this.data.municipality = event.target.options[event.target.options.selectedIndex].text
-	   this.fetch.municipality = event.target.options[event.target.options.selectedIndex].text		
 	   this.LocationService.getBarangays(event.target.value).subscribe(data => {
 		   this.barangays = data
 		   this.hasData = true	
@@ -210,16 +231,15 @@ export class PmcComponent implements OnInit {
 		})
 	}
 
-	fetch = {
-		municipality:'',
-		barangay:''
-	}
 
 	editChartData = false
 	updateChart(){
-		this.data['barangay'] = this.fetch.barangay
-		this.data['municipality'] = this.fetch.municipality	
-		this.PmcService.postToMOnthController(this.data).subscribe(data => {	
+		this.PMCData['barangay'] = 'test'
+		this.PMCData['year'] = this.data.year	
+		this.data['year'] = this.data.year	
+		this.PMCData['gender'] = 'Male'
+		this.PMCData['type'] = 'PMOC'
+		this.PmcService.postToMOnthController(this.PMCData).subscribe(data => {	
 			this.editChartData = false		
 			this.MONTHbarChartLabels = []
 			this.MONTHbarChartData[0].data = []
@@ -236,31 +256,27 @@ export class PmcComponent implements OnInit {
 		})
 	}
 
-	PMCData = {}
+	PMCData:any = {}
 	fetchData(){
 		this.PmcService.showPMC(
 			this.data.municipality,
 			this.data.year		
 		).subscribe(data => {
 			this.hasSelectedData = true
-			this.PMCData = data.data	
-			data.month.forEach(element => {
-				if(!this.MONTHbarChartLabels.includes(element.month)){
-					this.MONTHbarChartLabels.push(element.month)					
+			this.PMCData = data.data[0]	
+			console.log(data.month)
+			for(let index in data.month){
+				if (!this.MONTHbarChartLabels.includes(data.month[index].month)) {
+					this.MONTHbarChartLabels.push(data.month[index].month);
 				}
-				if(this.checked.male){
-					this.MONTHbarChartData[0].data.push(element.males)
-	 				this.data.months[element.month] = element.males				
-				}
-				if(this.checked.female){
-					this.MONTHbarChartData[0].data.push(element.females)
-					this.data.months[element.month] = element.females				
-				}
-				if(this.checked.all){
-					this.MONTHbarChartData[0].data.push(element.total)
-					this.data.months[element.month] = element.total					
-				}
-			})
+				this.MONTHbarChartData[0].data.push(data.month[index].total);
+			}
+			this.PMCData.months = this.data.months		
+			// this.PmcService.retrieveCoupleByAgeGroup().subscribe(data => {
+			// 	this.coupleByAgeGroupData.data = data.data
+			// 	console.log('pmc',data)
+			// })
+		
 		},error =>{
 			this.hasSelectedData = false
 			this.UtilityService.setAlert('No data on this particular filter yet','info')
@@ -268,7 +284,9 @@ export class PmcComponent implements OnInit {
 	}
 
 
+	updateBottomChart(type){
 
+	}
 
 
 
