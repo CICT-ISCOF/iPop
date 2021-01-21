@@ -238,6 +238,20 @@ export class DeathsStatComponent implements OnInit {
 	]
 	
 	fetchData() {
+		if(
+			this.getDataParams.municipality == "" || 
+			this.getDataParams.municipality  == null ||
+			this.getDataParams.barangay == "" || 
+			this.getDataParams.barangay == null ||
+			this.getDataParams.year == "" ||  
+			this.getDataParams.barangay ==null 
+		){
+			return Swal.fire(
+				'Filter Policy',
+				'Please specify filters to get accurate data',
+				'info'
+			)
+		}
 		this.MONTHbarChartLabels = []
 		this.MONTHbarChartData[0].data = []
 		this.MONTHbarChartData[1].data = []
