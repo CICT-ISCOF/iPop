@@ -1,3 +1,4 @@
+import { OfficialsService } from './../provincial-officials/officials.service';
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { BaseAPIService } from '../../base-api.service'
@@ -9,7 +10,8 @@ export class StatisticsService {
 
 	constructor(
 		private http : HttpClient,
-		private BaseAPIService : BaseAPIService
+		private BaseAPIService : BaseAPIService,
+	
 	) { }
 
 	user =''

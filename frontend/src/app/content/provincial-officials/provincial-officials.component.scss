@@ -12,6 +12,10 @@ p {
     text-align: center;
 }
 
+.container {
+    background: var(--bg);
+}
+
 h3,
 h4,
 .person-name {
@@ -27,6 +31,14 @@ h4,
     cursor: pointer;
 }
 
+.sideImag {
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 1px solid rgba($color: gray, $alpha: .3);
+    width: 50px;
+    height: 50px;
+}
+
 label {
     padding-top: 5px;
 }
@@ -37,6 +49,7 @@ label {
 
 .flex {
     display: flex;
+    width: 100%;
 }
 
 .close {

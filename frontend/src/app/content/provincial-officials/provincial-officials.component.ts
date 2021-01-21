@@ -12,8 +12,14 @@ export class ProvincialOfficialsComponent implements OnInit {
 
     constructor(
 		private UtilityService : UtilityService,
-		private OfficialsService : OfficialsService
-	) { }
+		private OfficialsService : OfficialsService,
+	) { 
+		this.OfficialsService.getOfficialsFilter().subscribe(data => {
+			this.officialsImage = data
+		})
+	}
+
+	officialsImage = ""
 
     ngOnInit(): void {
 		this.getOfficials()

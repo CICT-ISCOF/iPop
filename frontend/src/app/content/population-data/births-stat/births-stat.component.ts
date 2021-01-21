@@ -1,3 +1,4 @@
+import  Swal  from 'sweetalert2';
 import { UtilityService } from './../../../utility.service';
 import { BirthStatService } from './birth-stat.service';
 import { LocationService } from './../../../location.service';
@@ -10,246 +11,356 @@ import { groupBy, where } from '../../../helpers';
   styleUrls: ['./births-stat.component.scss'],
 })
 export class BirthsStatComponent implements OnInit {
-  constructor(
-    private LocationService: LocationService,
-    private BirthStatService: BirthStatService,
-    private UtilityService: UtilityService
-  ) {}
+	constructor(
+		private LocationService: LocationService,
+		private BirthStatService: BirthStatService,
+		private UtilityService: UtilityService
+	) {}
 
-  municipalities: any = [];
-  barangays: any = [];
-  hasData = true;
+	municipalities: any = [];
+	barangays: any = [];
+	hasData = true;
 
-  data = {
-    municipality: 'Select Municipality',
-    barangay: '',
-    year: '',
-    gender: '',
-    total_live_births: '',
-    crude_birth_rate: '',
-    general_fertility_rate: '',
-    months: {
-      January: 0,
-      February: 0,
-      March: 0,
-      April: 0,
-      May: 0,
-      June: 0,
-      July: 0,
-      August: 0,
-      September: 0,
-      October: 0,
-      November: 0,
-      December: 0,
-    },
-    type: 'Birth',
-  };
+	data = {
+		municipality: 'Select Municipality',
+		barangay: '',
+		year: '',
+		gender: 'Male',
+		total_live_births: '',
+		crude_birth_rate: '',
+		general_fertility_rate: '',
+		monthsFemale: {
+			January: 0,
+			February: 0,
+			March: 0,
+			April: 0,
+			May: 0,
+			June: 0,
+			July: 0,
+			August: 0,
+			September: 0,
+			October: 0,
+			November: 0,
+			December: 0,
+		},
+		monthsMale: {
+			January: 0,
+			February: 0,
+			March: 0,
+			April: 0,
+			May: 0,
+	 		June: 0,
+			July: 0,
+			August: 0,
+			September: 0,
+			October: 0,
+			November: 0,
+			December: 0,
+			
+		},
+		monthsTotal: {
+			January: 0,
+			February: 0,
+			March: 0,
+			April: 0,
+			May: 0,
+			June: 0,
+			July: 0,
+			August: 0,
+			September: 0,
+			October: 0,
+			November: 0,
+			December: 0,
+			
+		},
 
-  MONTHbarChartOptions = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-  };
-  MONTHbarChartLabels = [];
-  MONTHbarChartType = 'bar';
-  MONTHbarChartLegend = true;
-  MONTHbarChartData = [{ data: [], label: 'Births By Months' }];
+		type: 'Birth',
+	};
 
-  // -------------
+	MONTHbarChartOptions = {
+		scaleShowVerticalLines: false,
+		responsive: true,
+	};
+	MONTHbarChartLabels = [];
+	MONTHbarChartType = 'bar';
+	MONTHbarChartLegend = true;
+	MONTHbarChartData = [
+		{ data: [], label: 'Females' },
+		{ data: [], label: 'Males' },
+		{ data: [], label: 'Total' }
+	];
 
-  TEENAGEBIRTHRATEbarChartOptions = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-  };
-  TEENAGEBIRTHRATEbarChartLabels = [];
-  TEENAGEBIRTHRATEbarChartType = 'line';
-  TEENAGEBIRTHRATEbarChartLegend = true;
-  TEENAGEBIRTHRATEbarChartData = [
-    { data: [], label: 'INCIDENCE OF TEENAGE BIRTHS' },
-  ];
+	// -------------
 
-  // -------------
+	TEENAGEBIRTHRATEbarChartOptions = {
+		scaleShowVerticalLines: false,
+		responsive: true,
+	};
+	TEENAGEBIRTHRATEbarChartLabels = [];
+	TEENAGEBIRTHRATEbarChartType = 'line';
+	TEENAGEBIRTHRATEbarChartLegend = true;
+	TEENAGEBIRTHRATEbarChartData = [
+		{ data: [], label: 'INCIDENCE OF TEENAGE BIRTHS' },
+	];
 
-  ILLEGITIMATEBIRTHbarChartOptions = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-  };
-  ILLEGITIMATEBIRTHbarChartLabels = [];
-  ILLEGITIMATEBIRTHbarChartType = 'line';
-  ILLEGITIMATEBIRTHbarChartLegend = true;
-  ILLEGITIMATEBIRTHbarChartData = [
-    { data: [], label: 'INCIDENCE OF ILLEGITIMATE BIRTHS' },
-  ];
+	// -------------
 
-  years = [];
+	ILLEGITIMATEBIRTHbarChartOptions = {
+		scaleShowVerticalLines: false,
+		responsive: true,
+	};
+	ILLEGITIMATEBIRTHbarChartLabels = [];
+	ILLEGITIMATEBIRTHbarChartType = 'line';
+	ILLEGITIMATEBIRTHbarChartLegend = true;
+	ILLEGITIMATEBIRTHbarChartData = [
+		{ data: [], label: 'INCIDENCE OF ILLEGITIMATE BIRTHS' },
+	];
 
-  getDataParams = {
-    barangay: '',
-    municipality: '',
-    year: '',
-    gender: '',
-  };
+	years = [];
 
-  checked = {
-    male: false,
-    female: false,
-    all: true,
-  };
+	getDataParams = {
+		barangay: '',
+		municipality: '',
+		year: '',
+		gender: '',
+	}
 
-  ngOnInit(): void {
-    for (let i = 2020; i <= 2050; i++) {
-      this.years.push(i);
-    }
-    this.getMuncipalities();
-  }
+	checked = {
+		male: true,
+		female: false,
+		all: false,
+	}
 
-  getMuncipalities() {
-    this.LocationService.getMunicipalities().subscribe((data) => {
-      this.municipalities = data;
-    });
-  }
+	ngOnInit(): void {
+		for (let i = 2015; i <= 2050; i++) {
+			this.years.push(i);
+		}
+		this.getMuncipalities();
+	}
 
-  getBarangays(event) {
-    this.data.municipality =
-      event.target.options[event.target.options.selectedIndex].text;
-    this.LocationService.getBarangays(event.target.value).subscribe((data) => {
-      this.barangays = data;
-    });
-  }
+	municipalityIsLoading = false
+	getMuncipalities(){		
+		this.municipalityIsLoading = true
+		this.LocationService.getMunicipalities().subscribe(data => {
+			this.municipalityIsLoading = false
+			this.municipalities = data			
+		})
+	}
+	barangayIsLoading = false
+	getBarangaysandGet(event) {
+		this.barangayIsLoading = true	
+		this.getDataParams.municipality = event.target.options[event.target.options.selectedIndex].text;
+		this.LocationService.getBarangays(event.target.value).subscribe((data) => {
+			this.barangays = data
+			this.barangayIsLoading = false
+		})
+	}
 
-  save() {
-    this.BirthStatService.postToMOnthController(this.data).subscribe((data) => {
-      this.BirthStatService.create(this.data).subscribe((data) => {
-        this.UtilityService.setAlert(
-          'New Death Statistics Data has been added',
-          'success'
-        );
-      });
-    });
-  }
+	getBarangays(event){	
+		this.barangayIsLoading = true	
+		this.data.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data		
+			this.barangayIsLoading = false
+		})
+	} 
 
-  editChartData = false;
-  updateChart() {
-    this.data['barangay'] = this.getDataParams.barangay;
-    this.data['municipality'] = this.getDataParams.municipality;
-    this.data['year'] = this.getDataParams.year;
-    this.data['gender'] = this.getDataParams.gender;
-    this.BirthStatService.postToMOnthController(this.data).subscribe((data) => {
-      this.editChartData = false;
-      this.MONTHbarChartLabels = [];
-      this.MONTHbarChartData[0].data = [];
-      this.fetchData();
-      this.UtilityService.setAlert('Chart has been updated', 'success');
-    });
-  }
+	update(){
+		this.BirthStatService.create(this.birthSatistics).subscribe((data) => {
+			Swal.fire(
+				'Data has been updated',
+				`Data on ${this.birthSatistics['barangay']}, ${this.birthSatistics['municipality']}  at year ${this.birthSatistics['year']} has been updated`,
+				'success'
+			)
+		})
+	}
 
-  getBarangaysandGet(event) {
-    this.getDataParams.municipality =
-      event.target.options[event.target.options.selectedIndex].text;
-    this.LocationService.getBarangays(event.target.value).subscribe((data) => {
-      this.barangays = data;
-    });
-  }
+	save() {
+		this.data['months'] = []
+		for(let key in this.checked){
+			if(this.checked[key]){
+				if(key == 'male'){
+					this.data['months'] = this.data['monthsMale']
+				}
+				if(key == 'female'){
+					this.data['months'] = this.data['monthsFemale']
+				}
+				if(key == 'all'){
+					this.data['months'] = this.data['monthsTotal']
+				}
+			}
+		}
+		this.BirthStatService.postToMOnthController(this.data).subscribe((data) => {
+			this.BirthStatService.create(this.data).subscribe((data) => {
+				Swal.fire(
+					'New Birth Statistics Data has been added',
+					'',
+					'success'
+				)
+			})
+		})
+	}
 
-  check(item) {
-    for (let checkbox in this.checked) {
-      this.checked[checkbox] = false;
-    }
-    this.checked[item] = true;
-    this.getDataParams.gender = item;
-    this.fetchData();
-  }
+	editChartData = false;
+	isLoading = false
+	updateChart() {
+		this.isLoading = true
+		this.data['barangay'] = this.getDataParams.barangay;
+		this.data['municipality'] = this.getDataParams.municipality;
+		this.data['year'] = this.getDataParams.year;
+		this.data['gender'] = this.getDataParams.gender;
+		this.data['months'] = []
+		for(let key in this.checked){
+			if(this.checked[key]){
+				if(key == 'male'){
+					this.data['months'] = this.data['monthsMale']
+				}
+				if(key == 'female'){
+					this.data['months'] = this.data['monthsFemale']
+				}
+				if(key == 'all'){
+					this.data['months'] = this.data['monthsTotal']
+				}
+			}
+		}
+		this.BirthStatService.postToMOnthController(this.data).subscribe((data) => {
+			this.isLoading = false
+			this.editChartData = false;
+			this.MONTHbarChartLabels = [];
+			this.MONTHbarChartData[0].data = [];
+			this.fetchData();
+			Swal.fire('Chart has been updated','', 'success');
+		})
+	}
 
-  birthSatistics = {};
-  hasSelectedData = false;
-  teenageBirth = [];
-  legitimateBirth = [];
-  fetchData() {
-    this.BirthStatService.showData(
-      this.getDataParams.municipality,
-      this.getDataParams.barangay,
-      this.getDataParams.year,
-      this.getDataParams.gender
-    ).subscribe(
-      (data) => {
-        this.hasSelectedData = true;
-        this.birthSatistics = data.data;
-        const incidences = groupBy(data.incidence, 'title');
-        console.log(incidences);
-        this.teenageBirth = [];
-        this.legitimateBirth = [];
+	
 
-        if (incidences[0][0].title === 'INCIDENCE OF TEENAGE BIRTHS') {
-          this.teenageBirth = incidences[0];
-        }
-        if (incidences[1][0].title === 'INCIDENCE OF ILLEGITIMATE BIRTHS') {
-          this.legitimateBirth = incidences[1];
-        }
-        if (incidences[1][0].title === 'INCIDENCE OF TEENAGE BIRTHS') {
-          this.teenageBirth = incidences[0];
-        }
-        if (incidences[0][0].title === 'INCIDENCE OF ILLEGITIMATE BIRTHS') {
-          this.legitimateBirth = incidences[1];
-        }
-        console.log('this.legitimateBirth', this.legitimateBirth);
-        // data.incidence.forEach(element => {
-        // 	if(!this.TEENAGEBIRTHRATEbarChartLabels.includes(element.year)){
-        // 		this.TEENAGEBIRTHRATEbarChartLabels.push(element.year)
-        // 	}
-        // 	this.TEENAGEBIRTHRATEbarChartData[0].data.push(element.value)
-        // })
-        console.log(data.month)
-        data.month.forEach((element) => {
-          if (!this.MONTHbarChartLabels.includes(element.month)) {
-            this.MONTHbarChartLabels.push(element.month);
-          }
-          if (this.checked.male) {
-            this.MONTHbarChartData[0].data.push(element.males);
-            this.data.months[element.month] = element.males;
-          }
-          if (this.checked.female) {
-            this.MONTHbarChartData[0].data.push(element.females);
-            this.data.months[element.month] = element.females;
-          }
-          if (this.checked.all) {
-            this.MONTHbarChartData[0].data.push(element.total);
-            this.data.months[element.month] = element.total;
-          }
-        });
-      },
-      (error) => {
-        this.hasSelectedData = false;
-        this.UtilityService.setAlert(
-          'No data on this particular filter yet',
-          'info'
-        );
-      }
-    );
-  }
+	check(item) {
+		for (let checkbox in this.checked) {
+			this.checked[checkbox] = false;
+		}
+		this.checked[item] = true;
+		this.getDataParams.gender = item;
+	}
 
-  bottomChartData = {
-    title: '',
-    type: 'Birth',
-    value: 0,
-    years: [],
-  };
-  DeathRateData = false;
-  saveBottomCharts(title) {
-    // INCIDENCE OF TEENAGE BIRTHS
-    // INCIDENCE OF ILLEGITIMATE BIRTHS
-    this.bottomChartData.title = title;
-    this.bottomChartData['barangay'] = this.getDataParams.barangay;
-    this.bottomChartData['municipality'] = this.getDataParams.municipality;
-    this.bottomChartData['gender'] = this.getDataParams.gender;
-    this.BirthStatService.postToinsidence(this.bottomChartData).subscribe(
-      (data) => {
-        this.DeathRateData = true;
-        this.UtilityService.setAlert(title + ' has been Updated', 'success');
-        this.TEENAGEBIRTHRATEbarChartLabels = [];
-        this.TEENAGEBIRTHRATEbarChartData[0].data = [];
-        this.ILLEGITIMATEBIRTHbarChartLabels = [];
-        this.ILLEGITIMATEBIRTHbarChartData[0].data = [];
-        this.fetchData();
-      }
-    );
-  }
+	birthSatistics = {};
+	hasSelectedData = false;
+	teenageBirth = [];
+	legitimateBirth = [];
+	fetchData() {
+		if(
+			this.getDataParams.municipality == "" || 
+			this.getDataParams.municipality  == null ||
+			this.getDataParams.barangay == "" || 
+			this.getDataParams.barangay == null ||
+			this.getDataParams.year == "" ||  
+			this.getDataParams.barangay ==null 
+		){
+			return Swal.fire(
+				'Filter Policy',
+				'Please specify filters to get accurate data',
+				'info'
+			)
+		}
+		this.MONTHbarChartLabels = []
+		this.MONTHbarChartData[0].data = []
+		this.MONTHbarChartData[1].data = []
+		this.MONTHbarChartData[2].data = []
+		this.BirthStatService.showData(
+			this.getDataParams.municipality,
+			this.getDataParams.barangay,
+			this.getDataParams.year,
+			this.getDataParams.gender
+		).subscribe(
+		(data) => {
+			this.hasSelectedData = true;
+			this.birthSatistics = data.data;
+			const incidences = groupBy(data.incidence, 'title');
+			// if (incidences[0][0].title == 'INCIDENCE OF TEENAGE BIRTHS') {
+				this.teenageBirth = incidences[0];
+				this.legitimateBirth = incidences[1];
+			// }
+			// else{
+				// this.teenageBirth = incidences[1];
+				// this.legitimateBirth = incidences[1];
+			// }
+			for(let index in this.teenageBirth){		
+				if(!this.TEENAGEBIRTHRATEbarChartLabels.includes(this.teenageBirth[index].year)){
+					this.TEENAGEBIRTHRATEbarChartLabels.push(this.teenageBirth[index].year)
+				}
+				this.TEENAGEBIRTHRATEbarChartData[0].data.push(this.teenageBirth[index].value)
+			}
+			for(let index in this.legitimateBirth){		
+				if(!this.ILLEGITIMATEBIRTHbarChartLabels.includes(this.legitimateBirth[index].year)){
+					this.ILLEGITIMATEBIRTHbarChartLabels.push(this.legitimateBirth[index].year)
+				}
+				this.ILLEGITIMATEBIRTHbarChartData[0].data.push(this.legitimateBirth[index].value)
+			}
+			for(let index in data.month){		
+				if (!this.MONTHbarChartLabels.includes(data.month[index].month)) {
+					this.MONTHbarChartLabels.push(data.month[index].month);
+				}
+				this.MONTHbarChartData[0].data.push(data.month[index].females);
+				this.data.monthsFemale[data.month[index].month] = data.month[index].females;
+		
+				this.MONTHbarChartData[1].data.push(data.month[index].males);
+				this.data.monthsMale[data.month[index].month] = data.month[index].males;
+		
+				this.MONTHbarChartData[2].data.push(data.month[index].total);
+				this.data.monthsTotal[data.month[index].month] = data.month[index].total;
+			}
+		},
+		(error) => {
+			this.hasSelectedData = false;
+			Swal.fire(
+				'Empty Data',
+				'No data on this particular filter yet',
+				'info'
+			)
+		})
+	}
+
+	getChecked(){
+		for(let key in this.checked){
+			if(this.checked[key]){
+				if(key == 'male'){
+					return 'monthsMale'
+				}
+				if(key == 'female'){
+					return 'monthsFemale'
+				}
+				if(key == 'all'){
+					return 'monthsTotal'
+				}
+			}
+		}
+	}
+
+	bottomChartData = {
+		title: '',
+		type: 'Birth',
+		value: 0,
+		years: [],
+	};
+	DeathRateData = false;
+	saveBottomCharts(title) {
+		// INCIDENCE OF TEENAGE BIRTHS
+		// INCIDENCE OF ILLEGITIMATE BIRTHS
+		this.bottomChartData.title = title;
+		this.bottomChartData['barangay'] = this.getDataParams.barangay;
+		this.bottomChartData['municipality'] = this.getDataParams.municipality;
+		this.bottomChartData['gender'] = this.getDataParams.gender;
+			this.BirthStatService.postToinsidence(this.bottomChartData).subscribe(
+			(data) => {
+				this.DeathRateData = true;
+				this.UtilityService.setAlert(title + ' has been Updated', 'success');
+				this.TEENAGEBIRTHRATEbarChartLabels = [];
+				this.TEENAGEBIRTHRATEbarChartData[0].data = [];
+				this.ILLEGITIMATEBIRTHbarChartLabels = [];
+				this.ILLEGITIMATEBIRTHbarChartData[0].data = [];
+				this.fetchData();
+			}
+		);
+		
+	}
 }
