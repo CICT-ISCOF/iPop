@@ -16,15 +16,14 @@ class CreatePMOCSTable extends Migration
         Schema::create('p_m_o_c_s', function (Blueprint $table) {
             $table->id();
             $table->string('municipality');
-            $table->string('barangay');
             $table->year('year');
-            $table->unsignedBigInteger('sessions')->default(0);
-            $table->unsignedBigInteger('oriented_couples')->default(0);
-            $table->unsignedBigInteger('individuals_interviewed')->default(0);
-            $table->unsignedBigInteger('applicants_by_age_group')->default(0);
-            $table->unsignedBigInteger('applicants_by_employment_status')->default(0);
-            $table->unsignedBigInteger('applicants_by_income_class')->default(0);
-            $table->unsignedBigInteger('applicants_by_knowledge_on_fp')->default(0);
+            $table->string('sessions')->default(0);
+            $table->string('oriented_couples')->default(0);
+            $table->string('individuals_interviewed')->default(0);
+            $table->string('applicants_by_age_group')->default(0);
+            $table->string('applicants_by_employment_status')->default(0);
+            $table->string('applicants_by_income_class')->default(0);
+            $table->string('applicants_by_knowledge_on_fp')->default(0);
             $table->timestamps();
         });
     }
