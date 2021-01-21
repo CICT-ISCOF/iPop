@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import { UtilityService } from './../../utility.service';
 import { PmcService } from './pmc.service';
 import { LocationService } from './../../location.service';
@@ -25,6 +26,8 @@ export class PmcComponent implements OnInit {
 		municipality:'',
 		year:'',
 		sessions:'',
+		brangay:'test',
+		gender:'Male',
 		oriented_couples:'',
 		individuals_interviewed:'',
 		applicants_by_age_group:'',
@@ -150,11 +153,6 @@ export class PmcComponent implements OnInit {
 
 
 
-
-
-
-
-
 	ngOnInit(): void {
 		for(let i = 2015;i < 2100;i++){
 			this.years.push(i)
@@ -200,6 +198,11 @@ export class PmcComponent implements OnInit {
    }
 
    save(){		
+		this.data['barangay'] = "Sample"
+		this.data['applicants_by_age_group'] = 1
+		this.data['applicants_by_employment_status'] = 1
+		this.data['applicants_by_income_class'] = 1
+		this.data['applicants_by_knowledge_on_fp'] = 1
 		this.PmcService.postToMOnthController(this.data).subscribe(data => {
 			this.PmcService.create(this.data).subscribe(data => {			
 				this.UtilityService.setAlert('New Death Statistics Data has been added', 'success')
@@ -237,16 +240,10 @@ export class PmcComponent implements OnInit {
 	fetchData(){
 		this.PmcService.showPMC(
 			this.getDataParams.municipality,
-			this.getDataParams.barangay		
+			this.getDataParams.year		
 		).subscribe(data => {
 			this.hasSelectedData = true
 			this.PMCData = data.data	
-			// data.incidence.forEach(element => {				
-			// 	if(!this.DEATHRATEbarChartLabels.includes(element.year)){
-			// 		this.DEATHRATEbarChartLabels.push(element.year)
-			// 	}
-			// 	this.DEATHRATEbarChartData[0].data.push(element.value)				
-			// })
 			data.month.forEach(element => {
 				if(!this.MONTHbarChartLabels.includes(element.month)){
 					this.MONTHbarChartLabels.push(element.month)					
@@ -269,11 +266,27 @@ export class PmcComponent implements OnInit {
 			this.UtilityService.setAlert('No data on this particular filter yet','info')
 		})		
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	pmcTeam:any = {}
+
 	savePMCTEAM(){
 		this.pmcTeam['photo'] = this.pmcTeam.file
 		this.PmcService.createTeams(this.pmcTeam).subscribe(data => {
-
+			this.ngOnInit()
+			Swal.fire('Team Successfully Added','','success')
 		})
 	}
 
@@ -287,14 +300,28 @@ export class PmcComponent implements OnInit {
 	updatePMTeam(team){	
 		delete team["photo"];
 		this.PmcService.updateTeams(team, team['id']).subscribe(data => {
-			this.UtilityService.setAlert(team['name'] + ' has been updated','success')
+			this.UtilityService.setAlert(team['name'] + ' has been updated','success')	
+			this.ngOnInit()
 		})
 	}
 
 	deleteTeam(id){
-		this.PmcService.deletePMCTeams(id).subscribe(data => {
-			this.UtilityService.setAlert('You have deleted a team member','info')
-		})
+		Swal.fire({
+			title: 'Are you sure you want to delete this team member?',		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Delete',
+			cancelButtonText: 'Later'
+		  }).then((result) => {
+			if (result.value) {
+				this.PmcService.deletePMCTeams(id).subscribe(data => {
+					this.UtilityService.setAlert('You have deleted a team member','info')	
+					this.ngOnInit()
+				})
+			} 
+		})	
+
+
 	}
 
 

@@ -69,6 +69,7 @@ h4,
         height: 70px;
         border-radius: 50%;
         align-self: center;
+        border: 1px solid rgba($color: var(--contrast), $alpha: .5) !important;
     }
 }
 
