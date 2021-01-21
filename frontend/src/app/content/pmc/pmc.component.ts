@@ -23,7 +23,7 @@ export class PmcComponent implements OnInit {
 	hasData = false	
 	data:any = {
 		municipality:'',
-		barangay:'',
+		year:'',
 		sessions:'',
 		oriented_couples:'',
 		individuals_interviewed:'',
@@ -70,12 +70,95 @@ export class PmcComponent implements OnInit {
 	MONTHbarChartType = 'bar';
 	MONTHbarChartLegend = true;
 	MONTHbarChartData = [
-		{data: [], label: 'No of Couples'},
+		{data: [], label: 'Data'},
 	
 	]
 	wantsToAddPMCTeam = false
+	years = []
+
+
+
+	coupleByAgeGroup = {
+		labels:[],
+		type:'bar',
+		legend:true,
+		data:[
+			{ data: [], label: 'Female'},
+			{ data: [], label: 'Male'},
+		],
+		options:{
+			scaleShowVerticalLines: false,
+			responsive: true
+		}
+	}
+
+	applicantsByEmploymentStatus = {
+		labels:[],
+		type:'bar',
+		legend:true,
+		data:[
+			{ data: [], label: 'Female'},
+			{ data: [], label: 'Male'},
+		],
+		options:{
+			scaleShowVerticalLines: false,
+			responsive: true
+		}
+	}
+
+	averageMonthlyIncome = {
+		labels:[],
+		type:'bar',
+		legend:true,
+		data:[
+			{ data: [], label: 'Female'},
+			{ data: [], label: 'Male'},
+		],
+		options:{
+			scaleShowVerticalLines: false,
+			responsive: true
+		}
+	}
+
+	knowLedgeOnFP = {
+		labels:[],
+		type:'bar',
+		legend:true,
+		data:[
+			{ data: [], label: 'Female'},
+			{ data: [], label: 'Male'},
+		],
+		options:{
+			scaleShowVerticalLines: false,
+			responsive: true
+		}
+	}
+
+	byCivilStatus = {
+		labels:[],
+		type:'bar',
+		legend:true,
+		data:[
+			{ data: [], label: 'Female'},
+			{ data: [], label: 'Male'},
+		],
+		options:{
+			scaleShowVerticalLines: false,
+			responsive: true
+		}
+	}
+
+
+
+
+
+
+
 
 	ngOnInit(): void {
+		for(let i = 2015;i < 2100;i++){
+			this.years.push(i)
+		}
 		this.getMuncipalities()
 		this.retrieveTeams()
 	}
