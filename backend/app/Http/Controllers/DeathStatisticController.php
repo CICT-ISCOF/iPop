@@ -26,6 +26,7 @@ class DeathStatisticController extends Controller
             'female' => 0,
             'crude_death_rate' => 0,
             'total' => 0,
+            'incidences' => Incidence::where('type', 'Death')->get(),
         ];
 
         foreach ($stats as $stat) {

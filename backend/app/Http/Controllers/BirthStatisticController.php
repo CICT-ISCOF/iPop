@@ -25,6 +25,7 @@ class BirthStatisticController extends Controller
             'total_live_births' => 0,
             'crude_birth_rate' => 0,
             'general_fertility_rate' => 0,
+            'incidences' => Incidence::where('type', 'Birth')->get(),
         ];
 
         foreach ($stats as $stat) {
