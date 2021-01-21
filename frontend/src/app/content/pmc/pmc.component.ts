@@ -239,8 +239,8 @@ export class PmcComponent implements OnInit {
 	PMCData = {}
 	fetchData(){
 		this.PmcService.showPMC(
-			this.getDataParams.municipality,
-			this.getDataParams.year		
+			this.data.municipality,
+			this.data.year		
 		).subscribe(data => {
 			this.hasSelectedData = true
 			this.PMCData = data.data	

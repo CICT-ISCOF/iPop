@@ -91,9 +91,9 @@ export class PmcService {
 		const url =  this.BaseAPIService.baseURL + '/pmocc-teams'
 		return this.http.get<any>(url ,{headers:this.getHeaders()})
 	}
-
+ 
 	showPMC(municipality, year){
-		const url =  this.baseURL + `?municipality=${municipality}&year=${year}}&barangay=''`
+		const url =  this.baseURL + `?municipality=${municipality}&year=${year}&barangay=''`
 		return this.http.get<any>(url ,{headers:this.getHeaders()})
 	}
 

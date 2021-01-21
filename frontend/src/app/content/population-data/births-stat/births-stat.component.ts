@@ -136,6 +136,13 @@ export class BirthsStatComponent implements OnInit {
 			this.years.push(i);
 		}
 		this.getMuncipalities();
+		this.getSummary()
+	}
+
+	getSummary(){
+		this.BirthStatService.getSUmmary().subscribe(data => {
+			this.birthSatistics = data
+		})
 	}
 
 	municipalityIsLoading = false
