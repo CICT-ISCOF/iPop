@@ -136,6 +136,13 @@ export class BirthsStatComponent implements OnInit {
 			this.years.push(i);
 		}
 		this.getMuncipalities();
+		this.getSummary()
+	}
+
+	getSummary(){
+		this.BirthStatService.getSUmmary().subscribe(data => {
+			this.birthSatistics = data
+		})
 	}
 
 	municipalityIsLoading = false
@@ -275,6 +282,7 @@ export class BirthsStatComponent implements OnInit {
 		(data) => {
 			this.hasSelectedData = true;
 			this.birthSatistics = data.data;
+			console.log(data.data)
 			const incidences = groupBy(data.incidence, 'title');
 			// if (incidences[0][0].title == 'INCIDENCE OF TEENAGE BIRTHS') {
 				this.teenageBirth = incidences[0];

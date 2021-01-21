@@ -62,7 +62,7 @@ export class BirthStatService {
 
 	showData(municipality, barangay, year, gender){
 		const url =  this.baseURL + `?municipality=${municipality}&barangay=${barangay}&year=${year}`
-		return this.http.get<any>(url ,{headers:this.getHeaders()})
+		return this.http.get<any>(url )
 	}
 
 
@@ -74,5 +74,10 @@ export class BirthStatService {
 	postToinsidence(data){		
 		const url = this.BaseAPIService.baseURL + '/incidences'
 		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
+	getSUmmary(){
+		const url = this.BaseAPIService.baseURL + '/birth-statistics/summary'
+		return this.http.get<any>(url )
 	}
 }

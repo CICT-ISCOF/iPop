@@ -83,6 +83,7 @@
             </div>
 
             <!-- paslak diri sa dalom -->
+            <!-- *ngIf="hasData" -->
             <div class="hasData">
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -95,7 +96,7 @@
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Sessions Conducted
                         </p>
-                        <h4 *ngIf="!numberOfSessions">{{pmcStat.sessions}}</h4> <input [(ngModel)]="pmcStat.sessions" (keyup.enter)="numberOfSessions = false;update()" *ngIf="numberOfSessions" type="text"> &nbsp;
+                        <h1 class="text-primary" *ngIf="!numberOfSessions">{{PMCData.sessions || 0}}</h1> <input [(ngModel)]="PMCData.sessions" (keyup.enter)="numberOfSessions = false;update()" *ngIf="numberOfSessions" type="text"> &nbsp;
                         <svg style="margin-top:5px;margin-left: 15px;" *ngIf="numberOfSessions" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
                                 <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                             </svg>
@@ -110,7 +111,7 @@
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Couples Oriented
                         </p>
-                        <h4 *ngIf="!couplesOrriented">{{pmcStat.oriented_couples}}</h4> <input [(ngModel)]="pmcStat.oriented_couples" (keyup.enter)="couplesOrriented = false;update()" *ngIf="couplesOrriented" type="text">&nbsp;
+                        <h1 class="text-primary" *ngIf="!couplesOrriented">{{PMCData.oriented_couples || 0}}</h1> <input [(ngModel)]="PMCData.oriented_couples" (keyup.enter)="couplesOrriented = false;update()" *ngIf="couplesOrriented" type="text">&nbsp;
                         <svg style="margin-top:5px;margin-left: 15px;" *ngIf="couplesOrriented" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
                                 <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                             </svg>
@@ -125,7 +126,7 @@
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Individuals Interview
                         </p>
-                        <h4 *ngIf="!individualInterview">{{pmcStat.individuals_interviewed}}</h4> <input [(ngModel)]="pmcStat.individuals_interviewed" (keyup.enter)="individualInterview = false;update()" *ngIf="individualInterview" type="text">&nbsp;
+                        <h1 class="text-primary" *ngIf="!individualInterview">{{PMCData.individuals_interviewed || 0}}</h1> <input [(ngModel)]="PMCData.individuals_interviewed" (keyup.enter)="individualInterview = false;update()" *ngIf="individualInterview" type="text">&nbsp;
                         <svg style="margin-top:5px;margin-left: 15px;" *ngIf="individualInterview" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
                             <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                         </svg>
@@ -152,55 +153,55 @@
                     <br>
                     <div class="form-group col-md-3">
                         <label for="January">January</label>
-                        <input type="text" class="form-control" id="January">
+                        <input [(ngModel)]="PMCData.months.January" type="number" class="form-control" id="January">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="February">February</label>
-                        <input type="text" class="form-control" id="February">
+                        <input [(ngModel)]="PMCData.months.February" type="number" class="form-control" id="February">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="March">March</label>
-                        <input type="text" class="form-control" id="March">
+                        <input [(ngModel)]="PMCData.months.March" type="number" class="form-control" id="March">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="April">April</label>
-                        <input type="text" class="form-control" id="April">
+                        <input [(ngModel)]="PMCData.months.April" type="number" class="form-control" id="April">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="May">May</label>
-                        <input type="text" class="form-control" id="May">
+                        <input [(ngModel)]="PMCData.months.May" type="number" class="form-control" id="May">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="June">June</label>
-                        <input type="text" class="form-control" id="June">
+                        <input [(ngModel)]="PMCData.months.June" type="number" class="form-control" id="June">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="July">July</label>
-                        <input type="text" class="form-control" id="July">
+                        <input [(ngModel)]="PMCData.months.July" type="number" class="form-control" id="July">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="August">August</label>
-                        <input type="text" class="form-control" id="August">
+                        <input [(ngModel)]="PMCData.months.August" type="number" class="form-control" id="August">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="September">September</label>
-                        <input type="text" class="form-control" id="September">
+                        <input [(ngModel)]="PMCData.months.September" type="number" class="form-control" id="September">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="October">October</label>
-                        <input type="text" class="form-control" id="October">
+                        <input [(ngModel)]="PMCData.months.October" type="number" class="form-control" id="October">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="November">November</label>
-                        <input type="text" class="form-control" id="November">
+                        <input [(ngModel)]="PMCData.months.November" type="number" class="form-control" id="November">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="December">December</label>
-                        <input type="text" class="form-control" id="December">
+                        <input [(ngModel)]="PMCData.months.December" type="number" class="form-control" id="December">
                     </div>
                     <div class="flex-container col-md-12">
-                        <button class="button">Save</button> &nbsp;
-                        <button (click)="editChartData = false;update()" *ngIf="editChartData" class="clickable">Cancel</button>
+                        <button (click)="editChartData = false;updateChart()" class="button">Save</button> &nbsp;
+                        <button (click)="editChartData = false" *ngIf="editChartData" class="clickable">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -243,42 +244,42 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="January">15-19</label>
-                        <input type="text" class="form-control" id="January">
+                        <input [(ngModel)]="coupleByAgeGroupData.data['15-19']" type="number" class="form-control" id="January">
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="January">20-24</label>
-                        <input type="text" class="form-control" id="January">
+                        <input [(ngModel)]="coupleByAgeGroupData.data['20-24']" type="number" class="form-control" id="January">
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="January">25-29</label>
-                        <input type="text" class="form-control" id="January">
+                        <input [(ngModel)]="coupleByAgeGroupData.data['25-29']" type="number" class="form-control" id="January">
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="January">30-34</label>
-                        <input type="text" class="form-control" id="January">
+                        <input [(ngModel)]="coupleByAgeGroupData.data['30-34']" type="number" class="form-control" id="January">
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="January">35-39</label>
-                        <input type="text" class="form-control" id="January">
+                        <input [(ngModel)]="coupleByAgeGroupData.data['35-39']" type="number" class="form-control" id="January">
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="January">40-44</label>
-                        <input type="text" class="form-control" id="January">
+                        <input [(ngModel)]="coupleByAgeGroupData.data['40-44']" type="number" class="form-control" id="January">
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="January">45 & UP</label>
-                        <input type="text" class="form-control" id="January">
+                        <input [(ngModel)]="coupleByAgeGroupData.data['45 & UP']" type="number" class="form-control" id="January">
                     </div>
 
                     <div class="col-md-12">
                         <div class="flex-container">
-                            <button class="button">Save</button>
+                            <button (click)="coupleByAgeGroupDataSave()" class="button">Save</button>
                         </div>
                     </div>
                 </div>

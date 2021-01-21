@@ -91,10 +91,10 @@ export class PmcService {
 		const url =  this.BaseAPIService.baseURL + '/pmocc-teams'
 		return this.http.get<any>(url ,{headers:this.getHeaders()})
 	}
-
+ 
 	showPMC(municipality, year){
-		const url =  this.baseURL + `?municipality=${municipality}&year=${year}}&barangay=''`
-		return this.http.get<any>(url ,{headers:this.getHeaders()})
+		const url =  this.baseURL + `?municipality=${municipality}&year=${year}`
+		return this.http.get<any>(url)
 	}
 
 
@@ -109,5 +109,16 @@ export class PmcService {
 	}
 
 
+	// -----------charts ----------
+
+	storeCoupleByAgeGroup(data){
+		const url = this.BaseAPIService.baseURL + '/pmc-age-group'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
+	retrieveCoupleByAgeGroup(){
+		const url = this.BaseAPIService.baseURL + '/pmc-age-group'
+		return this.http.get<any>(url)
+	}
 
 }
