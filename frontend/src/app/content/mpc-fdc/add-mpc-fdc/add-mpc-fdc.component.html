@@ -1,6 +1,9 @@
-<div class="add-new-teen-center-component">
-    <h2>Add New Teen Center</h2>
+<div class="add-new-teen-center-component container">
+    <h5 class="pop2">ADD MULTI-PURPOSE CONSELLING AND FAMILY DEVELOPMENT CENTER</h5>
     <div class="row">
+        <div class="col-md-12">
+            <br> <br>
+        </div>
         <div class="col-md-6">
             <label for="">Name</label>
             <input [(ngModel)]="teenCenter.name" type="text" class="form-control">
@@ -23,10 +26,11 @@
             <label for="">Services Offered</label>
             <textarea [(ngModel)]="teenCenter.services" autosize class="form-control"></textarea>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <br> <br>
+        </div>
+        <div class="col-md-12 flex-container">
             <button (click)="create()" class="button">Save MPC-FDC</button>
-            <button (click)="back()" class="clickable">Back</button>
         </div>
     </div>
 </div>

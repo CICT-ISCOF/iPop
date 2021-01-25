@@ -1,3 +1,4 @@
+import { MPCFDCComponent } from './../mpc-fdc.component';
 import { MpcService } from './../mpc.service';
 import { UtilityService } from './../../../utility.service';
 import { LocationService } from './../../../location.service';
@@ -14,7 +15,8 @@ export class AddMpcFdcComponent implements OnInit {
 	constructor(
 		private MpcService : MpcService,
 		private LocationService : LocationService,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private MPCFDCComponent : MPCFDCComponent
 	) { }
 
  
@@ -49,8 +51,6 @@ export class AddMpcFdcComponent implements OnInit {
 		})
 	}
 
-	// back(){
-	// 	this.MpcService.addNewTeenCenter(false)
-	// }
+
 
 }
