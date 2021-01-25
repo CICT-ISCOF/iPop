@@ -18,7 +18,20 @@ class CreatePMCAgeGroupsTable extends Migration
             $table->string('municipality');
             $table->string('barangay');
             $table->year('year');
-            $table->json('data');
+            $table->string('15_to_19_male');
+            $table->string('15_to_19_female');
+            $table->string('20_to_24_male');
+            $table->string('20_to_24_female');
+            $table->string('25_to_29_male');
+            $table->string('25_to_29_female');
+            $table->string('30_to_34_male');
+            $table->string('30_to_34_female');
+            $table->string('35_to_39_male');
+            $table->string('35_to_39_female');
+            $table->string('40_to_44_male');
+            $table->string('40_to_44_female');
+            $table->string('45_and_above_male');
+            $table->string('45_and_above_female');
             $table->timestamps();
         });
     }
