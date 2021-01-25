@@ -52,7 +52,7 @@ export class PmcComponent implements OnInit {
 	}
 	pmcStat = this.data
 	getDataParams = {
-		barangay:'',
+		barangay:'test',
 		municipality:'',
 		year:'',
 		gender:''
@@ -246,7 +246,7 @@ export class PmcComponent implements OnInit {
 		this.retrieveTeams()
 	}
 
-		triggerFileInput(id){
+	triggerFileInput(id){
 		document.getElementById(id).click()
 	}
 	activePMCTEAM = {}
@@ -281,15 +281,17 @@ export class PmcComponent implements OnInit {
 	}
 
 	save(){		
-		this.data['barangay'] = "Sample"
+		this.data['barangay'] = "test"
 		this.data['applicants_by_age_group'] = 1
 		this.data['applicants_by_employment_status'] = 1
 		this.data['applicants_by_income_class'] = 1
 		this.data['applicants_by_knowledge_on_fp'] = 1
-		this.PmcService.postToMOnthController(this.data).subscribe(data => {
-			this.PmcService.create(this.data).subscribe(data => {			
-				this.UtilityService.setAlert('New Death Statistics Data has been added', 'success')
-			})
+		this.data['oriented_couples'] =  this.PMCData['oriented_couples']
+		this.data['individuals_interviewed'] = this.PMCData['individuals_interviewed'] 
+		this.data['oriented_couples'] =   this.PMCData['oriented_couples'] 
+		this.data['sessions'] =  	this.PMCData['sessions']   
+		this.PmcService.create(this.data).subscribe(data => {			
+			this.UtilityService.setAlert('New Death Statistics Data has been added', 'success')
 		})
 	}
 
@@ -319,47 +321,7 @@ export class PmcComponent implements OnInit {
 	PMCData:any = {
 		months:{}
 	}
-	fetchData(){
-		this.PmcService.showPMC(
-			this.data.municipality,
-			this.data.year		
-		).subscribe(data => {
-			if( data.data[0] = null	 || data.data.length == 0){
-				this.hasData = false	
-				return Swal.fire('No data on this filters','','info')
-			}
-			else{
-				this.hasData = true
-				this.PMCData = data.data[0]	
-				for(let index in data.month){
-					if (!this.MONTHbarChartLabels.includes(data.month[index].month)) {
-						this.MONTHbarChartLabels.push(data.month[index].month);
-					}
-					this.MONTHbarChartData[0].data.push(data.month[index].total);
-				}
-				this.data.months['January'] = data.month[0].total	|| 0
-				this.data.months.February = data.month[1].total	 	|| 0
-				this.data.months.March = data.month[2].total	 	|| 0
-
-				this.data.months.April = data.month[3].total	 	|| 0
-				this.data.months.May = data.month[4].total	 		|| 0
-				this.data.months.June = data.month[5].total 		|| 0
-				
-				this.data.months.July = data.month[6].total	 		|| 0
-				this.data.months.August = data.month[7].total 		|| 0
-				this.data.months.September = data.month[8].total	|| 0
-
-				this.data.months.October = data.month[9].total	 	|| 0
-				this.data.months.November = data.month[10].total 	|| 0
-				this.data.months.December = data.month[11].total 	|| 0
-
-				this.fetchCharts()
-			}
-		},error =>{
-			this.hasData = false
-			this.UtilityService.setAlert('No data on this particular filter yet','info')
-		})		
-	}
+	
 
 	pmcTeam:any = {}
 
@@ -368,6 +330,12 @@ export class PmcComponent implements OnInit {
 		this.PmcService.createTeams(this.pmcTeam).subscribe(data => {
 			this.ngOnInit()
 			Swal.fire('Team Successfully Added','','success')
+			this.wantsToAddPMCTeam = false
+		},
+		(error) => {
+			for (let message in error.error.errors) {
+			  this.UtilityService.setAlert(error.error.errors[message], 'error');
+			}
 		})
 	}
 
@@ -381,8 +349,11 @@ export class PmcComponent implements OnInit {
 	updatePMTeam(team){	
 		delete team["photo"];
 		this.PmcService.updateTeams(team, team['id']).subscribe(data => {
-			this.UtilityService.setAlert(team['name'] + ' has been updated','success')	
 			this.ngOnInit()
+			Swal.fire(`${team['name']} has been updated`,'','success')
+			for(let index in this.activePMCTEAM){
+				this.activePMCTEAM[index] = false 
+			}
 		})
 	}
 
@@ -402,6 +373,7 @@ export class PmcComponent implements OnInit {
 			} 
 		})	
 	}
+
 
 	// -------------bottom charts-----------------
 
@@ -560,7 +532,50 @@ export class PmcComponent implements OnInit {
 		})
 	}
 	
+	// ------all--------
 
+	fetchData(){
+		this.PmcService.showPMC(
+			this.data.municipality,
+			this.data.year		
+		).subscribe(data => {
+			this.PMCData = data.data[0] ||  data.data[1]
+			if( data.data[0] = null	 || data.data.length == 0){
+				this.hasData = false	
+				return Swal.fire('No data on this filters','','info')
+			}
+			else{
+				this.hasData = true
+				console.log('PMCData',	this.PMCData)
+				for(let index in data.month){
+					if (!this.MONTHbarChartLabels.includes(data.month[index].month)) {
+						this.MONTHbarChartLabels.push(data.month[index].month);
+					}
+					this.MONTHbarChartData[0].data.push(data.month[index].total);
+				}
+				this.data.months['January'] = data.month[0].total	|| 0
+				this.data.months.February = data.month[1].total	 	|| 0
+				this.data.months.March = data.month[2].total	 	|| 0
+
+				this.data.months.April = data.month[3].total	 	|| 0
+				this.data.months.May = data.month[4].total	 		|| 0
+				this.data.months.June = data.month[5].total 		|| 0
+				
+				this.data.months.July = data.month[6].total	 		|| 0
+				this.data.months.August = data.month[7].total 		|| 0
+				this.data.months.September = data.month[8].total	|| 0
+
+				this.data.months.October = data.month[9].total	 	|| 0
+				this.data.months.November = data.month[10].total 	|| 0
+				this.data.months.December = data.month[11].total 	|| 0
+
+				this.fetchCharts()
+			}
+		},error =>{
+			this.hasData = false
+			this.UtilityService.setAlert('No data on this particular filter yet','info')
+		})		
+	}
 
 
 }

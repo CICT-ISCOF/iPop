@@ -30,16 +30,16 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="">Number of Sessions Conducted</label>
-                        <input [(ngModel)]="data.sessions" type="text" class="form-control">
+                        <input [(ngModel)]="PMCData.sessions" type="text" class="form-control">
 
                     </div>
                     <div class="col-md-4">
                         <label for="">Number of Couples Oriented</label>
-                        <input [(ngModel)]="data.oriented_couples" type="text" class="form-control">
+                        <input [(ngModel)]="PMCData.oriented_couples" type="text" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="">Number of Individuals Interview</label>
-                        <input [(ngModel)]="data.individuals_interviewed" type="text" class="form-control">
+                        <input [(ngModel)]="PMCData.individuals_interviewed" type="text" class="form-control">
                     </div>
                 </div>
                 <div class="row">
@@ -96,8 +96,8 @@
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Sessions Conducted
                         </p>
-                        <h1 class="text-primary" *ngIf="!numberOfSessions">{{PMCData.sessions || 0}}</h1> <input [(ngModel)]="PMCData.sessions" (keyup.enter)="numberOfSessions = false;update()" *ngIf="numberOfSessions" type="text"> &nbsp;
-                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="numberOfSessions" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                        <h1 (click)="numberOfSessions = true" class="text-primary" *ngIf="!numberOfSessions">{{PMCData.sessions || 0}}</h1> <input [(ngModel)]="PMCData.sessions" (keyup.enter)="numberOfSessions = false;save()" *ngIf="numberOfSessions" type="text"> &nbsp;
+                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="numberOfSessions" (click)="numberOfSessions = false;save()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
                                 <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                             </svg>
                     </li>
@@ -111,8 +111,8 @@
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Couples Oriented
                         </p>
-                        <h1 class="text-primary" *ngIf="!couplesOrriented">{{PMCData.oriented_couples || 0}}</h1> <input [(ngModel)]="PMCData.oriented_couples" (keyup.enter)="couplesOrriented = false;update()" *ngIf="couplesOrriented" type="text">&nbsp;
-                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="couplesOrriented" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                        <h1 (click)="couplesOrriented = true" class="text-primary" *ngIf="!couplesOrriented">{{PMCData.oriented_couples || 0}}</h1> <input [(ngModel)]="PMCData.oriented_couples" (keyup.enter)="couplesOrriented = false;save()" *ngIf="couplesOrriented" type="text">&nbsp;
+                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="couplesOrriented" (click)="numberOfSessions = false;save()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
                                 <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                             </svg>
                     </li>
@@ -126,8 +126,8 @@
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Individuals Interview
                         </p>
-                        <h1 class="text-primary" *ngIf="!individualInterview">{{PMCData.individuals_interviewed || 0}}</h1> <input [(ngModel)]="PMCData.individuals_interviewed" (keyup.enter)="individualInterview = false;update()" *ngIf="individualInterview" type="text">&nbsp;
-                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="individualInterview" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                        <h1 (click)="individualInterview = true" class="text-primary" *ngIf="!individualInterview">{{PMCData.individuals_interviewed || 0}}</h1> <input [(ngModel)]="PMCData.individuals_interviewed" (keyup.enter)="individualInterview = false;save()" *ngIf="individualInterview" type="text">&nbsp;
+                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="individualInterview" (click)="numberOfSessions = false;save()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
                             <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                         </svg>
                     </li>
@@ -577,10 +577,7 @@
         </div>
     </div>
 
-
-
-
-
+    <!-- --------------PMC TEAM ------------------------- -->
 
     <div class="col-md-4">
         <h4 class="pop2">
@@ -599,7 +596,7 @@
         </span>
         <br>
         <div *ngIf="!wantsToAddPMCTeam">
-            <div *ngFor="let team of teams; let i = index" class="container" style="padding-bottom: -20px !important;margin-bottom: -20px">
+            <div *ngFor="let team of teams; let i = index" class="container" style="padding-bottom: -20px !important;margin-bottom: -20px;margin-left: 0;">
                 <div *ngIf="!activePMCTEAM[i]">
                     <div class="flex" style="transform: translate(0,20px);">
                         <span (click)="toggleProgram(i)" class="edit" style="margin-right: 20px;">
@@ -646,7 +643,7 @@
             </div>
 
         </div>
-        <div *ngIf="wantsToAddPMCTeam" class="row container">
+        <div *ngIf="wantsToAddPMCTeam" class="row container" style="margin-left: 0px;">
             <div class="picture">
                 <img (click)="triggerFileInput('image-file')" [src]="placeholder" alt="" style="cursor: pointer;">
                 <input (change)="readURL($event.target.files,$event)" type="file" style="display: none;" id="image-file">
@@ -661,7 +658,7 @@
                     <input [(ngModel)]="pmcTeam.position" type="text" id="Position" class="form-control">
                 </div>
                 <div class="col-md-2 form-group">
-                    <button (click)="savePMCTEAM()" class="button">Save</button>
+                    <button (click)="savePMCTEAM()" style="margin-top: 40px;" class="button">Save</button>
                 </div>
             </div>
 
