@@ -303,40 +303,39 @@
                 <canvas *ngIf="!employmentStatusEdit" baseChart [datasets]="applicantsByEmploymentStatus.data" [labels]="applicantsByEmploymentStatus.labels" [options]="applicantsByEmploymentStatus.options" [legend]="applicantsByEmploymentStatus.legend" [chartType]="applicantsByEmploymentStatus.type">
                 </canvas>
                 <div *ngIf="employmentStatusEdit" class="row flex-container">
+                    <div class="form-group col-md-6">
+                        <label for="Student">Male Students</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.student_male" type="text" class="form-control" id="Student">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Student">Female Students</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.student_female" type="text" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Employed Males</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.employed_male" type="text" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Employed Females</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.employed_female" type="text" class="form-control" id="Employed">
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Unemployed Males</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.not_employed_male" type="text" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Unemployed Females</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.not_employed_female" type="text" class="form-control" id="Not Employed">
+                    </div>
+
                     <div class="col-md-12">
                         <div class="flex-container">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
-                            </div>
-
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <br> <br>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="Student">Student</label>
-                        <input type="text" class="form-control" id="Student">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Employed">Employed</label>
-                        <input type="text" class="form-control" id="Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">Not Employed</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="flex-container">
-                            <button class="button">Save</button>
+                            <button (click)="saveApplicantsByEmploymentStatus()" class="button">Save</button>
                         </div>
                     </div>
                 </div>
@@ -360,34 +359,19 @@
                 <canvas *ngIf="!knowledgeInFP" baseChart [datasets]="knowLedgeOnFP.data" [labels]="knowLedgeOnFP.labels" [options]="knowLedgeOnFP.options" [legend]="knowLedgeOnFP.legend" [chartType]="knowLedgeOnFP.type">
                 </canvas>
                 <div *ngIf="knowledgeInFP" class="row flex-container">
-                    <div class="col-md-12">
-                        <div class="flex-container">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
-                            </div>
 
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <br> <br>
-                    </div>
                     <div class="form-group col-md-5">
-                        <label for="Student">Year</label>
-                        <input type="text" class="form-control" id="Student">
+                        <label for="Employed">Males</label>
+                        <input [(ngModel)]="knowLedgeOnFPData.males" type="number" class="form-control" id="Employed">
                     </div>
 
                     <div class="form-group col-md-5">
-                        <label for="Employed">Value</label>
-                        <input type="text" class="form-control" id="Employed">
+                        <label for="Employed">Females</label>
+                        <input [(ngModel)]="knowLedgeOnFPData.females" type="number" class="form-control" id="Employed">
                     </div>
 
                     <div class="col-md-2">
-                        <button style="margin-top: 25px;" class="button">Save</button>
+                        <button (click)="saveknowLedgeOnFP()" style="margin-top: 25px;" class="button">Save</button>
                     </div>
                 </div>
             </div>
@@ -410,44 +394,50 @@
                 <canvas *ngIf="!byCivilStatusEdit" baseChart [datasets]="byCivilStatus.data" [labels]="byCivilStatus.labels" [options]="byCivilStatus.options" [legend]="byCivilStatus.legend" [chartType]="byCivilStatus.type">
                 </canvas>
                 <div *ngIf="byCivilStatusEdit" class="row flex-container">
+
+                    <div class="form-group col-md-6">
+                        <label for="Student">Single (Males)</label>
+                        <input [(ngModel)]="byCivilStatusData.single_male" type="number" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Student">Single (Females)</label>
+                        <input [(ngModel)]="byCivilStatusData.single_female" type="number" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Co-Habiting/Live-in (Males)</label>
+                        <input [(ngModel)]="byCivilStatusData.live_in_male" type="number" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Co-Habiting/Live-in (Females)</label>
+                        <input [(ngModel)]="byCivilStatusData.live_in_female" type="number" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Widow/er  (Males)</label>
+                        <input [(ngModel)]="byCivilStatusData.widow_male" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Widow/er  (Females)</label>
+                        <input [(ngModel)]="byCivilStatusData.widow_female" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Divorced/Separated (Males)</label>
+                        <input [(ngModel)]="byCivilStatusData.separated_male" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Divorced/Separated (Females)</label>
+                        <input [(ngModel)]="byCivilStatusData.separated_female" type="number" class="form-control" id="Not Employed">
+                    </div>
+
                     <div class="col-md-12">
                         <div class="flex-container">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
-                            </div>
-
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <br> <br>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="Student">Single</label>
-                        <input type="text" class="form-control" id="Student">
-                    </div>
-
-                    <div class="form-group col-md-3">
-                        <label for="Employed">Co-Habiting/Live-in</label>
-                        <input type="text" class="form-control" id="Employed">
-                    </div>
-
-                    <div class="form-group col-md-3">
-                        <label for="Not Employed">Widow/er</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="Not Employed">Divorced/Separated</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="flex-container">
-                            <button class="button">Save</button>
+                            <button (click)="savebyCivilStatus()" class="button">Save</button>
                         </div>
                     </div>
                 </div>
@@ -471,60 +461,77 @@
                 <canvas *ngIf="!averageMonthlyIncomeEdit" baseChart [datasets]="averageMonthlyIncome.data" [labels]="averageMonthlyIncome.labels" [options]="averageMonthlyIncome.options" [legend]="averageMonthlyIncome.legend" [chartType]="averageMonthlyIncome.type">
                 </canvas>
                 <div *ngIf="averageMonthlyIncomeEdit" class="row flex-container">
+                    <div class="form-group col-md-6">
+                        <label for="Student">No Income (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.no_income_male" type="number" class="form-control" id="Student">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Student">No Income (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.no_income_female" type="number" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Under ₱ 5,000 (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.under_5k_male" type="number" class="form-control" id="Employed">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Under ₱ 5,000 (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.under_5k_female" type="number" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 5,000 - ₱ 9,999 (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['5k_to_10k_male']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 5,000 - ₱ 9,999 (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['5k_to_10k_female']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 10,000 - ₱ 14,999 (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['10k_to_15k_male']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 10,000 - ₱ 14,999 (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['10k_to_15k_female']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 15,000 - ₱ 19,999 (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['15k_to_20k_male']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 15,000 - ₱ 19,999 (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['15k_to_20k_female']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 20,000 - ₱ 24,999 (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['20k_to_25k_male']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 20,000 - ₱ 24,999 (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['20k_to_25k_female']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 25,000 Up (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.above_25k_male" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 25,000 Up (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.above_25k_female" type="number" class="form-control" id="Not Employed">
+                    </div>
+
                     <div class="col-md-12">
                         <div class="flex-container">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
-                            </div>
-
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <br> <br>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="Student">No Income</label>
-                        <input type="text" class="form-control" id="Student">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Employed">Under ₱ 5,000</label>
-                        <input type="text" class="form-control" id="Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">₱ 5,000 - ₱ 9,999</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">₱ 10,000 - ₱ 14,999</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">₱ 15,000 - ₱ 19,999</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">₱ 20,000 - ₱ 24,999</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">₱ 25,000 Up</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="flex-container">
-                            <button class="button">Save</button>
+                            <button (click)="saveAverageMonthlyIncome()" class="button">Save</button>
                         </div>
                     </div>
                 </div>

@@ -1,3 +1,4 @@
+import { Label } from 'ng2-charts';
 import Swal from 'sweetalert2';
 import { UtilityService } from './../../utility.service';
 import { PmcService } from './pmc.service';
@@ -10,9 +11,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pmc.component.scss']
 })
 export class PmcComponent implements OnInit {
-
-   
-	constructor(
+	
+   	constructor(
 		private LocationService : LocationService,
 		private PmcService : PmcService,
 		private UtilityService : UtilityService
@@ -79,8 +79,6 @@ export class PmcComponent implements OnInit {
 	wantsToAddPMCTeam = false
 	years = []
 
-
-
 	coupleByAgeGroup = {
 		labels:[],
 		type:'bar',
@@ -88,6 +86,7 @@ export class PmcComponent implements OnInit {
 		data:[
 			{ data: [], label: 'Female'},
 			{ data: [], label: 'Male'},
+			{ data: [], label: 'Total'},
 		],
 		options:{
 			scaleShowVerticalLines: false,
@@ -100,30 +99,61 @@ export class PmcComponent implements OnInit {
 	}
 
 	coupleByAgeGroupDataSave(){
-		
 		this.coupleByAgeGroupData['barangay'] = 'test'
 		this.coupleByAgeGroupData['year'] = this.data.year	
 		this.coupleByAgeGroupData['year'] = this.data.year	
 		this.coupleByAgeGroupData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
-		console.log(this.coupleByAgeGroupData.data )
-		console.log('jam lantawa ', this.coupleByAgeGroupData['data'])
-		console.log(this.coupleByAgeGroupData)
 		this.PmcService.storeCoupleByAgeGroup(this.coupleByAgeGroupData).subscribe(data =>{
-			// Swal.fire('New PMC Couple Applicants by Age Group Data has been Added','','success')
-			// this.fetchData()
+			this.getPMCAgeGroup()
+		})
+	}
+
+	applicantsByEmploymentStatus = {
+		labels:['Students','Employed','Unemployed'],
+		type:'bar',
+		legend:true,
+		data:[
+			{ data: [1,21,21], label: 'Female'},
+			{ data: [1,21,21], label: 'Male'},
+			{ data: [1,21,21], label: 'Total'},
+		],
+		options:{
+			scaleShowVerticalLines: false,
+			responsive: true
+		}
+	}
+
+	applicantsByEmploymentStatusData:any = {
+		data:{}
+	}
+
+	saveApplicantsByEmploymentStatus(){
+		this.applicantsByEmploymentStatusData['barangay'] = 'test'
+		this.applicantsByEmploymentStatusData['year'] = this.data.year	
+		this.applicantsByEmploymentStatusData['year'] = this.data.year	
+		this.applicantsByEmploymentStatusData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
+		this.PmcService.storeApplicantsByEmploymentStatus(this.applicantsByEmploymentStatusData).subscribe(data =>{
+			this.getPMCEES()
 		})
 	}
 
 
-
-
-	applicantsByEmploymentStatus = {
-		labels:[],
+	averageMonthlyIncome = {
+		labels:[
+			'No Income',
+			'Under ₱ 5,000 ',
+			'₱ 5,000 - ₱ 9,999',
+			'₱ 10,000 - ₱ 14,999',
+			'₱ 15,000 - ₱ 19,999',
+			' 20,000 - ₱ 24,999',
+			'₱ 25,000 Up'
+		],
 		type:'bar',
 		legend:true,
 		data:[
-			{ data: [], label: 'Female'},
-			{ data: [], label: 'Male'},
+			{ data: [1,2,3,4], label: 'Female'},
+			{ data: [1,2,3,4], label: 'Male'},
+			{ data: [1,2,3,4], label: 'Total'},
 		],
 		options:{
 			scaleShowVerticalLines: false,
@@ -131,41 +161,57 @@ export class PmcComponent implements OnInit {
 		}
 	}
 
-	averageMonthlyIncome = {
-		labels:[],
-		type:'bar',
-		legend:true,
-		data:[
-			{ data: [], label: 'Female'},
-			{ data: [], label: 'Male'},
-		],
-		options:{
-			scaleShowVerticalLines: false,
-			responsive: true
-		}
+	averageMonthlyIncomeData:any = {
+		data:{}
+	}
+
+	saveAverageMonthlyIncome(){
+		this.averageMonthlyIncomeData['barangay'] = 'test'
+		this.averageMonthlyIncomeData['year'] = this.data.year	
+		this.averageMonthlyIncomeData['year'] = this.data.year	
+		this.averageMonthlyIncomeData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
+		this.PmcService.storeAverageMonthlyIncome(this.averageMonthlyIncomeData).subscribe(data =>{
+			this.getAverageMonthlyIncome()
+		})
 	}
 
 	knowLedgeOnFP = {
-		labels:[],
+		labels:[ 	],
 		type:'bar',
 		legend:true,
 		data:[
-			{ data: [], label: 'Female'},
-			{ data: [], label: 'Male'},
+			{ data: [1], label: 'Female'},
+			{ data: [2], label: 'Male'},
+			{ data: [3], label: 'Total'},
 		],
 		options:{
 			scaleShowVerticalLines: false,
 			responsive: true
 		}
+	}
+
+	knowLedgeOnFPData:any = {
+		data:{}
+	}
+
+	saveknowLedgeOnFP(){
+		this.knowLedgeOnFPData['barangay'] = 'test'
+		this.knowLedgeOnFPData['year'] = this.data.year	
+		this.knowLedgeOnFPData['year'] = this.data.year	
+		this.knowLedgeOnFPData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
+		this.PmcService.storeknowLedgeOnFP(this.knowLedgeOnFPData).subscribe(data =>{
+			this.getknowLedgeOnFP()
+		})
 	}
 
 	byCivilStatus = {
-		labels:[],
+		labels:['Single','Co-Habiting/Live-in','Widow/er','Divorced/Separated'],
 		type:'bar',
 		legend:true,
 		data:[
 			{ data: [], label: 'Female'},
 			{ data: [], label: 'Male'},
+			{ data: [], label: 'Average'},
 		],
 		options:{
 			scaleShowVerticalLines: false,
@@ -173,7 +219,19 @@ export class PmcComponent implements OnInit {
 		}
 	}
 
+	byCivilStatusData:any = {
+		data:{}
+	}
 
+	savebyCivilStatus(){
+		this.byCivilStatusData['barangay'] = 'test'
+		this.byCivilStatusData['year'] = this.data.year	
+		this.byCivilStatusData['year'] = this.data.year	
+		this.byCivilStatusData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
+		this.PmcService.storebyCivilStatus(this.byCivilStatusData).subscribe(data =>{
+			this.getebyCivilStatus()
+		})
+	}
 
 	ngOnInit(): void {
 		for(let i = 2015;i < 2100;i++){
@@ -206,19 +264,19 @@ export class PmcComponent implements OnInit {
 		 
 	getMuncipalities(){		
 		this.LocationService.getMunicipalities().subscribe(data => {
-		   this.municipalities = data			
-	   })
-   }
-   
-   getBarangays(event){	
-	   this.data.municipality = event.target.options[event.target.options.selectedIndex].text
-	   this.LocationService.getBarangays(event.target.value).subscribe(data => {
-		   this.barangays = data
-		   this.hasData = true	
-	   })
-   }
+		this.municipalities = data			
+	})
+	}
 
-   save(){		
+	getBarangays(event){	
+		this.data.municipality = event.target.options[event.target.options.selectedIndex].text
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data
+			this.hasData = true	
+		})
+	}
+
+	save(){		
 		this.data['barangay'] = "Sample"
 		this.data['applicants_by_age_group'] = 1
 		this.data['applicants_by_employment_status'] = 1
@@ -230,7 +288,6 @@ export class PmcComponent implements OnInit {
 			})
 		})
 	}
-
 
 	editChartData = false
 	updateChart(){
@@ -248,7 +305,6 @@ export class PmcComponent implements OnInit {
 		})
 	}
 
-
 	getBarangaysandGet(event){	
 		this.getDataParams.municipality = event.target.options[event.target.options.selectedIndex].text;	
 		this.LocationService.getBarangays(event.target.value).subscribe(data => {
@@ -264,7 +320,6 @@ export class PmcComponent implements OnInit {
 		).subscribe(data => {
 			this.hasSelectedData = true
 			this.PMCData = data.data[0]	
-			console.log(data.month)
 			for(let index in data.month){
 				if (!this.MONTHbarChartLabels.includes(data.month[index].month)) {
 					this.MONTHbarChartLabels.push(data.month[index].month);
@@ -272,31 +327,12 @@ export class PmcComponent implements OnInit {
 				this.MONTHbarChartData[0].data.push(data.month[index].total);
 			}
 			this.PMCData.months = this.data.months		
-			// this.PmcService.retrieveCoupleByAgeGroup().subscribe(data => {
-			// 	this.coupleByAgeGroupData.data = data.data
-			// 	console.log('pmc',data)
-			// })
-		
+			this.fetchCharts()
 		},error =>{
 			this.hasSelectedData = false
 			this.UtilityService.setAlert('No data on this particular filter yet','info')
 		})		
 	}
-
-
-	updateBottomChart(type){
-
-	}
-
-
-
-
-
-
-
-
-
-
 
 	pmcTeam:any = {}
 
@@ -338,9 +374,129 @@ export class PmcComponent implements OnInit {
 				})
 			} 
 		})	
-
-
 	}
+
+
+	// -------------bottom charts-----------------
+
+	fetchCharts(){
+		this.getPMCAgeGroup()
+		this.getPMCEES()
+		this.getAverageMonthlyIncome()
+		this.getknowLedgeOnFP()
+		this.getebyCivilStatus()
+	}
+
+	getPMCAgeGroup(){
+		// this.PmcService.retrieveCoupleByAgeGroup(this.data.municipality, this.data.year).subscribe(data => {
+		// 	let keys = []
+		// 	let values = []
+		// 	let totals = []
+		// 	for(let key in data[0].data){
+		// 		keys.push(key)
+		// 	}
+		// 	for(let key in data[0].data){
+		// 		values.push(data[0].data[key])
+		// 	}
+
+		// 	for(let key in data[0].data){
+		// 		totals.push(data[0].data[key] + data[0].data[key])
+		// 	}
+		// 	this.coupleByAgeGroupData.data = data[0].data
+		// 	this.coupleByAgeGroup.labels = keys
+		// 	this.coupleByAgeGroup.data[0].data = values
+		// 	this.coupleByAgeGroup.data[1].data = values
+		// 	this.coupleByAgeGroup.data[2].data = totals
+		// })
+	}
+
+	getPMCEES(){
+		this.PmcService.retrieveApplicantsByEmploymentStatus(this.data.municipality, this.data.year).subscribe(data => {
+			data = data[0]
+			this.applicantsByEmploymentStatus.data[0].data = [data.student_female,data.employed_female,data.not_employed_female]
+			this.applicantsByEmploymentStatus.data[1].data = [data.student_male,data.employed_male,data.not_employed_male]
+			this.applicantsByEmploymentStatus.data[2].data = [
+				parseInt(data.student_female) + parseInt(data.student_male) ,
+				parseInt(data.not_employed_female) + parseInt(data.not_employed_male),
+				parseInt(data.employed_male) + parseInt(data.employed_female)
+			]
+			this.applicantsByEmploymentStatusData = data 
+		})
+	}
+
+	getAverageMonthlyIncome(){
+		this.PmcService.retrieveAverageMonthlyIncome(this.data.municipality, this.data.year).subscribe(data => {
+			data = data[0]
+			this.averageMonthlyIncome.data[0].data = [
+				parseInt(data.no_income_male),
+				parseInt(data.under_5k_male),
+				parseInt(data['5k_to_10k_female']),
+				parseInt(data['10k_to_15k_female']),
+				parseInt(data['15k_to_20k_female']),
+				parseInt(data['20k_to_25k_female']),
+				parseInt(data['above_25k_female'])
+			]
+			this.averageMonthlyIncome.data[1].data = [
+				parseInt(data.no_income_male),
+				parseInt(data.under_5k_male),
+				parseInt(data['5k_to_10k_male']),
+				parseInt(data['10k_to_15k_male']),
+				parseInt(data['15k_to_20k_male']),
+				parseInt(data['20k_to_25k_male']),
+				parseInt(data['above_25k_male'])
+			]
+			this.averageMonthlyIncome.data[2].data = [
+				parseInt(data.no_income_male) + parseInt(data.no_income_female),
+				parseInt(data.under_5k_male) + parseInt(data.under_5k_female),
+				parseInt(data['5k_to_10k_male']) + parseInt(data['5k_to_10k_female']),
+				parseInt(data['10k_to_15k_male']) + parseInt(data['10k_to_15k_female']),
+				parseInt(data['15k_to_20k_male']) + parseInt(data['15k_to_20k_female']),
+				parseInt(data['20k_to_25k_male']) + parseInt(data['20k_to_25k_female']),
+				parseInt(data['above_25k_male']) + parseInt(data['above_25k_female']),
+			]
+			this.averageMonthlyIncomeData = data
+		})
+	}
+
+	getknowLedgeOnFP(){
+		this.PmcService.retrieveknowLedgeOnFP(this.data.municipality, this.data.year).subscribe(data => {
+			data = data[0]	
+			this.knowLedgeOnFP.data[0].data = [data.females]
+			this.knowLedgeOnFP.data[1].data = [data.males]
+			this.knowLedgeOnFP.data[2].data = [
+				parseInt(data.males) + parseInt(data.females) 
+			]
+			this.knowLedgeOnFP.labels = [`Knowledege on FP by ${this.data.municipality} on year ${this.data.year}`]
+			this.knowLedgeOnFPData = data
+		})
+	}
+
+	getebyCivilStatus(){
+		this.PmcService.retrievebyCivilStatus(this.data.municipality, this.data.year).subscribe(data => {	
+			data = data[0]
+			this.byCivilStatus.data[0].data = [
+				parseInt(data.single_female),
+				parseInt(data.live_in_female),
+				parseInt(data.widow_female),
+				parseInt(data['separated_female']),
+			]
+			this.byCivilStatus.data[1].data = [
+				parseInt(data.single_male),
+				parseInt(data.live_in_male),
+				parseInt(data.widow_male),
+				parseInt(data['separated_male']),
+			]
+			this.byCivilStatus.data[2].data = [
+				(parseInt(data.single_male) + parseInt(data.single_female))  /2 ,
+				(parseInt(data.live_in_female) + parseInt(data.live_in_female))/ 2 ,
+				(parseInt(data.widow_male) + parseInt(data.widow_female))/ 2 ,
+		
+				(parseInt(data.separated_male) + parseInt(data.separated_female))/ 2 ,
+			]
+			this.byCivilStatusData = data
+		})
+	}
+	
 
 
 

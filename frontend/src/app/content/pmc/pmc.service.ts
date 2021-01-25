@@ -116,9 +116,52 @@ export class PmcService {
 		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
 	}
 
-	retrieveCoupleByAgeGroup(){
-		const url = this.BaseAPIService.baseURL + '/pmc-age-group'
+	retrieveCoupleByAgeGroup(municipality,year){
+		const url = this.BaseAPIService.baseURL + `/pmc-age-group?municipality=${municipality}&year=${year}`
 		return this.http.get<any>(url)
 	}
+
+
+	storeApplicantsByEmploymentStatus(data){
+		const url = this.BaseAPIService.baseURL + '/pmc-ess'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
+	retrieveApplicantsByEmploymentStatus(municipality,year){
+		const url = this.BaseAPIService.baseURL + `/pmc-ess?municipality=${municipality}&year=${year}`
+		return this.http.get<any>(url)
+	}
+
+	storeAverageMonthlyIncome(data){
+		const url = this.BaseAPIService.baseURL + '/pmc-amis'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
+
+	retrieveAverageMonthlyIncome(municipality,year){
+		const url = this.BaseAPIService.baseURL + `/pmc-amis?municipality=${municipality}&year=${year}`
+		return this.http.get<any>(url)
+	}
+
+	storeknowLedgeOnFP(data){
+		const url = this.BaseAPIService.baseURL + '/pmc-kfp'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
+	retrieveknowLedgeOnFP(municipality,year){
+		const url = this.BaseAPIService.baseURL + `/pmc-kfp?municipality=${municipality}&year=${year}`
+		return this.http.get<any>(url)
+	}
+
+	storebyCivilStatus(data){
+		const url = this.BaseAPIService.baseURL + '/pmc-ccs'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
+	retrievebyCivilStatus(municipality,year){
+		const url = this.BaseAPIService.baseURL + `/pmc-ccs?municipality=${municipality}&year=${year}`
+		return this.http.get<any>(url)
+	}
+
 
 }
