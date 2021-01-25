@@ -84,7 +84,7 @@
 
             <!-- paslak diri sa dalom -->
             <!-- *ngIf="hasData" -->
-            <div class="hasData">
+            <div *ngIf="hasData" class="hasData">
                 <ul class="list-group">
                     <li class="list-group-item">
                         <p class="municipality-name">
@@ -153,51 +153,51 @@
                     <br>
                     <div class="form-group col-md-3">
                         <label for="January">January</label>
-                        <input [(ngModel)]="PMCData.months.January" type="number" class="form-control" id="January">
+                        <input [(ngModel)]="data.months.January" type="number" class="form-control" id="January">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="February">February</label>
-                        <input [(ngModel)]="PMCData.months.February" type="number" class="form-control" id="February">
+                        <input [(ngModel)]="data.months.February" type="number" class="form-control" id="February">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="March">March</label>
-                        <input [(ngModel)]="PMCData.months.March" type="number" class="form-control" id="March">
+                        <input [(ngModel)]="data.months.March" type="number" class="form-control" id="March">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="April">April</label>
-                        <input [(ngModel)]="PMCData.months.April" type="number" class="form-control" id="April">
+                        <input [(ngModel)]="data.months.April" type="number" class="form-control" id="April">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="May">May</label>
-                        <input [(ngModel)]="PMCData.months.May" type="number" class="form-control" id="May">
+                        <input [(ngModel)]="data.months.May" type="number" class="form-control" id="May">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="June">June</label>
-                        <input [(ngModel)]="PMCData.months.June" type="number" class="form-control" id="June">
+                        <input [(ngModel)]="data.months.June" type="number" class="form-control" id="June">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="July">July</label>
-                        <input [(ngModel)]="PMCData.months.July" type="number" class="form-control" id="July">
+                        <input [(ngModel)]="data.months.July" type="number" class="form-control" id="July">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="August">August</label>
-                        <input [(ngModel)]="PMCData.months.August" type="number" class="form-control" id="August">
+                        <input [(ngModel)]="data.months.August" type="number" class="form-control" id="August">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="September">September</label>
-                        <input [(ngModel)]="PMCData.months.September" type="number" class="form-control" id="September">
+                        <input [(ngModel)]="data.months.September" type="number" class="form-control" id="September">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="October">October</label>
-                        <input [(ngModel)]="PMCData.months.October" type="number" class="form-control" id="October">
+                        <input [(ngModel)]="data.months.October" type="number" class="form-control" id="October">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="November">November</label>
-                        <input [(ngModel)]="PMCData.months.November" type="number" class="form-control" id="November">
+                        <input [(ngModel)]="data.months.November" type="number" class="form-control" id="November">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="December">December</label>
-                        <input [(ngModel)]="PMCData.months.December" type="number" class="form-control" id="December">
+                        <input [(ngModel)]="data.months.December" type="number" class="form-control" id="December">
                     </div>
                     <div class="flex-container col-md-12">
                         <button (click)="editChartData = false;updateChart()" class="button">Save</button> &nbsp;
@@ -207,7 +207,7 @@
             </div>
 
 
-            <div class="container">
+            <div *ngIf="hasData" class="container">
                 <h4></h4>
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">PMC Couple Applicants by Age Group (%)</span>
@@ -242,40 +242,77 @@
                     <div class="col-md-12">
                         <br> <br>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="January">15-19</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['15-19']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">15-19 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['15_to_19_male']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">20-24</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['20-24']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">15-19 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['15_to_19_female']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">25-29</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['25-29']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">20-24 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['20_to_24_male']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">30-34</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['30-34']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">20-24 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['20_to_24_female']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">35-39</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['35-39']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">25-29 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['25_to_29_male']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">40-44</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['40-44']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">25-29 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['25_to_29_female']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">45 & UP</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['45 & UP']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">30-34 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['30_to_34_male']" type="number" class="form-control" id="January">
                     </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">30-34 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['30_to_34_female']" type="number" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">35-39 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['35_to_39_male']" type="number" class="form-control" id="January">
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                        <label for="January">35-39 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['35_to_39_female']" type="number" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">40-44 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['40_to_44_male']" type="number" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">40-44 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['40_to_44_female']" type="number" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">45 & UP (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData.data['45_and_above_male']" type="number" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">45 & UP (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData.data['45_and_above_female']" type="number" class="form-control" id="January">
+                    </div>
+
 
                     <div class="col-md-12">
                         <div class="flex-container">
@@ -285,7 +322,7 @@
                 </div>
             </div>
 
-            <div class="container">
+            <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">PMC Applicants by Employment Status and Sex (%)</span>
                     <span (click)="employmentStatusEdit = true" *ngIf="!employmentStatusEdit" class="ml-auto">
@@ -341,7 +378,7 @@
                 </div>
             </div>
 
-            <div class="container">
+            <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">Knowledge on Family Planning among PMC Applicants (%)</span>
                     <span (click)="knowledgeInFP = true" *ngIf="!knowledgeInFP" class="ml-auto">
@@ -376,7 +413,7 @@
                 </div>
             </div>
 
-            <div class="container">
+            <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">Percentage Distribution of PMC Applicants by Civil Status</span>
                     <span (click)="byCivilStatusEdit = true" *ngIf="!byCivilStatusEdit" class="ml-auto">
@@ -443,7 +480,7 @@
                 </div>
             </div>
 
-            <div class="container">
+            <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">PMC Applicants by Average Monthly Income and Sex (%)</span>
                     <span (click)="averageMonthlyIncomeEdit = true" *ngIf="!averageMonthlyIncomeEdit" class="ml-auto">

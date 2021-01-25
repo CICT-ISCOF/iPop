@@ -80,7 +80,7 @@ export class PmcComponent implements OnInit {
 	years = []
 
 	coupleByAgeGroup = {
-		labels:[],
+		labels:['15-19','20-24','25-29 ','30-34','35-39','40-44','45 & UP'],
 		type:'bar',
 		legend:true,
 		data:[
@@ -105,6 +105,7 @@ export class PmcComponent implements OnInit {
 		this.coupleByAgeGroupData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
 		this.PmcService.storeCoupleByAgeGroup(this.coupleByAgeGroupData).subscribe(data =>{
 			this.getPMCAgeGroup()
+			return Swal.fire('Chart has been successfully updated','','success')
 		})
 	}
 
@@ -134,6 +135,7 @@ export class PmcComponent implements OnInit {
 		this.applicantsByEmploymentStatusData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
 		this.PmcService.storeApplicantsByEmploymentStatus(this.applicantsByEmploymentStatusData).subscribe(data =>{
 			this.getPMCEES()
+			return Swal.fire('Chart has been successfully updated','','success')
 		})
 	}
 
@@ -172,6 +174,7 @@ export class PmcComponent implements OnInit {
 		this.averageMonthlyIncomeData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
 		this.PmcService.storeAverageMonthlyIncome(this.averageMonthlyIncomeData).subscribe(data =>{
 			this.getAverageMonthlyIncome()
+			return Swal.fire('Chart has been successfully updated','','success')
 		})
 	}
 
@@ -201,6 +204,7 @@ export class PmcComponent implements OnInit {
 		this.knowLedgeOnFPData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
 		this.PmcService.storeknowLedgeOnFP(this.knowLedgeOnFPData).subscribe(data =>{
 			this.getknowLedgeOnFP()
+			return Swal.fire('Chart has been successfully updated','','success')
 		})
 	}
 
@@ -230,6 +234,7 @@ export class PmcComponent implements OnInit {
 		this.byCivilStatusData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
 		this.PmcService.storebyCivilStatus(this.byCivilStatusData).subscribe(data =>{
 			this.getebyCivilStatus()
+			return Swal.fire('Chart has been successfully updated','','success')
 		})
 	}
 
@@ -272,7 +277,6 @@ export class PmcComponent implements OnInit {
 		this.data.municipality = event.target.options[event.target.options.selectedIndex].text
 		this.LocationService.getBarangays(event.target.value).subscribe(data => {
 			this.barangays = data
-			this.hasData = true	
 		})
 	}
 
@@ -301,7 +305,7 @@ export class PmcComponent implements OnInit {
 			this.MONTHbarChartLabels = []
 			this.MONTHbarChartData[0].data = []
 			this.fetchData()
-			this.UtilityService.setAlert('Chart has been updated','success')			
+			return Swal.fire('Chart has been successfully updated','','success')
 		})
 	}
 
@@ -312,24 +316,47 @@ export class PmcComponent implements OnInit {
 		})
 	}
 
-	PMCData:any = {}
+	PMCData:any = {
+		months:{}
+	}
 	fetchData(){
 		this.PmcService.showPMC(
 			this.data.municipality,
 			this.data.year		
 		).subscribe(data => {
-			this.hasSelectedData = true
-			this.PMCData = data.data[0]	
-			for(let index in data.month){
-				if (!this.MONTHbarChartLabels.includes(data.month[index].month)) {
-					this.MONTHbarChartLabels.push(data.month[index].month);
-				}
-				this.MONTHbarChartData[0].data.push(data.month[index].total);
+			if( data.data[0] = null	 || data.data.length == 0){
+				this.hasData = false	
+				return Swal.fire('No data on this filters','','info')
 			}
-			this.PMCData.months = this.data.months		
-			this.fetchCharts()
+			else{
+				this.hasData = true
+				this.PMCData = data.data[0]	
+				for(let index in data.month){
+					if (!this.MONTHbarChartLabels.includes(data.month[index].month)) {
+						this.MONTHbarChartLabels.push(data.month[index].month);
+					}
+					this.MONTHbarChartData[0].data.push(data.month[index].total);
+				}
+				this.data.months['January'] = data.month[0].total	|| 0
+				this.data.months.February = data.month[1].total	 	|| 0
+				this.data.months.March = data.month[2].total	 	|| 0
+
+				this.data.months.April = data.month[3].total	 	|| 0
+				this.data.months.May = data.month[4].total	 		|| 0
+				this.data.months.June = data.month[5].total 		|| 0
+				
+				this.data.months.July = data.month[6].total	 		|| 0
+				this.data.months.August = data.month[7].total 		|| 0
+				this.data.months.September = data.month[8].total	|| 0
+
+				this.data.months.October = data.month[9].total	 	|| 0
+				this.data.months.November = data.month[10].total 	|| 0
+				this.data.months.December = data.month[11].total 	|| 0
+
+				this.fetchCharts()
+			}
 		},error =>{
-			this.hasSelectedData = false
+			this.hasData = false
 			this.UtilityService.setAlert('No data on this particular filter yet','info')
 		})		
 	}
@@ -376,8 +403,27 @@ export class PmcComponent implements OnInit {
 		})	
 	}
 
-
 	// -------------bottom charts-----------------
+
+	clearCharts(){
+		const charts = ['averageMonthlyIncome','applicantsByEmploymentStatus','coupleByAgeGroup','knowLedgeOnFP','byCivilStatus']
+		const chartToEdit = ['coupleByAgeGroupEdit','employmentStatusEdit','knowledgeInFP','byCivilStatusEdit','averageMonthlyIncomeEdit']
+		for(let chart of chartToEdit){
+			this[chart] = false
+		}
+		for(let chart of charts){
+			for(let i = 0; i < 3;i++){
+				this[chart].data[i].data = []
+			}
+		}
+	}
+
+	coupleByAgeGroupEdit = false
+	employmentStatusEdit = false
+	knowledgeInFP = false
+	byCivilStatusEdit = false
+	averageMonthlyIncomeEdit = false
+
 
 	fetchCharts(){
 		this.getPMCAgeGroup()
@@ -385,32 +431,46 @@ export class PmcComponent implements OnInit {
 		this.getAverageMonthlyIncome()
 		this.getknowLedgeOnFP()
 		this.getebyCivilStatus()
+		this.hasData = true	
 	}
 
 	getPMCAgeGroup(){
-		// this.PmcService.retrieveCoupleByAgeGroup(this.data.municipality, this.data.year).subscribe(data => {
-		// 	let keys = []
-		// 	let values = []
-		// 	let totals = []
-		// 	for(let key in data[0].data){
-		// 		keys.push(key)
-		// 	}
-		// 	for(let key in data[0].data){
-		// 		values.push(data[0].data[key])
-		// 	}
-
-		// 	for(let key in data[0].data){
-		// 		totals.push(data[0].data[key] + data[0].data[key])
-		// 	}
-		// 	this.coupleByAgeGroupData.data = data[0].data
-		// 	this.coupleByAgeGroup.labels = keys
-		// 	this.coupleByAgeGroup.data[0].data = values
-		// 	this.coupleByAgeGroup.data[1].data = values
-		// 	this.coupleByAgeGroup.data[2].data = totals
-		// })
+		this.clearCharts()
+		this.PmcService.retrieveCoupleByAgeGroup(this.data.municipality, this.data.year).subscribe(data => {
+			data = data[0]
+			this.coupleByAgeGroup.data[0].data = [
+				parseInt(data['15_to_19_female']),
+				parseInt(data['20_to_24_female']),
+				parseInt(data['25_to_29_female']),
+				parseInt(data['30_to_34_female']),
+				parseInt(data['35_to_39_female']),
+				parseInt(data['40_to_44_female']),
+				parseInt(data['45_and_above_female'])
+			]
+			this.coupleByAgeGroup.data[1].data = [
+				parseInt(data['15_to_19_male']),
+				parseInt(data['20_to_24_male']),
+				parseInt(data['25_to_29_male']),
+				parseInt(data['30_to_34_male']),
+				parseInt(data['35_to_39_male']),
+				parseInt(data['40_to_44_male']),
+				parseInt(data['45_and_above_male'])
+			]
+			this.coupleByAgeGroup.data[2].data = [
+				parseInt(data['15_to_19_female']) +  parseInt(data['15_to_19_male']) ,
+				parseInt(data['20_to_24_female']) +  parseInt(data['20_to_24_male']) ,
+				parseInt(data['25_to_29_female']) +  parseInt(data['25_to_29_male']),
+				parseInt(data['30_to_34_female']) +  parseInt(data['30_to_34_male']) ,
+				parseInt(data['35_to_39_female']) +  parseInt(data['35_to_39_male']),
+				parseInt(data['40_to_44_female']) +  parseInt(data['40_to_44_male']),
+				parseInt(data['45_and_above_female']) + parseInt(data['45_and_above_male'])
+			]
+			this.coupleByAgeGroupData = data 
+		})
 	}
 
 	getPMCEES(){
+		this.clearCharts()
 		this.PmcService.retrieveApplicantsByEmploymentStatus(this.data.municipality, this.data.year).subscribe(data => {
 			data = data[0]
 			this.applicantsByEmploymentStatus.data[0].data = [data.student_female,data.employed_female,data.not_employed_female]
@@ -425,6 +485,7 @@ export class PmcComponent implements OnInit {
 	}
 
 	getAverageMonthlyIncome(){
+		this.clearCharts()
 		this.PmcService.retrieveAverageMonthlyIncome(this.data.municipality, this.data.year).subscribe(data => {
 			data = data[0]
 			this.averageMonthlyIncome.data[0].data = [
@@ -459,6 +520,7 @@ export class PmcComponent implements OnInit {
 	}
 
 	getknowLedgeOnFP(){
+		this.clearCharts()
 		this.PmcService.retrieveknowLedgeOnFP(this.data.municipality, this.data.year).subscribe(data => {
 			data = data[0]	
 			this.knowLedgeOnFP.data[0].data = [data.females]
@@ -472,6 +534,7 @@ export class PmcComponent implements OnInit {
 	}
 
 	getebyCivilStatus(){
+		this.clearCharts()
 		this.PmcService.retrievebyCivilStatus(this.data.municipality, this.data.year).subscribe(data => {	
 			data = data[0]
 			this.byCivilStatus.data[0].data = [
