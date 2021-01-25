@@ -15,7 +15,11 @@
                 <h5 class="pop2" style="font-weight: 900;">ADD PRE-MARRIAGE ORIENTATION AND COUNSELLING RECORD</h5>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="">Municipality</label>
+                        <label for="municipality">
+                            <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Municipality</label>
                         <select (change)="getBarangays($event)" type="text" class="form-control">                      
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
@@ -57,7 +61,11 @@
             <div class="filters">
                 <div class="row container" style="margin-left: 0 !important;">
                     <div class="col-md-6">
-                        <label for="">Municipality</label>
+                        <label for="municipality">
+                            <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Municipality</label>
                         <select (change)="getBarangays($event)" type="text" class="form-control">                      
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>

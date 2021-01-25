@@ -267,10 +267,13 @@ export class PmcComponent implements OnInit {
 		}		
 	}	
 		 
+	municipalityIsLoading = false
 	getMuncipalities(){		
+		this.municipalityIsLoading = true
 		this.LocationService.getMunicipalities().subscribe(data => {
-		this.municipalities = data			
-	})
+			this.municipalities = data			
+			this.municipalityIsLoading = false
+		})
 	}
 
 	getBarangays(event){	
