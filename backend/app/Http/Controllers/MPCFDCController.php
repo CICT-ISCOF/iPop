@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use App\Models\Log;
 use App\Models\MPCFDC;
+use App\Models\MPCFDCFile;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -47,6 +49,8 @@ class MPCFDCController extends Controller
             'tc_coordinator_count' => ['nullable', 'numeric'],
             'population' => ['nullable', 'numeric'],
             'services' => ['nullable', 'string'],
+            'files' => ['nullable', 'array'],
+            'files.*' => ['required', 'isFile'],
         ]);
 
         $mPCFDC = MPCFDC::create($data);
@@ -55,6 +59,17 @@ class MPCFDCController extends Controller
             'message' => $request->user()->makeMessage('wants to add a MPCFDC.'),
         ]);
         $mPCFDC->setApproved($request->user()->hasRole(Role::ADMIN));
+
+        if (isset($data['files'])) {
+            collect($data['files'])->each(function ($raw) use ($mPCFDC) {
+                $file = File::process($raw);
+                $file->public = true;
+                $file->save();
+                $mPCFDC->files()->create(['file_id' => $file->id]);
+            });
+        }
+
+        $mPCFDC->load('files');
 
         Log::record("Created a MPCFDC.");
 
@@ -90,11 +105,27 @@ class MPCFDCController extends Controller
             'tc_coordinator_count' => ['nullable', 'numeric'],
             'population' => ['nullable', 'numeric'],
             'services' => ['nullable', 'string'],
+            'files' => ['nullable', 'array'],
+            'files.*' => ['required', 'isFile'],
         ]);
 
         $mPCFDC->update($data);
         $mPCFDC->setApproved($request->user()->hasRole(Role::ADMIN))
             ->setApprovalMessage($request->user()->makeMessage('wants to update a MPCFDC.'));
+
+        if (isset($data['files'])) {
+            $mPCFDC->files->each(function (MPCFDCFile $file) {
+                $file->delete();
+            });
+            collect($data['files'])->each(function ($raw) use ($mPCFDC) {
+                $file = File::process($raw);
+                $file->public = true;
+                $file->save();
+                $mPCFDC->files()->create(['file_id' => $file->id]);
+            });
+        }
+
+        $mPCFDC->load('files');
 
         Log::record("Updated a MPCFDC.");
 

@@ -19,4 +19,18 @@ class MPCFDC extends Model
         'population',
         'services',
     ];
+
+    protected static function booted()
+    {
+        static::deleting(function (self $mPCFDC) {
+            $mPCFDC->files->each(function (MPCFDCFile $file) {
+                $file->delete();
+            });
+        });
+    }
+
+    public function files()
+    {
+        return $this->hasMany(MPCFDCFile::class, 'mpcfdc_id');
+    }
 }
