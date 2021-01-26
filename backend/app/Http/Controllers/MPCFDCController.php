@@ -65,7 +65,7 @@ class MPCFDCController extends Controller
                 $file = File::process($raw);
                 $file->public = true;
                 $file->save();
-                $mPCFDC->files()->create(['file_id' => $file->id]);
+                MPCFDCFile::create(['file_id' => $file->id, 'mpcfdc_id' => $mPCFDC->id]);
             });
         }
 
@@ -82,8 +82,9 @@ class MPCFDCController extends Controller
      * @param  \App\Models\MPCFDC  $mPCFDC
      * @return \Illuminate\Http\Response
      */
-    public function show(MPCFDC $mPCFDC)
+    public function show($id)
     {
+        $mPCFDC = MPCFDC::findOrFail($id);
         return MPCFDC::findApproved($mPCFDC->id)->first()
             ?: response('', 404);
     }
@@ -95,8 +96,9 @@ class MPCFDCController extends Controller
      * @param  \App\Models\MPCFDC  $mPCFDC
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MPCFDC $mPCFDC)
+    public function update(Request $request, $id)
     {
+        $mPCFDC = MPCFDC::findOrFail($id);
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'location' => ['nullable', 'string', 'max:255'],
@@ -121,7 +123,7 @@ class MPCFDCController extends Controller
                 $file = File::process($raw);
                 $file->public = true;
                 $file->save();
-                $mPCFDC->files()->create(['file_id' => $file->id]);
+                MPCFDCFile::create(['file_id' => $file->id, 'mpcfdc_id' => $mPCFDC->id]);
             });
         }
 

@@ -65,8 +65,9 @@ class MPCFDCPersonnelController extends Controller
      * @param  \App\Models\MPCFDCPersonnel  $mPCFDCPersonnel
      * @return \Illuminate\Http\Response
      */
-    public function show(MPCFDCPersonnel $mPCFDCPersonnel)
+    public function show($id)
     {
+        $mPCFDCPersonnel = MPCFDCPersonnel::findOrFail($id);
         return MPCFDCPersonnel::findApproved($mPCFDCPersonnel->id)
             ->first() ?: response('', 404);
     }
@@ -78,8 +79,9 @@ class MPCFDCPersonnelController extends Controller
      * @param  \App\Models\MPCFDCPersonnel  $mPCFDCPersonnel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MPCFDCPersonnel $mPCFDCPersonnel)
+    public function update(Request $request, $id)
     {
+        $mPCFDCPersonnel = MPCFDCPersonnel::findOrFail($id);
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
@@ -113,8 +115,9 @@ class MPCFDCPersonnelController extends Controller
      * @param  \App\Models\MPCFDCPersonnel  $mPCFDCPersonnel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MPCFDCPersonnel $mPCFDCPersonnel)
+    public function destroy($id)
     {
+        $mPCFDCPersonnel = MPCFDCPersonnel::findOrFail($id);
         $mPCFDCPersonnel->makeDeleteRequest();
 
         Log::record('Deleted a MPCFDC Personnel');
