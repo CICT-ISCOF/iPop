@@ -56,8 +56,9 @@ class SBMPTCFocalPersonController extends Controller
      * @param  \App\Models\SBMPTCFocalPerson  $sBMPTCFocalPerson
      * @return \Illuminate\Http\Response
      */
-    public function show(SBMPTCFocalPerson $sBMPTCFocalPerson)
+    public function show($id)
     {
+        $sBMPTCFocalPerson = SBMPTCFocalPerson::findOrFail($id);
         return SBMPTCFocalPerson::findApproved($sBMPTCFocalPerson->id)->first()
             ?: response('', 404);
     }
@@ -69,8 +70,9 @@ class SBMPTCFocalPersonController extends Controller
      * @param  \App\Models\SBMPTCFocalPerson  $sBMPTCFocalPerson
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SBMPTCFocalPerson $sBMPTCFocalPerson)
+    public function update(Request $request, $id)
     {
+        $sBMPTCFocalPerson = SBMPTCFocalPerson::findOrFail($id);
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
         ]);
@@ -90,8 +92,9 @@ class SBMPTCFocalPersonController extends Controller
      * @param  \App\Models\SBMPTCFocalPerson  $sBMPTCFocalPerson
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SBMPTCFocalPerson $sBMPTCFocalPerson)
+    public function destroy($id)
     {
+        $sBMPTCFocalPerson = SBMPTCFocalPerson::findOrFail($id);
         $sBMPTCFocalPerson->makeDeleteRequest();
 
         Log::record("Deleted a SBMPTC Focal Person.");
