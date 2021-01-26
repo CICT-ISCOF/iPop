@@ -1,6 +1,11 @@
+import { LocationService } from './../../location.service';
 import { Component, OnInit } from '@angular/core';
 import { MpcService } from './mpc.service'
+import { Injectable } from '@angular/core';
 
+@Injectable({
+	providedIn: 'root'
+})
 @Component({
   selector: 'app-mpc-fdc',
   templateUrl: './mpc-fdc.component.html',
@@ -9,32 +14,46 @@ import { MpcService } from './mpc.service'
 export class MPCFDCComponent implements OnInit {
 
 	constructor(
-		private MpcService : MpcService
-	) { 
-		this.listener = this.MpcService.triggerListener().subscribe(value => {
-			this.show = value
-		})
-	}
+		private MpcService : MpcService,
+		private LocationService : LocationService
 
-	listener
+	) { 
+	
+	}
+	districtS = ['II','II','III','IV']
+	municipalities = []
+	show = false
+	mpc:any  = {}
+	mpcs = []
 
 	ngOnInit(): void {
-		this.getMPCFDC()
+		this.getMuncipalities()
 	}
-	
-	show = false
 
-	showMPC(id){
-		this.MpcService.showMPC(id).subscribe(data => {
-			console.log(data)
-		})
+	back(){
+		window.history.back()
+	}
+
+	municipalityIsLoading = false
+	getMuncipalities(){
+		this.municipalityIsLoading = true
+		this.LocationService.getMunicipalities().subscribe(data => {
+			this.municipalities = data	
+			this.municipalityIsLoading = false			
+		})		
+	}
+
+	showMPC(mpc){
+		this.show = false 
+		localStorage.setItem('mpc-ref',JSON.stringify(mpc))
 		this.show = true 
+		this.MpcService.setMPC(mpc)
 	}
 
-	mpcs = []
+	
 	getMPCFDC(){		
-		this.MpcService.retrieveMPC().subscribe(response => {
-			this.mpcs = response.data
+		this.MpcService.retrieveMPC(this.mpc).subscribe(data => {
+			this.mpcs = data
 		})
 	}
 

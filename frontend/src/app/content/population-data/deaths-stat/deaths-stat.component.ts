@@ -220,6 +220,9 @@ export class DeathsStatComponent implements OnInit {
 		});
 	}
 
+	back(){
+		window.history.back()
+	}
 
 	check(item) {
 		for (let checkbox in this.checked) {

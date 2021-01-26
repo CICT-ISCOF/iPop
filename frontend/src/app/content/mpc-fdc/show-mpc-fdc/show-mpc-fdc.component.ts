@@ -1,3 +1,4 @@
+import { MPCFDCComponent } from './../mpc-fdc.component';
 import { MpcService } from './../mpc.service';
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -10,8 +11,16 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 export class ShowMpcFdcComponent implements OnInit {
 
 	constructor(
-		private MpcService : MpcService
-	) { }
+		private MpcService : MpcService,
+		private MPCFDCComponent : MPCFDCComponent
+	) {
+		this.MpcService.getMPC().subscribe(data => {
+			this.mpc = data
+		})
+	}
+
+
+	mpc = JSON.parse(localStorage.getItem('mpc-ref'))
 
 	ngOnInit(): void {
 	}
@@ -32,8 +41,8 @@ export class ShowMpcFdcComponent implements OnInit {
 		}
 	}
 
-	hideShow(){		
-		this.MpcService.setToHidden()
+	back(){
+		this.MPCFDCComponent.show = false
 	}
 
 }

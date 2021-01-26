@@ -23,7 +23,8 @@ export class MpcService {
 					'Content-Type':[]
 				})	
 
-  	private show = new Subject<any>();
+	  private show = new Subject<any>();
+	  private mpc = new Subject<any>();
 
 	getHeaders(){
 		this.user = JSON.parse(localStorage.getItem('user-data'))
@@ -33,6 +34,16 @@ export class MpcService {
 			'Authorization' : 'Bearer '+ this.token,
 			'Content-Type':[]
 		})	
+	}
+
+
+	setMPC(mpc){
+		console.log(mpc)
+		this.mpc.next(mpc)
+	}
+
+	getMPC(){
+		return this.mpc.asObservable()
 	}
 
   	setToHidden(){
@@ -72,8 +83,8 @@ export class MpcService {
 		const url = this.BaseAPIService.baseURL + '/mpcfdcs'
 		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
 	} 
-	retrieveMPC(){
-		const url = this.BaseAPIService.baseURL + '/mpcfdcs'
+	retrieveMPC(data){
+		const url = this.BaseAPIService.baseURL + `/mpcfdcs?municipality=${data.municipality}&district=${data.district}`
 		return this.http.get<any>(url )
 	} 
 	showMPC( id ){

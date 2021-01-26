@@ -34,6 +34,11 @@ export class StatisticsComponent implements OnInit {
 
 	// --------- new ------------
 	
+	back(){
+		window.history.back()
+	}
+
+
 	addData = false
 
 	data:any = {}

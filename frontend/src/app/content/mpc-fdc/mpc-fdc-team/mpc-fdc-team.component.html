@@ -1,8 +1,8 @@
 <button (click)="addTeam = true" *ngIf="!addTeam" class="button">Add MPC-FDC Team</button> &nbsp;
-<!-- <button (click)="addFocalPerson = true" *ngIf="!addFocalPerson" class="button">Add Focal Person</button> -->
+<button (click)="addFocalPerson = true" *ngIf="!addFocalPerson" class="button">Add Focal Person</button>
 <br>
 <br>
-<div class="row" *ngIf="addTeam">
+<div class="row container row" style="margin-left: 0;" *ngIf="addTeam">
     <div class="picture">
         <img (click)="triggerFileInput('image-file')" [src]="placeholder" alt="" style="cursor: pointer;">
         <input (change)="readURL($event.target.files,$event)" type="file" style="display: none;" id="image-file">
@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div class="row" *ngIf="addFocalPerson">
+<div class="row container" style="margin-left: 0;" *ngIf="addFocalPerson">
     <div class="form-group col-md-12">
         <label for="Name">Name</label>
         <input type="text" id="Name" class="form-control">
@@ -33,29 +33,31 @@
 </div>
 
 
-<div *ngIf="!addTeam" [class.hide]="addFocalPerson">
-    <h3>
+<div *ngIf="!addTeam" [class.hide]="addFocalPerson" style="margin-left: 0;">
+    <h4 class="pop2">
         MPC-FDC TEAM
-    </h3>
-    <hr>
-    <div class="person-name">JUAN DELA CRUZ</div>
-    <p>Provincial Teen Center Coordinator</p>
-    <br>
-    <!-- <p>MPC-FDC Focal Persons</p>
+    </h4>
+    <div class="container">
+        <div class="person-name">JUAN DELA CRUZ</div>
+        <p>Provincial Teen Center Coordinator</p>
+    </div>
+
+    <p class="pop2">MPC-FDC Focal Persons</p>
     <ul class="list-group">
         <li class="list-group-item" *ngFor="let item of [1,2,3,4,5,6];let i = index">
             <div class="flex absolute">
                 <div *ngIf="!acitveFocalPersons[i]" class="absolute flex">
                     <div (click)="toggleFocalPersons(i)" class="edit">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                            <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                           </svg>
                     </div>
                     <div (click)="deleteFocalPerson(i)" class="remove">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                          </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-minus" viewBox="0 0 16 16">
+                            <path d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
+                            <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -71,5 +73,5 @@
                 </div>
             </div>
         </li>
-    </ul> -->
+    </ul>
 </div>

@@ -1,6 +1,13 @@
 <div class="pmc-component row">
     <div class="row">
-        <div class="col-md-7"></div>
+        <div class="col-md-7">
+            <button (click)="back()" class="clickable">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+                  </svg>
+                  Back
+              </button>
+        </div>
         <div class="col-md-2">
             <button (click)="wantsToAdd = true" *ngIf="!wantsToAdd" class="button rounded"><i class="fa fa-plus"></i></button>
             <button (click)="wantsToAdd = false" *ngIf="wantsToAdd" class="button rounded"><i class="fa fa-times"></i></button>
@@ -15,7 +22,11 @@
                 <h5 class="pop2" style="font-weight: 900;">ADD PRE-MARRIAGE ORIENTATION AND COUNSELLING RECORD</h5>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="">Municipality</label>
+                        <label for="municipality">
+                            <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Municipality</label>
                         <select (change)="getBarangays($event)" type="text" class="form-control">                      
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
@@ -30,16 +41,16 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="">Number of Sessions Conducted</label>
-                        <input [(ngModel)]="data.sessions" type="text" class="form-control">
+                        <input [(ngModel)]="PMCData.sessions" type="text" class="form-control">
 
                     </div>
                     <div class="col-md-4">
                         <label for="">Number of Couples Oriented</label>
-                        <input [(ngModel)]="data.oriented_couples" type="text" class="form-control">
+                        <input [(ngModel)]="PMCData.oriented_couples" type="text" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="">Number of Individuals Interview</label>
-                        <input [(ngModel)]="data.individuals_interviewed" type="text" class="form-control">
+                        <input [(ngModel)]="PMCData.individuals_interviewed" type="text" class="form-control">
                     </div>
                 </div>
                 <div class="row">
@@ -57,7 +68,11 @@
             <div class="filters">
                 <div class="row container" style="margin-left: 0 !important;">
                     <div class="col-md-6">
-                        <label for="">Municipality</label>
+                        <label for="municipality">
+                            <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Municipality</label>
                         <select (change)="getBarangays($event)" type="text" class="form-control">                      
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
@@ -84,7 +99,7 @@
 
             <!-- paslak diri sa dalom -->
             <!-- *ngIf="hasData" -->
-            <div class="hasData">
+            <div *ngIf="hasData" class="hasData">
                 <ul class="list-group">
                     <li class="list-group-item">
                         <p class="municipality-name">
@@ -96,8 +111,8 @@
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Sessions Conducted
                         </p>
-                        <h1 class="text-primary" *ngIf="!numberOfSessions">{{PMCData.sessions || 0}}</h1> <input [(ngModel)]="PMCData.sessions" (keyup.enter)="numberOfSessions = false;update()" *ngIf="numberOfSessions" type="text"> &nbsp;
-                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="numberOfSessions" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                        <h1 (click)="numberOfSessions = true" class="text-primary" *ngIf="!numberOfSessions">{{PMCData.sessions || 0}}</h1> <input [(ngModel)]="PMCData.sessions" (keyup.enter)="numberOfSessions = false;save()" *ngIf="numberOfSessions" type="text"> &nbsp;
+                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="numberOfSessions" (click)="numberOfSessions = false;save()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
                                 <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                             </svg>
                     </li>
@@ -111,8 +126,8 @@
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Couples Oriented
                         </p>
-                        <h1 class="text-primary" *ngIf="!couplesOrriented">{{PMCData.oriented_couples || 0}}</h1> <input [(ngModel)]="PMCData.oriented_couples" (keyup.enter)="couplesOrriented = false;update()" *ngIf="couplesOrriented" type="text">&nbsp;
-                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="couplesOrriented" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                        <h1 (click)="couplesOrriented = true" class="text-primary" *ngIf="!couplesOrriented">{{PMCData.oriented_couples || 0}}</h1> <input [(ngModel)]="PMCData.oriented_couples" (keyup.enter)="couplesOrriented = false;save()" *ngIf="couplesOrriented" type="text">&nbsp;
+                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="couplesOrriented" (click)="numberOfSessions = false;save()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
                                 <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                             </svg>
                     </li>
@@ -126,8 +141,8 @@
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Individuals Interview
                         </p>
-                        <h1 class="text-primary" *ngIf="!individualInterview">{{PMCData.individuals_interviewed || 0}}</h1> <input [(ngModel)]="PMCData.individuals_interviewed" (keyup.enter)="individualInterview = false;update()" *ngIf="individualInterview" type="text">&nbsp;
-                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="individualInterview" (click)="numberOfSessions = false;update()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                        <h1 (click)="individualInterview = true" class="text-primary" *ngIf="!individualInterview">{{PMCData.individuals_interviewed || 0}}</h1> <input [(ngModel)]="PMCData.individuals_interviewed" (keyup.enter)="individualInterview = false;save()" *ngIf="individualInterview" type="text">&nbsp;
+                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="individualInterview" (click)="numberOfSessions = false;save()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
                             <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                         </svg>
                     </li>
@@ -153,51 +168,51 @@
                     <br>
                     <div class="form-group col-md-3">
                         <label for="January">January</label>
-                        <input [(ngModel)]="PMCData.months.January" type="number" class="form-control" id="January">
+                        <input [(ngModel)]="data.months.January" type="number" class="form-control" id="January">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="February">February</label>
-                        <input [(ngModel)]="PMCData.months.February" type="number" class="form-control" id="February">
+                        <input [(ngModel)]="data.months.February" type="number" class="form-control" id="February">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="March">March</label>
-                        <input [(ngModel)]="PMCData.months.March" type="number" class="form-control" id="March">
+                        <input [(ngModel)]="data.months.March" type="number" class="form-control" id="March">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="April">April</label>
-                        <input [(ngModel)]="PMCData.months.April" type="number" class="form-control" id="April">
+                        <input [(ngModel)]="data.months.April" type="number" class="form-control" id="April">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="May">May</label>
-                        <input [(ngModel)]="PMCData.months.May" type="number" class="form-control" id="May">
+                        <input [(ngModel)]="data.months.May" type="number" class="form-control" id="May">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="June">June</label>
-                        <input [(ngModel)]="PMCData.months.June" type="number" class="form-control" id="June">
+                        <input [(ngModel)]="data.months.June" type="number" class="form-control" id="June">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="July">July</label>
-                        <input [(ngModel)]="PMCData.months.July" type="number" class="form-control" id="July">
+                        <input [(ngModel)]="data.months.July" type="number" class="form-control" id="July">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="August">August</label>
-                        <input [(ngModel)]="PMCData.months.August" type="number" class="form-control" id="August">
+                        <input [(ngModel)]="data.months.August" type="number" class="form-control" id="August">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="September">September</label>
-                        <input [(ngModel)]="PMCData.months.September" type="number" class="form-control" id="September">
+                        <input [(ngModel)]="data.months.September" type="number" class="form-control" id="September">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="October">October</label>
-                        <input [(ngModel)]="PMCData.months.October" type="number" class="form-control" id="October">
+                        <input [(ngModel)]="data.months.October" type="number" class="form-control" id="October">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="November">November</label>
-                        <input [(ngModel)]="PMCData.months.November" type="number" class="form-control" id="November">
+                        <input [(ngModel)]="data.months.November" type="number" class="form-control" id="November">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="December">December</label>
-                        <input [(ngModel)]="PMCData.months.December" type="number" class="form-control" id="December">
+                        <input [(ngModel)]="data.months.December" type="number" class="form-control" id="December">
                     </div>
                     <div class="flex-container col-md-12">
                         <button (click)="editChartData = false;updateChart()" class="button">Save</button> &nbsp;
@@ -207,7 +222,7 @@
             </div>
 
 
-            <div class="container">
+            <div *ngIf="hasData" class="container">
                 <h4></h4>
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">PMC Couple Applicants by Age Group (%)</span>
@@ -242,40 +257,77 @@
                     <div class="col-md-12">
                         <br> <br>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="January">15-19</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['15-19']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">15-19 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['15_to_19_male']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">20-24</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['20-24']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">15-19 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['15_to_19_female']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">25-29</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['25-29']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">20-24 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['20_to_24_male']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">30-34</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['30-34']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">20-24 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['20_to_24_female']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">35-39</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['35-39']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">25-29 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['25_to_29_male']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">40-44</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['40-44']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">25-29 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['25_to_29_female']" type="number" class="form-control" id="January">
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="January">45 & UP</label>
-                        <input [(ngModel)]="coupleByAgeGroupData.data['45 & UP']" type="number" class="form-control" id="January">
+                    <div class="form-group col-md-6">
+                        <label for="January">30-34 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['30_to_34_male']" type="number" class="form-control" id="January">
                     </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">30-34 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['30_to_34_female']" type="number" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">35-39 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['35_to_39_male']" type="number" class="form-control" id="January">
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                        <label for="January">35-39 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['35_to_39_female']" type="number" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">40-44 (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['40_to_44_male']" type="number" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">40-44 (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData['40_to_44_female']" type="number" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">45 & UP (Males)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData.data['45_and_above_male']" type="number" class="form-control" id="January">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="January">45 & UP (Females)</label>
+                        <input [(ngModel)]="coupleByAgeGroupData.data['45_and_above_female']" type="number" class="form-control" id="January">
+                    </div>
+
 
                     <div class="col-md-12">
                         <div class="flex-container">
@@ -285,7 +337,7 @@
                 </div>
             </div>
 
-            <div class="container">
+            <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">PMC Applicants by Employment Status and Sex (%)</span>
                     <span (click)="employmentStatusEdit = true" *ngIf="!employmentStatusEdit" class="ml-auto">
@@ -303,46 +355,45 @@
                 <canvas *ngIf="!employmentStatusEdit" baseChart [datasets]="applicantsByEmploymentStatus.data" [labels]="applicantsByEmploymentStatus.labels" [options]="applicantsByEmploymentStatus.options" [legend]="applicantsByEmploymentStatus.legend" [chartType]="applicantsByEmploymentStatus.type">
                 </canvas>
                 <div *ngIf="employmentStatusEdit" class="row flex-container">
+                    <div class="form-group col-md-6">
+                        <label for="Student">Male Students</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.student_male" type="text" class="form-control" id="Student">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Student">Female Students</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.student_female" type="text" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Employed Males</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.employed_male" type="text" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Employed Females</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.employed_female" type="text" class="form-control" id="Employed">
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Unemployed Males</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.not_employed_male" type="text" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Unemployed Females</label>
+                        <input [(ngModel)]="applicantsByEmploymentStatusData.not_employed_female" type="text" class="form-control" id="Not Employed">
+                    </div>
+
                     <div class="col-md-12">
                         <div class="flex-container">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
-                            </div>
-
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <br> <br>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="Student">Student</label>
-                        <input type="text" class="form-control" id="Student">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Employed">Employed</label>
-                        <input type="text" class="form-control" id="Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">Not Employed</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="flex-container">
-                            <button class="button">Save</button>
+                            <button (click)="saveApplicantsByEmploymentStatus()" class="button">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="container">
+            <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">Knowledge on Family Planning among PMC Applicants (%)</span>
                     <span (click)="knowledgeInFP = true" *ngIf="!knowledgeInFP" class="ml-auto">
@@ -360,39 +411,24 @@
                 <canvas *ngIf="!knowledgeInFP" baseChart [datasets]="knowLedgeOnFP.data" [labels]="knowLedgeOnFP.labels" [options]="knowLedgeOnFP.options" [legend]="knowLedgeOnFP.legend" [chartType]="knowLedgeOnFP.type">
                 </canvas>
                 <div *ngIf="knowledgeInFP" class="row flex-container">
-                    <div class="col-md-12">
-                        <div class="flex-container">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
-                            </div>
 
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <br> <br>
-                    </div>
                     <div class="form-group col-md-5">
-                        <label for="Student">Year</label>
-                        <input type="text" class="form-control" id="Student">
+                        <label for="Employed">Males</label>
+                        <input [(ngModel)]="knowLedgeOnFPData.males" type="number" class="form-control" id="Employed">
                     </div>
 
                     <div class="form-group col-md-5">
-                        <label for="Employed">Value</label>
-                        <input type="text" class="form-control" id="Employed">
+                        <label for="Employed">Females</label>
+                        <input [(ngModel)]="knowLedgeOnFPData.females" type="number" class="form-control" id="Employed">
                     </div>
 
                     <div class="col-md-2">
-                        <button style="margin-top: 25px;" class="button">Save</button>
+                        <button (click)="saveknowLedgeOnFP()" style="margin-top: 25px;" class="button">Save</button>
                     </div>
                 </div>
             </div>
 
-            <div class="container">
+            <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">Percentage Distribution of PMC Applicants by Civil Status</span>
                     <span (click)="byCivilStatusEdit = true" *ngIf="!byCivilStatusEdit" class="ml-auto">
@@ -410,50 +446,56 @@
                 <canvas *ngIf="!byCivilStatusEdit" baseChart [datasets]="byCivilStatus.data" [labels]="byCivilStatus.labels" [options]="byCivilStatus.options" [legend]="byCivilStatus.legend" [chartType]="byCivilStatus.type">
                 </canvas>
                 <div *ngIf="byCivilStatusEdit" class="row flex-container">
+
+                    <div class="form-group col-md-6">
+                        <label for="Student">Single (Males)</label>
+                        <input [(ngModel)]="byCivilStatusData.single_male" type="number" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Student">Single (Females)</label>
+                        <input [(ngModel)]="byCivilStatusData.single_female" type="number" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Co-Habiting/Live-in (Males)</label>
+                        <input [(ngModel)]="byCivilStatusData.live_in_male" type="number" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Co-Habiting/Live-in (Females)</label>
+                        <input [(ngModel)]="byCivilStatusData.live_in_female" type="number" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Widow/er  (Males)</label>
+                        <input [(ngModel)]="byCivilStatusData.widow_male" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Widow/er  (Females)</label>
+                        <input [(ngModel)]="byCivilStatusData.widow_female" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Divorced/Separated (Males)</label>
+                        <input [(ngModel)]="byCivilStatusData.separated_male" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">Divorced/Separated (Females)</label>
+                        <input [(ngModel)]="byCivilStatusData.separated_female" type="number" class="form-control" id="Not Employed">
+                    </div>
+
                     <div class="col-md-12">
                         <div class="flex-container">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
-                            </div>
-
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <br> <br>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="Student">Single</label>
-                        <input type="text" class="form-control" id="Student">
-                    </div>
-
-                    <div class="form-group col-md-3">
-                        <label for="Employed">Co-Habiting/Live-in</label>
-                        <input type="text" class="form-control" id="Employed">
-                    </div>
-
-                    <div class="form-group col-md-3">
-                        <label for="Not Employed">Widow/er</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="Not Employed">Divorced/Separated</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="flex-container">
-                            <button class="button">Save</button>
+                            <button (click)="savebyCivilStatus()" class="button">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="container">
+            <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">PMC Applicants by Average Monthly Income and Sex (%)</span>
                     <span (click)="averageMonthlyIncomeEdit = true" *ngIf="!averageMonthlyIncomeEdit" class="ml-auto">
@@ -471,60 +513,77 @@
                 <canvas *ngIf="!averageMonthlyIncomeEdit" baseChart [datasets]="averageMonthlyIncome.data" [labels]="averageMonthlyIncome.labels" [options]="averageMonthlyIncome.options" [legend]="averageMonthlyIncome.legend" [chartType]="averageMonthlyIncome.type">
                 </canvas>
                 <div *ngIf="averageMonthlyIncomeEdit" class="row flex-container">
+                    <div class="form-group col-md-6">
+                        <label for="Student">No Income (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.no_income_male" type="number" class="form-control" id="Student">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Student">No Income (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.no_income_female" type="number" class="form-control" id="Student">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Under ₱ 5,000 (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.under_5k_male" type="number" class="form-control" id="Employed">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Employed">Under ₱ 5,000 (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.under_5k_female" type="number" class="form-control" id="Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 5,000 - ₱ 9,999 (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['5k_to_10k_male']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 5,000 - ₱ 9,999 (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['5k_to_10k_female']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 10,000 - ₱ 14,999 (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['10k_to_15k_male']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 10,000 - ₱ 14,999 (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['10k_to_15k_female']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 15,000 - ₱ 19,999 (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['15k_to_20k_male']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 15,000 - ₱ 19,999 (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['15k_to_20k_female']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 20,000 - ₱ 24,999 (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['20k_to_25k_male']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 20,000 - ₱ 24,999 (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData['20k_to_25k_female']" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 25,000 Up (Males)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.above_25k_male" type="number" class="form-control" id="Not Employed">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Not Employed">₱ 25,000 Up (Females)</label>
+                        <input [(ngModel)]="averageMonthlyIncomeData.above_25k_female" type="number" class="form-control" id="Not Employed">
+                    </div>
+
                     <div class="col-md-12">
                         <div class="flex-container">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline2">Female</label>
-                            </div>
-
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
-                                <label style="padding-top: 5px;" class="custom-control-label" for="defaultInline1">Male</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <br> <br>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="Student">No Income</label>
-                        <input type="text" class="form-control" id="Student">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Employed">Under ₱ 5,000</label>
-                        <input type="text" class="form-control" id="Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">₱ 5,000 - ₱ 9,999</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">₱ 10,000 - ₱ 14,999</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">₱ 15,000 - ₱ 19,999</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">₱ 20,000 - ₱ 24,999</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="Not Employed">₱ 25,000 Up</label>
-                        <input type="text" class="form-control" id="Not Employed">
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="flex-container">
-                            <button class="button">Save</button>
+                            <button (click)="saveAverageMonthlyIncome()" class="button">Save</button>
                         </div>
                     </div>
                 </div>
@@ -533,10 +592,7 @@
         </div>
     </div>
 
-
-
-
-
+    <!-- --------------PMC TEAM ------------------------- -->
 
     <div class="col-md-4">
         <h4 class="pop2">
@@ -555,7 +611,7 @@
         </span>
         <br>
         <div *ngIf="!wantsToAddPMCTeam">
-            <div *ngFor="let team of teams; let i = index" class="container" style="padding-bottom: -20px !important;margin-bottom: -20px">
+            <div *ngFor="let team of teams; let i = index" class="container" style="padding-bottom: -20px !important;margin-bottom: -20px;margin-left: 0;">
                 <div *ngIf="!activePMCTEAM[i]">
                     <div class="flex" style="transform: translate(0,20px);">
                         <span (click)="toggleProgram(i)" class="edit" style="margin-right: 20px;">
@@ -602,7 +658,7 @@
             </div>
 
         </div>
-        <div *ngIf="wantsToAddPMCTeam" class="row container">
+        <div *ngIf="wantsToAddPMCTeam" class="row container" style="margin-left: 0px;">
             <div class="picture">
                 <img (click)="triggerFileInput('image-file')" [src]="placeholder" alt="" style="cursor: pointer;">
                 <input (change)="readURL($event.target.files,$event)" type="file" style="display: none;" id="image-file">
@@ -617,7 +673,7 @@
                     <input [(ngModel)]="pmcTeam.position" type="text" id="Position" class="form-control">
                 </div>
                 <div class="col-md-2 form-group">
-                    <button (click)="savePMCTEAM()" class="button">Save</button>
+                    <button (click)="savePMCTEAM()" style="margin-top: 40px;" class="button">Save</button>
                 </div>
             </div>
 
