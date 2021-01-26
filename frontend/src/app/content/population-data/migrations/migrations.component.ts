@@ -197,6 +197,11 @@ export class MigrationsComponent implements OnInit {
 		})
 	}
 
+	back(){
+		window.history.back()
+	}
+
+
 	check(item){
 		for(let checkbox in this.checked){
 			this.checked[checkbox] = false

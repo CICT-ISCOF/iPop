@@ -18,6 +18,12 @@ export class PmcComponent implements OnInit {
 		private UtilityService : UtilityService
 	
 	) { }
+
+	back(){
+		window.history.back()
+	}
+
+	
 	numberOfSessions = false
 	municipalities:any = [] 
 	barangays:any = [] 

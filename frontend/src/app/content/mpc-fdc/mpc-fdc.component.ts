@@ -30,7 +30,9 @@ export class MPCFDCComponent implements OnInit {
 		this.getMuncipalities()
 	}
 
-
+	back(){
+		window.history.back()
+	}
 
 	municipalityIsLoading = false
 	getMuncipalities(){

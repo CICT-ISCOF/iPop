@@ -17,6 +17,11 @@ export class BirthsStatComponent implements OnInit {
 		private UtilityService: UtilityService
 	) {}
 
+	
+	back(){
+		window.history.back()
+	}
+	
 	municipalities: any = [];
 	barangays: any = [];
 	hasData = true;
