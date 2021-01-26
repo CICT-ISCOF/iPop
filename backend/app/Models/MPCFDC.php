@@ -20,6 +20,8 @@ class MPCFDC extends Model
         'services',
     ];
 
+    protected $with = ['files'];
+
     protected static function booted()
     {
         static::deleting(function (self $mPCFDC) {
