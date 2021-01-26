@@ -11,6 +11,20 @@
     cursor: pointer;
 }
 
+.close {
+    opacity: 0;
+    pointer-events: none;
+    margin-left: 10px
+}
+
+.flex:hover {
+    .close {
+        opacity: 1;
+        pointer-events: inherit;
+        cursor: pointer;
+    }
+}
+
 .hide {
     display: none;
 }

@@ -13,8 +13,8 @@ export class MpcService {
 		private BaseAPIService : BaseAPIService
 	) { }
 
-	user = JSON.parse(localStorage.getItem('user-data'))
-	token = this.user.token
+	user:any = ''
+	token:any = ''
 
 	baseURL = 	this.BaseAPIService.baseURL + '/mpcfdc-teams'
 	headers = 	new HttpHeaders({
@@ -101,6 +101,7 @@ export class MpcService {
 		return this.http.delete<any>(url ,{headers:this.getHeaders()})
 	}
 
+	
 
 
 }

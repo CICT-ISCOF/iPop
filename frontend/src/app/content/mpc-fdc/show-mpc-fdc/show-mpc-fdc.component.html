@@ -7,10 +7,6 @@
             {{mpc.name}} MPC-FDC
         </h3>
         <p style="text-align: center;">{{mpc.location}}</p>
-        <!-- <hr>
-        <br>
-        <app-dynamic-mapping></app-dynamic-mapping>
-        <br> -->
         <br>
         <h5>Images of {{mpc.name}} </h5>
         <hr>
@@ -20,14 +16,18 @@
             </ng-template>
         </owl-carousel-o>
         <div class="flex-container">
-            <button class="button">Add Images</button>
+            <button (click)="triggerInput()" class="button">Add Images</button>
             <button class="button">Edit Images</button>
+            <input (change)="readURL($event.target.files,$event)" multiple accept="image/*" type="file" style="display: none;" id="file">
         </div>
         <br>
         <h5 style="text-align: center;">SERVICE OFFERED</h5>
         <hr>
-        <p style="text-align: center;">{{mpc.services}}</p>
+        <p [innerHTML]="nl2br(mpc.services)"></p>
     </div>
+
+
+    <!-- __MPC_FDC_TEAM__ -->
     <div class="col-md-4" style="float: right; transform: translate(100px);">
         <h3 class="pop2">
             Personnel In-charge
