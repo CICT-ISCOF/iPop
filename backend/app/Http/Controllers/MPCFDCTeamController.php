@@ -64,8 +64,9 @@ class MPCFDCTeamController extends Controller
      * @param  \App\Models\MPCFDCTeam  $MPCFDCTeam
      * @return \Illuminate\Http\Response
      */
-    public function show(MPCFDCTeam $MPCFDCTeam)
+    public function show($id)
     {
+        $MPCFDCTeam = MPCFDCTeam::findOrFail($id);
         return MPCFDCTeam::findApproved($MPCFDCTeam->id)->first()
             ?: response('', 404);
     }
@@ -77,8 +78,9 @@ class MPCFDCTeamController extends Controller
      * @param  \App\Models\MPCFDCTeam  $MPCFDCTeam
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MPCFDCTeam $MPCFDCTeam)
+    public function update(Request $request, $id)
     {
+        $MPCFDCTeam = MPCFDCTeam::findOrFail($id);
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
@@ -110,8 +112,9 @@ class MPCFDCTeamController extends Controller
      * @param  \App\Models\MPCFDCTeam  $MPCFDCTeam
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MPCFDCTeam $MPCFDCTeam)
+    public function destroy($id)
     {
+        $MPCFDCTeam = MPCFDCTeam::findOrFail($id);
         $MPCFDCTeam->makeDeleteRequest();
 
         Log::record("Deleted a MPCFDC Team.");
