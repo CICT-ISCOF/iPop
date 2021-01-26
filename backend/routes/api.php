@@ -32,7 +32,7 @@ use App\Http\Controllers\MigrationStatisticController;
 use App\Http\Controllers\ModelPermissionController;
 use App\Http\Controllers\MonthChartController;
 use App\Http\Controllers\MPCFDCController;
-use App\Http\Controllers\MPCFDPersonelCController;
+use App\Http\Controllers\MPCFDPersonnelCController;
 use App\Http\Controllers\MPCFDCTeamController;
 use App\Http\Controllers\MTCMMembersController;
 use App\Http\Controllers\MunicipalityADController;
@@ -211,7 +211,7 @@ Route::middleware('throttle:60,1')->group(function () {
         'pmc-amis' => PMCAMISController::class,
         'pmc-kfp' => PMCKFPController::class,
         'pmc-ccs' => PMCCSController::class,
-        'pmc-personel' => MPCFDPersonelCController::class,
+        'pmc-personel' => MPCFDPersonnelController::class,
         // Municipality Age Distribution and Age Dependency
         'm-ad' => MunicipalityADController::class,
         'population-chart' => PopulationChartController::class,
