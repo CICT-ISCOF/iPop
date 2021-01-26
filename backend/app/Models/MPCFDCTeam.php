@@ -17,6 +17,8 @@ class MPCFDCTeam extends Model
         'photo_id',
     ];
 
+    protected $with = ['photo'];
+
     public static function booted()
     {
         static::deleted(function ($team) {
