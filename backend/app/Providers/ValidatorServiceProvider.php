@@ -32,7 +32,7 @@ class ValidatorServiceProvider extends ServiceProvider
             $parameters,
             $validator
         ) {
-            if (base64_encode(base64_decode($value, true)) === $value) {
+            if (is_string($value) && base64_encode(base64_decode($value, true)) === $value) {
                 return true;
             }
             if ($value instanceof UploadedFile) {
