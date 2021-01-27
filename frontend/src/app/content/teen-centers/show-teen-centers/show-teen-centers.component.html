@@ -49,11 +49,11 @@
         <div *ngIf="addPersnalInCharge" class="flex-container">
             <div class="container flex-container">
                 <img (click)="triggerFile()" [src]="src" alt="" class="mr-2" style="width: 50px;height: 50px;border-radius: 50%;">
-                <input (change)="readUrl($event.target,$event)" accept="image/*" id="personnel" type="file" style="display: none;">
+                <input [(ngModel)]="personnel.photo" (change)="readUrl($event.target,$event)" accept="image/*" id="personnel" type="file" style="display: none;">
                 <label style="margin-right: 10px;transform: translateY(5px);" for="Name">Name</label>
-                <input [(ngModel)]="personnel.position" type="text" class="form-control mr-2" id="Name">
+                <input [(ngModel)]="personnel.name" type="text" class="form-control mr-2" id="Name">
                 <label style="margin-right: 10px;transform: translateY(5px);" for="Position">Position</label>
-                <input [(ngModel)]="personnel.photo" type="text" class="form-control" id="Position">
+                <input [(ngModel)]="personnel.position" type="text" class="form-control" id="Position">
                 <button (click)="savePersonnel()" class="clickable">
                     <i class="fa fa-check text-success"></i>
                 </button>

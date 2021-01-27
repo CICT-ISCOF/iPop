@@ -14,7 +14,7 @@ export class TeenCenterAhydTeamComponent implements OnInit {
 		private TeenCentersService : TeenCentersService,
 		private UtilityService : UtilityService
 	) { }
-
+ 
 	ngOnInit(): void {
 	
 		this.getTeams()
@@ -29,16 +29,16 @@ export class TeenCenterAhydTeamComponent implements OnInit {
 	}
 
 	focalPersons = []
+	getFocalPerson(){	
+		this.TeenCentersService.retrieve().subscribe(data => {
+			this.focalPersons =  data.data		
+		})
+	}
+	
 	createFocalPerson(){
 		this.TeenCentersService.create(this.focalPerson).subscribe(data => {
 			this.UtilityService.setAlert('New Focal Person has been added','success')
 			this.ngOnInit()
-		})
-	}
-
-	getFocalPerson(){	
-		this.TeenCentersService.retrieve().subscribe(data => {
-			this.focalPersons = data
 		})
 	}
 
@@ -52,6 +52,7 @@ export class TeenCenterAhydTeamComponent implements OnInit {
 			}).then((result) => {
 			if (result.value) {
 				this.TeenCentersService.update(focalPerson,focalPerson['id']).subscribe(data => {
+					this.UtilityService.setAlert(`${focalPerson['name']} has been updated`,'info')
 					this.ngOnInit()
 				})
 			} 
@@ -70,6 +71,7 @@ export class TeenCenterAhydTeamComponent implements OnInit {
 			if (result.value) {
 				this.TeenCentersService.deleteFocalPerson(id).subscribe(data => {
 					this.ngOnInit()
+					this.UtilityService.setAlert('A Focal Person has been removed','info')
 				})
 			} 
 		})
@@ -83,16 +85,17 @@ export class TeenCenterAhydTeamComponent implements OnInit {
 
 	ahydTeams = []
 
+
+	getTeams(){
+		this.TeenCentersService.retrieveTeam().subscribe(data => {
+			this.ahydTeams = data.data			
+		})
+	}
+
 	createTeam(){
 		this.TeenCentersService.createTeam(this.ahydTeam).subscribe(data => {
 			this.ngOnInit()
 			this.UtilityService.setAlert('New AHYD Team has been added','success')
-		})
-	}
-
-	getTeams(){
-		this.TeenCentersService.retrieveTeam().subscribe(data => {
-			this.ahydTeams = data			
 		})
 	}
 
@@ -106,6 +109,7 @@ export class TeenCenterAhydTeamComponent implements OnInit {
 			}).then((result) => {
 			if (result.value) {
 				this.TeenCentersService.updateTeam(team).subscribe(data => {
+					this.UtilityService.setAlert(`${team['name']} has been updated`,'info')
 					this.ngOnInit()		
 				})
 			} 
@@ -123,6 +127,7 @@ export class TeenCenterAhydTeamComponent implements OnInit {
 				if (result.value) {
 					this.TeenCentersService.deleteAHYDTeam(id).subscribe(data => {
 					this.ngOnInit()		
+					this.UtilityService.setAlert('An AHYD has been removed','info')
 				})
 			}
 		})
@@ -133,6 +138,14 @@ export class TeenCenterAhydTeamComponent implements OnInit {
 	toggleFocalPersons(focalPersonID){		
 		this.acitveFocalPersons[focalPersonID] == true ?  this.acitveFocalPersons[focalPersonID] = false : this.acitveFocalPersons[focalPersonID] = true	
 		console.log(this.acitveFocalPersons[focalPersonID])		
+	}
+
+
+	activeTeams = {}
+
+	toggleTeams(id){		
+		this.activeTeams[id] == true ?  this.activeTeams[id] = false : this.activeTeams[id] = true	
+		console.log(this.activeTeams[id])		
 	}
 
 }

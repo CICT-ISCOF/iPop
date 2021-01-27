@@ -27,7 +27,7 @@
             </h4>
             <div class="flex-container row">
                 <div class="distict-container  col-md-3" *ngFor="let district of districts  | keyvalue; let i = index">
-                    <div [class.active]="activeDistrict['I']" class="district container" (click)="makeDistrictActive('I');setdata(district.value.data)">
+                    <div class="district container" (click)="makeDistrictActive('I');setdata(district.value.data)">
                         <div class="district-name">District {{district.key}}</div>
                         <br>
                         <h1 class="number-of-teen-centers" style="color:var(--contrast)">{{district.value.length || 0}}</h1>
@@ -40,13 +40,13 @@
                 <br> <br> <br>
                 <ul *ngIf="activeDistrict['I']  && !show" class="list-group">
                     <li class="list-group-item" *ngFor="let data of data">
-                        <p *ngIf="!activeMPC[data.id]" class="municipality-name">
+                        <p (click)="showMPC(data)" *ngIf="!activeMPC[data.id]" class="municipality-name">
                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px;" width="25" height="25" fill="#1E93FD" class="bi bi-house" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
                             <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
                         </svg>&nbsp;{{data.name}}
                         </p>
-                        <h4 *ngIf="!activeMPC[data.id]" (click)="showMPC(data)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FF3C44" class="bi bi-geo-fill" viewBox="0 0 16 16">
+                        <h4 (click)="showMPC(data)" *ngIf="!activeMPC[data.id]" (click)="showMPC(data)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FF3C44" class="bi bi-geo-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"/>
                           </svg> {{data.municipality}}
                         </h4>

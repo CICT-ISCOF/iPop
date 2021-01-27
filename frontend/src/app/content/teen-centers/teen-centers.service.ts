@@ -124,6 +124,29 @@ export class TeenCentersService {
 	}
 	
 
+	// ---------personnel incharhe ----------
+
+	createPersonnel(data){
+		const url = this.BaseAPIService.baseURL + '/sbmptc-personnel'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	} 
+
+	retrivePersonnel(id){
+		const url = this.BaseAPIService.baseURL + `/sbmptc-personnel?mpcfdc_id=${id}`
+		return this.http.get<any>(url )
+	} 
+
+	updatePersonnel(data){
+		const url = this.BaseAPIService.baseURL + '/sbmptc-personnel' + data['id']
+		return this.http.patch<any>(url ,data,{headers:this.getHeaders()})
+	} 
+
+
+	deletePersonnel(id){
+		const url = this.BaseAPIService.baseURL + '/sbmptc-personnel' + id
+		return this.http.delete<any>(url ,{headers:this.getHeaders()})
+	}
+
 
 
   
