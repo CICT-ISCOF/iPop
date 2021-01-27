@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AgeDistributionController;
+use App\Http\Controllers\AgeProfileController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\LoginController;
@@ -49,6 +50,7 @@ use App\Http\Controllers\PMOCTeamController;
 use App\Http\Controllers\PopulationChartController;
 use App\Http\Controllers\PopulationPyramidController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileSummaryController;
 use App\Http\Controllers\ProgramAreaController;
 use App\Http\Controllers\ProvincialOfficialController;
 use App\Http\Controllers\RecordController;
@@ -218,6 +220,8 @@ Route::middleware('throttle:60,1')->group(function () {
         'm-ad' => MunicipalityADController::class,
         'population-chart' => PopulationChartController::class,
         'population-pyramid' => PopulationPyramidController::class,
+        'age-profile' => AgeProfileController::class,
+        'profile-summary' => ProfileSummaryController::class,
     ]);
 
     // Delete 1 award media
