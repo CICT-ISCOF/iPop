@@ -5,14 +5,14 @@
 <div class="row container" *ngIf="addTeam">
     <div class="form-group col-md-12">
         <label for="Name">Name</label>
-        <input [(ngModel)]="ahydTeam.name" type="text" id="Name" class="form-control">
+        <input (keyup.enter)="createTeam();addTeam = false" [(ngModel)]="ahydTeam.name" type="text" id="Name" class="form-control">
     </div>
     <div class="form-group col-md-12">
         <label for="Position">Position</label>
-        <input [(ngModel)]="ahydTeam.posotion" type="text" id="Position" class="form-control">
+        <input (keyup.enter)="createTeam();addTeam = false" [(ngModel)]="ahydTeam.posotion" type="text" id="Position" class="form-control">
     </div>
     <div class="form-group col-md-12 flex-container">
-        <button (click)="createTeam()" class="button">Save</button>
+        <button (click)="createTeam();addTeam = false" class="button">Save</button>
         <button (click)="addTeam = false" class="clickable">Back</button>
     </div>
 </div>
@@ -20,7 +20,7 @@
 <div class="row container" *ngIf="addFocalPerson">
     <div class="form-group col-md-12">
         <label for="Name">Name</label>
-        <input [(ngModel)]="focalPerson.name" type="text" id="Name" class="form-control">
+        <input (keyup.enter)="createFocalPerson();addFocalPerson = false" [(ngModel)]="focalPerson.name" type="text" id="Name" class="form-control">
     </div>
     <div class="form-group col-md-12 flex-container">
         <button (click)="createFocalPerson();addFocalPerson = false" class="button">Save</button>
@@ -31,8 +31,7 @@
 
 <div *ngIf="!addTeam" [class.hide]="addFocalPerson">
     <h3 class="pop2"> AHYD TEAM</h3>
-    <hr>
-    <div *ngFor="let ahydTeam of ahydTeams" class="container">
+    <div *ngFor="let ahydTeam of ahydTeams" class="container" style="margin-bottom: -0px;">
         <div class="flex absolute">
             <div class="absolute flex" style="margin-right: 20px;margin-top: -10px;">
                 <div *ngIf="!activeTeams[ahydTeam.id]" (click)="toggleTeams(ahydTeam.id)" class="edit">
@@ -55,9 +54,9 @@
             </div>
         </div>
         <div *ngIf="activeTeams[ahydTeam.id]" class="flex-container row" style="min-height: 50px;padding: 10px;">
-            <label style="margin-left: -50px;transform: translateY(5px);" class="mr-2" for="Name">Name</label>
-            <input style="margin-left: -30px;margin-right: 30px;" [(ngModel)]="ahydTeam.name" type="text" class="form-control w-50" id="Name">
-            <button (click)="updateTeam(ahydTeam)" class="clickable">
+            <label (keyup.enter)="updateTeam(ahydTeam);toggleTeams(ahydTeam.id)" style="margin-left: -50px;transform: translateY(-50px);" class="mr-2" for="Name">Name</label>
+            <input (keyup.enter)="updateTeam(ahydTeam);toggleTeams(ahydTeam.id)" style="margin-left: -30px;margin-right: 30px;" [(ngModel)]="ahydTeam.name" type="text" class="form-control w-50" id="Name">
+            <button (click)="updateTeam(ahydTeam);toggleTeams(ahydTeam.id)" class="clickable">
                 <i class="fa fa-check text-success"></i>
             </button>
         </div>

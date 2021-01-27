@@ -132,12 +132,12 @@ export class TeenCentersService {
 	} 
 
 	retrivePersonnel(id){
-		const url = this.BaseAPIService.baseURL + `/sbmptc-personnel?mpcfdc_id=${id}`
+		const url = this.BaseAPIService.baseURL + `/sbmptc-personnel?sbmptc_id=${id}`
 		return this.http.get<any>(url )
 	} 
 
 	updatePersonnel(data){
-		const url = this.BaseAPIService.baseURL + '/sbmptc-personnel' + data['id']
+		const url = this.BaseAPIService.baseURL + '/sbmptc-personnel/' + data['id']
 		return this.http.patch<any>(url ,data,{headers:this.getHeaders()})
 	} 
 
