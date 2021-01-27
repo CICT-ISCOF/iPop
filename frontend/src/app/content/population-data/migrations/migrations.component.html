@@ -16,6 +16,30 @@
             </div>
         </div>
         <h3 class="tl-center pop2">PROVINCE OF ILOILO (MIGRATION)</h3>
+        <div class="container row " style="margin-left: 0px;">
+            <div class="col-md-12">
+                <h5>Provincial Summary</h5>
+                <hr>
+            </div>
+            <div class="col-md-12 d-flex">
+                <div style="flex: 1;text-align: center;">
+                    <p>Total In Migrations</p>
+                    <br>
+                    <h1 class="text-primary">{{summary.total_in_migrations || 0}}</h1>
+                </div>
+                <div style="flex: 1;text-align: center;">
+                    <p>Total Out Migrations</p>
+                    <br>
+                    <h1 class="text-primary">{{summary.total_out_migrations || 0}}</h1>
+                </div>
+                <div style="flex: 1;text-align: center;">
+                    <p>Net Migrations</p>
+                    <br>
+                    <h1 class="text-primary">{{summary.net_migrations || 0}}</h1>
+                </div>
+            </div>
+        </div>
+
         <div *ngIf="!hasData" class="!hasData container">
             <h2 class="pop2">Add Migration Statistics Data</h2>
             <hr>

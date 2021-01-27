@@ -123,7 +123,16 @@ export class DeathsStatComponent implements OnInit {
 		for (let i = 2015; i <= 2050; i++) {
 			this.years.push(i);
 		}
-		this.getMuncipalities();
+		this.getMuncipalities()
+		this.getSummary()
+	}
+
+	summary = {}
+	getSummary(){
+		this.DeathStatService.getSummary().subscribe(data => {
+			this.summary = data
+			console.log(data)
+		})
 	}
 
 	municipalityIsLoading = false
@@ -187,6 +196,7 @@ export class DeathsStatComponent implements OnInit {
 				)
 			})
 		})
+		this.getSummary()
 	}
 
 	editChartData = false;
@@ -306,6 +316,7 @@ export class DeathsStatComponent implements OnInit {
 				)
 			}
 		)
+		this.getSummary()
 	}
 
 	getChecked(){

@@ -143,10 +143,10 @@ export class BirthsStatComponent implements OnInit {
 		this.getMuncipalities();
 		this.getSummary()
 	}
-
+	sumamry = {}
 	getSummary(){
 		this.BirthStatService.getSUmmary().subscribe(data => {
-			this.birthSatistics = data
+			this.sumamry = data
 		})
 	}
 
@@ -211,6 +211,7 @@ export class BirthsStatComponent implements OnInit {
 				)
 			})
 		})
+		this.getSummary()
 	}
 
 	editChartData = false;
@@ -331,6 +332,7 @@ export class BirthsStatComponent implements OnInit {
 				'info'
 			)
 		})
+		this.getSummary()
 	}
 
 	getChecked(){

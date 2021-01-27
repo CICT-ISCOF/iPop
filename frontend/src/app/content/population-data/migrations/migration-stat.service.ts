@@ -74,4 +74,10 @@ export class MigrationStatService {
 		const url = this.BaseAPIService.baseURL + '/incidences'
 		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
 	}
+
+	getSummary(){		
+		const url = this.BaseAPIService.baseURL + '/migration-statistics/summary'
+		return this.http.get<any>(url)
+	}
+
 }

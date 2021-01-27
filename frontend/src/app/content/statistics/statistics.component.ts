@@ -142,6 +142,19 @@ export class StatisticsComponent implements OnInit {
 		this.getMunicipality()		
 		this.getMuncipalities()
 		this.getMonths()		
+		this.getSummaries()
+	}
+
+	// hasFilteredData = false
+	getSummaries(){
+		// this.hasFilteredData = true
+		// this.StatisticsService.getSummaries().subscribe((data:any) => {
+		// 	this.filteredData = []
+		// 	for(let index in data){
+		// 		this.filteredData.push(data[index][0])
+		// 	}
+		// 	console.log(data)
+		// })
 	}
 
 	municipalities = []

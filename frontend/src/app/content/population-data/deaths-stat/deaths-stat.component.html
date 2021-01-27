@@ -16,7 +16,24 @@
             </div>
         </div>
         <h3 class="tl-center pop2">PROVINCE OF ILOILO (DEATHS)</h3>
-
+        <div class="container row " style="margin-left: 0px;">
+            <div class="col-md-12">
+                <h5>Provincial Summary</h5>
+                <hr>
+            </div>
+            <div class="col-md-12 d-flex">
+                <div style="flex: 1;text-align: center;">
+                    <p>Total Deaths</p>
+                    <br>
+                    <h1 class="text-primary">{{summary.total || 0}}</h1>
+                </div>
+                <div style="flex: 1;text-align: center;">
+                    <p>Crude Death Rate</p>
+                    <br>
+                    <h1 class="text-primary">{{summary.crude_death_rate || 0}}</h1>
+                </div>
+            </div>
+        </div>
 
         <div *ngIf="!hasData" class="!hasData container">
             <h2 class="pop2">Add Death Statistics Data</h2>

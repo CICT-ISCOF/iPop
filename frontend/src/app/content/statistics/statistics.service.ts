@@ -30,6 +30,11 @@ export class StatisticsService {
 	}
 
 	statURL = this.BaseAPIService.baseURL + '/statistic-profiles'
+	getSummaries(){
+		const url  = this.BaseAPIService.baseURL + '/statistic-profiles/by-municipality'
+		return this.http.get(url)
+	}
+
 
 	addPopulationProfileData(data){
 		return this.http.post(this.statURL, data , {headers:this.getHeaders()})

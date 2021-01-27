@@ -168,51 +168,51 @@
                     <br>
                     <div class="form-group col-md-3">
                         <label for="January">January</label>
-                        <input [(ngModel)]="data.months.January" type="number" class="form-control" id="January">
+                        <input [(ngModel)]="months.January" type="number" class="form-control" id="January">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="February">February</label>
-                        <input [(ngModel)]="data.months.February" type="number" class="form-control" id="February">
+                        <input [(ngModel)]="months.February" type="number" class="form-control" id="February">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="March">March</label>
-                        <input [(ngModel)]="data.months.March" type="number" class="form-control" id="March">
+                        <input [(ngModel)]="months.March" type="number" class="form-control" id="March">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="April">April</label>
-                        <input [(ngModel)]="data.months.April" type="number" class="form-control" id="April">
+                        <input [(ngModel)]="months.April" type="number" class="form-control" id="April">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="May">May</label>
-                        <input [(ngModel)]="data.months.May" type="number" class="form-control" id="May">
+                        <input [(ngModel)]="months.May" type="number" class="form-control" id="May">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="June">June</label>
-                        <input [(ngModel)]="data.months.June" type="number" class="form-control" id="June">
+                        <input [(ngModel)]="months.June" type="number" class="form-control" id="June">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="July">July</label>
-                        <input [(ngModel)]="data.months.July" type="number" class="form-control" id="July">
+                        <input [(ngModel)]="months.July" type="number" class="form-control" id="July">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="August">August</label>
-                        <input [(ngModel)]="data.months.August" type="number" class="form-control" id="August">
+                        <input [(ngModel)]="months.August" type="number" class="form-control" id="August">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="September">September</label>
-                        <input [(ngModel)]="data.months.September" type="number" class="form-control" id="September">
+                        <input [(ngModel)]="months.September" type="number" class="form-control" id="September">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="October">October</label>
-                        <input [(ngModel)]="data.months.October" type="number" class="form-control" id="October">
+                        <input [(ngModel)]="months.October" type="number" class="form-control" id="October">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="November">November</label>
-                        <input [(ngModel)]="data.months.November" type="number" class="form-control" id="November">
+                        <input [(ngModel)]="months.November" type="number" class="form-control" id="November">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="December">December</label>
-                        <input [(ngModel)]="data.months.December" type="number" class="form-control" id="December">
+                        <input [(ngModel)]="months.December" type="number" class="form-control" id="December">
                     </div>
                     <div class="flex-container col-md-12">
                         <button (click)="editChartData = false;updateChart()" class="button">Save</button> &nbsp;
@@ -611,7 +611,7 @@
         </span>
         <br>
         <div *ngIf="!wantsToAddPMCTeam">
-            <div *ngFor="let team of teams; let i = index" class="container" style="padding-bottom: -20px !important;margin-bottom: -20px;margin-left: 0;">
+            <div *ngFor="let team of teams; let i = index" class="container" style="padding-bottom: -20px !important;margin-bottom: -20px;margin-left: 0;transition: .5s linear;">
                 <div *ngIf="!activePMCTEAM[i]">
                     <div class="flex" style="transform: translate(0,20px);">
                         <span (click)="toggleProgram(i)" class="edit" style="margin-right: 20px;">

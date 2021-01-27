@@ -56,6 +56,20 @@ export class PmcComponent implements OnInit {
 		},	
 		type:'PMOC'
 	}
+	months = {
+		January:0,
+		February:0,
+		March:0,
+		April:0,
+		May:0,
+		June:0,
+		July:0,
+		August:0,
+		September:0,
+		October:0,
+		November:0,
+		December:0,
+	}	
 	pmcStat = this.data
 	getDataParams = {
 		barangay:'test',
@@ -110,7 +124,7 @@ export class PmcComponent implements OnInit {
 		this.coupleByAgeGroupData['year'] = this.data.year	
 		this.coupleByAgeGroupData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
 		this.PmcService.storeCoupleByAgeGroup(this.coupleByAgeGroupData).subscribe(data =>{
-			this.getPMCAgeGroup()
+			this.fetchData()
 			return Swal.fire('Chart has been successfully updated','','success')
 		})
 	}
@@ -120,9 +134,9 @@ export class PmcComponent implements OnInit {
 		type:'bar',
 		legend:true,
 		data:[
-			{ data: [1,21,21], label: 'Female'},
-			{ data: [1,21,21], label: 'Male'},
-			{ data: [1,21,21], label: 'Total'},
+			{ data: [], label: 'Female'},
+			{ data: [], label: 'Male'},
+			{ data: [], label: 'Total'},
 		],
 		options:{
 			scaleShowVerticalLines: false,
@@ -140,7 +154,7 @@ export class PmcComponent implements OnInit {
 		this.applicantsByEmploymentStatusData['year'] = this.data.year	
 		this.applicantsByEmploymentStatusData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
 		this.PmcService.storeApplicantsByEmploymentStatus(this.applicantsByEmploymentStatusData).subscribe(data =>{
-			this.getPMCEES()
+			this.fetchData()
 			return Swal.fire('Chart has been successfully updated','','success')
 		})
 	}
@@ -159,9 +173,9 @@ export class PmcComponent implements OnInit {
 		type:'bar',
 		legend:true,
 		data:[
-			{ data: [1,2,3,4], label: 'Female'},
-			{ data: [1,2,3,4], label: 'Male'},
-			{ data: [1,2,3,4], label: 'Total'},
+			{ data: [], label: 'Female'},
+			{ data: [], label: 'Male'},
+			{ data: [], label: 'Total'},
 		],
 		options:{
 			scaleShowVerticalLines: false,
@@ -179,7 +193,7 @@ export class PmcComponent implements OnInit {
 		this.averageMonthlyIncomeData['year'] = this.data.year	
 		this.averageMonthlyIncomeData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
 		this.PmcService.storeAverageMonthlyIncome(this.averageMonthlyIncomeData).subscribe(data =>{
-			this.getAverageMonthlyIncome()
+			this.fetchData()
 			return Swal.fire('Chart has been successfully updated','','success')
 		})
 	}
@@ -189,9 +203,9 @@ export class PmcComponent implements OnInit {
 		type:'bar',
 		legend:true,
 		data:[
-			{ data: [1], label: 'Female'},
-			{ data: [2], label: 'Male'},
-			{ data: [3], label: 'Total'},
+			{ data: [], label: 'Female'},
+			{ data: [], label: 'Male'},
+			{ data: [], label: 'Total'},
 		],
 		options:{
 			scaleShowVerticalLines: false,
@@ -209,7 +223,7 @@ export class PmcComponent implements OnInit {
 		this.knowLedgeOnFPData['year'] = this.data.year	
 		this.knowLedgeOnFPData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
 		this.PmcService.storeknowLedgeOnFP(this.knowLedgeOnFPData).subscribe(data =>{
-			this.getknowLedgeOnFP()
+			this.fetchData()
 			return Swal.fire('Chart has been successfully updated','','success')
 		})
 	}
@@ -239,7 +253,7 @@ export class PmcComponent implements OnInit {
 		this.byCivilStatusData['year'] = this.data.year	
 		this.byCivilStatusData['municipality'] = this.data.municipality	|| this.PMCData.muncipality
 		this.PmcService.storebyCivilStatus(this.byCivilStatusData).subscribe(data =>{
-			this.getebyCivilStatus()
+			this.fetchData()
 			return Swal.fire('Chart has been successfully updated','','success')
 		})
 	}
@@ -295,11 +309,17 @@ export class PmcComponent implements OnInit {
 		this.data['applicants_by_employment_status'] = 1
 		this.data['applicants_by_income_class'] = 1
 		this.data['applicants_by_knowledge_on_fp'] = 1
-		this.data['oriented_couples'] =  this.PMCData['oriented_couples']
-		this.data['individuals_interviewed'] = this.PMCData['individuals_interviewed'] 
-		this.data['oriented_couples'] =   this.PMCData['oriented_couples'] 
-		this.data['sessions'] =  	this.PMCData['sessions']   
+		if(this.data['oriented_couples'] == 0 || this.data['oriented_couples'] == undefined){
+			this.data['oriented_couples'] =  this.PMCData['oriented_couples']
+			this.data['individuals_interviewed'] = this.PMCData['individuals_interviewed'] 
+			this.data['oriented_couples'] =   this.PMCData['oriented_couples'] 
+			this.data['sessions'] =  	this.PMCData['sessions']  
+		}
+		this.data['months'] = {}
+		this.data['months'] = this.months
+
 		this.PmcService.create(this.data).subscribe(data => {			
+			this.PmcService.postToMOnthController(this.data).subscribe(()=>{})
 			this.UtilityService.setAlert('New Death Statistics Data has been added', 'success')
 		})
 	}
@@ -311,6 +331,7 @@ export class PmcComponent implements OnInit {
 		this.data['year'] = this.data.year	
 		this.PMCData['gender'] = 'Male'
 		this.PMCData['type'] = 'PMOC'
+		this.PMCData['months'] = this.months
 		this.PmcService.postToMOnthController(this.PMCData).subscribe(data => {	
 			this.editChartData = false		
 			this.MONTHbarChartLabels = []
@@ -397,6 +418,7 @@ export class PmcComponent implements OnInit {
 				this[chart].data[i].data = []
 			}
 		}
+		
 	}
 
 	coupleByAgeGroupEdit = false
@@ -407,6 +429,7 @@ export class PmcComponent implements OnInit {
 
 
 	fetchCharts(){
+		this.clearCharts()
 		this.getPMCAgeGroup()
 		this.getPMCEES()
 		this.getAverageMonthlyIncome()
@@ -416,7 +439,6 @@ export class PmcComponent implements OnInit {
 	}
 
 	getPMCAgeGroup(){
-		this.clearCharts()
 		this.PmcService.retrieveCoupleByAgeGroup(this.data.municipality, this.data.year).subscribe(data => {
 			data = data[0]
 			this.coupleByAgeGroup.data[0].data = [
@@ -451,7 +473,6 @@ export class PmcComponent implements OnInit {
 	}
 
 	getPMCEES(){
-		this.clearCharts()
 		this.PmcService.retrieveApplicantsByEmploymentStatus(this.data.municipality, this.data.year).subscribe(data => {
 			data = data[0]
 			this.applicantsByEmploymentStatus.data[0].data = [data.student_female,data.employed_female,data.not_employed_female]
@@ -466,7 +487,6 @@ export class PmcComponent implements OnInit {
 	}
 
 	getAverageMonthlyIncome(){
-		this.clearCharts()
 		this.PmcService.retrieveAverageMonthlyIncome(this.data.municipality, this.data.year).subscribe(data => {
 			data = data[0]
 			this.averageMonthlyIncome.data[0].data = [
@@ -501,7 +521,6 @@ export class PmcComponent implements OnInit {
 	}
 
 	getknowLedgeOnFP(){
-		this.clearCharts()
 		this.PmcService.retrieveknowLedgeOnFP(this.data.municipality, this.data.year).subscribe(data => {
 			data = data[0]	
 			this.knowLedgeOnFP.data[0].data = [data.females]
@@ -515,7 +534,6 @@ export class PmcComponent implements OnInit {
 	}
 
 	getebyCivilStatus(){
-		this.clearCharts()
 		this.PmcService.retrievebyCivilStatus(this.data.municipality, this.data.year).subscribe(data => {	
 			data = data[0]
 			this.byCivilStatus.data[0].data = [
@@ -548,36 +566,29 @@ export class PmcComponent implements OnInit {
 			this.data.municipality,
 			this.data.year		
 		).subscribe(data => {
-			this.PMCData = data.data[0] ||  data.data[1]
-			if( data.data[0] = null	 || data.data.length == 0){
+			this.PMCData = data.data[0] 
+			console.log(data)
+			for(let index in data.month){
+				this.months[data.month[index].month] = data.month[index].total
+			}
+			console.log('bago na months',this.months)
+			if( data.data[0] == null || data.data.length == 0){
 				this.hasData = false	
 				return Swal.fire('No data on this filters','','info')
 			}
 			else{
 				this.hasData = true
-				console.log('PMCData',	this.PMCData)
-				for(let index in data.month){
-					if (!this.MONTHbarChartLabels.includes(data.month[index].month)) {
-						this.MONTHbarChartLabels.push(data.month[index].month);
-					}
-					this.MONTHbarChartData[0].data.push(data.month[index].total);
+		
+				if(data.month == undefined){
 				}
-				this.data.months['January'] = data.month[0].total	|| 0
-				this.data.months.February = data.month[1].total	 	|| 0
-				this.data.months.March = data.month[2].total	 	|| 0
-
-				this.data.months.April = data.month[3].total	 	|| 0
-				this.data.months.May = data.month[4].total	 		|| 0
-				this.data.months.June = data.month[5].total 		|| 0
-				
-				this.data.months.July = data.month[6].total	 		|| 0
-				this.data.months.August = data.month[7].total 		|| 0
-				this.data.months.September = data.month[8].total	|| 0
-
-				this.data.months.October = data.month[9].total	 	|| 0
-				this.data.months.November = data.month[10].total 	|| 0
-				this.data.months.December = data.month[11].total 	|| 0
-
+				else{
+					for(let index in data.month){
+						if (!this.MONTHbarChartLabels.includes(data.month[index].month)) {
+							this.MONTHbarChartLabels.push(data.month[index].month);
+						}
+						this.MONTHbarChartData[0].data.push(data.month[index].total || 0);
+					}
+				}
 				this.fetchCharts()
 			}
 		},error =>{

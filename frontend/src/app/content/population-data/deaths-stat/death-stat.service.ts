@@ -16,7 +16,7 @@ export class DeathStatService {
 	) {
 		
 	}
-
+ 
 	user:any = ''
 	token:any = ''
 
@@ -74,6 +74,11 @@ export class DeathStatService {
 	postToinsidence(data){		
 		const url = this.BaseAPIService.baseURL + '/incidences'
 		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	}
+
+	getSummary(){		
+		const url = this.BaseAPIService.baseURL + '/death-statistics/summary'
+		return this.http.get<any>(url)
 	}
 
 

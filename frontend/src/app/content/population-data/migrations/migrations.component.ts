@@ -104,6 +104,15 @@ export class MigrationsComponent implements OnInit {
 			this.years.push(i)
 		}
 		this.getMuncipalities()
+		this.getSummary()
+	}
+
+	summary = {}
+	getSummary(){
+		this.MigrationStatService.getSummary().subscribe(data => {
+			this.summary = data
+			console.log(data)
+		})
 	}
 	
 	getDataParams = {
@@ -164,6 +173,7 @@ export class MigrationsComponent implements OnInit {
 				)
 			})
 		})
+		this.getSummary()
 	}
 
 	editChartData = false
@@ -273,7 +283,8 @@ export class MigrationsComponent implements OnInit {
 				'No data on this particular filter yet',
 				'info'
 			)
-		})		
+		})	
+		this.getSummary()	
 	}
 
 	getChecked(){
