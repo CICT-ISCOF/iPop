@@ -23,9 +23,27 @@ class ProfileController extends Controller
 
         foreach ($profiles as $profile) {
             if (!in_array($profile->municipality, array_keys($data))) {
-                $data[$profile->municipality] = [];
+                $data[$profile->municipality] = [
+                    'barangays' => 0,
+                    'land_area' => 0,
+                    'population_density' => 0,
+                    'males' => 0,
+                    'females' => 0,
+                    'total' => 0,
+                    'sex_ratio' => 0,
+                    'number_of_hh' => 0,
+                    'average_hh_size' => 0,
+                ];
             }
-            $data[$profile->municipality][] = $profile;
+
+            $data[$profile->municipality]['barangays'] += (int)$profile->barangays;
+            $data[$profile->municipality]['land_area'] += (float)$profile->land_area;
+            $data[$profile->municipality]['population_density'] += (int)$profile->population_density;
+            $data[$profile->municipality]['males'] += (int)$profile->males;
+            $data[$profile->municipality]['females'] += (int)$profile->females;
+            $data[$profile->municipality]['total'] += (int)$profile->males + (int)$profile->females;
+            $data[$profile->municipality]['sex_ratio'] += (int)$profile->sex_ratio;
+            $data[$profile->municipality]['average_hh_size'] += (int)$profile->average_household_size;
         }
         return array_values($data);
     }
