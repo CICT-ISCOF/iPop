@@ -9,6 +9,7 @@ import { Chart } from 'chart.js';
 import { ChartType } from 'chart.js';
 import { SingleDataSet, Label, Color } from 'ng2-charts';
 import Swal from 'sweetalert2'
+import { OfficialsService1 } from '../officials-of/officials.service';
 
 @Component({
 	selector: 'app-statistics',
@@ -37,7 +38,44 @@ export class StatisticsComponent implements OnInit {
 	back(){
 		window.history.back()
 	}
+	constructor(	
+		private StatisticsService : StatisticsService,
+		private LocationService : LocationService,
+		private UtilityService : UtilityService,
+		private OfficialsService : OfficialsService,
+		private OfficialsService1 : OfficialsService1
+	) { 
+		this.OfficialsService1.listen().subscribe(()=>{
+			this.CheckBarangaysAndMunicipalities()
+		})
+	}
 
+	ngOnInit(): void {	
+		for(let year = 2015; year < 2100; year++){
+			this.years.push(year)
+		}
+		this.getPopulation()
+		this.getTotals()		
+		this.getMunicipality()		
+		this.getMuncipalities()
+		this.getMonths()		
+		this.getSummaries()
+		localStorage.removeItem('municipality-ref') 
+		localStorage.removeItem('barangay-ref') 
+	}
+
+	CheckBarangaysAndMunicipalities(){
+		if(localStorage.getItem('municipality-ref') == undefined){
+			this.hasBarangaysAndMunicipalities = false
+			return
+		}
+		if(localStorage.getItem('barangay-ref') == undefined){
+			this.hasBarangaysAndMunicipalities = false
+			return
+		}
+		this.hasBarangaysAndMunicipalities =  true
+		return
+	}
 
 	addData = false
 
@@ -71,6 +109,9 @@ export class StatisticsComponent implements OnInit {
 			}
 		)
 		this.OfficialsService.setOfficialsFilter(this.filter)
+		localStorage.setItem('municipality-ref',this.filter.municipality) 
+		localStorage.setItem('barangay-ref',this.filter.barangay) 
+		this.OfficialsService1.setTrigger()
 	}
 
 	updateFiltered(callback){
@@ -107,12 +148,10 @@ export class StatisticsComponent implements OnInit {
 
 	years = []
 
-	constructor(	
-		private StatisticsService : StatisticsService,
-		private LocationService : LocationService,
-		private UtilityService : UtilityService,
-		private OfficialsService : OfficialsService
-	) { }
+
+
+	
+	hasBarangaysAndMunicipalities = false
 
 	// -------------- formaters ----------------
 
@@ -134,17 +173,7 @@ export class StatisticsComponent implements OnInit {
 		month:''
 	}
 
-	ngOnInit(): void {	
-		for(let year = 2015; year < 2100; year++){
-			this.years.push(year)
-		}
-		this.getPopulation()
-		this.getTotals()		
-		this.getMunicipality()		
-		this.getMuncipalities()
-		this.getMonths()		
-		this.getSummaries()
-	}
+
 
 	// hasFilteredData = false
 	getSummaries(){

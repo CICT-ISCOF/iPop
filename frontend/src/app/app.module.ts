@@ -170,6 +170,8 @@ import { ApprovalsComponent } from './shared/navbar/approvals/approvals.componen
 import { AddMpcFdcComponent } from './content/mpc-fdc/add-mpc-fdc/add-mpc-fdc.component';
 import { PopulationProfileByMunicipalityComponent } from './content/population-profile-by-municipality/population-profile-by-municipality.component';
 import { AgeDistributionByMunicipalityComponent } from './content/age-distribution-by-municipality/age-distribution-by-municipality.component';
+import { MunicipalityOfficialsComponent } from './content/officials-of/municipality-officials/municipality-officials.component';
+import { BarangayOfficialsComponent } from './content/officials-of/barangay-officials/barangay-officials.component';
 
 
 
@@ -389,6 +391,8 @@ const routes: Routes = [
     AddMpcFdcComponent,
     PopulationProfileByMunicipalityComponent,
     AgeDistributionByMunicipalityComponent,
+    MunicipalityOfficialsComponent,
+    BarangayOfficialsComponent,
   
     
 
