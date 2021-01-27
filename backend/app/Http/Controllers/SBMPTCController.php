@@ -123,8 +123,9 @@ class SBMPTCController extends Controller
      * @param  \App\Models\SBMPTC  $sBMPTC
      * @return \Illuminate\Http\sbmptc
      */
-    public function update(Request $request, SBMPTC $sbmptc)
+    public function update(Request $request, $id)
     {
+        $sbmptc = SBMPTC::findOrFail($id);
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'location' => ['nullable', 'string', 'max:255'],
@@ -142,7 +143,7 @@ class SBMPTCController extends Controller
             ->setApprovalMessage($request->user()->makeMessage('wants to update a SBMPTC.'));
 
         if (isset($data['photos'])) {
-            $sbmptc->photo->each(function ($photo) {
+            $sbmptc->photos->each(function ($photo) {
                 $photo->delete();
             });
             collect($data['photos'])->each(function ($binary) use ($sbmptc) {
@@ -166,8 +167,9 @@ class SBMPTCController extends Controller
      * @param  \App\Models\SBMPTC  $sbmptc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SBMPTC $sbmptc)
+    public function destroy($id)
     {
+        $sbmptc = SBMPTC::findOrFail($id);
         $sbmptc->makeDeleteRequest();
 
         Log::record("Deleted a SBMPTC.");
