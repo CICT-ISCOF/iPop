@@ -57,8 +57,9 @@ class SBMPTCTeamController extends Controller
      * @param  \App\Models\SBMPTCTeam $team
      * @return \Illuminate\Http\Response
      */
-    public function show(SBMPTCTeam $team)
+    public function show($id)
     {
+        $team = SBMPTCTeam::findOrFail($id);
         return SBMPTCTeam::findApproved($team->id)->first()
             ?: response('', 404);
     }
@@ -70,8 +71,9 @@ class SBMPTCTeamController extends Controller
      * @param  \App\Models\SBMPTCTeam $team
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SBMPTCTeam $team)
+    public function update(Request $request, $id)
     {
+        $team = SBMPTCTeam::findOrFail($id);
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
@@ -92,8 +94,9 @@ class SBMPTCTeamController extends Controller
      * @param  \App\Models\SBMPTCTeam $team
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SBMPTCTeam $team)
+    public function destroy($id)
     {
+        $team = SBMPTCTeam::findOrFail($id);
         $team->makeDeleteRequest();
 
         Log::record("Deleted a SBMPTC Team.");

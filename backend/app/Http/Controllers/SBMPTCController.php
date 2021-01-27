@@ -133,11 +133,27 @@ class SBMPTCController extends Controller
             'services' => ['nullable', 'string'],
             'municipality' => ['nullable', Rule::exists('municipalities', 'name')],
             'district' => ['nullable', 'string', 'max:255'],
+            'photos' => ['nullable', 'array'],
+            'photos.*' => ['required', 'isFile'],
         ]);
 
         $sbmptc->update($data);
         $sbmptc->setApproved($request->user()->hasRole(Role::ADMIN))
             ->setApprovalMessage($request->user()->makeMessage('wants to update a SBMPTC.'));
+
+        if (isset($data['photos'])) {
+            $sbmptc->photo->each(function ($photo) {
+                $photo->delete();
+            });
+            collect($data['photos'])->each(function ($binary) use ($sbmptc) {
+                $file = File::process($binary);
+                $file->public = true;
+                $file->save();
+                $sbmptc->photos()->create([
+                    'photo_id' => $file->id,
+                ]);
+            });
+        }
 
         Log::record("Updated a SBMPTC.");
 

@@ -45,7 +45,7 @@ class SBMPTCPersonnelController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
-            'sbmptc_id' => ['required', Rule::exists(new SBMPTC(), 'id')],
+            'sbmptc_id' => ['required', Rule::exists('s_b_m_p_t_c_s', 'id')],
             'photo' => ['required', 'isFile'],
         ]);
 
@@ -93,7 +93,7 @@ class SBMPTCPersonnelController extends Controller
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
-            'sbmptc_id' => ['nullable', Rule::exists(new SBMPTC(), 'id')],
+            'sbmptc_id' => ['nullable', Rule::exists('s_b_m_p_t_c_s', 'id')],
             'photo' => ['nullable', 'isFile'],
         ]);
 
