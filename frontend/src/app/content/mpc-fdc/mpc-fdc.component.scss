@@ -1,6 +1,5 @@
 .mpc-fdc-component {
     padding: 10px 50px;
-    padding-right: 15px;
 }
 
 ul {
@@ -18,4 +17,8 @@ ul {
         border: 1px solid rgba($color: lightgray, $alpha: .9);
         background: rgba($color: gray, $alpha: .2);
     }
+}
+
+.col-md-12 {
+    max-width: auto !important;
 }

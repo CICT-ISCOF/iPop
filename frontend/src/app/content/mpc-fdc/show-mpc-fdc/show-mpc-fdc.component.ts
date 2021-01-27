@@ -39,7 +39,8 @@ export class ShowMpcFdcComponent implements OnInit {
 			reader.onload = (event) => {	
 				this.mpc['files'].push( (<FileReader>event.target).result		)
 				this.MpcService.updateMPC(this.mpc).subscribe(data => {
-					console.log(data)
+					this.ngOnInit()
+					this.mpc = data
 				})
 			}	
 		})
@@ -68,13 +69,12 @@ export class ShowMpcFdcComponent implements OnInit {
 
 
 
-
-	customOptions: OwlOptions = {	
+	customOptions: OwlOptions = {
 		center: true,
 		items:2,
 		loop:true,
 		margin:0,
-	   
+	
 		navSpeed: 700,
 		autoplay:true,	
 		autoplayTimeout:2000,
@@ -84,7 +84,6 @@ export class ShowMpcFdcComponent implements OnInit {
 			}
 		}
 	}
-
 	back(){
 		this.MPCFDCComponent.show = false
 	}

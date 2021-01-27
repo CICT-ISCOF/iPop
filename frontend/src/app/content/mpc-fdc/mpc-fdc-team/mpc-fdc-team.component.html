@@ -107,11 +107,11 @@
                     </div>
                 </div>
             </div>
-            <p *ngIf="!acitveFocalPersons[i]">{{person.name}}</p>
-            <div class="row" *ngIf="acitveFocalPersons[i]">
-                <div class="form-group col-md-8">
-                    <label for="name">New Focal Person Name</label>
-                    <input type="text" id="name" [(ngModel)]="person.name">
+            <p style="transform: translateY(10px);" *ngIf="!acitveFocalPersons[i]">{{person.name}}</p>
+            <div class="row" *ngIf="acitveFocalPersons[i]" style="transform: translateY(10px);">
+                <div class="form-group col-md-8 d-flex">
+                    <label style="margin-right: 20px;transform: translateY(10px);" for="name">Name</label>
+                    <input class="form-control" type="text" id="name" [(ngModel)]="person.name">
                 </div>
                 <div class="form-group col-md-4 row">
                     <button (click)="updateFocalPersons(person);toggleFocalPersons(i)" class="clickable">

@@ -63,7 +63,11 @@ export class ProvincialOfficialsComponent implements OnInit {
 					this.ngOnInit()
 				})				
 			} 
-		})
+		},(error) => {
+			for (let message in error.error.errors) {
+			  this.UtilityService.setAlert(error.error.errors[message], 'error');
+			}
+		  }) 
 	}
 
 	saveOfficial(){
@@ -83,9 +87,9 @@ export class ProvincialOfficialsComponent implements OnInit {
 			cancelButtonText: 'Nope'
 		  }).then((result) => {
 			if (result.value) {
+				this.editOfficial(official_id)
 				this.OfficialsService.updateOfficial(official_id,official).subscribe(data =>{
 					this.UtilityService.setAlert('Changes Saved','success')
-					this.editOfficial(official_id)
 					this.ngOnInit()
 				})				
 			} 

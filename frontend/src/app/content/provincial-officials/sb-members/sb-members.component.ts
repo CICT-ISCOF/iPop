@@ -57,10 +57,10 @@ export class SbMembersComponent implements OnInit {
 	}
 
 	saveMember(){
+		this.addMember = false
 		this.OfficialsService.create(this.sbMember).subscribe(data =>{
 			this.UtilityService.setAlert('new SB Member Added','success')
 			this.ngOnInit()
-			this.addMember = false
 		})
 	}
 

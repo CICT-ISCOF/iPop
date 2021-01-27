@@ -8,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeenCentersComponent implements OnInit {
 
+	back(){
+		window.history.back()
+	}
+	
 	addTeenCenter = false
 
-	activeDistrict ={
+	activeDistrict:any ={
 		I:true,
 		II:false,
 		III:false,
@@ -53,6 +57,7 @@ export class TeenCentersComponent implements OnInit {
 		this.TeenCentersService.getTeenCenters().subscribe(data =>{
 			console.log('teen center', data)
 			this.district = data
+			console.log(data)
 		})
 	}
 

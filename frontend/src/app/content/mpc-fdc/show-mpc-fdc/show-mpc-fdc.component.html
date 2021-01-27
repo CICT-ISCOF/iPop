@@ -1,39 +1,40 @@
-<p style="text-align: center;" *ngIf="mpc.name == undefined">
-    No data yet..</p>
-<div *ngIf="mpc.name != undefined" class="mpc-component col-md-12 row">
-    <div class="col-md-8">
-
-        <h3>
-            {{mpc.name}} MPC-FDC
-        </h3>
+<p style="text-align: center;" *ngIf="mpc.name == undefined">No data yet..</p>
+<div *ngIf="mpc.name != undefined" class="mpc-component col-md-12 row" style="max-width: auto !important;">
+    <div class="col-md-12">
+        <h3>{{mpc.name}} MPC-FDC </h3>
         <p style="text-align: center;">{{mpc.location}}</p>
         <br>
-        <h5>Images of {{mpc.name}} </h5>
+        <h5 style="text-align: center;display: flex;">
+            <span>Images of {{mpc.name}}
+            </span>
+            <button (click)="triggerInput()" class="button ml-auto">Change Image(s)</button>
+        </h5>
         <hr>
-        <owl-carousel-o [options]="customOptions">
-            <ng-template carouselSlide *ngFor="let image of [1,2]">
-                <img alt="" title="slide.title " src="../../../assets/home/3.jpg">
-            </ng-template>
-        </owl-carousel-o>
+        <div class="row col-md-12">
+            <div class="images col-md-3" style="margin-bottom: 20px;" *ngFor="let image of mpc.files">
+                <img style=" width: 100%;
+                height: 100%;border-radius: 5px;" alt="" [src]="image.file.uri">
+            </div>
+
+        </div>
+
         <div class="flex-container">
-            <button (click)="triggerInput()" class="button">Add Images</button>
-            <button class="button">Edit Images</button>
+
             <input (change)="readURL($event.target.files,$event)" multiple accept="image/*" type="file" style="display: none;" id="file">
         </div>
         <br>
-        <h5 style="text-align: center;">SERVICE OFFERED</h5>
+        <h5 style="text-align: left;">SERVICE OFFERED</h5>
         <hr>
         <p [innerHTML]="nl2br(mpc.services)"></p>
     </div>
 
 
     <!-- __MPC_FDC_TEAM__ -->
-    <div class="col-md-4" style="float: right; transform: translate(100px);">
-        <h3 class="pop2">
-            Personnel In-charge
-        </h3>
-
-        <div class="flex-container container" style="flex-direction: column;margin-left: 0;">
+    <div class="col-md-12 row">
+        <br>
+        <h3 class="col-md-12" style="text-align: left;"> Personnel In-charge</h3>
+        <hr>
+        <div class="col-md-3 personnel m-4" *ngFor="let item of [1,2,2,2,2,2]">
             <div class="picture">
                 <img src="../../../../assets/avatars/boy-blue.png" alt="">
             </div>
@@ -41,5 +42,6 @@
             <div class="person-name">JAMEL EID YASSIN</div>
             <p style="text-align: center;">Provincial Teen Center Coordinator</p>
         </div>
+
     </div>
 </div>

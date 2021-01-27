@@ -51,7 +51,6 @@ export class MpcFdcTeamComponent implements OnInit {
 			team['photo'] = temPhoto
 			this.editTeam(team)
 		})
-	
 	}
 
 	acitveTeams = {}
