@@ -68,7 +68,6 @@ export class ShowMpcFdcComponent implements OnInit {
 		reader.onload = (event) => {		
 			this. src = (<FileReader>event.target).result
 		}
-		// this.items[index].attachment = files.item(0)
 	}
 
 	personnel = {

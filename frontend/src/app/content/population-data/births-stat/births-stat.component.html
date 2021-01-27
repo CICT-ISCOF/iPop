@@ -389,11 +389,10 @@
         </div>
     </div>
     <div class="side col-md-4">
-        <h3 class="pop2">Provincial Officials</h3>
-        <app-provincial-officials></app-provincial-officials>
-        <br> <br>
-        <app-sb-members></app-sb-members>
-        <br><br><br>
+        <app-provincial-officials *ngIf="!hasBarangaysAndMunicipalities"></app-provincial-officials>
+        <app-sb-members *ngIf="!hasBarangaysAndMunicipalities"></app-sb-members>
+        <municipality-officials></municipality-officials>
+        <br>
         <h3 class="pop2">TECHNICAL NOTES</h3>
         <hr>
         <p><span class="fw-bold">Crude Birth Rate</span> - the number of live births per 1,000 population in a given year Teenage Births – the number of live births to women ages 19 and below per 100 live births in a given year Illegitimate Births – the

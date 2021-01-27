@@ -4,6 +4,7 @@ import { BirthStatService } from './birth-stat.service';
 import { LocationService } from './../../../location.service';
 import { Component, OnInit } from '@angular/core';
 import { groupBy, where } from '../../../helpers';
+import { OfficialsService1 } from '../../officials-of/officials.service';
 
 @Component({
   selector: 'app-births-stat',
@@ -14,8 +15,39 @@ export class BirthsStatComponent implements OnInit {
 	constructor(
 		private LocationService: LocationService,
 		private BirthStatService: BirthStatService,
-		private UtilityService: UtilityService
-	) {}
+		private UtilityService: UtilityService,
+		private OfficialsService1 : OfficialsService1,
+	) { 
+		this.OfficialsService1.listen().subscribe(()=>{
+			this.CheckBarangaysAndMunicipalities()
+		})
+	}
+
+	ngOnInit(): void {
+		for (let i = 2015; i <= 2050; i++) {
+			this.years.push(i);
+		}
+		this.getMuncipalities();
+		this.getSummary()
+		localStorage.removeItem('municipality-ref') 
+		localStorage.removeItem('barangay-ref') 
+	}
+
+	hasBarangaysAndMunicipalities = false
+
+	CheckBarangaysAndMunicipalities(){
+		if(localStorage.getItem('municipality-ref') == undefined){
+			this.hasBarangaysAndMunicipalities = false
+			return
+		}
+		if(localStorage.getItem('barangay-ref') == undefined){
+			this.hasBarangaysAndMunicipalities = false
+			return
+		}
+		this.hasBarangaysAndMunicipalities =  true
+		return
+	}
+
 
 	
 	back(){
@@ -136,13 +168,7 @@ export class BirthsStatComponent implements OnInit {
 		all: false,
 	}
 
-	ngOnInit(): void {
-		for (let i = 2015; i <= 2050; i++) {
-			this.years.push(i);
-		}
-		this.getMuncipalities();
-		this.getSummary()
-	}
+	
 	sumamry = {}
 	getSummary(){
 		this.BirthStatService.getSUmmary().subscribe(data => {
@@ -279,6 +305,11 @@ export class BirthsStatComponent implements OnInit {
 		this.MONTHbarChartData[0].data = []
 		this.MONTHbarChartData[1].data = []
 		this.MONTHbarChartData[2].data = []
+
+		localStorage.setItem('municipality-ref',this.getDataParams.municipality) 
+		localStorage.setItem('barangay-ref',this.getDataParams.barangay) 
+		this.OfficialsService1.setTrigger()
+
 		this.BirthStatService.showData(
 			this.getDataParams.municipality,
 			this.getDataParams.barangay,

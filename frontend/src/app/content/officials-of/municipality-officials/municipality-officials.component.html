@@ -1,0 +1,72 @@
+<div *ngIf="hasBarangaysAndMunicipalities">
+    <p class="pop2">muncipal officials</p>
+    <span style="position: absolute;right: 0;transform: translate(-30px,-45px);cursor: pointer;" (click)="addOfficial = true" *ngIf="!addOfficial">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-file-plus-fill" viewBox="0 0 16 16">
+            <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
+        </svg>
+    </span>
+    <span style="position: absolute;right: 0;transform: translate(-30px,-45px);cursor: pointer;" (click)="addOfficial = false" *ngIf="addOfficial">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+        </svg>
+    </span>
+
+    <div *ngIf="addOfficial" class="row flex-container container" style="margin-left: 0;">
+        <label for="name" class=" col-md-2 mr-1" style="margin-left: -50px;">Name</label>
+        <input (keyup.enter)="create();addOfficial = false" [(ngModel)]="official.name" type="text" id="name" class="form-control col-md-3 mr-4">
+
+        <label for="position" class=" col-md-2 mr-1" style="margin-left: -20px;">Position</label>
+        <input (keyup.enter)="create();addOfficial = false" [(ngModel)]="official.position" type="text" id="position" class="form-control col-md-3">
+
+        <div (click)="create();addOfficial = false" *ngIf="addOfficial" class="clickable center col-md-1 ml-2">
+            <i class="fa fa-check text-success"></i>
+        </div>
+    </div>
+
+
+    <div class="flex container" style="margin-bottom: -10px;" [class.selected]="activeOfficials[provincialOfficial.id]" *ngFor="let provincialOfficial of officials;let i = index">
+        <div class="flex">
+            <img *ngIf="!activeOfficials[provincialOfficial.id]" class="sideImag" src="../../../assets/avatars/girl-black.png" alt="">
+            <div *ngIf="!activeOfficials[provincialOfficial.id]">
+                <h5 style="font-weight: 900;">{{provincialOfficial.name}}</h5>
+                <p>{{provincialOfficial.position}}</p>
+            </div>
+            <div class="row" *ngIf="activeOfficials[provincialOfficial.id]">
+
+                <div class="form-group col-md-5">
+                    <label for="name">New Name</label>
+                    <input (keyup.enter)="update(provincialOfficial);editOfficial(provincialOfficial.id)" [(ngModel)]="provincialOfficial.name" type="text" id="name" class="form-control">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="name">New Position</label>
+                    <input (keyup.enter)="update(provincialOfficial);editOfficial(provincialOfficial.id)" [(ngModel)]="provincialOfficial.position" type="text" id="name" class="form-control">
+                </div>
+
+                <div (click)="update(provincialOfficial);editOfficial(provincialOfficial.id)" class="clickable center col-md-1" style="margin-top: 30px;">
+                    <i class="fa fa-check text-success"></i>
+                </div>
+
+                <div (click)="editOfficial(provincialOfficial.id)" class="clickable center col-md-1" style="margin-top: 30px;">
+                    <i class="fa fa-times"></i>
+                </div>
+            </div>
+        </div>
+
+        <span class="close ml-auto">        
+          <svg  (click)="editOfficial(provincialOfficial.id)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+    </span>
+        <span class="close ml-20">
+        <svg  (click)="deleteOfficial(provincialOfficial)"  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-minus" viewBox="0 0 16 16">
+            <path d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
+            <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+        </svg>
+    </span>
+    </div>
+
+
+
+    <barangay-officials></barangay-officials>
+</div>
