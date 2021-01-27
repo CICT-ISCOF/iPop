@@ -101,6 +101,31 @@ export class MpcService {
 		return this.http.delete<any>(url ,{headers:this.getHeaders()})
 	}
 
+
+
+	// -------- personnels ===========
+
+	createPersonnel(data){
+		const url = this.BaseAPIService.baseURL + '/pmc-personel'
+		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
+	} 
+
+	retrivePersonnel(id){
+		const url = this.BaseAPIService.baseURL + `/pmc-personel?mpcfdc_id=${id}`
+		return this.http.get<any>(url )
+	} 
+
+	updatePersonnel(data){
+		const url = this.BaseAPIService.baseURL + '/pmc-personel' + data['id']
+		return this.http.patch<any>(url ,data,{headers:this.getHeaders()})
+	} 
+
+
+	deletePersonnel(id){
+		const url = this.BaseAPIService.baseURL + '/pmc-personel' + id
+		return this.http.delete<any>(url ,{headers:this.getHeaders()})
+	}
+
 	
 
 

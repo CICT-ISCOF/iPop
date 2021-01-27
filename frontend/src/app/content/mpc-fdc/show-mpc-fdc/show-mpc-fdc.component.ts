@@ -1,3 +1,4 @@
+import { UtilityService } from './../../../utility.service';
 import { MPCFDCComponent } from './../mpc-fdc.component';
 import { MpcService } from './../mpc.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +14,8 @@ export class ShowMpcFdcComponent implements OnInit {
 
 	constructor(
 		private MpcService : MpcService,
-		private MPCFDCComponent : MPCFDCComponent
+		private MPCFDCComponent : MPCFDCComponent,
+		private UtilityService : UtilityService
 	) {
 		this.MpcService.getMPC().subscribe(data => {
 			this.mpc = data
@@ -24,7 +26,7 @@ export class ShowMpcFdcComponent implements OnInit {
 	mpc:any = JSON.parse(localStorage.getItem('mpc-ref'))
 
 	ngOnInit(): void {
-
+		this.retrievePersonnel()
 	}
 
 	triggerInput(){
@@ -56,10 +58,51 @@ export class ShowMpcFdcComponent implements OnInit {
 
 
 
+	triggerFile(){
+		document.getElementById('personnel').click()
+	}
 
+	readUrl(event){
+		const reader = new FileReader();   
+		reader.readAsDataURL(event.target.files[0]);   
+		reader.onload = (event) => {		
+			this. src = (<FileReader>event.target).result
+		}
+		// this.items[index].attachment = files.item(0)
+	}
 
+	personnel = {
+		mpcfdc_id:this.mpc.id
+	}
+	src:any = '../../../../assets/avatars/girl-black.png'
+	personnels = []
 
+	savePersonnel(){
+		this.MpcService.createPersonnel(this.personnel).subscribe(data => {
+			this.UtilityService.setAlert(`New Personnel on ${this.mpc['name']} has been added`,'success')
+			this.ngOnInit()
+		})
+	}
 
+	retrievePersonnel(){
+		this.MpcService.retrivePersonnel(this.mpc.id).subscribe(data => {
+			this.personnels = data
+		})
+	}
+
+	updatePersonnel(personnel){
+		this.MpcService.updatePersonnel(personnel).subscribe(data => {
+			this.UtilityService.setAlert(`${personnel.name} has been has been successfully updated `,'success')
+			this.ngOnInit()
+		})
+	}
+
+	deletePersonnel(personnel){
+		this.MpcService.deletePersonnel(personnel.id).subscribe(data => {
+			this.UtilityService.setAlert(`${personnel.name} has been removed as a personnel on ${this.mpc['name']} `,'success')
+			this.ngOnInit()
+		})
+	}
 
 
 

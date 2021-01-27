@@ -1,3 +1,5 @@
+import Swal  from 'sweetalert2';
+import { UtilityService } from './../../utility.service';
 import { LocationService } from './../../location.service';
 import { Component, OnInit } from '@angular/core';
 import { MpcService } from './mpc.service'
@@ -15,8 +17,8 @@ export class MPCFDCComponent implements OnInit {
 
 	constructor(
 		private MpcService : MpcService,
-		private LocationService : LocationService
-
+		private LocationService : LocationService,
+		private UtilityService  : UtilityService,
 	) { 
 	
 	}
@@ -49,12 +51,47 @@ export class MPCFDCComponent implements OnInit {
 		this.show = true 
 		this.MpcService.setMPC(mpc)
 	}
-
 	
 	getMPCFDC(){		
 		this.MpcService.retrieveMPC(this.mpc).subscribe(data => {
 			this.mpcs = data
 		})
+	}
+	
+	updateMPC(mpc){
+		let tempFiles = []
+		tempFiles = mpc.files
+		mpc['files'] = []
+		this.MpcService.updateMPC(mpc).subscribe(data => {
+			this.UtilityService.setAlert(`${mpc.name} has been updated`,'success')
+			mpc['files'] = tempFiles
+		})
+	}
+
+	deleteMPC(mpc){
+		Swal.fire({
+			title: `Are you sure you want to delete ${mpc.name}?`,		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Delete',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.MpcService.deleteMPC(mpc.id).subscribe(data => {
+					this.UtilityService.setAlert(`${mpc.name} has been removed`,'success')
+					this.getMPCFDC()
+				},error => {
+					this.UtilityService.setAlert(`${mpc.name} has been removed`,'success')
+					this.getMPCFDC()
+				})		
+				
+			} 
+		})	
+	}
+
+	activeMPC = {}
+	editMPC(id){
+		this.activeMPC[id] == true ?  this.activeMPC[id] = false : this.activeMPC[id] = true	
 	}
 
 	
