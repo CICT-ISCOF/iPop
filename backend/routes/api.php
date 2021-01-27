@@ -56,6 +56,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SBMemberController;
 use App\Http\Controllers\SBMPTCController;
 use App\Http\Controllers\SBMPTCFocalPersonController;
+use App\Http\Controllers\SBMPTCPersonnelController;
 use App\Http\Controllers\SBMPTCTeamController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ServiceController;
@@ -180,6 +181,7 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::apiResources([
         'articles' => ArticleController::class,
         'sbmptcs' => SBMPTCController::class,
+        'sbmptc-personnel' => SBMPTCPersonnelController::class,
         'sbmptcs-teams' => SBMPTCTeamController::class,
         'sbmptcs-focal-persons' => SBMPTCFocalPersonController::class,
         'mtcms' => MTCMMembersController::class,
