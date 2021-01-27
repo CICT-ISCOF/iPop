@@ -34,13 +34,13 @@
         AHYD TEAM
     </h3>
     <hr>
-    <div *ngFor="let ahydTeams of ahydTeams">
+    <!-- <div *ngFor="let ahydTeams of ahydTeams">
         <div class="person-name">{{ahydTeams.name}}</div>
         <p>{{ahydTeams.position}}</p>
-    </div>
+    </div> -->
     <br>
     <p *ngIf="focalPersons.length != 0">AHYD Focal Persons</p>
-    <ul class="list-group">
+    <!-- <ul class="list-group">
         <li class="list-group-item" *ngFor="let focalPerson of focalPersons;let i = index">
             <div class="flex absolute">
                 <div *ngIf="!acitveFocalPersons[focalPerson.id]" class="absolute flex">
@@ -70,5 +70,5 @@
                 </div>
             </div>
         </li>
-    </ul>
+    </ul> -->
 </div>

@@ -7,102 +7,124 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class TeenCentersService {
-  constructor(
-    private http: HttpClient,
-    private BaseAPIService: BaseAPIService
-  ) {
-    if (
-      localStorage.getItem('user-data') &&
-      localStorage.getItem('user-data') != undefined
-    ) {
-      this.user = JSON.parse(localStorage.getItem('user-data'));
-      this.token = this.user.token;
-    }
-  }
+	constructor(
+		private http: HttpClient,
+		private BaseAPIService: BaseAPIService
+	) {
+		if (
+		localStorage.getItem('user-data') &&
+		localStorage.getItem('user-data') != undefined
+		) {
+		this.user = JSON.parse(localStorage.getItem('user-data'));
+		this.token = this.user.token;
+		}
+	}
 
-  user: any = JSON.parse(localStorage.getItem('user-data'));
-  token: any = this.user.token;
+	user: any = JSON.parse(localStorage.getItem('user-data'));
+	token: any = this.user.token;
 
-  baseURL = this.BaseAPIService.baseURL + '/sbmptcs';
-  headers = new HttpHeaders({
-    Accept: 'application/json',
-    Authorization: 'Bearer ' + this.token,
-    'Content-Type': [],
-  });
+	baseURL = this.BaseAPIService.baseURL + '/sbmptcs';
+	headers = new HttpHeaders({
+		Accept: 'application/json',
+		Authorization: 'Bearer ' + this.token,
+		'Content-Type': [],
+	});
+		getHeaders(){
+			this.user = JSON.parse(localStorage.getItem('user-data'))
+			this.token = this.user['token']
+			return new HttpHeaders({
+				'Accept':'application/json',
+				'Authorization' : 'Bearer '+ this.token,
+				'Content-Type':[]
+			})	
+		}
+	private show = new Subject<any>();
+	private add = new Subject<any>();
 
-  private show = new Subject<any>();
-  private add = new Subject<any>();
+	setToHidden() {
+		this.show.next(false);
+	}
 
-  setToHidden() {
-    this.show.next(false);
-  }
+	triggerListener() {
+		return this.show.asObservable();
+	}
 
-  triggerListener() {
-    return this.show.asObservable();
-  }
+	addNewTeenCenter(value) {
+		this.add.next(value);
+	}
+	
+	backListener() {
+		return this.add.asObservable();
+	}
 
-  addNewTeenCenter(value) {
-    this.add.next(value);
-  }
+	getTeenCenters() {
+		const url = this.baseURL;
+		return this.http.get<any>(url);
+	}
 
-  backListener() {
-    return this.add.asObservable();
-  }
+	addTeencenter(teenCenter) {
+		const url = this.baseURL;
+		return this.http.post<any>(url, teenCenter, { headers: this.getHeaders() });
+	}
 
-  getTeenCenters() {
-    const url = this.baseURL;
-    return this.http.get<any>(url, { headers: this.headers });
-  }
+	updateTeenCenter(data){
+		const url = this.baseURL + `/${data['id']}`
+		return this.http.patch<any>(url, data, { headers: this.getHeaders() });
+	}
 
-  addTeencenter(teenCenter) {
-    const url = this.baseURL;
-    return this.http.post<any>(url, teenCenter, { headers: this.headers });
-  }
+	deleteTeenCenter(id){
+		const url = this.baseURL + `/${id}`
+		return this.http.delete<any>(url, { headers: this.getHeaders() });
+	}
 
-  // ---------- focal Persons ------------------
+	// ---------- focal Persons ------------------
 
-  create(focalPerson) {
-    const url = this.BaseAPIService.baseURL + '/sbmptcs-focal-persons';
-    return this.http.post<any>(url, focalPerson, { headers: this.headers });
-  }
+	create(focalPerson) {
+		const url = this.BaseAPIService.baseURL + '/sbmptcs-focal-persons';
+		return this.http.post<any>(url, focalPerson, { headers: this.getHeaders() });
+	}
 
-  retrieve() {
-    const url = this.BaseAPIService.baseURL + '/sbmptcs-focal-persons';
-    return this.http.get<any>(url);
-  }
+	retrieve() {
+		const url = this.BaseAPIService.baseURL + '/sbmptcs-focal-persons';
+		return this.http.get<any>(url);
+	}
 
-  update(focalPerson, id) {
-    const url = this.BaseAPIService.baseURL + '/sbmptcs-focal-persons/' + id;
-    return this.http.patch<any>(url, focalPerson, { headers: this.headers });
-  }
+	update(focalPerson, id) {
+		const url = this.BaseAPIService.baseURL + '/sbmptcs-focal-persons/' + id;
+		return this.http.patch<any>(url, focalPerson, { headers: this.getHeaders() });
+	}
 
-  deleteFocalPerson(id) {
-    const url = this.BaseAPIService.baseURL + '/sbmptcs-focal-persons/' + id;
-    return this.http.delete<any>(url, { headers: this.headers });
-  }
+	deleteFocalPerson(id) {
+		const url = this.BaseAPIService.baseURL + '/sbmptcs-focal-persons/' + id;
+		return this.http.delete<any>(url, { headers: this.getHeaders() });
+	}
 
-  // ---------------- AHYD TEAM ----------------
+	// ---------------- AHYD TEAM ----------------
 
-  createTeam(ahyd) {
-    const url = this.BaseAPIService.baseURL + '/sbmptcs-teams';
-    return this.http.post<any>(url, ahyd, { headers: this.headers });
-  }
-  retrieveTeam() {
-    const url = this.BaseAPIService.baseURL + '/sbmptcs-teams';
-    return this.http.get<any>(url, { headers: this.headers });
-  }
-  updateTeam(ahyd) {
-    const url = this.BaseAPIService.baseURL + '/sbmptcs-teams/' + ahyd['id'];
-    return this.http.patch<any>(url, ahyd, { headers: this.headers });
-  }
-  deleteAHYDTeam(id) {
-    const url = this.BaseAPIService.baseURL + '/sbmptcs-teams/' + id;
-    return this.http.delete<any>(url, { headers: this.headers });
-  }
+	createTeam(ahyd) {
+		const url = this.BaseAPIService.baseURL + '/sbmptcs-teams';
+		return this.http.post<any>(url, ahyd, { headers: this.getHeaders() });
+	}
+	retrieveTeam() {
+		const url = this.BaseAPIService.baseURL + '/sbmptcs-teams';
+		return this.http.get<any>(url);
+	}
+	updateTeam(ahyd) {
+		const url = this.BaseAPIService.baseURL + '/sbmptcs-teams/' + ahyd['id'];
+		return this.http.patch<any>(url, ahyd, { headers: this.getHeaders() });
+	}
+	deleteAHYDTeam(id) {
+		const url = this.BaseAPIService.baseURL + '/sbmptcs-teams/' + id;
+		return this.http.delete<any>(url, { headers: this.getHeaders() });
+	}
+
+	showTeenCenter(id){
+		const url = this.BaseAPIService.baseURL + '/sbmptcs/' + id;
+		return this.http.get<any>(url);
+	}
+	
 
 
-  showTeenCenter(id){
-      const url = this.BaseAPIService.baseURL + '/sbmptcs/' + id;
-      return this.http.get<any>(url, { headers: this.headers });
-  }
+
+  
 }

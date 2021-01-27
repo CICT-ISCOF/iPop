@@ -14,11 +14,61 @@ export class ShowTeenCentersComponent implements OnInit {
 		private TeenCentersService : TeenCentersService
 	) { }
 
-	ngOnInit(): void {
+	addPersnalInCharge = false
 
+	ngOnInit(): void {
+		console.log('teenCenter',this.teenCenter)
 	}
 
-	addPersnalInCharge = false
+	teenCenter = JSON.parse(localStorage.getItem('teen-center-ref'))
+
+	triggerInput(){
+		document.getElementById('file1').click()
+	}
+
+	readURL(files, event){
+		alert('ari')
+		this.teenCenter['files'] = []
+		Object.keys(files).forEach(i => {				
+			const reader = new FileReader();   
+			reader.readAsDataURL(event.target.files[i]);   		     
+			reader.onload = (event) => {	
+				this.teenCenter['files'].push( (<FileReader>event.target).result		)
+				this.TeenCentersService.updateTeenCenter(this.teenCenter).subscribe(data => {
+					this.ngOnInit()
+					this.teenCenter = data
+				})
+			}	
+		})
+		console.log(this.teenCenter)
+	}
+
+	triggerFile(){
+		document.getElementById('personnel').click()
+	}
+
+	// readUrl(event){
+	// 	const reader = new FileReader();   
+	// 	reader.readAsDataURL(event.target.files[0]);   
+	// 	reader.onload = (event) => {		
+	// 		this. src = (<FileReader>event.target).result
+	// 	}
+	// }
+
+	src:any = '../../../../assets/avatars/boy-blue.png'
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	customOptions: OwlOptions = {	
 		center: true,

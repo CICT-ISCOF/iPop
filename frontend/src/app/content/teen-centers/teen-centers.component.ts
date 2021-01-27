@@ -1,5 +1,7 @@
+import { UtilityService } from './../../utility.service';
 import { TeenCentersService } from './teen-centers.service';
 import { Component, OnInit } from '@angular/core';
+import Swal  from 'sweetalert2';
 
 @Component({
   selector: 'app-teen-centers',
@@ -30,6 +32,7 @@ export class TeenCentersComponent implements OnInit {
 
 	constructor(
 		private TeenCentersService : TeenCentersService,
+		private UtilityService : UtilityService
 	) { 
 		this.listener = this.TeenCentersService.triggerListener().subscribe(value => {
 			this.show = value
@@ -48,24 +51,67 @@ export class TeenCentersComponent implements OnInit {
 	
 	show = false
 
-	district:any = {
-		I:{data:[]},
-		II:{data:[]},
-		III:{data:[]}		
+	districts:any = {
+	
 	}
+
+	data = []
+
+	setdata(data){
+		this.data = data
+	}
+
 	getTeenCenters(){
 		this.TeenCentersService.getTeenCenters().subscribe(data =>{
 			console.log('teen center', data)
-			this.district = data
-			console.log(data)
+			this.districts = data		
 		})
 	}
 
-	showMPC(id){
+	showMPC(teenCenter){
 		this.show = true
-		this.TeenCentersService.showTeenCenter(id).subscribe(data => {
+		localStorage.setItem('teen-center-ref',JSON.stringify(teenCenter))
+	}
 
-		})
+
+	
+	activeMPC = {}
+	editMPC(id,event){
+	
+		this.activeMPC[id] == true ?  this.activeMPC[id] = false : this.activeMPC[id] = true	
+		
+	}
+
+	updateMPC(mpc){
+		this.TeenCentersService.updateTeenCenter(mpc).subscribe(data => {
+			this.UtilityService.setAlert(`${mpc.name} has been updated`,'success')
+			this.getTeenCenters()
+		},(error) => {
+			for (let message in error.error.errors) {
+			  this.UtilityService.setAlert(error.error.errors[message], 'error');
+			}
+		})	
+	}
+
+	deleteMPC(mpc,event){
+		Swal.fire({
+			title: `Are you sure you want to delete ${mpc.name}?`,		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Delete',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
+				this.TeenCentersService.deleteTeenCenter(mpc.id).subscribe(data => {
+					this.UtilityService.setAlert(`${mpc.name} has been removed`,'success')
+					this.getTeenCenters()
+				},error => {
+					this.UtilityService.setAlert(`${mpc.name} has been removed`,'success')
+					this.getTeenCenters()
+				})		
+				
+			} 
+		})	
 	}
 
 }
