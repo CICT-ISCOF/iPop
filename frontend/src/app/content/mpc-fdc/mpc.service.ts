@@ -116,7 +116,7 @@ export class MpcService {
 	} 
 
 	updatePersonnel(data){
-		const url = this.BaseAPIService.baseURL + '/pmc-personel' + data['id']
+		const url = this.BaseAPIService.baseURL + '/pmc-personel/' + data['id']
 		return this.http.patch<any>(url ,data,{headers:this.getHeaders()})
 	} 
 

@@ -1,5 +1,5 @@
 <p style="text-align: center;" *ngIf="mpc.name == undefined">No data yet..</p>
-<div *ngIf="mpc.name != undefined" class="mpc-component col-md-12 row" style="max-width: auto !important;">
+<div *ngIf="mpc.name != undefined" class="mpc-component col-md-12 row container" style="max-width: auto !important;margin-left: 0;">
     <div class="col-md-12">
         <h3>{{mpc.name}} MPC-FDC </h3>
         <p style="text-align: center;">{{mpc.location}}</p>
@@ -30,45 +30,81 @@
 
 
     <!-- __MPC_FDC_TEAM__ -->
-    <div class="col-md-12 row">
+    <div class="col-md-12">
         <h3 class="col-md-12" style="text-align: left;margin-top: 50px;display: flex;">
             <span> Personnel In-charge</span>
-            <span *ngIf="!AddPersonnel" (click)="AddPersonnel = true" class="ml-auto">
+            <span (click)="addPersnalInCharge = true" *ngIf="!addPersnalInCharge" class="ml-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                   </svg>
             </span>
-            <span *ngIf="AddPersonnel" (click)="AddPersonnel = false" class="ml-auto">
+            <span (click)="addPersnalInCharge = false" *ngIf="addPersnalInCharge" class="ml-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                   </svg>
             </span>
         </h3>
         <hr>
-        <div *ngIf="AddPersonnel" class="flex-container">
+        <div *ngIf="addPersnalInCharge" class="flex-container">
             <div class="container flex-container">
-                <img (click)="triggerFile()" [src]="src" alt="" class="mr-2" style="width: 50px;height: 50px;border-radius: 50%;">
-                <input (change)="readUrl($event)" [(ngModel)]="personnel.name" accept="image/*" id="personnel" type="file" style="display: none;">
+                <img (click)="triggerFile2()" [src]="src" alt="" class="mr-2" style="width: 50px;height: 50px;border-radius: 50%;">
+                <input (change)="readAddUrl($event.target,$event)" accept="image/*" id="file2" type="file" style="display: none;">
                 <label style="margin-right: 10px;transform: translateY(5px);" for="Name">Name</label>
-                <input [(ngModel)]="personnel.position" type="text" class="form-control mr-2" id="Name">
+                <input (keyup.enter)="savePersonnel();addPersnalInCharge= false" [(ngModel)]="personnel.name" type="text" class="form-control mr-2" id="Name">
                 <label style="margin-right: 10px;transform: translateY(5px);" for="Position">Position</label>
-                <input [(ngModel)]="personnel.photo" type="text" class="form-control" id="Position">
-                <button (click)="savePersonnel()" class="clickable">
+                <input (keyup.enter)="savePersonnel();addPersnalInCharge= false" [(ngModel)]="personnel.position" type="text" class="form-control" id="Position">
+                <button (click)="savePersonnel();addPersnalInCharge= false" class="clickable">
                     <i class="fa fa-check text-success"></i>
                 </button>
             </div>
         </div>
-        <div *ngIf="!AddPersonnel" class="col-md-12  m-4 row">
-            <div class="col-md-3 personnel" *ngFor="let item of [1,2,2,2,2,2]">
-                <div class="picture">
-                    <img src="../../../../assets/avatars/boy-blue.png" alt="">
+        <div *ngIf="!addPersnalInCharge" class="col-md-12  m-4 row">
+            <div class="col-md-3 personnel container" *ngFor="let data of personnels;let i = index">
+                <div class="d-flex">
+                    <div>
+                        .
+                    </div>
+                    <div *ngIf="!activePersonnel[i]" class="ml-auto" (click)="togglePesonnel(i)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                          </svg>
+                    </div>
+                    <div *ngIf="activePersonnel[i]" class="ml-auto" (click)="togglePesonnel(i)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </div>
+                    <div (click)="deletePersonnel(data)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-minus" viewBox="0 0 16 16">
+                            <path d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
+                            <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                        </svg>
+                    </div>
                 </div>
-                <br>
-                <div class="person-name">JAMEL EID YASSIN</div>
-                <p style="text-align: center;">Provincial Teen Center Coordinator</p>
+                <div *ngIf="activePersonnel[i]" class="row">
+                    <div class="form-group col-md-12">
+                        <label for="Name">Name</label>
+                        <input (keyup.enter)="updatePersonnel(data);togglePesonnel(i)" [(ngModel)]="data.name" type="text" class="form-control" id="Name">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="Position">position</label>
+                        <input (keyup.enter)="updatePersonnel(data);togglePesonnel(i)" [(ngModel)]="data.position" type="text" class="form-control" id="Position">
+                    </div>
+                    <div class="col-md-12 flex-container">
+                        <button (click)="updatePersonnel(data);togglePesonnel(i)" style="flex: 1;" class="button">Save</button>
+                    </div>
+                </div>
+                <div *ngIf="!activePersonnel[i]">
+                    <div class="picture">
+                        <img [src]="data.photo.uri" alt="">
+                    </div>
+                    <br>
+                    <div style="text-align: center;" class="person-name">{{data.name}}</div>
+                    <p style="text-align: center;">{{data.position}}</p>
+                </div>
             </div>
         </div>
-
     </div>
 </div>

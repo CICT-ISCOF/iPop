@@ -111,13 +111,8 @@
                     <div *ngIf="show" class="flex-container col-md-12">
                         <button (click)='show = false' class="button">Hide</button>
                     </div>
-                    <div>
-                        <div class="col-md-12" *ngIf="show">
-                            <app-show-mpc-fdc></app-show-mpc-fdc>
-                        </div>
-                    </div>
                 </div>
-
+                <app-show-mpc-fdc *ngIf="show"></app-show-mpc-fdc>
             </div>
             <div class="col-md-4">
                 <app-mpc-fdc-team></app-mpc-fdc-team>
