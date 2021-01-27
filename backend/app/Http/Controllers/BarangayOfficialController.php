@@ -62,8 +62,9 @@ class BarangayOfficialController extends Controller
      * @param  \App\Models\BarangayOfficial  $barangayOfficial
      * @return \Illuminate\Http\Response
      */
-    public function show(BarangayOfficial $barangayOfficial)
+    public function show($id)
     {
+        $barangayOfficial = BarangayOfficial::findOrFail($id);
         return BarangayOfficial::findApproved($barangayOfficial->id)->first()
             ?: response('', 404);
     }
@@ -75,8 +76,9 @@ class BarangayOfficialController extends Controller
      * @param  \App\Models\BarangayOfficial  $barangayOfficial
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BarangayOfficial $barangayOfficial)
+    public function update(Request $request, $id)
     {
+        $barangayOfficial = BarangayOfficial::findOrFail($id);
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
@@ -96,8 +98,9 @@ class BarangayOfficialController extends Controller
      * @param  \App\Models\BarangayOfficial  $barangayOfficial
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BarangayOfficial $barangayOfficial)
+    public function destroy($id)
     {
+        $barangayOfficial = BarangayOfficial::findOrFail($id);
         $barangayOfficial->makeDeleteRequest();
         Log::record("User deleted a barangay official.");
         return response('', 204);

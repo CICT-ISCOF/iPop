@@ -64,8 +64,9 @@ class MunicipalOfficialController extends Controller
      * @param  \App\Models\MunicipalOfficial  $municipalOfficial
      * @return \Illuminate\Http\Response
      */
-    public function show(MunicipalOfficial $municipalOfficial)
+    public function show($id)
     {
+        $municipalOfficial = MunicipalOfficial::findOrFail($id);
         return MunicipalOfficial::findApproved($municipalOfficial->id)->first()
             ?: response('', 404);
     }
@@ -77,8 +78,9 @@ class MunicipalOfficialController extends Controller
      * @param  \App\Models\MunicipalOfficial  $municipalOfficial
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MunicipalOfficial $municipalOfficial)
+    public function update(Request $request, $id)
     {
+        $municipalOfficial = MunicipalOfficial::findOrFail($id);
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
@@ -100,8 +102,9 @@ class MunicipalOfficialController extends Controller
      * @param  \App\Models\MunicipalOfficial  $municipalOfficial
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MunicipalOfficial $municipalOfficial)
+    public function destroy($id)
     {
+        $municipalOfficial = MunicipalOfficial::findOrFail($id);
         $municipalOfficial->makeDeleteRequest();
 
         Log::record("Deleted a Municipal Official.");

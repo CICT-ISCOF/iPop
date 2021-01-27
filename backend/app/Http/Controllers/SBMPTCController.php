@@ -142,7 +142,7 @@ class SBMPTCController extends Controller
             ->setApprovalMessage($request->user()->makeMessage('wants to update a SBMPTC.'));
 
         if (isset($data['photos'])) {
-            $sbmptc->photo->each(function ($photo) {
+            $sbmptc->photos->each(function ($photo) {
                 $photo->delete();
             });
             collect($data['photos'])->each(function ($binary) use ($sbmptc) {
