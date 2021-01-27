@@ -44,6 +44,7 @@ export class StatisticsComponent implements OnInit {
 	data:any = {}
 
 	saveData(){
+		this.data['age_dependency_ratio'] = '1'
 		this.StatisticsService.addPopulationProfileData(this.data).subscribe(
 		(data) => {
 			this.addData = false
