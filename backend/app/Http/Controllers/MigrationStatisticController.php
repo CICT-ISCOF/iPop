@@ -22,9 +22,9 @@ class MigrationStatisticController extends Controller
         $stats = MigrationStatistic::getApproved()->get();
 
         $data = [
-            'total_in_migrations',
-            'total_out_migrations',
-            'net_migrations',
+            'total_in_migrations' => 0,
+            'total_out_migrations' => 0,
+            'net_migrations' => 0,
             'incidences' => Incidence::where('type', 'Migration')->get(),
         ];
 

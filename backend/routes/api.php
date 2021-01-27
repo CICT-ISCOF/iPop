@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AgeDistributionController;
+use App\Http\Controllers\AgeProfileController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\LoginController;
@@ -32,7 +33,7 @@ use App\Http\Controllers\MigrationStatisticController;
 use App\Http\Controllers\ModelPermissionController;
 use App\Http\Controllers\MonthChartController;
 use App\Http\Controllers\MPCFDCController;
-use App\Http\Controllers\MPCFDPersonnelCController;
+use App\Http\Controllers\MPCFDCPersonnelController;
 use App\Http\Controllers\MPCFDCTeamController;
 use App\Http\Controllers\MTCMMembersController;
 use App\Http\Controllers\MunicipalityADController;
@@ -49,6 +50,7 @@ use App\Http\Controllers\PMOCTeamController;
 use App\Http\Controllers\PopulationChartController;
 use App\Http\Controllers\PopulationPyramidController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileSummaryController;
 use App\Http\Controllers\ProgramAreaController;
 use App\Http\Controllers\ProvincialOfficialController;
 use App\Http\Controllers\RecordController;
@@ -56,6 +58,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SBMemberController;
 use App\Http\Controllers\SBMPTCController;
 use App\Http\Controllers\SBMPTCFocalPersonController;
+use App\Http\Controllers\SBMPTCPersonnelController;
 use App\Http\Controllers\SBMPTCTeamController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ServiceController;
@@ -180,6 +183,7 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::apiResources([
         'articles' => ArticleController::class,
         'sbmptcs' => SBMPTCController::class,
+        'sbmptc-personnel' => SBMPTCPersonnelController::class,
         'sbmptcs-teams' => SBMPTCTeamController::class,
         'sbmptcs-focal-persons' => SBMPTCFocalPersonController::class,
         'mtcms' => MTCMMembersController::class,
@@ -211,11 +215,13 @@ Route::middleware('throttle:60,1')->group(function () {
         'pmc-amis' => PMCAMISController::class,
         'pmc-kfp' => PMCKFPController::class,
         'pmc-ccs' => PMCCSController::class,
-        'pmc-personel' => MPCFDPersonnelController::class,
+        'pmc-personel' => MPCFDCPersonnelController::class,
         // Municipality Age Distribution and Age Dependency
         'm-ad' => MunicipalityADController::class,
         'population-chart' => PopulationChartController::class,
         'population-pyramid' => PopulationPyramidController::class,
+        'age-profile' => AgeProfileController::class,
+        'profile-summary' => ProfileSummaryController::class,
     ]);
 
     // Delete 1 award media
