@@ -18,6 +18,7 @@ export class OfficialsService1 {
 	private trigger = new Subject()
 
 	setTrigger(){
+		
 		this.trigger.next()
 	}
 	

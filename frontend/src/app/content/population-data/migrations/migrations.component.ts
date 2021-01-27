@@ -3,6 +3,7 @@ import { MigrationStatService } from './migration-stat.service';
 import { LocationService } from './../../../location.service';
 import { Component, OnInit } from '@angular/core';
 import  Swal  from 'sweetalert2';
+import { OfficialsService1 } from '../../officials-of/officials.service';
 
 
 @Component({
@@ -15,8 +16,38 @@ export class MigrationsComponent implements OnInit {
 	constructor(
 		private LocationService : LocationService,
 		private MigrationStatService : MigrationStatService,
-		private UtilityService : UtilityService
-	) { }
+		private UtilityService : UtilityService,
+		private OfficialsService1 : OfficialsService1,
+	) { 
+		this.OfficialsService1.listen().subscribe(()=>{
+			this.CheckBarangaysAndMunicipalities()
+		})
+	}
+
+	ngOnInit(): void {
+		for (let i = 2015; i <= 2050; i++) {
+			this.years.push(i);
+		}
+		this.getMuncipalities();
+		this.getSummary()
+		localStorage.removeItem('municipality-ref') 
+		localStorage.removeItem('barangay-ref') 
+	}
+
+	hasBarangaysAndMunicipalities = false
+
+	CheckBarangaysAndMunicipalities(){
+		if(localStorage.getItem('municipality-ref') == undefined){
+			this.hasBarangaysAndMunicipalities = false
+			return
+		}
+		if(localStorage.getItem('barangay-ref') == undefined){
+			this.hasBarangaysAndMunicipalities = false
+			return
+		}
+		this.hasBarangaysAndMunicipalities =  true
+		return
+	}
 
 	municipalities:any = [] 
 	barangays:any = [] 
@@ -98,14 +129,6 @@ export class MigrationsComponent implements OnInit {
 	MIGRATIONbarChartType = 'bar';
 	MIGRATIONbarChartLegend = true;
 	
-
-	ngOnInit(): void {
-		for(let i = 2015 ; i <= 2050; i ++){
-			this.years.push(i)
-		}
-		this.getMuncipalities()
-		this.getSummary()
-	}
 
 	summary = {}
 	getSummary(){
@@ -250,6 +273,12 @@ export class MigrationsComponent implements OnInit {
 				'info'
 			)
 		}
+
+		localStorage.setItem('municipality-ref',this.getDataParams.municipality) 
+		localStorage.setItem('barangay-ref',this.getDataParams.barangay) 
+		this.OfficialsService1.setTrigger()
+
+
 		this.MigrationStatService.showData(
 			this.getDataParams.municipality,
 			this.getDataParams.barangay,

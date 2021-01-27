@@ -316,12 +316,10 @@
         </div>
     </div>
     <div class="col-md-4">
-        <h3 class="pop2">Provincial Officials</h3>
-
-        <app-provincial-officials></app-provincial-officials>
-        <br> <br>
-        <app-sb-members></app-sb-members>
-        <br><br><br>
+        <app-provincial-officials *ngIf="!hasBarangaysAndMunicipalities"></app-provincial-officials>
+        <app-sb-members *ngIf="!hasBarangaysAndMunicipalities"></app-sb-members>
+        <municipality-officials></municipality-officials>
+        <br>
         <h3 class="pop2">TECHNICAL NOTES</h3>
         <hr>
         <p><span class="fw-bold">Mortality</span> - refers to death within a population</p>
