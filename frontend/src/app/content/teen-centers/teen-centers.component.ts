@@ -83,9 +83,13 @@ export class TeenCentersComponent implements OnInit {
 	}
 
 	updateMPC(mpc){
+		let tempPHotos = []
+		tempPHotos = mpc['photos']
+		delete mpc['photos']
 		this.TeenCentersService.updateTeenCenter(mpc).subscribe(data => {
 			this.UtilityService.setAlert(`${mpc.name} has been updated`,'success')
 			this.getTeenCenters()
+			mpc['photos'] = tempPHotos
 		},(error) => {
 			for (let message in error.error.errors) {
 			  this.UtilityService.setAlert(error.error.errors[message], 'error');

@@ -11,14 +11,15 @@
         <p>{{teenCenter.municipality}}</p>
         <br> <br>
         <h5 class="d-flex">
-            <span>Images of {{teenCenter.name}}</span>
+            <span style="transform: translate(0,30px);">Images of {{teenCenter.name}}</span>
             <button (click)="triggerInput()" class="ml-auto button">Images</button>
             <input (change)="readURL($event.target.files,$event)" multiple accept="image/*" type="file" style="display: none;" id="file1">
         </h5>
         <hr>
-        <owl-carousel-o [options]="customOptions">
-            <ng-template carouselSlide *ngFor="let image of teenCenter.files">
-                <img alt="" title="slide.title " src="../../../assets/avatars/boy-blue.png">
+        <p *ngIf="teenCenter.photos.length == 0" style="text-align: center;">No photos yet..</p>
+        <owl-carousel-o [options]="customOptions" *ngIf="teenCenter.photos.length != 0">
+            <ng-template carouselSlide *ngFor="let data of teenCenter.photos">
+                <img alt="" title="slide.title " [src]="data.photo.uri">
             </ng-template>
         </owl-carousel-o>
         <br>

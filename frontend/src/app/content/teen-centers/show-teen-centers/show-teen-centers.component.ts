@@ -30,7 +30,6 @@ export class ShowTeenCentersComponent implements OnInit {
 	}
 
 	readURL(files, event){
-		alert('ari')
 		this.teenCenter['files'] = []
 		this.teenCenter['photos'] = []
 		Object.keys(files).forEach(i => {				
