@@ -681,24 +681,6 @@
 
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <!-- <div class="spinner-border text-warning fast" role="status">
                         <span class="sr-only">Loading...</span>
                     </div> -->
@@ -709,7 +691,17 @@
             <!-- top populated  -->
             <div class="row container">
                 <div class="form-group col-md-12">
-                    <h2 class="pop2">TOP POPULATED MUNCIPALITIES</h2>
+                    <h2 class="pop2 d-flex" style="align-items: center;">
+                        <span style="color: white;">  TOP POPULATED MUNCIPALITIES </span>
+                        <span class="ml-auto">
+                            <button (click)="addTopPopulated = true;" *ngIf="!addTopPopulated" class="clickable rounded">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <button (click)="addTopPopulated = false" *ngIf="addTopPopulated" class="clickable rounded">
+                                <i class="fa fa-times"></i>
+                            </button>
+                       </span>
+                    </h2>
                     <p style="color:gray" style="text-align: center;">All over Iloilo</p>
                     <!-- <div *ngIf="population.top.length == 0 " class="flex-container">
                         <div class="spinner-border text-light fast" role="status">
@@ -723,27 +715,36 @@
                             <p class="sub-title">TOTAL POPULATION</p>
                             <p class="sub-title">PERCENTAGE</p>
                         </li>
-                        <!-- <li *ngFor="let municipality of population.top" class="list-group-item barangays">
+                        <li *ngFor="let municipality of topPopulateds" class="list-group-item barangays">
                             <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
-                            <p>{{municipality.name}}</p>
-                            <p>{{municipality.total}}</p>
+                            <p>{{municipality.data.name}}</p>
+                            <p>{{municipality.data.total}}</p>
                             <p>
-                                <ng2-odometer class="low" [number]=" municipality.total / population.total * 100 | number:'1.0-0' " [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }">
+                                <ng2-odometer class="low" [number]="muncipality.data.percent" [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }">
                                 </ng2-odometer>%</p>
-
-                        </li> -->
+                        </li>
+                        <li *ngIf="addTopPopulated" class="list-group-item barangays d-flex">
+                            <select [(ngModel)]="topPulated.data.name" class="form-control" id="Municipality">
+                                <option *ngFor="let municipality of municipalities">{{municipality.name}}</option>
+                            </select>
+                            <input [(ngModel)]="topPulated.data.total" type="text" class="form-control" id="Total Population">
+                            <input [(ngModel)]="topPulated.data.percent" type="text" class="form-control" id="Percentage">
+                            <div style="transform: translate(20px,10px);">
+                                <i (click)="createtopPopulateds() " class="fa fa-check text-success "></i>
+                            </div>
+                        </li>
                     </ul>
                 </div>
-                <!-- <div class="form-group col-md-6">
-                    <div class="map w-100 col-md-12" #map id="map" style="height: 100%; ">
+                <!-- <div class="form-group col-md-6 ">
+                    <div class="map w-100 col-md-12 " #map id="map " style="height: 100%; ">
                     </div>
                 </div> -->
             </div>
         </div>
 
-        <div class="side col-md-4">
-            <app-provincial-officials *ngIf="!hasBarangaysAndMunicipalities"></app-provincial-officials>
-            <app-sb-members *ngIf="!hasBarangaysAndMunicipalities"></app-sb-members>
+        <div class="side col-md-4 ">
+            <app-provincial-officials *ngIf="!hasBarangaysAndMunicipalities "></app-provincial-officials>
+            <app-sb-members *ngIf="!hasBarangaysAndMunicipalities "></app-sb-members>
             <municipality-officials></municipality-officials>
 
         </div>

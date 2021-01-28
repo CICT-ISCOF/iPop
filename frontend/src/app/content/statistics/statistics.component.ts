@@ -220,10 +220,12 @@ export class StatisticsComponent implements OnInit {
 	// --------------------top population----------------------
 
 
-	topPulated = {}
+	topPulated = {
+		data:{}
+	}
 	topPopulateds:any = []
 
-	createtopPopulateds(topPulated){
+	createtopPopulateds(){
 		this.TopPopulatedMunicipalityService.create(this.topPulated).subscribe(data => {
 			this.ngOnInit()
 			Swal.fire('Creation of Population Successful','','success')
