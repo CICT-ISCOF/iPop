@@ -7,6 +7,7 @@
         <table class="table table-striped table-responsive">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Municiplality</th>
                     <th>No. of Brgys</th>
                     <th>Land Area(Sqkm)</th>
@@ -20,16 +21,19 @@
                 </tr>
             </thead>
             <tbody>
-                <td>Ajuy</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
+                <tr *ngFor="let data of data;let i =index">
+                    <td>{{i+1}}</td>
+                    <td>Ajuy</td>
+                    <td>{{data.barangays || 0}}</td>
+                    <td>{{data.land_area || 0}}</td>
+                    <td>{{data.population_density || 0}} </td>
+                    <td>{{data.males || 0}}</td>
+                    <td>{{data.females || 0}}</td>
+                    <td>{{data['disk_total_space(directory)'] || 0}}</td>
+                    <td>{{data.sex_ratio || 0}}</td>
+                    <td>{{data.number_of_hh || 0}}</td>
+                    <td>{{data.average_hh_size || 0}}</td>
+                </tr>
             </tbody>
         </table>
         <br>
