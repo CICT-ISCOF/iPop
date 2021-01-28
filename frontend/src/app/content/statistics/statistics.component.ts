@@ -1,3 +1,5 @@
+import { TopPopulatedMunicipalityService } from './top-populated-municipality.service';
+import { PopulationPyramidService } from './population-pyramid.service';
 import { OfficialsService } from './../provincial-officials/officials.service';
 import { UtilityService } from './../../utility.service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
@@ -15,21 +17,6 @@ import { OfficialsService1 } from '../officials-of/officials.service';
 	selector: 'app-statistics',
 	templateUrl: './statistics.component.html',
 	styleUrls: ['./statistics.component.scss','statistics.component.responsive.scss'],
-	// animations: [
-	// 	trigger('listAnimation', [
-	// 		transition('* => *',[
-	// 			query(':enter', style({opacity:0}),{optional:true}),
-
-	// 			query(':enter', stagger('300ms',[
-	// 				animate('.6s ease-in', keyframes([
-	// 					style({opacity:0,transform: 'translateY(-75%)', offset:0}),
-	// 					style({opacity:.5,transform: 'translateY(30px)', offset:0.3}),
-	// 					style({opacity:1,transform: 'translateY(0)', offset:1})
-	// 				]))
-	// 			]))
-	// 		])
-	// 	])
-	// ]
 })
 export class StatisticsComponent implements OnInit {
 
@@ -38,31 +25,46 @@ export class StatisticsComponent implements OnInit {
 	back(){
 		window.history.back()
 	}
+
 	constructor(	
 		private StatisticsService : StatisticsService,
 		private LocationService : LocationService,
 		private UtilityService : UtilityService,
 		private OfficialsService : OfficialsService,
-		private OfficialsService1 : OfficialsService1
+		private OfficialsService1 : OfficialsService1,
+		private PopulationPyramidService : PopulationPyramidService,
+		private TopPopulatedMunicipalityService : TopPopulatedMunicipalityService,
 	) { 
 		this.OfficialsService1.listen().subscribe(()=>{
 			this.CheckBarangaysAndMunicipalities()
 		})
 	}
 
+	years = []
+	theme = localStorage.getItem('data-theme')
+	isLoading = false
+	municipalities = []
+	municipalityIsLoading = false
+	barangays = []
+	barangayIsLoading
+	filter = {
+		municipality:'',
+		barangay:'',
+		year:'',
+		month:''
+	}
+
 	ngOnInit(): void {	
 		for(let year = 2015; year < 2100; year++){
 			this.years.push(year)
 		}
-		this.getPopulation()
-		this.getTotals()		
-		this.getMunicipality()		
 		this.getMuncipalities()
-		this.getMonths()		
 		this.getSummaries()
 		localStorage.removeItem('municipality-ref') 
 		localStorage.removeItem('barangay-ref') 
 	}
+
+	hasBarangaysAndMunicipalities = false
 
 	CheckBarangaysAndMunicipalities(){
 		if(localStorage.getItem('municipality-ref') == undefined){
@@ -78,8 +80,32 @@ export class StatisticsComponent implements OnInit {
 	}
 
 	addData = false
-
 	data:any = {}
+	filteredData = {}
+	
+	getMuncipalities(){
+		this.municipalityIsLoading = true
+		this.LocationService.getMunicipalities().subscribe(data => {
+			this.municipalities = data	
+			this.municipalityIsLoading = false			
+		})		
+	}
+
+	getBarangays(event){	
+		this.barangayIsLoading = true
+		this.filter.municipality = event.target.options[event.target.options.selectedIndex].text;	
+		this.data['municipality'] = event.target.options[event.target.options.selectedIndex].text;	
+		this.filter.barangay = ''
+		this.LocationService.getBarangays(event.target.value).subscribe(data => {
+			this.barangays = data	
+			this.barangayIsLoading = false
+		})
+	}
+	
+	setBarangay(event){
+		this.filter.barangay = event.target.options[event.target.options.selectedIndex].text;	
+		this.data['barangay'] = event.target.options[event.target.options.selectedIndex].text;	
+	}
 
 	saveData(){
 		this.data['age_dependency_ratio'] = '1'
@@ -97,7 +123,6 @@ export class StatisticsComponent implements OnInit {
 		})
 	}
 
-	filteredData = {}
 	setFilter(){
 		this.StatisticsService.filterData(this.filter).subscribe(
 			(data) => {	
@@ -112,6 +137,7 @@ export class StatisticsComponent implements OnInit {
 		localStorage.setItem('municipality-ref',this.filter.municipality) 
 		localStorage.setItem('barangay-ref',this.filter.barangay) 
 		this.OfficialsService1.setTrigger()
+		this.retrievepopulationPyramid(this.filter)
 	}
 
 	updateFiltered(callback){
@@ -143,162 +169,101 @@ export class StatisticsComponent implements OnInit {
 		return true;
 	}
 
-
-
-
-	years = []
-
-
-
-	
-	hasBarangaysAndMunicipalities = false
-
-	// -------------- formaters ----------------
-
-	formatChartBackground(){
-		return this.theme == 'dark' ?   '#282C34' : 'white'		
-	}
-
-	formatChatColor(){
-		return this.theme == 'dark' ?   'white' : 'black'
-	}
-
-	theme = localStorage.getItem('data-theme')
-	isLoading = false
-
-	filter = {
-		municipality:'',
-		barangay:'',
-		year:'',
-		month:''
-	}
-
-
-
-	// hasFilteredData = false
 	getSummaries(){
-		// this.hasFilteredData = true
-		// this.StatisticsService.getSummaries().subscribe((data:any) => {
-		// 	this.filteredData = []
-		// 	for(let index in data){
-		// 		this.filteredData.push(data[index][0])
-		// 	}
-		// 	console.log(data)
-		// })
+
 	}
 
-	municipalities = []
-	municipalityIsLoading = false
-	getMuncipalities(){
-		this.municipalityIsLoading = true
-		this.LocationService.getMunicipalities().subscribe(data => {
-			this.municipalities = data	
-			this.municipalityIsLoading = false			
-		})		
+	// ---------- population pyramid -----------------
+
+	populationPyramid = {
+		data:{
+			male:{},
+			female:{}
+		}
+	}
+	populationPyramids:any = []
+
+	createpopulationPyramid(){
+		this.populationPyramid['municipality'] = this.filter.municipality
+		this.populationPyramid['barangay'] = this.filter.barangay
+		this.populationPyramid['year'] = this.filter.year
+		if(this.populationPyramid['year'] == '' ){
+			return Swal.fire('Please set Filters to add municipality','','error')
+		}
+		this.PopulationPyramidService.create(this.populationPyramid).subscribe(data => {
+			this.ngOnInit()
+			Swal.fire('Creation of Population Successful','','success')
+		})
 	}
 
-	barangays = []
-	barangayIsLoading
+	retrievepopulationPyramid(filters){
+		this.PopulationPyramidService.retrieve(filters).subscribe(data => {
+			this.populationPyramids = data
+		})
+	}
+
+	updatepopulationPyramid(pyramidData){
+		this.PopulationPyramidService.update(pyramidData).subscribe(data => {
+			this.ngOnInit()
+			this.UtilityService.setAlert('Population data updated succcesffully','success')
+		})
+	}
+
+
+	activepopulationPyramids = {}
+	editpopulationPyramids(index){
+		this.activepopulationPyramids[index] == true ?  this.activepopulationPyramids[index] = false : this.activepopulationPyramids[index] = true	
+	}
+
 	
-	getBarangays(event){	
-		this.barangayIsLoading = true
-		this.filter.municipality = event.target.options[event.target.options.selectedIndex].text;	
-		this.data['municipality'] = event.target.options[event.target.options.selectedIndex].text;	
-		this.filter.barangay = ''
-		this.LocationService.getBarangays(event.target.value).subscribe(data => {
-			this.barangays = data	
-			this.barangayIsLoading = false
+
+	// --------------------top population----------------------
+
+
+	topPulated = {}
+	topPopulateds:any = []
+
+	createtopPopulateds(topPulated){
+		this.TopPopulatedMunicipalityService.create(this.topPulated).subscribe(data => {
+			this.ngOnInit()
+			Swal.fire('Creation of Population Successful','','success')
 		})
 	}
 
-	setBarangay(event){
-		this.filter.barangay = event.target.options[event.target.options.selectedIndex].text;	
-		this.data['barangay'] = event.target.options[event.target.options.selectedIndex].text;	
-	}
-
-	general
-	population = {
-		top:[],
-		total:0
-	}
-	totals
-	genders
-	municipality
-
-	getPopulation(){
-		this.StatisticsService.population().subscribe(data => {		
-			this.population = data		
-			console.log(data)
+	retrievetopPopulateds(){
+		this.TopPopulatedMunicipalityService.retrieve().subscribe(data => {
+			this.topPopulateds = data
 		})
 	}
 
-	getTotals(){
-		this.totals = this.StatisticsService.totals().subscribe(data => {			
-			this.totals = data
-		})
-	}
-
-	getMunicipality(){
-		this.municipality = this.StatisticsService.municipality().subscribe(data => {
-			
-		})
-	}
-
-	monthsisLoading = true
-	month:any = {
-		death:{total:''},
-		birth:{total:''},
-		marriage:{total:''},
-		inmigration:{total:''},
-		outmigration:{total:''},	
-	}
-
-	sexs = {
-		male:0,
-		female:0
-	}
-
-	marriageisLoading = false
-	getMonths(){
-		this.monthsisLoading = true
-		this.StatisticsService.ageDistribution().subscribe(data => {			
-			this.charts.ageDistribution = data
-			for(let value in data){
-				if(Number.isInteger(data[value][1]) ){
-					this.sexs.male += data[value][1]
-					this.sexs.female -= data[value][2]
-				}
-			}
-		})
-		this.StatisticsService.months().subscribe(data => {
-			this.marriageisLoading = true
-	 		this.month = data
-			const  truncate = (month) => {
-				return month.substring(0, 3);
-			}
-			this.charts.married = []
-			for(let key in data.marriage){
-				this.charts.married.push(data.marriage[key])				
-			}		
-			this.charts.married.pop()	
-			// this.createMarriedChart()		`			
-			for(let key in data.birth){
-				this.charts.birthAndDeath.push([ key , data.birth[key]  ,-data.death[key]    ])
+	deletetopPopulateds(municipality){
+		Swal.fire({
+			title: `Are you sure you want to remove this  ${municipality['name']}?`,		
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Remove',
+			cancelButtonText: 'Nope'
+		  }).then((result) => {
+			if (result.value) {
 				
-			}	
-			for(let key in data.inmigration){
-				this.charts.inMigAndOutMig.push([ key , data.inmigration[key]  ,-data.outmigration[key]    ])			
-			}		
-			this.charts.birthAndDeath.pop()
-			this.charts.inMigAndOutMig.pop()
-			this.monthsisLoading = false
-			
-			this.callCharts()	
+			} 
 		})
-		
 	}
 
-	// ----------------- charts -----------------------------
+	activetopPopulateds = {}
+	edittopPopulateds(index){
+		this.activetopPopulateds[index] == true ?  this.activetopPopulateds[index] = false : this.activetopPopulateds[index] = true	
+	}
+
+
+
+
+
+
+
+
+	// ------------------charts-------------------
+	
 	
 	charts = {		
 		ageDistribution : [
@@ -317,20 +282,6 @@ export class StatisticsComponent implements OnInit {
 		married:[			
 		]
 	}
-
-	polarAreaChartType: ChartType = 'line'
-	polarAreaLegend : true
-	bgColor: Color[] = [
-		{
-			backgroundColor:
-			'linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1))',
-			borderColor: 'purple',
-			pointBackgroundColor: 'rgba(148,159,177,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-		}
-	]
 
 	googleChartOptions = {			
 		pyramidChartOptions :{
@@ -419,9 +370,6 @@ export class StatisticsComponent implements OnInit {
 
 	callCharts(){
 		this.drawChart('male-and-female',this.charts.ageDistribution)
-		this.drawChart('death-and-birth',this.charts.birthAndDeath)
-		this.drawChart('in-mig-and-Out-mig',this.charts.inMigAndOutMig)
-		
 	}
 
 	drawChart(chartId,chartData){
@@ -445,6 +393,18 @@ export class StatisticsComponent implements OnInit {
 		google.setOnLoadCallback(chart)
 		
 	}
+
+	// -------------- formaters ----------------
+
+	formatChartBackground(){
+		return this.theme == 'dark' ?   '#282C34' : 'white'		
+	}
+
+	formatChatColor(){
+		return this.theme == 'dark' ?   'white' : 'black'
+	}
+
+	
 
 
 

@@ -488,11 +488,220 @@
 
             <!-- age distribution  -->
             <div class="row container chart-container">
-                <h2 class="pop2 col-md-12">POPULATION PYRAMID</h2>
+                <h2 class="pop2 col-md-12 d-flex" style="align-items: center;">
+                    <span style="color:white">POPULATION PYRAMID</span>
+                    <span *ngIf="!addPopulationData" class="ml-auto">
+                        <button (click)="addPopulationData = true" class="clickable rounded"><i class="fa fa-plus"></i></button>
+                    </span>
+                    <span *ngIf="addPopulationData" class="ml-auto">
+                        <button (click)="addPopulationData = false" class="clickable rounded"><i class="fa fa-times"></i></button>
+                    </span>
+                    <span *ngIf="addPopulationData">
+                            <button (click)="createpopulationPyramid()" class="button">Save Pyramid Chart</button>
+                    </span>
+                </h2>
+
                 <div id="male-and-female" class="w-100">
-                    <div class="spinner-border text-warning fast" role="status">
-                        <span class="sr-only">Loading...</span>
+                    <div *ngIf="addPopulationData">
+                        <div class="row">
+                            <div class="row col-md-6 container" style="margin-top: 20px !important;;">
+                                <h4 class="col-md-12" style="margin-bottom: 20px;"> <br> Males</h4>
+                                <div class="col-md-3">
+                                    <label for="Below 1 year old">Below 1 year</label>
+                                    <input [(ngModel)]="populationPyramid.data.male.below_1_year_old" type="text" class="form-control" id="Below 1 year old">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="5-9">5-9</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['5-9']" type="text" class="form-control" id="5-9">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="10-14">10-14</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['10-14']" type="text" class="form-control" id="10-14">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="15-19">15-19</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['15-19']" type="text" class="form-control" id="15-19">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="20-24">20-24</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['20-24']" type="text" class="form-control" id="20-24">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="25-29">25-29</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['25-29']" type="text" class="form-control" id="25-29">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="30-34">30-34</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['30-34']" type="text" class="form-control" id="30-34">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="35-39">35-39</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['35-39']" type="text" class="form-control" id="35-39">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="40-44">40-44</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['40-44']" type="text" class="form-control" id="40-44">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="45-49">45-49</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['45-49']" type="text" class="form-control" id="45-49">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="50-54">50-54</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['50-54']" type="text" class="form-control" id="50-54">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="55-59">55-59</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['55-59']" type="text" class="form-control" id="55-59">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="60-64">60-64</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['60-64']" type="text" class="form-control" id="60-64">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="65-69">65-69</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['65-69']" type="text" class="form-control" id="65-69">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="70-74">70-74</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['70-74']" type="text" class="form-control" id="70-74">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="75-79">75-79</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['75-79']" type="text" class="form-control" id="75-79">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="80 and above">80 and above</label>
+                                    <input [(ngModel)]="populationPyramid.data.male['eighty_and_above']" type="text" class="form-control" id="80 and above">
+                                </div>
+                            </div>
+
+                            <div class="row col-md-6 container" style="margin-top: 20px !important;transform: translate(30px);">
+                                <h4 class="col-md-12" style="margin-bottom: 20px;"> <br> Females</h4>
+                                <div class="col-md-3">
+                                    <label for="Below 1 year old">Below 1 year</label>
+                                    <input [(ngModel)]="populationPyramid.data.female.below_1_year_old" type="text" class="form-control" id="Below 1 year old">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="5-9">5-9</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['5-9']" type="text" class="form-control" id="5-9">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="10-14">10-14</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['10-14']" type="text" class="form-control" id="10-14">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="15-19">15-19</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['15-19']" type="text" class="form-control" id="15-19">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="20-24">20-24</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['20-24']" type="text" class="form-control" id="20-24">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="25-29">25-29</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['25-29']" type="text" class="form-control" id="25-29">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="30-34">30-34</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['30-34']" type="text" class="form-control" id="30-34">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="35-39">35-39</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['35-39']" type="text" class="form-control" id="35-39">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="40-44">40-44</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['40-44']" type="text" class="form-control" id="40-44">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="45-49">45-49</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['45-49']" type="text" class="form-control" id="45-49">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="50-54">50-54</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['50-54']" type="text" class="form-control" id="50-54">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="55-59">55-59</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['55-59']" type="text" class="form-control" id="55-59">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="60-64">60-64</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['60-64']" type="text" class="form-control" id="60-64">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="65-69">65-69</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['65-69']" type="text" class="form-control" id="65-69">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="70-74">70-74</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['70-74']" type="text" class="form-control" id="70-74">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="75-79">75-79</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['75-79']" type="text" class="form-control" id="75-79">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="80 and above">80 and above</label>
+                                    <input [(ngModel)]="populationPyramid.data.female['eighty_and_above']" type="text" class="form-control" id="80 and above">
+                                </div>
+                            </div>
+
+
+                        </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- <div class="spinner-border text-warning fast" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div> -->
                 </div>
             </div>
             <br>
@@ -500,21 +709,21 @@
             <!-- top populated  -->
             <div class="row container">
                 <div class="form-group col-md-12">
-                    <h2 class="pop">TOP POPULATED MUNCIPALITIES</h2>
-                    <p style="color:gray">All over Iloilo</p>
-                    <div *ngIf="population.top.length == 0 " class="flex-container">
+                    <h2 class="pop2">TOP POPULATED MUNCIPALITIES</h2>
+                    <p style="color:gray" style="text-align: center;">All over Iloilo</p>
+                    <!-- <div *ngIf="population.top.length == 0 " class="flex-container">
                         <div class="spinner-border text-light fast" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
-                    </div>
-                    <ul class="list-group" [@listAnimation]="population.top.length">
+                    </div> -->
+                    <ul class="list-group">
                         <li class="list-group-item barangays">
                             <i style="color:transparent;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
                             <p class="sub-title">MUNICIPALITY</p>
                             <p class="sub-title">TOTAL POPULATION</p>
                             <p class="sub-title">PERCENTAGE</p>
                         </li>
-                        <li *ngFor="let municipality of population.top" class="list-group-item barangays">
+                        <!-- <li *ngFor="let municipality of population.top" class="list-group-item barangays">
                             <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
                             <p>{{municipality.name}}</p>
                             <p>{{municipality.total}}</p>
@@ -522,14 +731,13 @@
                                 <ng2-odometer class="low" [number]=" municipality.total / population.total * 100 | number:'1.0-0' " [config]="{ animation: 'slide', format: 'd', value: 0, auto: true }">
                                 </ng2-odometer>%</p>
 
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
-
-                <div class="form-group col-md-6">
+                <!-- <div class="form-group col-md-6">
                     <div class="map w-100 col-md-12" #map id="map" style="height: 100%; ">
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
