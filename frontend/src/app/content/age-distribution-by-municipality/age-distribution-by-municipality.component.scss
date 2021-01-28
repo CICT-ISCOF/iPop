@@ -8,12 +8,17 @@ h2 {
 }
 
 th {
-    border: 1px solid rgba($color: black, $alpha: .5);
+    border: 1px solid rgba($color: lightgray, $alpha: .5);
+    flex: 1;
+}
+
+table * {
+    text-align: center !important;
 }
 
 .tech-notes {
     padding: 20px;
-    background-color: rgba($color: lightgray, $alpha: .5);
+    background-color: rgba($color: #E2E5E9, $alpha: .2);
     * {
         font-style: italic;
         color: #0B79A0;
