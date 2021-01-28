@@ -15,6 +15,7 @@ class CreateTopPopulationsTable extends Migration
     {
         Schema::create('top_populations', function (Blueprint $table) {
             $table->id();
+            $table->text('data');
             $table->timestamps();
         });
     }
