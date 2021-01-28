@@ -5,15 +5,15 @@
 <div class="row container row" style="margin-left: 0;" *ngIf="addTeam">
     <div class="picture">
         <img (click)="triggerFileInput('image-file')" [src]="placeholder" alt="" style="cursor: pointer;">
-        <input (change)="readURL($event.target.files,$event)" type="file" style="display: none;" id="image-file">
+        <input (keyup.enter)="saveTeam();addTeam = false" (change)="readURL($event.target.files,$event)" type="file" style="display: none;" id="image-file">
     </div>
     <div class="form-group col-md-12">
         <label for="Name">Name</label>
-        <input [(ngModel)]="MPCFDCTeam.name" type="text" id="Name" class="form-control">
+        <input (keyup.enter)="saveTeam();addTeam = false" [(ngModel)]="MPCFDCTeam.name" type="text" id="Name" class="form-control">
     </div>
     <div class="form-group col-md-12">
         <label for="Position">Position</label>
-        <input [(ngModel)]="MPCFDCTeam.position" type="text" id="Position" class="form-control">
+        <input (keyup.enter)="saveTeam();addTeam = false" [(ngModel)]="MPCFDCTeam.position" type="text" id="Position" class="form-control">
     </div>
     <div class="form-group col-md-12">
         <button (click)="saveTeam();addTeam = false" class="button">Save</button>
@@ -24,7 +24,7 @@
 <div class="row container" style="margin-left: 0;" *ngIf="addFocalPerson">
     <div class="form-group col-md-6">
         <label for="Name">Name</label>
-        <input [(ngModel)]="focalPerson.name" type="text" id="Name" class="form-control">
+        <input (keyup.enter)="createFocalPersons();addFocalPerson = false" [(ngModel)]="focalPerson.name" type="text" id="Name" class="form-control">
     </div>
     <div class="form-group col-md-6 row flex-container d-flex" style="margin-top: 20px;">
         <button (click)="createFocalPersons();addFocalPerson = false" class="clickable col-md-6">
@@ -73,15 +73,15 @@
         <div *ngIf="acitveTeams[team.id]" class="row">
             <div class="col-md-5 flex-container">
                 <label style="margin-right: 10px;" for="Name">Name</label>
-                <input [(ngModel)]="team.name" type="text" class="form-control" id="Name">
+                <input (keyup.enter)="updateTeam(team);editTeam(team)" [(ngModel)]="team.name" type="text" class="form-control" id="Name">
             </div>
             <div class="col-md-5 flex-container">
                 <label style="margin-right: 10px;" for="Position">Position</label>
-                <input [(ngModel)]="team.position" type="text" class="form-control" id="Position">
+                <input (keyup.enter)="updateTeam(team);editTeam(team)" [(ngModel)]="team.position" type="text" class="form-control" id="Position">
             </div>
             <div class="col-md-2 flex-container">
                 <button class="clickable">
-                    <i (click)="updateTeam(team)" class="fa fa-check text-success"></i>
+                    <i (click)="updateTeam(team);editTeam(team)" class="fa fa-check text-success"></i>
                 </button>
             </div>
         </div>
@@ -111,7 +111,7 @@
             <div class="row" *ngIf="acitveFocalPersons[i]" style="transform: translateY(10px);">
                 <div class="form-group col-md-8 d-flex">
                     <label style="margin-right: 20px;transform: translateY(10px);" for="name">Name</label>
-                    <input class="form-control" type="text" id="name" [(ngModel)]="person.name">
+                    <input (keyup.enter)="updateFocalPersons(person);toggleFocalPersons(i)" class="form-control" type="text" id="name" [(ngModel)]="person.name">
                 </div>
                 <div class="form-group col-md-4 row">
                     <button (click)="updateFocalPersons(person);toggleFocalPersons(i)" class="clickable">

@@ -1,3 +1,4 @@
+import { PopByMunicipalityService } from './pop-by-municipality.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PopulationProfileByMunicipalityComponent implements OnInit {
 
-  constructor() { }
+    constructor(
+		private PopByMunicipalityService : PopByMunicipalityService
+	) { }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+		this.PopByMunicipalityService.getSummary().subscribe(data => {
+			console.log(data)
+			this.data = data
+		})
+	}
+	
+	data = {
+
+	}
 
 }

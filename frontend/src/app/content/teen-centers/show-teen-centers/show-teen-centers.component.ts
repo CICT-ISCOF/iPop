@@ -20,6 +20,7 @@ export class ShowTeenCentersComponent implements OnInit {
 
 	ngOnInit(): void {
 		console.log('teenCenter',this.teenCenter)
+		this.retrievePersonnel()
 	}
 
 	teenCenter = JSON.parse(localStorage.getItem('teen-center-ref'))
@@ -29,7 +30,6 @@ export class ShowTeenCentersComponent implements OnInit {
 	}
 
 	readURL(files, event){
-		alert('ari')
 		this.teenCenter['files'] = []
 		this.teenCenter['photos'] = []
 		Object.keys(files).forEach(i => {				
@@ -51,13 +51,17 @@ export class ShowTeenCentersComponent implements OnInit {
 		document.getElementById('personnel').click()
 	}
 
-	// readUrl(event){
-	// 	const reader = new FileReader();   
-	// 	reader.readAsDataURL(event.target.files[0]);   
-	// 	reader.onload = (event) => {		
-	// 		this. src = (<FileReader>event.target).result
-	// 	}
-	// }
+	triggerFile2(){
+		document.getElementById('file2').click()
+	}
+
+	readAddUrl(files:FileList,event){
+		const reader = new FileReader();   
+		reader.readAsDataURL(event.target.files[0]);   
+		reader.onload = (event) => {		
+			this. src = (<FileReader>event.target).result
+		}
+	}
 
 	src:any = '../../../../assets/avatars/boy-blue.png'
 
@@ -66,30 +70,46 @@ export class ShowTeenCentersComponent implements OnInit {
 	}
 	personnels = []
 	savePersonnel(){
+		this.personnel['photo'] = this.src
 		this.TeenCentersService.createPersonnel(this.personnel).subscribe(data => {
 			this.UtilityService.setAlert(`New Personnel on ${this.teenCenter['name']} has been added`,'success')
 			this.ngOnInit()
+		},
+		(error) => {
+			for (let message in error.error.errors) {
+			  this.UtilityService.setAlert(error.error.errors[message], 'error');
+			}
 		})
 	}
 
 	retrievePersonnel(){
 		this.TeenCentersService.retrivePersonnel(this.teenCenter.id).subscribe(data => {
 			this.personnels = data
+			console.log('personnels',data)
 		})
 	}
 
 	updatePersonnel(personnel){
+		let tempPhoto = {}
+		tempPhoto = personnel['photo']
+		delete personnel['photo']
 		this.TeenCentersService.updatePersonnel(personnel).subscribe(data => {
 			this.UtilityService.setAlert(`${personnel.name} has been has been successfully updated `,'success')
 			this.ngOnInit()
+			personnel['photo'] = tempPhoto
 		})
 	}
 
 	deletePersonnel(personnel){
-		this.TeenCentersService.deletePersonnel(personnel.id).subscribe(data => {
+		this.TeenCentersService.deletePersonnel(personnel).subscribe(data => {
 			this.UtilityService.setAlert(`${personnel.name} has been removed as a personnel on ${this.teenCenter['name']} `,'success')
 			this.ngOnInit()
 		})
+	}
+
+	activePersonnel = {}
+	togglePesonnel(index){
+		this.activePersonnel[index] == true ?  this.activePersonnel[index] = false : this.activePersonnel[index] = true	
 	}
 
 

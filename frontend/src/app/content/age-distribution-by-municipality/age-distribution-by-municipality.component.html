@@ -8,6 +8,7 @@
             <thead>
                 <tr>
                     <th>Municiplality</th>
+                    <th>Year</th>
                     <th>HH Population</th>
                     <th>0-14</th>
                     <th>15-64</th>
@@ -15,17 +16,77 @@
                     <th>Young Dependency</th>
                     <th>Old Dependency</th>
                     <th>Dependency</th>
+                    <th>
+                        <button (click)="addData = true" *ngIf="!addData" class="button rounded">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button (click)="addData = false" *ngIf="addData" class="button rounded">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <td>Ajuy</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
+                <tr *ngIf="addData">
+                    <td><input [(ngModel)]="ageDistribution.municipality" type="text" class="form-control"></td>
+                    <td><input [(ngModel)]="ageDistribution.year" type="number" class="form-control"></td>
+                    <td><input [(ngModel)]="ageDistribution.hh_population" type="number" class="form-control"></td>
+                    <td><input [(ngModel)]="ageDistribution.age_0_14" type="number" class="form-control"></td>
+                    <td><input [(ngModel)]="ageDistribution.age_15_64" type="number" class="form-control"></td>
+                    <td><input [(ngModel)]="ageDistribution['65_and_over']" type="number" class="form-control"></td>
+                    <td><input [(ngModel)]="ageDistribution.young_dependency" type="number" class="form-control"></td>
+                    <td><input [(ngModel)]="ageDistribution.old_dependency" type="number" class="form-control"></td>
+                    <td><input [(ngModel)]="ageDistribution.dependency" type="number" class="form-control"></td>
+                    <td class="flex-container">
+                        <i (click)="create();addData = false" class="fa fa-check text-success clickable"></i>
+                    </td>
+                </tr>
+                <tr *ngFor="let data of ageDistributions;let i = index">
+                    <td *ngIf="!editable[i]">{{data.municipality}}</td>
+                    <td *ngIf="!editable[i]">{{data.year}}</td>
+                    <td *ngIf="!editable[i]">{{data.hh_population}}</td>
+                    <td *ngIf="!editable[i]">{{data.age_0_14}}</td>
+                    <td *ngIf="!editable[i]">{{data.age_15_64}}</td>
+                    <td *ngIf="!editable[i]">{{data['65_and_over']}}</td>
+                    <td *ngIf="!editable[i]">{{data.young_dependency}}</td>
+                    <td *ngIf="!editable[i]">{{data.old_dependency}}</td>
+                    <td *ngIf="!editable[i]">{{data.dependency}}</td>
+
+
+                    <td *ngIf="editable[i]"><input [(ngModel)]="data.municipality" type="text" class="form-control"></td>
+                    <td *ngIf="editable[i]"><input [(ngModel)]="data.year" type="number" class="form-control"></td>
+                    <td *ngIf="editable[i]"><input [(ngModel)]="data.hh_population" type="number" class="form-control"></td>
+                    <td *ngIf="editable[i]"><input [(ngModel)]="data.age_0_14" type="number" class="form-control"></td>
+                    <td *ngIf="editable[i]"><input [(ngModel)]="data.age_15_64" type="number" class="form-control"></td>
+                    <td *ngIf="editable[i]"><input [(ngModel)]="data['65_and_over']" type="number" class="form-control"></td>
+                    <td *ngIf="editable[i]"><input [(ngModel)]="ageDistribution.young_dependency" type="number" class="form-control"></td>
+                    <td *ngIf="editable[i]"><input [(ngModel)]="data.old_dependency" type="number" class="form-control"></td>
+                    <td *ngIf="editable[i]"><input [(ngModel)]="data.dependency" type="number" class="form-control"></td>
+                    <td *ngIf="editable[i]" class="flex-container">
+                        <i (click)="update(data);edit(i)" class="fa fa-check text-success clickable"></i>
+                    </td>
+
+
+                    <td *ngIf="!editable[i]" class="flex-container">
+                        <svg (click)="edit(i)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                    </td>
+
+                    <td *ngIf="editable[i]" class="flex-container">
+                        <i (click)="edit(i)" class="fa fa-times"></i>
+                    </td>
+
+                    <td>
+                        <svg (click)="deleteData(data)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-minus" viewBox="0 0 16 16">
+                            <path d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
+                            <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                        </svg>
+
+                    </td>
+
+                </tr>
             </tbody>
         </table>
         <br>

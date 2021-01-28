@@ -1,22 +1,11 @@
 .mpc-component {
     display: flex;
-    padding: 20px;
-    max-width: auto !important;
-}
-
-.images {
-    min-height: 30vh;
-    max-height: 30vh;
+    width: 100%;
+    padding: 5px;
 }
 
 .front {
     width: 70%;
-}
-
-.personnel {
-    box-sizing: 0px 0px 5px lightgray;
-    padding: 20px;
-    border-radius: 5px !important;
 }
 
 .side {
@@ -24,14 +13,32 @@
     text-align: center;
 }
 
-h3,
-.person-name {
-    font-weight: 800;
-    text-align: center;
+h5 {
+    font-size: .9rem;
+    font-weight: 300;
 }
 
-.carousel-holder .center img {
-    transform: scaleX(1.5);
+h3,
+h4,
+.person-name {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+owl-carousel-o img {
+    height: 40vh;
+    min-width: 100%;
+    background-repeat: no-repeat !important;
+    background-size: fill !important;
+    background-position: center !important;
+    background-size: 100% 100% !important;
+}
+
+.owl-carousel .owl-item img {
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
+    max-width: initial;
 }
 
 .picture {

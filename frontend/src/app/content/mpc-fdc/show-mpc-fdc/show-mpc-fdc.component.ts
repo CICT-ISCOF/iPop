@@ -62,7 +62,7 @@ export class ShowMpcFdcComponent implements OnInit {
 		document.getElementById('personnel').click()
 	}
 
-	readUrl(event){
+	readAddUrl(files:FileList,event){
 		const reader = new FileReader();   
 		reader.readAsDataURL(event.target.files[0]);   
 		reader.onload = (event) => {		
@@ -70,18 +70,32 @@ export class ShowMpcFdcComponent implements OnInit {
 		}
 	}
 
+	src:any = '../../../../assets/avatars/boy-blue.png'
+
+	triggerFile2(){
+		document.getElementById('file2').click()
+	}
+
+	 
+
 	personnel = {
 		mpcfdc_id:this.mpc.id
 	}
-	src:any = '../../../../assets/avatars/girl-black.png'
 	personnels = []
 
 	savePersonnel(){
+		this.personnel['photo'] = this.src
 		this.MpcService.createPersonnel(this.personnel).subscribe(data => {
 			this.UtilityService.setAlert(`New Personnel on ${this.mpc['name']} has been added`,'success')
 			this.ngOnInit()
+		},
+		(error) => {
+			for (let message in error.error.errors) {
+			  this.UtilityService.setAlert(error.error.errors[message], 'error');
+			}
 		})
 	}
+
 
 	retrievePersonnel(){
 		this.MpcService.retrivePersonnel(this.mpc.id).subscribe(data => {
@@ -90,9 +104,13 @@ export class ShowMpcFdcComponent implements OnInit {
 	}
 
 	updatePersonnel(personnel){
+		let tempPhoto = {}
+		tempPhoto = personnel['photo']
+		delete personnel['photo']
 		this.MpcService.updatePersonnel(personnel).subscribe(data => {
 			this.UtilityService.setAlert(`${personnel.name} has been has been successfully updated `,'success')
 			this.ngOnInit()
+			personnel['photo'] = tempPhoto
 		})
 	}
 
@@ -102,6 +120,12 @@ export class ShowMpcFdcComponent implements OnInit {
 			this.ngOnInit()
 		})
 	}
+
+	activePersonnel = {}
+	togglePesonnel(index){
+		this.activePersonnel[index] == true ?  this.activePersonnel[index] = false : this.activePersonnel[index] = true	
+	}
+
 
 
 

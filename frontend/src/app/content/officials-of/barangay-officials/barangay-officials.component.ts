@@ -71,15 +71,15 @@ export class BarangayOfficialsComponent implements OnInit {
 
 	deleteOfficial(official){
 		Swal.fire({
-			title: 'Are you sure you want to update existing Official data?',		
+			title: 'Are you sure you want to remove Official data?',		
 			icon: 'warning',
 			showCancelButton: true,
-			confirmButtonText: 'Update',
+			confirmButtonText: 'Remove',
 			cancelButtonText: 'Nope'
 		  }).then((result) => {
 			if (result.value) {
 				this.OfficialsService.deleteBarangayOfficials(official.id).subscribe(data => {
-					this.UtilityService.setAlert(`${official.name} has been updated`,'success')
+					this.UtilityService.setAlert(`${official.name} has been removed`,'success')
 					this.retieve()
 				})		
 			} 

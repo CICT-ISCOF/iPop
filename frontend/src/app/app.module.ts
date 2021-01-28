@@ -17,14 +17,13 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { Ng2OdometerModule } from 'ng2-odometer';
 import {NgxPaginationModule} from 'ngx-pagination';
-// import { AngularOpenlayersModule } from "ngx-openlayers";
 import { ChartsModule } from 'ng2-charts';
 import { AgmCoreModule } from '@agm/core';
 import { ResponsiveModule } from 'ngx-responsive'
 import 'ag-grid-enterprise';
 import { TreeNgxModule } from 'tree-ngx';
 
-
+// components------------
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -101,7 +100,6 @@ import { OutMigsSearchComponent } from './content/search/out-migs-search/out-mig
 import { MarriagesSearchComponent } from './content/search/marriages-search/marriages-search.component';
 import { CpdbSearchComponent } from './content/search/cpdb-search/cpdb-search.component';
 import { DeviceComponent } from './content/logs/device/device.component';
-
 import { CommentCpdbComponent } from './content/shared/comments/comment-cpdb/comment-cpdb.component';
 import { CommentBirthsComponent } from './content/shared/comments/comment-births/comment-births.component';
 import { CommentDeathsComponent } from './content/shared/comments/comment-deaths/comment-deaths.component';
