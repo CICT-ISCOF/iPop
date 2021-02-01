@@ -10,7 +10,7 @@ class TopPopulationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum');
+        $this->middleware('auth:sanctum')->except('index', 'show');
     }
 
     /**
@@ -20,7 +20,7 @@ class TopPopulationController extends Controller
      */
     public function index()
     {
-        return TopPopulation::getApproved()->first();
+        return TopPopulation::getApproved()->get();
     }
 
     /**
