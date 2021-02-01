@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Log;
+use App\Models\Role;
 use App\Models\TopPopulation;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class TopPopulationController extends Controller
      */
     public function index()
     {
-        return TopPopulation::getApproved()->get();
+        return TopPopulation::getApproved()->first();
     }
 
     /**
@@ -40,12 +41,14 @@ class TopPopulationController extends Controller
                 'requester_id' => $request->user()->id,
                 'message' => $request->user()->makeMessage('wants to update a top population.')
             ]);
+            $topPopulation->setApproved($request->user()->hasRole(Role::ADMIN));
         } else {
             $topPopulation = TopPopulation::create($data);
             $topPopulation->approval()->create([
                 'requester_id' => $request->user()->id,
                 'message' => $request->user()->makeMessage('wants to add a top population.')
             ]);
+            $topPopulation->setApproved($request->user()->hasRole(Role::ADMIN))
         }
 
         Log::record('User created a top population.');
