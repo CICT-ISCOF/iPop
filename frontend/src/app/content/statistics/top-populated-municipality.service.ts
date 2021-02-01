@@ -37,7 +37,7 @@ export class TopPopulatedMunicipalityService {
 
 	retrieve(){
 		const url  = this.baseURL
-		return this.http.get(url)
+		return this.http.get(url, {headers:this.getHeaders()})
 	} 
 
 	update(data){

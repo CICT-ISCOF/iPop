@@ -192,13 +192,8 @@ li {
 #death-and-birth,
 #male-and-female,
 #in-mig-and-Out-mig {
-    height: 107%;
-    margin-top: -57px;
-    width: 120% !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background: var(--bg);
+    height: auto;
     rect {
         fill: transparent !important;
     }
@@ -209,7 +204,7 @@ li {
 }
 
 .chart-container {
-    height: 80vh;
+    height: auto;
     overflow: hidden;
 }
 

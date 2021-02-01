@@ -60,6 +60,7 @@ export class StatisticsComponent implements OnInit {
 		}
 		this.getMuncipalities()
 		this.getSummaries()
+		this.retrievetopPopulateds()
 		localStorage.removeItem('municipality-ref') 
 		localStorage.removeItem('barangay-ref') 
 	}
@@ -184,6 +185,7 @@ export class StatisticsComponent implements OnInit {
 	populationPyramids:any = []
 
 	createpopulationPyramid(){
+		alert(this.filter.municipality)
 		this.populationPyramid['municipality'] = this.filter.municipality
 		this.populationPyramid['barangay'] = this.filter.barangay
 		this.populationPyramid['year'] = this.filter.year
@@ -197,9 +199,40 @@ export class StatisticsComponent implements OnInit {
 	}
 
 	retrievepopulationPyramid(filters){
+		this.ageDistribution = [
+			['Age', 'Male', 'Female'],		
+		]
 		this.PopulationPyramidService.retrieve(filters).subscribe(data => {
 			this.populationPyramids = data
+			for(let key in data[0]['data']['female']){
+				this.ageDistribution.push([
+					key,
+					parseInt(data[0]['data']['male'][key]),
+					-Math.abs(parseInt(data[0]['data']['female'][key]))
+				])
+			}
+			this.drawChart('male-and-female',this.ageDistribution)
 		})
+	}
+
+	ageDistribution:any =  [
+		['Age', 'Male', 'Female'],		
+	]
+
+	drawChart(chartId,chartData){
+		let style = this.googleChartOptions.pyramidChartOptions
+		const chart = () => {
+			var data = google.visualization.arrayToDataTable(chartData)
+			var chart = new google.visualization.BarChart(document.getElementById(chartId))			
+			var formatter = new google.visualization.NumberFormat({
+				pattern: ';'
+			})
+			formatter.format(data, 2)
+			chart.draw(data, style )
+		}
+		google.load("visualization", "1", {packages:["corechart"]})
+		google.setOnLoadCallback(chart)
+		
 	}
 
 	updatepopulationPyramid(pyramidData){
@@ -267,23 +300,7 @@ export class StatisticsComponent implements OnInit {
 	// ------------------charts-------------------
 	
 	
-	charts = {		
-		ageDistribution : [
-			['Age', 'Male', 'Female'],		
-		],
-				
-		birthAndDeath:[			
-			['Age', 'Births', 'Deaths'],	
-					
-		],
-
-		inMigAndOutMig:[
-			['Age', 'In-Migrants', 'Out-Migrants'],	
-					
-		],
-		married:[			
-		]
-	}
+	
 
 	googleChartOptions = {			
 		pyramidChartOptions :{
@@ -292,9 +309,9 @@ export class StatisticsComponent implements OnInit {
 				'opacity': 0
 			},		
 			title: '',
-            titleTextStyle: {color: 'blue', fontSize: 16, align: 'center', bold: true},
+            titleTextStyle: {color: 'blue', fontSize: 30, align: 'center', bold: true},
             colors: ['#09B2E7','#F30091', ],
-            chartArea: { backgroundColor: 'transparent', height: '70%', top: '10%' },
+            chartArea: { backgroundColor: 'transparent', height: '100%', top: '10%' },
             isStacked: true,        
             hAxis: {
                 textPosition: 'none',
@@ -314,87 +331,12 @@ export class StatisticsComponent implements OnInit {
 			legend: {textStyle: {color: this.formatChatColor()}}			
 					
 		},
-		birthsAndDeaths :{
-			backgroundColor: {
-				'fill': 'transparent',
-				'opacity': 0
-			},
-			title: '',
-            titleTextStyle: {color: 'blue', fontSize: 16, align: 'center', bold: true},
-            colors: ['red','#81D340', ],
-            chartArea: { backgroundColor: 'transparent', height: '70%', top: '10%', color:this.formatChatColor() },
-            isStacked: true,           
-			hAxis: {
-                textPosition: 'none',
-                format: ';',
-				title: '',
-				textStyle: {
-					color: this.formatChatColor()
-				},
-            },
-            vAxis: {
-                direction: 1,
-				title: '',
-				textStyle: {
-					color: this.formatChatColor()
-				},
-			},			
-			legend: {textStyle: {color: this.formatChatColor()}}			
-		},
-		inMIgsandOutMigs :{
-			backgroundColor: {
-				'fill': 'transparent',
-				'opacity': 0
-			},
-			title: '',
-            titleTextStyle: {color: 'blue', fontSize: 16, align: 'center', bold: true},
-            colors: ['#F2C30D','#59B8B3', ],
-            chartArea: { backgroundColor: 'transparent', height: '70%', top: '10%', color:this.formatChatColor()},
-            isStacked: true,          
-			hAxis: {
-                textPosition: 'none',
-                format: ';',
-				title: '',
-				textStyle: {
-					color: this.formatChatColor()
-				},
-            },
-            vAxis: {
-                direction: 1,
-				title: '',
-				textStyle: {
-					color: this.formatChatColor()
-				},
-			},	
-			legend: {textStyle: {color: this.formatChatColor()}}			
-		}
-	}
-
-	callCharts(){
-		this.drawChart('male-and-female',this.charts.ageDistribution)
-	}
-
-	drawChart(chartId,chartData){
-		let style = this.googleChartOptions.pyramidChartOptions
-		if( chartId == 'death-and-birth'){
-		    style = this.googleChartOptions.birthsAndDeaths
-		}
-		if( chartId == 'in-mig-and-Out-mig'){
-			style = this.googleChartOptions.inMIgsandOutMigs
-		}
-		const chart = () => {
-			var data = google.visualization.arrayToDataTable(chartData)
-			var chart = new google.visualization.BarChart(document.getElementById(chartId))			
-			var formatter = new google.visualization.NumberFormat({
-				pattern: ';'
-			})
-			formatter.format(data, 2)
-			chart.draw(data, style )
-		}
-		google.load("visualization", "1", {packages:["corechart"]})
-		google.setOnLoadCallback(chart)
 		
 	}
+
+
+
+	
 
 	// -------------- formaters ----------------
 
