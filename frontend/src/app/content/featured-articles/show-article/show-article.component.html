@@ -6,16 +6,16 @@
         </svg>
     </div>
     <br><br>
-    <h2>{{ article.title }}</h2>
-    <p>March 30, 2020 - 11:26am</p>
+    <h2 style="text-align: center;">{{ article.title }}</h2>
+    <p><span class="badge badge-primary">{{article.created_at | date: 'MMMM dd, yyyy - h:ma'}}</span> </p>
 
     <owl-carousel-o *ngIf="article.photos.length != 0" [options]="customOptions">
         <ng-template carouselSlide *ngFor="let image of article.photos">
             <img alt="" title="slide.title " [src]="image.file.uri">
         </ng-template>
     </owl-carousel-o>
-
+    <br>
     <div class="text">
-        {{ article.body }}
+        <p [innerHTML]="nl2br(article.body)" style="text-align: center;"></p>
     </div>
 </div>

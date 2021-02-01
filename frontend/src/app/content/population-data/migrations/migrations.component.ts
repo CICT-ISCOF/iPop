@@ -1,3 +1,4 @@
+import { UserService } from './../../../user.service';
 import { UtilityService } from './../../../utility.service';
 import { MigrationStatService } from './migration-stat.service';
 import { LocationService } from './../../../location.service';
@@ -18,12 +19,13 @@ export class MigrationsComponent implements OnInit {
 		private MigrationStatService : MigrationStatService,
 		private UtilityService : UtilityService,
 		private OfficialsService1 : OfficialsService1,
+		private UserService : UserService
 	) { 
 		this.OfficialsService1.listen().subscribe(()=>{
 			this.CheckBarangaysAndMunicipalities()
 		})
 	}
-
+	isUser =  !this.UserService.isUser()
 	ngOnInit(): void {
 		for (let i = 2015; i <= 2050; i++) {
 			this.years.push(i);

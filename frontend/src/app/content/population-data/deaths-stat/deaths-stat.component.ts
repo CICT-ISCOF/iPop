@@ -1,3 +1,4 @@
+import { UserService } from './../../../user.service';
 import { UtilityService } from './../../../utility.service';
 import { DeathStatService } from './death-stat.service';
 import { LocationService } from './../../../location.service';
@@ -16,6 +17,7 @@ export class DeathsStatComponent implements OnInit {
 		private DeathStatService: DeathStatService,
 		private UtilityService: UtilityService,
 		private OfficialsService1 : OfficialsService1,
+		private UserService : UserService,
 	) { 
 		this.OfficialsService1.listen().subscribe(()=>{
 			this.CheckBarangaysAndMunicipalities()
@@ -33,6 +35,7 @@ export class DeathsStatComponent implements OnInit {
 	}
 
 
+	isUser =  !this.UserService.isUser()
 	hasBarangaysAndMunicipalities = false
 
 	CheckBarangaysAndMunicipalities(){

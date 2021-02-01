@@ -1,3 +1,4 @@
+import { UserService } from './../../user.service';
 import { OfficialsService } from './officials.service';
 import { UtilityService } from './../../utility.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,12 +14,14 @@ export class ProvincialOfficialsComponent implements OnInit {
     constructor(
 		private UtilityService : UtilityService,
 		private OfficialsService : OfficialsService,
+		private UserService : UserService
 	) { 
 		this.OfficialsService.getOfficialsFilter().subscribe(data => {
 			this.officialsImage = data
 		})
 	}
-
+	isUser =  !this.UserService.isUser()
+	
 	officialsImage = ""
 
     ngOnInit(): void {

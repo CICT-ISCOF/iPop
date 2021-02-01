@@ -1,3 +1,4 @@
+import { UserService } from './../../../user.service';
 import  Swal  from 'sweetalert2';
 import { UtilityService } from './../../../utility.service';
 import { BirthStatService } from './birth-stat.service';
@@ -17,11 +18,14 @@ export class BirthsStatComponent implements OnInit {
 		private BirthStatService: BirthStatService,
 		private UtilityService: UtilityService,
 		private OfficialsService1 : OfficialsService1,
+		private UserService : UserService
 	) { 
 		this.OfficialsService1.listen().subscribe(()=>{
 			this.CheckBarangaysAndMunicipalities()
 		})
 	}
+
+	isUser =  !this.UserService.isUser()
 
 	ngOnInit(): void {
 		for (let i = 2015; i <= 2050; i++) {

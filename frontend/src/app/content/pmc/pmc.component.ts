@@ -1,3 +1,4 @@
+import { UserService } from './../../user.service';
 import { Label } from 'ng2-charts';
 import Swal from 'sweetalert2';
 import { UtilityService } from './../../utility.service';
@@ -15,14 +16,15 @@ export class PmcComponent implements OnInit {
    	constructor(
 		private LocationService : LocationService,
 		private PmcService : PmcService,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private UserService : UserService
 	
 	) { }
 
 	back(){
 		window.history.back()
 	}
-
+	isUser =  !this.UserService.isUser()
 	
 	numberOfSessions = false
 	municipalities:any = [] 

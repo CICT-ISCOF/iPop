@@ -46,7 +46,7 @@ export class PmcService {
 
 	retrieve (municipality, barangay){
 		const url = this.baseURL + '?municipality=' + municipality + '&barangay=' + barangay
-		return this.http.get<any>(url ,{headers:this.getHeaders()})
+		return this.http.get<any>(url )
 	}
 
 	update(data, id){
@@ -61,7 +61,7 @@ export class PmcService {
 
 	show(data){
 		const url =  this.baseURL + '/' + data
-		return this.http.get<any>(url ,{headers:this.getHeaders()})
+		return this.http.get<any>(url )
 	}
 
 
@@ -74,7 +74,7 @@ export class PmcService {
 
 	retrieveTeams (){
 		const url = this.BaseAPIService.baseURL + '/pmocc-teams'
-		return this.http.get<any>(url ,{headers:this.getHeaders()})
+		return this.http.get<any>(url )
 	}
 
 	updateTeams(data, id){
@@ -89,7 +89,7 @@ export class PmcService {
 
 	showTeams(data){
 		const url =  this.BaseAPIService.baseURL + '/pmocc-teams'
-		return this.http.get<any>(url ,{headers:this.getHeaders()})
+		return this.http.get<any>(url )
 	}
  
 	showPMC(municipality, year){

@@ -1,3 +1,4 @@
+import { UserService } from './../../../user.service';
 import { OfficialsService } from './../officials.service';
 import { UtilityService } from './../../../utility.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,9 +13,10 @@ export class SbMembersComponent implements OnInit {
 
 	constructor(
 		private UtilityService : UtilityService,
-		private OfficialsService : OfficialsService
+		private OfficialsService : OfficialsService,
+		private UserService : UserService
 	) { }
-
+	isUser =  !this.UserService.isUser()
 	ngOnInit(): void {
 		this.getSBMembers()
 	}

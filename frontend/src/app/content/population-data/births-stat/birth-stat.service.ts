@@ -16,18 +16,10 @@ export class BirthStatService {
 	) {
 		
 	} 
-
 	user:any = ''
 	token:any = ''
 
 	baseURL = 	this.BaseAPIService.baseURL + '/birth-statistics'
-	headers = 	new HttpHeaders({
-					'Accept':'application/json',
-					'Authorization' : 'Bearer '+ this.token,
-					'Content-Type':[]
-				})	
-
-	private page = new Subject<any>();
 
 	getHeaders(){
 		this.user = JSON.parse(localStorage.getItem('user-data'))
@@ -39,7 +31,6 @@ export class BirthStatService {
 		})	
 	}
 
-
 	create (data){
 		const url = this.baseURL
 		return this.http.post<any>(url,data ,{headers:this.getHeaders()})
@@ -47,7 +38,7 @@ export class BirthStatService {
 
 	retrieve (){
 		const url = this.baseURL
-		return this.http.get<any>(url ,{headers:this.getHeaders()})
+		return this.http.get<any>(url)
 	}
 
 	update(data, id){

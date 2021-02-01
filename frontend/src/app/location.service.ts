@@ -14,25 +14,13 @@ export class LocationService {
       private BaseAPIService : BaseAPIService
     ) { }
 
-    user = JSON.parse(localStorage.getItem('user-data'))
-    token = this.user.token
-
-    baseURL = 	this.BaseAPIService.baseURL + '/location'
-    headers = 	new HttpHeaders({
-            'Accept':'application/json',
-            'Authorization' : 'Bearer '+ this.token,
-            'Content-Type':[]
-          })	
-    
+	baseURL = 	this.BaseAPIService.baseURL + '/location'
 	private regions = new Subject<any>();
 	private provinces = new Subject<any>();
-	private municipalities = new Subject<any>();
-	private barangays = new Subject<any>();
-
 
     setRegions(){
 		const url = this.baseURL + '/regions'
-		const data = this.http.get<any>(url,{headers:this.headers})		
+		const data = this.http.get<any>(url)		
 		this.regions.next(data)
 		return data
 	}
@@ -43,7 +31,7 @@ export class LocationService {
 
 	setProvinces(region_code){
 		const url = this.baseURL + '/provinces?region_code=' + region_code		
-		const data =   this.http.get<any>(url,{headers:this.headers})	
+		const data =   this.http.get<any>(url)	
 		this.provinces.next(data)
 		return data
 	}
@@ -61,13 +49,12 @@ export class LocationService {
 
 	getMunicipalities(){		
 		const url = this.baseURL + '/municipalities?province_code=0630' 
-		return  this.http.get<any>(url,{headers:this.headers})		
+		return  this.http.get<any>(url)		
 	}
-	
 
 	getBarangays(municipality_code){
 		const url = this.baseURL + '/barangays?municipality_code=' + municipality_code
-		return   this.http.get<any>(url,{headers:this.headers})	
+		return   this.http.get<any>(url)	
 	}
 
 

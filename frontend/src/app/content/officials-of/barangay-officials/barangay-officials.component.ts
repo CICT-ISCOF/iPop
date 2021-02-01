@@ -1,3 +1,4 @@
+import { UserService } from './../../../user.service';
 import { UtilityService } from './../../../utility.service';
 import { OfficialsService1 } from './../officials.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +13,8 @@ export class BarangayOfficialsComponent implements OnInit {
 
 	constructor(
 		private OfficialsService : OfficialsService1,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private UserService : UserService
 	) { 
 		this.OfficialsService.listen().subscribe(()=>{
 			this.CheckBarangaysAndMunicipalities()
@@ -22,7 +24,7 @@ export class BarangayOfficialsComponent implements OnInit {
 			}
 		})
 	}
-
+	isUser =  !this.UserService.isUser()
 	hasBarangaysAndMunicipalities = false
 
 	ngOnInit(): void {

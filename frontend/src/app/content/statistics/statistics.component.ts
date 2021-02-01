@@ -1,3 +1,4 @@
+import { UserService } from './../../user.service';
 import { TopPopulatedMunicipalityService } from './top-populated-municipality.service';
 import { PopulationPyramidService } from './population-pyramid.service';
 import { OfficialsService } from './../provincial-officials/officials.service';
@@ -34,11 +35,14 @@ export class StatisticsComponent implements OnInit {
 		private OfficialsService1 : OfficialsService1,
 		private PopulationPyramidService : PopulationPyramidService,
 		private TopPopulatedMunicipalityService : TopPopulatedMunicipalityService,
+		private UserService : UserService
 	) { 
 		this.OfficialsService1.listen().subscribe(()=>{
 			this.CheckBarangaysAndMunicipalities()
 		})
-	}
+	}  
+
+	isUser =  !this.UserService.isUser()
 
 	years = []
 	theme = localStorage.getItem('data-theme')
@@ -268,6 +272,7 @@ export class StatisticsComponent implements OnInit {
 	retrievetopPopulateds(){
 		this.TopPopulatedMunicipalityService.retrieve().subscribe(data => {
 			this.topPopulateds = data
+			console.log('top populated ', data)
 		})
 	}
 

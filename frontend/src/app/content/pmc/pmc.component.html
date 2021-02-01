@@ -1,5 +1,7 @@
+<app-home *ngIf="isUser"></app-home>
+
 <div class="pmc-component row">
-    <div class="row">
+    <div *ngIf="!isUser" class="row">
         <div class="col-md-7">
             <button (click)="back()" class="clickable">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
@@ -103,11 +105,11 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <p class="municipality-name">
-                            <svg style="margin-right: 20px;" *ngIf="!numberOfSessions" (click)="numberOfSessions = true" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <svg style="margin-right: 20px;" *ngIf="!numberOfSessions   && !isUser" (click)="numberOfSessions = true" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                             </svg>
-                            <svg style="margin-right: 20px;" *ngIf="numberOfSessions" (click)="numberOfSessions = false" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <svg style="margin-right: 20px;" *ngIf="numberOfSessions   && !isUser" (click)="numberOfSessions = false" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Sessions Conducted
                         </p>
@@ -118,26 +120,26 @@
                     </li>
                     <li class="list-group-item">
                         <p class="municipality-name">
-                            <svg style="margin-right: 20px;" *ngIf="!couplesOrriented" (click)="couplesOrriented = true" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <svg style="margin-right: 20px;" *ngIf="!couplesOrriented   && !isUser" (click)="couplesOrriented = true" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                             </svg>
-                            <svg style="margin-right: 20px;" *ngIf="couplesOrriented" (click)="couplesOrriented = false" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <svg style="margin-right: 20px;" *ngIf="couplesOrriented   && !isUser" (click)="couplesOrriented = false" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Couples Oriented
                         </p>
-                        <h1 (click)="couplesOrriented = true" class="text-primary" *ngIf="!couplesOrriented">{{PMCData.oriented_couples || 0}}</h1> <input [(ngModel)]="PMCData.oriented_couples" (keyup.enter)="couplesOrriented = false;save()" *ngIf="couplesOrriented" type="text">&nbsp;
-                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="couplesOrriented" (click)="numberOfSessions = false;save()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                        <h1 (click)="couplesOrriented = true" class="text-primary" *ngIf="!couplesOrriented ">{{PMCData.oriented_couples || 0}}</h1> <input [(ngModel)]="PMCData.oriented_couples" (keyup.enter)="couplesOrriented = false;save()" *ngIf="couplesOrriented" type="text">&nbsp;
+                        <svg style="margin-top:5px;margin-left: 15px;" *ngIf="couplesOrriented   && !isUser" (click)="numberOfSessions = false;save()" xmlns="http://www.w3.org/2000/svg" width="23px" height="23px" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
                                 <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5z"/>
                             </svg>
                     </li>
                     <li class="list-group-item">
                         <p class="municipality-name">
-                            <svg style="margin-right: 20px;" *ngIf="!individualInterview" (click)="individualInterview = true" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <svg style="margin-right: 20px;" *ngIf="!individualInterview   && !isUser" (click)="individualInterview = true" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                             </svg>
-                            <svg style="margin-right: 20px;" *ngIf="individualInterview" (click)="individualInterview = false" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <svg style="margin-right: 20px;" *ngIf="individualInterview   && !isUser" (click)="individualInterview = false" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                             </svg> Number of Individuals Interview
                         </p>
@@ -151,7 +153,7 @@
                 <div class="container" *ngIf="!editChartData">
                     <h4 class="d-flex">
                         <span class="ml-auto" style="transform: translate(15px);"> Number of Couples</span>
-                        <span (click)="editChartData = true" *ngIf="!editChartData" class="ml-auto">
+                        <span (click)="editChartData = true" *ngIf="!editChartData" [class.unclicable]="isUser" class="ml-auto">
                             <svg style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -226,7 +228,7 @@
                 <h4></h4>
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">PMC Couple Applicants by Age Group (%)</span>
-                    <span (click)="coupleByAgeGroupEdit = true" *ngIf="!coupleByAgeGroupEdit" class="ml-auto">
+                    <span (click)="coupleByAgeGroupEdit = true" *ngIf="!coupleByAgeGroupEdit" [class.unclicable]="isUser" class="ml-auto">
                         <svg  style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -340,7 +342,7 @@
             <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">PMC Applicants by Employment Status and Sex (%)</span>
-                    <span (click)="employmentStatusEdit = true" *ngIf="!employmentStatusEdit" class="ml-auto">
+                    <span (click)="employmentStatusEdit = true" *ngIf="!employmentStatusEdit" [class.unclicable]="isUser" class="ml-auto">
                         <svg style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -396,7 +398,7 @@
             <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">Knowledge on Family Planning among PMC Applicants (%)</span>
-                    <span (click)="knowledgeInFP = true" *ngIf="!knowledgeInFP" class="ml-auto">
+                    <span (click)="knowledgeInFP = true" *ngIf="!knowledgeInFP" [class.unclicable]="isUser" class="ml-auto">
                         <svg style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -431,7 +433,7 @@
             <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">Percentage Distribution of PMC Applicants by Civil Status</span>
-                    <span (click)="byCivilStatusEdit = true" *ngIf="!byCivilStatusEdit" class="ml-auto">
+                    <span (click)="byCivilStatusEdit = true" *ngIf="!byCivilStatusEdit" [class.unclicable]="isUser" class="ml-auto">
                         <svg style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -498,7 +500,7 @@
             <div *ngIf="hasData" class="container">
                 <h4 class="d-flex">
                     <span class="ml-auto" style="transform: translate(15px);">PMC Applicants by Average Monthly Income and Sex (%)</span>
-                    <span (click)="averageMonthlyIncomeEdit = true" *ngIf="!averageMonthlyIncomeEdit" class="ml-auto">
+                    <span (click)="averageMonthlyIncomeEdit = true" *ngIf="!averageMonthlyIncomeEdit" [class.unclicable]="isUser" class="ml-auto">
                         <svg style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -599,7 +601,7 @@
             PMC Team
         </h4>
 
-        <span style="position: absolute;right: 0;transform: translate(-30px,-45px);cursor: pointer;" (click)="wantsToAddPMCTeam = true" *ngIf="!wantsToAddPMCTeam">
+        <span style="position: absolute;right: 0;transform: translate(-30px,-45px);cursor: pointer;" (click)="wantsToAddPMCTeam = true" *ngIf="!wantsToAddPMCTeam && !isUser">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-file-plus-fill" viewBox="0 0 16 16">
                 <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
             </svg>
@@ -613,7 +615,7 @@
         <div *ngIf="!wantsToAddPMCTeam">
             <div *ngFor="let team of teams; let i = index" class="container" style="padding-bottom: -20px !important;margin-bottom: -20px;margin-left: 0;transition: .5s linear;">
                 <div *ngIf="!activePMCTEAM[i]">
-                    <div class="flex" style="transform: translate(0,20px);">
+                    <div *ngIf="!isUser" class="flex" style="transform: translate(0,20px);">
                         <span (click)="toggleProgram(i)" class="edit" style="margin-right: 20px;">
                                 <svg style="margin-top: -10px;"  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
