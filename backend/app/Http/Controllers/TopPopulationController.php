@@ -48,7 +48,7 @@ class TopPopulationController extends Controller
                 'requester_id' => $request->user()->id,
                 'message' => $request->user()->makeMessage('wants to add a top population.')
             ]);
-            $topPopulation->setApproved($request->user()->hasRole(Role::ADMIN))
+            $topPopulation->setApproved($request->user()->hasRole(Role::ADMIN));
         }
 
         Log::record('User created a top population.');
