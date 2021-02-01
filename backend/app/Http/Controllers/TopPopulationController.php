@@ -21,7 +21,7 @@ class TopPopulationController extends Controller
      */
     public function index()
     {
-        return TopPopulation::getApproved()->first();
+        return TopPopulation::getApproved()->get();
     }
 
     /**
@@ -34,22 +34,13 @@ class TopPopulationController extends Controller
     {
         $data = $request->all();
 
-        $topPopulation = TopPopulation::first();
-        if ($topPopulation) {
-            $topPopulation->update($data);
-            $topPopulation->approval->update([
-                'requester_id' => $request->user()->id,
-                'message' => $request->user()->makeMessage('wants to update a top population.')
-            ]);
-            $topPopulation->setApproved($request->user()->hasRole(Role::ADMIN));
-        } else {
-            $topPopulation = TopPopulation::create($data);
-            $topPopulation->approval()->create([
-                'requester_id' => $request->user()->id,
-                'message' => $request->user()->makeMessage('wants to add a top population.')
-            ]);
-            $topPopulation->setApproved($request->user()->hasRole(Role::ADMIN));
-        }
+
+        $topPopulation = TopPopulation::create($data);
+        $topPopulation->approval()->create([
+            'requester_id' => $request->user()->id,
+            'message' => $request->user()->makeMessage('wants to add a top population.')
+        ]);
+        $topPopulation->setApproved($request->user()->hasRole(Role::ADMIN));
 
         Log::record('User created a top population.');
         return $topPopulation;
@@ -61,8 +52,9 @@ class TopPopulationController extends Controller
      * @param  \App\Models\TopPopulation  $topPopulation
      * @return \Illuminate\Http\Response
      */
-    public function show(TopPopulation $topPopulation)
+    public function show($id)
     {
+        $topPopulation = TopPopulation::findOrFail($id);
         return TopPopulation::findApproved($topPopulation)
             ->first() ?: response('', 404);
     }
@@ -74,9 +66,13 @@ class TopPopulationController extends Controller
      * @param  \App\Models\TopPopulation  $topPopulation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TopPopulation $topPopulation)
+    public function update(Request $request, $id)
     {
-        return response('', 404);
+        $topPopulation = TopPopulation::findOrFail($id);
+
+        $topPopulation->update($request->all());
+
+        return $topPopulation;
     }
 
     /**
@@ -85,8 +81,9 @@ class TopPopulationController extends Controller
      * @param  \App\Models\TopPopulation  $topPopulation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TopPopulation $topPopulation)
+    public function destroy($id)
     {
+        $topPopulation = TopPopulation::findOrFail($id);
         $topPopulation->makeDeleteRequest();
 
         return response('', 204);
