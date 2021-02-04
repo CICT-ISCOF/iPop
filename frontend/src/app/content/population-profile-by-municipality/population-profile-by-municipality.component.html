@@ -1,5 +1,5 @@
+<app-home *ngIf="isUser"></app-home>
 <br>
-
 <div class="d-flex align-items-center justify-content-center " style="flex-direction: column;">
     <div>
         <h2>Population Profile by Municipality</h2>
@@ -23,7 +23,7 @@
             <tbody>
                 <tr *ngFor="let data of data;let i =index">
                     <td>{{i+1}}</td>
-                    <td>Ajuy</td>
+                    <td>{{data.barangays || 'N/A'}}</td>
                     <td>{{data.barangays || 0}}</td>
                     <td>{{data.land_area || 0}}</td>
                     <td>{{data.population_density || 0}} </td>
@@ -49,3 +49,23 @@
         <p><span>Sex Ratio</span>-the ratio of males to females in a given population expressed as the number of males per 100 females</p>
     </div>
 </div>
+
+<br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br>

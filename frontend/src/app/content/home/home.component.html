@@ -128,9 +128,9 @@
                             <div routerLink="/Teen-Centers" class="drop-down-item">
                                 TEEN CENTERS
                             </div>
-                            <div routerLink="/Issues&Concerns" class="drop-down-item">
+                            <!-- <div routerLink="/Issues&Concerns" class="drop-down-item">
                                 ISSUES AND CONCERNS
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -151,7 +151,10 @@
                     </div>
                 </div>
                 <div class=" Item">
-                    <input type="search" placeholder="Search..." class="hide-on-mobile from-control" style="cursor: default;">
+                    <input list="datalist" type="search" placeholder="Search..." class="hide-on-mobile from-control" style="cursor: default;">
+                    <datalist id="datalist">
+                        <option >datalist</option>
+                    </datalist>
                 </div>
             </div>
         </div>

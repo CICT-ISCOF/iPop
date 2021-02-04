@@ -20,8 +20,8 @@ export class TeenCentersService {
 		}
 	}
 
-	user: any = JSON.parse(localStorage.getItem('user-data'));
-	token: any = this.user.token;
+	user: any = {}
+	token: any =''
 
 	baseURL = this.BaseAPIService.baseURL + '/sbmptcs';
 	headers = new HttpHeaders({
@@ -29,15 +29,17 @@ export class TeenCentersService {
 		Authorization: 'Bearer ' + this.token,
 		'Content-Type': [],
 	});
-		getHeaders(){
-			this.user = JSON.parse(localStorage.getItem('user-data'))
-			this.token = this.user['token']
-			return new HttpHeaders({
-				'Accept':'application/json',
-				'Authorization' : 'Bearer '+ this.token,
-				'Content-Type':[]
-			})	
-		}
+	
+	getHeaders(){
+		this.user = JSON.parse(localStorage.getItem('user-data'))
+		this.token = this.user['token']
+		return new HttpHeaders({
+			'Accept':'application/json',
+			'Authorization' : 'Bearer '+ this.token,
+			'Content-Type':[]
+		})	
+	}
+	
 	private show = new Subject<any>();
 	private add = new Subject<any>();
 

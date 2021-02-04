@@ -12,7 +12,7 @@
         <br> <br>
         <h5 class="d-flex">
             <span style="transform: translate(0,30px);">Images of {{teenCenter.name}}</span>
-            <button (click)="triggerInput()" class="ml-auto button">Images</button>
+            <button *ngIf="!isUser" (click)="triggerInput()" class="ml-auto button">Images</button>
             <input (change)="readURL($event.target.files,$event)" multiple accept="image/*" type="file" style="display: none;" id="file1">
         </h5>
         <hr>
@@ -34,13 +34,13 @@
     <div class="col-md-12">
         <h3 class="col-md-12" style="text-align: left;margin-top: 50px;display: flex;">
             <span> Personnel In-charge</span>
-            <span (click)="addPersnalInCharge = true" *ngIf="!addPersnalInCharge" class="ml-auto">
+            <span (click)="addPersnalInCharge = true" *ngIf="!addPersnalInCharge &&!isUser" class="ml-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                   </svg>
             </span>
-            <span (click)="addPersnalInCharge = false" *ngIf="addPersnalInCharge" class="ml-auto">
+            <span (click)="addPersnalInCharge = false" *ngIf="addPersnalInCharge &&!isUser" class="ml-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                   </svg>
@@ -62,7 +62,7 @@
         </div>
         <div *ngIf="!addPersnalInCharge" class="col-md-12  m-4 row">
             <div class="col-md-3 personnel container" *ngFor="let data of personnels;let i = index">
-                <div class="d-flex">
+                <div *ngIf="!isUser" class="d-flex">
                     <div>
                         .
                     </div>
@@ -109,3 +109,5 @@
         </div>
     </div>
 </div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

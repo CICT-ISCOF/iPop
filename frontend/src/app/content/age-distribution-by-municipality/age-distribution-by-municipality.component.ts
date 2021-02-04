@@ -1,7 +1,8 @@
+import { UserService } from './../../user.service';
 import { AgeDistributionServince } from './service.service';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'
-
+ 
 
 @Component({
   selector: 'app-age-distribution-by-municipality',
@@ -11,13 +12,14 @@ import Swal from 'sweetalert2'
 export class AgeDistributionByMunicipalityComponent implements OnInit {
 
 	constructor(
-		private AgeDistributionServince : AgeDistributionServince
+		private AgeDistributionServince : AgeDistributionServince,
+		private UserService : UserService
 	) { }
 
 	ngOnInit(): void {
 		this.retrieve()
 	}
-
+	isUser =  !this.UserService.isUser()
 
 	ageDistribution = {}
 	ageDistributions:any = []

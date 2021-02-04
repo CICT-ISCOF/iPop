@@ -1,3 +1,5 @@
+import { UserService } from './../../user.service';
+import { Subscription } from 'rxjs';
 import { UtilityService } from './../../utility.service';
 import { TeenCentersService } from './teen-centers.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,6 +12,30 @@ import Swal  from 'sweetalert2';
 })
 export class TeenCentersComponent implements OnInit {
 
+	constructor(
+		private TeenCentersService : TeenCentersService,
+		private UtilityService : UtilityService,
+		private UserService : UserService
+	) { 
+		this.listener = this.TeenCentersService.triggerListener().subscribe(value => {
+			this.show = value
+		})
+
+		this.listener = this.TeenCentersService.backListener().subscribe(value => {
+			this.addTeenCenter = value
+		})
+	}
+
+	 
+	
+	listener:Subscription
+
+	ngOnInit(): void {
+		this.getTeenCenters()
+	}
+
+	isUser =  !this.UserService.isUser()
+	
 	back(){
 		window.history.back()
 	}
@@ -30,24 +56,7 @@ export class TeenCentersComponent implements OnInit {
 		this.activeDistrict[item] = true
 	}
 
-	constructor(
-		private TeenCentersService : TeenCentersService,
-		private UtilityService : UtilityService
-	) { 
-		this.listener = this.TeenCentersService.triggerListener().subscribe(value => {
-			this.show = value
-		})
-
-		this.listener = this.TeenCentersService.backListener().subscribe(value => {
-			this.addTeenCenter = value
-		})
-	}
-
-	listener
-
-	ngOnInit(): void {
-		this.getTeenCenters()
-	}
+	
 	
 	show = false
 

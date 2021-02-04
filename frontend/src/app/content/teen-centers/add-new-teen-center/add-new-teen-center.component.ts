@@ -1,3 +1,4 @@
+import { UserService } from './../../../user.service';
 import { UtilityService } from './../../../utility.service';
 import { LocationService } from './../../../location.service';
 import { TeenCentersService } from './../teen-centers.service';
@@ -13,12 +14,15 @@ export class AddNewTeenCenterComponent implements OnInit {
 	constructor(
 		private TeenCentersService : TeenCentersService,
 		private LocationService : LocationService,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private UserService : UserService
 	) { }
 
 	ngOnInit(): void {
 		this.getMuncipalities()
 	}
+
+	isUser =  !this.UserService.isUser()
 
 	teenCenter = {
 		location:'',

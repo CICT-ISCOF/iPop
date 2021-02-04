@@ -64,7 +64,7 @@ export class MpcService {
 	} 
 	retrieve(){
 		const url = this.baseURL
-		return this.http.get<any>(url ,{headers:this.getHeaders()})
+		return this.http.get<any>(url)
 	}
 	update(id,data){
 		const url = this.baseURL + '/' + id

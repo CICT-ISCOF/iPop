@@ -91,7 +91,8 @@ img {
 
 .Item,
 a {
-    padding: 30px 25px;
+    padding: 10px 25px;
+    padding-top: 5px;
     cursor: pointer;
     color: var(--color) !important;
     flex: 1;
@@ -235,7 +236,7 @@ video {
 
 .drop-down {
     min-width: 250px;
-    margin-top: 35px;
+    margin-top: 10px;
     width: auto;
     position: absolute;
     left: -60%;
@@ -314,7 +315,7 @@ video {
 }
 
 .navigation {
-    padding: 20px 5vw;
+    padding: 5px 5vw;
     // background: var(--contrast);
     display: flex;
     align-items: center;

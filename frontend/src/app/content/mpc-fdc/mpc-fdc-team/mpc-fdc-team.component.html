@@ -1,7 +1,6 @@
-<button (click)="addTeam = true" *ngIf="!addTeam" class="button">Add MPC-FDC Team</button> &nbsp;
-<button (click)="addFocalPerson = true" *ngIf="!addFocalPerson" class="button">Add Focal Person</button>
-<br>
-<br>
+<button style="transform: translate(0,-20px);" (click)="addTeam = true" *ngIf="!addTeam && !isUser" class="button">Add MPC-FDC Team</button> &nbsp;
+<button style="transform: translate(0,-20px);" (click)="addFocalPerson = true" *ngIf="!addFocalPerson && !isUser" class="button">Add Focal Person</button>
+
 <div class="row container row" style="margin-left: 0;" *ngIf="addTeam">
     <div class="picture">
         <img (click)="triggerFileInput('image-file')" [src]="placeholder" alt="" style="cursor: pointer;">
@@ -39,8 +38,8 @@
 </div>
 
 
-<div *ngIf="!addTeam" [class.hide]="addFocalPerson" style="margin-left: 0;">
-    <h4 class="pop2">
+<div *ngIf="!addTeam" [class.hide]="addFocalPerson" style="margin-left: 0;margin-top: -20px;">
+    <h4 class="pop2" style="margin-bottom: 0px;">
         MPC-FDC TEAM
     </h4>
     <div class="container " *ngFor="let team of teams" style="margin-bottom: -10px;">
@@ -87,8 +86,8 @@
         </div>
 
     </div>
-    <br>
-    <p class="pop2">MPC-FDC Focal Persons</p>
+
+    <!-- <p class="pop2" style="transform: translate(0,20px);">MPC-FDC Focal Persons</p>
     <ul class="list-group">
         <li class="list-group-item" *ngFor="let person of focalPesons;let i = index">
             <div class="flex absolute">
@@ -125,5 +124,5 @@
                 </div>
             </div>
         </li>
-    </ul>
+    </ul> -->
 </div>

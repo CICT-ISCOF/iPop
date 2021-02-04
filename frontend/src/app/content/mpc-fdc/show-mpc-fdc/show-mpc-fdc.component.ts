@@ -1,3 +1,4 @@
+import { UserService } from './../../../user.service';
 import { UtilityService } from './../../../utility.service';
 import { MPCFDCComponent } from './../mpc-fdc.component';
 import { MpcService } from './../mpc.service';
@@ -15,12 +16,15 @@ export class ShowMpcFdcComponent implements OnInit {
 	constructor(
 		private MpcService : MpcService,
 		private MPCFDCComponent : MPCFDCComponent,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private UserService  : UserService,
 	) {
 		this.MpcService.getMPC().subscribe(data => {
 			this.mpc = data
 		})
 	}
+
+	isUser =  !this.UserService.isUser()
 
 
 	mpc:any = JSON.parse(localStorage.getItem('mpc-ref'))

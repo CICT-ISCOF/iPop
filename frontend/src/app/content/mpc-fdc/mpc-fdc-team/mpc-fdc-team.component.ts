@@ -1,3 +1,4 @@
+import { UserService } from './../../../user.service';
 import { FocalPersonsService } from './../focal-persons.service';
 import { UtilityService } from './../../../utility.service';
 import { MPCFDCComponent } from './../mpc-fdc.component';
@@ -15,8 +16,11 @@ export class MpcFdcTeamComponent implements OnInit {
 	constructor(
 		private MpcService : MpcService,
 		private UtilityService : UtilityService,
-		private FocalPersonsService  :FocalPersonsService
+		private FocalPersonsService  :FocalPersonsService,
+		private UserService  :UserService,
 	) { }
+
+	isUser =  !this.UserService.isUser()
 
 	ngOnInit(): void {
 		this.getTeams()

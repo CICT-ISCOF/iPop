@@ -1,5 +1,5 @@
+<app-home *ngIf="isUser"></app-home>
 <br>
-
 <div class="d-flex align-items-center justify-content-center " style="flex-direction: column;">
     <div>
         <h2>Age Distribution and Age Dependency Ratio by Municipality</h2>
@@ -16,7 +16,7 @@
                     <th>Young Dependency</th>
                     <th>Old Dependency</th>
                     <th>Dependency</th>
-                    <th>
+                    <th *ngIf="!isUser">
                         <button (click)="addData = true" *ngIf="!addData" class="button rounded">
                             <i class="fa fa-plus"></i>
                         </button>
@@ -102,3 +102,24 @@
         <p><span>Old Age Dependency Ration</span>- ratio of persons in the old dependent ages (65 and over) to those in the econimacally productive ages (15-64) in a population</p>
     </div>
 </div>
+
+
+<br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br> <br>
+<br>

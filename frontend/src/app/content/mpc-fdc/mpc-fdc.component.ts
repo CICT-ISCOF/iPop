@@ -1,3 +1,4 @@
+import { UserService } from './../../user.service';
 import Swal  from 'sweetalert2';
 import { UtilityService } from './../../utility.service';
 import { LocationService } from './../../location.service';
@@ -19,9 +20,11 @@ export class MPCFDCComponent implements OnInit {
 		private MpcService : MpcService,
 		private LocationService : LocationService,
 		private UtilityService  : UtilityService,
+		private UserService  : UserService,
 	) { 
 	
 	}
+	isUser =  !this.UserService.isUser()
 	districtS = ['II','II','III','IV']
 	municipalities = []
 	show = false

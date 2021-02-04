@@ -1,3 +1,4 @@
+import { UserService } from './../../../user.service';
 import { UtilityService } from './../../../utility.service';
 import { TeenCentersService } from './../teen-centers.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,11 +14,12 @@ export class ShowTeenCentersComponent implements OnInit {
 
   	constructor(
 		private TeenCentersService : TeenCentersService,
-		private UtilityService : UtilityService
+		private UtilityService : UtilityService,
+		private UserService : UserService
 	) { }
 
 	addPersnalInCharge = false
-
+	isUser =  !this.UserService.isUser()
 	ngOnInit(): void {
 		console.log('teenCenter',this.teenCenter)
 		this.retrievePersonnel()
