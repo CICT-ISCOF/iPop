@@ -32,7 +32,7 @@ class RegisterController extends Controller
 
     public function viewer(Request $request)
     {
-        $data = $request->validated();
+        $data = $request->all();
         $role = Role::findByName('Viewer');
         $data['password'] = Hash::make($data['password']);
         $user = $this->create($data);
