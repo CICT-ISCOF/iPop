@@ -88,6 +88,7 @@ Route::middleware('throttle:60,1')->group(function () {
         Route::get('/barangays', [LocationController::class, 'barangays']);
         Route::get('/search', [LocationController::class, 'search']);
         Route::get('/search/geocode', [TomtomController::class, 'search']);
+        Route::get('/municipality-code', [LocationController::class, 'getMuncipalityCode']);
     });
 
     Route::options('/logs/visit', [LogController::class, 'visit']);
