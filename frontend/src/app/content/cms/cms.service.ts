@@ -13,8 +13,8 @@ export class CmsService {
 		private BaseAPIService : BaseAPIService
 	) { }
 
-	user = JSON.parse(localStorage.getItem('user-data'))
-	token = this.user.token
+	user = {}
+	token = ''
 
 	baseURL = 	this.BaseAPIService.baseURL 
 	headers = 	new HttpHeaders({
@@ -51,30 +51,40 @@ export class CmsService {
 
 	save(content){
 		const url = this.baseURL + '/cms/array'				
-		return this.http.post(url, content, {headers:this.headers})
+		return this.http.post(url, content, {headers:this.getHeaders()})
 	}
 
 	getLinks(){
 		const url = this.baseURL + '/cms/links'	
-		return this.http.get(url, {headers:this.headers})		
+		return this.http.get(url, {headers:this.getHeaders()})		
 	}
 
 
 	saveQuickLinks(data){
 		const url = this.baseURL + '/cms/quick-links'				
-		return this.http.post(url, data, {headers:this.headers} )
+		return this.http.post(url, data, {headers:this.getHeaders()} )
 	}
 
 	setChild(data){
 		const url = this.baseURL + '/cms/links/children'
-		return this.http.post(url, data, {headers:this.headers} )
+		return this.http.post(url, data, {headers:this.getHeaders()} )
 	}
 	
 	// ---------------new--------------------
 
 	saveArticle(data){
 		const url = this.baseURL + '/articles'				
-		return this.http.post(url, data, {headers:this.headers} )
+		return this.http.post(url, data, {headers:this.getHeaders()} )
 	}
 
+	getHeaders(){
+		this.user = JSON.parse(localStorage.getItem('user-data'))
+		this.token = this.user['token']
+		return new HttpHeaders({
+			'Accept':'application/json',
+			'Authorization' : 'Bearer '+ this.token,
+			'Content-Type':[]
+		})	
+	}
+ 
 }

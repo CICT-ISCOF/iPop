@@ -189,7 +189,6 @@ export class StatisticsComponent implements OnInit {
 	populationPyramids:any = []
 
 	createpopulationPyramid(){
-		alert(this.filter.municipality)
 		this.populationPyramid['municipality'] = this.filter.municipality
 		this.populationPyramid['barangay'] = this.filter.barangay
 		this.populationPyramid['year'] = this.filter.year

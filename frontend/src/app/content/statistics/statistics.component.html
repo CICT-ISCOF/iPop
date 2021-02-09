@@ -327,7 +327,7 @@
                     </tr>
                     <tr>
                         <th>Sex Ratio</th>
-                        <td *ngIf="!sax_ration">{{filteredData.sax_ration || 'N/A'}}</td>
+                        <td *ngIf="!sax_ration">{{filteredData.sex_ratio || 'N/A'}}</td>
                         <td *ngIf="sax_ration"><input type="text" class="form-control w-50" [(ngModel)]="filteredData.sax_ration"></td>
                         <div>
                             <span *ngIf="!sax_ration" (click)="sax_ration == true ? sax_ration = false : sax_ration = true">
