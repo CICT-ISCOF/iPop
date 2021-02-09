@@ -48,6 +48,29 @@ class ProfileController extends Controller
         return array_values($data);
     }
 
+    public function total(Request $request)
+    {
+        $builder = Profile::getApproved();
+
+        foreach ($request->all() as $key => $query) {
+            $builder->where($key, $query);
+        }
+
+        $data = [
+            'males' => 0,
+            'females' => 0,
+        ];
+
+        foreach ($builder->get() as $profile) {
+            $data['males'] += (int)$profile->males;
+            $data['females'] += (int)$profile->females;
+        }
+
+        $data['total'] = $data['males'] + $data['females'];
+
+        return $data;
+    }
+
     /**
      * Display a listing of the resource.
      *
