@@ -26,6 +26,7 @@ class BirthStatisticController extends Controller
             'crude_birth_rate' => 0,
             'general_fertility_rate' => 0,
             'incidences' => Incidence::where('type', 'Birth')->get(),
+            'total' => $stats->count(),
         ];
 
         foreach ($stats as $stat) {
@@ -65,6 +66,7 @@ class BirthStatisticController extends Controller
             }
             return $builder;
         })->first();
+
         return [
             'data' => $result,
             'month' => $monthChart,

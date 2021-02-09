@@ -11,13 +11,10 @@ use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
-
     public function getMuncipalityCode(Request $request)
     {
-        return Municipality::where('code',$request->input('municipality_code'))->first();
+        return Municipality::where('municipality_code', $request->input('municipality_code'))->first();
     }
-
-
 
     public function regions(Request $request)
     {
@@ -126,8 +123,8 @@ class LocationController extends Controller
         $results = $model::search($data['query']);
         $data =
             $request->input('paginate') === 'true'
-                ? $results->paginate(10)
-                : $results->get();
+            ? $results->paginate(10)
+            : $results->get();
         if ($request->input('type') === 'Barangay') {
             $data->load('municipality');
         }

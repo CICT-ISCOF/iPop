@@ -26,6 +26,7 @@ class MigrationStatisticController extends Controller
             'total_out_migrations' => 0,
             'net_migrations' => 0,
             'incidences' => Incidence::where('type', 'Migration')->get(),
+            'total' => $stats->count(),
         ];
 
         foreach ($stats as $stat) {

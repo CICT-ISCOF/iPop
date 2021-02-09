@@ -20,7 +20,7 @@ class BirthStatistic extends Model
         'general_fertility_rate',
     ];
 
-    protected $appends = ['profile'];
+    protected $appends = ['profile', 'total'];
 
     public function getProfileAttribute()
     {
@@ -29,5 +29,13 @@ class BirthStatistic extends Model
             ->where('barangay', $this->barangay)
             ->where('municipality', $this->municipality)
             ->first();
+    }
+
+    public function getTotalAttribute()
+    {
+        if (!$this->profile) {
+            return 0;
+        }
+        return $this->profile->males + $this->profile->females;
     }
 }

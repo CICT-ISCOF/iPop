@@ -225,6 +225,8 @@ Route::middleware('throttle:60,1')->group(function () {
         'profile-summary' => ProfileSummaryController::class,
     ]);
 
+    Route::get('/statistic-profile/total', [ProfileController::class, 'total']);
+
     // Delete 1 award media
     Route::delete('/awards/medias/{media}', [AwardController::class, 'deleteAwardMedia']);
 
