@@ -19,7 +19,9 @@ export default function TotalDataDeaths(props: any) {
                 />
                 <View style={styles.text}>
                     <Text style={styles.title}>Total Population</Text>
-                    <Text style={styles.value}>2</Text>
+                    <Text style={styles.value}>
+                        <TotalPopulation />
+                    </Text>
                 </View>
             </View>
             <View style={[styles.box, { backgroundColor: 'red' }]}>
@@ -57,4 +59,5 @@ import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
+import TotalPopulation from '../total-population';
 import styles from './deaths.style';

@@ -20,7 +20,9 @@ export default function TotalDataMIgrations() {
                 />
                 <View style={styles.text}>
                     <Text style={styles.title}>Total In Migrations</Text>
-                    <Text style={styles.value}>2</Text>
+                    <Text style={styles.value}>
+                        <TotalPopulation />
+                    </Text>
                 </View>
             </View>
             <View style={[styles.box, { backgroundColor: '#02A1C7' }]}>
@@ -54,4 +56,5 @@ import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
+import TotalPopulation from '../total-population';
 import styles from './migrations.style';
