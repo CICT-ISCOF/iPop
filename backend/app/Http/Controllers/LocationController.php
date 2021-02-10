@@ -13,7 +13,7 @@ class LocationController extends Controller
 {
     public function getMuncipalityCode(Request $request)
     {
-        return Municipality::where('municipality_code', $request->input('municipality_code'))->first();
+        return Municipality::where('code', $request->input('municipality_code'))->first();
     }
 
     public function regions(Request $request)
