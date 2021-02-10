@@ -20,9 +20,7 @@ export default function Migrations() {
                     style={[styles.menu, { color: Colors[colorScheme].text }]}>
                     Migrations
                 </Text>
-                <MigrationsSummary />
                 <MigrationsSelects />
-                <TotalDataMigrations />
             </ScrollView>
         </View>
     );

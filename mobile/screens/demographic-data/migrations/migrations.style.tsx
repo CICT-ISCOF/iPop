@@ -33,4 +33,14 @@ export default StyleSheet.create({
         fontSize: 40,
         textAlign: 'right',
     },
+    TextInput: {
+        width: '100%',
+        height: 40,
+        borderWidth: 1,
+        marginBottom: 20,
+        borderRadius: 5,
+        paddingLeft: 20,
+        flex: 0.5,
+        marginTop: 60,
+    },
 });

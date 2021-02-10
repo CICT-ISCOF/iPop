@@ -1,12 +1,16 @@
-export default function MigrationsSummary() {
+export default function MigrationsSummary(props: any) {
     const colorScheme = useColorScheme();
+    const summary = props.data;
     return (
         <View>
             <Text
-                style={{
-                    fontSize: 25,
-                    fontWeight: '600',
-                }}>
+                style={[
+                    {
+                        fontSize: 25,
+                        fontWeight: '600',
+                    },
+                    { color: Colors[colorScheme].text },
+                ]}>
                 Provincial Summary
             </Text>
             <ScrollView
@@ -20,7 +24,9 @@ export default function MigrationsSummary() {
                     />
                     <View style={styles.text}>
                         <Text style={styles.title}>Total In Migrations</Text>
-                        <Text style={styles.value}>2</Text>
+                        <Text style={styles.value}>
+                            {summary.total_in_migrations || 0}
+                        </Text>
                     </View>
                 </View>
                 <View style={[styles.box, { backgroundColor: '#02A1C7' }]}>
@@ -31,7 +37,9 @@ export default function MigrationsSummary() {
                     />
                     <View style={styles.text}>
                         <Text style={styles.title}>Total Out Migrations</Text>
-                        <Text style={styles.value}>2</Text>
+                        <Text style={styles.value}>
+                            {summary.total_out_migrations || 0}
+                        </Text>
                     </View>
                 </View>
                 <View style={[styles.box, { backgroundColor: '#FF7900' }]}>
@@ -42,7 +50,9 @@ export default function MigrationsSummary() {
                     />
                     <View style={styles.text}>
                         <Text style={styles.title}>Net Migrations</Text>
-                        <Text style={styles.value}>2</Text>
+                        <Text style={styles.value}>
+                            {summary.net_migrations || 0}
+                        </Text>
                     </View>
                 </View>
             </ScrollView>

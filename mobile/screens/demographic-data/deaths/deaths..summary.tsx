@@ -1,9 +1,6 @@
 export default function DeathSummary(props: any) {
     const colorScheme = useColorScheme();
     const summary = props.data;
-    useEffect(() => {
-        console.log(props.data);
-    }, []);
 
     return (
         <View>
