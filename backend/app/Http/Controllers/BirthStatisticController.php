@@ -14,7 +14,7 @@ class BirthStatisticController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index', 'show', 'summary');
+        $this->middleware('auth:sanctum')->only('store', 'update', 'destroy');
     }
 
     public function summary()
