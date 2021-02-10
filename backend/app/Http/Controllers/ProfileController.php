@@ -7,13 +7,13 @@ use App\Models\Role;
 use App\Models\Statistics\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
- 
+
 class ProfileController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:sanctum')->except('index', 'show', 'byMunicipality');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show', 'byMunicipality', 'total');
+    }
 
     public function byMunicipality()
     {
