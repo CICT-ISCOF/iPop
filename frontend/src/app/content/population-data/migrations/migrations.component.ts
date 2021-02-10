@@ -1,3 +1,4 @@
+import { BirthStatService } from './../births-stat/birth-stat.service';
 import { UserService } from './../../../user.service';
 import { UtilityService } from './../../../utility.service';
 import { MigrationStatService } from './migration-stat.service';
@@ -19,7 +20,8 @@ export class MigrationsComponent implements OnInit {
 		private MigrationStatService : MigrationStatService,
 		private UtilityService : UtilityService,
 		private OfficialsService1 : OfficialsService1,
-		private UserService : UserService
+		private UserService : UserService,
+		private BirthStatService : BirthStatService
 	) { 
 		this.OfficialsService1.listen().subscribe(()=>{
 			this.CheckBarangaysAndMunicipalities()
@@ -34,8 +36,15 @@ export class MigrationsComponent implements OnInit {
 		this.getSummary()
 		localStorage.removeItem('municipality-ref') 
 		localStorage.removeItem('barangay-ref') 
+		this.getPopulationTotal()
 	}
 
+	popTtotal = {}
+	getPopulationTotal(){
+		this.BirthStatService.getPopulationTotal().subscribe(data => {
+			this.popTtotal = data.total
+		})
+	}
 	hasBarangaysAndMunicipalities = false
 
 	CheckBarangaysAndMunicipalities(){

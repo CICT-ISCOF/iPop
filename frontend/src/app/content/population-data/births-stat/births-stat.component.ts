@@ -33,8 +33,16 @@ export class BirthsStatComponent implements OnInit {
 		}
 		this.getMuncipalities();
 		this.getSummary()
+		this.getPopulationTotal()
 		localStorage.removeItem('municipality-ref') 
 		localStorage.removeItem('barangay-ref') 
+	}
+
+	popTtotal = {}
+	getPopulationTotal(){
+		this.BirthStatService.getPopulationTotal().subscribe(data => {
+			this.popTtotal = data.total
+		})
 	}
 
 	hasBarangaysAndMunicipalities = false
@@ -171,7 +179,7 @@ export class BirthsStatComponent implements OnInit {
 		female: false,
 		all: false,
 	}
-
+ 
 	
 	sumamry = {}
 	getSummary(){

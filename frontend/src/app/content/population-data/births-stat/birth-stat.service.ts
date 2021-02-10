@@ -71,4 +71,10 @@ export class BirthStatService {
 		const url = this.BaseAPIService.baseURL + '/birth-statistics/summary'
 		return this.http.get<any>(url )
 	}
+
+
+	getPopulationTotal(){
+		const url = this.BaseAPIService.baseURL + '/statistic-profile/total'
+		return this.http.get<any>(url )
+	}
 }

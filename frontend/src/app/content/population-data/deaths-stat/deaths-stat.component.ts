@@ -1,3 +1,4 @@
+import { BirthStatService } from './../births-stat/birth-stat.service';
 import { UserService } from './../../../user.service';
 import { UtilityService } from './../../../utility.service';
 import { DeathStatService } from './death-stat.service';
@@ -18,6 +19,7 @@ export class DeathsStatComponent implements OnInit {
 		private UtilityService: UtilityService,
 		private OfficialsService1 : OfficialsService1,
 		private UserService : UserService,
+		private BirthStatService : BirthStatService
 	) { 
 		this.OfficialsService1.listen().subscribe(()=>{
 			this.CheckBarangaysAndMunicipalities()
@@ -29,11 +31,18 @@ export class DeathsStatComponent implements OnInit {
 			this.years.push(i);
 		}
 		this.getMuncipalities()
-		this.getSummary()
 		localStorage.removeItem('municipality-ref') 
 		localStorage.removeItem('barangay-ref') 
+		this.getSummary()
+		this.getPopulationTotal()
 	}
 
+	popTtotal = {}
+	getPopulationTotal(){
+		this.BirthStatService.getPopulationTotal().subscribe(data => {
+			this.popTtotal = data.total
+		})
+	}
 
 	isUser =  !this.UserService.isUser()
 	hasBarangaysAndMunicipalities = false
