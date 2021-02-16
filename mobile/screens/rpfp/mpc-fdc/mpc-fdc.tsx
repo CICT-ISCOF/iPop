@@ -21,15 +21,11 @@ export default function MPCFDC() {
                     Multi-purpose Counseling and Family Development Center
                 </Text>
                 <MPCFDCsSelects />
-                <MPCFDCImages />
-                <ServiceOfferedMPCFDC />
                 <View style={{ height: 150 }} />
             </ScrollView>
         </View>
     );
 }
-import MPCFDCImages from './images';
-import ServiceOfferedMPCFDC from './services-offered';
 import MPCFDCsSelects from './mpc-fdc-select';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';

@@ -43,7 +43,7 @@ export default function PopProfile(props: any) {
             ]}>
             <Text
                 style={{
-                    color: 'red',
+                    color: '#02A1C7',
                     fontWeight: '600',
                     fontSize: 20,
                     margin: 10,

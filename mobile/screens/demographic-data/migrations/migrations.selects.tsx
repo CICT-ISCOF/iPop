@@ -161,10 +161,11 @@ export default function MigrationsSelects() {
 import { View, Text, ScrollView, TextInput } from 'react-native';
 import axios from 'axios';
 import base from '../../../constants/Api';
+import React, { useState, useEffect } from 'react';
+
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-community/picker';
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState, useEffect } from 'react';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import styles from './migrations.style';

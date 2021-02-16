@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function MPCFDCImages() {
+export default function MPCFDCImages(props: any) {
     return (
         <View>
             <ScrollView
@@ -20,6 +20,7 @@ export default function MPCFDCImages() {
                 style={[
                     styles.scrollview,
                     { backgroundColor: 'rgba(150,150,150,0.9)' },
+                    props.visibility == true ? {} : { display: 'none' },
                 ]}>
                 <Image
                     style={styles.image}

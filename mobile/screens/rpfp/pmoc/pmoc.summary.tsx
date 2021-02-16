@@ -1,5 +1,13 @@
-export default function PMOCSummary() {
+export default function PMOCSummary(props: any) {
     const colorScheme = useColorScheme();
+    let PMCData = {
+        sessions: 0,
+        oriented_couples: 0,
+        individuals_interviewed: 0,
+    };
+    if (props.data.length != 0) {
+        PMCData = props.data;
+    }
     return (
         <View
             style={{
@@ -7,7 +15,8 @@ export default function PMOCSummary() {
             }}>
             <ScrollView
                 horizontal={true}
-                showsHorizontalScrollIndicator={false}>
+                showsHorizontalScrollIndicator={false}
+                style={props.visibility == true ? {} : { display: 'none' }}>
                 <View style={[styles.box, { backgroundColor: '#FF7900' }]}>
                     <Ionicons
                         name='ios-information-circle-outline'
@@ -18,7 +27,7 @@ export default function PMOCSummary() {
                         <Text style={styles.title}>
                             Number of Sessions Conducted
                         </Text>
-                        <Text style={styles.value}>2</Text>
+                        <Text style={styles.value}>{PMCData.sessions}</Text>
                     </View>
                 </View>
                 <View style={[styles.box, { backgroundColor: '#35A8FB' }]}>
@@ -31,7 +40,9 @@ export default function PMOCSummary() {
                         <Text style={styles.title}>
                             Number of Couples orriented
                         </Text>
-                        <Text style={styles.value}>2</Text>
+                        <Text style={styles.value}>
+                            {PMCData.oriented_couples}
+                        </Text>
                     </View>
                 </View>
                 <View style={[styles.box, { backgroundColor: '#8B2BD2' }]}>
@@ -44,7 +55,9 @@ export default function PMOCSummary() {
                         <Text style={styles.title}>
                             Number of Individuals Interviewed
                         </Text>
-                        <Text style={styles.value}>2</Text>
+                        <Text style={styles.value}>
+                            {PMCData.individuals_interviewed}
+                        </Text>
                     </View>
                 </View>
             </ScrollView>

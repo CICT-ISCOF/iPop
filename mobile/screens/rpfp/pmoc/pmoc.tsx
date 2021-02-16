@@ -19,7 +19,6 @@ export default function PMOCData() {
                     Pre-Marraige Orrientation and Counseling
                 </Text>
                 <PMOCSelects />
-                <PMOCSummary />
             </ScrollView>
         </View>
     );

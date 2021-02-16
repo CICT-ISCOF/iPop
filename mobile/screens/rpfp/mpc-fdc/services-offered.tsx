@@ -1,4 +1,4 @@
-export default function ServiceOfferedMPCFDC() {
+export default function ServiceOfferedMPCFDC(props: any) {
     const colorScheme = useColorScheme();
     const styles = StyleSheet.create({
         title: {
@@ -15,7 +15,7 @@ export default function ServiceOfferedMPCFDC() {
         },
     });
     return (
-        <View>
+        <View style={props.visibility == true ? {} : { display: 'none' }}>
             <Text style={styles.title}>Servies Offered</Text>
             <Text style={styles.description}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora

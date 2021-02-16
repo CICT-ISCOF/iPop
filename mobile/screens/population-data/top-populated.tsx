@@ -34,7 +34,7 @@ export default function TopPopulated() {
             }}>
             <Text
                 style={{
-                    color: 'red',
+                    color: '#02A1C7',
                     fontWeight: '600',
                     fontSize: 20,
                     margin: 10,
@@ -68,7 +68,7 @@ export default function TopPopulated() {
                 <View style={[styles.td]}>
                     <Text
                         style={{
-                            color: 'red',
+                            color: '#3EA662',
                             fontWeight: '800',
                         }}>
                         Percentage
@@ -101,7 +101,7 @@ export default function TopPopulated() {
                         <View style={[styles.td]}>
                             <Text
                                 style={{
-                                    color: 'red',
+                                    color: '#3EA662',
                                     fontWeight: '700',
                                 }}>
                                 {municipality['data']['percent'] || 0}%
