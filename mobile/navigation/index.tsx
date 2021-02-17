@@ -78,6 +78,8 @@ function RootNavigator() {
                 name='ShowProgramAreas'
                 component={ShowProgramAreas}
             />
+            <Stack.Screen name='ShowTeenCenter' component={ShowTeenCenter} />
+            <Stack.Screen name='TeenCenterList' component={TeenCenterList} />
         </Stack.Navigator>
     );
 }
@@ -111,3 +113,5 @@ import Password from '../screens/register/password';
 import Username from '../screens/register/username';
 import ShowServices from '../screens/main/services/services-offered-show';
 import ShowProgramAreas from '../screens/main/program-areas/program-areas-show';
+import ShowTeenCenter from '../screens/ahyd/teen-centers/teen-center-show';
+import TeenCenterList from '../screens/ahyd/teen-centers/teen-center-lists';

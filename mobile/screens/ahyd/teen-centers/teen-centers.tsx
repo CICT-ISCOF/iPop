@@ -20,8 +20,6 @@ export default function TeenCenters() {
                     Teen Centers
                 </Text>
                 <TeenCentersSelects />
-                <TeenCenterImages />
-                <ServiceOfferedTeenCenters />
                 <View style={{ height: 150 }} />
             </ScrollView>
         </View>

@@ -33,4 +33,20 @@ export default StyleSheet.create({
         fontSize: 40,
         textAlign: 'right',
     },
+    teenCenter: {
+        flexDirection: 'row',
+        marginTop: 10,
+        borderRadius: 7,
+        paddingVertical: 15,
+        paddingHorizontal: 20,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.17,
+        shadowRadius: 5.49,
+        elevation: 5,
+        alignItems: 'center',
+    },
 });

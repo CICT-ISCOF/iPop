@@ -2,10 +2,10 @@ export default function ServiceOfferedMPCFDC(props: any) {
     const colorScheme = useColorScheme();
     const styles = StyleSheet.create({
         title: {
-            margin: 10,
+            margin: 6,
             fontWeight: '700',
             fontSize: 25,
-            color: 'red',
+            color: '#02A1C7',
             marginTop: 50,
         },
         description: {
@@ -14,15 +14,16 @@ export default function ServiceOfferedMPCFDC(props: any) {
             lineHeight: 30,
         },
     });
+
+    let mpc = props.data;
+    mpc.files = [];
+    if (mpc.name != undefined) {
+        mpc = props.data;
+    }
     return (
-        <View style={props.visibility == true ? {} : { display: 'none' }}>
+        <View style={[mpc.name != undefined ? {} : { display: 'none' }]}>
             <Text style={styles.title}>Servies Offered</Text>
-            <Text style={styles.description}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
-                culpa eum praesentium perspiciatis quo inventore quisquam
-                aspernatur commodi molestias. Tempore quo eligendi nobis
-                suscipit aspernatur molestiae esse libero ad perferendis!
-            </Text>
+            <Text style={styles.description}>{mpc.services} tae</Text>
         </View>
     );
 }

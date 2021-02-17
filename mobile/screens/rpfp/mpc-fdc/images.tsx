@@ -10,35 +10,49 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: 'rgba(150,150,150,0.9)',
     },
+    title: {
+        transform: [{ translateY: 40 }],
+        textAlign: 'center',
+    },
 });
 
 export default function MPCFDCImages(props: any) {
+    let mpc = props.data;
+    // mpc.files = [];
+    // if (mpc.name != undefined) {
+    //     mpc.files = props.data.files;
+    // }
     return (
         <View>
+            <Text
+                style={[
+                    styles.title,
+                    mpc.name != undefined ? {} : { display: 'none' },
+                    mpc.files.length != 0 ? {} : { display: 'none' },
+                ]}>
+                Image(s) of {mpc.name}
+            </Text>
             <ScrollView
                 horizontal={true}
                 style={[
                     styles.scrollview,
-                    { backgroundColor: 'rgba(150,150,150,0.9)' },
-                    props.visibility == true ? {} : { display: 'none' },
+                    { backgroundColor: 'rgba(150,150,150,0.9)', marginTop: 50 },
+                    mpc.files.length != 0 ? {} : { display: 'none' },
+                    mpc.name != undefined ? {} : { display: 'none' },
                 ]}>
-                <Image
-                    style={styles.image}
-                    source={require('../../../assets/IPOP/Iloilo-Provincial-Capitol-Panay-News-2.jpg')}
-                />
-                <Image
-                    style={styles.image}
-                    source={require('../../../assets/IPOP/2019-Kaunlarang-Pantao-Award-for-Best-Provincial-Population-Office-696x467.jpg')}
-                />
-
-                <Image
-                    style={styles.image}
-                    source={require('../../../assets/IPOP/Org-Chart-Employee-Roles-In-Organization.png')}
-                />
+                {mpc.files.map((image: any, index: any) => {
+                    return (
+                        <Image
+                            key={index}
+                            style={styles.image}
+                            source={{ uri: image.file.uri }}
+                        />
+                    );
+                })}
             </ScrollView>
         </View>
     );
 }
 
 import React from 'react';
-import { View, Image, ScrollView, StyleSheet } from 'react-native';
+import { View, Image, ScrollView, StyleSheet, Text } from 'react-native';

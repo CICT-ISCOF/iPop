@@ -165,7 +165,7 @@ export default function Login({ navigation }: any) {
                         isLoading == true ? { opacity: 0.5 } : {},
                     ]}>
                     <Text style={styles.buttonText}>
-                        {isLoading == true ? 'Loggin-in' : 'Log-in'}
+                        {isLoading == true ? 'Loggin-in..' : 'Log-in'}
                     </Text>
                 </TouchableOpacity>
             </View>

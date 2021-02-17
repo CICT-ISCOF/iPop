@@ -3,14 +3,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function MPCFDCsSelects() {
     const colorScheme = useColorScheme();
 
-    const [data, setData] = useState([]);
-    const [year, setYear] = useState('');
+    const [data, setData] = useState([{ files: [] }]);
 
     const [municipalities, setMunicipalities] = useState([]);
     const [municipality, setMunicipality] = useState(1);
     const [municipalityName, setMunicipalityName] = useState('');
     const [district, setDistrict] = useState('');
-
+    const [mpcName, SetMpcName] = useState('');
+    const [mpcData, SetMpcData] = useState({ files: [] });
+    const [mpcVisibility, setMpcVisibility] = useState(false);
     const [visible, setVisibility] = useState(false);
 
     const baseURL = base.apiURL + 'location';
@@ -57,10 +58,14 @@ export default function MPCFDCsSelects() {
                 } else {
                     alert('No data on this filter');
                     setVisibility(false);
+                    setMpcVisibility(false);
                 }
             })
             .catch((error) => {
+                alert('No data on this filter');
                 console.error(error);
+                setVisibility(false);
+                setMpcVisibility(false);
             });
     }
 
@@ -122,24 +127,31 @@ export default function MPCFDCsSelects() {
                 <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
             </TouchableOpacity>
 
-            <Picker
-                style={[
-                    { flex: 1, marginTop: -30 },
-                    visible == true ? {} : { display: 'none' },
-                ]}>
-                {data.map((mpc: any, index: any) => {
-                    return (
-                        <Picker.Item
-                            key={index}
-                            label={mpc.name}
-                            value={mpc.location}
-                            color={Colors[colorScheme].text}
-                        />
-                    );
-                })}
-            </Picker>
-            <MPCFDCImages visiblity={visible} data={data} />
-            <ServiceOfferedMPCFDC visiblity={visible} data={data} />
+            {data.map((mpc: any, index: any) => {
+                return (
+                    <TouchableOpacity
+                        key={index}
+                        style={[
+                            styles.mpcs,
+                            { backgroundColor: Colors[colorScheme].background },
+                            mpc.name != undefined ? {} : { display: 'none' },
+                        ]}
+                        onPress={() => {
+                            SetMpcData(mpc);
+                            SetMpcName(mpc.name);
+                            setMpcVisibility(true);
+                            console.log(mpc.files);
+                        }}>
+                        <Text style={{ flex: 1 }}>{mpc.name}</Text>
+                        <Text style={{ flex: 1, color: '#02A1C7' }}>
+                            {mpc.location}
+                        </Text>
+                    </TouchableOpacity>
+                );
+            })}
+
+            <MPCFDCImages visiblity={mpcVisibility} data={mpcData} />
+            <ServiceOfferedMPCFDC visiblity={mpcVisibility} data={mpcData} />
         </View>
     );
 }
