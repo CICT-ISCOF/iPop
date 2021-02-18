@@ -1,8 +1,20 @@
 export default function PyramidChart(props: any) {
     const males = props.males;
     const females = props.females;
+    const colorScheme = useColorScheme();
+
     return (
         <View style={[males.length < 2 ? { display: 'none' } : {}]}>
+            <Text
+                style={[
+                    styles.chartTitle,
+                    {
+                        color: Colors[colorScheme].text,
+                    },
+                ]}>
+                Population Pyramid
+            </Text>
+            <View style={styles.separator}></View>
             <View
                 style={{
                     flexDirection: 'row',
@@ -31,7 +43,7 @@ export default function PyramidChart(props: any) {
                         transform: [{ scaleX: -1 }],
                     }}
                     keys={keys}
-                    colors={['#88A2CA']}
+                    colors={['#5EB5EF']}
                     data={males}
                     horizontal={true}
                     showGrid={true}
@@ -40,7 +52,7 @@ export default function PyramidChart(props: any) {
                 <StackedBarChart
                     style={{ height: 400, flex: 1 }}
                     keys={keys}
-                    colors={['#DC656C']}
+                    colors={['#FF829D']}
                     data={females}
                     horizontal={true}
                     showGrid={true}
@@ -84,6 +96,10 @@ const pyramidLabesl = [
     '5-9',
     '-1',
 ];
+import useColorScheme from '../../hooks/useColorScheme';
+
+import Colors from '../../constants/Colors';
+import styles from './pop-data.style';
 import * as shape from 'd3-shape';
 import { StackedBarChart, YAxis, XAxis } from 'react-native-svg-charts';
 import React from 'react';

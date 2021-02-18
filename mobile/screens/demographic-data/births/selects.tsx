@@ -11,11 +11,15 @@ export default function BirthsSelects() {
 
     const [barangays, setBarangays] = useState([]);
     const [barangay, setBarangay] = useState('');
-    const [visible, setVisibility] = useState(false);
     const [summary, setSummary] = useState({});
     const [birthData, setBirthData] = useState({});
 
+    const [dataVisibility, setdataVisibility] = useState(false);
+
     const baseURL = base.apiURL + 'location';
+
+    const [monthData, setmonthData] = useState({});
+    const [lineChartData, setlineChartData] = useState({});
 
     useEffect(() => {
         async function getMunicipalities() {
@@ -61,13 +65,50 @@ export default function BirthsSelects() {
             base.apiURL +
             'birth-statistics?' +
             `?municipality=${data['municipality']}&barangay=${data['barangay']}&year=${data['year']}`;
+
+        let total: any = [];
+        let males: any = [];
+        let females: any = [];
+        let teenageBirths: any = [];
+        let illegitimateBirths: any = [];
+
         axios.get(url).then((response) => {
             if (response.data.data != null) {
                 setBirthData(response.data.data);
-                setVisibility(true);
+                setdataVisibility(true);
+                for (let key in response.data.month) {
+                    total.push(response.data.month[key]['total']);
+                    males.push(response.data.month[key]['males']);
+                    females.push(response.data.month[key]['males']);
+                }
+                setmonthData({
+                    total: total,
+                    males: males,
+                    female: females,
+                });
+                for (let key in response.data.incidence) {
+                    if (
+                        response.data.incidence[key]['title'] ==
+                        'INCIDENCE OF TEENAGE BIRTHS'
+                    ) {
+                        teenageBirths.push({
+                            value: response.data.incidence[key]['value'],
+                            year: response.data.incidence[key]['year'],
+                        });
+                    } else {
+                        illegitimateBirths.push({
+                            value: response.data.incidence[key]['value'],
+                            year: response.data.incidence[key]['year'],
+                        });
+                    }
+                }
+                setlineChartData({
+                    teenageBirths: teenageBirths,
+                    illegitimateBirths: illegitimateBirths,
+                });
             } else {
                 alert('No data on this filter');
-                setVisibility(false);
+                setdataVisibility(false);
             }
         });
     }
@@ -75,6 +116,18 @@ export default function BirthsSelects() {
     return (
         <View>
             <Summary data={summary} />
+            <Text
+                style={[
+                    styles.chartTitle,
+                    {
+                        color: Colors[colorScheme].text,
+                        marginLeft: -0,
+                    },
+                ]}>
+                Filter By Location
+            </Text>
+            <View style={[styles.separator, { marginLeft: -20 }]}></View>
+
             <View style={{ flexDirection: 'row' }}>
                 <Picker
                     style={{ flex: 1.8, marginTop: -30 }}
@@ -82,7 +135,11 @@ export default function BirthsSelects() {
                     onValueChange={(itemValue: any, itemIndex) =>
                         getBarangays(itemValue)
                     }>
-                    <Picker.Item label='Municipality' value='Municipality' />
+                    <Picker.Item
+                        label='Municipality'
+                        color={Colors[colorScheme].text}
+                        value='Municipality'
+                    />
 
                     {municipalities.map((municipality: any, index: any) => {
                         return (
@@ -102,7 +159,11 @@ export default function BirthsSelects() {
                     onValueChange={(itemValue: any, itemIndex) =>
                         setBarangay(itemValue)
                     }>
-                    <Picker.Item label='Barangay' value='Barangay' />
+                    <Picker.Item
+                        label='Barangay'
+                        color={Colors[colorScheme].text}
+                        value='Barangay'
+                    />
                     {barangays.map((barangay: any, index: any) => {
                         return (
                             <Picker.Item
@@ -151,10 +212,43 @@ export default function BirthsSelects() {
                 />
                 <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
             </TouchableOpacity>
-            <MonthCharts />
-            <TotalData data={birthData} visibility={visible} />
-            <TeenageBirths />
-            <IllegitimateBirths />
+            <View style={{ height: 50 }} />
+            <Text
+                style={[
+                    styles.chartTitle,
+                    {
+                        color: Colors[colorScheme].text,
+                        marginLeft: -0,
+                    },
+                    dataVisibility == true ? {} : { display: 'none' },
+                ]}>
+                {'Year ' + year + ' of ' + barangay + ',  ' + municipalityName}
+            </Text>
+            <View
+                style={[
+                    styles.separator,
+                    { marginLeft: -20 },
+                    dataVisibility == true ? {} : { display: 'none' },
+                ]}></View>
+            <TotalData data={birthData} visibility={dataVisibility} />
+            <MonthCharts
+                barangay={barangay}
+                municipalityName={municipalityName}
+                visibility={dataVisibility}
+                monthData={monthData}
+            />
+            <TeenageBirths
+                visibility={dataVisibility}
+                lineChartData={lineChartData}
+                barangay={barangay}
+                municipalityName={municipalityName}
+            />
+            <IllegitimateBirths
+                visibility={dataVisibility}
+                lineChartData={lineChartData}
+                barangay={barangay}
+                municipalityName={municipalityName}
+            />
         </View>
     );
 }

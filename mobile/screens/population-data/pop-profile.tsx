@@ -42,14 +42,15 @@ export default function PopProfile(props: any) {
                 data.coverage == undefined ? { display: 'none' } : {},
             ]}>
             <Text
-                style={{
-                    color: '#02A1C7',
-                    fontWeight: '600',
-                    fontSize: 20,
-                    margin: 10,
-                }}>
+                style={[
+                    styles.chartTitle,
+                    {
+                        color: Colors[colorScheme].text,
+                    },
+                ]}>
                 Population Profile
             </Text>
+            <View style={styles.separator}></View>
             <View
                 style={[
                     styles.tr,

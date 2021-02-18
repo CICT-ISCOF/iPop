@@ -33,21 +33,22 @@ export default function TopPopulated() {
                 marginTop: 50,
             }}>
             <Text
-                style={{
-                    color: '#02A1C7',
-                    fontWeight: '600',
-                    fontSize: 20,
-                    margin: 10,
-                }}>
-                Top Populated Municipality
+                style={[
+                    styles.chartTitle,
+                    {
+                        color: Colors[colorScheme].text,
+                    },
+                ]}>
+                Top Populated Municipality (All over Iloilo)
             </Text>
+            <View style={styles.separator}></View>
             <View
                 style={[
                     styles.tr,
                     ,
                     { borderColor: Colors[colorScheme].border },
                 ]}>
-                <View style={styles.th}>
+                <View style={[styles.th, { flex: 2 }]}>
                     <Text
                         style={{
                             color: Colors[colorScheme].text,
@@ -56,7 +57,7 @@ export default function TopPopulated() {
                         Municipality
                     </Text>
                 </View>
-                <View style={[styles.td]}>
+                <View style={[styles.td, { flex: 0.4 }]}>
                     <Text
                         style={{
                             color: '#1873FF',
@@ -85,12 +86,12 @@ export default function TopPopulated() {
                             ,
                             { borderColor: Colors[colorScheme].border },
                         ]}>
-                        <View style={styles.th}>
+                        <View style={[styles.th, { flex: 2 }]}>
                             <Text style={{ color: Colors[colorScheme].text }}>
                                 {municipality['data']['name'] || 0}
                             </Text>
                         </View>
-                        <View style={[styles.td]}>
+                        <View style={[styles.td, { flex: 0.4 }]}>
                             <Text
                                 style={{
                                     color: '#1873FF',

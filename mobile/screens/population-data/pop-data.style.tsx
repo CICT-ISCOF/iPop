@@ -50,4 +50,18 @@ export default StyleSheet.create({
         flex: 0.5,
         marginTop: 60,
     },
+    chartTitle: {
+        fontSize: 20,
+        marginBottom: 5,
+        marginTop: 40,
+        opacity: 0.5,
+        textAlign: 'center',
+    },
+    separator: {
+        marginVertical: 5,
+        height: 1,
+        width: '110%',
+        borderBottomColor: 'rgba(150,150,150,.5)',
+        borderBottomWidth: 1,
+    },
 });

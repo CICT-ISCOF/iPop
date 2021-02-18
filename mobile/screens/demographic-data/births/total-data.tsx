@@ -7,11 +7,17 @@ export default function TotalData(props: any) {
     if (props.data.length != 0) {
         birthSatistics = props.data;
     }
+    const screenWidth = Dimensions.get('window').width;
+
     return (
         <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            style={props.visibility == true ? {} : { display: 'none' }}>
+            style={
+                props.visibility == true
+                    ? { width: screenWidth, marginLeft: -20, paddingLeft: 20 }
+                    : { display: 'none' }
+            }>
             <View style={[styles.box, { backgroundColor: '#DF0F64' }]}>
                 <Ionicons
                     name='ios-information-circle-outline'
@@ -72,7 +78,7 @@ export default function TotalData(props: any) {
 
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Dimensions } from 'react-native';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import TotalPopulation from '../total-population';
