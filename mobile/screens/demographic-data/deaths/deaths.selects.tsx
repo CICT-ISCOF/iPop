@@ -151,6 +151,14 @@ export default function DeathsSelects() {
                 <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
             </TouchableOpacity>
             <TotalDataDeaths visibility={visible} data={birthData} />
+
+            <MonthCharts />
+            <CrudeDeathRate />
+            <View
+                style={{
+                    height: 150,
+                }}
+            />
         </View>
     );
 }
@@ -168,3 +176,5 @@ import useColorScheme from '../../../hooks/useColorScheme';
 import styles from './deaths.style';
 import DeathSummary from './deaths..summary';
 import TotalDataDeaths from './deaths..total-data';
+import MonthCharts from '../deaths/deaths..month-charts';
+import CrudeDeathRate from './crude-death-rate-chart';

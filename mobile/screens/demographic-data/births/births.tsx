@@ -25,6 +25,7 @@ export default function Births() {
                 </Text>
 
                 <BirthsSelects />
+                <View style={{ height: 150 }} />
             </ScrollView>
         </View>
     );

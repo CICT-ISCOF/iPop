@@ -21,6 +21,12 @@ export default function Migrations() {
                     Migrations
                 </Text>
                 <MigrationsSelects />
+                <MonthCharts />
+                <View
+                    style={{
+                        height: 150,
+                    }}
+                />
             </ScrollView>
         </View>
     );
@@ -35,3 +41,4 @@ import SearchNav from '../../main/home/components/search/search';
 import BackContainer from '../../../shared/back-container/back-container';
 
 import styles from './migrations.style';
+import MonthCharts from '../migrations/migrations.month-charts';

@@ -43,4 +43,18 @@ export default StyleSheet.create({
         flex: 0.5,
         marginTop: 60,
     },
+    chartTitle: {
+        marginLeft: 40,
+        fontWeight: '600',
+        fontSize: 20,
+        marginBottom: 5,
+        marginTop: 40,
+    },
+    separator: {
+        marginVertical: 10,
+        height: 1,
+        width: '80%',
+        borderBottomColor: 'rgba(150,150,150,.5)',
+        borderBottomWidth: 1,
+    },
 });
