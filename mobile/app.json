@@ -30,5 +30,6 @@
         "web": {
             "favicon": "./assets/images/icon1.png"
         }
+
     }
 }

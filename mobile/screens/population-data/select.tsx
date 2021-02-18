@@ -12,6 +12,17 @@ export default function Selects() {
     const [barangay, setBarangay] = useState('');
     const [visible, setVisibility] = useState(false);
 
+    const [males, setMales] = useState([
+        {
+            Females: 1,
+        },
+    ]);
+    const [females, setFemales] = useState([
+        {
+            Females: 1,
+        },
+    ]);
+
     const baseURL = base.apiURL + 'location';
 
     useEffect(() => {
@@ -54,12 +65,39 @@ export default function Selects() {
             if (response.data.length != 0) {
                 setData(response.data);
                 setVisibility(true);
-                console.log(response.data);
+                getPyramidData();
             } else {
                 alert('No data on this filter');
                 setVisibility(false);
             }
         });
+    }
+
+    async function getPyramidData() {
+        let malesArray: any = [];
+        let femalesArray: any = [];
+        const url =
+            base.apiURL +
+            'population-pyramid' +
+            `?year=${year}&barangay=${barangay}`;
+        axios
+            .get(url)
+            .then((response) => {
+                let maleData = response.data[0]['data']['female'];
+                let femaleData = response.data[0]['data']['male'];
+                for (let key in maleData) {
+                    malesArray.push({ Females: maleData[key] });
+                }
+                for (let key in femaleData) {
+                    femalesArray.push({ Females: femaleData[key] });
+                }
+                setMales(malesArray);
+                console.log(malesArray);
+                setFemales(femalesArray);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     return (
@@ -140,11 +178,12 @@ export default function Selects() {
                 />
                 <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
             </TouchableOpacity>
-
+            <PyramidChart males={males} females={females} />
             <PopProfile visibility={visible} data={data} />
         </View>
     );
 }
+
 import Colors from '../../constants/Colors';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -155,3 +194,4 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import useColorScheme from '../../hooks/useColorScheme';
 import { Picker } from '@react-native-community/picker';
+import PyramidChart from './pop-pyramid';
