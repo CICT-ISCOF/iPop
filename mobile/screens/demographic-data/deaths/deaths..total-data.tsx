@@ -1,4 +1,6 @@
 export default function TotalDataDeaths(props: any) {
+    const screenWidth = Dimensions.get('window').width;
+
     let deathStatistics = {
         total: 0,
         crude_death_rate: 0,
@@ -10,7 +12,11 @@ export default function TotalDataDeaths(props: any) {
         <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            style={props.visibility == true ? {} : { display: 'none' }}>
+            style={
+                props.visibility == true
+                    ? { width: screenWidth, marginLeft: -20, paddingLeft: 20 }
+                    : { display: 'none' }
+            }>
             <View style={[styles.box, { backgroundColor: '#DF0F64' }]}>
                 <Ionicons
                     name='ios-information-circle-outline'
@@ -56,7 +62,7 @@ export default function TotalDataDeaths(props: any) {
 
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Dimensions } from 'react-native';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import TotalPopulation from '../total-population';

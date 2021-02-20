@@ -19,6 +19,7 @@ import axios from 'axios';
 import base from '../../constants/Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TopPadding from '../../shared/top-padding/top-padding';
+import MapScreen from '../../shared/maps/maps';
 
 export default function Login({ navigation }: any) {
     const colorScheme = useColorScheme();
@@ -92,6 +93,8 @@ export default function Login({ navigation }: any) {
                 },
             ]}>
             <TopPadding color={1} />
+
+            {/* <MapScreen /> */}
 
             <Image
                 style={styles.image}

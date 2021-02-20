@@ -1,21 +1,24 @@
 export default function DeathSummary(props: any) {
     const colorScheme = useColorScheme();
     const summary = props.data;
+    const screenWidth = Dimensions.get('window').width;
 
     return (
         <View>
             <Text
                 style={[
+                    styles.chartTitle,
                     {
-                        fontSize: 25,
-                        fontWeight: '600',
+                        color: Colors[colorScheme].text,
+                        marginLeft: -0,
                     },
-                    { color: Colors[colorScheme].text },
                 ]}>
                 Provincial Summary
             </Text>
+            <View style={[styles.separator, { marginLeft: -20 }]}></View>
             <ScrollView
                 horizontal={true}
+                style={{ width: screenWidth, marginLeft: -20, paddingLeft: 20 }}
                 showsHorizontalScrollIndicator={false}>
                 <View style={[styles.box, { backgroundColor: 'red' }]}>
                     <Ionicons
@@ -47,7 +50,7 @@ export default function DeathSummary(props: any) {
 }
 import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Dimensions } from 'react-native';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 
