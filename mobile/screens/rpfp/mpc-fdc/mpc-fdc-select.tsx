@@ -127,6 +127,9 @@ export default function MPCFDCsSelects() {
                 <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
             </TouchableOpacity>
 
+            <MapScreen change={municipalityName + " Iloilo"} />
+
+
             {data.map((mpc: any, index: any) => {
                 return (
                     <TouchableOpacity
@@ -166,4 +169,5 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-community/picker';
 import { Ionicons } from '@expo/vector-icons';
 import useColorScheme from '../../../hooks/useColorScheme';
-import styles from './mpc-fdc.style';
+import styles from './mpc-fdc.style'; import MapScreen from '../../../shared/maps/maps';
+

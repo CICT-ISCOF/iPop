@@ -16,7 +16,7 @@ export default function TeenageBirths(props: any) {
         labels: ['2015', '2016', '2017', '2018'],
         datasets: [
             {
-                data: [20, 45, 28, 89],
+                data: [0, 0, 0, 0],
             },
         ],
     };

@@ -12,7 +12,7 @@ export default function MonthCharts(props: any) {
         ],
         datasets: [
             {
-                data: [20, 45, 28],
+                data: [0, 0, 0],
             },
         ],
     };
@@ -33,10 +33,11 @@ export default function MonthCharts(props: any) {
             'Dec',
             '',
             '',
+
         ],
         datasets: [
             {
-                data: [20, 45, 28, 80, 99, 43, 20, 45, 28, 80, 99, 43, 0, 0],
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             },
         ],
     };
@@ -57,10 +58,11 @@ export default function MonthCharts(props: any) {
             'Dec',
             '',
             '',
+
         ],
         datasets: [
             {
-                data: [20, 45, 28, 80, 99, 43, 20, 45, 28, 80, 99, 43, 0, 0],
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             },
         ],
     };
@@ -81,10 +83,11 @@ export default function MonthCharts(props: any) {
             'Dec',
             '',
             '',
+
         ],
         datasets: [
             {
-                data: [20, 45, 28, 80, 99, 43, 20, 45, 28, 80, 99, 43, 0, 0],
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             },
         ],
     };

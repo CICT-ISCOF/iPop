@@ -188,6 +188,11 @@ export default function DeathsSelects() {
                 />
                 <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
             </TouchableOpacity>
+
+            <MapScreen change={barangay + " " + municipalityName} />
+
+
+
             <TotalDataDeaths visibility={visible} data={birthData} />
 
             <MonthCharts
@@ -225,4 +230,5 @@ import styles from './deaths.style';
 import DeathSummary from './deaths..summary';
 import TotalDataDeaths from './deaths..total-data';
 import MonthCharts from '../deaths/deaths..month-charts';
-import CrudeDeathRate from './crude-death-rate-chart';
+import CrudeDeathRate from './crude-death-rate-chart'; import MapScreen from '../../../shared/maps/maps';
+

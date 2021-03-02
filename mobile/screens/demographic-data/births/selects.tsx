@@ -212,6 +212,11 @@ export default function BirthsSelects() {
                 />
                 <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
             </TouchableOpacity>
+
+            <MapScreen change={barangay + " " + municipalityName} />
+
+
+
             <View style={{ height: 50 }} />
             <Text
                 style={[
@@ -268,4 +273,5 @@ import Summary from './summary';
 import IllegitimateBirths from './illegitimate-births-charts';
 import MonthCharts from './month-charts';
 import TeenageBirths from './teenage-births-charts';
-import TotalData from './total-data';
+import TotalData from './total-data'; import MapScreen from '../../../shared/maps/maps';
+

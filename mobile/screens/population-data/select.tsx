@@ -83,22 +83,26 @@ export default function Selects() {
         axios
             .get(url)
             .then((response) => {
-                let maleData = response.data[0]['data']['female'];
-                let femaleData = response.data[0]['data']['male'];
-                for (let key in maleData) {
-                    malesArray.push({ Females: maleData[key] });
+                if (response.data.length != 0) {
+                    let maleData = response.data[0]['data']['female'];
+                    let femaleData = response.data[0]['data']['male'];
+                    for (let key in maleData) {
+                        malesArray.push({ Females: maleData[key] });
+                    }
+                    for (let key in femaleData) {
+                        femalesArray.push({ Females: femaleData[key] });
+                    }
+                    setMales(malesArray);
+                    console.log(malesArray);
+                    setFemales(femalesArray);
                 }
-                for (let key in femaleData) {
-                    femalesArray.push({ Females: femaleData[key] });
-                }
-                setMales(malesArray);
-                console.log(malesArray);
-                setFemales(femalesArray);
             })
             .catch((error) => {
                 console.error(error);
             });
     }
+
+    const childRef = useRef();
 
     return (
         <View>
@@ -178,14 +182,15 @@ export default function Selects() {
                 />
                 <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
             </TouchableOpacity>
+            <MapScreen change={barangay + " " + municipalityName} />
             <PyramidChart males={males} females={females} />
             <PopProfile visibility={visible} data={data} />
         </View>
     );
 }
-
+import MapScreen from '../../shared/maps/maps'
 import Colors from '../../constants/Colors';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import base from '../../constants/Api';
 import styles from './pop-data.style';

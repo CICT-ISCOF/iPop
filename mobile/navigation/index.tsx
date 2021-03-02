@@ -12,7 +12,6 @@ import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import TopPadding from '../shared/top-padding/top-padding';
-import { View, Text } from 'react-native';
 
 // main screens
 

@@ -154,6 +154,8 @@ export default function MigrationsSelects() {
                 />
                 <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
             </TouchableOpacity>
+            <MapScreen change={barangay + " " + municipalityName} />
+
             <TotalDataMIgrations visibility={visible} data={birthData} />
         </View>
     );
@@ -170,4 +172,5 @@ import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import styles from './migrations.style';
 import MigrationsSummary from './migrations.summary';
-import TotalDataMIgrations from './migrations.total-data';
+import TotalDataMIgrations from './migrations.total-data'; import MapScreen from '../../../shared/maps/maps';
+
