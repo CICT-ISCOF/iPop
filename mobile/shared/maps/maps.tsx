@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useImperativeHandle, useRef, forwardRef } from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import * as Location from 'expo-location';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Polygon } from 'react-native-maps';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
@@ -48,6 +48,7 @@ export default function MapScreen(props: any, ref: any) {
             const url = `https://us1.locationiq.com/v1/search.php?key=pk.ca7d72d67098fe33153685abf70e35a9&q=${props.change}&format=json`
             axios.get(url).then((response) => {
                 setData(response.data)
+                // alert(JSON.stringify(response.data[0].boundingbox))
             }).catch((error) => {
                 console.error(error)
             });
@@ -128,7 +129,10 @@ export default function MapScreen(props: any, ref: any) {
                     }}
                     pinColor={"#1ED760"}
                     title={"You are here"}
+                // image={require('../../assets/markers/green.png')}
+                // icon={require('../../assets/markers/green.png')}
                 />
+
                 <Marker
                     coordinate={{
                         latitude: data[0].lat,
@@ -136,6 +140,8 @@ export default function MapScreen(props: any, ref: any) {
                     }}
                     pinColor={"red"}
                     title={data[0].display_name}
+                // image={require('../../assets/markers/red.png')}
+                // icon={require('../../assets/markers/red.png')}
                 />
             </MapView>
         </View>
