@@ -16,31 +16,31 @@ import base from '../../constants/Api';
 import TopPadding from '../../shared/top-padding/top-padding';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Register({ route }: any) {
+export default function Register( { route }: any ) {
     const colorScheme = useColorScheme();
-    const [errors, setErrors] = useState(false);
+    const [ errors, setErrors ] = useState( false );
     const navigation = useNavigation();
 
     const login = () => {
-        navigation.navigate('Login');
+        navigation.navigate( 'Login' );
     };
 
-    const [fullname, setFullname] = useState('');
+    const [ fullname, setFullname ] = useState( '' );
 
     return (
         <View
             style={[
                 styles.container,
                 {
-                    backgroundColor: Colors[colorScheme].background,
+                    backgroundColor: Colors[ colorScheme ].background,
                 },
             ]}>
             <TopPadding />
 
-            <View style={[styles.TextInputContianer, ,]}>
+            <View style={[ styles.TextInputContianer, , ]}>
                 <Text
                     style={{
-                        color: Colors[colorScheme].text,
+                        color: Colors[ colorScheme ].text,
                         textAlign: 'left',
                         alignSelf: 'flex-start',
                         marginBottom: 7,
@@ -48,22 +48,23 @@ export default function Register({ route }: any) {
                     What is your fullname?
                 </Text>
                 <TextInput
-                    onChangeText={(text) => {
-                        setFullname(text);
+                    autoFocus={true}
+                    onChangeText={( text ) => {
+                        setFullname( text );
                     }}
                     returnKeyType='next'
                     onSubmitEditing={() => {
-                        setErrors(false);
-                        if (fullname == '') {
-                            return setErrors(true);
+                        setErrors( false );
+                        if ( fullname == '' ) {
+                            return setErrors( true );
                         }
-                        navigation.navigate('Username', { fullname: fullname });
+                        navigation.navigate( 'Username', { fullname: fullname } );
                     }}
                     style={[
                         styles.TextInput,
                         {
-                            borderColor: Colors[colorScheme].border,
-                            color: Colors[colorScheme].text,
+                            borderColor: Colors[ colorScheme ].border,
+                            color: Colors[ colorScheme ].text,
                         },
                     ]}
                     placeholder='Enter Fullname'
@@ -78,24 +79,24 @@ export default function Register({ route }: any) {
                         {
                             alignSelf: 'flex-start',
                             color: 'red',
-                            transform: [{ translateY: -12 }],
+                            transform: [ { translateY: -12 } ],
                         },
                         errors == false
                             ? {
-                                  position: 'absolute',
-                                  top: -500,
-                              }
+                                position: 'absolute',
+                                top: -500,
+                            }
                             : {},
                     ]}>
                     Please enter your fullname
                 </Text>
                 <TouchableOpacity
                     onPress={() => {
-                        setErrors(false);
-                        if (fullname == '') {
-                            return setErrors(true);
+                        setErrors( false );
+                        if ( fullname == '' ) {
+                            return setErrors( true );
                         }
-                        navigation.navigate('Username', { fullname: fullname });
+                        navigation.navigate( 'Username', { fullname: fullname } );
                     }}
                     style={styles.button}>
                     <Text style={styles.buttonText}>Next</Text>
@@ -109,7 +110,7 @@ export default function Register({ route }: any) {
                 <Text
                     style={[
                         styles.ghostBtnText,
-                        { color: Colors[colorScheme].text },
+                        { color: Colors[ colorScheme ].text },
                     ]}>
                     Back to Login
                 </Text>

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+export default StyleSheet.create( {
     container: {
         flex: 1,
         alignItems: 'center',
@@ -20,10 +20,8 @@ export default StyleSheet.create({
         marginTop: '20%',
         resizeMode: 'stretch',
         width: 100,
-        height: 100,
-        borderRadius: 50,
-        borderWidth: 2,
-        borderColor: '#5B80F3',
+        height: 50,
+
     },
     TextInputContianer: {
         width: '100%',
@@ -39,7 +37,7 @@ export default StyleSheet.create({
         paddingLeft: 20,
     },
     button: {
-        backgroundColor: '#5B80F3',
+        backgroundColor: '#426FC3',
         padding: 15,
         width: '100%',
         borderRadius: 5,
@@ -52,9 +50,7 @@ export default StyleSheet.create({
         fontWeight: '600',
     },
     ghostBtn: {
-        position: 'absolute',
-        bottom: 100,
-        padding: 30,
+        marginTop: 20
     },
     ghostBtnText: {},
-});
+} );

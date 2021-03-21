@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+export default StyleSheet.create( {
     container: {
         flex: 1,
         alignItems: 'center',
@@ -12,7 +12,7 @@ export default StyleSheet.create({
     },
     apptitle: {
         fontSize: 40,
-        color: '#5B80F3',
+        color: '#426FC3',
         fontWeight: '500',
         width: '70%',
         textAlign: 'center',
@@ -33,7 +33,7 @@ export default StyleSheet.create({
         paddingLeft: 20,
     },
     button: {
-        backgroundColor: '#5B80F3',
+        backgroundColor: '#426FC3',
         padding: 15,
         width: '100%',
         borderRadius: 5,
@@ -44,12 +44,6 @@ export default StyleSheet.create({
         fontSize: 20,
         fontWeight: '600',
     },
-    ghostBtn: {
-        position: 'absolute',
-        bottom: 100,
-        padding: 30,
-    },
-    ghostBtnText: {},
     profileContainerMain: {
         borderRadius: 100,
         height: 205,
@@ -57,7 +51,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 10,
+        marginBottom: -50,
         marginTop: 50,
         borderWidth: 2,
     },
@@ -83,8 +77,12 @@ export default StyleSheet.create({
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
-        transform: [{ translateY: -60 }, { translateX: 70 }],
+        transform: [ { translateY: -60 }, { translateX: 70 } ],
         borderWidth: 3,
         borderColor: 'white',
     },
-});
+    ghostBtn: {
+        marginTop: 20
+    },
+    ghostBtnText: {},
+} );

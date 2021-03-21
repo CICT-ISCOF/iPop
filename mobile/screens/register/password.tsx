@@ -55,14 +55,13 @@ export default function Password( { route }: any ) {
                 Your username is:{' '}
                 <Text
                     style={{
-                        color: '#80D23F',
-                        fontSize: 20,
-                        fontWeight: '700',
+                        color: '#426FC3',
+                        fontWeight: '500',
                     }}>
                     {username}
                 </Text>
             </Text>
-            <View style={[ styles.TextInputContianer, { marginTop: '50%' } ]}>
+            <View style={[ styles.TextInputContianer, { marginTop: 100 } ]}>
                 <Text
                     style={{
                         color: Colors[ colorScheme ].text,
@@ -73,6 +72,7 @@ export default function Password( { route }: any ) {
                     What would you like to be your password?
                 </Text>
                 <TextInput
+                    autoFocus={true}
                     onChangeText={( text ) => {
                         setPassword( text );
                     }}

@@ -1,16 +1,5 @@
-import { StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
-import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-    Image,
-    TextInput,
-    ActivityIndicator,
-    BackHandler,
-} from 'react-native';
-import { RootStackParamList } from '../../types';
+import { Text, TouchableOpacity, View, Image, TextInput, BackHandler, } from 'react-native';
 import styles from './login.style';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
@@ -19,97 +8,89 @@ import axios from 'axios';
 import base from '../../constants/Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TopPadding from '../../shared/top-padding/top-padding';
-import MapScreen from '../../shared/maps/maps';
 
-export default function Login({ navigation }: any) {
+export default function Login( { navigation }: any ) {
     const colorScheme = useColorScheme();
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [isLoading, setLoading] = useState(false);
-    const [errors, setErrors] = useState(false);
+    const [ username, setUsername ] = useState( '' );
+    const [ password, setPassword ] = useState( '' );
+    const [ isLoading, setLoading ] = useState( false );
+    const [ errors, setErrors ] = useState( false );
 
     let passwordInput: any;
 
-    useEffect(() => {
+    useEffect( () => {
         const backAction = () => {
-            return false;
-        };
+            return false
+        }
+
         const backHandler = BackHandler.addEventListener(
             'hardwareBackPress',
             backAction
-        );
+        )
 
         return () => backHandler.remove();
-    }, []);
+    }, [] )
 
-    const login = () => {
-        if (isLoading == false) {
-            setErrors(false);
+    function login() {
+        if ( isLoading == false ) {
+            setErrors( false );
             const data = {
                 username: username,
                 password: password,
             };
-            if (data.username == '' || data.password == '') {
-                setLoading(false);
-                return alert('Please key in your correct login info');
+            if ( data.username == '' || data.password == '' ) {
+                setLoading( false );
+                return alert( 'Please key in your correct login info' );
             }
-            setLoading(true);
+            setLoading( true );
 
             axios
-                .post(base.apiURL + base.login, data, {
+                .post( base.apiURL + base.login, data, {
                     headers: base.loginHeaders,
-                })
-                .then((response) => {
-                    navigation.replace('Root');
+                } )
+                .then( ( response ) => {
+                    navigation.replace( 'Root' );
                     AsyncStorage.setItem(
                         'user',
-                        JSON.stringify(response.data.user)
+                        JSON.stringify( response.data.user )
                     );
                     AsyncStorage.setItem(
                         'token',
-                        JSON.stringify(response.data.token)
+                        JSON.stringify( response.data.token )
                     );
-                    console.log(response.data);
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    setErrors(true);
-                    setLoading(false);
-                });
+                    console.log( response.data );
+                    setLoading( false );
+                } )
+                .catch( () => {
+                    setErrors( true );
+                    setLoading( false );
+                } );
         }
     };
 
     const register = () => {
-        navigation.push('Register');
+        navigation.push( 'Register' );
     };
 
     return (
-        <View
-            style={[
-                styles.container,
-                {
-                    backgroundColor: Colors[colorScheme].background,
-                },
-            ]}>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background, }, ]}>
             <TopPadding color={1} />
-
-            {/* <MapScreen /> */}
-
             <Image
                 style={styles.image}
-                source={require('../../assets/images/transparent-logo.png')}
+                source={require( '../../assets/images/logo.png' )}
             />
+
             <View style={styles.TextInputContianer}>
                 <TextInput
-                    onChangeText={(text) => {
-                        setUsername(text);
+                    autoFocus={true}
+                    onChangeText={( text ) => {
+                        setUsername( text );
                     }}
                     style={[
                         styles.TextInput,
                         {
-                            borderColor: Colors[colorScheme].border1,
-                            color: Colors[colorScheme].text,
+                            borderColor: Colors[ colorScheme ].border1,
+                            color: Colors[ colorScheme ].text,
                         },
                     ]}
                     placeholder='Username'
@@ -118,18 +99,17 @@ export default function Login({ navigation }: any) {
                         passwordInput.focus();
                     }}
                 />
+
                 <TextInput
-                    onChangeText={(text) => {
-                        setPassword(text);
+                    onChangeText={( text ) => {
+                        setPassword( text )
                     }}
-                    ref={(input) => {
-                        passwordInput = input;
-                    }}
+                    ref={( input ) => passwordInput = input}
                     style={[
                         styles.TextInput,
                         {
-                            borderColor: Colors[colorScheme].border1,
-                            color: Colors[colorScheme].text,
+                            borderColor: Colors[ colorScheme ].border1,
+                            color: Colors[ colorScheme ].text,
                         },
                     ]}
                     placeholder='Password'
@@ -141,22 +121,23 @@ export default function Login({ navigation }: any) {
                     }}
                 />
             </View>
-            <Text
-                style={[
-                    {
-                        textAlign: 'center',
-                        color: 'red',
-                        transform: [{ translateY: 15 }],
-                    },
-                    errors == false
-                        ? {
-                              position: 'absolute',
-                              top: -500,
-                          }
-                        : {},
-                ]}>
+
+            <Text style={[
+                {
+                    textAlign: 'center',
+                    color: 'red',
+                    transform: [ { translateY: 15 } ],
+                },
+                errors == false
+                    ? {
+                        position: 'absolute',
+                        top: -500,
+                    }
+                    : {},
+            ]}>
                 Username or password is in-correct
             </Text>
+
             <View style={styles.TextInputContianer}>
                 <TouchableOpacity
                     onPress={() => {
@@ -172,6 +153,7 @@ export default function Login({ navigation }: any) {
                     </Text>
                 </TouchableOpacity>
             </View>
+
             <TouchableOpacity
                 onPress={() => {
                     register();
@@ -180,9 +162,7 @@ export default function Login({ navigation }: any) {
                 <Text
                     style={[
                         styles.ghostBtnText,
-                        {
-                            color: Colors[colorScheme].text,
-                        },
+                        { color: Colors[ colorScheme ].text, },
                     ]}>
                     Not Registered? Create an account.
                 </Text>

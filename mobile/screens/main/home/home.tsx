@@ -35,15 +35,9 @@ export default function Home() {
 
     return (
         <View style={styles.container}>
-            <AlertComponent hidden={false} />
+            {/* <AlertComponent hidden={false} /> */}
             <TopPadding />
-            <View
-                style={[
-                    styles.container,
-                    {
-                        backgroundColor: Colors[ colorScheme ].homeBG,
-                    },
-                ]}>
+            <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].homeBG, }, ]}>
                 <View
                     style={{
                         backgroundColor: Colors[ colorScheme ].background,
@@ -52,23 +46,21 @@ export default function Home() {
                     <SearchNav />
                     <Image
                         style={{
-                            height: 50,
+                            height: 25,
                             width: 50,
                             resizeMode: 'stretch',
-                            borderRadius: 50,
-                            borderWidth: 2,
-                            borderColor: '#5B80F3',
                             margin: 20,
                             marginTop: -5,
                             position: 'relative',
                             zIndex: 0,
                         }}
-                        source={require( '../../../assets/images/transparent-logo.png' )}
+                        source={require( '../../../assets/images/logo.png' )}
                     />
                 </View>
                 <ScrollView
                     refreshControl={
                         <RefreshControl
+                            tintColor='#426FC3'
                             refreshing={refreshing}
                             onRefresh={onRefresh}
                         />

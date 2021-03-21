@@ -9,22 +9,13 @@ export default function Username( { route }: any ) {
 
     return (
         <View
-            style={[
-                styles.container,
-                {
-                    backgroundColor: Colors[ colorScheme ].background,
-                },
-            ]}>
+            style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background, }, ]}>
             <TopPadding />
-            <Text
-                style={{
-                    color: Colors[ colorScheme ].text,
-                }}>
+            <Text style={{ color: Colors[ colorScheme ].text, }}>
                 Howdy!
             </Text>
             <Text style={[ styles.apptitle ]}>{fullname}</Text>
-
-            <View style={[ styles.TextInputContianer, { marginTop: '50%' } ]}>
+            <View style={[ styles.TextInputContianer, { marginTop: 100 } ]}>
                 <Text
                     style={{
                         color: Colors[ colorScheme ].text,
@@ -35,6 +26,7 @@ export default function Username( { route }: any ) {
                     What would you like to be your username?
                 </Text>
                 <TextInput
+                    autoFocus={true}
                     onChangeText={( text ) => {
                         setUsername( text );
                     }}

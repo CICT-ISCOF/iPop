@@ -8,6 +8,14 @@ export type RootStackParamList = {
     Username: undefined;
     Password: undefined;
     Avatar: undefined;
+    Splash: undefined;
+
+    // stepper
+    Step1: undefined;
+    Step2: undefined;
+    Step3: undefined;
+    Step4: undefined;
+    Step5: undefined;
 
     // aboutus
     Mandate: undefined;
@@ -48,5 +56,4 @@ export type BottomTabParamList = {
     ProgamAreas: undefined;
     Profile: undefined;
     Menu: undefined;
-
 };
