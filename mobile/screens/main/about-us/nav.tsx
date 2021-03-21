@@ -131,7 +131,7 @@ export default function AboutScreen() {
                     renderItem={renderNav}
                     data={navs}
                     numColumns={3}
-                    keyExtractor={navs.item.id}
+                    keyExtractor={navs.index}
                 />
 
                 <View style={{ height: 100 }} />

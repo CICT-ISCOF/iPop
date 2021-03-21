@@ -1,19 +1,39 @@
-export default function FeautredArticles(props: any) {
-    const colorScheme = useColorScheme();
 
+import React, { useState, useEffect } from 'react';
+import Colors from '../../../../../constants/Colors';
+import useColorScheme from '../../../../../hooks/useColorScheme';
+import { Text, View, Image, StyleSheet, Dimensions } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+
+
+export default function FeautredArticles( props: any ) {
+
+    const colorScheme = useColorScheme();
     let feedBackground = colorScheme == 'dark' ? '#242526' : 'white';
 
-    const articles = props.data;
+    let articles = props.data
 
-    //
+    const [ truncate, settruncate ]: any = useState( [] )
+
+    function formatText( string: String, number: any ) {
+        var trimmable = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u2028\u2029\u3000\uFEFF';
+        var reg = new RegExp( '(?=[' + trimmable + '])' );
+        var words = string.split( reg );
+        var count = 0;
+        return words.filter( function ( word: any ) {
+            count += word.length;
+            return count <= number;
+        } ).join( '' ) + '..';
+    }
+
     return (
         <View
             style={{
                 marginTop: -40,
             }}>
-            {articles.map((article: any, index: any) => {
-                return (
-                    <TouchableOpacity
+            {
+                articles.map( ( article: any, index: any ) => (
+                    <View
                         key={index}
                         style={[
                             styles.featuredArticle,
@@ -21,70 +41,92 @@ export default function FeautredArticles(props: any) {
                                 backgroundColor: feedBackground,
                             },
                         ]}>
-                        <Image
-                            style={[
-                                styles.image,
-                                article.photos.length != 0
-                                    ? {}
-                                    : { display: 'none' },
-                            ]}
-                            source={
-                                article.photos.length != 0
-                                    ? { uri: article.photos[0].file.uri }
-                                    : { uri: '' }
+                        <ScrollView
+                            decelerationRate={0}
+                            snapToInterval={Dimensions.get( 'screen' ).width + 20 - ( 0 + 0 )}
+                            style={{
+                                marginLeft: -20,
+                                width: Dimensions.get( 'screen' ).width,
+                            }}
+                            horizontal={true} showsHorizontalScrollIndicator={false}>
+                            {
+                                article.photos.map( ( photo: any, index: any ) => (
+                                    <Image
+                                        key={index}
+                                        style={[ styles.image, ]}
+                                        source={{ uri: photo.file.uri }}
+                                    />
+                                ) )
                             }
-                        />
+                        </ScrollView>
 
                         <View style={styles.texts}>
                             <Text
                                 style={[
                                     styles.title,
-                                    ,
-                                    { color: Colors[colorScheme].text },
+
+                                    { color: Colors[ colorScheme ].text },
                                 ]}>
                                 {article.title}
                             </Text>
-                            <Text
-                                style={[{ color: Colors[colorScheme].text1 }]}>
-                                {article.body}
+                            <Text style={[ { color: Colors[ colorScheme ].text, lineHeight: 25, fontSize: 14 } ]}>
+                                {truncate.includes( index ) ? article.body : formatText( article.body, 200 )}
                             </Text>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    let array = truncate
+                                    for ( let i of array ) {
+                                        if ( array.includes( index ) ) {
+                                            array.splice( i, 1 )
+                                            settruncate( array )
+                                            props.refresh()
+                                            return
+                                        }
+                                    }
+                                    array.push( index )
+                                    settruncate( array )
+                                    props.refresh()
+
+                                }}
+                                style={{ marginTop: 20 }}>
+                                <Text style={{ color: Colors[ colorScheme ].text1, fontSize: 16, marginBottom: 20 }}>
+                                    {truncate.includes( index ) ? 'See less' : 'See more'}
+                                    ....
+
+                                    </Text>
+                            </TouchableOpacity>
                         </View>
-                    </TouchableOpacity>
-                );
-            })}
+
+
+
+                    </View>
+                ) )
+            }
         </View>
     );
 }
 
-import React, { useState, useEffect } from 'react';
-import Colors from '../../../../../constants/Colors';
-import useColorScheme from '../../../../../hooks/useColorScheme';
-import homeStyle from '../../home.style';
-import { Text, View, Image, StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { ScrollView } from 'react-native-gesture-handler';
-import axios from 'axios';
-import base from '../../../../../constants/Api';
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create( {
     featuredArticle: {
-        flexDirection: 'row',
         marginTop: 7,
         padding: 20,
+        borderWidth: 2,
+        borderColor: 'rgba(150,150,150,.2)'
     },
     image: {
-        height: 70,
-        width: 70,
-        marginRight: 15,
-        marginTop: 5,
+        height: 200,
+        marginTop: 10,
+        marginLeft: -20,
+        width: Dimensions.get( 'screen' ).width + 20,
     },
     texts: {
-        width: '80%',
+        width: '100%',
     },
     title: {
-        fontWeight: '600',
-        fontSize: 20,
-        marginTop: -5,
+        fontWeight: '700',
+        fontSize: 13,
         marginBottom: 15,
+        marginTop: 20
     },
-});
+} );

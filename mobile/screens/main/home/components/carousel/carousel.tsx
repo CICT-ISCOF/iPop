@@ -19,6 +19,9 @@ export default function Carousel( props: any ) {
             </Text>
             <ScrollView
                 horizontal={true}
+                decelerationRate={0}
+                snapToInterval={380 - ( 0 + 0 )}
+                snapToAlignment={"center"}
                 style={[
                     styles.scrollview,
                     { backgroundColor: 'rgba(150,150,150,0.2)' },

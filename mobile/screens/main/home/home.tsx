@@ -16,6 +16,15 @@ export default function Home() {
         } );
     };
 
+    const refresh = () => {
+        axios.get( base.apiURL + base.carousel ).then( ( response ) => {
+            setCarouselData( response.data );
+            axios.get( base.apiURL + base.featureArticles ).then( ( response ) => {
+                setFeautredArticlesData( response.data );
+            } );
+        } );
+    }
+
     useEffect( () => {
         async function fetchCarouseData() {
             axios.get( base.apiURL + base.carousel ).then( ( response ) => {
@@ -34,44 +43,46 @@ export default function Home() {
     }, [] );
 
     return (
-        <View style={styles.container}>
-            {/* <AlertComponent hidden={false} /> */}
-            <TopPadding />
-            <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].homeBG, }, ]}>
-                <View
+        <View style={[ styles.container, { backgroundColor: 'transparent', } ]}>
+
+
+            <View style={{
+                width: '100%',
+                zIndex: 99,
+                paddingTop: 50,
+                backgroundColor: Colors[ colorScheme ].background
+            }}>
+                <Image
                     style={{
-                        backgroundColor: Colors[ colorScheme ].background,
-                        marginTop: -11.9,
-                    }}>
-                    <SearchNav />
-                    <Image
-                        style={{
-                            height: 25,
-                            width: 50,
-                            resizeMode: 'stretch',
-                            margin: 20,
-                            marginTop: -5,
-                            position: 'relative',
-                            zIndex: 0,
-                        }}
-                        source={require( '../../../assets/images/logo.png' )}
-                    />
-                </View>
-                <ScrollView
-                    refreshControl={
-                        <RefreshControl
-                            tintColor='#426FC3'
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    }>
-                    <View>
-                        <Carousel data={carouselData} />
-                        <FeautredArticles data={feautredArticlesData} />
-                    </View>
-                    <View style={{ height: 40 }} />
-                </ScrollView>
+                        height: 25,
+                        width: 50,
+                        resizeMode: 'stretch',
+                        margin: 20,
+                        marginTop: -5,
+
+                    }}
+                    source={require( '../../../assets/images/logo.png' )}
+                />
             </View>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        tintColor='#426FC3'
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }>
+                <Carousel
+                    data={carouselData}
+                />
+                <FeautredArticles
+                    refresh={() => {
+                        refresh()
+                    }}
+                    data={feautredArticlesData}
+                />
+                <View style={{ height: 40 }} />
+            </ScrollView>
         </View>
     );
 }
