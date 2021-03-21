@@ -39,11 +39,7 @@ import ShowProgramAreas from '../screens/main/program-areas/program-areas-show';
 import ShowTeenCenter from '../screens/ahyd/teen-centers/teen-center-show';
 import TeenCenterList from '../screens/ahyd/teen-centers/teen-center-lists';
 
-export default function Navigation( {
-    colorScheme,
-}: {
-    colorScheme: ColorSchemeName;
-} ) {
+export default function Navigation( { colorScheme, }: { colorScheme: ColorSchemeName; } ) {
     return (
         <NavigationContainer
             linking={LinkingConfiguration}
