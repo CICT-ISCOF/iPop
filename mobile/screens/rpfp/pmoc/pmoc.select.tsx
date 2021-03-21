@@ -133,6 +133,8 @@ export default function PMOCSelects() {
                 />
                 <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
             </TouchableOpacity>
+            <MapScreen change={municipalityName + " Iloilo"} />
+
             <PMOCSummary visibility={visible} data={birthData} />
         </View>
     );
@@ -153,4 +155,5 @@ import useColorScheme from '../../../hooks/useColorScheme';
 import styles from './pmoc.style';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-community/picker';
-import PMOCSummary from './pmoc.summary';
+import PMOCSummary from './pmoc.summary'; import MapScreen from '../../../shared/maps/maps';
+

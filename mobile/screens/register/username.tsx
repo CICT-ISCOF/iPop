@@ -1,33 +1,24 @@
-export default function Username({ route }) {
+export default function Username( { route }: any ) {
     const colorScheme = useColorScheme();
-    const [errors, setErrors] = useState(false);
+    const [ errors, setErrors ] = useState( false );
     const navigation = useNavigation();
 
     const { fullname } = route.params;
 
-    const [username, setUsername] = useState('');
+    const [ username, setUsername ] = useState( '' );
 
     return (
         <View
-            style={[
-                styles.container,
-                {
-                    backgroundColor: Colors[colorScheme].background,
-                },
-            ]}>
+            style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background, }, ]}>
             <TopPadding />
-            <Text
-                style={{
-                    color: Colors[colorScheme].text,
-                }}>
+            <Text style={{ color: Colors[ colorScheme ].text, }}>
                 Howdy!
             </Text>
-            <Text style={[styles.apptitle]}>{fullname}</Text>
-
-            <View style={[styles.TextInputContianer, { marginTop: '50%' }]}>
+            <Text style={[ styles.apptitle ]}>{fullname}</Text>
+            <View style={[ styles.TextInputContianer, { marginTop: 100 } ]}>
                 <Text
                     style={{
-                        color: Colors[colorScheme].text,
+                        color: Colors[ colorScheme ].text,
                         textAlign: 'left',
                         alignSelf: 'flex-start',
                         marginBottom: 7,
@@ -35,25 +26,26 @@ export default function Username({ route }) {
                     What would you like to be your username?
                 </Text>
                 <TextInput
-                    onChangeText={(text) => {
-                        setUsername(text);
+                    autoFocus={true}
+                    onChangeText={( text ) => {
+                        setUsername( text );
                     }}
                     returnKeyType='next'
                     onSubmitEditing={() => {
-                        setErrors(false);
-                        if (username == '') {
-                            return setErrors(true);
+                        setErrors( false );
+                        if ( username == '' ) {
+                            return setErrors( true );
                         }
-                        navigation.navigate('Password', {
+                        navigation.navigate( 'Password', {
                             fullname: fullname,
                             username: username,
-                        });
+                        } );
                     }}
                     style={[
                         styles.TextInput,
                         {
-                            borderColor: Colors[colorScheme].border,
-                            color: Colors[colorScheme].text,
+                            borderColor: Colors[ colorScheme ].border,
+                            color: Colors[ colorScheme ].text,
                         },
                     ]}
                     placeholder='Enter Username'
@@ -63,27 +55,27 @@ export default function Username({ route }) {
                         {
                             alignSelf: 'flex-start',
                             color: 'red',
-                            transform: [{ translateY: -12 }],
+                            transform: [ { translateY: -12 } ],
                         },
                         errors == false
                             ? {
-                                  position: 'absolute',
-                                  top: -500,
-                              }
+                                position: 'absolute',
+                                top: -500,
+                            }
                             : {},
                     ]}>
                     Please set your username
                 </Text>
                 <TouchableOpacity
                     onPress={() => {
-                        setErrors(false);
-                        if (username == '') {
-                            return setErrors(true);
+                        setErrors( false );
+                        if ( username == '' ) {
+                            return setErrors( true );
                         }
-                        navigation.navigate('Password', {
+                        navigation.navigate( 'Password', {
                             fullname: fullname,
                             username: username,
-                        });
+                        } );
                     }}
                     style={styles.button}>
                     <Text style={styles.buttonText}>Next</Text>
@@ -91,13 +83,13 @@ export default function Username({ route }) {
             </View>
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate('Register', { fullname: fullname });
+                    navigation.navigate( 'Register', { fullname: fullname } );
                 }}
                 style={styles.ghostBtn}>
                 <Text
                     style={[
                         styles.ghostBtnText,
-                        { color: Colors[colorScheme].text },
+                        { color: Colors[ colorScheme ].text },
                     ]}>
                     I will change my fullname
                 </Text>

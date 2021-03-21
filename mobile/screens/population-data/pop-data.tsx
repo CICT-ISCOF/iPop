@@ -27,13 +27,15 @@ export default function PopulationData() {
                 </Text>
                 <Text
                     style={[
-                        styles.province,
-                        { color: Colors[colorScheme].text },
+                        styles.chartTitle,
+                        {
+                            color: Colors[colorScheme].text,
+                        },
                     ]}>
                     Province of Iloilo
                 </Text>
+                <View style={styles.separator}></View>
                 <Selects />
-
                 <TopPopulated />
                 <View style={{ height: 100 }} />
             </ScrollView>

@@ -1,4 +1,4 @@
-const tintColorLight = '#4371DC';
+const tintColorLight = '#426FC3';
 const tintColorDark = '#4371DC';
 
 export default {

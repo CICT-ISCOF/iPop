@@ -29,10 +29,11 @@ export default function SearchNav(props: any) {
                     width: '100%',
                     position: 'relative',
                     zIndex: 1,
+                    marginTop: 50
                 },
                 props.hidden == true ? { marginBottom: -20 } : {},
             ]}>
-            <View
+            {/* <View
                 style={[
                     styles.textInputWrapper,
                     {
@@ -97,7 +98,7 @@ export default function SearchNav(props: any) {
                         placeholder='Search on iPOP'
                     />
                 </TouchableOpacity>
-            </View>
+            </View> */}
         </View>
     );
 }

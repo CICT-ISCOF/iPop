@@ -16,29 +16,59 @@ export default function TeenageBirths(props: any) {
         labels: ['2015', '2016', '2017', '2018'],
         datasets: [
             {
-                data: [20, 45, 28, 89],
+                data: [0, 0, 0, 0],
             },
         ],
     };
 
+    if (
+        props.lineChartData != undefined &&
+        props.lineChartData.teenageBirths != undefined &&
+        props.lineChartData.teenageBirths.length != 0
+    ) {
+        chartdata.labels = [];
+        chartdata.datasets[0].data = [];
+
+        for (let index in props.lineChartData.teenageBirths) {
+            chartdata.labels.push(
+                props.lineChartData.teenageBirths[index].year
+            );
+            chartdata.datasets[0].data.push(
+                props.lineChartData.teenageBirths[index].value
+            );
+        }
+    }
+
     const screenWidth = Dimensions.get('window').width;
 
     const chartConfig = {
-        backgroundColor: 'transparent',
         backgroundGradientFrom: Colors[colorScheme].background,
         backgroundGradientTo: Colors[colorScheme].background,
-        decimalPlaces: 0, // optional, defaults to 2dp
-        color: (opacity = 1) => 'red',
+        decimalPlaces: 0,
+        fillShadowGradient: '#FF829D',
+        fillShadowGradientOpacity: 0.5,
+        color: (opacity = 1) => '#FF829D',
         style: {
-            borderRadius: 16,
+            borderRadius: 1,
+        },
+        strokeWidth: 1,
+        barPercentage: 0.17,
+        labelColor: (opacity = 1) => Colors[colorScheme].text,
+        propsForDots: {
+            strokeWidth: '1',
+            stroke: '#FF829D',
         },
     };
+
     return (
         <View
-            style={{
-                marginTop: 20,
-                marginLeft: -50,
-            }}>
+            style={[
+                {
+                    marginTop: 20,
+                    marginLeft: -50,
+                },
+                props.visibility == true ? {} : { display: 'none' },
+            ]}>
             <Text
                 style={[
                     styles.chartTitle,
@@ -46,15 +76,16 @@ export default function TeenageBirths(props: any) {
                         color: Colors[colorScheme].text,
                     },
                 ]}>
-                Incidence of Teenage Births
+                Teenage Births (Brgy. {props.barangay})
             </Text>
             <View style={styles.separator}></View>
             <LineChart
                 data={chartdata}
-                width={screenWidth + 20}
-                height={220}
                 chartConfig={chartConfig}
                 bezier
+                width={screenWidth + 120}
+                height={360}
+                fromZero={true}
             />
         </View>
     );

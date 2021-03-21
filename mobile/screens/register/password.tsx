@@ -1,36 +1,36 @@
-export default function Password({ route }) {
+export default function Password( { route }: any ) {
     const colorScheme = useColorScheme();
 
     const navigation = useNavigation();
 
     const { fullname, username } = route.params;
 
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [message, setMessage] = useState('');
+    const [ password, setPassword ] = useState( '' );
+    const [ confirmPassword, setConfirmPassword ] = useState( '' );
+    const [ message, setMessage ] = useState( '' );
 
-    const [errors, setErrors] = useState(false);
+    const [ errors, setErrors ] = useState( false );
 
     async function validate() {
-        setErrors(false);
-        if (password != confirmPassword) {
-            setMessage('Password does not match');
-            return setErrors(true);
+        setErrors( false );
+        if ( password != confirmPassword ) {
+            setMessage( 'Password does not match' );
+            return setErrors( true );
         }
-        if (password == '' || confirmPassword == '') {
-            setMessage('One or more fields should not be empty');
-            return setErrors(true);
+        if ( password == '' || confirmPassword == '' ) {
+            setMessage( 'One or more fields should not be empty' );
+            return setErrors( true );
         }
-        if (password.length < 3) {
-            setMessage('Password is to weak');
-            return setErrors(true);
+        if ( password.length < 3 ) {
+            setMessage( 'Password is to weak' );
+            return setErrors( true );
         }
 
-        navigation.navigate('Avatar', {
+        navigation.navigate( 'Avatar', {
             fullname: fullname,
             username: username,
             password: password,
-        });
+        } );
     }
 
     let confirmPasswordInput: any;
@@ -40,32 +40,31 @@ export default function Password({ route }) {
             style={[
                 styles.container,
                 {
-                    backgroundColor: Colors[colorScheme].background,
+                    backgroundColor: Colors[ colorScheme ].background,
                 },
             ]}>
             <TopPadding />
             <Text
                 style={{
-                    color: Colors[colorScheme].text,
+                    color: Colors[ colorScheme ].text,
                 }}>
                 Howdy!
             </Text>
             <Text style={styles.apptitle}>{fullname}</Text>
-            <Text style={{ color: Colors[colorScheme].text }}>
+            <Text style={{ color: Colors[ colorScheme ].text }}>
                 Your username is:{' '}
                 <Text
                     style={{
-                        color: '#80D23F',
-                        fontSize: 20,
-                        fontWeight: '700',
+                        color: '#426FC3',
+                        fontWeight: '500',
                     }}>
                     {username}
                 </Text>
             </Text>
-            <View style={[styles.TextInputContianer, { marginTop: '50%' }]}>
+            <View style={[ styles.TextInputContianer, { marginTop: 100 } ]}>
                 <Text
                     style={{
-                        color: Colors[colorScheme].text,
+                        color: Colors[ colorScheme ].text,
                         textAlign: 'left',
                         alignSelf: 'flex-start',
                         marginBottom: 7,
@@ -73,8 +72,9 @@ export default function Password({ route }) {
                     What would you like to be your password?
                 </Text>
                 <TextInput
-                    onChangeText={(text) => {
-                        setPassword(text);
+                    autoFocus={true}
+                    onChangeText={( text ) => {
+                        setPassword( text );
                     }}
                     secureTextEntry={true}
                     returnKeyType='next'
@@ -84,20 +84,20 @@ export default function Password({ route }) {
                     style={[
                         styles.TextInput,
                         {
-                            borderColor: Colors[colorScheme].border1,
+                            borderColor: Colors[ colorScheme ].border1,
                             marginBottom: 0,
                             borderRadius: 0,
-                            color: Colors[colorScheme].text,
+                            color: Colors[ colorScheme ].text,
                         },
                     ]}
                     placeholder='Enter Password'
                 />
                 <TextInput
-                    ref={(input) => {
+                    ref={( input ) => {
                         confirmPasswordInput = input;
                     }}
-                    onChangeText={(text) => {
-                        setConfirmPassword(text);
+                    onChangeText={( text ) => {
+                        setConfirmPassword( text );
                     }}
                     secureTextEntry={true}
                     returnKeyType='next'
@@ -107,9 +107,9 @@ export default function Password({ route }) {
                     style={[
                         styles.TextInput,
                         {
-                            borderColor: Colors[colorScheme].border1,
+                            borderColor: Colors[ colorScheme ].border1,
                             borderRadius: 0,
-                            color: Colors[colorScheme].text,
+                            color: Colors[ colorScheme ].text,
                         },
                     ]}
                     placeholder='Confirm Password'
@@ -119,13 +119,13 @@ export default function Password({ route }) {
                         {
                             alignSelf: 'flex-start',
                             color: 'red',
-                            transform: [{ translateY: -12 }],
+                            transform: [ { translateY: -12 } ],
                         },
                         errors == false
                             ? {
-                                  position: 'absolute',
-                                  top: -500,
-                              }
+                                position: 'absolute',
+                                top: -500,
+                            }
                             : {},
                     ]}>
                     {message}
@@ -140,16 +140,16 @@ export default function Password({ route }) {
             </View>
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate('Username', {
+                    navigation.navigate( 'Username', {
                         fullname: fullname,
                         username: username,
-                    });
+                    } );
                 }}
                 style={styles.ghostBtn}>
                 <Text
                     style={[
                         styles.ghostBtnText,
-                        { color: Colors[colorScheme].text },
+                        { color: Colors[ colorScheme ].text },
                     ]}>
                     I will change my username
                 </Text>

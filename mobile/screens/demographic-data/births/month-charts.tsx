@@ -1,165 +1,131 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-} from 'react-native-chart-kit';
+import { BarChart, } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
+import styles from './births.style';
+import Colors from '../../../constants/Colors';
+import useColorScheme from '../../../hooks/useColorScheme';
+import dummy from '../../../constants/dummy'
+import chartConfig from '../../../constants/chartconfig'
 
-export default function MonthCharts(props: any) {
-    let data = props.data;
+export default function MonthCharts( props: any ) {
+    const screenWidth = Dimensions.get( 'window' ).width;
     const colorScheme = useColorScheme();
 
-    const screenWidth = Dimensions.get('window').width;
-    const chartdataMale = {
-        labels: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-            '',
-            '',
-        ],
+
+    let chartdataMale = {
+        labels: dummy.labels,
         datasets: [
             {
-                data: [20, 45, 28, 80, 99, 43, 20, 45, 28, 80, 99, 43, 0, 0],
+                data: dummy.data,
             },
         ],
     };
 
-    const chartdataFemale = {
-        labels: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-            '',
-            '',
-        ],
+    let chartdataFemale = {
+        labels: dummy.labels,
         datasets: [
             {
-                data: [20, 45, 28, 80, 99, 43, 20, 45, 28, 80, 99, 43, 0, 0],
+                data: dummy.data,
             },
         ],
     };
 
-    const chartdataTotal = {
-        labels: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-            '',
-            '',
-        ],
+    let chartdataTotal = {
+        labels: dummy.labels,
         datasets: [
             {
-                data: [20, 45, 28, 80, 99, 43, 20, 45, 28, 80, 99, 43, 0, 0],
+                data: dummy.data,
             },
         ],
     };
 
-    const chartConfig = (textColor: any) => {
-        return {
-            backgroundColor: 'transparent',
-            backgroundGradientFrom: Colors[colorScheme].background,
-            backgroundGradientTo: Colors[colorScheme].background,
-            decimalPlaces: 0, // optional, defaults to 2dp
-            color: (opacity = 1) => textColor,
-            style: {
-                borderRadius: 16,
-            },
-        };
-    };
+    if ( props.monthData != undefined && props.monthData.males != undefined ) {
+        chartdataMale.datasets[ 0 ].data = props.monthData.males;
+        chartdataFemale.datasets[ 0 ].data = props.monthData.female;
+        chartdataTotal.datasets[ 0 ].data = props.monthData.total;
+    }
+
+
+
     return (
         <View
-            style={{
-                marginTop: 20,
-                marginLeft: -50,
-            }}>
+            style={[
+                {
+                    marginTop: 20,
+                    marginLeft: -70,
+                },
+                props.visibility == true || props.monthData.length != undefined
+                    ? {}
+                    : { display: 'none' },
+            ]}>
             <Text
                 style={[
                     styles.chartTitle,
                     {
-                        color: Colors[colorScheme].text,
+                        color: Colors[ colorScheme ].text,
                     },
                 ]}>
-                Births By Months(Male)
+                Births in Brgy. {props.barangay} (Male)
             </Text>
+
             <View style={styles.separator}></View>
+
             <BarChart
-                //   style={graphStyle}
                 data={chartdataFemale}
-                width={screenWidth + 20}
-                height={320}
-                chartConfig={chartConfig('red')}
+                width={screenWidth + 50}
+                withHorizontalLabels={false}
+                height={360}
+                chartConfig={chartConfig( '#FF829D' )}
+                fromZero={true}
+                showValuesOnTopOfBars={true}
+                withInnerLines={false}
             />
             <Text
                 style={[
                     styles.chartTitle,
                     {
-                        color: Colors[colorScheme].text,
+                        color: Colors[ colorScheme ].text,
                     },
                 ]}>
-                Births By Months(Female)
+                Births in Brgy. {props.barangay}(Female)
             </Text>
+
             <View style={styles.separator}></View>
+
             <BarChart
-                //   style={graphStyle}
                 data={chartdataMale}
-                width={screenWidth + 20}
-                height={320}
-                chartConfig={chartConfig('blue')}
+                width={screenWidth + 50}
+                withHorizontalLabels={false}
+                height={360}
+                chartConfig={chartConfig( '#5EB5EF' )}
+                fromZero={true}
+                showValuesOnTopOfBars={true}
+                withInnerLines={false}
             />
+
             <Text
                 style={[
                     styles.chartTitle,
                     {
-                        color: Colors[colorScheme].text,
+                        color: Colors[ colorScheme ].text,
                     },
                 ]}>
-                Births By Months(Total)
+                Births in Brgy. {props.barangay}(Total)
             </Text>
+
             <View style={styles.separator}></View>
             <BarChart
-                //   style={graphStyle}
                 data={chartdataTotal}
-                width={screenWidth + 20}
-                height={320}
-                chartConfig={chartConfig('orange')}
+                width={screenWidth + 50}
+                withHorizontalLabels={false}
+                height={360}
+                chartConfig={chartConfig( 'orange' )}
+                showValuesOnTopOfBars={true}
+                fromZero={true}
+                withInnerLines={false}
             />
         </View>
     );
 }
 
-import styles from './births.style';
-
-import Colors from '../../../constants/Colors';
-import useColorScheme from '../../../hooks/useColorScheme';

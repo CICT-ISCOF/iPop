@@ -17,6 +17,9 @@ export default function DeathsSelects() {
 
     const baseURL = base.apiURL + 'location';
 
+    const [monthData, setmonthData] = useState({});
+    const [lineChartData, setlineChartData] = useState({});
+
     useEffect(() => {
         async function getMunicipalities() {
             const url = baseURL + '/municipalities?province_code=0630';
@@ -57,6 +60,11 @@ export default function DeathsSelects() {
         if (municipalityName == '' || barangay == '' || year == '') {
             return alert('Complete filters to perform this operation');
         }
+        let total: any = [];
+        let males: any = [];
+        let females: any = [];
+        let crudeDeathRate: any = [];
+
         const url =
             base.apiURL +
             'death-statistics?' +
@@ -65,6 +73,25 @@ export default function DeathsSelects() {
             if (response.data.data != null) {
                 setBirthData(response.data.data);
                 setVisibility(true);
+                for (let key in response.data.month) {
+                    total.push(response.data.month[key]['total']);
+                    males.push(response.data.month[key]['males']);
+                    females.push(response.data.month[key]['males']);
+                }
+                setmonthData({
+                    total: total,
+                    males: males,
+                    female: females,
+                });
+                for (let key in response.data.incidence) {
+                    crudeDeathRate.push({
+                        value: response.data.incidence[key]['value'],
+                        year: response.data.incidence[key]['year'],
+                    });
+                }
+                setlineChartData({
+                    crudeDeathRate: crudeDeathRate,
+                });
             } else {
                 alert('No data on this filter');
                 setVisibility(false);
@@ -74,6 +101,17 @@ export default function DeathsSelects() {
     return (
         <View>
             <DeathSummary data={summary} />
+            <Text
+                style={[
+                    styles.chartTitle,
+                    {
+                        color: Colors[colorScheme].text,
+                        marginLeft: -0,
+                    },
+                ]}>
+                Filter By Location
+            </Text>
+            <View style={[styles.separator, { marginLeft: -20 }]}></View>
             <View style={{ flexDirection: 'row' }}>
                 <Picker
                     style={{ flex: 1.8, marginTop: -30 }}
@@ -150,10 +188,25 @@ export default function DeathsSelects() {
                 />
                 <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
             </TouchableOpacity>
+
+            <MapScreen change={barangay + " " + municipalityName} />
+
+
+
             <TotalDataDeaths visibility={visible} data={birthData} />
 
-            <MonthCharts />
-            <CrudeDeathRate />
+            <MonthCharts
+                barangay={barangay}
+                municipalityName={municipalityName}
+                visibility={visible}
+                monthData={monthData}
+            />
+            <CrudeDeathRate
+                visibility={visible}
+                lineChartData={lineChartData}
+                barangay={barangay}
+                municipalityName={municipalityName}
+            />
             <View
                 style={{
                     height: 150,
@@ -177,4 +230,5 @@ import styles from './deaths.style';
 import DeathSummary from './deaths..summary';
 import TotalDataDeaths from './deaths..total-data';
 import MonthCharts from '../deaths/deaths..month-charts';
-import CrudeDeathRate from './crude-death-rate-chart';
+import CrudeDeathRate from './crude-death-rate-chart'; import MapScreen from '../../../shared/maps/maps';
+

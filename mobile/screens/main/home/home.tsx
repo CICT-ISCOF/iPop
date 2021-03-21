@@ -1,85 +1,88 @@
-export default function HomeScreen() {
+export default function Home() {
     const colorScheme = useColorScheme();
 
-    const [refreshing, setRefreshing] = useState(false);
-    const [carouselData, setCarouselData] = useState([]);
-    const [feautredArticlesData, setFeautredArticlesData] = useState([]);
+    const [ refreshing, setRefreshing ] = useState( false );
+    const [ carouselData, setCarouselData ] = useState( [] );
+    const [ feautredArticlesData, setFeautredArticlesData ] = useState( [] );
 
     const onRefresh = () => {
-        setRefreshing(true);
-        axios.get(base.apiURL + base.carousel).then((response) => {
-            setCarouselData(response.data);
-            axios.get(base.apiURL + base.featureArticles).then((response) => {
-                setFeautredArticlesData(response.data);
-                setRefreshing(false);
-            });
-        });
+        setRefreshing( true );
+        axios.get( base.apiURL + base.carousel ).then( ( response ) => {
+            setCarouselData( response.data );
+            axios.get( base.apiURL + base.featureArticles ).then( ( response ) => {
+                setFeautredArticlesData( response.data );
+                setRefreshing( false );
+            } );
+        } );
     };
 
-    useEffect(() => {
+    const refresh = () => {
+        axios.get( base.apiURL + base.carousel ).then( ( response ) => {
+            setCarouselData( response.data );
+            axios.get( base.apiURL + base.featureArticles ).then( ( response ) => {
+                setFeautredArticlesData( response.data );
+            } );
+        } );
+    }
+
+    useEffect( () => {
         async function fetchCarouseData() {
-            axios.get(base.apiURL + base.carousel).then((response) => {
-                setCarouselData(response.data);
-            });
+            axios.get( base.apiURL + base.carousel ).then( ( response ) => {
+                setCarouselData( response.data );
+            } );
         }
 
         async function fetchfeautredArticlesData() {
-            axios.get(base.apiURL + base.featureArticles).then((response) => {
-                setFeautredArticlesData(response.data);
-            });
+            axios.get( base.apiURL + base.featureArticles ).then( ( response ) => {
+                setFeautredArticlesData( response.data );
+            } );
         }
 
         fetchCarouseData();
         fetchfeautredArticlesData();
-    }, []);
+    }, [] );
 
     return (
-        <View style={styles.container}>
-            <AlertComponent hidden={false} />
-            <TopPadding />
-            <View
-                style={[
-                    styles.container,
-                    {
-                        backgroundColor: Colors[colorScheme].homeBG,
-                    },
-                ]}>
-                <View
+        <View style={[ styles.container, { backgroundColor: 'transparent', } ]}>
+
+
+            <View style={{
+                width: '100%',
+                zIndex: 99,
+                paddingTop: 50,
+                backgroundColor: Colors[ colorScheme ].background
+            }}>
+                <Image
                     style={{
-                        backgroundColor: Colors[colorScheme].background,
-                        marginTop: -11.9,
-                    }}>
-                    <SearchNav />
-                    <Image
-                        style={{
-                            height: 50,
-                            width: 50,
-                            resizeMode: 'stretch',
-                            borderRadius: 50,
-                            borderWidth: 2,
-                            borderColor: '#5B80F3',
-                            margin: 20,
-                            marginTop: -5,
-                            position: 'relative',
-                            zIndex: 0,
-                        }}
-                        source={require('../../../assets/images/transparent-logo.png')}
-                    />
-                </View>
-                <ScrollView
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    }>
-                    <View>
-                        <Carousel data={carouselData} />
-                        <FeautredArticles data={feautredArticlesData} />
-                    </View>
-                    <View style={{ height: 40 }} />
-                </ScrollView>
+                        height: 25,
+                        width: 50,
+                        resizeMode: 'stretch',
+                        margin: 20,
+                        marginTop: -5,
+
+                    }}
+                    source={require( '../../../assets/images/logo.png' )}
+                />
             </View>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        tintColor='#426FC3'
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }>
+                <Carousel
+                    data={carouselData}
+                />
+                <FeautredArticles
+                    refresh={() => {
+                        refresh()
+                    }}
+                    data={feautredArticlesData}
+                />
+                <View style={{ height: 40 }} />
+            </ScrollView>
         </View>
     );
 }

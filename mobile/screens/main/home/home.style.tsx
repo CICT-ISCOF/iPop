@@ -1,18 +1,14 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+export default StyleSheet.create( {
     container: {
         flex: 1,
-
-        paddingTop: 30,
     },
     nav: {
-        backgroundColor: '#4465B6',
         padding: 15,
     },
 
     textInputWrapper: {
-        backgroundColor: 'lightgray',
         alignSelf: 'flex-end',
         padding: 10,
         borderRadius: 50,
@@ -23,4 +19,4 @@ export default StyleSheet.create({
         marginTop: 50,
         marginLeft: 20,
     },
-});
+} );

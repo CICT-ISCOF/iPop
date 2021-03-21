@@ -1,24 +1,21 @@
 import * as React from 'react';
-
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Grid from 'react-native-grid-component';
 import styles from './nav.style';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
-import { StackScreenProps } from '@react-navigation/stack';
 import Header from '../../../shared/header/header';
-import { AboutParamList } from '../../../types';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import SearchNav from '../../../screens/main/home/components/search/search';
-import { ScrollView } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import TopPadding from '../../../shared/top-padding/top-padding';
+import { useNavigation } from '@react-navigation/native';
 
-export default function AboutScreen({
-    navigation,
-}: StackScreenProps<AboutParamList, 'AboutScreen'>) {
+export default function AboutScreen() {
+    const navigation = useNavigation();
+
     const colorScheme = useColorScheme();
 
-    const navs = [
+    const navs: any = [
         {
             title: 'Mandate',
             route: 'Mandate',
@@ -80,63 +77,63 @@ export default function AboutScreen({
             route: 'ContactUs',
             id: 9,
             icon: 'cellphone-iphone',
-            color: Colors[colorScheme].text,
+            color: Colors[ colorScheme ].text,
         },
     ];
 
-    const renderNav = (data: any) => {
+    const renderNav = ( data: any ) => {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    navigate(data.route);
+                    navigate( data.item.route );
                 }}
-                key={data.id}
                 style={[
                     styles.navs,
-                    { backgroundColor: Colors[colorScheme].background },
+                    { backgroundColor: Colors[ colorScheme ].background },
                 ]}>
                 <MaterialCommunityIcons
                     style={styles.navIons}
-                    name={data.icon}
+                    name={data.item.icon}
                     size={50}
-                    color={data.color}
+                    color={data.item.color}
                 />
                 <View style={styles.navButton}>
-                    <Text style={styles.navButtonText}>{data.title}</Text>
+                    <Text style={styles.navButtonText}>{data.item.title}</Text>
                 </View>
             </TouchableOpacity>
         );
     };
 
-    const navigate = (location: any) => {
-        navigation.push(location);
+    const navigate = ( location: any ) => {
+        navigation.navigate( location );
     };
 
     return (
-        <View style={[styles.container, { padding: 0 }]}>
+        <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
             <ScrollView
                 style={[
                     styles.container,
-                    {
-                        backgroundColor: Colors[colorScheme].bg1,
-                    },
+                    { backgroundColor: Colors[ colorScheme ].bg1, },
                 ]}>
                 <SearchNav />
                 <Text
-                    style={[styles.menu, { color: Colors[colorScheme].text }]}>
+                    style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
                     About Us
                 </Text>
 
                 <Header />
 
                 {/* ----------navs----------- */}
-                <Grid
+                <FlatList
+                    showsVerticalScrollIndicator={false}
                     style={styles.list}
                     renderItem={renderNav}
                     data={navs}
                     numColumns={3}
+                    keyExtractor={navs.index}
                 />
+
                 <View style={{ height: 100 }} />
             </ScrollView>
         </View>

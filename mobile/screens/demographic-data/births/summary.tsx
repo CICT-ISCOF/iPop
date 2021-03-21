@@ -1,22 +1,24 @@
 export default function Summary(props: any) {
     const colorScheme = useColorScheme();
-
+    const screenWidth = Dimensions.get('window').width;
     const sumamry = props.data;
 
     return (
         <View>
             <Text
                 style={[
+                    styles.chartTitle,
                     {
-                        fontSize: 25,
-                        fontWeight: '600',
+                        color: Colors[colorScheme].text,
+                        marginLeft: -0,
                     },
-                    { color: Colors[colorScheme].text },
                 ]}>
                 Provincial Summary
             </Text>
+            <View style={[styles.separator, { marginLeft: -20 }]}></View>
             <ScrollView
                 horizontal={true}
+                style={{ width: screenWidth, marginLeft: -20, paddingLeft: 20 }}
                 showsHorizontalScrollIndicator={false}>
                 <View style={[styles.box, { backgroundColor: '#8FDA4F' }]}>
                     <Ionicons
@@ -31,7 +33,6 @@ export default function Summary(props: any) {
                         </Text>
                     </View>
                 </View>
-
                 <View style={[styles.box, { backgroundColor: '#FF7900' }]}>
                     <Ionicons
                         name='ios-information-circle-outline'
@@ -45,7 +46,6 @@ export default function Summary(props: any) {
                         </Text>
                     </View>
                 </View>
-
                 <View style={[styles.box, { backgroundColor: '#35A8FB' }]}>
                     <Ionicons
                         name='ios-information-circle-outline'
@@ -65,7 +65,7 @@ export default function Summary(props: any) {
 }
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Dimensions } from 'react-native';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import styles from './births.style';

@@ -37,8 +37,11 @@ export default function ShowTeenCenter({ route }: any) {
                     {data.municipality}
                 </Text>
 
-                <TeenCenterImages data={data} />
+                <MapScreen change={data.municipality + " Iloilo"} />
+
                 <ServiceOfferedTeenCenters data={data} />
+
+                <View style={{ height: 50 }} />
             </ScrollView>
         </View>
     );
@@ -50,4 +53,5 @@ import TeenCenterImages from './images';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import BackContainer from '../../../shared/back-container/back-container';
-import TopPadding from '../../../shared/top-padding/top-padding';
+import TopPadding from '../../../shared/top-padding/top-padding'; import MapScreen from '../../../shared/maps/maps';
+

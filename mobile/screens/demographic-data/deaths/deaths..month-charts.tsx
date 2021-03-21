@@ -1,98 +1,62 @@
-export default function MonthCharts(props: any) {
-    let data = props.data;
-    const colorScheme = useColorScheme();
+import React from 'react';
+import { View, Text } from 'react-native';
+import { BarChart,} from 'react-native-chart-kit';
+import { Dimensions } from 'react-native';
+import styles from './deaths.style';
+import Colors from '../../../constants/Colors';
+import useColorScheme from '../../../hooks/useColorScheme';
+import dummy from '../../../constants/dummy'
+import chartConfig from '../../../constants/chartconfig'
 
-    const screenWidth = Dimensions.get('window').width;
+export default function MonthCharts( props: any ) {
+    const colorScheme = useColorScheme();
+    const screenWidth = Dimensions.get( 'window' ).width;
+    
     const chartdataMale = {
-        labels: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-            '',
-            '',
-        ],
+        labels: dummy.labels,
         datasets: [
             {
-                data: [20, 45, 28, 80, 99, 43, 20, 45, 28, 80, 99, 43, 0, 0],
+                data: dummy.data,
             },
         ],
-    };
+    }
 
     const chartdataFemale = {
-        labels: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-            '',
-            '',
-        ],
+        labels: dummy.labels,
         datasets: [
             {
-                data: [20, 45, 28, 80, 99, 43, 20, 45, 28, 80, 99, 43, 0, 0],
+                data: dummy.data,
             },
         ],
-    };
+    }
 
     const chartdataTotal = {
-        labels: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-            '',
-            '',
-        ],
+        labels: dummy.labels,
         datasets: [
             {
-                data: [20, 45, 28, 80, 99, 43, 20, 45, 28, 80, 99, 43, 0, 0],
+                data: dummy.data,
             },
         ],
-    };
+    }
 
-    const chartConfig = (textColor: any) => {
-        return {
-            backgroundColor: 'transparent',
-            backgroundGradientFrom: Colors[colorScheme].background,
-            backgroundGradientTo: Colors[colorScheme].background,
-            decimalPlaces: 0, // optional, defaults to 2dp
-            color: (opacity = 1) => textColor,
-            style: {
-                borderRadius: 16,
-            },
-        };
-    };
+    if (props.monthData != undefined && props.monthData.males != undefined) {
+        chartdataMale.datasets[0].data = props.monthData.males;
+        chartdataFemale.datasets[0].data = props.monthData.female;
+        chartdataTotal.datasets[0].data = props.monthData.total;
+    }
+   
+    
     return (
         <View
-            style={{
-                marginTop: 20,
-                marginLeft: -50,
-            }}>
+            style={[
+                {
+                    marginTop: 20,
+                    marginLeft: -70,
+                },
+                props.visibility == true || props.monthData.length != undefined
+                    ? {}
+                    : { display: 'none' },
+            ]}>
             <Text
                 style={[
                     styles.chartTitle,
@@ -104,11 +68,14 @@ export default function MonthCharts(props: any) {
             </Text>
             <View style={styles.separator}></View>
             <BarChart
-                //   style={graphStyle}
                 data={chartdataFemale}
-                width={screenWidth + 20}
-                height={320}
-                chartConfig={chartConfig('red')}
+                width={screenWidth + 50}
+                withHorizontalLabels={false}
+                height={360}
+                chartConfig={chartConfig('#FF829D')}
+                fromZero={true}
+                showValuesOnTopOfBars={true}
+                withInnerLines={false}
             />
             <Text
                 style={[
@@ -121,11 +88,14 @@ export default function MonthCharts(props: any) {
             </Text>
             <View style={styles.separator}></View>
             <BarChart
-                //   style={graphStyle}
                 data={chartdataMale}
-                width={screenWidth + 20}
-                height={320}
-                chartConfig={chartConfig('blue')}
+                width={screenWidth + 50}
+                withHorizontalLabels={false}
+                height={360}
+                chartConfig={chartConfig('#5EB5EF')}
+                fromZero={true}
+                showValuesOnTopOfBars={true}
+                withInnerLines={false}
             />
             <Text
                 style={[
@@ -138,26 +108,15 @@ export default function MonthCharts(props: any) {
             </Text>
             <View style={styles.separator}></View>
             <BarChart
-                //   style={graphStyle}
                 data={chartdataTotal}
-                width={screenWidth + 20}
-                height={320}
+                width={screenWidth + 50}
+                withHorizontalLabels={false}
+                height={360}
                 chartConfig={chartConfig('orange')}
+                fromZero={true}
+                showValuesOnTopOfBars={true}
+                withInnerLines={false}
             />
         </View>
     );
 }
-import React from 'react';
-import { View, Text } from 'react-native';
-import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-} from 'react-native-chart-kit';
-import { Dimensions } from 'react-native';
-import styles from './deaths.style';
-
-import Colors from '../../../constants/Colors';
-import useColorScheme from '../../../hooks/useColorScheme';

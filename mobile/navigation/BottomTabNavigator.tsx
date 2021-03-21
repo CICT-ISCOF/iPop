@@ -1,29 +1,16 @@
-import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import {
-    BottomTabParamList,
-    HomeParamList,
-    AboutParamList,
-    MenuParamList,
-    ProgramAreasParamList,
-    ProfileParamList,
-    MandateParamList,
-    MissionVisionParamList,
-} from '../types';
+import { BottomTabParamList, } from '../types';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 //screens
-import HomeScreen from '../screens/main/home/home';
+import Home from '../screens/main/home/home';
 import MenuScreen from '../shared/menu';
 import AboutScreen from '../screens/main/about-us/nav';
 import ProgramAreasScreen from '../screens/main/program-areas/program-areas';
@@ -37,30 +24,30 @@ export default function BottomTabNavigator() {
     return (
         <BottomTab.Navigator
             initialRouteName='Home'
-            tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+            tabBarOptions={{ activeTintColor: Colors[ colorScheme ].tint }}>
             <BottomTab.Screen
                 name='Home'
-                component={HomeScreen}
+                component={HomeNavigator}
                 options={{
-                    tabBarIcon: ({ color }) => (
+                    tabBarIcon: ( { color } ) => (
                         <AntDesign name='home' size={24} color={color} />
                     ),
                 }}
             />
             <BottomTab.Screen
                 name='AboutUs'
-                component={AboutUs}
+                component={AboutUsNavigator}
                 options={{
-                    tabBarIcon: ({ color }) => (
+                    tabBarIcon: ( { color } ) => (
                         <MaterialIcons name='people' size={24} color={color} />
                     ),
                 }}
             />
             <BottomTab.Screen
                 name='ProgamAreas'
-                component={ProgramAreas}
+                component={ProgramAreasNavigator}
                 options={{
-                    tabBarIcon: ({ color }) => (
+                    tabBarIcon: ( { color } ) => (
                         <MaterialCommunityIcons
                             name='radar'
                             size={24}
@@ -71,18 +58,18 @@ export default function BottomTabNavigator() {
             />
             <BottomTab.Screen
                 name='Profile'
-                component={Profile}
+                component={ProfileNavigator}
                 options={{
-                    tabBarIcon: ({ color }) => (
+                    tabBarIcon: ( { color } ) => (
                         <AntDesign name='user' size={24} color={color} />
                     ),
                 }}
             />
             <BottomTab.Screen
                 name='Menu'
-                component={Menu}
+                component={MenuNavigator}
                 options={{
-                    tabBarIcon: ({ color }) => (
+                    tabBarIcon: ( { color } ) => (
                         <SimpleLineIcons name='menu' size={24} color={color} />
                     ),
                 }}
@@ -91,30 +78,23 @@ export default function BottomTabNavigator() {
     );
 }
 
-function TabBarIcon(props: {
-    name: React.ComponentProps<typeof Ionicons>['name'];
-    color: string;
-}) {
-    return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-}
 
-const HomeStack = createStackNavigator<HomeParamList>();
 
-function Home() {
+const HomeStack = createStackNavigator<any>();
+function HomeNavigator() {
     return (
         <HomeStack.Navigator>
             <HomeStack.Screen
-                name='TabOneScreen'
-                component={TabOneScreen}
+                name='Home'
+                component={Home}
                 options={{ headerTitle: '', headerShown: false }}
             />
         </HomeStack.Navigator>
     );
 }
 
-const AboutStack = createStackNavigator<AboutParamList>();
-
-function AboutUs() {
+const AboutStack = createStackNavigator<any>();
+function AboutUsNavigator() {
     return (
         <AboutStack.Navigator>
             <AboutStack.Screen
@@ -126,9 +106,8 @@ function AboutUs() {
     );
 }
 
-const ProgramAreasStack = createStackNavigator<ProgramAreasParamList>();
-
-function ProgramAreas() {
+const ProgramAreasStack = createStackNavigator<any>();
+function ProgramAreasNavigator() {
     return (
         <ProgramAreasStack.Navigator>
             <ProgramAreasStack.Screen
@@ -140,9 +119,8 @@ function ProgramAreas() {
     );
 }
 
-const ProfileStack = createStackNavigator<ProfileParamList>();
-
-function Profile() {
+const ProfileStack = createStackNavigator<any>();
+function ProfileNavigator() {
     return (
         <ProfileStack.Navigator>
             <ProfileStack.Screen
@@ -154,9 +132,8 @@ function Profile() {
     );
 }
 
-const MenuStack = createStackNavigator<MenuParamList>();
-
-function Menu() {
+const MenuStack = createStackNavigator<any>();
+function MenuNavigator() {
     return (
         <MenuStack.Navigator>
             <MenuStack.Screen

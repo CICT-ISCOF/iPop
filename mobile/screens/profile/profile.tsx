@@ -96,7 +96,7 @@ export default function ProfileScreen() {
         },
     });
     return (
-        <View style={[styles.container, { padding: 0 }]}>
+        <ScrollView style={[styles.container, { padding: 0 }]}>
             <TopPadding />
             <ScrollView
                 style={[
@@ -144,6 +144,6 @@ export default function ProfileScreen() {
                     Lagubang, Baortac Nuevo
                 </Text>
             </ScrollView>
-        </View>
+        </ScrollView>
     );
 }
