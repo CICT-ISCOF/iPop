@@ -1,37 +1,37 @@
-export default function HomeScreen() {
+export default function Home() {
     const colorScheme = useColorScheme();
 
-    const [refreshing, setRefreshing] = useState(false);
-    const [carouselData, setCarouselData] = useState([]);
-    const [feautredArticlesData, setFeautredArticlesData] = useState([]);
+    const [ refreshing, setRefreshing ] = useState( false );
+    const [ carouselData, setCarouselData ] = useState( [] );
+    const [ feautredArticlesData, setFeautredArticlesData ] = useState( [] );
 
     const onRefresh = () => {
-        setRefreshing(true);
-        axios.get(base.apiURL + base.carousel).then((response) => {
-            setCarouselData(response.data);
-            axios.get(base.apiURL + base.featureArticles).then((response) => {
-                setFeautredArticlesData(response.data);
-                setRefreshing(false);
-            });
-        });
+        setRefreshing( true );
+        axios.get( base.apiURL + base.carousel ).then( ( response ) => {
+            setCarouselData( response.data );
+            axios.get( base.apiURL + base.featureArticles ).then( ( response ) => {
+                setFeautredArticlesData( response.data );
+                setRefreshing( false );
+            } );
+        } );
     };
 
-    useEffect(() => {
+    useEffect( () => {
         async function fetchCarouseData() {
-            axios.get(base.apiURL + base.carousel).then((response) => {
-                setCarouselData(response.data);
-            });
+            axios.get( base.apiURL + base.carousel ).then( ( response ) => {
+                setCarouselData( response.data );
+            } );
         }
 
         async function fetchfeautredArticlesData() {
-            axios.get(base.apiURL + base.featureArticles).then((response) => {
-                setFeautredArticlesData(response.data);
-            });
+            axios.get( base.apiURL + base.featureArticles ).then( ( response ) => {
+                setFeautredArticlesData( response.data );
+            } );
         }
 
         fetchCarouseData();
         fetchfeautredArticlesData();
-    }, []);
+    }, [] );
 
     return (
         <View style={styles.container}>
@@ -41,12 +41,12 @@ export default function HomeScreen() {
                 style={[
                     styles.container,
                     {
-                        backgroundColor: Colors[colorScheme].homeBG,
+                        backgroundColor: Colors[ colorScheme ].homeBG,
                     },
                 ]}>
                 <View
                     style={{
-                        backgroundColor: Colors[colorScheme].background,
+                        backgroundColor: Colors[ colorScheme ].background,
                         marginTop: -11.9,
                     }}>
                     <SearchNav />
@@ -63,7 +63,7 @@ export default function HomeScreen() {
                             position: 'relative',
                             zIndex: 0,
                         }}
-                        source={require('../../../assets/images/transparent-logo.png')}
+                        source={require( '../../../assets/images/transparent-logo.png' )}
                     />
                 </View>
                 <ScrollView
