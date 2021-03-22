@@ -48,6 +48,7 @@ import Step2 from '../screens/Steps/step2';
 import Step3 from '../screens/Steps/step3';
 import Step4 from '../screens/Steps/step4';
 import Step5 from '../screens/Steps/step5';
+import ShowArticle from '../screens/main/home/components/featured-articles/show-featuredArticles';
 
 export default function Navigation( { colorScheme, }: { colorScheme: ColorSchemeName; } ) {
     return (
@@ -70,6 +71,8 @@ function RootNavigator() {
             <Stack.Screen name='Password' component={Password} />
             <Stack.Screen name='Avatar' component={Avatar} />
             <Stack.Screen name='Root' component={BottomTabNavigator} />
+
+            <Stack.Screen name='ShowArticle' component={ShowArticle} />
 
             {/* steps  */}
             <Stack.Screen name='Step1' component={Step1} />

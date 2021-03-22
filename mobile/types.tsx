@@ -17,6 +17,9 @@ export type RootStackParamList = {
     Step4: undefined;
     Step5: undefined;
 
+
+    ShowArticle: undefined;
+
     // aboutus
     Mandate: undefined;
     MissionVIsion: undefined;

@@ -1,3 +1,18 @@
+import axios from 'axios';
+import base from '../../../constants/Api';
+import { View, Image, RefreshControl, ActivityIndicator } from 'react-native';
+import { useState, useEffect } from 'react';
+import * as React from 'react';
+import styles from './home.style';
+import Colors from '../../../constants/Colors';
+import useColorScheme from '../../../hooks/useColorScheme';
+
+//components
+import Carousel from './components/carousel/carousel';
+import FeautredArticles from './components/featured-articles/featured-articls';
+import { ScrollView } from 'react-native-gesture-handler';
+import HomeNav from './home-nav';
+
 export default function Home() {
     const colorScheme = useColorScheme();
 
@@ -42,10 +57,13 @@ export default function Home() {
         fetchfeautredArticlesData();
     }, [] );
 
+    function changeArticle() {
+
+    }
+
+
     return (
         <View style={[ styles.container, { backgroundColor: 'transparent', } ]}>
-
-
             <View style={{
                 width: '100%',
                 zIndex: 99,
@@ -75,6 +93,15 @@ export default function Home() {
                 <Carousel
                     data={carouselData}
                 />
+
+                <HomeNav
+                    menu={( menu: any ) => {
+                        changeArticle()
+                    }}
+                />
+
+
+
                 <FeautredArticles
                     refresh={() => {
                         refresh()
@@ -86,20 +113,3 @@ export default function Home() {
         </View>
     );
 }
-import axios from 'axios';
-import base from '../../../constants/Api';
-import { View, Image, RefreshControl, ActivityIndicator } from 'react-native';
-import { useState, useEffect } from 'react';
-import * as React from 'react';
-import styles from './home.style';
-import Colors from '../../../constants/Colors';
-import useColorScheme from '../../../hooks/useColorScheme';
-
-//components
-import Carousel from './components/carousel/carousel';
-import FeautredArticles from './components/featured-articles/featured-articls';
-import SearchNav from './components/search/search';
-
-import { ScrollView } from 'react-native-gesture-handler';
-import TopPadding from '../../../shared/top-padding/top-padding';
-import AlertComponent from '../../../shared/alerts/alerts';

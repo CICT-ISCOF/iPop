@@ -4,15 +4,7 @@ import { StackActions } from '@react-navigation/native';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 import { useState } from 'react';
-import {
-    Text,
-    TouchableOpacity,
-    View,
-    TextInput,
-    Platform,
-} from 'react-native';
-import axios from 'axios';
-import base from '../../constants/Api';
+import { Text, TouchableOpacity, View, TextInput, } from 'react-native';
 import TopPadding from '../../shared/top-padding/top-padding';
 import { useNavigation } from '@react-navigation/native';
 

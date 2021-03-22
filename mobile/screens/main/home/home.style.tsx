@@ -19,4 +19,20 @@ export default StyleSheet.create( {
         marginTop: 50,
         marginLeft: 20,
     },
+
+    menuButton: {
+        paddingHorizontal: 20,
+        paddingBottom: 14,
+    },
+    menuButtonActive: {
+        borderBottomWidth: 2,
+        borderBottomColor: '#5B80F3',
+    },
+    menuButtonText: {
+        color: 'gray'
+    },
+    menuButtonActiveText: {
+        fontWeight: 'bold'
+    }
+
 } );
