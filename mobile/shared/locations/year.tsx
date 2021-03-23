@@ -21,7 +21,7 @@ export default function Years( props: any ) {
                 <TextInput
                     autoFocus={true}
                     keyboardType="numeric"
-                    style={style.textInput}
+                    style={[ style.textInput, { color: Colors[ colorScheme ].text } ]}
                     placeholder="Enter year.."
                     value={year}
                     onChangeText={( text ) => {

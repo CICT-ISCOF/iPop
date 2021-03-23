@@ -100,7 +100,8 @@ export default function PyramidChart( props: any ) {
             <Text
                 style={{
                     textAlign: 'center',
-                    padding: 20
+                    padding: 20,
+                    color: Colors[ colorScheme ].text
                 }} >
                 This content has neither x-axis nor y-axis labels. Please refer to the website for labels.
                 </Text>

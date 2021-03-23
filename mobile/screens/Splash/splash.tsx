@@ -15,8 +15,7 @@ export default function Splash( { navigation }: any ) {
                 }, 1000 );
             } else {
                 setTimeout( () => {
-                    navigation.navigate( 'Step1' )
-                    // navigation.navigate( 'Login' )
+                    navigation.navigate( 'Root' )
                 }, 1000 );
             }
         } )()
