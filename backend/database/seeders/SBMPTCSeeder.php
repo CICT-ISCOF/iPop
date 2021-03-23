@@ -341,7 +341,7 @@ class SBMPTCSeeder extends Seeder
                 'tc_coordinator_count' => 0,
                 'population' => 0,
                 'services' => '',
-                'municipality' => 'Leganas',
+                'municipality' => 'Leganes',
                 'district' => 'II',
             ],
             [
