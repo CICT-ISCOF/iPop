@@ -39,8 +39,13 @@ export class FeaturedArticlesComponent implements OnInit {
 		const length = 900;	
 		const ending = '...';	
 		return string.substring(0, length - ending.length) + ending;
-		
-	}
+    }
+    
+    deleteArticle( id) {
+        this.FeaturedArticlesService.deleteArticle( id ).subscribe( data => {
+            this.ngOnInit()
+        } )
+    }
 	
 
 }

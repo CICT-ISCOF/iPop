@@ -3,20 +3,25 @@
     <h5 class="pop2">Featured Articles</h5>
     <hr>
 
-    <div class="article-container">
-        <div (click)="showArticle(article)" class="article" *ngFor="let article of articles">
-            <h2>{{article.title}}</h2>
-            <p><span class="badge badge-primary">{{article.created_at | date: 'MMMM dd, yyyy - h:ma'}}</span> </p>
-            <div class="body">
-                <div *ngIf="article.photos.length != 0" class="image">
-                    <img [src]="article.photos[0].file.uri" alt="">
+    <div class="article-container" style="display: flex;">
+        <div class="article" *ngFor="let article of articles">
+            <div (click)="showArticle(article)">
+                <h2>{{article.title}}
+                </h2>
+                <p><span class="badge badge-primary">{{article.created_at | date: 'MMMM dd, yyyy - h:ma'}}</span> </p>
+                <div class="body">
+                    <div *ngIf="article.photos.length != 0" class="image">
+                        <img [src]="article.photos[0].file.uri" alt="">
+                    </div>
+                    <div class="text">
+                        {{tuncateString(article.body)}}
+                    </div>
                 </div>
-                <div class="text">
-                    {{tuncateString(article.body)}}
-                </div>
+                <hr>
+                <br><br>
             </div>
-            <hr>
-            <br><br>
+            <button (click)="deleteArticle(article.id)" class="btn btn-danger mr-auto">Delete</button>
+
         </div>
     </div>
 
