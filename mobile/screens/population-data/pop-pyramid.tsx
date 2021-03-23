@@ -1,93 +1,110 @@
 import useColorScheme from '../../hooks/useColorScheme';
 import Colors from '../../constants/Colors';
-import styles from './pop-data.style';
 //@ts-ignore
-import { StackedBarChart, YAxis, XAxis } from 'react-native-svg-charts';
+import { StackedBarChart, YAxis, XAxis, BarChart, Grid } from 'react-native-svg-charts';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import styles from '../../shared/locations/municipality.style'
+import base from '../../constants/Api';
+import axios from 'axios';
 
 
 export default function PyramidChart( props: any ) {
-    const males = props.males;
-    const females = props.females;
+
+    const [ female, setfemale ]: any = React.useState( [] )
+    const [ male, setmale ]: any = React.useState( [] )
+
+
+    React.useEffect( () => {
+        getData()
+    }, [] )
+
+
+    function getData() {
+        const filter = {
+            municipality: props.data.municipality,
+            barangay: props.data.barangay,
+            year: props.data.year,
+        }
+
+        const url =
+            base.apiURL +
+            'population-pyramid' +
+            `?municipality=${ filter[ 'municipality' ] }&barangay=${ filter[ 'barangay' ] }&year=${ filter[ 'year' ] }`;
+        axios.get( url ).then( ( response ) => {
+            let malesArray = []
+            let femalesArray = []
+            if ( response.data.length != 0 ) {
+                for ( let key in response.data[ 0 ].data.male ) {
+                    malesArray.push( response.data[ 0 ].data.male[ key ] );
+                }
+                for ( let key in response.data[ 0 ].data.female ) {
+                    femalesArray.push( response.data[ 0 ].data.female[ key ] );
+                }
+                setfemale( femalesArray )
+                setmale( malesArray )
+
+            } else {
+                alert( `Population Pyramid on year ${ filter.year } is not set` );
+            }
+        } )
+    }
+
     const colorScheme = useColorScheme();
 
     return (
-        <View style={[ males.length < 2 ? { display: 'none' } : {} ]}>
-            <Text
-                style={[
-                    styles.chartTitle,
-                    {
-                        color: Colors[ colorScheme ].text,
-                    },
-                ]}>
-                Population Pyramid
-            </Text>
-            <View style={styles.separator}></View>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background } ]}>
+            <View style={styles.header} />
+            <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Population Pyramid</Text>
+            <View style={styles.separator} />
+
+
             <View
-                style={{
-                    flexDirection: 'row',
-                }}>
-                <YAxis
-                    data={YAsixdata}
-                    contentInset={{ top: 0, bottom: 0 }}
-                    svg={{
-                        fill: 'black',
-                        fontSize: 10,
-                    }}
-                    numberOfTicks={6}
-                    formatLabel={( value: any, index: any ) => {
-                        return pyramidLabesl[ index ];
-                    }}
-                    style={{
-                        marginRight: 20,
-                        marginTop: 35,
-                        height: 350,
-                    }}
-                />
-                <StackedBarChart
-                    style={{
-                        height: 400,
-                        flex: 1,
-                        transform: [ { scaleX: -1 } ],
-                    }}
-                    keys={keys}
-                    colors={[ '#5EB5EF' ]}
-                    data={males}
+                style={
+                    [
+                        {
+                            flexDirection: 'row',
+                            padding: 15,
+                        },
+                        male.length == 0 || female.length == 0 ? { display: 'none', position: 'absolute', left: -500 } : {}
+                    ]
+                }
+            >
+
+                <BarChart
+                    style={{ transform: [ { scaleX: -1 } ], flex: 1 }}
+                    data={male}
+                    svg={{ fill: '#1E4973' }}
+                    contentInset={{ top: -20, bottom: 0 }}
+
                     horizontal={true}
-                    showGrid={true}
-                    contentInset={{ top: 30, bottom: 30 }}
-                />
-                <StackedBarChart
+                    spacingInner={.5}
+                    spacingOuter={.5}
+                >
+                    <Grid />
+                </BarChart>
+
+                <BarChart
                     style={{ height: 400, flex: 1 }}
-                    keys={keys}
-                    colors={[ '#FF829D' ]}
-                    data={females}
+                    data={female}
+                    svg={{ fill: '#C00002' }}
+                    contentInset={{ top: -20, bottom: 0 }}
                     horizontal={true}
-                    showGrid={true}
-                    contentInset={{ top: 30, bottom: 30 }}
-                />
+                    spacingInner={.5}
+                    spacingOuter={.5}
+                >
+                    <Grid />
+                </BarChart>
             </View>
-            <XAxis
-                style={{ marginTop: 20 }}
-                data={[ 1, 2 ]}
-                formatLabel={( value: any, index: any ) => {
-                    return pyramidXAxis[ index ];
-                }}
-                contentInset={{ left: 70, right: 70 }}
-                svg={{ fontSize: 10, fill: 'black' }}
-            />
+
+            <Text
+                style={{
+                    textAlign: 'center',
+                    padding: 20
+                }} >
+                This content has neither x-axis nor y-axis labels. Please refer to the website for labels.
+                </Text>
         </View>
     );
 }
-
-const pyramidXAxis = [ 'Males', 'Females' ];
-const YAsixdata = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ];
-
-const keys = [ 'Females' ];
-
-const pyramidLabesl = [
-    '80+', '75-79', '70-74', '65-69', '60-64', '55-59', '50-54', '45-49', '40-44', '35-39', '30-34',
-    '25-29', '20-24', '15-19', '10-14', '5-9', '-1',
-];
 

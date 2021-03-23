@@ -1,67 +1,82 @@
 import { StyleSheet } from 'react-native';
-export default StyleSheet.create({
+export default StyleSheet.create( {
     container: {
         flex: 1,
         padding: 20,
         paddingTop: 30,
     },
-    menu: {
-        fontWeight: '700',
-        fontSize: 35,
-        width: '70%',
-        marginBottom: 50,
-    },
-    province: {
-        textAlign: 'center',
-        fontWeight: '600',
-        fontSize: 30,
-        marginBottom: 20,
-    },
-    label: {
-        margin: 5,
+    topContainer: {
         marginTop: 20,
-    },
-    select: {
-        flex: 1,
-    },
-
-    tr: {
         flexDirection: 'row',
-        borderBottomWidth: 1,
-
+        margin: 10,
+        backgroundColor: 'rgba(113,111,139,.2)',
+        height: 60,
         padding: 10,
+        borderRadius: 10,
+        justifyContent: 'center'
     },
-    th: {
+    backContainer: {
+        height: '100%',
         flex: 1,
-        padding: 2,
+        justifyContent: 'center',
+        borderRadius: 10,
+        marginRight: 10,
+        minWidth: 40,
+        alignItems: 'center',
+        shadowColor: "rgba(113,111,139,1)",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.57,
+        shadowRadius: 4.65,
+        elevation: 6,
     },
-    td: {
+    textINputContainer: {
+        height: '100%',
+        flexDirection: 'row',
+        flex: 4,
+        justifyContent: 'center',
+        borderRadius: 10,
+        shadowColor: "rgba(113,111,139,1)",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.57,
+        shadowRadius: 4.65,
+        elevation: 6,
+    },
+    iconCOntainer: {
+        height: '100%',
+        justifyContent: 'center',
         flex: 1,
-        padding: 2,
-        paddingLeft: 20,
+        maxWidth: 40,
+        alignItems: 'center',
+        borderRadius: 10,
     },
-    TextInput: {
-        width: '100%',
-        height: 40,
-        borderWidth: 1,
-        marginBottom: 20,
-        borderRadius: 5,
-        paddingLeft: 20,
-        flex: 0.5,
-        marginTop: 60,
+    menuContainer: {
+        height: '100%',
+        flex: 1,
+        justifyContent: 'center',
+        borderRadius: 10,
+        marginLeft: 10,
+        minWidth: 40,
+        alignItems: 'center',
+        shadowColor: "rgba(113,111,139,1)",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.57,
+        shadowRadius: 4.65,
+        elevation: 6,
     },
-    chartTitle: {
-        fontSize: 20,
-        marginBottom: 5,
-        marginTop: 40,
-        opacity: 0.5,
-        textAlign: 'center',
-    },
-    separator: {
-        marginVertical: 5,
-        height: 1,
-        width: '110%',
-        borderBottomColor: 'rgba(150,150,150,.5)',
-        borderBottomWidth: 1,
-    },
-});
+    textInput: {
+        flex: 4,
+        borderRadius: 10,
+        paddingRight: 10
+
+    }
+
+} );

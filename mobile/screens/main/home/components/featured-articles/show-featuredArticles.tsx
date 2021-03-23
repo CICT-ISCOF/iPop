@@ -51,7 +51,7 @@ export default function ShowArticle( { route }: any ) {
                 <Text
                     style={[
                         styles.body,
-                        { color: Colors[ colorScheme ].text },
+                        { color: Colors[ colorScheme ].text1 },
                     ]}>
                     {article.body}
                 </Text>
@@ -65,16 +65,16 @@ const styles = StyleSheet.create( {
 
     title: {
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 30,
         marginBottom: 15,
         padding: 20,
-        lineHeight: 25
+        lineHeight: 35
     },
 
     body: {
         fontSize: 17,
         padding: 20,
-        lineHeight: 30
-
+        lineHeight: 30,
+        color: 'gray'
     }
 } );

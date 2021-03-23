@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styles from './register.style';
-import { StackActions } from '@react-navigation/native';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 import { useState } from 'react';
