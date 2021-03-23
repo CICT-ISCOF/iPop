@@ -38,7 +38,7 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string'],
             'body' => ['required', 'string'],
             'files' => ['nullable', 'array'],
             'files.*' => ['required'],
@@ -100,7 +100,7 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article)
     {
         $data = $request->validate([
-            'title' => ['nullable', 'string', 'max:255'],
+            'title' => ['nullable', 'string'],
             'body' => ['nullable', 'string'],
             'files' => ['nullable', 'array'],
             'files.*' => ['required'],

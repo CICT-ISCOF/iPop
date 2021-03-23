@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BaseAPIService {
-
-  constructor() { }
+  constructor() {}
 
     public baseURL = 'http://192.168.1.102:8000/api'
 
@@ -22,5 +21,5 @@ export class BaseAPIService {
 		})	
   	}
 
-
+ 
 }
