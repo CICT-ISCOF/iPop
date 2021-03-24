@@ -14,6 +14,7 @@ export default StyleSheet.create( {
         borderBottomColor: 'rgba(150,150,150,.2)',
         borderBottomWidth: 1,
         width: '100%',
+        marginTop: 10
     },
     button: {
         width: '100%',
@@ -27,6 +28,7 @@ export default StyleSheet.create( {
         alignItems: 'center',
         minHeight: 95,
         margin: 25,
+        maxWidth: 120
     },
     roundedButtonIcon: {
         borderRadius: 50,
