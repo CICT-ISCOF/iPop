@@ -103,7 +103,6 @@ export default function Deaths() {
     )
 
     const ProvincialDataRef: any = React.useRef();
-
     const ProvincialSheet = () => (
         <DeathSummary />
     )

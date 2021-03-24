@@ -8,22 +8,17 @@ import base from '../../../constants/Api';
 
 export default function DeathSummary( props: any ) {
     const colorScheme = useColorScheme();
-    const summary = props.data;
-    const screenWidth = Dimensions.get( 'window' ).width;
-
-
-    const [ data, setData ]: any = useState( {} );
-
+    const [ data, setData ]: any = useState( {} )
 
     useEffect( () => {
         async function getSummary() {
             const url = base.apiURL + 'death-statistics/summary';
             axios.get( url ).then( ( response ) => {
                 setData( response.data );
-            } );
+            } )
         }
 
-        getSummary();
+        getSummary()
     }, [] )
 
     return (
@@ -63,7 +58,6 @@ const style = StyleSheet.create( {
         width: '95%',
         flexDirection: 'row',
         paddingVertical: 30
-
     },
     municipality: {
         textTransform: 'capitalize',
@@ -81,6 +75,5 @@ const style = StyleSheet.create( {
         marginTop: -15,
         color: 'orange'
     },
-
 } )
 

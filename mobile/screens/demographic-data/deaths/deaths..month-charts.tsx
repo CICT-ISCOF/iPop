@@ -85,7 +85,7 @@ export default function MonthCharts( props: any ) {
         <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background, } ]}>
             <View style={styles.header} />
             <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Deaths by months</Text>
-
+            <Text style={{ color: 'gray', textAlign: 'center', marginTop: -20, textTransform: 'capitalize' }}>{props.data.barangay}, {props.data.municipality}</Text>
             <View style={style.nav}>
 
                 <TouchableOpacity
@@ -217,7 +217,7 @@ const style = StyleSheet.create( {
         justifyContent: 'center',
         alignItems: 'center',
         padding: 7,
-        marginTop: 0
+        marginTop: 20
     },
     navButtons: {
         marginRight: 20,

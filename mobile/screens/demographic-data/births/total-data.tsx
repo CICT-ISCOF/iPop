@@ -39,7 +39,8 @@ export default function TotalData( props: any ) {
     return (
         <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background } ]}>
             <View style={styles.header} />
-            <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Birth Data of {props.data.barangay}, {props.data.municipality}</Text>
+            <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Birth Data</Text>
+            <Text style={{ color: 'gray', textAlign: 'center', marginTop: -20, textTransform: 'capitalize' }}>{props.data.barangay}, {props.data.municipality}</Text>
             <View style={styles.separator} />
 
             <View style={[ style.dataContainer, { borderLeftColor: '#9376FB', } ]}>

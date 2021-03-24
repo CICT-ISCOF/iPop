@@ -67,6 +67,7 @@ export default function CrudeDeathRate( props: any ) {
         <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background, } ]}>
             <View style={styles.header} />
             <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Crude Death Rate</Text>
+            <Text style={{ color: 'gray', textAlign: 'center', marginTop: -20, textTransform: 'capitalize' }}>{props.data.barangay}, {props.data.municipality}</Text>
 
             <View style={{ padding: 10 }}>
                 <View style={[ { backgroundColor: Colors[ colorScheme ].background }, style.chartContainer ]}>
