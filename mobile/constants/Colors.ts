@@ -13,7 +13,8 @@ export default {
 		tabIconSelected: tintColorLight,
 		border:'lightgray',
 		border1:'rgba(150,150,150,0.2)',
-		homeBG:'#E4E6E9'
+		homeBG:'white',
+        BottomSheetBG:'white'
 	},
 	dark: {
 		text: '#fff',
@@ -26,6 +27,7 @@ export default {
 		tabIconSelected: tintColorDark,
 		border:'rgba(150,150,150,0.3)',
 		border1:'rgba(50,50,50,0.9)',
-		homeBG:'#18191A'
+        homeBG:'#161616',
+        BottomSheetBG:'#15171A'
 	},
 };

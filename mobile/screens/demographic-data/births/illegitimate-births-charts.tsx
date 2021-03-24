@@ -65,12 +65,12 @@ export default function IllegitimateBirths( props: any ) {
 
 
     return (
-        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background, } ]}>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].BottomSheetBG, } ]}>
             <View style={styles.header} />
             <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Incidence of Illegitimate Births</Text>
             <Text style={{ color: 'gray', textAlign: 'center', marginTop: -20, textTransform: 'capitalize' }}>{props.data.barangay}, {props.data.municipality}</Text>
             <View style={{ padding: 10 }}>
-                <View style={[ { backgroundColor: Colors[ colorScheme ].background }, style.chartContainer ]}>
+                <View style={[ { backgroundColor: Colors[ colorScheme ].BottomSheetBG }, style.chartContainer ]}>
                     <View style={style.chartWrapper}>
                         <LineChart
                             data={chartdata}

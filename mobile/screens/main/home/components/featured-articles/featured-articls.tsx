@@ -47,14 +47,10 @@ export default function FeautredArticles( props: any ) {
                         style={[
                             styles.featuredArticle,
                             {
-                                backgroundColor: feedBackground,
+                                backgroundColor: 'transparent',
                             },
                         ]}>
-                        <Image
-                            key={index}
-                            style={[ styles.image, ]}
-                            source={{ uri: article.photos[ 0 ].file.uri }}
-                        />
+
                         <View style={styles.texts}>
                             <Text
                                 style={[
@@ -66,6 +62,11 @@ export default function FeautredArticles( props: any ) {
                             </Text>
                             <Text style={{ color: 'gray' }}>{toDate( article.updated_at )}</Text>
                         </View>
+                        <Image
+                            key={index}
+                            style={[ styles.image, ]}
+                            source={{ uri: article.photos[ 0 ].file.uri }}
+                        />
                     </TouchableOpacity>
                 ) )
             }
@@ -78,25 +79,26 @@ const styles = StyleSheet.create( {
     featuredArticle: {
         marginTop: -2,
         padding: 15,
-        borderWidth: 2,
-        borderColor: 'rgba(150,150,150,.2)',
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(150,150,150,.1)',
         flexDirection: 'row',
-        paddingVertical: 30,
+        paddingVertical: 15,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center'
     },
     image: {
-        height: 100,
+        height: 80,
         width: 120,
+        borderRadius: 5
     },
     texts: {
         width: '60%',
-        marginLeft: 20
+        marginRight: 20
     },
     title: {
-        fontWeight: '700',
-        fontSize: 15,
+        fontWeight: 'bold',
+        fontSize: 16,
         marginBottom: 15,
     },
 } );

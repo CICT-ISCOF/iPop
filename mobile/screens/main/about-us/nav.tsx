@@ -89,7 +89,7 @@ export default function AboutScreen() {
                 }}
                 style={[
                     styles.navs,
-                    { backgroundColor: Colors[ colorScheme ].background },
+                    { backgroundColor: Colors[ colorScheme ].homeBG },
                 ]}>
                 <MaterialCommunityIcons
                     style={styles.navIons}
@@ -97,7 +97,7 @@ export default function AboutScreen() {
                     size={50}
                     color={data.item.color}
                 />
-                <View style={styles.navButton}>
+                <View style={[ styles.navButton ]}>
                     <Text style={styles.navButtonText}>{data.item.title}</Text>
                 </View>
             </TouchableOpacity>
@@ -114,7 +114,7 @@ export default function AboutScreen() {
             <ScrollView
                 style={[
                     styles.container,
-                    { backgroundColor: Colors[ colorScheme ].background, },
+                    { backgroundColor: Colors[ colorScheme ].homeBG, },
                 ]}>
                 <SearchNav />
                 <Text

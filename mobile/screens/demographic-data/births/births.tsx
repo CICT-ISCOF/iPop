@@ -201,17 +201,17 @@ export default function Births() {
                     onPress={() => {
                         navigation.goBack()
                     }}
-                    style={[ styles.backContainer, { backgroundColor: Colors[ colorScheme ].background } ]}>
+                    style={[ styles.backContainer, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
                     <Ionicons name="arrow-back" size={20} color={Colors[ colorScheme ].text1} />
                 </TouchableOpacity>
 
-                <View style={[ styles.textINputContainer, { backgroundColor: Colors[ colorScheme ].background } ]}>
-                    <View style={[ styles.iconCOntainer, { backgroundColor: Colors[ colorScheme ].background } ]}>
+                <View style={[ styles.textINputContainer, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
+                    <View style={[ styles.iconCOntainer, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
                         <Ionicons name="ios-search-outline" size={20} color={Colors[ colorScheme ].text1} />
                     </View>
                     <TextInput
                         ref={ref => textInput = ref}
-                        style={[ styles.textInput, { backgroundColor: Colors[ colorScheme ].background } ]}
+                        style={[ styles.textInput, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}
                         placeholder="Select Location"
                         onTouchEnd={() => {
                             textInput.blur()
@@ -226,7 +226,7 @@ export default function Births() {
                     onPress={() => {
                         MenuRef.current.open()
                     }}
-                    style={[ styles.menuContainer, { backgroundColor: Colors[ colorScheme ].background } ]}>
+                    style={[ styles.menuContainer, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
                     <SimpleLineIcons name="menu" size={16} color={Colors[ colorScheme ].text1} />
                 </TouchableOpacity>
             </View>

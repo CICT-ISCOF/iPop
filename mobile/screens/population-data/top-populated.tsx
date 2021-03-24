@@ -36,7 +36,7 @@ export default function TopPopulated() {
     )
 
     return (
-        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background } ]}>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
             <View style={styles.header} />
             <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Top Populated Municipalities</Text>
             <View style={styles.separator} />

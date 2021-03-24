@@ -18,66 +18,66 @@ export default function ProgramAreasScreen() {
     const colorScheme = useColorScheme();
     const navigation = useNavigation();
 
-    const navigate = (params: any) => {
-        navigation.navigate('ShowProgramAreas', { data: params });
+    const navigate = ( params: any ) => {
+        navigation.navigate( 'ShowProgramAreas', { data: params } );
     };
 
     return (
-        <View style={[styles.container, { padding: 0 }]}>
+        <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
             <ScrollView
                 style={[
                     styles.container,
                     {
-                        backgroundColor: Colors[ colorScheme ].background,
+                        backgroundColor: Colors[ colorScheme ].homeBG,
                     },
                 ]}>
                 <SearchNav />
                 <Text
-                    style={[styles.menu, { color: Colors[colorScheme].text }]}>
+                    style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
                     Program Areas
                 </Text>
                 <TouchableOpacity
                     onPress={() => {
-                        navigate(2);
+                        navigate( 2 );
                     }}
                     style={[
                         styles.button,
-                        { backgroundColor: Colors[colorScheme].background },
+                        { backgroundColor: Colors[ colorScheme ].background },
                     ]}>
                     <FontAwesome name='stethoscope' size={35} color='#02A1C7' />
                     <Text
                         style={[
                             styles.buttonText,
-                            { color: Colors[colorScheme].text },
+                            { color: Colors[ colorScheme ].text },
                         ]}>
                         Adolescent Health and Youth Development
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        navigate(1);
+                        navigate( 1 );
                     }}
                     style={[
                         styles.button,
-                        { backgroundColor: Colors[colorScheme].background },
+                        { backgroundColor: Colors[ colorScheme ].background },
                     ]}>
                     <FontAwesome5 name='people-carry' size={24} color='red' />
                     <Text
                         style={[
                             styles.buttonText,
-                            { color: Colors[colorScheme].text },
+                            { color: Colors[ colorScheme ].text },
                         ]}>
                         Responsible Parenthood and Family Planning
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        navigate(3);
+                        navigate( 3 );
                     }}
                     style={[
                         styles.button,
-                        { backgroundColor: Colors[colorScheme].background },
+                        { backgroundColor: Colors[ colorScheme ].background },
                     ]}>
                     <MaterialIcons
                         name='data-usage'
@@ -87,7 +87,7 @@ export default function ProgramAreasScreen() {
                     <Text
                         style={[
                             styles.buttonText,
-                            { color: Colors[colorScheme].text },
+                            { color: Colors[ colorScheme ].text },
                         ]}>
                         Comprehensive Population Data Banking and Management
                         Project
@@ -95,17 +95,17 @@ export default function ProgramAreasScreen() {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        navigate(4);
+                        navigate( 4 );
                     }}
                     style={[
                         styles.button,
-                        { backgroundColor: Colors[colorScheme].background },
+                        { backgroundColor: Colors[ colorScheme ].background },
                     ]}>
                     <Ionicons name='ios-people' size={24} color='orange' />
                     <Text
                         style={[
                             styles.buttonText,
-                            { color: Colors[colorScheme].text },
+                            { color: Colors[ colorScheme ].text },
                         ]}>
                         Population Development and Integration
                     </Text>

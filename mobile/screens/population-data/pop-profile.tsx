@@ -59,7 +59,7 @@ export default function PopProfile( props: any ) {
     const colorScheme = useColorScheme();
 
     return (
-        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background } ]}>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
             <View style={styles.header} />
             <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Population Profile</Text>
             <View style={styles.separator} />

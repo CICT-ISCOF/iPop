@@ -26,7 +26,7 @@ export default function Summary( props: any ) {
     const colorScheme = useColorScheme();
 
     return (
-        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background } ]}>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
             <View style={styles.header} />
             <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Provincial Birth Data</Text>
             <View style={styles.separator} />

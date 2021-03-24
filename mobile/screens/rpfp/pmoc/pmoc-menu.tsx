@@ -15,7 +15,7 @@ export default function PMOCMenu( props: any ) {
         props.type( type )
     }
     return (
-        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background } ]}>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
             <View style={styles.header} />
             <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Select What to View on PMOC</Text>
             <Text style={{ color: 'gray', textAlign: 'center', marginTop: -20, textTransform: 'capitalize' }}> {props.municipality}</Text>

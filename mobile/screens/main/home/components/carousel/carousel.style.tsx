@@ -1,13 +1,14 @@
 import { StyleSheet } from 'react-native';
 export default StyleSheet.create( {
     scrollview: {
-        height: 250,
+        height: 210,
         width: '100%',
     },
     image: {
-        height: '100%%',
-        width: 380,
+        height: '100%',
+        width: 300,
         resizeMode: 'stretch',
+        borderRadius: 10,
     },
     placeholder: {
         alignSelf: 'center',
@@ -18,9 +19,7 @@ export default StyleSheet.create( {
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        transform: [
-            { translateY: -30 }
-        ],
+
         zIndex: 999,
         position: 'relative'
     },
@@ -31,8 +30,7 @@ export default StyleSheet.create( {
         margin: 5,
         opacity: .5,
         backgroundColor: '#426FC3',
-        borderWidth: 1,
-        borderColor: 'white'
+
     },
     stepperActive: {
         width: 10,
@@ -48,7 +46,6 @@ export default StyleSheet.create( {
         zIndex: 999,
         height: 250,
         justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.1)'
     }
 
 } );

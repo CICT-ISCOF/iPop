@@ -33,7 +33,7 @@ export default function Chart( props: any ) {
     const [ nav, setNav ] = React.useState( 'Males' )
 
     return (
-        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background, } ]}>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].BottomSheetBG, } ]}>
             <View style={styles.header} />
             <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>{props.type}</Text>
             <Text style={{ color: 'gray', textAlign: 'center', marginTop: -20, textTransform: 'capitalize' }}> {props.municipality}</Text>

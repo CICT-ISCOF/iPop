@@ -22,7 +22,7 @@ export default function MigrationsSummary( props: any ) {
     }, [] )
 
     return (
-        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background } ]}>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
             <View style={styles.header} />
             <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Provincial Migrations Data</Text>
             <View style={styles.separator} />

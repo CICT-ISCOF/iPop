@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+export default StyleSheet.create( {
     mainContianer: {
         marginBottom: 20,
     },
@@ -26,7 +26,7 @@ export default StyleSheet.create({
     text: {},
     title: {
         fontSize: 27,
-        color: '#2F5179',
+        color: '#426FC3',
         fontWeight: '800',
     },
-});
+} );

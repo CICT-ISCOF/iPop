@@ -19,12 +19,14 @@ export default function HomeNav( props: any ) {
             <View
                 style={{
                     flexDirection: 'row',
-                    backgroundColor: Colors[ colorScheme ].background,
-                    height: 60,
-                    alignItems: 'center',
+                    margin: 20,
+                    backgroundColor: 'rgba(113,111,139,.1)',
+                    borderRadius: 20,
                     justifyContent: 'center',
-                    marginBottom: 28,
-                    marginTop: -20
+                    alignItems: 'center',
+                    padding: 7,
+                    marginBottom: 58,
+                    marginTop: 10
                 }}
             >
                 <TouchableOpacity

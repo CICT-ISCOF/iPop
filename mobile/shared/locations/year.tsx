@@ -11,7 +11,7 @@ export default function Years( props: any ) {
     const [ year, setYear ] = React.useState( "" )
 
     return (
-        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background } ]}>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
             <View style={styles.header} />
 
             <View style={style.textInputContainer}>

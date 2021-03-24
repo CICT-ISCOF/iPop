@@ -13,7 +13,7 @@ export default function BirthMenu( props: any ) {
         props.type( type )
     }
     return (
-        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background } ]}>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
             <View style={styles.header} />
             <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Select What to View on {props.text}</Text>
             <View style={styles.separator} />

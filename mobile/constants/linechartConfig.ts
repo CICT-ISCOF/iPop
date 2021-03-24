@@ -7,8 +7,8 @@ export default function chartConfig(color:any) {
     const colorScheme = useColorScheme();
 
     return {
-        backgroundGradientFrom: Colors[ colorScheme ].background,
-        backgroundGradientTo: Colors[ colorScheme ].background,
+        backgroundGradientFrom: Colors[ colorScheme ].BottomSheetBG,
+        backgroundGradientTo: Colors[ colorScheme ].BottomSheetBG,
         decimalPlaces: 0,
         fillShadowGradient: color,
         fillShadowGradientOpacity: .3,

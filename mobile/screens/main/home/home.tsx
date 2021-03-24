@@ -63,12 +63,12 @@ export default function Home() {
 
 
     return (
-        <View style={[ styles.container, { backgroundColor: 'transparent', } ]}>
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].homeBG, } ]}>
             <View style={{
                 width: '100%',
                 zIndex: 99,
                 paddingTop: 50,
-                backgroundColor: Colors[ colorScheme ].background
+                backgroundColor: Colors[ colorScheme ].homeBG
             }}>
                 <Image
                     style={{
@@ -99,8 +99,6 @@ export default function Home() {
                         changeArticle()
                     }}
                 />
-
-
 
                 <FeautredArticles
                     refresh={() => {

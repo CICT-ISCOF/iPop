@@ -21,17 +21,28 @@ export default StyleSheet.create( {
     },
 
     menuButton: {
-        paddingHorizontal: 20,
-        paddingBottom: 14,
+        marginRight: 20,
+        flex: 1,
+        alignItems: 'center',
+        padding: 10,
+        borderRadius: 20,
     },
     menuButtonActive: {
-        borderBottomWidth: 2,
-        borderBottomColor: '#5B80F3',
+        backgroundColor: '#426FC3',
+        shadowColor: "rgba(113,111,139,1)",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.57,
+        shadowRadius: 4.65,
+        elevation: 6,
     },
     menuButtonText: {
         color: 'gray'
     },
     menuButtonActiveText: {
+        color: 'white',
         fontWeight: 'bold'
     }
 

@@ -31,57 +31,64 @@ export default function Carousel( props: any ) {
                 ref={scrollViewRef}
                 horizontal={true}
                 decelerationRate={0}
-                snapToInterval={380 - ( 0 + 0 )}
+                snapToInterval={310 - ( 0 + 0 )}
                 snapToAlignment={"center"}
                 centerContent={true}
                 directionalLockEnabled={true}
                 bounces={false}
                 onScroll={event => {
                     if ( event.nativeEvent.contentOffset.x > 50 ) {
+                        setPosition( event.nativeEvent.contentOffset.x )
                         if ( event.nativeEvent.contentOffset.x < position ) {
                             if ( step != 0 ) {
                                 setStep( step - 1 )
                             }
-                            setPosition( event.nativeEvent.contentOffset.x )
                             return
                         }
                         if ( step != images.length ) {
                             setStep( step + 1 )
-                            setPosition( event.nativeEvent.contentOffset.x )
                         }
                     }
 
                 }}
                 style={[
                     styles.scrollview,
-                    images.length != 0 ? {} : { position: 'absolute', left: 500 },
+                    images.length != 0 ? { marginLeft: -9 } : { position: 'absolute', left: 500 },
                 ]}
             >
                 {
                     images.map( ( image: any, index: any ) => {
                         if ( props.type == undefined ) {
                             return (
-                                <Image
-                                    key={index}
-                                    style={styles.image}
-                                    source={{ uri: image.photo.uri }}
-                                />
+                                <View style={[
+                                    { padding: 5 },
+                                ]}>
+                                    <Image
+                                        key={index}
+                                        style={styles.image}
+                                        source={{ uri: image.photo.uri }}
+                                    />
+                                </View>
                             )
                         }
                         if ( props.type == 'Show' ) {
                             return (
-                                <Image
-                                    key={index}
-                                    style={styles.image}
-                                    source={{ uri: image.file.uri }}
-                                />
+                                <View style={[
+                                    { padding: 5 },
+                                ]}>
+                                    <Image
+                                        key={index}
+                                        style={styles.image}
+                                        source={{ uri: image.file.uri }}
+                                    />
+                                </View>
                             )
                         }
                     } )
                 }
             </ScrollView>
 
-            <View
+            {/* <View
                 style={[
                     styles.buttons,
                     { left: 0 },
@@ -90,10 +97,10 @@ export default function Carousel( props: any ) {
                 ]}>
                 <TouchableOpacity
                     onPress={() => {
-                        scrollViewRef.current.scrollTo( { x: position - 380, animated: true } )
+                        scrollViewRef.current.scrollTo( { x: position - 360, animated: true } )
                     }}
                 >
-                    <Entypo name="chevron-with-circle-left" size={34} color="white" />
+                    <Entypo name="chevron-with-circle-left" size={34} color="#426FC3" />
                 </TouchableOpacity>
             </View>
 
@@ -106,12 +113,12 @@ export default function Carousel( props: any ) {
                 ]}>
                 <TouchableOpacity
                     onPress={() => {
-                        scrollViewRef.current.scrollTo( { x: position + 380, animated: true } )
+                        scrollViewRef.current.scrollTo( { x: position + 360, animated: true } )
                     }}
                 >
-                    <Entypo name="chevron-with-circle-right" size={34} color="white" />
+                    <Entypo name="chevron-with-circle-right" size={34} color="#426FC3" />
                 </TouchableOpacity>
-            </View>
+            </View> */}
 
             <View style={styles.stepTab}>
                 {

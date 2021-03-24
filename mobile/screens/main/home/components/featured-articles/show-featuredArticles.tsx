@@ -18,17 +18,17 @@ export default function ShowArticle( { route }: any ) {
 
     return (
         <View style={{
-            backgroundColor: Colors[ colorScheme ].background
+            backgroundColor: Colors[ colorScheme ].homeBG
         }}>
             <TopPadding />
-            <ScrollView style={{ paddingTop: 50, height: '100%' }}>
+            <ScrollView style={{ paddingTop: 50, height: '100%' }} showsVerticalScrollIndicator={false}>
 
                 <TouchableOpacity
                     onPress={() => {
                         navigation.goBack()
                     }}
                     style={{ paddingVertical: 20, paddingHorizontal: 10 }}>
-                    <Entypo name="chevron-thin-left" size={24} color="black" />
+                    <Entypo name="chevron-thin-left" size={24} color={Colors[ colorScheme ].text} />
                 </TouchableOpacity>
 
                 <Carousel

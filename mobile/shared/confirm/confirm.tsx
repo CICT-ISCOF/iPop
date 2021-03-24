@@ -21,7 +21,7 @@ export default function ConfirmBottomSheet( props: any ) {
                     props.blur( true )
                 }}
                 style={{
-                    backgroundColor: Colors[ colorScheme ].background,
+                    backgroundColor: Colors[ colorScheme ].BottomSheetBG,
                     borderRadius: 10,
                     width: '100%',
                     padding: 15
@@ -35,7 +35,7 @@ export default function ConfirmBottomSheet( props: any ) {
             </TouchableOpacity>
 
             <View style={{
-                backgroundColor: Colors[ colorScheme ].background,
+                backgroundColor: Colors[ colorScheme ].BottomSheetBG,
                 borderRadius: 10,
                 width: '100%',
                 marginBottom: 10
@@ -52,7 +52,7 @@ export default function ConfirmBottomSheet( props: any ) {
                                 style={[ {
                                     borderTopWidth: 1,
                                     borderTopColor: props.choices.length == 1 ? 'transparent' : 'rgba(150,150,150,.3)',
-                                    backgroundColor: Colors[ colorScheme ].background,
+                                    backgroundColor: Colors[ colorScheme ].BottomSheetBG,
                                     borderRadius: 10,
                                     width: '100%',
                                     padding: 15,

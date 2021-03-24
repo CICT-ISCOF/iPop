@@ -18,7 +18,7 @@ export default function Menus() {
     const navigation = useNavigation();
     const internalStyles = StyleSheet.create( {
         itemWrapper: {
-            backgroundColor: Colors[ colorScheme ].background,
+            backgroundColor: Colors[ colorScheme ].homeBG,
             borderRadius: 7,
             paddingVertical: 10,
             paddingHorizontal: 20,
