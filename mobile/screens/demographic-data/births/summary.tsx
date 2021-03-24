@@ -31,7 +31,7 @@ export default function Summary( props: any ) {
             <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Provincial Birth Data</Text>
             <View style={styles.separator} />
 
-            <View style={[ style.dataContainer, { borderLeftColor: '#1ED760', } ]}>
+            <View style={[ style.dataContainer, { borderLeftColor: '#49BDD7', } ]}>
                 <Text style={{ color: Colors[ colorScheme ].text1, flex: 4 }}>Crud Birth Rate</Text>
                 <Text style={{ color: Colors[ colorScheme ].text, flex: 1 }}>
                     {data.crude_birth_rate || 0}
@@ -45,7 +45,7 @@ export default function Summary( props: any ) {
                 </Text>
             </View>
 
-            <View style={[ style.dataContainer, { borderLeftColor: '#076DC9', } ]}>
+            <View style={[ style.dataContainer, { borderLeftColor: '#59B259', } ]}>
                 <Text style={{ color: Colors[ colorScheme ].text1, flex: 4 }}>Total Live Births</Text>
                 <Text style={{ color: Colors[ colorScheme ].text, flex: 1 }}>
                     {data.total_live_births || 0}

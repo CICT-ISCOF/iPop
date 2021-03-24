@@ -1,96 +1,119 @@
+import styles from '../../../shared/locations/municipality.style'
+import Colors from '../../../constants/Colors';
+import useColorScheme from '../../../hooks/useColorScheme';
 import React from 'react';
-import { View, Text } from 'react-native';
-import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-} from 'react-native-chart-kit';
+import { View, Text, StyleSheet } from 'react-native';
+import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
+import axios from 'axios';
+import base from '../../../constants/Api';
+import chartConfig from '../../../constants/linechartConfig'
 
 export default function IllegitimateBirths( props: any ) {
-    let data = props.data;
+    const { width, height } = Dimensions.get( 'window' );
+
     const colorScheme = useColorScheme();
-    const chartdata = {
+
+    React.useEffect( () => {
+        filter()
+    }, [] )
+
+    const [ chartdata, setchartdata ]: any = React.useState( {
         labels: [ '2015', '2016', '2017', '2018' ],
         datasets: [
             {
                 data: [ 0, 0, 0, 0 ],
             },
         ],
-    };
+    } )
 
-    const screenWidth = Dimensions.get( 'window' ).width;
-
-    if (
-        props.lineChartData != undefined &&
-        props.lineChartData.illegitimateBirths != undefined &&
-        props.lineChartData.illegitimateBirths.length != 0
-    ) {
-        chartdata.labels = [];
-        chartdata.datasets[ 0 ].data = [];
-
-        for ( let index in props.lineChartData.illegitimateBirths ) {
-            chartdata.labels.push(
-                props.lineChartData.illegitimateBirths[ index ].year
-            );
-            chartdata.datasets[ 0 ].data.push(
-                props.lineChartData.illegitimateBirths[ index ].value
-            );
+    async function filter() {
+        let tempChart: any = {
+            labels: [],
+            datasets: [
+                {
+                    data: [],
+                },
+            ],
         }
+
+        const filter = {
+            municipality: props.data.municipality,
+            barangay: props.data.barangay,
+            year: props.data.year,
+        }
+
+        const url =
+            base.apiURL +
+            'birth-statistics?' +
+            `?municipality=${ filter[ 'municipality' ] }&barangay=${ filter[ 'barangay' ] }&year=${ filter[ 'year' ] }`
+        axios.get( url ).then( ( response ) => {
+
+            if ( response.data.data != null ) {
+                for ( let key in response.data.incidence ) {
+                    if ( response.data.incidence[ key ][ 'title' ] != 'INCIDENCE OF TEENAGE BIRTHS' ) {
+                        tempChart.labels.push( response.data.incidence[ key ][ 'year' ] )
+                        tempChart.datasets[ 0 ].data.push( response.data.incidence[ key ][ 'value' ] )
+                    }
+                }
+                setchartdata( tempChart )
+            } else {
+                alert( `No data on year ${ filter.year }` )
+            }
+        } );
     }
 
-    const chartConfig = {
-        backgroundGradientFrom: Colors[ colorScheme ].background,
-        backgroundGradientTo: Colors[ colorScheme ].background,
-        decimalPlaces: 0,
-        fillShadowGradient: '#FF829D',
-        fillShadowGradientOpacity: 0.5,
-        color: ( opacity = 1 ) => '#FF829D',
-        style: {
-            borderRadius: 1,
-        },
-        strokeWidth: 1,
-        barPercentage: 0.17,
-        labelColor: ( opacity = 1 ) => Colors[ colorScheme ].text,
-        propsForDots: {
-            strokeWidth: '1',
-            stroke: '#FF829D',
-        },
-    };
+
     return (
-        <View
-            style={[
-                {
-                    marginTop: 20,
-                    marginLeft: -50,
-                },
-                props.visibility == true ? {} : { display: 'none' },
-            ]}>
-            <Text
-                style={[
-                    styles.chartTitle,
-                    {
-                        color: Colors[ colorScheme ].text,
-                    },
-                ]}>
-                Illegitimate Births (Brgy. {props.barangay})
-            </Text>
-            <View style={styles.separator}></View>
-            <LineChart
-                data={chartdata}
-                chartConfig={chartConfig}
-                bezier
-                width={screenWidth + 120}
-                height={360}
-                fromZero={true}
-            />
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background, } ]}>
+            <View style={styles.header} />
+            <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Incidence of Illegitimate Births</Text>
+            <Text style={{ color: 'gray', textAlign: 'center', marginTop: -20, textTransform: 'capitalize' }}>{props.data.barangay}, {props.data.municipality}</Text>
+            <View style={{ padding: 10 }}>
+                <View style={[ { backgroundColor: Colors[ colorScheme ].background }, style.chartContainer ]}>
+                    <View style={style.chartWrapper}>
+                        <LineChart
+                            data={chartdata}
+                            chartConfig={chartConfig( '#F78B00' )}
+                            bezier
+                            width={width + 100}
+                            height={200}
+                            fromZero={true}
+                            withDots={true}
+                            withShadow={true}
+                            withInnerLines={false}
+                            withOuterLines={false}
+                            withVerticalLines={false}
+                            withHorizontalLines={false}
+                        />
+                    </View>
+                </View>
+            </View>
         </View>
     );
 }
 
-import styles from './births.style';
+const style = StyleSheet.create( {
+    chartContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        marginTop: 50,
+        marginLeft: 20
+    },
+    chartTitle: {
+        fontSize: 20,
+        alignSelf: 'flex-start',
+        marginBottom: 40,
+        marginLeft: 20,
+        fontWeight: '500'
+    },
+    chartWrapper: {
+        transform: [
+            { translateX: 7 }
+        ]
+    }
+} )
 
-import Colors from '../../../constants/Colors';
-import useColorScheme from '../../../hooks/useColorScheme';
+
+

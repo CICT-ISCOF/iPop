@@ -39,17 +39,17 @@ export default function DeathSummary( props: any ) {
     return (
         <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background } ]}>
             <View style={styles.header} />
-            <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Provincial Death Data</Text>
+            <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Death Data of {props.data.barangay}, {props.data.municipality}</Text>
             <View style={styles.separator} />
 
-            <View style={[ style.dataContainer, { borderLeftColor: '#422B52', } ]}>
+            <View style={[ style.dataContainer, { borderLeftColor: '#9376FB', } ]}>
                 <Text style={{ color: Colors[ colorScheme ].text1, flex: 4 }}>Total Population</Text>
                 <Text style={{ color: Colors[ colorScheme ].text, flex: 1 }}>
                     < TotalPopulation />
                 </Text>
             </View>
 
-            <View style={[ style.dataContainer, { borderLeftColor: 'red', } ]}>
+            <View style={[ style.dataContainer, { borderLeftColor: '#C71E24', } ]}>
                 <Text style={{ color: Colors[ colorScheme ].text1, flex: 4 }}>Total Deaths</Text>
                 <Text style={{ color: Colors[ colorScheme ].text, flex: 1 }}>
                     {data.total || 0}
