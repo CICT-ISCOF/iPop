@@ -29,7 +29,7 @@ export default function ProgramAreasScreen() {
                 style={[
                     styles.container,
                     {
-                        backgroundColor: Colors[colorScheme].bg1,
+                        backgroundColor: Colors[ colorScheme ].background,
                     },
                 ]}>
                 <SearchNav />

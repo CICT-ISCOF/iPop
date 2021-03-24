@@ -11,45 +11,20 @@ export default function MenuScreen() {
     const colorScheme = useColorScheme();
 
     return (
-        <View style={[styles.container, { padding: 0 }]}>
+        <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={[
                     styles.container,
                     {
-                        backgroundColor: Colors[colorScheme].bg1,
+                        backgroundColor: Colors[ colorScheme ].background,
                     },
                 ]}>
                 <SearchNav />
-                <Text
-                    style={[styles.menu, { color: Colors[colorScheme].text }]}>
-                    Menu
+                <Text style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
+                    Hi, Jamel
                 </Text>
-                <View style={styles.listContianer}>
-                    <Image
-                        style={styles.image}
-                        source={require('../assets/avatars/boy-blue.png')}
-                    />
-                    <View style={styles.texts}>
-                        <Text
-                            style={[
-                                styles.name,
-                                ,
-                                { color: Colors[colorScheme].text },
-                            ]}>
-                            Juan Dela Cruz
-                        </Text>
-                        <Text
-                            style={[
-                                styles.position,
-                                ,
-                                { color: Colors[colorScheme].text1 },
-                            ]}>
-                            Viewer
-                        </Text>
-                    </View>
-                </View>
                 <Menus />
                 <View style={{ height: 100 }} />
             </ScrollView>

@@ -114,7 +114,7 @@ export default function AboutScreen() {
             <ScrollView
                 style={[
                     styles.container,
-                    { backgroundColor: Colors[ colorScheme ].bg1, },
+                    { backgroundColor: Colors[ colorScheme ].background, },
                 ]}>
                 <SearchNav />
                 <Text

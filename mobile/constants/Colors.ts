@@ -5,7 +5,7 @@ export default {
 	light: {
 		text: '#000',
 		text1:'rgba(150,150,150,0.9)',
-		background: '#fff',
+		background: 'white',
 		bg1: '#F0F2F5',
 		lighterBg:'#D5D5DD',
 		tint: tintColorLight,
@@ -18,7 +18,7 @@ export default {
 	dark: {
 		text: '#fff',
 		text1:'rgba(150,150,150,0.7)',
-        background: '#212226',
+        background: 'black',
 		bg1: '#18191A',
 		lighterBg:'#3A3B3C',
 		tint: tintColorDark,
