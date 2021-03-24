@@ -18,7 +18,7 @@ export default {
 	dark: {
 		text: '#fff',
 		text1:'rgba(150,150,150,0.7)',
-		background: '#242424',
+        background: '#212226',
 		bg1: '#18191A',
 		lighterBg:'#3A3B3C',
 		tint: tintColorDark,

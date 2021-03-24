@@ -1,122 +1,247 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { BarChart,} from 'react-native-chart-kit';
+
+
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { BarChart, } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
-import styles from './deaths.style';
+
+import React from 'react';
+import axios from 'axios';
+import styles from '../../../shared/locations/municipality.style'
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
+import base from '../../../constants/Api';
 import dummy from '../../../constants/dummy'
 import chartConfig from '../../../constants/chartconfig'
 
 export default function MonthCharts( props: any ) {
     const colorScheme = useColorScheme();
-    const screenWidth = Dimensions.get( 'window' ).width;
-    
-    const chartdataMale = {
+
+    const { width, height } = Dimensions.get( 'screen' );
+
+    const [ chartdataMale, setchartdataMale ] = React.useState( {
         labels: dummy.labels,
-        datasets: [
-            {
-                data: dummy.data,
-            },
-        ],
+        datasets: [ { data: dummy.data } ]
+    } )
+
+    const [ chartdataFemale, setchartdataFemale ] = React.useState( {
+        labels: dummy.labels,
+        datasets: [ { data: dummy.data } ]
+    } )
+
+    const [ chartdataTotal, setchartdataTotal ] = React.useState( {
+        labels: dummy.labels,
+        datasets: [ { data: dummy.data } ]
+    } )
+
+    const [ nav, setNav ] = React.useState( 'Males' )
+
+    React.useEffect( () => {
+        filter()
+    }, [] )
+
+    async function filter() {
+        let chartdataMaleTemp: any = {
+            labels: dummy.labels,
+            datasets: [ { data: [] } ]
+        }
+
+        let chartdataFemaleTemp: any = {
+            labels: dummy.labels,
+            datasets: [ { data: [] } ]
+        }
+
+        let chartdataTotalTemp: any = {
+            labels: dummy.labels,
+            datasets: [ { data: [] } ]
+        }
+
+        const filter = {
+            municipality: props.data.municipality,
+            barangay: props.data.barangay,
+            year: props.data.year,
+        }
+
+        const url =
+            base.apiURL +
+            'death-statistics?' +
+            `?municipality=${ filter[ 'municipality' ] }&barangay=${ filter[ 'barangay' ] }&year=${ filter[ 'year' ] }`
+        axios.get( url ).then( ( response ) => {
+            if ( response.data.month != null ) {
+                for ( let key in response.data.month ) {
+                    chartdataTotalTemp.datasets[ 0 ].data.push( response.data.month[ key ][ 'total' ] );
+                    chartdataFemaleTemp.datasets[ 0 ].data.push( response.data.month[ key ][ 'females' ] );
+                    chartdataMaleTemp.datasets[ 0 ].data.push( response.data.month[ key ][ 'males' ] );
+                }
+                setchartdataMale( chartdataMaleTemp )
+                setchartdataFemale( chartdataFemaleTemp )
+                setchartdataTotal( chartdataTotalTemp )
+            } else {
+                alert( `No data on year ${ filter.year }` )
+            }
+        } );
     }
 
-    const chartdataFemale = {
-        labels: dummy.labels,
-        datasets: [
-            {
-                data: dummy.data,
-            },
-        ],
-    }
-
-    const chartdataTotal = {
-        labels: dummy.labels,
-        datasets: [
-            {
-                data: dummy.data,
-            },
-        ],
-    }
-
-    if (props.monthData != undefined && props.monthData.males != undefined) {
-        chartdataMale.datasets[0].data = props.monthData.males;
-        chartdataFemale.datasets[0].data = props.monthData.female;
-        chartdataTotal.datasets[0].data = props.monthData.total;
-    }
-   
-    
     return (
-        <View
-            style={[
-                {
-                    marginTop: 20,
-                    marginLeft: -70,
-                },
-                props.visibility == true || props.monthData.length != undefined
-                    ? {}
-                    : { display: 'none' },
-            ]}>
-            <Text
-                style={[
-                    styles.chartTitle,
-                    {
-                        color: Colors[colorScheme].text,
-                    },
-                ]}>
-                Deaths By Months(Male)
-            </Text>
-            <View style={styles.separator}></View>
-            <BarChart
-                data={chartdataFemale}
-                width={screenWidth + 50}
-                withHorizontalLabels={false}
-                height={360}
-                chartConfig={chartConfig('#FF829D')}
-                fromZero={true}
-                showValuesOnTopOfBars={true}
-                withInnerLines={false}
-            />
-            <Text
-                style={[
-                    styles.chartTitle,
-                    {
-                        color: Colors[colorScheme].text,
-                    },
-                ]}>
-                Deaths By Months(Female)
-            </Text>
-            <View style={styles.separator}></View>
-            <BarChart
-                data={chartdataMale}
-                width={screenWidth + 50}
-                withHorizontalLabels={false}
-                height={360}
-                chartConfig={chartConfig('#5EB5EF')}
-                fromZero={true}
-                showValuesOnTopOfBars={true}
-                withInnerLines={false}
-            />
-            <Text
-                style={[
-                    styles.chartTitle,
-                    {
-                        color: Colors[colorScheme].text,
-                    },
-                ]}>
-                Deaths By Months(Total)
-            </Text>
-            <View style={styles.separator}></View>
-            <BarChart
-                data={chartdataTotal}
-                width={screenWidth + 50}
-                withHorizontalLabels={false}
-                height={360}
-                chartConfig={chartConfig('orange')}
-                fromZero={true}
-                showValuesOnTopOfBars={true}
-                withInnerLines={false}
-            />
+        <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].background, } ]}>
+            <View style={styles.header} />
+            <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Deaths by months</Text>
+
+            <View style={style.nav}>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        setNav( 'Males' )
+                    }}
+                    style={[ style.navButtons,
+                    nav == 'Males' ? style.avtiveButton : {},
+                    nav == 'Males' ? { backgroundColor: '#49BDD7' } : {}
+                    ]}
+                >
+                    <Text style={nav == 'Males' ? style.activeText : style.InactiveText} >Males</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        setNav( 'Females' )
+                    }}
+                    style={[ style.navButtons,
+                    nav == 'Females' ? style.avtiveButton : {},
+                    nav == 'Females' ? { backgroundColor: '#EF7896' } : {}
+                    ]}
+                >
+                    <Text style={nav == 'Females' ? style.activeText : style.InactiveText}>Females</Text>
+                </TouchableOpacity >
+
+                <TouchableOpacity
+                    onPress={() => {
+                        setNav( 'Total' )
+                    }}
+                    style={[ style.navButtons,
+                    nav == 'Total' ? style.avtiveButton : {},
+                    nav == 'Total' ? { backgroundColor: 'orange' } : {}
+                    ]}
+                >
+                    <Text style={nav == 'Total' ? style.activeText : style.InactiveText}>Total</Text>
+                </TouchableOpacity>
+
+            </View>
+
+            <View style={nav == 'Males' ? style.chartContainer : { position: 'absolute', left: -500 }}>
+                <Text style={[ style.chartTitle, { color: Colors[ colorScheme ].text } ]}>Male Deaths on Year ({props.data.year})</Text>
+
+                <BarChart
+                    data={chartdataMale}
+                    width={width - 20}
+                    height={200}
+                    chartConfig={chartConfig( '#49BDD7' )}
+                    fromZero={true}
+                    showBarTops={false}
+                    withHorizontalLabels={true}
+                    withInnerLines={false}
+                    withDots={true}
+                    withShadow={true}
+                    withOuterLines={true}
+                    withVerticalLines={true}
+                    withHorizontalLines={false}
+                />
+            </View>
+
+            <View style={nav == 'Females' ? style.chartContainer : { position: 'absolute', left: -500 }}>
+                <Text style={[ style.chartTitle, { color: Colors[ colorScheme ].text } ]}>Female Deaths on Year ({props.data.year})</Text>
+
+                <BarChart
+                    data={chartdataFemale}
+                    width={width - 20}
+                    height={200}
+                    chartConfig={chartConfig( '#EF7896' )}
+                    fromZero={true}
+                    showBarTops={false}
+                    withHorizontalLabels={true}
+                    withInnerLines={false}
+                    withDots={true}
+                    withShadow={true}
+                    withOuterLines={true}
+                    withVerticalLines={true}
+                    withHorizontalLines={false}
+                />
+            </View>
+
+
+
+            <View style={nav == 'Total' ? style.chartContainer : { position: 'absolute', left: -500 }}>
+                <Text style={[ style.chartTitle, { color: Colors[ colorScheme ].text } ]}>Total Deaths on Year ({props.data.year})</Text>
+
+                <BarChart
+                    data={chartdataTotal}
+                    width={width - 20}
+                    height={200}
+                    chartConfig={chartConfig( 'orange' )}
+                    fromZero={true}
+                    showBarTops={false}
+                    withHorizontalLabels={true}
+                    withInnerLines={false}
+                    withDots={true}
+                    withShadow={true}
+                    withOuterLines={true}
+                    withVerticalLines={true}
+                    withHorizontalLines={false}
+                />
+            </View>
         </View>
     );
 }
+
+const style = StyleSheet.create( {
+    chartContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        paddingBottom: 0,
+        paddingHorizontal: 10,
+        marginTop: 50,
+        marginLeft: -20
+    },
+    chartTitle: {
+        fontSize: 20,
+        alignSelf: 'flex-start',
+        marginBottom: 40,
+        marginLeft: 20,
+        fontWeight: '500'
+    },
+
+    nav: {
+        flexDirection: 'row',
+        margin: 20,
+        backgroundColor: 'rgba(113,111,139,.1)',
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 7,
+        marginTop: 0
+    },
+    navButtons: {
+        marginRight: 20,
+        flex: 1,
+        alignItems: 'center',
+        padding: 10,
+        borderRadius: 20,
+    },
+    avtiveButton: {
+        backgroundColor: '#426FC3',
+        shadowColor: "rgba(113,111,139,1)",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.57,
+        shadowRadius: 4.65,
+        elevation: 6,
+    },
+    InactiveText: {
+        color: 'gray'
+    },
+    activeText: {
+        color: 'white',
+        fontWeight: 'bold'
+    }
+} )

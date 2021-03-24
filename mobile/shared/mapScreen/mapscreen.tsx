@@ -39,7 +39,7 @@ export default function MapScreen( props: any ) {
     }, [ props.location ] )
 
     function changeMap() {
-        if ( props.location.barangay.name != undefined ) {
+        if ( props.location != undefined ) {
             const url = `https://us1.locationiq.com/v1/search.php?key=pk.ca7d72d67098fe33153685abf70e35a9&q=${ props.location.barangay.name } ${ props.location.municipality }&format=json`
             axios.get( url ).then( ( response ) => {
                 setData( response.data )
