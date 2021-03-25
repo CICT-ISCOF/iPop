@@ -12,8 +12,6 @@ import useColorScheme from '../../../hooks/useColorScheme';
 import styles from './mpc-fdc.style';
 import District from '../../../shared/locations/district';
 import MPCList from './mpc-list';
-import ShowMPC from './show-mpc';
-
 
 export default function MPCFDC() {
     const colorScheme = useColorScheme();

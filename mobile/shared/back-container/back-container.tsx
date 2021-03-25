@@ -10,10 +10,10 @@ import { StackActions } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
-export default function BackContainer(props: any) {
+export default function BackContainer( props: any ) {
     const colorScheme = useColorScheme();
     const navigation = useNavigation();
-    const styles = StyleSheet.create({
+    const styles = StyleSheet.create( {
         buttonContainer: {
             borderRadius: 50,
             shadowColor: '#000',
@@ -28,10 +28,10 @@ export default function BackContainer(props: any) {
             height: 40,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: Colors[colorScheme].background,
-            marginBottom: 20,
+            backgroundColor: Colors[ colorScheme ].background,
+            marginBottom: -20,
         },
-    });
+    } );
 
     const back = () => {
         navigation.goBack();
@@ -47,7 +47,7 @@ export default function BackContainer(props: any) {
                 <MaterialIcons
                     name='close'
                     size={20}
-                    color={Colors[colorScheme].text1}
+                    color={Colors[ colorScheme ].text1}
                 />
             </TouchableOpacity>
             <SearchNav hidden={props.hidden} />

@@ -59,7 +59,9 @@ export default function MenuScreen() {
                             marginRight: 20,
 
                         }}
-                        source={user.profile_picture}
+                        source={user.profile_picture == null
+                            ? require( '../assets/IPOP/Iloilo-Provincial-Capitol-Panay-News-2.jpg' )
+                            : { uri: user.profile_picture.uri }}
                     />
                     <Text style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
                         Howdy, {splitName( user.fullname )}

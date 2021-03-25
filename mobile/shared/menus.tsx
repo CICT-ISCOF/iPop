@@ -10,8 +10,10 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import BottomSheetScreen from 'react-native-animated-bottom-sheet';
+import ConfirmBottomSheet from './confirm/confirm';
 
 export default function Menus() {
     const colorScheme = useColorScheme();
@@ -44,30 +46,39 @@ export default function Menus() {
         navigation.navigate( location );
     };
 
-    const logout = () => {
-        Alert.alert(
-            'Log-out on IPOP?',
-            'Are you sure you want to Log-out?',
-            [
-                {
-                    text: 'Later',
-                    onPress: () => console.log( 'Cancel Pressed' ),
-                    style: 'cancel',
-                },
-                {
-                    text: 'Log-out',
-                    onPress: () => {
-                        AsyncStorage.clear();
-                        navigation.navigate( 'Login' );
-                    },
-                },
-            ],
-            { cancelable: false }
-        );
-    };
+
+    const [ loading, setLoading ] = React.useState( false )
+
+    const ConfrimSheetRef: any = React.useRef();
+    const ConfirmSheet = () => (
+        <ConfirmBottomSheet
+            color="red"
+            choices={[ 'Logout', ]}
+            calback={( choice: any ) => {
+                setLoading( true )
+                setTimeout( () => {
+                    AsyncStorage.clear();
+                    navigation.navigate( 'Login' );
+                }, 1000 );
+
+            }}
+            blur={( value: any ) => {
+                if ( value == true ) {
+                    ConfrimSheetRef.current.close()
+                }
+            }}
+        />
+    )
+
 
     return (
         <View>
+            <View style={[
+                { position: 'absolute', justifyContent: 'center', width: '100%', height: '100%', zIndex: 9999, },
+                loading == true ? {} : { left: -500 }
+            ]}>
+                <ActivityIndicator />
+            </View>
             <TouchableOpacity
                 onPress={() => {
                     navigate( 'PopulationData' );
@@ -261,7 +272,7 @@ export default function Menus() {
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
-                    logout();
+                    ConfrimSheetRef.current.open()
                 }}
                 style={{
                     marginTop: 20,
@@ -278,6 +289,12 @@ export default function Menus() {
 
                 </View>
             </TouchableOpacity>
+            <BottomSheetScreen
+                ref={ConfrimSheetRef}
+                renderContent={ConfirmSheet}
+                visibleHeight={Dimensions.get( 'window' ).height / 3.5}
+            />
         </View>
+
     );
 }

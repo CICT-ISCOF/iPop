@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-export default StyleSheet.create({
+export default StyleSheet.create( {
     container: {
         flex: 1,
         padding: 20,
@@ -11,11 +11,11 @@ export default StyleSheet.create({
         width: '70%',
         marginBottom: 50,
     },
-    title: { fontWeight: '600', fontSize: 25, marginBottom: 20 },
+    title: { fontWeight: '600', fontSize: 25, marginBottom: 20, color: 'gray' },
     subTitle: {
         fontWeight: '600',
         fontSize: 16,
-
+        color: '#5B80F3',
         marginTop: 20,
     },
     link: {
@@ -26,7 +26,7 @@ export default StyleSheet.create({
     date: {
         fontSize: 25,
         textAlign: 'center',
-        color: '#02A1C7',
+        color: 'gray',
         marginTop: 50,
     },
-});
+} );
