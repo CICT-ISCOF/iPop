@@ -8,7 +8,6 @@ export default StyleSheet.create( {
         paddingVertical: 20,
         fontWeight: "bold",
         fontSize: 20,
-        textTransform: 'capitalize'
     },
     separator: {
         borderBottomColor: 'rgba(150,150,150,.2)',

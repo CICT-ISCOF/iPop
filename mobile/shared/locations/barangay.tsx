@@ -22,7 +22,7 @@ export default function Barangays( props: any ) {
             <FontAwesome name="map-signs" size={25} color="#B86E08" />
             <Text
                 style={{
-                    color: 'gray',
+                    color: Colors[ colorScheme ].text,
                     marginLeft: 15,
                     textTransform: 'capitalize',
                     fontSize: 20,

@@ -39,6 +39,7 @@ export type RootStackParamList = {
     // rpfpData
     PMOCData: undefined;
     'MPC-FDC': undefined;
+    ShowMPC: undefined
 
     // ahydata 
     TeenCenters: undefined;

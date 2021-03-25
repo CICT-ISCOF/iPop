@@ -1,15 +1,12 @@
 import React from 'react';
-
 import { ScrollView } from 'react-native-gesture-handler';
-
 import Colors from '../../constants/Colors';
-
 import useColorScheme from '../../hooks/useColorScheme';
-import BackContainer from '../../shared/back-container/back-container';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect } from 'react';
 import TopPadding from '../../shared/top-padding/top-padding';
+
 export default function ProfileScreen() {
     const [ user, setUser ] = useState( {
         fullname: '',

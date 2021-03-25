@@ -46,7 +46,7 @@ export default function Municipalities( props: any ) {
             <FontAwesome5 name="map-marker-alt" size={25} color="#FC671E" />
             <Text
                 style={{
-                    color: 'gray',
+                    color: Colors[ colorScheme ].text,
                     marginLeft: 15,
                     textTransform: 'capitalize',
                     fontSize: 20,

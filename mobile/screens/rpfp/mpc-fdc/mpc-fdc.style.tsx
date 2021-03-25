@@ -1,62 +1,82 @@
 import { StyleSheet } from 'react-native';
-export default StyleSheet.create({
+export default StyleSheet.create( {
     container: {
         flex: 1,
         padding: 20,
         paddingTop: 30,
     },
-    menu: {
-        fontWeight: '700',
-        fontSize: 35,
-        width: '100%',
-        marginBottom: 50,
-    },
-    box: {
-        flexDirection: 'row',
-        minWidth: 150,
-        minHeight: 50,
-        borderRadius: 5,
-        alignItems: 'center',
-        padding: 20,
-        margin: 20,
-        marginLeft: 0,
-    },
-    text: {
-        marginLeft: 20,
-    },
-    title: {
-        color: 'white',
-        textAlign: 'right',
-    },
-    value: {
-        color: 'white',
-        fontSize: 40,
-        textAlign: 'right',
-    },
-    TextInput: {
-        width: '100%',
-        height: 40,
-        borderWidth: 1,
-        marginBottom: 20,
-        borderRadius: 5,
-        paddingLeft: 20,
-        flex: 0.5,
-        marginTop: 60,
-    },
-    mpcs: {
+    topContainer: {
         marginTop: 20,
-        borderRadius: 7,
-        paddingVertical: 15,
-        paddingHorizontal: 20,
         flexDirection: 'row',
+        margin: 10,
+        backgroundColor: 'rgba(113,111,139,.2)',
+        height: 60,
+        padding: 10,
+        borderRadius: 10,
+        justifyContent: 'center'
+    },
+    backContainer: {
+        height: '100%',
+        flex: .1,
+        justifyContent: 'center',
+        borderRadius: 10,
+        marginRight: 10,
+        minWidth: 40,
         alignItems: 'center',
-        shadowColor: '#000',
+        shadowColor: "rgba(113,111,139,1)",
         shadowOffset: {
             width: 0,
-            height: 5,
+            height: 3,
         },
-        shadowOpacity: 0.17,
-        shadowRadius: 5.49,
-        elevation: 5,
+        shadowOpacity: 0.57,
+        shadowRadius: 4.65,
+        elevation: 6,
     },
-});
+    textINputContainer: {
+        height: '100%',
+        flexDirection: 'row',
+        flex: 10,
+        justifyContent: 'center',
+        borderRadius: 10,
+        shadowColor: "rgba(113,111,139,1)",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.57,
+        shadowRadius: 4.65,
+        elevation: 6,
+    },
+    iconCOntainer: {
+        height: '100%',
+        justifyContent: 'center',
+        flex: 1,
+        maxWidth: 40,
+        alignItems: 'center',
+        borderRadius: 10,
+    },
+    menuContainer: {
+        height: '100%',
+        flex: .1,
+        justifyContent: 'center',
+        borderRadius: 10,
+        marginLeft: 10,
+        minWidth: 40,
+        alignItems: 'center',
+        shadowColor: "rgba(113,111,139,1)",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.57,
+        shadowRadius: 4.65,
+        elevation: 6,
+    },
+    textInput: {
+        flex: 4,
+        borderRadius: 10,
+        paddingRight: 10
+
+    }
+
+} );

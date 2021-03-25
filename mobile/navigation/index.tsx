@@ -49,6 +49,7 @@ import Step3 from '../screens/Steps/step3';
 import Step4 from '../screens/Steps/step4';
 import Step5 from '../screens/Steps/step5';
 import ShowArticle from '../screens/main/home/components/featured-articles/show-featuredArticles';
+import ShowMPC from '../screens/rpfp/mpc-fdc/show-mpc';
 
 export default function Navigation( { colorScheme, }: { colorScheme: ColorSchemeName; } ) {
     return (
@@ -100,6 +101,7 @@ function RootNavigator() {
             {/* rpfpData  */}
             <Stack.Screen name='PMOCData' component={PMOCData} />
             <Stack.Screen name='MPC-FDC' component={MPCFDC} />
+            <Stack.Screen name='ShowMPC' component={ShowMPC} />
 
             {/* ahydata  */}
             <Stack.Screen name='TeenCenters' component={TeenCenters} />
