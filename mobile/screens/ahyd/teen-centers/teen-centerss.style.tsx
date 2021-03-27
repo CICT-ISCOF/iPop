@@ -1,15 +1,18 @@
 import { StyleSheet } from 'react-native';
-export default StyleSheet.create({
+export default StyleSheet.create( {
     container: {
         flex: 1,
         padding: 20,
         paddingTop: 30,
     },
     menu: {
-        fontWeight: '700',
-        fontSize: 35,
-        width: '90%',
+        fontWeight: 'bold',
+        fontSize: 25,
+        width: '100%',
         marginBottom: 50,
+        marginTop: -40,
+        textAlign: 'center',
+        paddingHorizontal: 50
     },
     box: {
         flexDirection: 'row',
@@ -35,18 +38,10 @@ export default StyleSheet.create({
     },
     teenCenter: {
         flexDirection: 'row',
-        marginTop: 10,
-        borderRadius: 7,
-        paddingVertical: 15,
-        paddingHorizontal: 20,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 5,
-        },
-        shadowOpacity: 0.17,
-        shadowRadius: 5.49,
-        elevation: 5,
+        paddingVertical: 10,
+        paddingHorizontal: 5,
         alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(150,150,150,.1)'
     },
-});
+} );

@@ -9,6 +9,7 @@ export type RootStackParamList = {
     Password: undefined;
     Avatar: undefined;
     Splash: undefined;
+    NoInternet: undefined
 
     // stepper
     Step1: undefined;
@@ -16,6 +17,9 @@ export type RootStackParamList = {
     Step3: undefined;
     Step4: undefined;
     Step5: undefined;
+
+
+    ShowArticle: undefined;
 
     // aboutus
     Mandate: undefined;
@@ -36,6 +40,7 @@ export type RootStackParamList = {
     // rpfpData
     PMOCData: undefined;
     'MPC-FDC': undefined;
+    ShowMPC: undefined
 
     // ahydata 
     TeenCenters: undefined;

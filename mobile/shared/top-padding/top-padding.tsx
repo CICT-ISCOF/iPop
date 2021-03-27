@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 
-export default function TopPadding(color: any = undefined) {
+export default function TopPadding( color: any = undefined ) {
     const colorScheme = useColorScheme();
 
     return (
@@ -12,8 +12,8 @@ export default function TopPadding(color: any = undefined) {
                 height: 48,
                 backgroundColor:
                     color == undefined
-                        ? Colors[colorScheme].bg1
-                        : Colors[colorScheme].background,
+                        ? Colors[ colorScheme ].bg1
+                        : Colors[ colorScheme ].homeBG,
                 position: 'absolute',
                 zIndex: 8,
                 width: '100%',

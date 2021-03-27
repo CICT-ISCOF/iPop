@@ -107,14 +107,15 @@
                 <p (click)="reactivate()" [class.disabled]="!admin.blocked == true" class="clickable">
                     <i style="color:#81D340 " class="fas fa-sync-alt"></i>Reactivate
                 </p>
-            </div>
+            </div> 
             <div *ngIf="changeRole" class="role-container">
                 <label>From {{ admin.role }} to</label>
                 <select [(ngModel)]="newRole" type="text" class="form-control">                   
+                    <option>PPOI</option>
+                    <option>PPOII</option>
+                    <option>FOD</option>
+                    <option>TRD</option>
                     <option>Super Admin</option>
-                    <option>PPO1</option>
-                    <option>PPO</option>
-                    <option>BSPO</option>
                 </select>
                 <br>
                 <div style="display: flex;">

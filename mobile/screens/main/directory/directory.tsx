@@ -1,53 +1,76 @@
-import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import React from 'react';
 import TopPadding from '../../../shared/top-padding/top-padding';
+import Colors from '../../../constants/Colors';
+import useColorScheme from '../../../hooks/useColorScheme';
+import BackContainer from '../../../shared/back-container/back-container'; import DynamicSmallHeader from '../../../shared/header/dynamic-small-header';
+
 
 export default function Directory() {
     const colorScheme = useColorScheme();
 
-    const styles = StyleSheet.create({
+    const styles = StyleSheet.create( {
         container: {
             flex: 1,
             padding: 20,
-            paddingTop: 50,
+            paddingTop: 30,
         },
         menu: {
-            fontWeight: '700',
-            fontSize: 35,
-            width: '70%',
-            marginBottom: 30,
+            fontWeight: 'bold',
+            fontSize: 25,
+            width: '100%',
+            marginBottom: 50,
+            marginTop: -40,
+            textAlign: 'center',
+            paddingHorizontal: 50
         },
         divisions: {
             fontWeight: '700',
             fontSize: 25,
-            color: '#356F81',
+            color: '#426FC3',
             paddingTop: 30,
         },
         name: {
             fontSize: 20,
             marginTop: 20,
-            color: Colors[colorScheme].text,
+            color: Colors[ colorScheme ].text,
         },
         position: {
-            color: Colors[colorScheme].text1,
+            color: Colors[ colorScheme ].text1,
         },
-    });
+    } )
+
+    const [ show, setShow ] = React.useState( false )
+    function scrollHandler( event: any ) {
+        if ( event.nativeEvent.contentOffset.y < 1 ) {
+            setShow( false )
+        } else {
+            setShow( true )
+        }
+    }
 
     return (
-        <View style={[styles.container, { padding: 0 }]}>
+        <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
+            <View style={show == true ? {} : { position: 'absolute', left: -500 }}>
+                <DynamicSmallHeader text="Personnel Directory" />
+            </View>
             <ScrollView
-                style={[
-                    styles.container,
-                    {
-                        backgroundColor: Colors[colorScheme].bg1,
-                    },
-                ]}>
-                <BackContainer hidden={true} />
-                <Text
-                    style={[styles.menu, { color: Colors[colorScheme].text }]}>
-                    Personnel Directory
-                </Text>
+                showsVerticalScrollIndicator={false}
+                onScroll={( event ) => {
+                    scrollHandler( event )
+                }}
+                style={[ styles.container, { backgroundColor: Colors[ colorScheme ].homeBG, }, ]}>
+
+                <View style={show != true ? {} : { position: 'absolute', left: -500 }}>
+                    <BackContainer hidden={true} />
+                    <Text
+                        style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
+                        Personnel Directory
+                    </Text>
+                </View>
+
                 <View>
                     <Text style={styles.name}>Ramon C. Yee, MPG</Text>
                     <Text style={styles.position}>
@@ -119,7 +142,7 @@ export default function Directory() {
                 <Text style={styles.divisions}>FIELD OPERATIONS DIVISION</Text>
 
                 <View>
-                    <Text style={[styles.name, { color: 'orange' }]}>
+                    <Text style={[ styles.name, { color: 'orange', marginBottom: -20, marginTop: 20 } ]}>
                         District I
                     </Text>
                     <Text style={styles.position}></Text>
@@ -174,7 +197,7 @@ export default function Directory() {
                     </Text>
                 </View>
                 <View>
-                    <Text style={[styles.name, { color: 'orange' }]}>
+                    <Text style={[ styles.name, { color: 'orange', marginBottom: -20, marginTop: 20 } ]}>
                         District II
                     </Text>
                     <Text style={styles.position}></Text>
@@ -235,7 +258,7 @@ export default function Directory() {
                     </Text>
                 </View>
                 <View>
-                    <Text style={[styles.name, { color: 'orange' }]}>
+                    <Text style={[ styles.name, { color: 'orange', marginBottom: -20, marginTop: 20 } ]}>
                         District III
                     </Text>
                     <Text style={styles.position}></Text>
@@ -296,7 +319,7 @@ export default function Directory() {
                     </Text>
                 </View>
                 <View>
-                    <Text style={[styles.name, { color: 'orange' }]}>
+                    <Text style={[ styles.name, { color: 'orange', marginBottom: -20, marginTop: 20 } ]}>
                         District IV
                     </Text>
                     <Text style={styles.position}></Text>
@@ -344,7 +367,7 @@ export default function Directory() {
                     </Text>
                 </View>
                 <View>
-                    <Text style={[styles.name, { color: 'orange' }]}>
+                    <Text style={[ styles.name, { color: 'orange', marginBottom: -20, marginTop: 20 } ]}>
                         District V
                     </Text>
                     <Text style={styles.position}></Text>
@@ -491,7 +514,7 @@ export default function Directory() {
                 </Text>
 
                 <View>
-                    <Text style={[styles.name, { color: 'orange' }]}>
+                    <Text style={[ styles.name, { color: 'orange' } ]}>
                         DISTRICT I
                     </Text>
                     <Text style={styles.position}></Text>
@@ -525,7 +548,7 @@ export default function Directory() {
                     <Text style={styles.position}>Francisca Tanallon</Text>
                 </View>
                 <View>
-                    <Text style={[styles.name, { color: 'orange' }]}>
+                    <Text style={[ styles.name, { color: 'orange' } ]}>
                         DISTRICT II
                     </Text>
                     <Text style={styles.position}></Text>
@@ -563,7 +586,7 @@ export default function Directory() {
                     <Text style={styles.position}>ErdelindaDefensor</Text>
                 </View>
                 <View>
-                    <Text style={[styles.name, { color: 'orange' }]}>
+                    <Text style={[ styles.name, { color: 'orange' } ]}>
                         DISTRICT III
                     </Text>
                     <Text style={styles.position}></Text>
@@ -605,7 +628,7 @@ export default function Directory() {
                     <Text style={styles.position}>Ronnie C. Boluai</Text>
                 </View>
                 <View>
-                    <Text style={[styles.name, { color: 'orange' }]}>
+                    <Text style={[ styles.name, { color: 'orange' } ]}>
                         DISTRICT IV
                     </Text>
                     <Text style={styles.position}></Text>
@@ -643,7 +666,7 @@ export default function Directory() {
                     <Text style={styles.position}>Rovema A. Palma</Text>
                 </View>
                 <View>
-                    <Text style={[styles.name, { color: 'orange' }]}>
+                    <Text style={[ styles.name, { color: 'orange' } ]}>
                         DISTRICT V
                     </Text>
                     <Text style={styles.position}></Text>
@@ -698,9 +721,3 @@ export default function Directory() {
         </View>
     );
 }
-
-import Colors from '../../../constants/Colors';
-import SearchNav from '../home/components/search/search';
-import useColorScheme from '../../../hooks/useColorScheme';
-import { ScrollView } from 'react-native-gesture-handler';
-import BackContainer from '../../../shared/back-container/back-container';

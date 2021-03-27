@@ -48,6 +48,9 @@ import Step2 from '../screens/Steps/step2';
 import Step3 from '../screens/Steps/step3';
 import Step4 from '../screens/Steps/step4';
 import Step5 from '../screens/Steps/step5';
+import ShowArticle from '../screens/main/home/components/featured-articles/show-featuredArticles';
+import ShowMPC from '../screens/rpfp/mpc-fdc/show-mpc';
+import NoInternet from '../No-InternetScreen';
 
 export default function Navigation( { colorScheme, }: { colorScheme: ColorSchemeName; } ) {
     return (
@@ -70,6 +73,11 @@ function RootNavigator() {
             <Stack.Screen name='Password' component={Password} />
             <Stack.Screen name='Avatar' component={Avatar} />
             <Stack.Screen name='Root' component={BottomTabNavigator} />
+            <Stack.Screen name='NoInternet' component={NoInternet} />
+
+
+
+            <Stack.Screen name='ShowArticle' component={ShowArticle} />
 
             {/* steps  */}
             <Stack.Screen name='Step1' component={Step1} />
@@ -97,6 +105,7 @@ function RootNavigator() {
             {/* rpfpData  */}
             <Stack.Screen name='PMOCData' component={PMOCData} />
             <Stack.Screen name='MPC-FDC' component={MPCFDC} />
+            <Stack.Screen name='ShowMPC' component={ShowMPC} />
 
             {/* ahydata  */}
             <Stack.Screen name='TeenCenters' component={TeenCenters} />

@@ -5,7 +5,7 @@ import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import Header from '../../../shared/header/header';
 import { View, Text, TouchableOpacity } from 'react-native';
-import SearchNav from '../../../screens/main/home/components/search/search';
+import SmallHeader from '../../../shared/header/small-header';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import TopPadding from '../../../shared/top-padding/top-padding';
 import { useNavigation } from '@react-navigation/native';
@@ -63,7 +63,7 @@ export default function AboutScreen() {
             route: 'Services',
             id: 7,
             icon: 'room-service',
-            color: 'blue',
+            color: '#24ACF2',
         },
         {
             title: 'Awards',
@@ -77,7 +77,7 @@ export default function AboutScreen() {
             route: 'ContactUs',
             id: 9,
             icon: 'cellphone-iphone',
-            color: Colors[ colorScheme ].text,
+            color: 'gray',
         },
     ];
 
@@ -89,7 +89,7 @@ export default function AboutScreen() {
                 }}
                 style={[
                     styles.navs,
-                    { backgroundColor: Colors[ colorScheme ].background },
+                    { backgroundColor: Colors[ colorScheme ].homeBG },
                 ]}>
                 <MaterialCommunityIcons
                     style={styles.navIons}
@@ -97,7 +97,7 @@ export default function AboutScreen() {
                     size={50}
                     color={data.item.color}
                 />
-                <View style={styles.navButton}>
+                <View style={[ styles.navButton ]}>
                     <Text style={styles.navButtonText}>{data.item.title}</Text>
                 </View>
             </TouchableOpacity>
@@ -108,25 +108,43 @@ export default function AboutScreen() {
         navigation.navigate( location );
     };
 
+    const [ show, setShow ] = React.useState( false )
+    function scrollHandler( event: any ) {
+        if ( event.nativeEvent.contentOffset.y < 1 ) {
+            setShow( false )
+        } else {
+            setShow( true )
+        }
+    }
+
     return (
         <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
+
+            <View style={show == false ? {} : { position: 'absolute', left: -500 }}>
+                <Header />
+            </View>
+
+            <View style={show == true ? {} : { position: 'absolute', left: -500 }}>
+                <SmallHeader />
+            </View>
+
+
+
+
             <ScrollView
+                onScroll={( event ) => {
+                    scrollHandler( event )
+                }}
                 style={[
                     styles.container,
-                    { backgroundColor: Colors[ colorScheme ].bg1, },
+                    { backgroundColor: Colors[ colorScheme ].homeBG, },
                 ]}>
-                <SearchNav />
-                <Text
-                    style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
-                    About Us
-                </Text>
-
-                <Header />
 
                 {/* ----------navs----------- */}
                 <FlatList
                     showsVerticalScrollIndicator={false}
+
                     style={styles.list}
                     renderItem={renderNav}
                     data={navs}

@@ -1,45 +1,71 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import Colors from '../../../../constants/Colors';
+import useColorScheme from '../../../../hooks/useColorScheme';
+import BackContainer from '../../../../shared/back-container/back-container';
+import TopPadding from '../../../../shared/top-padding/top-padding'; import DynamicSmallHeader from '../../../../shared/header/dynamic-small-header';
+
 
 export default function MandateScreen() {
     const colorScheme = useColorScheme();
 
-    const styles = StyleSheet.create({
+    const styles = StyleSheet.create( {
         container: {
             flex: 1,
             padding: 20,
             paddingTop: 30,
         },
         menu: {
-            fontWeight: '700',
-            fontSize: 35,
+            fontWeight: 'bold',
+            fontSize: 25,
+            width: '100%',
             marginBottom: 50,
+            marginTop: -40,
+            textAlign: 'center',
+            paddingHorizontal: 50
         },
         list: {
             padding: 10,
             borderBottomWidth: 1,
-            color: Colors[colorScheme].text,
+            color: Colors[ colorScheme ].text,
             lineHeight: 30,
         },
-    });
+    } )
+
+
+    const [ show, setShow ] = React.useState( false )
+    function scrollHandler( event: any ) {
+        if ( event.nativeEvent.contentOffset.y < 1 ) {
+            setShow( false )
+        } else {
+            setShow( true )
+        }
+    }
 
     return (
-        <View style={[styles.container, { padding: 0 }]}>
+        <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
+
+            <View style={show == true ? {} : { position: 'absolute', left: -500 }}>
+                <DynamicSmallHeader text="Mandate" />
+            </View>
+
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                style={[
-                    styles.container,
-                    {
-                        backgroundColor: Colors[colorScheme].bg1,
-                    },
-                ]}>
-                <BackContainer hidden={true} />
-                <Text
-                    style={[styles.menu, { color: Colors[colorScheme].text }]}>
-                    Mandate
-                </Text>
-                <Text style={{ marginBottom: 30, color: '#356F81' }}>
+                onScroll={( event ) => {
+                    scrollHandler( event )
+                }}
+                style={[ styles.container, { backgroundColor: Colors[ colorScheme ].homeBG, }, ]}>
+
+                <View style={show != true ? {} : { position: 'absolute', left: -500 }}>
+                    <BackContainer />
+                    <Text
+                        style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
+                        Mandate
+                    </Text>
+                </View>
+
+                <Text style={{ marginBottom: 30, color: '#426FC3' }}>
                     (Local Government Code of 1991, Sec. 488)
                 </Text>
 
@@ -88,8 +114,3 @@ export default function MandateScreen() {
     );
 }
 
-import Colors from '../../../../constants/Colors';
-import SearchNav from '../../home/components/search/search';
-import useColorScheme from '../../../../hooks/useColorScheme';
-import BackContainer from '../../../../shared/back-container/back-container';
-import TopPadding from '../../../../shared/top-padding/top-padding';

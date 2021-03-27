@@ -1,34 +1,34 @@
 export default function TeenCentersSelects() {
     const colorScheme = useColorScheme();
     const navigation = useNavigation();
-    const [district, setDistrict] = useState('');
-    const [isFetching, setFetching] = useState(false);
+    const [ district, setDistrict ] = useState( '' );
+    const [ isFetching, setFetching ] = useState( false );
 
     async function getTeenCenter() {
-        if (district == '' || district == 'District') {
-            return alert('Complete filters to perform this operation');
+        if ( district == '' || district == 'District' ) {
+            return alert( 'Complete filters to perform this operation' );
         }
-        setFetching(true);
+        setFetching( true );
         const url = base.apiURL + `sbmptcs`;
         axios
-            .get(url)
-            .then((response) => {
-                if (response.data.length != 0) {
-                    navigation.navigate('TeenCenterList', {
-                        data: response.data[district],
+            .get( url )
+            .then( ( response ) => {
+
+                if ( response.data[ district ] != undefined ) {
+                    navigation.navigate( 'TeenCenterList', {
+                        data: response.data[ district ],
                         number: district,
-                    });
-                    setFetching(false);
+                    } );
+                    setFetching( false );
                 } else {
-                    alert('No data on this filter');
-                    setFetching(false);
+                    alert( 'No data on this filter' );
+                    setFetching( false );
                 }
-            })
-            .catch((error) => {
-                alert('No data on this filter');
-                console.error(error);
-                setFetching(false);
-            });
+            } )
+            .catch( ( error ) => {
+                alert( 'No data on this filter' );
+                setFetching( false );
+            } );
     }
 
     return (
@@ -37,31 +37,31 @@ export default function TeenCentersSelects() {
                 <Picker
                     style={{ flex: 1, marginTop: -30 }}
                     selectedValue={district}
-                    onValueChange={(itemValue: any, itemIndex) =>
-                        setDistrict(itemValue)
+                    onValueChange={( itemValue: any, itemIndex ) =>
+                        setDistrict( itemValue )
                     }>
                     <Picker.Item
-                        color={Colors[colorScheme].text}
+                        color={Colors[ colorScheme ].text}
                         label='District'
                         value='District'
                     />
                     <Picker.Item
-                        color={Colors[colorScheme].text}
+                        color={Colors[ colorScheme ].text}
                         label='I'
                         value='I'
                     />
                     <Picker.Item
-                        color={Colors[colorScheme].text}
+                        color={Colors[ colorScheme ].text}
                         label='II'
                         value='II'
                     />
                     <Picker.Item
-                        color={Colors[colorScheme].text}
+                        color={Colors[ colorScheme ].text}
                         label='III'
                         value='III'
                     />
                     <Picker.Item
-                        color={Colors[colorScheme].text}
+                        color={Colors[ colorScheme ].text}
                         label='IV'
                         value='IV'
                     />
@@ -80,13 +80,14 @@ export default function TeenCentersSelects() {
                     padding: 10,
                     alignItems: 'center',
                     justifyContent: 'center',
+                    marginTop: 50
                 }}>
                 <MaterialCommunityIcons
                     name='filter'
                     size={24}
                     color='rgba(250,250,250,.7)'
                 />
-                <Text style={{ color: 'white', marginLeft: 10 }}>Filter</Text>
+                <Text style={{ color: 'white', marginLeft: 10 }}>Show Teen Centers </Text>
             </TouchableOpacity>
 
             <Text
@@ -94,6 +95,7 @@ export default function TeenCentersSelects() {
                     {
                         textAlign: 'center',
                         marginTop: '20%',
+                        color: Colors[ colorScheme ].text
                     },
                     isFetching == true
                         ? {}

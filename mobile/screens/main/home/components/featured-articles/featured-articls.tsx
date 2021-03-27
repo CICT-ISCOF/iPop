@@ -3,12 +3,18 @@ import React, { useState, useEffect } from 'react';
 import Colors from '../../../../../constants/Colors';
 import useColorScheme from '../../../../../hooks/useColorScheme';
 import { Text, View, Image, StyleSheet, Dimensions } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import toDate from '../../../../../constants/date-converter';
 
 
 export default function FeautredArticles( props: any ) {
 
     const colorScheme = useColorScheme();
+    const navigation = useNavigation();
+
+
+
     let feedBackground = colorScheme == 'dark' ? '#242526' : 'white';
 
     let articles = props.data
@@ -33,32 +39,17 @@ export default function FeautredArticles( props: any ) {
             }}>
             {
                 articles.map( ( article: any, index: any ) => (
-                    <View
+                    <TouchableOpacity
                         key={index}
+                        onPress={() => {
+                            navigation.navigate( 'ShowArticle', { article: article } )
+                        }}
                         style={[
                             styles.featuredArticle,
                             {
-                                backgroundColor: feedBackground,
+                                backgroundColor: 'transparent',
                             },
                         ]}>
-                        <ScrollView
-                            decelerationRate={0}
-                            snapToInterval={Dimensions.get( 'screen' ).width + 20 - ( 0 + 0 )}
-                            style={{
-                                marginLeft: -20,
-                                width: Dimensions.get( 'screen' ).width,
-                            }}
-                            horizontal={true} showsHorizontalScrollIndicator={false}>
-                            {
-                                article.photos.map( ( photo: any, index: any ) => (
-                                    <Image
-                                        key={index}
-                                        style={[ styles.image, ]}
-                                        source={{ uri: photo.file.uri }}
-                                    />
-                                ) )
-                            }
-                        </ScrollView>
 
                         <View style={styles.texts}>
                             <Text
@@ -69,37 +60,14 @@ export default function FeautredArticles( props: any ) {
                                 ]}>
                                 {article.title}
                             </Text>
-                            <Text style={[ { color: Colors[ colorScheme ].text, lineHeight: 25, fontSize: 14 } ]}>
-                                {truncate.includes( index ) ? article.body : formatText( article.body, 200 )}
-                            </Text>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    let array = truncate
-                                    for ( let i of array ) {
-                                        if ( array.includes( index ) ) {
-                                            array.splice( i, 1 )
-                                            settruncate( array )
-                                            props.refresh()
-                                            return
-                                        }
-                                    }
-                                    array.push( index )
-                                    settruncate( array )
-                                    props.refresh()
-
-                                }}
-                                style={{ marginTop: 20 }}>
-                                <Text style={{ color: Colors[ colorScheme ].text1, fontSize: 16, marginBottom: 20 }}>
-                                    {truncate.includes( index ) ? 'See less' : 'See more'}
-                                    ....
-
-                                    </Text>
-                            </TouchableOpacity>
+                            <Text style={{ color: 'gray' }}>{toDate( article.updated_at )}</Text>
                         </View>
-
-
-
-                    </View>
+                        <Image
+                            key={index}
+                            style={[ styles.image, ]}
+                            source={{ uri: article.photos[ 0 ].file.uri }}
+                        />
+                    </TouchableOpacity>
                 ) )
             }
         </View>
@@ -109,24 +77,28 @@ export default function FeautredArticles( props: any ) {
 
 const styles = StyleSheet.create( {
     featuredArticle: {
-        marginTop: 7,
-        padding: 20,
-        borderWidth: 2,
-        borderColor: 'rgba(150,150,150,.2)'
+        marginTop: -2,
+        padding: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(150,150,150,.1)',
+        flexDirection: 'row',
+        paddingVertical: 15,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     image: {
-        height: 200,
-        marginTop: 10,
-        marginLeft: -20,
-        width: Dimensions.get( 'screen' ).width + 20,
+        height: 80,
+        width: 120,
+        borderRadius: 5
     },
     texts: {
-        width: '100%',
+        width: '60%',
+        marginRight: 20
     },
     title: {
-        fontWeight: '700',
-        fontSize: 13,
+        fontWeight: 'bold',
+        fontSize: 16,
         marginBottom: 15,
-        marginTop: 20
     },
 } );

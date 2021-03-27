@@ -1,14 +1,18 @@
 import { StyleSheet } from 'react-native';
-export default StyleSheet.create({
+export default StyleSheet.create( {
     container: {
         flex: 1,
         padding: 20,
         paddingTop: 30,
     },
     menu: {
-        fontWeight: '700',
-        fontSize: 35,
-        width: '70%',
+        fontWeight: 'bold',
+        fontSize: 25,
+        width: '100%',
+        marginBottom: 50,
+        marginTop: -40,
+        textAlign: 'center',
+        paddingHorizontal: 50
     },
     image: {
         height: '100%',
@@ -33,4 +37,4 @@ export default StyleSheet.create({
         marginTop: -5,
         marginBottom: 15,
     },
-});
+} );

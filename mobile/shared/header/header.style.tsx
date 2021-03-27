@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+export default StyleSheet.create( {
     mainContianer: {
         marginBottom: 20,
     },
@@ -9,15 +9,15 @@ export default StyleSheet.create({
         alignItems: 'flex-end',
     },
     iloilo: {
-        height: 70,
-        width: 70,
-        marginRight: 20,
+        height: 40,
+        width: 40,
+        marginRight: 5,
         marginVertical: 20,
     },
     ipop: {
-        height: 50,
-        width: 50,
-        marginRight: 20,
+        height: 30,
+        width: 30,
+        marginRight: 5,
         marginVertical: 20,
     },
     texts: {
@@ -25,8 +25,8 @@ export default StyleSheet.create({
     },
     text: {},
     title: {
-        fontSize: 27,
-        color: '#2F5179',
+        fontSize: 22,
+        color: '#426FC3',
         fontWeight: '800',
     },
-});
+} );

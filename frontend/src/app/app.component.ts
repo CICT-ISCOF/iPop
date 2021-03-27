@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
         'type'
       )
     );
-  }
+  } 
 
   checkLocalStorage() {
     this.role = localStorage.getItem('role');

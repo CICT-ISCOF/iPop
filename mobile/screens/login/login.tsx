@@ -19,6 +19,11 @@ export default function Login( { navigation }: any ) {
     let passwordInput: any;
 
     useEffect( () => {
+        ( async () => {
+            if ( await AsyncStorage.getItem( 'user' ) != undefined ) {
+                navigation.replace( 'Root' );
+            }
+        } )()
         const backAction = () => {
             return false
         }

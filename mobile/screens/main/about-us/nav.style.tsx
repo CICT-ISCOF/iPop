@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+export default StyleSheet.create( {
     container: {
         flex: 1,
         padding: 20,
@@ -15,14 +15,12 @@ export default StyleSheet.create({
     },
     navs: {
         flex: 1,
-        borderRadius: 10,
         paddingVertical: 15,
         alignItems: 'center',
-
         height: 140,
         margin: 10,
-        borderWidth: 2,
-        borderColor: '#03749C',
+        borderWidth: 1,
+        borderColor: 'rgba(150,150,150,.2)',
     },
     navIons: {
         textAlign: 'center',
@@ -30,7 +28,7 @@ export default StyleSheet.create({
     },
     navButton: {
         width: '100%',
-        backgroundColor: '#03749C',
+        backgroundColor: '#426FC3',
         padding: 10,
         position: 'absolute',
         bottom: 20,
@@ -41,4 +39,4 @@ export default StyleSheet.create({
         textAlign: 'center',
         color: 'white',
     },
-});
+} );

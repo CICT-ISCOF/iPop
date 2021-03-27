@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styles from './menu.style';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,282 +10,294 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import BottomSheetScreen from 'react-native-animated-bottom-sheet';
+import ConfirmBottomSheet from './confirm/confirm';
 
 export default function Menus() {
     const colorScheme = useColorScheme();
     const navigation = useNavigation();
-    const internalStyles = StyleSheet.create({
+    const internalStyles = StyleSheet.create( {
         itemWrapper: {
-            backgroundColor: Colors[colorScheme].background,
+            backgroundColor: Colors[ colorScheme ].homeBG,
             borderRadius: 7,
-            paddingVertical: 15,
+            paddingVertical: 10,
             paddingHorizontal: 20,
             flexDirection: 'row',
             alignItems: 'center',
-            shadowColor: '#000',
-            shadowOffset: {
-                width: 0,
-                height: 5,
-            },
-            shadowOpacity: 0.17,
-            shadowRadius: 5.49,
-            elevation: 5,
+
         },
         icon: {
-            marginRight: 10,
+            marginRight: 20,
+            borderRightWidth: 1,
+            paddingRight: 10,
+            borderRightColor: 'rgba(150,150,150,.2)',
+            width: 40
         },
         iconText: {
-            fontWeight: '600',
+            flex: 4,
             fontSize: 20,
-            color: Colors[colorScheme].text,
+            color: Colors[ colorScheme ].text,
         },
-    });
+    } );
 
-    const navigate = (location: any) => {
-        navigation.navigate(location);
+    const navigate = ( location: any ) => {
+        navigation.navigate( location );
     };
 
-    const logout = () => {
-        Alert.alert(
-            'Log-out on IPOP?',
-            'Are you sure you want to Log-out?',
-            [
-                {
-                    text: 'Later',
-                    onPress: () => console.log('Cancel Pressed'),
-                    style: 'cancel',
-                },
-                {
-                    text: 'Log-out',
-                    onPress: () => {
-                        AsyncStorage.clear();
-                        navigation.navigate('Login');
-                    },
-                },
-            ],
-            { cancelable: false }
-        );
-    };
+
+    const [ loading, setLoading ] = React.useState( false )
+
+    const ConfrimSheetRef: any = React.useRef();
+    const ConfirmSheet = () => (
+        <ConfirmBottomSheet
+            color="red"
+            choices={[ 'Logout', ]}
+            calback={( choice: any ) => {
+                setLoading( true )
+                setTimeout( () => {
+                    AsyncStorage.clear();
+                    navigation.navigate( 'Login' );
+                }, 1000 );
+
+            }}
+            blur={( value: any ) => {
+                if ( value == true ) {
+                    ConfrimSheetRef.current.close()
+                }
+            }}
+        />
+    )
+
 
     return (
         <View>
+            <View style={[
+                { position: 'absolute', justifyContent: 'center', width: '100%', height: '100%', zIndex: 9999, },
+                loading == true ? {} : { left: -500 }
+            ]}>
+                <ActivityIndicator />
+            </View>
             <TouchableOpacity
                 onPress={() => {
-                    navigate('PopulationData');
+                    navigate( 'PopulationData' );
                 }}
                 style={{
                     marginTop: 20,
                 }}>
                 <View style={internalStyles.itemWrapper}>
-                    <Ionicons
-                        style={internalStyles.icon}
-                        name='ios-people'
-                        size={20}
-                        color='#A11D82'
-                    />
+                    <View style={internalStyles.icon}>
+                        <Ionicons
+                            name='ios-people'
+                            size={20}
+                            color='#9376FB'
+                        />
+                    </View>
                     <Text style={internalStyles.iconText}>Population Data</Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
                 </View>
             </TouchableOpacity>
 
-            <Text
-                style={[
-                    styles.menu,
-                    {
-                        color: Colors[colorScheme].text,
-                        marginVertical: 20,
-                        marginTop: 40,
-                        fontSize: 25,
-                    },
-                ]}>
-                Demographic Data
-            </Text>
+
             <TouchableOpacity
                 onPress={() => {
-                    navigate('Births');
+                    navigate( 'Births' );
                 }}
                 style={{
                     marginTop: 10,
                 }}>
                 <View style={internalStyles.itemWrapper}>
-                    <FontAwesome5
-                        name='baby'
-                        style={internalStyles.icon}
-                        size={20}
-                        color='#7DCF3D'
-                    />
+                    <View style={internalStyles.icon}>
+                        <FontAwesome5
+                            name="birthday-cake"
+                            size={25}
+                            color='#59B259'
+                        />
+                    </View>
                     <Text style={internalStyles.iconText}>Births</Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
+
                 </View>
             </TouchableOpacity>
 
             <TouchableOpacity
                 onPress={() => {
-                    navigate('Deaths');
+                    navigate( 'Deaths' );
                 }}
                 style={{
                     marginTop: 10,
                 }}>
                 <View style={internalStyles.itemWrapper}>
-                    <FontAwesome
-                        name='warning'
-                        style={internalStyles.icon}
-                        size={20}
-                        color='red'
-                    />
+                    <View style={internalStyles.icon}>
+                        <FontAwesome
+                            name='warning'
+                            size={20}
+                            color='#C71E24'
+                        />
+                    </View>
                     <Text style={internalStyles.iconText}>Deaths</Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
+
                 </View>
             </TouchableOpacity>
 
             <TouchableOpacity
                 onPress={() => {
-                    navigate('Migrations');
+                    navigate( 'Migrations' );
                 }}
                 style={{
                     marginTop: 10,
                 }}>
                 <View style={internalStyles.itemWrapper}>
-                    <FontAwesome5
-                        name='plane'
-                        style={internalStyles.icon}
-                        size={20}
-                        color='#1086FE'
-                    />
+                    <View style={internalStyles.icon}>
+                        <FontAwesome5
+                            name='plane'
+                            size={20}
+                            color='#00B3E0'
+                        />
+                    </View>
                     <Text style={internalStyles.iconText}>Migrations</Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
+
                 </View>
             </TouchableOpacity>
 
-            <Text
-                style={[
-                    styles.menu,
-                    {
-                        color: Colors[colorScheme].text,
-                        marginVertical: 20,
-                        marginTop: 40,
-                        fontSize: 25,
-                    },
-                ]}>
-                RPFP Data
-            </Text>
+
             <TouchableOpacity
                 onPress={() => {
-                    navigate('PMOCData');
+                    navigate( 'PMOCData' );
                 }}
                 style={{
                     marginTop: 10,
                 }}>
                 <View style={internalStyles.itemWrapper}>
-                    <Fontisto
-                        name='persons'
-                        style={internalStyles.icon}
-                        size={20}
-                        color='#A30045'
-                    />
+                    <View style={internalStyles.icon}>
+                        <Fontisto
+                            name='persons'
+
+                            size={20}
+                            color='#F75800'
+                        />
+                    </View>
                     <Text style={internalStyles.iconText}>PMOC Data</Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
+
                 </View>
             </TouchableOpacity>
 
             <TouchableOpacity
                 onPress={() => {
-                    navigate('MPC-FDC');
+                    navigate( 'MPC-FDC' );
                 }}
                 style={{
                     marginTop: 10,
                 }}>
                 <View style={internalStyles.itemWrapper}>
-                    <MaterialCommunityIcons
-                        name='home-city'
-                        style={internalStyles.icon}
-                        size={20}
-                        color='orange'
-                    />
+                    <View style={internalStyles.icon}>
+                        <MaterialCommunityIcons
+                            name='home-city'
+                            size={20}
+                            color='orange'
+                        />
+                    </View>
                     <Text style={internalStyles.iconText}>MPC-FDC</Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
+
                 </View>
             </TouchableOpacity>
 
-            <Text
-                style={[
-                    styles.menu,
-                    {
-                        color: Colors[colorScheme].text,
-                        marginVertical: 20,
-                        marginTop: 40,
-                        fontSize: 25,
-                    },
-                ]}>
-                AHYD Data
-            </Text>
             <TouchableOpacity
                 onPress={() => {
-                    navigate('TeenCenters');
+                    navigate( 'TeenCenters' );
                 }}
                 style={{
                     marginTop: 10,
                 }}>
                 <View style={internalStyles.itemWrapper}>
-                    <FontAwesome5
-                        name='university'
-                        style={internalStyles.icon}
-                        size={20}
-                        color='#02ADA3'
-                    />
+                    <View style={internalStyles.icon}>
+                        <FontAwesome5
+                            name='university'
+                            size={20}
+                            color='#EF7896'
+                        />
+                    </View>
                     <Text style={internalStyles.iconText}>Teen Centers</Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
+
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 onPress={() => {
-                    navigate('IssuesAndConcerns');
+                    navigate( 'IssuesAndConcerns' );
                 }}
                 style={{
                     marginTop: 10,
                 }}>
                 <View style={internalStyles.itemWrapper}>
-                    <Entypo
-                        name='info-with-circle'
-                        style={internalStyles.icon}
-                        size={20}
-                        color='#4465B6'
-                    />
+                    <View style={internalStyles.icon}>
+                        <Entypo
+                            name='info-with-circle'
+                            size={20}
+                            color='#426FC3'
+                        />
+                    </View>
                     <Text style={internalStyles.iconText}>
                         Issues and concers
                     </Text>
-                </View>
-            </TouchableOpacity>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
 
-            <TouchableOpacity
+                </View>
+            </TouchableOpacity> */}
+
+            {/* <TouchableOpacity
                 onPress={() => {
-                    navigate('Others');
+                    navigate( 'Others' );
                 }}
                 style={{
                     marginTop: 20,
                 }}>
                 <View style={internalStyles.itemWrapper}>
-                    <Ionicons
-                        style={internalStyles.icon}
-                        name='ios-people'
-                        size={20}
-                        color='#A11D82'
-                    />
+                    <View style={internalStyles.icon}>
+                        <Entypo
+                            name='info-with-circle'
+                            size={20}
+                            color='#426FC3'
+                        />
+                    </View>
                     <Text style={internalStyles.iconText}>Others</Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
+
                 </View>
             </TouchableOpacity>
+            
+             */}
             <TouchableOpacity
                 onPress={() => {
-                    logout();
+                    ConfrimSheetRef.current.open()
                 }}
                 style={{
                     marginTop: 20,
                 }}>
-                <View style={internalStyles.itemWrapper}>
-                    <SimpleLineIcons
-                        name='logout'
-                        style={internalStyles.icon}
-                        size={20}
-                        color='#15B1D7'
-                    />
+                <View style={[ internalStyles.itemWrapper, { borderBottomWidth: 0 } ]}>
+                    <View style={internalStyles.icon}>
+                        <SimpleLineIcons
+                            name='logout'
+                            size={20}
+                            color='#15B1D7'
+                        />
+                    </View>
                     <Text style={internalStyles.iconText}>Log-out</Text>
+
                 </View>
             </TouchableOpacity>
+            <BottomSheetScreen
+                ref={ConfrimSheetRef}
+                renderContent={ConfirmSheet}
+                visibleHeight={Dimensions.get( 'window' ).height / 3.5}
+            />
         </View>
+
     );
 }

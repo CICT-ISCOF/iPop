@@ -6,56 +6,56 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 
-export default function MapScreen(props: any, ref: any) {
+export default function MapScreen( props: any, ref: any ) {
 
     const colorScheme = useColorScheme();
 
-    const [location, setLocation] = useState({
+    const [ location, setLocation ] = useState( {
         coords: { latitude: 0, longitude: 0 },
         longitude: 0,
         latitudeDelta: 0,
-    });
-    const [errorMsg, setErrorMsg] = useState('');
-    const [type, setType]: any = useState('Standard');
+    } );
+    const [ errorMsg, setErrorMsg ] = useState( '' );
+    const [ type, setType ]: any = useState( 'Standard' );
 
 
-    const [data, setData]: any = useState([
+    const [ data, setData ]: any = useState( [
         {
             lat: 11.0050,
             lon: 122.5373,
             display_name: 'Iloilo Province',
         }
-    ]);
+    ] );
 
-    useEffect(() => {
-        (async () => {
+    useEffect( () => {
+        ( async () => {
             let { status } = await Location.requestPermissionsAsync();
-            if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
+            if ( status !== 'granted' ) {
+                setErrorMsg( 'Permission to access location was denied' );
                 return;
             }
 
-            let location: any = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-        })();
+            let location: any = await Location.getCurrentPositionAsync( {} );
+            setLocation( location );
+        } )();
 
         changeMap()
 
-    }, [props.change]);
+    }, [ props.change ] );
 
     function changeMap() {
-        if (props.change != ' ') {
-            const url = `https://us1.locationiq.com/v1/search.php?key=pk.ca7d72d67098fe33153685abf70e35a9&q=${props.change}&format=json`
-            axios.get(url).then((response) => {
-                setData(response.data)
+        if ( props.change != ' ' ) {
+            const url = `https://us1.locationiq.com/v1/search.php?key=pk.ca7d72d67098fe33153685abf70e35a9&q=${ props.change }&format=json`
+            axios.get( url ).then( ( response ) => {
+                setData( response.data )
                 // alert(JSON.stringify(response.data[0].boundingbox))
-            }).catch((error) => {
-                console.error(error)
-            });
+            } ).catch( ( error ) => {
+                console.error( error )
+            } );
         }
     }
 
-    const styles = StyleSheet.create({
+    const styles = StyleSheet.create( {
         container: {
             flex: 1,
             backgroundColor: '#fff',
@@ -63,20 +63,19 @@ export default function MapScreen(props: any, ref: any) {
             justifyContent: 'center',
         },
         map: {
-            width: Dimensions.get('window').width,
-            height: 490,
-            marginLeft: -20,
+            width: '100%',
+            height: 290,
             marginTop: 20
         },
         button: {
-            backgroundColor: Colors[colorScheme].bg1,
+            backgroundColor: Colors[ colorScheme ].bg1,
             padding: 7,
             borderRadius: 5,
-            marginRight: 10,
+            marginLeft: 20,
             minWidth: 80,
             alignItems: 'center'
         }
-    });
+    } );
 
 
 
@@ -94,27 +93,27 @@ export default function MapScreen(props: any, ref: any) {
             }}>
                 <TouchableOpacity
                     onPress={() => {
-                        setType('standard')
+                        setType( 'standard' )
                     }} style={styles.button}><Text style={{
-                        color: Colors[colorScheme].text
+                        color: Colors[ colorScheme ].text
                     }}>Standard</Text></TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        setType('satellite')
+                        setType( 'satellite' )
                     }} style={styles.button}><Text style={{
-                        color: Colors[colorScheme].text
+                        color: Colors[ colorScheme ].text
                     }}>Satelite</Text></TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        setType('hybrid')
+                        setType( 'hybrid' )
                     }} style={styles.button}><Text style={{
-                        color: Colors[colorScheme].text
+                        color: Colors[ colorScheme ].text
                     }}>Hybrid</Text></TouchableOpacity>
             </View>
             <MapView
                 region={{
-                    latitude: data[0].lat,
-                    longitude: data[0].lon,
+                    latitude: data[ 0 ].lat,
+                    longitude: data[ 0 ].lon,
                     latitudeDelta: 0.922,
                     longitudeDelta: 0.421,
                 }}
@@ -135,11 +134,11 @@ export default function MapScreen(props: any, ref: any) {
 
                 <Marker
                     coordinate={{
-                        latitude: data[0].lat,
-                        longitude: data[0].lon
+                        latitude: data[ 0 ].lat,
+                        longitude: data[ 0 ].lon
                     }}
                     pinColor={"red"}
-                    title={data[0].display_name}
+                    title={data[ 0 ].display_name}
                 // image={require('../../assets/markers/red.png')}
                 // icon={require('../../assets/markers/red.png')}
                 />

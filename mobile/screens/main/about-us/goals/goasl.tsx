@@ -4,40 +4,59 @@ import TopPadding from '../../../../shared/top-padding/top-padding';
 
 export default function Goals() {
     const colorScheme = useColorScheme();
-    const styles = StyleSheet.create({
+    const styles = StyleSheet.create( {
         container: {
             flex: 1,
             padding: 20,
             paddingTop: 30,
         },
         menu: {
-            fontWeight: '700',
-            fontSize: 35,
+            fontWeight: 'bold',
+            fontSize: 25,
+            width: '100%',
             marginBottom: 50,
+            marginTop: -40,
+            textAlign: 'center',
+            paddingHorizontal: 50
         },
         list: {
             padding: 10,
             borderBottomWidth: 1,
             lineHeight: 30,
-            color: Colors[colorScheme].text,
+            color: Colors[ colorScheme ].text,
             fontWeight: '500',
         },
-    });
+    } )
+
+    const [ show, setShow ] = React.useState( false )
+    function scrollHandler( event: any ) {
+        if ( event.nativeEvent.contentOffset.y < 1 ) {
+            setShow( false )
+        } else {
+            setShow( true )
+        }
+    }
     return (
-        <View style={[styles.container, { padding: 0 }]}>
+        <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
+            <View style={show == true ? {} : { position: 'absolute', left: -500 }}>
+                <DynamicSmallHeader text="Goals" />
+            </View>
+
             <ScrollView
-                style={[
-                    styles.container,
-                    {
-                        backgroundColor: Colors[colorScheme].bg1,
-                    },
-                ]}>
-                <BackContainer hidden={true} />
-                <Text
-                    style={[styles.menu, { color: Colors[colorScheme].text }]}>
-                    Goals
-                </Text>
+                showsVerticalScrollIndicator={false}
+                onScroll={( event ) => {
+                    scrollHandler( event )
+                }}
+                style={[ styles.container, { backgroundColor: Colors[ colorScheme ].homeBG, }, ]}>
+
+                <View style={show != true ? {} : { position: 'absolute', left: -500 }}>
+                    <BackContainer hidden={true} />
+                    <Text
+                        style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
+                        Goals
+                    </Text>
+                </View>
 
                 <Text style={styles.list}>
                     To generate and maintain an efficient and reliable data bank
@@ -65,7 +84,7 @@ export default function Goals() {
 }
 
 import Colors from '../../../../constants/Colors';
-import SearchNav from '../../home/components/search/search';
 import useColorScheme from '../../../../hooks/useColorScheme';
 import { ScrollView } from 'react-native-gesture-handler';
-import BackContainer from '../../../../shared/back-container/back-container';
+import BackContainer from '../../../../shared/back-container/back-container'; import DynamicSmallHeader from '../../../../shared/header/dynamic-small-header';
+

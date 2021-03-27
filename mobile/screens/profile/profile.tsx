@@ -1,40 +1,37 @@
 import React from 'react';
-
 import { ScrollView } from 'react-native-gesture-handler';
-
 import Colors from '../../constants/Colors';
-
 import useColorScheme from '../../hooks/useColorScheme';
-import BackContainer from '../../shared/back-container/back-container';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect } from 'react';
 import TopPadding from '../../shared/top-padding/top-padding';
+
 export default function ProfileScreen() {
-    const [user, setUser] = useState({
+    const [ user, setUser ] = useState( {
         fullname: '',
         profile_picture: { uri: '' },
-    });
+    } );
 
-    useEffect(() => {
+    useEffect( () => {
         async function fetchAndSetUser() {
-            let userToSet: any = await AsyncStorage.getItem('user');
-            let user = JSON.parse(userToSet);
-            setUser(user);
-            console.log(user.profile_picture);
+            let userToSet: any = await AsyncStorage.getItem( 'user' );
+            let user = JSON.parse( userToSet );
+            setUser( user );
+            console.log( user.profile_picture );
         }
 
         fetchAndSetUser();
-    }, []);
+    }, [] );
 
     const colorScheme = useColorScheme();
 
-    const styles = StyleSheet.create({
+    const styles = StyleSheet.create( {
         container: {
             flex: 1,
             padding: 20,
             paddingTop: 30,
-            backgroundColor: Colors[colorScheme].background,
+            backgroundColor: Colors[ colorScheme ].background,
         },
         menu: {
             fontWeight: '700',
@@ -54,7 +51,7 @@ export default function ProfileScreen() {
         list: {
             padding: 10,
             borderBottomWidth: 1,
-            color: Colors[colorScheme].text,
+            color: Colors[ colorScheme ].text,
             lineHeight: 30,
         },
         cover: {
@@ -65,7 +62,7 @@ export default function ProfileScreen() {
             borderTopLeftRadius: 20,
         },
         profileContainerMain: {
-            backgroundColor: Colors[colorScheme].background,
+            backgroundColor: Colors[ colorScheme ].background,
             borderRadius: 100,
             marginTop: -100,
             height: 205,
@@ -75,7 +72,7 @@ export default function ProfileScreen() {
             justifyContent: 'center',
             marginBottom: 10,
             borderWidth: 2,
-            borderColor: Colors[colorScheme].background,
+            borderColor: Colors[ colorScheme ].background,
         },
         profileContainer: {
             borderRadius: 100,
@@ -92,22 +89,22 @@ export default function ProfileScreen() {
             width: 190,
             borderRadius: 100,
             borderWidth: 4,
-            borderColor: Colors[colorScheme].background,
+            borderColor: Colors[ colorScheme ].homeBG,
         },
-    });
+    } );
     return (
-        <ScrollView style={[styles.container, { padding: 0 }]}>
+        <View style={[ styles.container, { padding: 0, flex: 1, backgroundColor: Colors[ colorScheme ].homeBG, } ]}>
             <TopPadding />
             <ScrollView
+                showsHorizontalScrollIndicator={false}
                 style={[
                     styles.container,
                     {
-                        backgroundColor: Colors[colorScheme].background,
+                        backgroundColor: Colors[ colorScheme ].homeBG,
                     },
                 ]}>
-                <BackContainer hidden={true} />
                 <Text
-                    style={[styles.menu, { color: Colors[colorScheme].text }]}>
+                    style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
                     {user.fullname || 'Juan De La Cruz'}
                 </Text>
                 <Image
@@ -115,7 +112,7 @@ export default function ProfileScreen() {
                     style={styles.cover}
                     source={
                         user.profile_picture == null
-                            ? require('../../assets/IPOP/Iloilo-Provincial-Capitol-Panay-News-2.jpg')
+                            ? require( '../../assets/IPOP/Iloilo-Provincial-Capitol-Panay-News-2.jpg' )
                             : { uri: user.profile_picture.uri }
                     }
                 />
@@ -126,24 +123,24 @@ export default function ProfileScreen() {
                             style={styles.profile}
                             source={
                                 user.profile_picture == null
-                                    ? require('../../assets/IPOP/Iloilo-Provincial-Capitol-Panay-News-2.jpg')
+                                    ? require( '../../assets/IPOP/Iloilo-Provincial-Capitol-Panay-News-2.jpg' )
                                     : { uri: user.profile_picture.uri }
                             }
                         />
                     </View>
                 </View>
                 <Text
-                    style={[styles.name, { color: Colors[colorScheme].text }]}>
+                    style={[ styles.name, { color: Colors[ colorScheme ].text } ]}>
                     {user.fullname || 'Juan De La Cruz'}
                 </Text>
                 <Text
                     style={[
                         styles.address,
-                        { color: Colors[colorScheme].text },
+                        { color: Colors[ colorScheme ].text },
                     ]}>
-                    Lagubang, Baortac Nuevo
+                    Viewer
                 </Text>
             </ScrollView>
-        </ScrollView>
+        </View>
     );
 }

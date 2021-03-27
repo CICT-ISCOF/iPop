@@ -1,24 +1,50 @@
-import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+
+import React from 'react';
 import TopPadding from '../../../../shared/top-padding/top-padding';
+import Colors from '../../../../constants/Colors';
+import useColorScheme from '../../../../hooks/useColorScheme';
+import { ScrollView } from 'react-native-gesture-handler';
+import BackContainer from '../../../../shared/back-container/back-container';
+import DynamicSmallHeader from '../../../../shared/header/dynamic-small-header';
+
 
 export default function ContactUs() {
     const colorScheme = useColorScheme();
+
+    const [ show, setShow ] = React.useState( false )
+    function scrollHandler( event: any ) {
+        if ( event.nativeEvent.contentOffset.y < 1 ) {
+            setShow( false )
+        } else {
+            setShow( true )
+        }
+    }
+
     return (
-        <View style={[styles.container, { padding: 0 }]}>
+        <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
+            <View style={show == true ? {} : { position: 'absolute', left: -500 }}>
+                <DynamicSmallHeader text="Contact Us" />
+            </View>
+
             <ScrollView
-                style={[
-                    styles.container,
-                    {
-                        backgroundColor: Colors[colorScheme].bg1,
-                    },
-                ]}>
-                <BackContainer hidden={true} />
-                <Text
-                    style={[styles.menu, { color: Colors[colorScheme].text }]}>
-                    Contact Us
-                </Text>
+                showsVerticalScrollIndicator={false}
+                onScroll={( event ) => {
+                    scrollHandler( event )
+                }}
+                style={[ styles.container, { backgroundColor: Colors[ colorScheme ].homeBG, }, ]}>
+
+                <View style={show != true ? {} : { position: 'absolute', left: -500 }}>
+                    <BackContainer />
+                    <Text
+                        style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
+                        Contact Us
+                    </Text>
+                </View>
 
                 <View style={{ alignItems: 'flex-start' }}>
                     <View style={styles.contacts}>
@@ -31,7 +57,7 @@ export default function ContactUs() {
                         </View>
                         <Text
                             style={{
-                                color: Colors[colorScheme].text,
+                                color: Colors[ colorScheme ].text,
                             }}>
                             (033) 509 5081 | 328 7913
                         </Text>
@@ -51,7 +77,7 @@ export default function ContactUs() {
                         </View>
                         <Text
                             style={{
-                                color: Colors[colorScheme].text,
+                                color: Colors[ colorScheme ].text,
                             }}>
                             PPO Iloilo
                         </Text>
@@ -67,7 +93,7 @@ export default function ContactUs() {
                         </View>
                         <Text
                             style={{
-                                color: Colors[colorScheme].text,
+                                color: Colors[ colorScheme ].text,
                             }}>
                             ppo@iloilo.gov.phsvv
                         </Text>
@@ -83,7 +109,7 @@ export default function ContactUs() {
                         </View>
                         <Text
                             style={{
-                                color: Colors[colorScheme].text,
+                                color: Colors[ colorScheme ].text,
                             }}>
                             ppo@iloilo
                         </Text>
@@ -93,27 +119,22 @@ export default function ContactUs() {
         </View>
     );
 }
-import { Feather } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
 
-import Colors from '../../../../constants/Colors';
-import SearchNav from '../../home/components/search/search';
-import useColorScheme from '../../../../hooks/useColorScheme';
-import { ScrollView } from 'react-native-gesture-handler';
-import BackContainer from '../../../../shared/back-container/back-container';
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create( {
     container: {
         flex: 1,
         padding: 20,
         paddingTop: 30,
     },
     menu: {
-        fontWeight: '700',
-        fontSize: 35,
-        width: '70%',
+        fontWeight: 'bold',
+        fontSize: 25,
+        width: '100%',
         marginBottom: 50,
+        marginTop: -40,
+        textAlign: 'center',
+        paddingHorizontal: 50
     },
     contacts: {
         flexDirection: 'row',
@@ -129,4 +150,4 @@ const styles = StyleSheet.create({
         marginRight: 20,
         borderRadius: 50,
     },
-});
+} );
