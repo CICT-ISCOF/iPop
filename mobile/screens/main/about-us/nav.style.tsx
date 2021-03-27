@@ -21,16 +21,16 @@ export default StyleSheet.create( {
 
         height: 140,
         margin: 10,
-        shadowColor: "rgba(113,111,139,1)",
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        shadowOpacity: 0.57,
-        shadowRadius: 15.65,
-        elevation: 6,
-        // borderWidth: 2,
-        // borderColor: '#426FC3',
+        // shadowColor: "rgba(113,111,139,1)",
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 3,
+        // },
+        // shadowOpacity: 0.57,
+        // shadowRadius: 15.65,
+        // elevation: 6,
+        borderWidth: 1,
+        borderColor: 'rgba(150,150,150,.2)',
     },
     navIons: {
         textAlign: 'center',

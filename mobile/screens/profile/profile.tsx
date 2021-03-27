@@ -138,7 +138,7 @@ export default function ProfileScreen() {
                         styles.address,
                         { color: Colors[ colorScheme ].text },
                     ]}>
-                    Lagubang, Baortac Nuevo
+                    Viewer
                 </Text>
             </ScrollView>
         </View>
