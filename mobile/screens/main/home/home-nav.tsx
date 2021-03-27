@@ -65,7 +65,6 @@ export default function HomeNav( props: any ) {
                     <Text style={[ styles.menuButtonText, menu == 'This Month' ? styles.menuButtonActiveText : {} ]}>This Month</Text>
                 </TouchableOpacity>
             </View>
-
         </View>
     );
 }

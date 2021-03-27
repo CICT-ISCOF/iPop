@@ -1,31 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, Text, Dimensions } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import React, { useState, useRef } from 'react';
+import { View, Image, Text } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import styles from './carousel.style'
-import { Entypo } from '@expo/vector-icons';
-
 
 export default function Carousel( props: any ) {
+
     const images = props.data;
     const scrollViewRef: any = useRef();
     const [ step, setStep ]: any = useState( 0 )
     const [ position, setPosition ]: any = useState( 0 )
 
-
-
-
     return (
         <View>
-            <Text
-                style={[
-                    styles.placeholder,
-                    images.length == 0
-                        ? {}
-                        : { position: 'absolute', left: 500 },
-                ]}>
-                Nothing to show..
-            </Text>
-
             <ScrollView
                 showsHorizontalScrollIndicator={false}
                 ref={scrollViewRef}
@@ -84,6 +70,7 @@ export default function Carousel( props: any ) {
                                 </View>
                             )
                         }
+
                     } )
                 }
             </ScrollView>

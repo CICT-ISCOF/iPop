@@ -14,8 +14,7 @@ export default function TeenCenters() {
     return (
         <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
-            <ScrollView
-                showsVerticalScrollIndicator={false}
+            <View
                 style={[
                     styles.container,
                     {
@@ -30,7 +29,7 @@ export default function TeenCenters() {
                 <Text style={{ color: 'gray' }}>Swipe to Select District</Text>
                 <TeenCentersSelects />
                 <View style={{ height: 150 }} />
-            </ScrollView>
+            </View>
         </View>
     );
 }

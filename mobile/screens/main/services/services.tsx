@@ -15,7 +15,6 @@ import TopPadding from '../../../shared/top-padding/top-padding';
 import DynamicSmallHeader from '../../../shared/header/dynamic-small-header';
 import { Entypo } from '@expo/vector-icons';
 
-
 export default function Services() {
     const colorScheme = useColorScheme();
     const navigation = useNavigation();

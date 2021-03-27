@@ -50,6 +50,7 @@ import Step4 from '../screens/Steps/step4';
 import Step5 from '../screens/Steps/step5';
 import ShowArticle from '../screens/main/home/components/featured-articles/show-featuredArticles';
 import ShowMPC from '../screens/rpfp/mpc-fdc/show-mpc';
+import NoInternet from '../No-InternetScreen';
 
 export default function Navigation( { colorScheme, }: { colorScheme: ColorSchemeName; } ) {
     return (
@@ -72,6 +73,9 @@ function RootNavigator() {
             <Stack.Screen name='Password' component={Password} />
             <Stack.Screen name='Avatar' component={Avatar} />
             <Stack.Screen name='Root' component={BottomTabNavigator} />
+            <Stack.Screen name='NoInternet' component={NoInternet} />
+
+
 
             <Stack.Screen name='ShowArticle' component={ShowArticle} />
 

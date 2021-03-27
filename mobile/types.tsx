@@ -9,6 +9,7 @@ export type RootStackParamList = {
     Password: undefined;
     Avatar: undefined;
     Splash: undefined;
+    NoInternet: undefined
 
     // stepper
     Step1: undefined;

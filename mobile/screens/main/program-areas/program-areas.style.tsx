@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 export default StyleSheet.create( {
     container: {
         flex: 1,
@@ -41,32 +41,22 @@ export default StyleSheet.create( {
     },
     description: {
         padding: 10,
-
         lineHeight: 30,
     },
     article: {
         marginTop: 20,
-        padding: 20,
-        borderRadius: 3,
-        paddingBottom: 0,
+        borderBottomWidth: 5,
+        borderBottomColor: 'rgba(150,150,150,.2)',
+        width: Dimensions.get( 'screen' ).width,
+        marginLeft: -20,
+        padding: 10
     },
     title1: {
         fontWeight: '600',
         fontSize: 20,
         marginTop: -5,
         marginBottom: 15,
-        width: '80%',
+        textAlign: 'center'
     },
-    scrollview: {
-        height: 200,
-        width: '100%',
-        marginTop: 20,
-    },
-    image: {
-        height: '100%',
-        width: 300,
-        resizeMode: 'stretch',
-        borderWidth: 3,
-        borderColor: 'rgba(150,150,150,0.9)',
-    },
+
 } );

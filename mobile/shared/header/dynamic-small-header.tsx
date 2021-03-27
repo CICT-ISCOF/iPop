@@ -20,6 +20,8 @@ export default function DynamicSmallHeader( props: any ) {
             , paddingBottom: 10,
             paddingHorizontal: 20,
             alignItems: 'center'
+            , paddingRight: 50,
+            marginTop: -5
         }}>
             <TouchableOpacity
                 onPress={() => {

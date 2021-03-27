@@ -6,13 +6,14 @@ import styles from './program-areas.style';
 
 import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import { Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+
 import TopPadding from '../../../shared/top-padding/top-padding';
-import { useNavigation } from '@react-navigation/native';
 import DynamicSmallHeader from '../../../shared/header/dynamic-small-header';
 
 export default function ProgramAreasScreen() {
@@ -71,6 +72,8 @@ export default function ProgramAreasScreen() {
                         ]}>
                         Adolescent Health and Youth Development
                     </Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
+
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
@@ -89,6 +92,8 @@ export default function ProgramAreasScreen() {
                         ]}>
                         Responsible Parenthood and Family Planning
                     </Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
+
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
@@ -114,6 +119,8 @@ export default function ProgramAreasScreen() {
                         Comprehensive Population Data Banking and Management
                         Project
                     </Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
+
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
@@ -133,6 +140,8 @@ export default function ProgramAreasScreen() {
                         ]}>
                         Population Development and Integration
                     </Text>
+                    <Entypo name="chevron-small-right" size={24} color="gray" />
+
                 </TouchableOpacity>
             </ScrollView>
         </View>
