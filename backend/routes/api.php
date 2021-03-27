@@ -225,6 +225,10 @@ Route::middleware('throttle:60,1')->group(function () {
         'profile-summary' => ProfileSummaryController::class,
     ]);
 
+    Route::get('/articles/today', [ArticleController::class, 'today']);
+    Route::get('/articles/week', [ArticleController::class, 'week']);
+    Route::get('/articles/month', [ArticleController::class, 'month']);
+
     Route::get('/statistic-profile/total', [ProfileController::class, 'total']);
 
     // Delete 1 award media

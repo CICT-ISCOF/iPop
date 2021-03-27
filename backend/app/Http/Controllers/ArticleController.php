@@ -154,4 +154,30 @@ class ArticleController extends Controller
 
         return response('', 204);
     }
+
+    public function today()
+    {
+        $now = now();
+        return Article::whereDate('created_at', $now)
+            ->whereDay('created_at', $now->day)
+            ->whereMonth('created_at', $now->month)
+            ->get();
+    }
+
+    public function week()
+    {
+        $now = now();
+        return Article::whereBetween('created_at', [
+            $now->startOfWeek(),
+            $now->endOfWeek(),
+        ])->get();
+    }
+
+    public function month()
+    {
+        $now = now();
+        return Article::whereDate('created_at', $now)
+            ->whereMonth('created_at', $now->month)
+            ->get();
+    }
 }
