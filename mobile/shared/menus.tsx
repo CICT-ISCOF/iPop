@@ -228,7 +228,7 @@ export default function Menus() {
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 onPress={() => {
                     navigate( 'IssuesAndConcerns' );
                 }}
@@ -249,9 +249,9 @@ export default function Menus() {
                     <Entypo name="chevron-small-right" size={24} color="gray" />
 
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 onPress={() => {
                     navigate( 'Others' );
                 }}
@@ -260,9 +260,10 @@ export default function Menus() {
                 }}>
                 <View style={internalStyles.itemWrapper}>
                     <View style={internalStyles.icon}>
-                        <Feather name="external-link"
+                        <Entypo
+                            name='info-with-circle'
                             size={20}
-                            color='gray'
+                            color='#426FC3'
                         />
                     </View>
                     <Text style={internalStyles.iconText}>Others</Text>
@@ -270,6 +271,8 @@ export default function Menus() {
 
                 </View>
             </TouchableOpacity>
+            
+             */}
             <TouchableOpacity
                 onPress={() => {
                     ConfrimSheetRef.current.open()

@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import useColorScheme from '../../hooks/useColorScheme';
 import Colors from '../../constants/Colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 export default function BackContainer( props: any ) {
@@ -26,6 +25,9 @@ export default function BackContainer( props: any ) {
             justifyContent: 'center',
             backgroundColor: Colors[ colorScheme ].background,
             marginBottom: 10,
+            zIndex: 999,
+            right: 0,
+            alignSelf: 'flex-end'
         },
     } );
 
@@ -34,18 +36,16 @@ export default function BackContainer( props: any ) {
     };
 
     return (
-        <View>
-            <TouchableOpacity
-                onPress={() => {
-                    back();
-                }}
-                style={styles.buttonContainer}>
-                <MaterialIcons
-                    name='close'
-                    size={20}
-                    color={Colors[ colorScheme ].text1}
-                />
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+            onPress={() => {
+                back();
+            }}
+            style={styles.buttonContainer}>
+            <MaterialIcons
+                name='close'
+                size={20}
+                color={Colors[ colorScheme ].text1}
+            />
+        </TouchableOpacity>
     );
 }

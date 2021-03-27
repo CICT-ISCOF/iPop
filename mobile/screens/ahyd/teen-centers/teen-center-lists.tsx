@@ -8,27 +8,46 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import TopPadding from '../../../shared/top-padding/top-padding';
 import BackContainer from '../../../shared/back-container/back-container';
+import DynamicSmallHeader from '../../../shared/header/dynamic-small-header';
 
 export default function TeenCenterList( { route }: any ) {
     const { data, number } = route.params;
     const colorScheme = useColorScheme();
     const navigation = useNavigation();
+
+    const [ show, setShow ] = React.useState( false )
+    function scrollHandler( event: any ) {
+        if ( event.nativeEvent.contentOffset.y < 1 ) {
+            setShow( false )
+        } else {
+            setShow( true )
+        }
+    }
+
+
     return (
         <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
+
+            <View style={show == true ? {} : { position: 'absolute', left: -500 }}>
+                <DynamicSmallHeader text={'District ' + number} />
+            </View>
+
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                style={[
-                    styles.container,
-                    {
-                        backgroundColor: Colors[ colorScheme ].homeBG,
-                    },
-                ]}>
-                <BackContainer hidden={true} />
-                <Text
-                    style={[ styles.menu, { color: Colors[ colorScheme ].text, marginBottom: 40 } ]}>
-                    District {number}
-                </Text>
+                onScroll={( event ) => {
+                    scrollHandler( event )
+                }}
+                style={[ styles.container, { backgroundColor: Colors[ colorScheme ].homeBG, }, ]}>
+
+                <View style={show != true ? {} : { position: 'absolute', left: -500 }}>
+                    <BackContainer />
+                    <Text
+                        style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
+                        District {number}
+                    </Text>
+                </View>
+
                 {data.data.map( ( tc: any, index: any ) => {
                     return (
                         <TouchableOpacity

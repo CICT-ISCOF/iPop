@@ -6,9 +6,13 @@ export default StyleSheet.create( {
         paddingTop: 30,
     },
     menu: {
-        fontWeight: '700',
-        fontSize: 35,
-        width: '90%',
+        fontWeight: 'bold',
+        fontSize: 25,
+        width: '100%',
+        marginBottom: 50,
+        marginTop: -40,
+        textAlign: 'center',
+        paddingHorizontal: 50
     },
     box: {
         flexDirection: 'row',

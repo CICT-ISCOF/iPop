@@ -1,7 +1,7 @@
 import { View, Image, RefreshControl, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react'; import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { Entypo } from '@expo/vector-icons';
 
 import base from '../../../constants/Api';
 import * as React from 'react';
@@ -14,10 +14,12 @@ import FeautredArticles from './components/featured-articles/featured-articls';
 import HomeNav from './home-nav';
 import SearchScreen from './search-screen'
 import TopPadding from '../../../shared/top-padding/top-padding';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function Home() {
     const colorScheme = useColorScheme();
-
+    const navigation = useNavigation();
     const [ refreshing, setRefreshing ] = useState( false );
     const [ carouselData, setCarouselData ] = useState( [] );
     const [ feautredArticlesData, setFeautredArticlesData ] = useState( [] );
@@ -113,6 +115,18 @@ export default function Home() {
                     }}
                 >
                     <Ionicons name="search-outline" size={24} color="#426FC3" />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate( 'Others' );
+                    }}>
+                    <Entypo
+                        style={{ marginLeft: 20 }}
+                        name='info-with-circle'
+                        size={24}
+                        color='#426FC3'
+                    />
                 </TouchableOpacity>
             </View>
 

@@ -44,7 +44,6 @@ export default function MenuScreen() {
                         backgroundColor: Colors[ colorScheme ].homeBG,
                     },
                 ]}>
-                <SearchNav />
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center'

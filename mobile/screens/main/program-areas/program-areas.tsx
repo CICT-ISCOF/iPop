@@ -13,6 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import TopPadding from '../../../shared/top-padding/top-padding';
 import { useNavigation } from '@react-navigation/native';
+import DynamicSmallHeader from '../../../shared/header/dynamic-small-header';
 
 export default function ProgramAreasScreen() {
     const colorScheme = useColorScheme();
@@ -22,21 +23,37 @@ export default function ProgramAreasScreen() {
         navigation.navigate( 'ShowProgramAreas', { data: params } );
     };
 
+
+    const [ show, setShow ] = React.useState( false )
+    function scrollHandler( event: any ) {
+        if ( event.nativeEvent.contentOffset.y < 1 ) {
+            setShow( false )
+        } else {
+            setShow( true )
+        }
+    }
+
     return (
         <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
-            <ScrollView
-                style={[
-                    styles.container,
-                    {
-                        backgroundColor: Colors[ colorScheme ].homeBG,
-                    },
-                ]}>
+            <View style={show == true ? {} : { position: 'absolute', left: -500 }}>
+                <DynamicSmallHeader text="Program Areas" />
+            </View>
 
-                <Text
-                    style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
-                    Program Areas
-                </Text>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                onScroll={( event ) => {
+                    scrollHandler( event )
+                }}
+                style={[ styles.container, { backgroundColor: Colors[ colorScheme ].homeBG, }, ]}>
+
+                <View style={show != true ? {} : { position: 'absolute', left: -500 }}>
+                    <Text
+                        style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
+                        Program Areas
+                    </Text>
+                </View>
+
                 <TouchableOpacity
                     onPress={() => {
                         navigate( 2 );
@@ -45,7 +62,8 @@ export default function ProgramAreasScreen() {
                         styles.button,
                         { backgroundColor: Colors[ colorScheme ].background },
                     ]}>
-                    <FontAwesome name='stethoscope' size={35} color='#02A1C7' />
+                    <FontAwesome style={{ width: 40 }} name='stethoscope' size={35} color='#02A1C7' />
+                    <View style={styles.separator} />
                     <Text
                         style={[
                             styles.buttonText,
@@ -62,7 +80,8 @@ export default function ProgramAreasScreen() {
                         styles.button,
                         { backgroundColor: Colors[ colorScheme ].background },
                     ]}>
-                    <FontAwesome5 name='people-carry' size={24} color='red' />
+                    <FontAwesome5 style={{ width: 40 }} name='people-carry' size={24} color='red' />
+                    <View style={styles.separator} />
                     <Text
                         style={[
                             styles.buttonText,
@@ -80,10 +99,13 @@ export default function ProgramAreasScreen() {
                         { backgroundColor: Colors[ colorScheme ].background },
                     ]}>
                     <MaterialIcons
+                        style={{ width: 40 }}
                         name='data-usage'
                         size={24}
                         color='#3EA662'
                     />
+                    <View style={styles.separator} />
+
                     <Text
                         style={[
                             styles.buttonText,
@@ -101,7 +123,9 @@ export default function ProgramAreasScreen() {
                         styles.button,
                         { backgroundColor: Colors[ colorScheme ].background },
                     ]}>
-                    <Ionicons name='ios-people' size={24} color='orange' />
+                    <Ionicons style={{ width: 40 }} name='ios-people' size={24} color='orange' />
+                    <View style={styles.separator} />
+
                     <Text
                         style={[
                             styles.buttonText,

@@ -1,6 +1,11 @@
-import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import React from 'react';
 import TopPadding from '../../../shared/top-padding/top-padding';
+import Colors from '../../../constants/Colors';
+import useColorScheme from '../../../hooks/useColorScheme';
+import BackContainer from '../../../shared/back-container/back-container'; import DynamicSmallHeader from '../../../shared/header/dynamic-small-header';
+
 
 export default function Directory() {
     const colorScheme = useColorScheme();
@@ -9,7 +14,7 @@ export default function Directory() {
         container: {
             flex: 1,
             padding: 20,
-            paddingTop: 50,
+            paddingTop: 30,
         },
         menu: {
             fontWeight: 'bold',
@@ -716,9 +721,3 @@ export default function Directory() {
         </View>
     );
 }
-
-import Colors from '../../../constants/Colors';
-import useColorScheme from '../../../hooks/useColorScheme';
-import { ScrollView } from 'react-native-gesture-handler';
-import BackContainer from '../../../shared/back-container/back-container'; import DynamicSmallHeader from '../../../shared/header/dynamic-small-header';
-

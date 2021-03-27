@@ -6,12 +6,11 @@ import styles from './links.style';
 import * as Linking from 'expo-linking';
 
 export default function Links() {
-    const openLink = (link: any) => {
-        Linking.openURL(link);
+    const openLink = ( link: any ) => {
+        Linking.openURL( link );
     };
     return (
         <View>
-            <Text style={styles.title}>OTHER LINKS FOR PRESS RELEASES:</Text>
             <Text style={styles.date}>2015</Text>
 
             <Text style={styles.subTitle}>
