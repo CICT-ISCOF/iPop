@@ -2,7 +2,7 @@ import * as React from 'react';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import styles from './program-areas.style';
-import SearchNav from '../../../screens/main/home/components/search/search';
+
 
 import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -32,7 +32,7 @@ export default function ProgramAreasScreen() {
                         backgroundColor: Colors[ colorScheme ].homeBG,
                     },
                 ]}>
-                <SearchNav />
+
                 <Text
                     style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
                     Program Areas

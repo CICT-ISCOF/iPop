@@ -5,52 +5,72 @@ import TopPadding from '../../../../shared/top-padding/top-padding';
 export default function CoreValues() {
     const colorScheme = useColorScheme();
 
-    const styles = StyleSheet.create({
+    const styles = StyleSheet.create( {
         container: {
             flex: 1,
             padding: 20,
             paddingTop: 30,
         },
         menu: {
-            fontWeight: '700',
-            fontSize: 35,
+            fontWeight: 'bold',
+            fontSize: 25,
+            width: '100%',
             marginBottom: 50,
+            marginTop: -40,
+            textAlign: 'center',
+            paddingHorizontal: 50
         },
         list: {
             padding: 10,
             borderBottomWidth: 1,
             lineHeight: 30,
-            color: Colors[colorScheme].text1,
+            color: Colors[ colorScheme ].text1,
             fontWeight: '500',
         },
         bold: {
             fontWeight: '900',
             fontSize: 16,
-            color: '#356F81',
+            color: '#426FC3',
         },
-    });
+    } )
+
+    const [ show, setShow ] = React.useState( false )
+    function scrollHandler( event: any ) {
+        if ( event.nativeEvent.contentOffset.y < 1 ) {
+            setShow( false )
+        } else {
+            setShow( true )
+        }
+    }
 
     return (
-        <View style={[styles.container, { padding: 0 }]}>
+        <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
+            <View style={show == true ? {} : { position: 'absolute', left: -500 }}>
+                <DynamicSmallHeader text="Core Values" />
+            </View>
+
             <ScrollView
-                style={[
-                    styles.container,
-                    {
-                        backgroundColor: Colors[colorScheme].bg1,
-                    },
-                ]}>
-                <BackContainer hidden={true} />
-                <Text
-                    style={[styles.menu, { color: Colors[colorScheme].text }]}>
-                    Core Values
-                </Text>
+                showsVerticalScrollIndicator={false}
+                onScroll={( event ) => {
+                    scrollHandler( event )
+                }}
+                style={[ styles.container, { backgroundColor: Colors[ colorScheme ].homeBG, }, ]}>
+
+                <View style={show != true ? {} : { position: 'absolute', left: -500 }}>
+                    <BackContainer hidden={true} />
+                    <Text
+                        style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
+                        Core Values
+                    </Text>
+                </View>
+
                 <Text
                     style={{
                         textAlign: 'center',
                         marginBottom: 40,
                         lineHeight: 30,
-                        color: Colors[colorScheme].text,
+                        color: Colors[ colorScheme ].text,
                     }}>
                     We the constituents of the
                     <Text>Provincial Population Office (PPO)</Text> , commit
@@ -101,7 +121,8 @@ export default function CoreValues() {
 }
 
 import Colors from '../../../../constants/Colors';
-import SearchNav from '../../home/components/search/search';
+
 import useColorScheme from '../../../../hooks/useColorScheme';
 import { ScrollView } from 'react-native-gesture-handler';
-import BackContainer from '../../../../shared/back-container/back-container';
+import BackContainer from '../../../../shared/back-container/back-container'; import DynamicSmallHeader from '../../../../shared/header/dynamic-small-header';
+

@@ -4,7 +4,6 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { View, Text, Image, ScrollView } from 'react-native';
 import Menus from './menus';
-import SearchNav from '../screens/main/home/components/search/search';
 import TopPadding from './top-padding/top-padding';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

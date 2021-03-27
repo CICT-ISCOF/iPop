@@ -1,13 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import SearchNav from '../../screens/main/home/components/search/search';
 import { MaterialIcons } from '@expo/vector-icons';
 import useColorScheme from '../../hooks/useColorScheme';
 import Colors from '../../constants/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { StackActions } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
 export default function BackContainer( props: any ) {
@@ -29,7 +25,7 @@ export default function BackContainer( props: any ) {
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: Colors[ colorScheme ].background,
-            marginBottom: -20,
+            marginBottom: 10,
         },
     } );
 
@@ -50,7 +46,6 @@ export default function BackContainer( props: any ) {
                     color={Colors[ colorScheme ].text1}
                 />
             </TouchableOpacity>
-            <SearchNav hidden={props.hidden} />
         </View>
     );
 }

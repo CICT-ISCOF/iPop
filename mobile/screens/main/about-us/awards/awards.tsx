@@ -5,35 +5,35 @@ export default function Awards() {
 
     let feedBackground = colorScheme == 'dark' ? '#242526' : 'white';
 
-    const [awards, setAwards] = useState([]);
+    const [ awards, setAwards ] = useState( [] );
 
-    useEffect(() => {
+    useEffect( () => {
         async function fetchData() {
-            axios.get(base.apiURL + base.awards).then((response) => {
-                setAwards(response.data);
-            });
+            axios.get( base.apiURL + base.awards ).then( ( response ) => {
+                setAwards( response.data );
+            } );
         }
 
         fetchData();
-    }, []);
+    }, [] );
 
     return (
-        <View style={[styles.container, { padding: 0 }]}>
+        <View style={[ styles.container, { padding: 0 } ]}>
             <TopPadding />
             <ScrollView
                 style={[
                     styles.container,
                     {
-                        backgroundColor: Colors[colorScheme].bg1,
+                        backgroundColor: Colors[ colorScheme ].homeBG,
                     },
                 ]}>
                 <BackContainer hidden={true} />
                 <Text
-                    style={[styles.menu, { color: Colors[colorScheme].text }]}>
+                    style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
                     Awards
                 </Text>
 
-                {awards.map((award: any, index: any) => {
+                {awards.map( ( award: any, index: any ) => {
                     return (
                         <View
                             style={[
@@ -45,30 +45,30 @@ export default function Awards() {
                             <Text
                                 style={[
                                     styles.title,
-                                    { color: Colors[colorScheme].text },
+                                    { color: Colors[ colorScheme ].text },
                                 ]}>
                                 {award.title}
                             </Text>
                             <Text
-                                style={[{ color: Colors[colorScheme].text1 }]}>
+                                style={[ { color: Colors[ colorScheme ].text1 } ]}>
                                 {award.url}
                             </Text>
                             <ScrollView
                                 style={styles.scrollview}
                                 horizontal={true}
                                 showsHorizontalScrollIndicator={false}>
-                                {award.medias.map((media: any, index: any) => {
+                                {award.medias.map( ( media: any, index: any ) => {
                                     return (
                                         <Image
                                             style={styles.image}
                                             source={{ uri: media.file.uri }}
                                         />
                                     );
-                                })}
+                                } )}
                             </ScrollView>
                         </View>
                     );
-                })}
+                } )}
                 <View style={{ height: 150 }} />
             </ScrollView>
         </View>
