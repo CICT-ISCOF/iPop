@@ -1,51 +1,49 @@
 <app-create *ngIf="pinLogin == true"></app-create>
+
 <app-mobile-authentication></app-mobile-authentication>
+
 <div *ngIf="isLoading == true" class="loader"></div>
+
 <div class="sign-in-container">
+    <img class="overlay-bg" src="../../../assets//home/2.jpg" />
+
     <div class="sign-in-panel">
         <div>
             <div class="overlay1"></div>
         </div>
         <div class="row">
-            <div class="col-md-6 left">
-                <div>
-                    <div class="overlay"></div>
-                </div>
-                <img src="../../../assets/svg/login.svg" class="w-100 bg-image" alt="" />
-            </div>
-            <div class="col-md-6 right" style="padding: 15vh 10vw;">
-                <br /><br />
-                <div class="row img-container">
-                    <img class="avatar" src="../../../assets//avatars/boy-blue.png" alt="" />
-                </div>
-                <br />
-                <div class="md-form">
-                    <input (keyup.enter)="login()" [(ngModel)]="account.username" type="text" id="username" class="form-control" />
-                    <label for="username">Username</label>
-                </div>
-                <div class="md-form">
-                    <input (keyup.enter)="login()" [(ngModel)]="account.password" type="password" id="password" class="form-control" />
-                    <label for="password">Password</label>
-                </div>
+            <div class="col-md-5 right animated zoomInRight fast">
 
-                <br />
+                <h2 class="" style="font-weight: 900;color:#0B4FAC">Iloilo Provincial Population Office</h2>
+                <p style="color:gray">Login with your username and password given by the administrator</p>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input (keyup.enter)="login()" [(ngModel)]="account.username" type="search" id="username" class="form-control" />
+                    <br>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input (keyup.enter)="login()" [(ngModel)]="account.password" type="password" id="password" class="form-control" />
+                </div>
+                <br>
+
                 <button [disabled]="isLoading" class="button" (click)="login()">
-          <div
-            *ngIf="isLoading"
-            class="spinner-border text-light spinner-border-sm fast"
-            role="status"
-          >
-            <span class="sr-only">Loading...</span>
-          </div>
-          &nbsp;
-          <span style="color: white">{{
-            isLoading ? "Logging in..." : "Login"
-          }}</span>
-        </button>
-                <br />
-                <br />
-                <br />
-                <p (click)="loginWithPin()">Forgot Password? I will use pin instead</p>
+                    <div *ngIf="isLoading" class="spinner-border text-light spinner-border-sm fast"role="status"          >
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    &nbsp;
+                    <span style="color: white">
+                        {{  isLoading ? "Logging in..." : "Login"}}
+                    </span>
+                </button>
+
+                <p (click)="loginWithPin()" style="text-align: center;">Forgot Password? I will use pin instead</p>
+
+            </div>
+            <div class="col-md-7 left">
+                <img class="animated zoomIn fast" src="../../../assets//home/1.jpg" />
             </div>
         </div>
     </div>
