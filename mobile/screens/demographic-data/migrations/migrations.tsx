@@ -227,7 +227,7 @@ export default function Migrations() {
             <BottomSheetScreen
                 ref={LocalDataRef}
                 renderContent={LocalDataSheet}
-                visibleHeight={Dimensions.get( 'window' ).height / 1.75}
+                visibleHeight={Dimensions.get( 'window' ).height / 1.2}
             />
             <BottomSheetScreen
                 ref={ConfrimSheetRef}
@@ -237,7 +237,7 @@ export default function Migrations() {
             <BottomSheetScreen
                 ref={MigrationRef}
                 renderContent={MigrationSheet}
-                visibleHeight={Dimensions.get( 'window' ).height / 2}
+                visibleHeight={Dimensions.get( 'window' ).height / 1.5}
             />
             <BottomSheetScreen
                 ref={DeathsByMonthsRef}

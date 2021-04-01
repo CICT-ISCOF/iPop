@@ -186,7 +186,7 @@ export default function PopulationData() {
             <BottomSheetScreen
                 ref={MenuRef}
                 renderContent={MenuSheet}
-                visibleHeight={Dimensions.get( 'window' ).height / 3}
+                visibleHeight={Dimensions.get( 'window' ).height / 2.2}
             />
             <BottomSheetScreen
                 ref={YearRef}

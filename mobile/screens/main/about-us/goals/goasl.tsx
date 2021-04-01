@@ -21,7 +21,6 @@ export default function Goals() {
         },
         list: {
             padding: 10,
-            borderBottomWidth: 1,
             lineHeight: 30,
             color: Colors[ colorScheme ].text,
             fontWeight: '500',

@@ -42,7 +42,7 @@ export default function TeenCentersSelects() {
                     }>
                     <Picker.Item
                         color={Colors[ colorScheme ].text}
-                        label='District'
+                        label='Select District..'
                         value='District'
                     />
                     <Picker.Item
@@ -64,6 +64,11 @@ export default function TeenCentersSelects() {
                         color={Colors[ colorScheme ].text}
                         label='IV'
                         value='IV'
+                    />
+                    <Picker.Item
+                        color={Colors[ colorScheme ].text}
+                        label='V'
+                        value='V'
                     />
                 </Picker>
             </View>

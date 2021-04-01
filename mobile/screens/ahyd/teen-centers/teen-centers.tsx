@@ -26,7 +26,6 @@ export default function TeenCenters() {
                     style={[ styles.menu, { color: Colors[ colorScheme ].text } ]}>
                     Teen Centers
                 </Text>
-                <Text style={{ color: 'gray' }}>Swipe to Select District</Text>
                 <TeenCentersSelects />
                 <View style={{ height: 150 }} />
             </View>

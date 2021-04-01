@@ -9,7 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 export default function District( props: any ) {
     const colorScheme = useColorScheme();
 
-    const districts = [ 'I', 'II', , 'III', , 'IV' ]
+    const districts = [ 'I', 'II', , 'III', , 'IV', 'V' ]
 
 
     return (

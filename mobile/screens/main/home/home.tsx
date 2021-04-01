@@ -15,14 +15,14 @@ import HomeNav from './home-nav';
 import SearchScreen from './search-screen'
 import TopPadding from '../../../shared/top-padding/top-padding';
 import { useNavigation } from '@react-navigation/native';
-
+import * as articles from './components/featured-articles/article.service'
 
 export default function Home() {
     const colorScheme = useColorScheme();
     const navigation = useNavigation();
     const [ refreshing, setRefreshing ] = useState( false );
     const [ carouselData, setCarouselData ] = useState( [] );
-    const [ feautredArticlesData, setFeautredArticlesData ] = useState( [] );
+    const [ feautredArticlesData, setFeautredArticlesData ]: any = useState( [] );
 
     const onRefresh = () => {
         setRefreshing( true );
@@ -61,8 +61,16 @@ export default function Home() {
         fetchfeautredArticlesData();
     }, [] );
 
-    function changeArticle() {
-
+    async function changeArticle( menu: any ) {
+        if ( menu == 'Today' ) {
+            setFeautredArticlesData( await articles.today() || [] )
+            return
+        }
+        if ( menu == 'This Week' ) {
+            setFeautredArticlesData( await articles.week() || [] )
+            return
+        }
+        setFeautredArticlesData( await articles.month() || [] )
     }
 
     const [ showSearch, setShowSearch ] = useState( false )
@@ -148,7 +156,7 @@ export default function Home() {
 
                 <HomeNav
                     menu={( menu: any ) => {
-                        changeArticle()
+                        changeArticle( menu )
                     }}
                 />
 

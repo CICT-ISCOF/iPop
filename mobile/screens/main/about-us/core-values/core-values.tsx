@@ -22,7 +22,6 @@ export default function CoreValues() {
         },
         list: {
             padding: 10,
-            borderBottomWidth: 1,
             lineHeight: 30,
             color: Colors[ colorScheme ].text1,
             fontWeight: '500',

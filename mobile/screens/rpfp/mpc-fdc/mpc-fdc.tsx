@@ -123,7 +123,7 @@ export default function MPCFDC() {
             <BottomSheetScreen
                 ref={DistrictRef}
                 renderContent={DistrictSheet}
-                visibleHeight={Dimensions.get( 'window' ).height / 2}
+                visibleHeight={Dimensions.get( 'window' ).height / 1.75}
             />
             <BottomSheetScreen
                 ref={MPCListRef}

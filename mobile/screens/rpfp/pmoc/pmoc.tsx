@@ -192,7 +192,7 @@ export default function PMOCData() {
             <BottomSheetScreen
                 ref={MenuRef}
                 renderContent={MenuSheet}
-                visibleHeight={Dimensions.get( 'window' ).height / 3}
+                visibleHeight={Dimensions.get( 'window' ).height / 2.25}
             />
             <BottomSheetScreen
                 ref={YearRef}
@@ -202,7 +202,7 @@ export default function PMOCData() {
             <BottomSheetScreen
                 ref={ChartRef}
                 renderContent={ChartSheet}
-                visibleHeight={Dimensions.get( 'window' ).height / 1.5}
+                visibleHeight={Dimensions.get( 'window' ).height / 1.25}
             />
             <BottomSheetScreen
                 ref={LocalDataRef}

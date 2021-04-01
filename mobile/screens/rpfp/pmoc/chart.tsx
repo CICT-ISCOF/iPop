@@ -35,7 +35,7 @@ export default function Chart( props: any ) {
     return (
         <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].BottomSheetBG, } ]}>
             <View style={styles.header} />
-            <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>{props.type}</Text>
+            <Text style={[ styles.title, { color: Colors[ colorScheme ].text, paddingHorizontal: 50 } ]}>{props.type}</Text>
             <Text style={{ color: 'gray', textAlign: 'center', marginTop: -20, textTransform: 'capitalize' }}> {props.municipality}</Text>
             <View style={style.nav}>
 

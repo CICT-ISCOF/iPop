@@ -65,23 +65,24 @@ const style = StyleSheet.create( {
         borderRadius: 5,
         borderTopLeftRadius: 0,
         borderBottomLeftRadius: 0,
-        marginVertical: 5,
-        width: '95%'
+        marginVertical: 3,
+        width: '95%',
+        paddingVertical: 7
     },
     municipality: {
         textTransform: 'capitalize',
         color: 'gray'
     },
     value: {
-        fontSize: 20,
+        fontSize: 16,
         transform: [
-            { translateY: 5 }
+            { translateY: -3 }
         ],
         fontWeight: 'bold'
     },
     percent: {
         alignSelf: 'flex-end',
-        marginTop: -15,
+        marginTop: -25,
         color: 'orange'
     },
 

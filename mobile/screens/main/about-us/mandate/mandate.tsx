@@ -26,7 +26,7 @@ export default function MandateScreen() {
         },
         list: {
             padding: 10,
-            borderBottomWidth: 1,
+
             color: Colors[ colorScheme ].text,
             lineHeight: 30,
         },

@@ -1,4 +1,5 @@
 import TopPadding from '../../../../shared/top-padding/top-padding';
+import * as Linking from 'expo-linking';
 
 export default function Awards() {
     const colorScheme = useColorScheme();
@@ -56,9 +57,13 @@ export default function Awards() {
                             <Text style={[ styles.title, { color: Colors[ colorScheme ].text }, ]}>
                                 {award.title}
                             </Text>
-                            <Text style={[ { color: Colors[ colorScheme ].text1 } ]}>
-                                {award.url}
-                            </Text>
+                            <TouchableOpacity onPress={() => {
+                                Linking.openURL( award.url )
+                            }}>
+                                <Text style={[ { color: Colors[ colorScheme ].text1 } ]}>
+                                    {award.url}
+                                </Text>
+                            </TouchableOpacity>
                             <Carousel type="Show" data={award.medias} />
 
                         </View>
@@ -76,7 +81,7 @@ import useColorScheme from '../../../../hooks/useColorScheme';
 import { ScrollView } from 'react-native-gesture-handler';
 import BackContainer from '../../../../shared/back-container/back-container';
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './awards.style'; import Carousel from '../../home/components/carousel/carousel';
 import DynamicSmallHeader from '../../../../shared/header/dynamic-small-header';
 

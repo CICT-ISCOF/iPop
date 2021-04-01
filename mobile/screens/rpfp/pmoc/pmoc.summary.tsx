@@ -36,7 +36,7 @@ export default function PMOCSummary( props: any ) {
     return (
         <View style={[ styles.container, { backgroundColor: Colors[ colorScheme ].BottomSheetBG } ]}>
             <View style={styles.header} />
-            <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>Birth Data</Text>
+            <Text style={[ styles.title, { color: Colors[ colorScheme ].text } ]}>PMOC Data</Text>
             <Text style={{ color: 'gray', textAlign: 'center', marginTop: -20, textTransform: 'capitalize' }}>{props.data.barangay}, {props.data.municipality}</Text>
             <View style={styles.separator} />
 
