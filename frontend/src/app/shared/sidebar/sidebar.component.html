@@ -1,10 +1,10 @@
 <div [class.hide]="!hide" class="sidebar-component" [style.background]="'url(' + sidebar.backgroundImage + ')'" [class.removeBackground]="sidebar.background == false">
     <div class="filter" [ngStyle]="{background: sidebar.color}"></div>
     <h1>
-        <img class="logo" src="../../../assets/logo.png" alt="">
+        <img class="logo animated zoomIn fast" src="../../../assets/logo.png" alt="">
     </h1>
-    <div class="button-group">
-        <div *ngFor="let nav of navs" (click)="makeIconAsActive(nav.name)" class="sidebar-btn" [class.active]="icons[nav.name] == true" [routerLink]="['/' + nav.route]">
+    <div class="button-group animated slideInLeft fast">
+        <div *ngFor="let nav of navs" (click)="makeIconAsActive(nav)" class="sidebar-btn" [class.active]="icons[nav.name] == true" [routerLink]="['/' + nav.route]">
             <div class="button1" [class.button]="icons[nav.name] == true" [class.clickable]="icons[nav.name]  == false">
                 <div class="icon">
                     <i [class]="'bi ' +nav.icon"></i>

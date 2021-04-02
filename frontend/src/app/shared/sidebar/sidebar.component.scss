@@ -5,11 +5,8 @@
     float: left;
     position: fixed;
     overflow: hidden;
-    // background: url('../../../assets/wallpapers/land-1.jpg');
     background-size: 300% 100% !important;
-    // background-repeat: no-repeat !important;
-    z-index: 9;
-    // filter: grayscale(50%);
+    z-index: 99;
 }
 
 @media only screen and (max-width: 600px) {
@@ -63,7 +60,7 @@ h1 img {
 }
 
 .button-group * {
-    color: rgba($color: white, $alpha: .6);
+    color: rgba($color: white, $alpha: .7);
     font-size: 13px;
 }
 
@@ -121,7 +118,7 @@ h1 img {
 }
 
 i {
-    fill: rgba($color: white, $alpha: .6);
-    color: rgba($color: white, $alpha: .6);
+    fill: rgba($color: #66A045, $alpha: .6);
+    color: rgba($color: #66A045, $alpha: .6);
     font-size: 14px;
 }

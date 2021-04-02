@@ -4,6 +4,7 @@ import { UtilityService }  from '../../others/utility.service'
 import { MediaQueryService } from '../../others/media-query.service'
 import { DeviceService }  from '../../others/device.service'
 import * as nav from './sidebar'
+import {SidebarService} from './sidebar.service'
 
 @Component({
   selector: 'app-sidebar',
@@ -17,7 +18,8 @@ export class SidebarComponent implements OnInit {
 	constructor(
 		private UtilityService: UtilityService,
 		private MediaQueryService : MediaQueryService,
-		private DeviceService : DeviceService,
+        private DeviceService: DeviceService,
+        private SidebarService: SidebarService
 	) {
 		this.sub = this.UtilityService.geColor().subscribe(color => this.sidebar.color = this.formatColorFromLocalStorage(color))
 
@@ -38,9 +40,10 @@ export class SidebarComponent implements OnInit {
     hide = false
     icons: any = {}
     
-    makeIconAsActive(name:any) {
+    makeIconAsActive(nav:any) {
         this.icons = {}
-        this.icons[ name ] = true
+        this.icons[ nav.name ] = true
+        this.SidebarService.setSidebar(nav)
     }
 
     processSize( size: number ) {

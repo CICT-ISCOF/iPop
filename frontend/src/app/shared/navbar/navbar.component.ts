@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UtilityService } from '../../others/utility.service';
 import { Subscription } from 'rxjs';
+import { SidebarService } from '../sidebar/sidebar.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,58 +8,20 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  constructor(private UtilityService: UtilityService) {
-    this.subscription = this.UtilityService.getDropDown().subscribe((value) => {
-      this.dropdown = value;
-      this.approval = value;
-    });
-
-    this.subscription = this.UtilityService.getNavText().subscribe((value) => {
-      this.navText = value;
-      if (value == 'AdminAccounts') {
-        this.navText = 'Admin Accounts';
-      }
-    });
-  }
-
-  theme = localStorage.getItem('data-theme');
-
-  subscription: Subscription;
-
-  dropdown = false;
-  approval = false;
-
-  navText = '';
-
-  ngOnInit(): void {
-    this.syncPathAndNavText();
-  }
-
-  syncPathAndNavText() {
-    let url = document.createElement('a');
-    url.href = window.location.href;
-    const path = url.pathname;
-
-    if (path == '/search') {
-      this.UtilityService.setSidebarItemasActive('Universal Search');
-      this.navText = 'Universal Search';
+    constructor(
+        private SidebarService: SidebarService
+    ) {
+        this.SidebarService.getSidebarActiveNav().subscribe(value=>this.nav=value)
     }
-  }
+    nav = {}
+    theme = localStorage.getItem('data-theme');
+    subscription: Subscription;
+    dropdown = false;
+    approval = false;
+    navText = '';
+    account = JSON.parse( localStorage.getItem( 'user-data' ) );
+    name = this.account.user.fullname
+    ngOnInit(): void {
+    }
 
-  account = JSON.parse(localStorage.getItem('user-data'));
-
-  name = this.formatName(this.account.user.fullname);
-
-  formatName(fullname) {
-    let name = fullname.split(' ');
-    return name[0];
-  }
-
-  conversations() {
-    this.UtilityService.setSidebarItemasActive('Conversations');
-  }
-
-  handleClick(item) {
-    this.UtilityService.setNavText(item);
-  }
 }
