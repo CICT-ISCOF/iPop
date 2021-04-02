@@ -172,6 +172,9 @@ import { AgeDistributionByMunicipalityComponent } from './content/age-distributi
 import { MunicipalityOfficialsComponent } from './content/officials-of/municipality-officials/municipality-officials.component';
 import { BarangayOfficialsComponent } from './content/officials-of/barangay-officials/barangay-officials.component';
 import { ShimmerComponent } from './shared/shimmer/shimmer.component';
+import { MainComponent } from './modal/main/main.component';
+import { AddComponent } from './modal/home/add/add.component';
+import { EditComponent } from './modal/home/edit/edit.component';
 
 
 
@@ -394,6 +397,9 @@ const routes: Routes = [
         MunicipalityOfficialsComponent,
         BarangayOfficialsComponent,
         ShimmerComponent,
+        MainComponent,
+        AddComponent,
+        EditComponent,
         
 
     ],
