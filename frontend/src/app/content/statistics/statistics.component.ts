@@ -3,13 +3,9 @@ import { TopPopulatedMunicipalityService } from './top-populated-municipality.se
 import { PopulationPyramidService } from './population-pyramid.service';
 import { OfficialsService } from './../provincial-officials/officials.service';
 import { UtilityService } from '../../others/utility.service';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { StatisticsService } from  './statistics.service'
-import { Console } from 'console';
 import { LocationService } from '../../others/location.service'
-import {trigger, transition, style, animate, query, stagger, keyframes} from '@angular/animations'
-import { Chart } from 'chart.js';
-import { ChartType } from 'chart.js';
 import Swal from 'sweetalert2'
 import { OfficialsService1 } from '../officials-of/officials.service';
 
