@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AdminService } from '../../../admin.service'
-import { UtilityService } from '../../../utility.service'
+import { UtilityService } from '../../../others/utility.service'
 import Swal from 'sweetalert2'
 
 @Component({

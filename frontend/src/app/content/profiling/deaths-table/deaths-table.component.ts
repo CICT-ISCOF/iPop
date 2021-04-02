@@ -1,9 +1,9 @@
-import { MediaQueryService } from './../../../media-query.service';
+import { MediaQueryService } from '../../../others/media-query.service';
 import { Component, OnInit } from '@angular/core';
 import { DeathsService } from '../../deaths/deaths.service'
 import { BirthsService } from '../../births/births.service'
-import { UtilityService } from '../../../utility.service'
-import { ExcelService } from '../../../excel.service'
+import { UtilityService } from '../../../others/utility.service'
+import { ExcelService } from '../../../others/excel.service'
 
 @Component({
   selector: 'app-deaths-table',

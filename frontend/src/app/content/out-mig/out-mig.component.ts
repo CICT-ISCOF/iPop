@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OutMigService } from './out-mig.service'
-import { UtilityService } from '../../utility.service'
-import { LocationService } from '../../location.service'
+import { UtilityService } from '../../others/utility.service'
+import { LocationService } from '../../others/location.service'
 
 @Component({
   selector: 'app-out-mig',

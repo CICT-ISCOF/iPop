@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DeviceService } from '../.././../../device.service'
+import { DeviceService } from '../../../../others/device.service'
 import { Subscription } from 'rxjs';
 import { CmsService } from '../../../../content/cms/cms.service'
 @Component({

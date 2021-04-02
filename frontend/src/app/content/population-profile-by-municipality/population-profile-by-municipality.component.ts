@@ -1,4 +1,4 @@
-import { UserService } from './../../user.service';
+import { UserService } from '../../others/user.service';
 import { PopByMunicipalityService } from './pop-by-municipality.service';
 import { Component, OnInit } from '@angular/core';
  

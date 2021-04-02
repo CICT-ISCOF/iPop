@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CpdbService } from '../../../cpdb/cpdb.service'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
 import Swal from 'sweetalert2'
 
 @Component({

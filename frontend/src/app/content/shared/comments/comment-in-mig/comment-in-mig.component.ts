@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { InMigService } from '../../../in-mig/in-mig.service'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
 import Swal from 'sweetalert2'
-import { LocationService } from '../../../../location.service'
+import { LocationService } from '../../../../others/location.service'
 
 @Component({
   selector: 'app-comment-in-mig',

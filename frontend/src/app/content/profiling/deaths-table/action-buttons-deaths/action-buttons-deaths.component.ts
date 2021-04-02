@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'
 import { DeathsService } from '../../../deaths/deaths.service'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
 
 @Component({
   selector: 'app-action-buttons-deaths',

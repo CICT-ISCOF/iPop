@@ -7,7 +7,7 @@ import { ActionButtonsInMigsComponent } from '../action-buttons-in-migs/action-b
 import { StatusInMigsComponent } from '../status-in-migs/status-in-migs.component';
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
  
 
 @Component({

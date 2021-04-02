@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SlideService } from 'src/app/content/dynamic-home/slide.service';
-import { UtilityService } from 'src/app/utility.service';
+import { UtilityService } from 'src/app/others/utility.service';
 import { Modal } from '../../modal.service';
 
 @Component({

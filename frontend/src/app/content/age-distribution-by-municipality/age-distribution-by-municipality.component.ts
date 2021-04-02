@@ -1,4 +1,4 @@
-import { UserService } from './../../user.service';
+import { UserService } from '../../others/user.service';
 import { AgeDistributionServince } from './service.service';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'

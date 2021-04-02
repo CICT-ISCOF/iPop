@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription }  from 'rxjs';
-import { UtilityService }  from '../../utility.service'
+import { UtilityService }  from '../../others/utility.service'
 import Swal from 'sweetalert2'
-import { MediaQueryService } from '../../media-query.service'
-import { DeviceService }  from '../../device.service'
+import { MediaQueryService } from '../../others/media-query.service'
+import { DeviceService }  from '../../others/device.service'
 import { CountService } from '../../services/count.service'
 
 

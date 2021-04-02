@@ -2,7 +2,7 @@ import { Component ,OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CmsService } from './cms.service'
 import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
-import { UtilityService } from '../../utility.service'
+import { UtilityService } from '../../others/utility.service'
 import { Subscription } from 'rxjs'
 import {trigger, transition, style, animate, query, stagger, keyframes} from '@angular/animations'
 

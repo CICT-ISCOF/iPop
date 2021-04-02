@@ -7,7 +7,7 @@ import { ActionButtonsDeathsComponent } from '../action-buttons-deaths/action-bu
 import { RecordStatusDeathsComponent } from '../record-status-deaths/record-status-deaths.component';
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
 
 @Component({
   selector: 'app-table-deaths',

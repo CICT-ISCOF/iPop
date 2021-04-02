@@ -1,8 +1,8 @@
 import { BirthStatService } from './../births-stat/birth-stat.service';
-import { UserService } from './../../../user.service';
-import { UtilityService } from './../../../utility.service';
+import { UserService } from '../../../others/user.service';
+import { UtilityService } from '../../../others/utility.service';
 import { DeathStatService } from './death-stat.service';
-import { LocationService } from './../../../location.service';
+import { LocationService } from '../../../others/location.service';
 import { Component, OnInit } from '@angular/core';
 import  Swal  from 'sweetalert2';
 import { OfficialsService1 } from '../../officials-of/officials.service';

@@ -1,8 +1,8 @@
-import { MediaQueryService } from './../../../media-query.service';
+import { MediaQueryService } from '../../../others/media-query.service';
 import { Component, OnInit } from '@angular/core';
 import { MarriagesService } from '../../marriages/marriages.service'
-import { UtilityService } from '../../../utility.service'
-import { ExcelService } from '../../../excel.service'
+import { UtilityService } from '../../../others/utility.service'
+import { ExcelService } from '../../../others/excel.service'
 
 @Component({
   selector: 'app-marriage-table',

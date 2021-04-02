@@ -1,8 +1,8 @@
-import { UserService } from './../../../user.service';
+import { UserService } from '../../../others/user.service';
 import  Swal  from 'sweetalert2';
-import { UtilityService } from './../../../utility.service';
+import { UtilityService } from '../../../others/utility.service';
 import { BirthStatService } from './birth-stat.service';
-import { LocationService } from './../../../location.service';
+import { LocationService } from '../../../others/location.service';
 import { Component, OnInit } from '@angular/core';
 import { groupBy, where } from '../../../helpers';
 import { OfficialsService1 } from '../../officials-of/officials.service';

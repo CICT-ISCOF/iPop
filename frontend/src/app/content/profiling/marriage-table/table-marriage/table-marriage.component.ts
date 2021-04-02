@@ -7,7 +7,7 @@ import { ActionButtonsMarriageComponent } from '../action-buttons-marriage/actio
 import { StatusMarriageComponent } from '../status-marriage/status-marriage.component';
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
 import { MarriagesService } from '../../../marriages/marriages.service'
 
 @Component({

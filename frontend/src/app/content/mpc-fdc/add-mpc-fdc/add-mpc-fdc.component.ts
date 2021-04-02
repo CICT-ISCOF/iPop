@@ -1,7 +1,7 @@
 import { MPCFDCComponent } from './../mpc-fdc.component';
 import { MpcService } from './../mpc.service';
-import { UtilityService } from './../../../utility.service';
-import { LocationService } from './../../../location.service';
+import { UtilityService } from '../../../others/utility.service';
+import { LocationService } from '../../../others/location.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

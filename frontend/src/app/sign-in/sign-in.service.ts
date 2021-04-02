@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { BaseAPIService } from '../base-api.service'
+import { BaseAPIService } from '../others/base-api.service'
 
 @Injectable({
   providedIn: 'root'

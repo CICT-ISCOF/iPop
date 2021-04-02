@@ -7,7 +7,7 @@ import { ActionButtonsBirthComponent } from '../action-buttons-birth/action-butt
 import { StatusBirthComponent } from '../status-birth/status-birth.component';
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
 
 @Component({
   selector: 'app-table-births',

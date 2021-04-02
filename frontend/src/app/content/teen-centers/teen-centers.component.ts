@@ -1,6 +1,6 @@
-import { UserService } from './../../user.service';
+import { UserService } from '../../others/user.service';
 import { Subscription } from 'rxjs';
-import { UtilityService } from './../../utility.service';
+import { UtilityService } from '../../others/utility.service';
 import { TeenCentersService } from './teen-centers.service';
 import { Component, OnInit } from '@angular/core';
 import Swal  from 'sweetalert2';

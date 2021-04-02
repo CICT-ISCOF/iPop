@@ -1,12 +1,12 @@
-import { UserService } from './../../user.service';
+import { UserService } from '../../others/user.service';
 import { TopPopulatedMunicipalityService } from './top-populated-municipality.service';
 import { PopulationPyramidService } from './population-pyramid.service';
 import { OfficialsService } from './../provincial-officials/officials.service';
-import { UtilityService } from './../../utility.service';
+import { UtilityService } from '../../others/utility.service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { StatisticsService } from  './statistics.service'
 import { Console } from 'console';
-import { LocationService } from '../../location.service'
+import { LocationService } from '../../others/location.service'
 import {trigger, transition, style, animate, query, stagger, keyframes} from '@angular/animations'
 import { Chart } from 'chart.js';
 import { ChartType } from 'chart.js';

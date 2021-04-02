@@ -8,7 +8,7 @@ import { RoleComponent } from '../role/role.component';
 import { LocationComponent } from '../location/location.component'
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
-import { UtilityService } from '../../../utility.service'
+import { UtilityService } from '../../../others/utility.service'
 
 
 @Component({

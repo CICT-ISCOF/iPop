@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'
 import { MarriagesService } from '../../../marriages/marriages.service'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
  
 @Component({
   selector: 'app-action-buttons-marriage',

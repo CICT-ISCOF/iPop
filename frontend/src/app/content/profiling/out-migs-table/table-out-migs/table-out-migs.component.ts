@@ -7,7 +7,7 @@ import { ActionButtonsOutMigsComponent } from '../action-buttons-out-migs/action
 import { StatusOutMigsComponent } from '../status-out-migs/status-out-migs.component';
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
 
 
 

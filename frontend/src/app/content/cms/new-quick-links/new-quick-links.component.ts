@@ -1,4 +1,4 @@
-import { UtilityService } from './../../../utility.service';
+import { UtilityService } from '../../../others/utility.service';
 import { Component, OnInit } from '@angular/core';
 import { CmsService } from '../cms.service'
 import { OwlOptions } from 'ngx-owl-carousel-o';

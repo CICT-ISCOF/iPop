@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'
 import { OutMigService } from '../../../out-mig/out-mig.service'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
 @Component({
   selector: 'app-action-buttons-out-migs',
   templateUrl: './action-buttons-out-migs.component.html',

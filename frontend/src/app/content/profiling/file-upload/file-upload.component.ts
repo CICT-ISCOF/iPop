@@ -1,8 +1,8 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
-import { UtilityService } from '../../../utility.service'
-import { ExcelService } from '../../../excel.service'
+import { UtilityService } from '../../../others/utility.service'
+import { ExcelService } from '../../../others/excel.service'
 import { BulkService } from './bulk.service'
 
 @Component({

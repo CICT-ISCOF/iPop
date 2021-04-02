@@ -1,11 +1,11 @@
-import { UserService } from './user.service';
-import { ScrollEventService } from './scroll-event.service';
+import { UserService } from './others/user.service';
+import { ScrollEventService } from './others/scroll-event.service';
 import { Component, OnInit, Directive, HostListener } from '@angular/core';
-import { UtilityService } from './utility.service';
+import { UtilityService } from './others/utility.service';
 import { Subscription } from 'rxjs';
 import { NetworkStatusAngularService } from 'network-status-angular';
-import { MediaQueryService } from './media-query.service';
-import { DeviceService } from './device.service';
+import { MediaQueryService } from './others/media-query.service';
+import { DeviceService } from './others/device.service';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +17,10 @@ import { DeviceService } from './device.service';
 })
 export class AppComponent implements OnInit {
     title = 'ipo-web';
-
-    map = true;
+    userRole: Subscription;
+    role: string = '';
+    media: number;
+    isUser = !this.UserService.isUser();
 
     constructor(
         private UtilityService: UtilityService,
@@ -28,12 +30,8 @@ export class AppComponent implements OnInit {
         private ScrollEventService: ScrollEventService,
         private UserService: UserService
     ) {
-        this.userRole = this.UtilityService.getUserROle().subscribe((role) => {
-            this.role = role;
-        });
-        this.userRole = this.UtilityService.getLogoutValue().subscribe((role) => {
-            this.role = role;
-        });
+        this.userRole = this.UtilityService.getUserROle().subscribe((role) =>  this.role = role)
+        this.userRole = this.UtilityService.getLogoutValue().subscribe((role) =>  this.role = role)
 
         this.userRole = this.NetworkStatusAngularService.status.subscribe( (isConnected:boolean) => {
             if (isConnected) {
@@ -43,27 +41,12 @@ export class AppComponent implements OnInit {
                 this.UtilityService.setAlert(
                     'You are not connected to the internet',
                     'error'
-                );
+                )
             }
         } )
 
-        this.userRole = this.MediaQueryService.getSize().subscribe((media) => {
-            this.media = media;
-        })
-
-        // this.userRole = this.MapService.getMapToggler().subscribe((value) => {
-        //     this.map = false;
-        //     this.map = true;
-        // })
+        this.userRole = this.MediaQueryService.getSize().subscribe((media) =>  this.media = media)
     }
-
-    userRole: Subscription;
-
-    role: string = '';
-
-    media: number;
-
-    isUser = !this.UserService.isUser();
 
     onWindowScroll(event:Event) {
         if (this.isUser) {
@@ -84,7 +67,6 @@ export class AppComponent implements OnInit {
             return path;
         });
         this.checkLocalStorage();
-        
     } 
 
     checkLocalStorage() {

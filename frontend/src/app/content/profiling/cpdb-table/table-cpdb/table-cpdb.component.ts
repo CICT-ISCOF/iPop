@@ -7,7 +7,7 @@ import { ActionButtonsCpdbComponent } from '../action-buttons-cpdb/action-button
 import { RecordStatusComponent } from '../record-status/record-status.component';
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
 
 
 @Component({

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
 import Swal from 'sweetalert2'
-import { DeviceService } from '../.././../../device.service'
+import { DeviceService } from '../../../../others/device.service'
 import { Subscription } from 'rxjs'
 
 @Component({

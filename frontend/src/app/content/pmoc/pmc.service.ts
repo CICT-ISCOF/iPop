@@ -1,4 +1,4 @@
-import { BaseAPIService } from '../../base-api.service';
+import { BaseAPIService } from '../../others/base-api.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';

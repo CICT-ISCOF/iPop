@@ -1,6 +1,6 @@
-import { UserService } from './../../../user.service';
-import { UtilityService } from './../../../utility.service';
-import { LocationService } from './../../../location.service';
+import { UserService } from '../../../others/user.service';
+import { UtilityService } from '../../../others/utility.service';
+import { LocationService } from '../../../others/location.service';
 import { TeenCentersService } from './../teen-centers.service';
 import { Component, OnInit } from '@angular/core';
 

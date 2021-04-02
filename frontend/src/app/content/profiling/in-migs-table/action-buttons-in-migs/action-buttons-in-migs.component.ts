@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'
 import { InMigService } from '../../../in-mig/in-mig.service'
-import { UtilityService } from '../../../../utility.service'
+import { UtilityService } from '../../../../others/utility.service'
  
 @Component({
   selector: 'app-action-buttons-in-migs',

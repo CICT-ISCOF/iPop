@@ -1,5 +1,5 @@
-import { UtilityService } from './../../../../utility.service';
-import { UserService } from './../../../../user.service';
+import { UtilityService } from '../../../../others/utility.service';
+import { UserService } from '../../../../others/user.service';
 import { AboutService } from './../about.service';
 import { Component, OnInit } from '@angular/core';
 

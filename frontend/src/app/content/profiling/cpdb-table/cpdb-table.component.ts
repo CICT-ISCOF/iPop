@@ -1,9 +1,9 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { CpdbService } from '../../cpdb/cpdb.service'
 import {   Subscription} from 'rxjs'
-import { UtilityService } from '../../../utility.service'
-import { ExcelService } from '../../../excel.service'
-import { MediaQueryService } from '../../../media-query.service'
+import { UtilityService } from '../../../others/utility.service'
+import { ExcelService } from '../../../others/excel.service'
+import { MediaQueryService } from '../../../others/media-query.service'
 
 @Component({
   selector: 'app-cpdb-table',

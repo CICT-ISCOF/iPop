@@ -1,5 +1,5 @@
-import { UserService } from './../../user.service';
-import { UtilityService } from './../../utility.service';
+import { UserService } from '../../others/user.service';
+import { UtilityService } from '../../others/utility.service';
 import { SlideService } from './slide.service';
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';

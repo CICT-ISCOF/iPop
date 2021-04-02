@@ -7,7 +7,7 @@ import { RoleLogsComponent } from '../role-logs/role-logs.component';
 import { DeviceComponent } from '../device/device.component';
 import { Subscription } from 'rxjs'
 import Swal from 'sweetalert2'
-import { UtilityService } from '../../../utility.service'
+import { UtilityService } from '../../../others/utility.service'
 import { MapLogsComponent } from '../map-logs/map-logs.component'
 
 @Component({

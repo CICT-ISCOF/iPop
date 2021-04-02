@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SignInService } from '../../sign-in/sign-in.service'
-import { UtilityService } from '../../utility.service'
+import { UtilityService } from '../../others/utility.service'
 import { ThrowStmt } from '@angular/compiler';
-import { LocationService } from '../../location.service'
+import { LocationService } from '../../others/location.service'
 import { Subscription } from 'rxjs'
 
 

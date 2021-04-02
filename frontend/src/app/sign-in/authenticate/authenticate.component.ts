@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UtilityService } from '../../utility.service';
+import { UtilityService } from '../../others/utility.service';
 import { Subscription } from 'rxjs';
 import { SignInService } from '../sign-in.service';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UtilityService } from '../../../utility.service'
+import { UtilityService } from '../../../others/utility.service'
 import { AccountService } from '../../../settings/account/account.service'
 import { AdminService } from '../../../admin.service'
 import { AlertsComponent } from 'src/app/shared/alerts/alerts.component';

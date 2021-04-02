@@ -1,5 +1,5 @@
-import { UserService } from './../../../../user.service';
-import { UtilityService } from './../../../../utility.service';
+import { UserService } from '../../../../others/user.service';
+import { UtilityService } from '../../../../others/utility.service';
 import { AwardsService } from './../awards.service';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2'

@@ -1,5 +1,5 @@
-import { UserService } from './../../user.service';
-import { ScrollEventService } from './../../scroll-event.service';
+import { UserService } from '../../others/user.service';
+import { ScrollEventService } from '../../others/scroll-event.service';
 import { Component, OnInit } from '@angular/core';
 
 
