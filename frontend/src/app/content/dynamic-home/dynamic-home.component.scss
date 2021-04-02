@@ -54,3 +54,31 @@
     top: 0;
     right: 25%;
 }
+
+.links {
+    display: flex;
+    height: 20%;
+    border-bottom: 1px solid rgba(150, 150, 150, .1);
+    margin-bottom: 15px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    .icon {
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 50%;
+        background-color: rgba(150, 150, 150, .2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        margin-left: -30px;
+        i {
+            color: red;
+            font-size: 20px;
+        }
+    }
+    .link-text {
+        width: 80%;
+    }
+}

@@ -9,7 +9,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o'
 @Component({
   selector: 'app-ahydp',
   templateUrl: './ahydp.component.html',
-  styleUrls: ['./ahydp.component.scss','../../../home/home.component.scss','../../../home/home.component.inherit.cms.responsive.scss','../../../home/home.tablet.scss','../../../home/home.tablet.scss','../../general-public.style.scss']
+  styleUrls: ['./ahydp.component.scss','../../../header/home.component.scss','../../../header/home.component.inherit.cms.responsive.scss','../../../header/home.tablet.scss','../../../header/home.tablet.scss','../../general-public.style.scss']
 })
 export class AHYDPComponent implements OnInit {
 

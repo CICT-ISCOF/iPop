@@ -10,7 +10,7 @@ import { Modal } from 'src/app/modal/modal.service';
 @Component({
   selector: 'app-dynamic-home',
   templateUrl: './dynamic-home.component.html',
-  styleUrls: ['../home/home.component.scss','../home/home.component.inherit.cms.responsive.scss','../home/home.tablet.scss','../general-public/general-public.style.scss','./dynamic-home.component.scss']
+  styleUrls: ['../header/home.component.scss','../header/home.component.inherit.cms.responsive.scss','../header/home.tablet.scss','../general-public/general-public.style.scss','./dynamic-home.component.scss']
 })
 export class DynamicHomeComponent implements OnInit {
 

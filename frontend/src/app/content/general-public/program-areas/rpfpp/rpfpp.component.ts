@@ -9,7 +9,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o'
 @Component({
   selector: 'app-rpfpp',
   templateUrl: './rpfpp.component.html',
-  styleUrls: ['./rpfpp.component.scss','../../../home/home.component.scss','../../../home/home.component.inherit.cms.responsive.scss','../../../home/home.tablet.scss','../../../home/home.tablet.scss','../../general-public.style.scss']
+  styleUrls: ['./rpfpp.component.scss','../../../header/home.component.scss','../../../header/home.component.inherit.cms.responsive.scss','../../../header/home.tablet.scss','../../../header/home.tablet.scss','../../general-public.style.scss']
 })
 export class RPFPPComponent implements OnInit {
 

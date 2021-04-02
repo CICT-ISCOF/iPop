@@ -24,7 +24,7 @@ import { SlideToggleModule } from 'ngx-slide-toggle';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { HomeComponent } from './content/home/home.component';
+import { HomeComponent } from './content/header/home.component';
 import { DashoardComponent } from './content/dashoard/dashoard.component';
 import { CmsComponent } from './content/cms/cms.component';
 import { ProfilingComponent } from './content/profiling/profiling.component';
@@ -51,7 +51,6 @@ import { AlertsComponent } from './shared/alerts/alerts.component';
 import { CreateComponent } from './sign-in/create/create.component';
 import { AuthenticateComponent } from './sign-in/authenticate/authenticate.component';
 import { CpdbComponent } from './content/cpdb/cpdb.component';
-import { IconsComponent } from './shared/navbar/icons/icons.component';
 import { DropdownComponent } from './shared/navbar/dropdown/dropdown.component';
 import { SearchComponent } from './content/search/search.component';
 import { ShowProfileComponent } from './content/show-profile/show-profile.component';
@@ -260,7 +259,6 @@ const routes: Routes = [
         CreateComponent,
         AuthenticateComponent,
         CpdbComponent,
-        IconsComponent,
         DropdownComponent,
         SearchComponent,
         ShowProfileComponent,

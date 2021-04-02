@@ -8,7 +8,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 @Component({
   selector: 'app-awards',
   templateUrl: './awards.component.html',
-  styleUrls: ['./awards.component.scss','../../../home/home.component.scss','../../../home/home.component.inherit.cms.responsive.scss','../../../home/home.tablet.scss','../../general-public.style.scss']
+  styleUrls: ['./awards.component.scss','../../../header/home.component.scss','../../../header/home.component.inherit.cms.responsive.scss','../../../header/home.tablet.scss','../../general-public.style.scss']
 })
 export class AwardsComponent implements OnInit {
 

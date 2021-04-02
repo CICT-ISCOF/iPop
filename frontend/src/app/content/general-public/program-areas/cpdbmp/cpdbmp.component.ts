@@ -9,7 +9,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o'
 @Component({
   selector: 'app-cpdbmp',
   templateUrl: './cpdbmp.component.html',
-  styleUrls: ['./cpdbmp.component.scss','../../../home/home.component.scss','../../../home/home.component.inherit.cms.responsive.scss','../../../home/home.tablet.scss','../../../home/home.tablet.scss','../../general-public.style.scss']
+  styleUrls: ['./cpdbmp.component.scss','../../../header/home.component.scss','../../../header/home.component.inherit.cms.responsive.scss','../../../header/home.tablet.scss','../../../header/home.tablet.scss','../../general-public.style.scss']
 })
 export class CPDBMPComponent implements OnInit {
 

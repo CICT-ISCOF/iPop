@@ -9,7 +9,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o'
 @Component({
   selector: 'app-pdi',
   templateUrl: './pdi.component.html',
-  styleUrls: ['./pdi.component.scss','../../../home/home.component.scss','../../../home/home.component.inherit.cms.responsive.scss','../../../home/home.tablet.scss','../../../home/home.tablet.scss','../../general-public.style.scss']
+  styleUrls: ['./pdi.component.scss','../../../header/home.component.scss','../../../header/home.component.inherit.cms.responsive.scss','../../../header/home.tablet.scss','../../../header/home.tablet.scss','../../general-public.style.scss']
 })
 export class PDIComponent implements OnInit {
 

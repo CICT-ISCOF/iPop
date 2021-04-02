@@ -8,7 +8,7 @@ import {trigger, transition, style, animate, query, stagger, keyframes} from '@a
 @Component({
 	selector: 'app-preview',
 	templateUrl: './preview.component.html',
-	styleUrls: ['./preview.component.scss','preview.component.inherit.responsive.scss','preview.component.inherit.responsive.scss','../../home/home.component.inherit.cms.responsive.scss'],
+	styleUrls: ['./preview.component.scss','preview.component.inherit.responsive.scss','preview.component.inherit.responsive.scss','../../header/home.component.inherit.cms.responsive.scss'],
 	animations: [
 		trigger('listAnimation', [
 			transition('* => *',[

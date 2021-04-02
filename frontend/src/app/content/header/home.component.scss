@@ -64,18 +64,10 @@ img {
     justify-content: center;
     align-items: center;
     color: var(--absolute) !important;
-    display: inline-block;
+    display: flex;
     padding-bottom: 5px;
-    white-space: nowrap;
 }
 
-// .sticky {
-//     position: -webkit-sticky;
-//     position: sticky;
-//     top: 0;
-//     z-index: 99999;
-//     background: var(--bg);
-// }
 .nav,
 .nav-list {
     display: flex;
@@ -100,14 +92,6 @@ a {
     text-decoration: none;
 }
 
-input {
-    background: var(--bg) !important;
-}
-
-input:focus {
-    outline: 0;
-}
-
 .content {
     width: 100%;
     height: auto;
@@ -123,66 +107,10 @@ input:focus {
 .quick-links {
     width: 25%;
     height: 50vh;
-    padding: 20px;
     overflow-y: auto;
     display: flexbox;
     position: relative;
     z-index: 1;
-}
-
-.links {
-    display: flex;
-    height: 20%;
-    border-bottom: 1px solid rgba(150, 150, 150, .1);
-    margin-bottom: 15px;
-    cursor: pointer;
-}
-
-.link-images {
-    width: 30%;
-    height: 100%;
-    padding-left: 20px;
-}
-
-.link-images img {
-    width: 50px;
-    height: 50px;
-    position: relative;
-    z-index: 1;
-}
-
-.link-text {
-    width: 70%;
-    height: 100%;
-    padding: 5px 10px;
-}
-
-.placeholder-line {
-    height: 5px;
-    border-radius: 30px;
-    background: var(--contrast);
-    margin-bottom: 10px;
-}
-
-.social-icons-list {
-    display: flex;
-    height: 30px;
-    width: 100px;
-    margin-left: 20px !important;
-    padding-left: 20px;
-}
-
-.im {
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-.im:hover {
-    opacity: .6;
-}
-
-.im:acttive {
-    opacity: .4;
 }
 
 owl-carousel-o {
@@ -202,29 +130,8 @@ video {
     transform: scaleX(1.5);
 }
 
-.overlay {
-    position: absolute;
-    height: 32vh;
-    width: 100vw;
-    left: 0;
-    top: 0;
-    z-index: 0;
-}
-
-.overlay img {
-    width: 100%;
-    height: 100%;
-    opacity: .2;
-}
-
 .Item:hover {
     .drop-down-container {
-        display: block;
-    }
-}
-
-.drop-down-item:hover {
-    .drop-down-subcategory {
         display: block;
     }
 }
@@ -238,28 +145,33 @@ video {
     margin-top: 10px;
     width: auto;
     position: absolute;
-    left: -60%;
-    background: var(--bg);
-}
-
-.drop-down-subcategory {
-    right: -114%;
-    margin-top: -40px;
-    width: 250px;
-    position: absolute;
-    background: var(--bg);
-    top: 0;
-    display: none;
+    border-radius: 10px;
+    left: -100%;
+    background: var(--contrast);
+    z-index: 9999;
 }
 
 .drop-down-item {
-    padding: 20px;
-    border-bottom: 1px solid rgba(250, 250, 250, .5);
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(250, 250, 250, .1);
     font-size: 13px;
     color: var(--absolute);
     font-weight: normal !important;
-    background: var(--contrast);
-    color: white;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    * {
+        color: white;
+    }
+    i {
+        margin-left: -5px;
+        margin-right: 10px;
+        font-size: 13px;
+    }
+    p {
+        transform: translateY(10px);
+    }
 }
 
 .nav-list .Item:hover {
@@ -267,31 +179,8 @@ video {
 }
 
 .drop-down-item:hover {
-    background: var(--bg);
-    color: var(--colorPrimary);
-}
-
-.chat-container {
-    position: fixed;
-    bottom: 30px;
-    box-shadow: var(--shadow);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--contrast);
-    width: 60px;
-    height: 60px;
-    right: -15%;
-    z-index: 9;
-    cursor: pointer;
-}
-
-.chat-container i {
+    background-color: rgba($color: black, $alpha: .4);
     color: white;
-    border-radius: 50%;
-    font-size: 35px;
-    margin-left: 0px;
 }
 
 .quick-links-container {
@@ -311,21 +200,6 @@ video {
     background: var(--bg);
     box-shadow: 0px 0px 3px rgba(150, 150, 150, .2);
     background: var(--bg);
-}
-
-.navigation {
-    padding: 5px 5vw;
-    // background: var(--contrast);
-    display: flex;
-    align-items: center;
-}
-
-.navigation p {
-    color: white;
-    font-size: 2em;
-    text-transform: uppercase;
-    font-weight: 900;
-    margin: 0;
 }
 
 .fixed {
