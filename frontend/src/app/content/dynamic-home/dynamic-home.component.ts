@@ -4,6 +4,7 @@ import { SlideService } from './slide.service';
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import Swal from 'sweetalert2' 
+import * as Others from '../others/others'
 
 @Component({
   selector: 'app-dynamic-home',
@@ -17,11 +18,15 @@ export class DynamicHomeComponent implements OnInit {
 		private SlideService : SlideService,
 		private UtilityService : UtilityService,
 		private UserService : UserService
-	) { }
+	) { 
+       this.links = Others.links()
+    }
 
 	ngOnInit(): void {
 		this.getSlide()
 	}
+    
+    links = []
 
 	isUser = !this.UserService.isUser()
 
@@ -60,7 +65,9 @@ export class DynamicHomeComponent implements OnInit {
 	slides = []
 	getSlide(){
 		this.SlideService.retrieve().subscribe(data => {
-			this.slides = data
+			setTimeout(() => {
+                this.slides = data
+            }, 2000);
 		})
 	}
 

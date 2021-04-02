@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { NetworkStatusAngularService } from 'network-status-angular';
 import { MediaQueryService } from './media-query.service';
 import { DeviceService } from './device.service';
-import { MapService } from './content/maps/map.service';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +25,6 @@ export class AppComponent implements OnInit {
         private NetworkStatusAngularService: NetworkStatusAngularService,
         private MediaQueryService: MediaQueryService,
         private DeviceService: DeviceService,
-        private MapService: MapService,
         private ScrollEventService: ScrollEventService,
         private UserService: UserService
     ) {
@@ -53,10 +51,10 @@ export class AppComponent implements OnInit {
             this.media = media;
         })
 
-        this.userRole = this.MapService.getMapToggler().subscribe((value) => {
-            this.map = false;
-            this.map = true;
-        })
+        // this.userRole = this.MapService.getMapToggler().subscribe((value) => {
+        //     this.map = false;
+        //     this.map = true;
+        // })
     }
 
     userRole: Subscription;

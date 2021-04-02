@@ -118,7 +118,6 @@ input:focus {
 .carousel-holder {
     width: 75%;
     height: 50vh;
-    background: black;
 }
 
 .quick-links {
@@ -134,7 +133,7 @@ input:focus {
 .links {
     display: flex;
     height: 20%;
-    border-bottom: 1px solid rgba(150, 150, 150, .3);
+    border-bottom: 1px solid rgba(150, 150, 150, .1);
     margin-bottom: 15px;
     cursor: pointer;
 }

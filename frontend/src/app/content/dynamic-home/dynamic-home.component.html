@@ -1,46 +1,70 @@
-<app-home>
-</app-home>
+<app-home></app-home>
+
+
 <div class="wrapper" style="padding: 0;">
-    <div class="content" *ngIf="!wantsToadAnImage && slides.length != 0 ">
-        <div class="carousel-holder">
+    <div class="content" *ngIf="!wantsToadAnImage ">
+
+        <div *ngIf="!isUser && showModal" class=" carousel-holder overlay1 animated fadeIn fast">
+            <button (click)="showModal = false" class="btn close">
+                <i class="bi bi-x"></i>
+            </button>
+            <button class="btn btn-primary">Add Images</button>
+            <button class="ghost btn">Edit Slider</button>
+        </div>
+
+        <div *ngIf="!isUser && !showModal" class="show-overlay animated zoomIn fast">
+            <i (click)="showModal = true" style="font-size: 16px;color: white;" class="bi bi-three-dots"></i>
+        </div>
+
+        <div *ngIf="slides.length == 0" class="carousel-holder">
+            <shimmer [width]="'100%'" [height]="'100%'" [type]="'square'"></shimmer>
+        </div>
+        <div *ngIf="slides.length != 0" class="carousel-holder">
             <owl-carousel-o [options]="customOptions">
                 <ng-template carouselSlide *ngFor="let image of slides">
                     <img alt="" [style]="'background-image: url('+ image.photo.uri + ')'">
                 </ng-template>
             </owl-carousel-o>
         </div>
-        <div class="quick-links" style=" background: var(--bg);">
-            <p class="pop2">Quick Links</p>
-            <br>
-            <div *ngFor="let number of [0,1,2,3]" class="links">
-                <div class="link-images">
-                    <img src="../../../assets/iloilo-seal.png">
-                </div>
-                <div class="link-text">
-                    <div class="placeholder-line"></div>
-                    <div class="placeholder-line"></div>
-                    <div class="placeholder-line"></div>
-                </div>
+
+        <div class="quick-links card" style=" background: var(--bg);">
+            <p class="pop2 card-header">Quick Links</p>
+            <div class="card-body">
+                <a *ngFor="let link of links" class="links" target="_blank" [href]="link.url">
+                    <div class="link-images">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#0B4FAC" class="bi bi-link" viewBox="0 0 16 16">
+                        <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>
+                        <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
+                    </svg>
+                    </div>
+                    <div class="link-text">
+                        <p>{{link.title}}</p>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
-    <hr>
-    <div class="row" *ngIf="wantsToadAnImage">
+
+
+
+
+
+
+    <!-- <div class="row" *ngIf="wantsToadAnImage">
         <owl-carousel-o *ngIf="newImages != 0" [options]=" customOptions">
             <ng-template carouselSlide *ngFor="let image of newImages">
                 <img alt="" title="slide.title " [src]="image">
             </ng-template>
         </owl-carousel-o>
-    </div>
-    <br> <br> <br>
+    </div> -->
+    <!--     
     <div class="row" *ngIf="wantsToadAnImage">
-
         <button (click)="save()" class="button">Save</button>
         <button *ngIf="newImages != 0" (click)="clearSlider()" class="clickable">Clear Slider</button>
         <button *ngIf="newImages == 0 && !isUser" (click)="triggerImage()" class="clickable">Add Images</button>
-    </div>
+    </div> -->
 
-    <input multiple type="file" (change)="readURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]="'slider'">
+    <!-- <input multiple type="file" (change)="readURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]="'slider'">
     <button *ngIf="newImages.length == 0 && !isUser" (click)="triggerImage()" class="button">Add Images</button>
     <div *ngIf="wantsToEdit" class="row">
         <div class="col-md-2" *ngFor="let image of slides">
@@ -48,7 +72,7 @@
         </div>
     </div>
     <button (click)="editSlider()" *ngIf="!wantsToEdit && newImages.length == 0 && !isUser && slides.length != 0 " class="button">Edit Slider</button>
-    <button (click)="wantsToEdit = false" *ngIf="wantsToEdit" class="clickable">Cancel Editing</button>
+    <button (click)="wantsToEdit = false" *ngIf="wantsToEdit" class="clickable">Cancel Editing</button> -->
 </div>
 <div class="wrapper">
 

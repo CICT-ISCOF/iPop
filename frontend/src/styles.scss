@@ -303,20 +303,18 @@
         overflow-x: hidden;
     }
     
-    .button {
-        padding: 10px 12px;
-        border-radius: 4px;
-        color: white;
-        box-shadow: var(--shadow);
-        background: var(--contrast);
-        border: none;
-        margin: .5rem;
-    }
-    
-    button {
-        border: 4px !important;
-    }
-    
+    // .button {
+    //     padding: 10px 12px;
+    //     border-radius: 4px;
+    //     color: white;
+    //     box-shadow: var(--shadow);
+    //     background: var(--contrast);
+    //     border: none;
+    //     margin: .5rem;
+    // }
+    // button {
+    //     border: 4px !important;
+    // }
     .clickable {
         padding: 7px 12px;
         background: none;
@@ -375,13 +373,18 @@
     
     .pop2 {
         text-align: center;
-        background: var(--contrast);
-        color: white;
+        color: var(--colorPrimary);
         width: 100%;
-        padding: 10px;
         font-weight: 500 !important;
         font-size: 1rem !important;
-        text-transform: uppercase !important;
+        background-color: var(--bg);
+        position: sticky;
+        position: -webkit-sticky;
+        top: -20px;
+        border-bottom: 1px solid rgba(150, 150, 150, .1);
+        padding: 7px;
+        z-index: 9;
+        background-color: var(--bg);
     }
     
     .rounded {
@@ -394,6 +397,29 @@
     .unclicable {
         visibility: hidden;
         pointer-events: none;
+    }
+    
+    button:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+    }
+    
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        border-radius: 50%;
+        background-color: var(--bg) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        width: 50px;
+        .bi,
+        i {
+            font-size: 30px;
+            color: var(--colorPrimary);
+            transform: translate(0px, -2px);
+        }
     }
     
     // -----------------animations--------------------
