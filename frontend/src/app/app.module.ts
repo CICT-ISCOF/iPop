@@ -155,6 +155,7 @@ import { BarangayOfficialsComponent } from './content/officials-of/barangay-offi
 import { MainComponent } from './modal/main/main.component';
 import { AddComponent } from './modal/home/add/add.component';
 import { EditComponent } from './modal/home/edit/edit.component';
+import { ShimmerComponent } from './shared/shimmer/shimmer.component';
 
 
 
@@ -359,6 +360,7 @@ const routes: Routes = [
         MainComponent,
         AddComponent,
         EditComponent,
+        ShimmerComponent,
     ],
     imports: [
         SlideToggleModule,

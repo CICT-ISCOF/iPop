@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./featured-articles.component.scss']
 })
 export class FeaturedArticlesComponent implements OnInit {
+    
+    navs = ['All','Today','This Week','This Month']
+    
+    active = "All"
 
 	constructor(
 		private FeaturedArticlesService : FeaturedArticlesService
@@ -15,6 +19,10 @@ export class FeaturedArticlesComponent implements OnInit {
 			this.show = value
 		})
 	}
+    
+    makeActive(nav:any) {
+        this.active = nav
+    }
 
 	ngOnInit(): void {
 		this.getFeautredArticles()

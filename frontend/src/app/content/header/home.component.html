@@ -21,11 +21,11 @@
             <div class="nav-list">
                 <div class="Item">
                     <a href="https://www.iloilo.gov.ph/" target="_blank" rel="noopener noreferrer">
-                        ILOILO.GOV
+                        Iloilo.gov
                     </a>
                 </div>
                 <div routerLink="/home" class="Item"> Home </div>
-                <div [routerLink]="['/population-data']" class="Item">Population Data</div>
+                <div [routerLink]="['/population-data']" class="Item">Population</div>
                 <div *ngFor="let nav of navs" class="Item">
                     {{nav.name}}
                     <div class="drop-down-container" style="position: relative;">

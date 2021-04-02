@@ -14,7 +14,7 @@
         </div>
 
         <div *ngIf="slides.length == 0" class="carousel-holder">
-            <shimmer [width]="'100%'" [height]="'100%'" [type]="'square'"></shimmer>
+            <ShimmerPlaceholder></ShimmerPlaceholder>
         </div>
         <div *ngIf="slides.length != 0" class="carousel-holder">
             <owl-carousel-o [options]="customOptions">

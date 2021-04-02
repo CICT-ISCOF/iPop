@@ -1,0 +1,53 @@
+.shimmer {
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+}
+
+.animatedBG {
+    -webkit-animation-duration: 2.2s;
+    animation-duration: 2.2s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: shimmer;
+    animation-name: shimmer;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    background: #E5F0FB;
+    -webkit-animation-duration: 1.92s;
+    animation-duration: 1.92s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: shimmer;
+    animation-name: shimmer;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    background: var(--bg);
+    background: -webkit-linear-gradient(to right, rgba(150, 150, 150, .3) 4%, rgba(250, 250, 250, .7) 25%, rgba(150, 150, 150, .3) 36%);
+    background: linear-gradient(to right, rgba(150, 150, 150, .3) 4%, rgba(250, 250, 250, .7)25%, rgba(150, 150, 150, .3) 36%);
+    -webkit-background-size: 1200px 100%;
+    -webkit-background-size: 1200px 100%;
+    background-size: 1200px 100%;
+}
+
+@-webkit-keyframes shimmer {
+    0% {
+        background-position: -100% 0
+    }
+    100% {
+        background-position: 100% 0
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1200px 0
+    }
+    100% {
+        background-position: 1200px 0
+    }
+}

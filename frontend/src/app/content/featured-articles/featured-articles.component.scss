@@ -5,8 +5,8 @@
     justify-content: center;
     border-radius: 10px;
     img {
-        height: 100px;
-        width: 100px !important;
+        height: 150px;
+        width: 250px !important;
         margin-right: 20px;
     }
     .text {
@@ -22,5 +22,22 @@
         line-height: 1.3333;
         font-weight: bold;
         width: 70%;
+        color: var(--contrast)
+    }
+}
+
+.nav1 {
+    width: 100%;
+    border-radius: 30px;
+    background: rgba(150, 150, 150, .1);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    div {
+        flex: 1;
+    }
+    button {
+        border-radius: 30px !important;
     }
 }
