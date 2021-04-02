@@ -1,0 +1,48 @@
+ @media only screen and (max-width: 1368px) {
+     .admin-accounts,
+     .search-container {
+         transform: translate(0px) !important;
+         padding: 10px !important;
+         input {
+             width: 70% !important;
+         }
+         padding:10px 3vw !important
+     }
+     .hide-on-mobile {
+         display: none !important;
+     }
+      ::-webkit-scrollbar {
+         display: none;
+     }
+     .search-results {
+         margin-left: 10px !important;
+     }
+     .headline {
+         margin-left: 20px !important;
+     }
+ }
+ 
+ @media only screen and (max-width: 600px) {
+     .side {
+         display: none;
+     }
+     .birth-stat-component {
+         padding: 0 20px;
+     }
+     .front {
+         width: 100% !important;
+     }
+ }
+ 
+ // tablet
+ @media only screen and (min-device-width: 600px) and (max-device-width: 1024px) {
+     .side {
+         display: none;
+     }
+     .birth-stat-component {
+         padding: 0 20px;
+     }
+     .front {
+         width: 100% !important;
+     }
+ }
