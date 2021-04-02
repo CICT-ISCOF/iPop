@@ -8,14 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OthersComponent implements OnInit {
 
-  constructor(
-    private UserService : UserService
-  ) { }
+    constructor(
+        private UserService : UserService
+    ) { }
 
-  
-	isUser =  !this.UserService.isUser()
+    
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
 }

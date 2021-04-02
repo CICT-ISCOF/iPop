@@ -10,7 +10,6 @@ import { LocationService } from '../../location.service'
 import {trigger, transition, style, animate, query, stagger, keyframes} from '@angular/animations'
 import { Chart } from 'chart.js';
 import { ChartType } from 'chart.js';
-import { SingleDataSet, Label, Color } from 'ng2-charts';
 import Swal from 'sweetalert2'
 import { OfficialsService1 } from '../officials-of/officials.service';
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../admin.service'
 import { UtilityService } from '../../utility.service'
 import Swal from 'sweetalert2'
-import { MapService } from '../maps/map.service'
 
 @Component({
   selector: 'app-admin-accounts',
@@ -14,7 +13,6 @@ export class AdminAccountsComponent implements OnInit {
 	constructor(
 		private  AdminService : AdminService,
 		private UtilityService : UtilityService,		
-		private MapService : MapService
 	) { 
 		this.reload = this.AdminService.getReload().subscribe(data => {
 			this.paginate(this.pagination.currentPage)

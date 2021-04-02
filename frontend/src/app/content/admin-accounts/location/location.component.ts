@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MapService } from '../../maps/map.service'
 
 @Component({
   selector: 'app-location',
@@ -8,22 +7,15 @@ import { MapService } from '../../maps/map.service'
 })
 export class LocationComponent implements OnInit {
 
-  constructor(
-    private MapService : MapService
-  ) { }
+    constructor(
+    ) { }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
-  params
-
-	agInit(params:any){
-    this.params = params.data
-  }
-
-  showMap(){    
-    this.MapService.setCoordsofLocation(this.params.barangay + ', ' + this.params.munipali + ', Iloilo')
-    this.MapService.mapToggler(true)
-  }
+    params
+    agInit(params:any){
+        this.params = params.data
+    }
 
 }

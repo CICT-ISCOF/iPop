@@ -6,8 +6,6 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { GoogleChartsModule } from 'angular-google-charts';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { SlideToggleModule } from 'ngx-slide-toggle';
 import { HttpClientModule } from '@angular/common/http';
 import { NetworkStatusAngularModule } from 'network-status-angular';
 import { TooltipModule } from 'ng2-tooltip-directive';
@@ -15,14 +13,12 @@ import { AgTableModule, AgTableCustomSettings } from 'ag-table';
 import { AgGridModule } from 'ag-grid-angular';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
-import { Ng2OdometerModule } from 'ng2-odometer';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { ChartsModule } from 'ng2-charts';
 import { AgmCoreModule } from '@agm/core';
 import { ResponsiveModule } from 'ngx-responsive'
 import 'ag-grid-enterprise';
-import { TreeNgxModule } from 'tree-ngx';
 import { ShimmerModule } from '@sreyaj/ng-shimmer';
+import { SlideToggleModule } from 'ngx-slide-toggle';
 
 // components------------
 import { AppComponent } from './app.component';
@@ -40,9 +36,7 @@ import { UserManualComponent } from './content/user-manual/user-manual.component
 import { ConversationsComponent } from './content/conversations/conversations.component';
 import { AdminAccountsComponent } from './content/admin-accounts/admin-accounts.component';
 import { AdministratorsComponent } from './content/administrators/administrators.component';
-import { ShowContentComponent } from './content/show-content/show-content.component';
 import { BackupAndRestoreComponent } from './content/backup-and-restore/backup-and-restore.component';
-import { PageNotFoundComponent } from './content/page-not-found/page-not-found.component';
 import { DeathsComponent } from './content/deaths/deaths.component';
 import { BirthsComponent } from './content/births/births.component';
 import { InMigComponent } from './content/in-mig/in-mig.component';
@@ -60,15 +54,12 @@ import { CpdbComponent } from './content/cpdb/cpdb.component';
 import { IconsComponent } from './shared/navbar/icons/icons.component';
 import { DropdownComponent } from './shared/navbar/dropdown/dropdown.component';
 import { SearchComponent } from './content/search/search.component';
-import { ProfileShowComponent } from './content/profile-show/profile-show.component';
 import { ShowProfileComponent } from './content/show-profile/show-profile.component';
 import { ShowAdminStatusComponent } from './content/admin-accounts/show-admin-status/show-admin-status.component';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { LogsComponent } from './content/logs/logs.component';
 import { CpdbTableComponent } from './content/profiling/cpdb-table/cpdb-table.component';
-import { TestsComponent } from './content/tests/tests.component';
-import { ActionButtonsComponent } from './content/tests/action-buttons/action-buttons.component';
 import { RoleComponent } from './content/admin-accounts/role/role.component';
 import { TableAdministratorComponent } from './content/admin-accounts/table-administrator/table-administrator.component';
 import { ActionButtonAdminComponent } from './content/admin-accounts/action-button-admin/action-button-admin.component';
@@ -117,18 +108,12 @@ import { MobileAuthenticationComponent } from './sign-in/mobile/mobile-authentic
 import { NavbarMobileComponent } from './shared/devices/mobile/navbar-mobile/navbar-mobile.component'
 import { DropdownComponentMobile }  from './shared/devices/mobile/dropdown/dropdown.component';
 import { FileUploadComponent } from './content/profiling/file-upload/file-upload.component';
-import { MapsComponent } from './content/maps/maps.component';
 import { LocationComponent } from './content/admin-accounts/location/location.component';
-import { PreloaderComponent } from './shared/preloader/preloader.component';
-import { PmcComponent } from './content/pmc/pmc.component';
+import { PmcComponent } from './content/pmoc/pmc.component';
 import { AhydComponent } from './content/ahyd/ahyd.component';
 import { FooterComponent } from './content/footer/footer.component';
-import { PmocComponent } from './content/pmoc/pmoc.component';
 import { MPCFDCComponent } from './content/mpc-fdc/mpc-fdc.component';
 import { TeenCentersComponent } from './content/teen-centers/teen-centers.component';
-import { IssuesAndConcernsComponent } from './content/issues-and-concerns/issues-and-concerns.component';
-import { OthersComponent } from './content/others/others.component';
-import { RolesComponent } from './content/roles/roles.component';
 import { PpoMandateComponent } from './content/general-public/about/ppo-mandate/ppo-mandate.component';
 import { VmgComponent } from './content/general-public/about/vmg/vmg.component';
 import { CoreValuesComponent } from './content/general-public/about/core-values/core-values.component';
@@ -145,9 +130,7 @@ import { PDIServicesComponent } from './content/general-public/services-offered/
 import { PDMServicesComponent } from './content/general-public/services-offered/pdm-services/pdm-services.component';
 import { DynamicHomeComponent } from './content/dynamic-home/dynamic-home.component';
 import { ProvincialOfficialsComponent } from './content/provincial-officials/provincial-officials.component';
-import { PmocTeamComponent } from './content/pmoc-team/pmoc-team.component';
 import { AhydTeamComponent } from './content/ahyd-team/ahyd-team.component';
-import { MTCTeamComponent } from './content/mtc-team/mtc-team.component';
 import { GeneralComponent } from './content/population-data/general/general.component';
 import { MigrationsComponent } from './content/population-data/migrations/migrations.component';
 import { DeathsStatComponent } from './content/population-data/deaths-stat/deaths-stat.component';
@@ -156,7 +139,6 @@ import { PMOCStatComponent } from './content/population-data/pmoc-stat/pmoc-stat
 import { SBMTCStatComponent } from './content/population-data/sbmtc-stat/sbmtc-stat.component';
 import { SBMTCInfoComponent } from './content/population-data/sbmtc-info/sbmtc-info.component';
 import { MPCAndFDCComponent } from './content/population-data/mpc-and-fdc/mpc-and-fdc.component';
-import { DynamicMappingComponent } from './content/dynamic-mapping/dynamic-mapping.component';
 import { ShowMpcFdcComponent } from './content/mpc-fdc/show-mpc-fdc/show-mpc-fdc.component';
 import { ShowTeenCentersComponent } from './content/teen-centers/show-teen-centers/show-teen-centers.component';
 import { FeaturedArticlesComponent } from './content/featured-articles/featured-articles.component';
@@ -171,7 +153,6 @@ import { PopulationProfileByMunicipalityComponent } from './content/population-p
 import { AgeDistributionByMunicipalityComponent } from './content/age-distribution-by-municipality/age-distribution-by-municipality.component';
 import { MunicipalityOfficialsComponent } from './content/officials-of/municipality-officials/municipality-officials.component';
 import { BarangayOfficialsComponent } from './content/officials-of/barangay-officials/barangay-officials.component';
-import { ShimmerComponent } from './shared/shimmer/shimmer.component';
 import { MainComponent } from './modal/main/main.component';
 import { AddComponent } from './modal/home/add/add.component';
 import { EditComponent } from './modal/home/edit/edit.component';
@@ -179,7 +160,6 @@ import { EditComponent } from './modal/home/edit/edit.component';
 
 
 const routes: Routes = [
-    { path:'test', component:TestsComponent},
     // COMMENTS 
     { path:'comments/cpdb/:id', component:CommentCpdbComponent},  
     { path:'comments/births/:id', component:CommentBirthsComponent},  
@@ -208,9 +188,7 @@ const routes: Routes = [
     { path:'MPC-FDC', component:MPCFDCComponent}, 
     // AHYD 
     { path:'Teen-Centers', component:TeenCentersComponent}, 
-    { path:'Issues&Concerns', component:IssuesAndConcernsComponent},
     // OTHERS
-    { path:'Others', component:OthersComponent}, 
     // ABOUT 
     { path:'ABOUT/PPO-MADATE', component:PpoMandateComponent}, 
     { path:'ABOUT/VISION,MISSION,GOALS', component:VmgComponent},
@@ -231,7 +209,6 @@ const routes: Routes = [
         // PROGRAM AREAS 
     { path:'cms', component:CmsComponent},  
     { path:'content-lists', component:ContentsListComponent},   
-    { path:'content/:title/:id', component:ShowContentComponent},  
     { path:'admin-accounts', component:AdminAccountsComponent},  
     { path:'admin/:id', component:ShowAdminStatusComponent}, 
     { path:'new-admin', component:AdministratorsComponent},  
@@ -243,7 +220,6 @@ const routes: Routes = [
     { path:'conversations', component:ConversationsComponent },  
     { path:'account', component:AccountComponent},  
     { path:'backup-adn-restore', component:BackupAndRestoreComponent}, 
-    { path:'aww-snap', component:PageNotFoundComponent},  
     { path:'population-profile-by-municipality', component:PopulationProfileByMunicipalityComponent}, 
     { path:'age-distribution-by-municipality', component:AgeDistributionByMunicipalityComponent},  
 ];
@@ -269,9 +245,7 @@ const routes: Routes = [
         ConversationsComponent,
         AdminAccountsComponent,
         AdministratorsComponent,
-        ShowContentComponent,
         BackupAndRestoreComponent,
-        PageNotFoundComponent,
         DeathsComponent,
         BirthsComponent,
         InMigComponent,
@@ -289,13 +263,10 @@ const routes: Routes = [
         IconsComponent,
         DropdownComponent,
         SearchComponent,
-        ProfileShowComponent,
         ShowProfileComponent,
         ShowAdminStatusComponent,
         LogsComponent,
         CpdbTableComponent,
-        TestsComponent,
-        ActionButtonsComponent,
         RoleComponent,
         TableAdministratorComponent,
         ActionButtonAdminComponent,
@@ -342,18 +313,12 @@ const routes: Routes = [
         UpdateQuickLinkComponent,
         ShowQuickLinkComponent,
         FileUploadComponent,
-        MapsComponent,
         LocationComponent,
-        PreloaderComponent,
         PmcComponent,
         AhydComponent,
         FooterComponent,
-        PmocComponent,
         MPCFDCComponent,
         TeenCentersComponent,
-        IssuesAndConcernsComponent,
-        OthersComponent,
-        RolesComponent,
         PpoMandateComponent,
         VmgComponent,
         CoreValuesComponent,
@@ -370,9 +335,7 @@ const routes: Routes = [
         PDMServicesComponent,
         DynamicHomeComponent,
         ProvincialOfficialsComponent,
-        PmocTeamComponent,
         AhydTeamComponent,
-        MTCTeamComponent,
         GeneralComponent,
         MigrationsComponent,
         DeathsStatComponent,
@@ -381,7 +344,6 @@ const routes: Routes = [
         SBMTCStatComponent,
         SBMTCInfoComponent,
         MPCAndFDCComponent,
-        DynamicMappingComponent,
         ShowMpcFdcComponent,
         ShowTeenCentersComponent,
         FeaturedArticlesComponent,
@@ -396,17 +358,13 @@ const routes: Routes = [
         AgeDistributionByMunicipalityComponent,
         MunicipalityOfficialsComponent,
         BarangayOfficialsComponent,
-        ShimmerComponent,
         MainComponent,
         AddComponent,
         EditComponent,
-        
-
     ],
     imports: [
+        SlideToggleModule,
         ShimmerModule,
-        ChartsModule,
-        TreeNgxModule,
         NgxPaginationModule,
         ResponsiveModule,
         BrowserModule,
@@ -420,13 +378,10 @@ const routes: Routes = [
         CarouselModule ,
         BrowserAnimationsModule,
         GoogleChartsModule,
-        LeafletModule,
-        SlideToggleModule,
         HttpClientModule,
         TextareaAutosizeModule,
         NetworkStatusAngularModule.forRoot(),
         TooltipModule,
-        Ng2OdometerModule.forRoot(),
         AgTableModule,
         NgxPaginationModule,
         AgGridModule.withComponents([

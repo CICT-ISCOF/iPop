@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { BaseAPIService } from '../base-api.service'
 import { Observable, Subject } from 'rxjs';
-import Echo from "laravel-echo"
 import * as io from 'socket.io-client';
 
 @Injectable({

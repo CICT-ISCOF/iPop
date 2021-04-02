@@ -1,9 +1,8 @@
-import { UserService } from './../../user.service';
-import { Label } from 'ng2-charts';
+import { UserService } from '../../user.service';
 import Swal from 'sweetalert2';
-import { UtilityService } from './../../utility.service';
+import { UtilityService } from '../../utility.service';
 import { PmcService } from './pmc.service';
-import { LocationService } from './../../location.service';
+import { LocationService } from '../../location.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
