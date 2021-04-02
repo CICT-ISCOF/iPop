@@ -1,1 +1,24 @@
-<p>add works!</p>
+<div class="row">
+    <div *ngFor="let item of [1,2,3,4,5,6,7,8,9]">
+        <shimmer *ngIf="slides.length == 0" [width]="'200px'" [height]="'200px'" class=" col-md-3" [type]="'square'"></shimmer>
+    </div>
+    <button class="col-md-12" *ngIf="slides.length != 0" (click)="triggerImage()" class="btn btn-warning">Add an Image</button>
+    <button [disabled]="isLoading" class="col-md-12" *ngIf="newImages != 0" (click)="save()" class="btn btn-primary">
+         {{  isLoading ? "Saving..." : "     Save Images "}}
+    </button>
+
+
+    <p style="margin-top: 50px;" class="col-md-12" *ngIf="slides.length != 0" for="">Previous Images</p>
+    <div *ngFor="let image of slides" class="container col-md-3">
+        <img style="width: 100%;height: 100%;border-radius: 4px;" [src]="image.photo.uri" alt="">
+    </div>
+
+
+    <p style="margin-top: 50px;" class="col-md-12" *ngIf="newImages.length != 0" for="">New Images</p>
+    <div *ngFor="let image of newImages" class="container col-md-3">
+        <img alt="" [src]="image" style="width: 100%;height: 100%;border-radius: 4px;">
+    </div>
+
+
+    <input multiple type="file" (change)="readURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]="'slider'">
+</div>

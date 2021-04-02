@@ -30,9 +30,10 @@ export class Modal {
         return this.title.asObservable()
     }
     
-    renderModal(){
+    getModalType(){
         return this.modal.asObservable()
     }
     
+   
     
 }

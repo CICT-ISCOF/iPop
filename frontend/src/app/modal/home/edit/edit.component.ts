@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-edit',
+  selector: 'EditSlider',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })

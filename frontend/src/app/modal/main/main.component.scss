@@ -1,6 +1,6 @@
 .back-drop {
     top: 0px;
-    position: absolute;
+    position: fixed;
     background-color: rgba(20, 20, 20, .5);
     z-index: 99999999999999999999;
     width: 100%;
@@ -8,22 +8,23 @@
     backdrop-filter: blur(1px);
     display: flex;
     align-items: center;
+    overflow: auto;
 }
 
 .modal-preview {
     background-color: var(--bg);
     box-sizing: inherit;
-    width: 800px;
+    width: 1000px;
     margin: auto;
     margin-top: 100px;
     padding: 10px;
     border-radius: 7px;
-    box-shadow: 0px 0px 15px rgba(150, 150, 150, .5);
+    box-shadow: 0px 0px 15px rgba(20, 20, 20, .5);
 }
 
 .custom-modal-header {
     display: flex;
-    padding: 15px 20px;
+    padding: 7px 10px;
     align-items: center;
     justify-content: center;
 }
@@ -52,5 +53,6 @@ h4 {
 }
 
 .modal-body {
-    padding: 20
+    padding: 70px;
+    align-items: flex-start;
 }

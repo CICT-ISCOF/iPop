@@ -12,9 +12,12 @@ export class MainComponent implements OnInit {
         private Modal : Modal
     ) { 
         this.Modal.isShowing().subscribe( value => this.isShowing = value   )
-        this.Modal.getTitle().subscribe( title => this.title = title)
+        this.Modal.getTitle().subscribe( title => this.title = title )
+        this.Modal.getModalType().subscribe( type => this.type = type )
+
     }
     
+    type = ""
     title = ""
     isShowing = false
 

@@ -5,6 +5,13 @@
             <div (click)="closeModal()" class="modal-close"></div>
         </div>
         <div class="modal-body">
+            <!-- home -->
+            <AddSlider *ngIf="type == 'Add Image'"></AddSlider>
+            <EditSlider *ngIf="type == 'Edit Image'"></EditSlider>
+
+
+
+
 
         </div>
     </div>
