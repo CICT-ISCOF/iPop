@@ -36,7 +36,7 @@ export class FeaturedArticlesComponent implements OnInit {
 	}
 
 	tuncateString (string) {		
-		const length = 900;	
+		const length = 300;	
 		const ending = '...';	
 		return string.substring(0, length - ending.length) + ending;
     }

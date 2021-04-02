@@ -1,6 +1,5 @@
 <div class="home-container">
     <br>
-
     <div>
         <div class="header" *ngIf="!hide">
             <div>
@@ -31,7 +30,7 @@
                     {{nav.name}}
                     <div class="drop-down-container" style="position: relative;">
                         <div class="drop-down">
-                            <div *ngFor="let child of nav.children" class="drop-down-container animated fadeIn fast" [routerLink]="child.route" class="drop-down-item">
+                            <div *ngFor="let child of nav.children" class="drop-down-container animated fadeIn fast" [routerLink]="'/' + child.route" class="drop-down-item">
                                 <i class="bi bi-folder"></i>
                                 <p style="flex: 3;"> {{child.name}}</p>
                                 <i class="bi bi-chevron-right"></i>

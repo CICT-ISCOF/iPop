@@ -10,7 +10,7 @@
             <button (click)="editModal()" class="ghost btn">Delete Slider Image(s)</button>
         </div>
         <div *ngIf="!isUser && !showModal" class="show-overlay animated zoomIn fast">
-            <i (click)="showModal = true" style="font-size: 16px;color: white;" class="bi bi-three-dots"></i>
+            <i (click)="showModal = true" style="font-size: 16px;color: white;cursor: pointer;" class="bi bi-three-dots"></i>
         </div>
 
         <div *ngIf="slides.length == 0" class="carousel-holder">

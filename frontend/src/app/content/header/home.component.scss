@@ -210,7 +210,6 @@ video {
     .Item {
         color: white !important
     }
-    opacity: .99;
     padding: 0 5vw;
     backdrop-filter: blur(51px);
     padding-top: 5px;
@@ -221,11 +220,6 @@ video {
         font-weight: 900;
         input {
             color: var(--contrast) !important
-        }
-    }
-    .Item:hover {
-        .drop-down-container {
-            opacity: .8;
         }
     }
 }

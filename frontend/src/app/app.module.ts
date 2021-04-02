@@ -127,7 +127,7 @@ import { RPFPPServicesComponent } from './content/general-public/services-offere
 import { ADHYDPServicesComponent } from './content/general-public/services-offered/adhydp-services/adhydp-services.component';
 import { PDIServicesComponent } from './content/general-public/services-offered/pdi-services/pdi-services.component';
 import { PDMServicesComponent } from './content/general-public/services-offered/pdm-services/pdm-services.component';
-import { DynamicHomeComponent } from './content/dynamic-home/dynamic-home.component';
+import { DynamicHomeComponent } from './content/sliders-and-quiclinks/dynamic-home.component';
 import { ProvincialOfficialsComponent } from './content/provincial-officials/provincial-officials.component';
 import { AhydTeamComponent } from './content/ahyd-team/ahyd-team.component';
 import { GeneralComponent } from './content/population-data/general/general.component';

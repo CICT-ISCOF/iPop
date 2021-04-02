@@ -1,32 +1,29 @@
-<br><br><br><br>
 <div class="articles-wrapper" *ngIf="!show">
-    <h5 class="pop2">Featured Articles</h5>
-    <hr>
-
-    <div class="article-container" style="display: flex;">
-        <div class="article" *ngFor="let article of articles">
-            <div (click)="showArticle(article)">
-                <h2>{{article.title}}
-                </h2>
-                <p><span class="badge badge-primary">{{article.created_at | date: 'MMMM dd, yyyy - h:ma'}}</span> </p>
-                <div class="body">
-                    <div *ngIf="article.photos.length != 0" class="image">
-                        <img [src]="article.photos[0].file.uri" alt="">
-                    </div>
-                    <div class="text">
-                        {{tuncateString(article.body)}}
+    <br><br><br>
+    <div style="display:flex">
+        <div class="article-container " style="display: flex;width: 800px;margin:auto;flex-direction: column;">
+            <h3>Featured Articles</h3>
+            <br>
+            <div class="article card" *ngFor="let article of articles">
+                <div (click)="showArticle(article)">
+                    <h5>{{article.title}} </h5>
+                    <p style="color:gray">{{article.created_at | date: 'MMMM dd, yyyy - h:ma'}} </p>
+                    <div style=" display: flex; ">
+                        <div class="text ">
+                            {{tuncateString(article.body)}}
+                        </div>
+                        <div *ngIf="article.photos.length !=0 " class="image ">
+                            <img [src]="article.photos[0].file.uri " alt=" ">
+                        </div>
                     </div>
                 </div>
-                <hr>
-                <br><br>
+                <!-- <button (click)="deleteArticle(article.id) " class="btn btn-danger mr-auto ">Delete</button> -->
             </div>
-            <button (click)="deleteArticle(article.id)" class="btn btn-danger mr-auto">Delete</button>
-
         </div>
-    </div>
 
-    <p *ngIf="articles.length == 0">No articles to show...</p>
+        <p *ngIf="articles.length==0 ">No articles to show...</p>
+    </div>
 
 </div>
 
-<app-show-article *ngIf="show"></app-show-article>
+<app-show-article *ngIf="show "></app-show-article>
