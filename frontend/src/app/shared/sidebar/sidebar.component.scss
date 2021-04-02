@@ -1,3 +1,4 @@
+@import './scrollbar.scss';
 .sidebar-component {
     width: 220px;
     height: 100%;
@@ -45,26 +46,13 @@
     margin-top: -50px;
 }
 
-h1 {
+h1 img {
     position: relative;
     z-index: 9999;
-    font-weight: 500;
-    padding: 15px 20px;
-    font-size: 13px !important;
-}
-
-h1 img {
     width: 100%;
     margin-right: 5px;
-}
-
-hr {
-    border-bottom: 1px solid rgba(150, 150, 150, .2);
-}
-
-.button:focus {
-    border: none !important;
-    box-shadow: none !important;
+    margin-bottom: 50px;
+    margin-top: 100px;
 }
 
 .filter {
@@ -74,14 +62,13 @@ hr {
     opacity: .86;
 }
 
-.button {
-    background: transparent;
-    box-shadow: none;
+.button-group * {
+    color: rgba($color: white, $alpha: .6);
+    font-size: 13px;
 }
 
-.button-group * {
-    color: white;
-    font-size: 13px;
+.button-group {
+    padding: 10px
 }
 
 .sidebar-btn {
@@ -89,18 +76,25 @@ hr {
     padding-left: 10px;
     cursor: pointer;
     margin-bottom: 10px;
+    padding: 5px 20px;
+    border-radius: 6px;
 }
 
 .sidebar-btn:hover {
-    background: rgba(150, 150, 150, .3);
-}
-
-.sidebar-btn button {
-    width: 100%;
+    background-color: rgba($color: black, $alpha: .4);
+    * {
+        color: white;
+        .bi {
+            color: yellow
+        }
+    }
 }
 
 .active * {
-    color: white !important;
+    color: white;
+    .bi {
+        color: orange
+    }
 }
 
 .active {
@@ -115,75 +109,19 @@ hr {
 }
 
 .icon {
-    width: 40px;
-    color: #0675e7;
+    width: 30px;
     margin-left: -10px;
-    color: gray;
+    background-color: rgba($color: white, $alpha: .1);
+    border-radius: 35%;
+    height: 30px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-right: 13px;
 }
 
-svg,
 i {
-    fill: rgba($color: white, $alpha: .6) !important;
-    color: rgba($color: white, $alpha: .6) !important;
-    font-size: 20px !important;
-}
-
-::-webkit-scrollbar {
-    width: 7px;
-}
-
-
-/* Track */
-
-::-webkit-scrollbar-track {
-    background: #C1C1C1;
-}
-
-
-/* Handle */
-
-::-webkit-scrollbar-thumb {
-    background: var(--bg1);
-    border-radius: 30px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    -ms-border-radius: 30px;
-    -o-border-radius: 30px;
-    // border: 1px solid rgba(150, 150, 150, .7);
-}
-
-
-/* Handle on hover */
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--bg1);
-}
-
-button {
-    font-size: 13px;
-}
-
-.demographics {
-    background: rgba(0, 0, 0, 0.16);
-    * {
-        font-size: 14px !important;
-    }
-    .records {
-        background: rgba(0, 0, 0, 0.16);
-        * {
-            font-size: 12px !important;
-        }
-    }
-}
-
-.triangle {
-    margin-left: auto;
-    transform: translate(19px) rotate(-90deg);
-    svg {
-        fill: var(--bg1) !important;
-        width: 23px;
-        height: 23px;
-    }
-    -webkit-filter: drop-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12));
-    filter: drop-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12));
+    fill: rgba($color: white, $alpha: .6);
+    color: rgba($color: white, $alpha: .6);
+    font-size: 14px;
 }
