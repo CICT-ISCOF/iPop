@@ -1,15 +1,16 @@
 import { UserService } from '../../others/user.service';
-import { TopPopulatedMunicipalityService } from './top-populated-municipality.service';
-import { PopulationPyramidService } from './population-pyramid.service';
+import { TopPopulatedMunicipalityService } from './services/top-populated-municipality.service';
+import { PopulationPyramidService } from './services/population-pyramid.service';
 import { OfficialsService } from './../provincial-officials/officials.service';
 import { UtilityService } from '../../others/utility.service';
 import { Component, OnInit} from '@angular/core';
-import { StatisticsService } from  './statistics.service'
-import { LocationService } from '../../others/location.service'
+import { StatisticsService } from  './services/statistics.service'
 import Swal from 'sweetalert2'
 import { OfficialsService1 } from '../officials-of/officials.service';
 import { FiltersService } from 'src/app/filters/filters.service';
 import * as chart from './chartOption'
+import { Modal } from 'src/app/modal/modal.service';
+import {DataService} from './services/data.service'
 
 @Component({
 	selector: 'app-statistics',
@@ -27,7 +28,9 @@ export class StatisticsComponent implements OnInit {
 		private OfficialsService1 : OfficialsService1,
 		private PopulationPyramidService : PopulationPyramidService,
 		private TopPopulatedMunicipalityService : TopPopulatedMunicipalityService,
-		private UserService : UserService
+        private UserService: UserService,
+        private Modal: Modal,
+        private DataService : DataService
 	) { 
 		// this.OfficialsService1.listen().subscribe(()=>this.CheckBarangaysAndMunicipalities() )
         
@@ -49,10 +52,7 @@ export class StatisticsComponent implements OnInit {
 		localStorage.removeItem('barangay-ref') 
 	}
 
-	addData = false
 	data:any = {}
-	filteredData = {}
-
 	
     setFilter() {
         const data = {
@@ -63,18 +63,13 @@ export class StatisticsComponent implements OnInit {
         if ( this.filterIsValidated() ) {
             this.StatisticsService.filterData( data ).subscribe( data  => {
                     if ( data[ 0 ] == null || undefined ) {
-                        this.filteredData = {}
+                        this.DataService.setPopProfileData( {})
                         return
-                    }
-                    this.filteredData = data[ 0 ]
+                }
+                this.DataService.setPopProfileData( data[ 0 ] )
                 }
             )
         }
-        // this.OfficialsService.setOfficialsFilter( this.data )
-        // localStorage.setItem( 'municipality-ref', this.municipality )
-        // localStorage.setItem( 'barangay-ref', this.barangay )
-        // this.OfficialsService1.setTrigger()
-        // this.retrievepopulationPyramid( this.data )
     }
     
     saveData() {
@@ -85,16 +80,9 @@ export class StatisticsComponent implements OnInit {
         })
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    addPopData() {
+        this.Modal.show( 'AddPopulationData', 'Add Population Profile' )
+    }
     
     
 
@@ -112,27 +100,6 @@ export class StatisticsComponent implements OnInit {
         return true
     }
     
-    
-
-	updateFiltered(callback){
-		if(this.isEmpty(this.filteredData)){
-			return Swal.fire(
-				`Trying to Updated Empty Data`,
-				"Utililize filters to choose your desired unempty Population Data you want to update",
-				'error'
-			).then(()=>{
-				Swal.fire(
-					`Remember`,
-					"You could always add Population Data by clicking the plus button at the top",
-					'info'
-				)
-			})
-		}
-		this.StatisticsService.updateData(this.filteredData).subscribe((data)=>{
-			this.UtilityService.setAlert('Data has been updated','info')
-			callback()
-		})
-	}
 
 	isEmpty(JSONObject) {
 		for(var prop in JSONObject) {
