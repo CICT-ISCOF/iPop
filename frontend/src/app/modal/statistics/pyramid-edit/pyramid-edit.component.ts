@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PopulationPyramidService } from 'src/app/content/statistics/services/population-pyramid.service';
+import { UtilityService } from 'src/app/others/utility.service';
 
 @Component({
   selector: 'app-pyramid-edit',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PyramidEditComponent implements OnInit {
 
-  constructor() { }
+    constructor (
+        private PopulationPyramidService: PopulationPyramidService,
+        private UtilityService: UtilityService
+
+  ) { }
 
   ngOnInit(): void {
   }
+    updatepopulationPyramid( pyramidData ) {
+        this.PopulationPyramidService.update( pyramidData ).subscribe( data => {
+            this.ngOnInit()
+            this.UtilityService.setAlert( 'Population data updated succcesffully', 'success' )
+        } )
+    }
 
 }

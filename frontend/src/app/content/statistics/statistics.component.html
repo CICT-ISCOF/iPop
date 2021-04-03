@@ -1,86 +1,80 @@
 <app-home *ngIf="isUser"></app-home>
 
 <div class="statistics-component">
-
     <div class="row">
+        <div class="col-md-8">
+           <div class="d-flex">
+                <div style="align-self: flex-start;flex: 3;">
+                    <Municipality></Municipality>
+                    <Barangay></Barangay>
+                    <Years></Years>
+                </div>
+                <div style="align-self: flex-end;">
+                    <button *ngIf="this.municipality.name != '' &&  this.barangay.name != '' && this.year != 0 " (click)="setFilter()"
+                        class="btn btn-sm btn-info rounded">Search</button>
+                    <button *ngIf="this.municipality.name != '' &&  this.barangay.name != '' && this.year != 0 "
+                        (click)="addData = true" class="btn btn-sm btn-danger rounded">Show Map</button>
+                    <button (click)="addPopData()" class="btn btn-sm btn-primary rounded">Add Population Data</button>
+                </div>
+           </div>
+        <br>
+        <div class="row card">
+            <div class="card-header">
+                <h5 class="d-flex">
+                    <span style="font-weight: 400;">Population Pyramid</span>
+                    <button *ngIf="!isUser"  (click)="AddPyramidData()" class="ml-auto btn btn-sm btn-primary">
+                        <i style="color:white" class="fa fa-plus"></i>
+                    </button>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="chart"></div>
+            </div>
+        </div>
+        <br>
+        <PopProfile></PopProfile>
 
-        <div *ngIf="!addData" class="front col-md-8">
-               <div style="display: flex;width: 100%;margin-left: -20px;">
-                    <div style="align-self: flex-start;flex: 3;">
-                        <Municipality></Municipality>
-                        <Barangay></Barangay>
-                        <Years></Years>
-                    </div>
-                    <div style="align-self: flex-end;">
-                        <button 
-                            *ngIf="this.municipality.name != '' &&  this.barangay.name != '' && this.year != 0 "
-                            (click)="setFilter()"  class="btn btn-sm btn-info rounded">Search</button>
-                        <button 
-                        *ngIf="this.municipality.name != '' &&  this.barangay.name != '' && this.year != 0 "
-                         (click)="addData = true" class="btn btn-sm btn-danger rounded">Show Map</button>
-                        <button (click)="addPopData()" class="btn btn-sm btn-primary rounded">Add Population Data</button>
-                    </div>
-               </div>
-                
-            <PopProfile></PopProfile>
-
-            <!-- age distribution  -->
-            <div class="row container chart-container">
-                <h2 class="pop2 col-md-12 d-flex" style="align-items: center;max-height: 50px;">
-                    <span style="color:white">POPULATION PYRAMID</span>
-                    <span *ngIf="!addPopulationData && !isUser" class="ml-auto">
-                        <button (click)="addPopulationData = true" class="clickable rounded"><i class="fa fa-plus"></i></button>
-                    </span>
-                    <span *ngIf="addPopulationData && !isUser" class="ml-auto">
-                        <button (click)="addPopulationData = false" class="clickable rounded"><i class="fa fa-times"></i></button>
-                    </span>
-                    <span *ngIf="addPopulationData && !isUser">
-                            <button (click)="createpopulationPyramid()" class="button">Save Pyramid Chart</button>
+        <!-- top populated  -->
+        <div class="row card">
+            <div class="form-group col-md-12">
+                <h2 class="pop2 d-flex" style="align-items: center;">
+                    <span style="color: white;">  TOP POPULATED MUNCIPALITIES </span>
+                    <span class="ml-auto">
+                        <button (click)="addTopPopulated = true;" *ngIf="!addTopPopulated" class="clickable rounded">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button (click)="addTopPopulated = false" *ngIf="addTopPopulated" class="clickable rounded">
+                            <i class="fa fa-times"></i>
+                        </button>
                     </span>
                 </h2>
+                <p style="color:gray" style="text-align: center;">All over Iloilo</p>
+                <ul class="list-group">
+                    <li class="list-group-item barangays">
+                        <i style="color:transparent;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
+                        <p class="sub-title">MUNICIPALITY</p>
+                        <p class="sub-title">TOTAL POPULATION</p>
+                        <p class="sub-title">PERCENTAGE</p>
+                    </li>
+                    <li *ngFor="let municipality of topPopulateds" class="list-group-item barangays">
+                        <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
+                        <p>{{municipality.data.name || 0}}</p>
+                        <p style="font-weight: 900;" class="text-primary">{{municipality.data.total || 0}}</p>
+                        <p style="font-weight: 900;" class="text-danger">{{municipality.data.percent || 0}}%</p>
+                    </li>
+                    <li *ngIf="addTopPopulated" class="list-group-item barangays d-flex">
+                        <select [(ngModel)]="topPulated.data.name" class="form-control" id="Municipality">
+                            <option *ngFor="let municipality of municipalities">{{municipality.name}}</option>
+                        </select>
+                        <input [(ngModel)]="topPulated.data.total" type="text" class="form-control" id="Total Population">
+                        <input [(ngModel)]="topPulated.data.percent" type="text" class="form-control" id="Percentage">
+                        <div style="transform: translate(20px,10px);">
+                            <i (click)="createtopPopulateds() " class="fa fa-check text-success "></i>
+                        </div>
+                    </li>
+                </ul>
             </div>
-
-            <!-- top populated  -->
-            <div class="row container">
-                <div class="form-group col-md-12">
-                    <h2 class="pop2 d-flex" style="align-items: center;">
-                        <span style="color: white;">  TOP POPULATED MUNCIPALITIES </span>
-                        <span class="ml-auto">
-                            <button (click)="addTopPopulated = true;" *ngIf="!addTopPopulated" class="clickable rounded">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                            <button (click)="addTopPopulated = false" *ngIf="addTopPopulated" class="clickable rounded">
-                                <i class="fa fa-times"></i>
-                            </button>
-                       </span>
-                    </h2>
-                    <p style="color:gray" style="text-align: center;">All over Iloilo</p>
-                    <ul class="list-group">
-                        <li class="list-group-item barangays">
-                            <i style="color:transparent;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
-                            <p class="sub-title">MUNICIPALITY</p>
-                            <p class="sub-title">TOTAL POPULATION</p>
-                            <p class="sub-title">PERCENTAGE</p>
-                        </li>
-                        <li *ngFor="let municipality of topPopulateds" class="list-group-item barangays">
-                            <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
-                            <p>{{municipality.data.name || 0}}</p>
-                            <p style="font-weight: 900;" class="text-primary">{{municipality.data.total || 0}}</p>
-                            <p style="font-weight: 900;" class="text-danger">{{municipality.data.percent || 0}}%</p>
-                        </li>
-                        <li *ngIf="addTopPopulated" class="list-group-item barangays d-flex">
-                            <select [(ngModel)]="topPulated.data.name" class="form-control" id="Municipality">
-                                <option *ngFor="let municipality of municipalities">{{municipality.name}}</option>
-                            </select>
-                            <input [(ngModel)]="topPulated.data.total" type="text" class="form-control" id="Total Population">
-                            <input [(ngModel)]="topPulated.data.percent" type="text" class="form-control" id="Percentage">
-                            <div style="transform: translate(20px,10px);">
-                                <i (click)="createtopPopulateds() " class="fa fa-check text-success "></i>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        </div>
         </div>
 
         <div class="side col-md-4 ">

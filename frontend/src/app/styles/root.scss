@@ -58,7 +58,7 @@ html[color="plain_green"] {
 
 html[data-theme="light"] {
     --bg: white;
-    --bg1: #F0F0F0;
+    --bg1: #F8F9FA;
     --inputBg: #e3e5e8;
     --shadow: 0 2px 5px 0 rgba(150, 150, 150, 0.16), 0 2px 5px 0 rgba(50, 50, 150, 0.12);
     --colorPrimary: black;
@@ -69,8 +69,8 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-    --bg1: #121212;
-    --bg: #1B1C1D;
+    --bg1: #1B1C25;
+    --bg: #282B33;
     --inputBg: #2c313c;
     --shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     --colorPrimary: #abb2bf;
