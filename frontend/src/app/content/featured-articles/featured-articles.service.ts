@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { BaseAPIService } from '../../others/base-api.service'
-import { Observable, Subject } from 'rxjs';
-
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,6 @@ export class FeaturedArticlesService {
 	
     private show = new Subject<any>();
     private article = new Subject<any>();
-    
     
     getHeaders(){
 		let user = JSON.parse(localStorage.getItem('user-data'))
@@ -55,5 +53,22 @@ export class FeaturedArticlesService {
         const url = this.baseURL + '/articles/' + id
         return this.http.delete( url, { headers: this.getHeaders()})
     }
+    
+    today() {
+        const url = this.baseURL + '/articles/today'
+        return this.http.get( url )
+    }
+    
+    week() {
+        const url = this.baseURL + '/articles/week'
+        return this.http.get( url )
+
+    }
+    
+    month() {
+        const url = this.baseURL + '/articles/month'
+        return this.http.get( url )
+    }
+    
 }
  
