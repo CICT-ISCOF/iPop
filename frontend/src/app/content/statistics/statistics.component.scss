@@ -9,7 +9,7 @@
 }
 .nav1 {
     width: 100%;
-    border-radius: 30px;
+    border-radius: 4px;
     background: rgba(150, 150, 150, .1);
     padding: 10px 20px;
     display: flex;
@@ -21,4 +21,9 @@
     .btn {
         color: white !important
     }
+}
+.card-header{
+    background: var(--bg) !important;
+    background-color: var(--bg) !important;
+    border-bottom: 1px solid rgba(150,150,150,.1);
 }

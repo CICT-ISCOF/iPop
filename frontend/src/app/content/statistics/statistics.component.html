@@ -4,13 +4,13 @@
     <div class="row">
         <div class="col-md-8 ">
            <div class="d-flex">
-                <div class="nav1" >
+                <div class="nav1 " >
                     <Municipality></Municipality>
                     <Barangay></Barangay>
                     <Years></Years>
       
                     <button *ngIf="this.municipality.name != '' &&  this.barangay.name != '' && this.year != 0 " (click)="setFilter()"
-                        class="btn btn-sm btn-primary rounded">Search</button>
+                        class="btn btn-sm btn-primary rounded">Show Data</button>
                     <button *ngIf="this.municipality.name != '' &&  this.barangay.name != '' && this.year != 0 "
                         (click)="addData = true" class="btn btn-sm btn-primary rounded" style="opacity: .9;">Show Map</button>
                     <button (click)="addPopData()" class="btn btn-sm btn-primary rounded" style="opacity: .8;">Add Population Data</button>
