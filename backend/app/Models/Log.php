@@ -25,6 +25,16 @@ class Log extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function toSearchableArray()
+    {
+        $data = $this->toArray();
+
+        return [
+            'id' => $data['id'],
+            'action' => $data['action'],
+        ];
+    }
+
     /**
      * Records an activity to the database.
      *
