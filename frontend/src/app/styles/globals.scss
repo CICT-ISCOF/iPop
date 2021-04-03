@@ -255,9 +255,8 @@ div:focus {
     visibility: hidden;
     pointer-events: none;
 }
-
-button:hover {
-    box-shadow: 0 0px 25px rgba(20, 20, 20, 0.30), 0 0px 10px rgba(50, 50, 50, 0.22) !important;
+.btn{
+    margin:.5rem
 }
 
 .close {
