@@ -277,4 +277,12 @@ button:hover {
         color: var(--colorPrimary);
         transform: translate(0px, -2px);
     }
+    
+    .card-header{
+        background: var(--bg) !important;background-color: var(--bg) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid rgba(150,150,150,.1);
+    }
 }

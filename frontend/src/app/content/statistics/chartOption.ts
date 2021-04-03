@@ -9,10 +9,9 @@ export const options = {
             'fill': 'transparent',
             'opacity': 0
         },
-        title: '',
-        titleTextStyle: { color: 'blue', fontSize: 30, align: 'center', bold: true },
-        colors: [ '#09B2E7', '#F30091', ],
-        chartArea: { backgroundColor: 'transparent', height: '100%', top: '10%' },
+        titleTextStyle: { color: 'gray', fontSize: 30, align: 'center', bold: true },
+        colors: [ '#FD582C', '#9D5DB6', ],
+        chartArea: { backgroundColor: 'transparent', height: '100%', top: '%' },
         isStacked: true,
         hAxis: {
             textPosition: 'none',

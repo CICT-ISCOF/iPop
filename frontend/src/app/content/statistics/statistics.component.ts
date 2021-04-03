@@ -8,6 +8,7 @@ import { FiltersService } from 'src/app/filters/filters.service';
 import { Modal } from 'src/app/modal/modal.service';
 import {DataService} from './services/data.service'
 import { drawChart } from './draw-chart'
+import * as pyramid from './pyramid'
 
 @Component({
 	selector: 'app-statistics',
@@ -34,8 +35,6 @@ export class StatisticsComponent implements OnInit {
     municipality = ""
     barangay = ""
 	isUser =  !this.UserService.isUser()
-	populationPyramids:any = []
-    
 	ngOnInit(): void {	
 		this.retrievetopPopulateds()
 	}
@@ -63,20 +62,29 @@ export class StatisticsComponent implements OnInit {
     }
     
     getPopulationPyramid( data: any ) {
-        alert('ari')
-        this.ageDistribution = [
-            [ 'Age', 'Male', 'Female' ],
+       let ageDistribution:any = [
+            [ 'Age', 'Female', 'Male' ],
         ]
-        this.PopulationPyramidService.retrieve( data ).subscribe( data => {
-            this.populationPyramids = data
-            for ( let key in data[ 0 ][ 'data' ][ 'female' ] ) {
-                this.ageDistribution.push( [
-                    key,
-                    parseInt( data[ 0 ][ 'data' ][ 'male' ][ key ] ),
-                    -Math.abs( parseInt( data[ 0 ][ 'data' ][ 'female' ][ key ] ) )
-                ] )
+        this.PopulationPyramidService.retrieve( data ).subscribe( (data:any) => {
+            if ( data.length == 0 ) {
+                ageDistribution = pyramid.data
+            } else {
+                for ( let key in data[ 0 ][ 'data' ][ 'female' ] ) {
+                    let newText = ""
+                    if ( key == 'below_1_year_old' ) {
+                        newText = "Below 1 Year Old"
+                    }
+                    if ( key == 'eighty_and_above' ) {
+                        newText = "80 and Above"
+                    }
+                    ageDistribution.push( [
+                        key == 'below_1_year_old' || key == 'eighty_and_above' ? newText : key,
+                        -Math.abs( parseInt( data[ 0 ][ 'data' ][ 'female' ][ key ] ) ),
+                        parseInt( data[ 0 ][ 'data' ][ 'male' ][ key ] ),
+                    ] )
+                }
             }
-            drawChart( 'chart', this.ageDistribution )
+            drawChart( 'chart', ageDistribution )
         } )
     }
     
@@ -88,14 +96,10 @@ export class StatisticsComponent implements OnInit {
         this.Modal.show( 'AddPyramidData', 'Add Population Pyramid Data' )
     }
 
-	ageDistribution:any =  [
-		['Age', 'Male', 'Female'],		
-	]
 
 	topPulated = {
 		data:{}
     }
-    
 	topPopulateds:any = []
 
 	createtopPopulateds(){
@@ -104,13 +108,11 @@ export class StatisticsComponent implements OnInit {
 			Swal.fire('Creation of Population Successful','','success')
 		})
 	}
-
 	retrievetopPopulateds(){
 		this.TopPopulatedMunicipalityService.retrieve().subscribe(data => {
 			this.topPopulateds = data
 		})
 	}
-
 	deletetopPopulateds(municipality){
 		Swal.fire({
 			title: `Are you sure you want to remove this  ${municipality['name']}?`,		
@@ -124,7 +126,6 @@ export class StatisticsComponent implements OnInit {
 			} 
 		})
 	}
-
 	activetopPopulateds = {}
 	edittopPopulateds(index){
 		this.activetopPopulateds[index] == true ?  this.activetopPopulateds[index] = false : this.activetopPopulateds[index] = true	
