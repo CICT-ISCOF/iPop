@@ -32,50 +32,9 @@
         </div>
         <br>
         <PopProfile></PopProfile>
-
-        <!-- top populated  -->
-        <div class="row card">
-            <div class="form-group col-md-12">
-                <h2 class="pop2 d-flex" style="align-items: center;">
-                    <span style="color: white;">  TOP POPULATED MUNCIPALITIES </span>
-                    <span class="ml-auto">
-                        <button (click)="addTopPopulated = true;" *ngIf="!addTopPopulated" class="clickable rounded">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                        <button (click)="addTopPopulated = false" *ngIf="addTopPopulated" class="clickable rounded">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </span>
-                </h2>
-                <p style="color:gray" style="text-align: center;">All over Iloilo</p>
-                <ul class="list-group">
-                    <li class="list-group-item barangays">
-                        <i style="color:transparent;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
-                        <p class="sub-title">MUNICIPALITY</p>
-                        <p class="sub-title">TOTAL POPULATION</p>
-                        <p class="sub-title">PERCENTAGE</p>
-                    </li>
-                    <li *ngFor="let municipality of topPopulateds" class="list-group-item barangays">
-                        <i style="color:orangered;font-size: 20px;" class="fas fa-map-marker-alt mr-auto"></i>
-                        <p>{{municipality.data.name || 0}}</p>
-                        <p style="font-weight: 900;" class="text-primary">{{municipality.data.total || 0}}</p>
-                        <p style="font-weight: 900;" class="text-danger">{{municipality.data.percent || 0}}%</p>
-                    </li>
-                    <li *ngIf="addTopPopulated" class="list-group-item barangays d-flex">
-                        <select [(ngModel)]="topPulated.data.name" class="form-control" id="Municipality">
-                            <option *ngFor="let municipality of municipalities">{{municipality.name}}</option>
-                        </select>
-                        <input [(ngModel)]="topPulated.data.total" type="text" class="form-control" id="Total Population">
-                        <input [(ngModel)]="topPulated.data.percent" type="text" class="form-control" id="Percentage">
-                        <div style="transform: translate(20px,10px);">
-                            <i (click)="createtopPopulateds() " class="fa fa-check text-success "></i>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <br>
+        <TopPopulated></TopPopulated>
         </div>
-        </div>
-
         <div class="side col-md-4 ">
             <app-provincial-officials *ngIf="!hasBarangaysAndMunicipalities "></app-provincial-officials>
             <app-sb-members *ngIf="!hasBarangaysAndMunicipalities "></app-sb-members>

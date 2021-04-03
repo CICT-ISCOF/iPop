@@ -1,9 +1,7 @@
 import { UserService } from '../../others/user.service';
-import { TopPopulatedMunicipalityService } from './services/top-populated-municipality.service';
 import { PopulationPyramidService } from './services/population-pyramid.service';
 import { Component, OnInit} from '@angular/core';
 import { StatisticsService } from  './services/statistics.service'
-import Swal from 'sweetalert2'
 import { FiltersService } from 'src/app/filters/filters.service';
 import { Modal } from 'src/app/modal/modal.service';
 import {DataService} from './services/data.service'
@@ -20,7 +18,6 @@ export class StatisticsComponent implements OnInit {
 	constructor(	
 		private StatisticsService : StatisticsService,
 		private PopulationPyramidService : PopulationPyramidService,
-		private TopPopulatedMunicipalityService : TopPopulatedMunicipalityService,
         private UserService: UserService,
         private Modal: Modal,
         private DataService: DataService,
@@ -36,7 +33,6 @@ export class StatisticsComponent implements OnInit {
     barangay = ""
 	isUser =  !this.UserService.isUser()
 	ngOnInit(): void {	
-		this.retrievetopPopulateds()
 	}
 
 	data:any = {}
@@ -95,40 +91,4 @@ export class StatisticsComponent implements OnInit {
     AddPyramidData() {
         this.Modal.show( 'AddPyramidData', 'Add Population Pyramid Data' )
     }
-
-
-	topPulated = {
-		data:{}
-    }
-	topPopulateds:any = []
-
-	createtopPopulateds(){
-		this.TopPopulatedMunicipalityService.create(this.topPulated).subscribe(data => {
-			this.ngOnInit()
-			Swal.fire('Creation of Population Successful','','success')
-		})
-	}
-	retrievetopPopulateds(){
-		this.TopPopulatedMunicipalityService.retrieve().subscribe(data => {
-			this.topPopulateds = data
-		})
-	}
-	deletetopPopulateds(municipality){
-		Swal.fire({
-			title: `Are you sure you want to remove this  ${municipality['name']}?`,		
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Remove',
-			cancelButtonText: 'Nope'
-		  }).then((result) => {
-			if (result.value) {
-				
-			} 
-		})
-	}
-	activetopPopulateds = {}
-	edittopPopulateds(index){
-		this.activetopPopulateds[index] == true ?  this.activetopPopulateds[index] = false : this.activetopPopulateds[index] = true	
-	}
-
 }
