@@ -21,15 +21,15 @@ export class SidebarComponent implements OnInit {
         private DeviceService: DeviceService,
         private SidebarService: SidebarService
 	) {
-		this.sub = this.UtilityService.geColor().subscribe(color => this.sidebar.color = this.formatColorFromLocalStorage(color))
+        this.UtilityService.geColor().subscribe(color => this.sidebar.color = this.formatColorFromLocalStorage(color))
 
-		this.sub = this.UtilityService.geBackground().subscribe(boolean =>this.sidebar.background = this.formatStringtoBoolean(boolean))
+        this.UtilityService.geBackground().subscribe(boolean =>this.sidebar.background = this.formatStringtoBoolean(boolean))
 
-		this.sub = this.UtilityService.getImage().subscribe(image => this.sidebar.backgroundImage = this.formatImage(image))
+        this.UtilityService.getImage().subscribe(image => this.sidebar.backgroundImage = this.formatImage(image))
 
-		this.sub = this.MediaQueryService.getSize().subscribe(size => 	this.hide = this.processSize(size)) 
+        this.MediaQueryService.getSize().subscribe(size => 	this.hide = this.processSize(size)) 
 
-		this.sub = this.DeviceService.sidebarState().subscribe(state=>this.hide = state)
+        this.DeviceService.sidebarState().subscribe( state => this.hide = state )
 	}
 
     navs = nav.Sidebar()
@@ -82,6 +82,4 @@ export class SidebarComponent implements OnInit {
 		let sideBarColor =   "var(--" + color +")"		
 		return  sideBarColor
 	}
-	
-
 }
