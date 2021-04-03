@@ -6,17 +6,18 @@ use App\Models\Log;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
     public function authenticate(Request $request)
     {
-        $mode = $request->header('X-Auth-Mode');
+        $mode = Str::lower($request->header('x-auth-mode'));
         switch ($mode) {
-            case 'Pin':
+            case 'pin':
                 return $this->checkPin($request);
                 break;
-            case 'Password':
+            case 'password':
                 return $this->checkPassword($request);
                 break;
             default:

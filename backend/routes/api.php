@@ -181,6 +181,10 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::get('/death-statistics/summary', [DeathStatisticController::class, 'summary']);
     Route::get('/migration-statistics/summary', [MigrationStatisticController::class, 'summary']);
 
+    Route::get('/articles/today', [ArticleController::class, 'today']);
+    Route::get('/articles/week', [ArticleController::class, 'week']);
+    Route::get('/articles/month', [ArticleController::class, 'month']);
+
     Route::apiResources([
         'articles' => ArticleController::class,
         'sbmptcs' => SBMPTCController::class,
@@ -224,10 +228,6 @@ Route::middleware('throttle:60,1')->group(function () {
         'age-profile' => AgeProfileController::class,
         'profile-summary' => ProfileSummaryController::class,
     ]);
-
-    Route::get('/articles/today', [ArticleController::class, 'today']);
-    Route::get('/articles/week', [ArticleController::class, 'week']);
-    Route::get('/articles/month', [ArticleController::class, 'month']);
 
     Route::get('/statistic-profile/total', [ProfileController::class, 'total']);
 
