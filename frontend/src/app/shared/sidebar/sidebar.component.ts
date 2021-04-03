@@ -34,7 +34,11 @@ export class SidebarComponent implements OnInit {
 
     navs = nav.Sidebar()
 	
-	ngOnInit(): void {
+    ngOnInit(): void {
+        let nav = JSON.parse( localStorage.getItem( 'nav' ))
+        if ( localStorage.getItem( 'nav' ) != undefined ) {
+            this.makeIconAsActive( nav)
+        }
     }
     
     hide = false
@@ -43,7 +47,8 @@ export class SidebarComponent implements OnInit {
     makeIconAsActive(nav:any) {
         this.icons = {}
         this.icons[ nav.name ] = true
-        this.SidebarService.setSidebar(nav)
+        this.SidebarService.setSidebar( nav )
+        localStorage.setItem('nav',JSON.stringify(nav))
     }
 
     processSize( size: number ) {

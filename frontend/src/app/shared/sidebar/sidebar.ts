@@ -34,7 +34,7 @@ const navs = [
     {
         name: 'History Logs',
         route: 'logs',
-        icon: 'bi-unlock-fill',
+        icon: 'bi-clock-history',
         type: 'admin'
     },
     {
