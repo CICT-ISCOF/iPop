@@ -156,6 +156,10 @@ import { MainComponent } from './modal/main/main.component';
 import { AddComponent } from './modal/home/add/add.component';
 import { EditComponent } from './modal/home/edit/edit.component';
 import { ShimmerComponent } from './shared/shimmer/shimmer.component';
+import { MunicipalityComponent } from './filters/municipality/municipality.component';
+import { BarangayComponent } from './filters/barangay/barangay.component';
+import { YearsComponent } from './filters/years/years.component';
+import { DistrictComponent } from './filters/district/district.component';
 
 
 
@@ -361,6 +365,10 @@ const routes: Routes = [
         AddComponent,
         EditComponent,
         ShimmerComponent,
+        MunicipalityComponent,
+        BarangayComponent,
+        YearsComponent,
+        DistrictComponent,
     ],
     imports: [
         SlideToggleModule,
