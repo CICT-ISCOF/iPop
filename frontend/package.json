@@ -11,7 +11,9 @@
         "hmr": "ng serve -o --configuration --hmr",
         "postinstall": "node ./decorate-angular-cli.js"
     },
-    "resolutions": { "webpack": "^5.0.0" },
+    "resolutions": {
+        "webpack": "^5.0.0"
+    },
     "private": true,
     "dependencies": {
         "@agm/core": "^3.0.0-beta.0",

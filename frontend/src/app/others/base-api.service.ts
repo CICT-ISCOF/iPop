@@ -1,25 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class BaseAPIService {
-  constructor() {}
+	constructor() {}
 
-    public baseURL = 'http://192.168.1.103:8000/api'
+	public baseURL = 'http://127.0.0.1:8000/api'
 
-	user =''
+	user = ''
 	token = ''
 
-	getHeaders(){
+	getHeaders() {
 		this.user = JSON.parse(localStorage.getItem('user-data'))
 		this.token = this.user['token']
 		return new HttpHeaders({
-			'Accept':'application/json',
-			'Authorization' : 'Bearer '+ this.token,
-			'Content-Type':[]
-		})	
-  	}
-
- 
+			Accept: 'application/json',
+			Authorization: 'Bearer ' + this.token,
+			'Content-Type': [],
+		})
+	}
 }
