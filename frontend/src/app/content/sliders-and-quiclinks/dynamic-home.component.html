@@ -23,8 +23,7 @@
             </owl-carousel-o>
         </div>
         <div class="quick-links card">
-            <p class="pop2 card-header">Quick Links</p>
-            <div class="card-body">
+            <p class="pop2">Quick Links</p>
                 <a *ngFor="let link of links" class="links" target="_blank" [href]="link.url">
                     <div class="icon">
                         <i class="bi bi-folder-symlink-fill"></i>
@@ -33,7 +32,6 @@
                         <p>{{link.title}}</p>
                     </div>
                 </a>
-            </div>
         </div>
     </div>
 </div>
