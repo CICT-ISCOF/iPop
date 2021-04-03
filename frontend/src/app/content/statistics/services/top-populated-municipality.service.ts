@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import { OfficialsService } from './../provincial-officials/officials.service';
+import { OfficialsService } from '../../provincial-officials/officials.service';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { BaseAPIService } from '../../others/base-api.service'
+import { BaseAPIService } from '../../../others/base-api.service'
 
 @Injectable({
   providedIn: 'root'
 })
-export class PopulationPyramidService {
+export class TopPopulatedMunicipalityService {
 
-  
+ 
 	constructor(
 		private http : HttpClient,
 		private BaseAPIService : BaseAPIService,
 	
 	) { }
 
-	user =''
+	user = {}
 	token = ''
 
-	baseURL = this.BaseAPIService.baseURL + '/population-pyramid'
+	baseURL = this.BaseAPIService.baseURL + '/top-populations'
 
 	getHeaders(){
 		this.user = JSON.parse(localStorage.getItem('user-data'))
@@ -31,12 +31,12 @@ export class PopulationPyramidService {
 	}
 
 	create(data){
-		const url  = this.baseURL 
+		const url  = this.baseURL
 		return this.http.post(url,data, {headers:this.getHeaders()})
 	} 
 
-	retrieve(filters){
-		const url  = this.baseURL + `?year=${filters.year}&barangay=${filters.barangay}`
+	retrieve(){
+		const url  = this.baseURL
 		return this.http.get(url)
 	} 
 
@@ -49,7 +49,5 @@ export class PopulationPyramidService {
 		const url  = this.baseURL + `/${id}`
 		return this.http.delete(url, {headers:this.getHeaders()})
 	}
-
-
 	
 }

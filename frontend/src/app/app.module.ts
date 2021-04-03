@@ -156,6 +156,19 @@ import { MainComponent } from './modal/main/main.component';
 import { AddComponent } from './modal/home/add/add.component';
 import { EditComponent } from './modal/home/edit/edit.component';
 import { ShimmerComponent } from './shared/shimmer/shimmer.component';
+import { MunicipalityComponent } from './filters/municipality/municipality.component';
+import { BarangayComponent } from './filters/barangay/barangay.component';
+import { YearsComponent } from './filters/years/years.component';
+import { DistrictComponent } from './filters/district/district.component';
+import { PopProfileComponent } from './content/statistics/pop-profile/pop-profile.component';
+import { PopPyramidComponent } from './content/statistics/pop-pyramid/pop-pyramid.component';
+import { TopPopulatedComponent } from './content/statistics/top-populated/top-populated.component';
+import { PopulationAddComponent } from './modal/statistics/population-add/population-add.component';
+import { PopulationEditComponent } from './modal/statistics/population-edit/population-edit.component';
+import { ProfileEditComponent } from './modal/statistics/profile-edit/profile-edit.component';
+import { PyramidEditComponent } from './modal/statistics/pyramid-edit/pyramid-edit.component';
+import { PyramidAddComponent } from './modal/statistics/pyramid-add/pyramid-add.component';
+import { ProfileAddComponent } from './modal/statistics/profile-add/profile-add.component';
 
 
 
@@ -361,6 +374,19 @@ const routes: Routes = [
         AddComponent,
         EditComponent,
         ShimmerComponent,
+        MunicipalityComponent,
+        BarangayComponent,
+        YearsComponent,
+        DistrictComponent,
+        PopProfileComponent,
+        PopPyramidComponent,
+        TopPopulatedComponent,
+        PopulationAddComponent,
+        PopulationEditComponent,
+        ProfileEditComponent,
+        PyramidEditComponent,
+        PyramidAddComponent,
+        ProfileAddComponent,
     ],
     imports: [
         SlideToggleModule,

@@ -23,5 +23,9 @@ export class NavbarComponent implements OnInit {
     name = this.account.user.fullname
     ngOnInit(): void {
     }
+    
+    back() {
+        window.history.back()
+    }
 
 }

@@ -22,7 +22,27 @@ export class FeaturedArticlesComponent implements OnInit {
     
     makeActive(nav:any) {
         this.active = nav
+        if ( nav == 'Today' ) {
+            this.FeaturedArticlesService.today().subscribe(data => {
+                this.articles = data
+            })
+            return
+        }
+        if ( nav == 'This Week' ) {
+            this.FeaturedArticlesService.week().subscribe(data => {
+                this.articles = data
+            })
+            return
+        }
+        if ( nav == 'This Month' ) {
+            this.FeaturedArticlesService.month().subscribe(data => {
+                this.articles = data
+            })
+            return
+        }
+        this.ngOnInit()
     }
+    
 
 	ngOnInit(): void {
 		this.getFeautredArticles()

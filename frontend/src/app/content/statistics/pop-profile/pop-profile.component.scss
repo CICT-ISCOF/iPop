@@ -1,0 +1,19 @@
+.list{
+    border-left:2px solid rgba(34,166,242,.1);
+    padding: 20px 40px;
+    width: 100%;
+    margin:-10px
+}
+
+.icon{
+    transform: translate(6px);
+    i{
+        color:rgba(34,166,242,.7);
+        font-size: 30px;
+  
+    }
+}.card-header{
+    background: var(--bg) !important;
+    background-color: var(--bg) !important;
+    border-bottom: 1px solid rgba(150,150,150,.1);
+}

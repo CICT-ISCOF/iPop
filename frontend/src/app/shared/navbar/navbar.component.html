@@ -2,8 +2,9 @@
 
 <div class="navbar">
     <div class="h3">
-        <i [class]="'bi ' +nav.icon"></i>
+        <i (click)="back()" class="bi bi-arrow-left-square-fill"></i>
         <h5> {{nav.name }}</h5>
+        <i [class]="'bi ' +nav.icon"></i>
     </div>
 
     <div style="align-self: flex-end;display: flex;position: absolute;right: 20px;">

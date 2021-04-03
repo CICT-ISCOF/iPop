@@ -1,5 +1,4 @@
 <app-home></app-home>
-
 <div class="wrapper" style="padding: 0;">
     <div class="content" *ngIf="!wantsToadAnImage ">
         <div *ngIf="!isUser && showModal" class=" carousel-holder overlay1 animated fadeIn fast">
@@ -24,8 +23,7 @@
             </owl-carousel-o>
         </div>
         <div class="quick-links card">
-            <p class="pop2 card-header">Quick Links</p>
-            <div class="card-body">
+            <p class="pop2">Quick Links</p>
                 <a *ngFor="let link of links" class="links" target="_blank" [href]="link.url">
                     <div class="icon">
                         <i class="bi bi-folder-symlink-fill"></i>
@@ -34,18 +32,8 @@
                         <p>{{link.title}}</p>
                     </div>
                 </a>
-            </div>
         </div>
     </div>
-
-    <!-- <button *ngIf="newImages.length == 0 && !isUser" (click)="triggerImage()" class="button">Add Images</button>
-    <div *ngIf="wantsToEdit" class="row">
-        <div class="col-md-2" *ngFor="let image of slides">
-            <img (click)="deletePhoto(image.id)" alt="" tooltip="Click to delete this image" placement="top" show-delay="100" [theme]="theme" [src]="image.photo.uri">
-        </div>
-    </div>
-    <button (click)="editSlider()" *ngIf="!wantsToEdit && newImages.length == 0 && !isUser && slides.length != 0 " class="button">Edit Slider</button> -->
-
 </div>
 <div class="wrapper">
     <app-featured-articles></app-featured-articles>

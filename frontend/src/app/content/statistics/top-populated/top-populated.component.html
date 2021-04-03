@@ -1,0 +1,43 @@
+<div class="row card">
+    <div class="form-group col-md-12">
+        <div class="card-header">
+            <h5 class="pop2 d-flex" style="align-items: center;">
+                <span>Top Populated Municipalties </span>
+                <span class="ml-auto">
+                    <button (click)="addTopPopulated = true;" *ngIf="!addTopPopulated" class="btn dark">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <button (click)="addTopPopulated = false" *ngIf="addTopPopulated" class="btn dark">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </span>
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div *ngFor="let municipality of topPopulateds" class="col-6 d-flex list">
+                        <i style="color: #FD582C;transform: translateY(-10px);" class="bi bi-shop-window"></i>
+                        <div style="flex: 5">
+                            <p s>{{municipality.data.name || 0}}</p>
+                            <p style="font-weight: 400;" class="text-danger">{{municipality.data.percent || 0}}%</p>
+                        </div>
+                        <div style="flex: 1;display: flex;">
+                            <h3 style="font-weight: 200;" class="text-success">{{municipality.data.total || 0}}</h3>
+                            <i style="font-size: 1rem;align-self: center;margin-left: 10px;" class="bi bi-people"></i>
+                        </div>
+                    </div>
+                    <div *ngIf="addTopPopulated" class="list-group-item barangays d-flex">
+                        <select [(ngModel)]="topPulated.data.name" class="form-control" id="Municipality">
+                            <option *ngFor="let municipality of municipalities">{{municipality.name}}</option>
+                        </select>
+                        <input [(ngModel)]="topPulated.data.total" type="number" placeholder="Total Population" class="form-control" id="Total Population">
+                        <input [(ngModel)]="topPulated.data.percent" type="number" placeholder="Percent" class="form-control" id="Percentage">
+                        <div style="transform: translate(20px,10px);">
+                            <i (click)="createtopPopulateds() " class="fa fa-check text-success "></i>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

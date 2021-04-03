@@ -1,13 +1,12 @@
 import { UserService } from '../../others/user.service';
-import { TopPopulatedMunicipalityService } from './top-populated-municipality.service';
-import { PopulationPyramidService } from './population-pyramid.service';
-import { OfficialsService } from './../provincial-officials/officials.service';
-import { UtilityService } from '../../others/utility.service';
+import { PopulationPyramidService } from './services/population-pyramid.service';
 import { Component, OnInit} from '@angular/core';
-import { StatisticsService } from  './statistics.service'
-import { LocationService } from '../../others/location.service'
-import Swal from 'sweetalert2'
-import { OfficialsService1 } from '../officials-of/officials.service';
+import { StatisticsService } from  './services/statistics.service'
+import { FiltersService } from 'src/app/filters/filters.service';
+import { Modal } from 'src/app/modal/modal.service';
+import {DataService} from './services/data.service'
+import { drawChart } from './draw-chart'
+import * as pyramid from './pyramid'
 
 @Component({
 	selector: 'app-statistics',
@@ -16,341 +15,80 @@ import { OfficialsService1 } from '../officials-of/officials.service';
 })
 export class StatisticsComponent implements OnInit {
 
-	// --------- new ------------
-	
-	back(){
-		window.history.back()
-	}
-
 	constructor(	
 		private StatisticsService : StatisticsService,
-		private LocationService : LocationService,
-		private UtilityService : UtilityService,
-		private OfficialsService : OfficialsService,
-		private OfficialsService1 : OfficialsService1,
 		private PopulationPyramidService : PopulationPyramidService,
-		private TopPopulatedMunicipalityService : TopPopulatedMunicipalityService,
-		private UserService : UserService
+        private UserService: UserService,
+        private Modal: Modal,
+        private DataService: DataService,
+        private FiltersService: FiltersService,
 	) { 
-		this.OfficialsService1.listen().subscribe(()=>{
-			this.CheckBarangaysAndMunicipalities()
-		})
+        this.FiltersService.getYear().subscribe( value => this.year = value)
+        this.FiltersService.getMunicipality().subscribe( (value:any) => {this.municipality = value.name} )
+        this.FiltersService.getBarangay().subscribe( ( value: any ) => { this.barangay = value.name} )
 	}  
 
+    year:any = 0
+    municipality = ""
+    barangay = ""
 	isUser =  !this.UserService.isUser()
-
-	years = []
-	theme = localStorage.getItem('data-theme')
-	isLoading = false
-	municipalities = []
-	municipalityIsLoading = false
-	barangays = []
-	barangayIsLoading
-	filter = {
-		municipality:'',
-		barangay:'',
-		year:'',
-		month:''
-	}
-
 	ngOnInit(): void {	
-		for(let year = 2015; year < 2100; year++){
-			this.years.push(year)
-		}
-		this.getMuncipalities()
-		this.getSummaries()
-		this.retrievetopPopulateds()
-		localStorage.removeItem('municipality-ref') 
-		localStorage.removeItem('barangay-ref') 
 	}
 
-	hasBarangaysAndMunicipalities = false
-
-	CheckBarangaysAndMunicipalities(){
-		if(localStorage.getItem('municipality-ref') == undefined){
-			this.hasBarangaysAndMunicipalities = false
-			return
-		}
-		if(localStorage.getItem('barangay-ref') == undefined){
-			this.hasBarangaysAndMunicipalities = false
-			return
-		}
-		this.hasBarangaysAndMunicipalities =  true
-		return
-	}
-
-	addData = false
 	data:any = {}
-	filteredData = {}
 	
-	getMuncipalities(){
-		this.municipalityIsLoading = true
-		this.LocationService.getMunicipalities().subscribe(data => {
-			this.municipalities = data	
-			this.municipalityIsLoading = false			
-		})		
-	}
-
-	getBarangays(event){	
-		this.barangayIsLoading = true
-		this.filter.municipality = event.target.options[event.target.options.selectedIndex].text;	
-		this.data['municipality'] = event.target.options[event.target.options.selectedIndex].text;	
-		this.filter.barangay = ''
-		this.LocationService.getBarangays(event.target.value).subscribe(data => {
-			this.barangays = data	
-			this.barangayIsLoading = false
-		})
-	}
-	
-	setBarangay(event){
-		this.filter.barangay = event.target.options[event.target.options.selectedIndex].text;	
-		this.data['barangay'] = event.target.options[event.target.options.selectedIndex].text;	
-	}
-
-	saveData(){
-		this.data['age_dependency_ratio'] = '1'
-		this.StatisticsService.addPopulationProfileData(this.data).subscribe(
-		(data) => {
-			this.addData = false
-			this.UtilityService.setAlert('Population Profile Added Successfully for ' + this.data.municipality,'success')
-			this.ngOnInit()
-		},
-		(error) => {
-			for (let message in error.error.errors) {
-				this.UtilityService.setAlert(error.error.errors[message], 'error');
-			}
-			this.isLoading = false;
-		})
-	}
-
-	setFilter(){
-		this.StatisticsService.filterData(this.filter).subscribe(
-			(data) => {	
-				if(data[0] == null || undefined){
-					this.filteredData = {}
-					return
-				}		
-				this.filteredData = data[0]
-			}
-		)
-		this.OfficialsService.setOfficialsFilter(this.filter)
-		localStorage.setItem('municipality-ref',this.filter.municipality) 
-		localStorage.setItem('barangay-ref',this.filter.barangay) 
-		this.OfficialsService1.setTrigger()
-		this.retrievepopulationPyramid(this.filter)
-	}
-
-	updateFiltered(callback){
-		if(this.isEmpty(this.filteredData)){
-			return Swal.fire(
-				`Trying to Updated Empty Data`,
-				"Utililize filters to choose your desired unempty Population Data you want to update",
-				'error'
-			).then(()=>{
-				Swal.fire(
-					`Remember`,
-					"You could always add Population Data by clicking the plus button at the top",
-					'info'
-				)
-			})
-		}
-		this.StatisticsService.updateData(this.filteredData).subscribe((data)=>{
-			this.UtilityService.setAlert('Data has been updated','info')
-			callback()
-		})
-		
-	}
-
-	isEmpty(JSONObject) {
-		for(var prop in JSONObject) {
-			if(JSONObject.hasOwnProperty(prop))
-				return false;
-		}
-		return true;
-	}
-
-	getSummaries(){
-
-	}
-
-	// ---------- population pyramid -----------------
-
-	populationPyramid = {
-		data:{
-			male:{},
-			female:{}
-		}
-	}
-	populationPyramids:any = []
-
-	createpopulationPyramid(){
-		this.populationPyramid['municipality'] = this.filter.municipality
-		this.populationPyramid['barangay'] = this.filter.barangay
-		this.populationPyramid['year'] = this.filter.year
-		if(this.populationPyramid['year'] == '' ){
-			return Swal.fire('Please set Filters to add municipality','','error')
-		}
-		this.PopulationPyramidService.create(this.populationPyramid).subscribe(data => {
-			this.ngOnInit()
-			Swal.fire('Creation of Population Successful','','success')
-		})
-	}
-
-	retrievepopulationPyramid(filters){
-		this.ageDistribution = [
-			['Age', 'Male', 'Female'],		
-		]
-		this.PopulationPyramidService.retrieve(filters).subscribe(data => {
-			this.populationPyramids = data
-			for(let key in data[0]['data']['female']){
-				this.ageDistribution.push([
-					key,
-					parseInt(data[0]['data']['male'][key]),
-					-Math.abs(parseInt(data[0]['data']['female'][key]))
-				])
-			}
-			this.drawChart('male-and-female',this.ageDistribution)
-		})
-	}
-
-	ageDistribution:any =  [
-		['Age', 'Male', 'Female'],		
-	]
-
-	drawChart(chartId,chartData){
-		let style = this.googleChartOptions.pyramidChartOptions
-		const chart = () => {
-			var data = google.visualization.arrayToDataTable(chartData)
-			var chart = new google.visualization.BarChart(document.getElementById(chartId))			
-			var formatter = new google.visualization.NumberFormat({
-				pattern: ';'
-			})
-			formatter.format(data, 2)
-			chart.draw(data, style )
-		}
-		google.load("visualization", "1", {packages:["corechart"]})
-		google.setOnLoadCallback(chart)
-		
-	}
-
-	updatepopulationPyramid(pyramidData){
-		this.PopulationPyramidService.update(pyramidData).subscribe(data => {
-			this.ngOnInit()
-			this.UtilityService.setAlert('Population data updated succcesffully','success')
-		})
-	}
-
-
-	activepopulationPyramids = {}
-	editpopulationPyramids(index){
-		this.activepopulationPyramids[index] == true ?  this.activepopulationPyramids[index] = false : this.activepopulationPyramids[index] = true	
-	}
-
-	
-
-	// --------------------top population----------------------
-
-
-	topPulated = {
-		data:{}
-	}
-	topPopulateds:any = []
-
-	createtopPopulateds(){
-		this.TopPopulatedMunicipalityService.create(this.topPulated).subscribe(data => {
-			this.ngOnInit()
-			Swal.fire('Creation of Population Successful','','success')
-		})
-	}
-
-	retrievetopPopulateds(){
-		this.TopPopulatedMunicipalityService.retrieve().subscribe(data => {
-			this.topPopulateds = data
-			console.log('top populated ', data)
-		})
-	}
-
-	deletetopPopulateds(municipality){
-		Swal.fire({
-			title: `Are you sure you want to remove this  ${municipality['name']}?`,		
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Remove',
-			cancelButtonText: 'Nope'
-		  }).then((result) => {
-			if (result.value) {
-				
-			} 
-		})
-	}
-
-	activetopPopulateds = {}
-	edittopPopulateds(index){
-		this.activetopPopulateds[index] == true ?  this.activetopPopulateds[index] = false : this.activetopPopulateds[index] = true	
-	}
-
-
-
-
-
-
-
-
-	// ------------------charts-------------------
-	
-	
-	
-
-	googleChartOptions = {			
-		pyramidChartOptions :{
-			backgroundColor: {
-				'fill': 'transparent',
-				'opacity': 0
-			},		
-			title: '',
-            titleTextStyle: {color: 'blue', fontSize: 30, align: 'center', bold: true},
-            colors: ['#09B2E7','#F30091', ],
-            chartArea: { backgroundColor: 'transparent', height: '100%', top: '10%' },
-            isStacked: true,        
-            hAxis: {
-                textPosition: 'none',
-                format: ';',
-				title: '',
-				textStyle: {
-					color: this.formatChatColor()
-				},
-            },
-            vAxis: {
-                direction: 1,
-				title: '',
-				textStyle: {
-					color: this.formatChatColor()
-				},
-            },			
-			legend: {textStyle: {color: this.formatChatColor()}}			
-					
-		},
-		
-	}
-
-
-
-	
-
-	// -------------- formaters ----------------
-
-	formatChartBackground(){
-		return this.theme == 'dark' ?   '#282C34' : 'white'		
-	}
-
-	formatChatColor(){
-		return this.theme == 'dark' ?   'white' : 'black'
-	}
-
-	
-
-
-
-	
-
+    setFilter() {
+        const data = {
+            municipality: this.municipality,
+            barangay: this.barangay,
+            year: this.year,
+        }
+        this.getPopulationPyramid( data )
+        this.getProfileData(data)
+    }
+    
+    getProfileData(data:any) {
+        this.StatisticsService.filterData( data ).subscribe( data => {
+            if ( data[ 0 ] == null || undefined ) {
+                this.DataService.setPopProfileData( {} )
+                return
+            }
+            this.DataService.setPopProfileData( data[ 0 ] )
+        } )
+    }
+    
+    getPopulationPyramid( data: any ) {
+       let ageDistribution:any = [
+            [ 'Age', 'Female', 'Male' ],
+        ]
+        this.PopulationPyramidService.retrieve( data ).subscribe( (data:any) => {
+            if ( data.length == 0 ) {
+                ageDistribution = pyramid.data
+            } else {
+                for ( let key in data[ 0 ][ 'data' ][ 'female' ] ) {
+                    let newText = ""
+                    if ( key == 'below_1_year_old' ) {
+                        newText = "Below 1 Year Old"
+                    }
+                    if ( key == 'eighty_and_above' ) {
+                        newText = "80 and Above"
+                    }
+                    ageDistribution.push( [
+                        key == 'below_1_year_old' || key == 'eighty_and_above' ? newText : key,
+                        -Math.abs( parseInt( data[ 0 ][ 'data' ][ 'female' ][ key ] ) ),
+                        parseInt( data[ 0 ][ 'data' ][ 'male' ][ key ] ),
+                    ] )
+                }
+            }
+            drawChart( 'chart', ageDistribution )
+        } )
+    }
+    
+    addPopData() {
+        this.Modal.show( 'AddPopulationData', 'Add Population Profile' )
+    }
+    
+    AddPyramidData() {
+        this.Modal.show( 'AddPyramidData', 'Add Population Pyramid Data' )
+    }
 }

@@ -21,20 +21,24 @@ export class SidebarComponent implements OnInit {
         private DeviceService: DeviceService,
         private SidebarService: SidebarService
 	) {
-		this.sub = this.UtilityService.geColor().subscribe(color => this.sidebar.color = this.formatColorFromLocalStorage(color))
+        this.UtilityService.geColor().subscribe(color => this.sidebar.color = this.formatColorFromLocalStorage(color))
 
-		this.sub = this.UtilityService.geBackground().subscribe(boolean =>this.sidebar.background = this.formatStringtoBoolean(boolean))
+        this.UtilityService.geBackground().subscribe(boolean =>this.sidebar.background = this.formatStringtoBoolean(boolean))
 
-		this.sub = this.UtilityService.getImage().subscribe(image => this.sidebar.backgroundImage = this.formatImage(image))
+        this.UtilityService.getImage().subscribe(image => this.sidebar.backgroundImage = this.formatImage(image))
 
-		this.sub = this.MediaQueryService.getSize().subscribe(size => 	this.hide = this.processSize(size)) 
+        this.MediaQueryService.getSize().subscribe(size => 	this.hide = this.processSize(size)) 
 
-		this.sub = this.DeviceService.sidebarState().subscribe(state=>this.hide = state)
+        this.DeviceService.sidebarState().subscribe( state => this.hide = state )
 	}
 
     navs = nav.Sidebar()
 	
-	ngOnInit(): void {
+    ngOnInit(): void {
+        let nav = JSON.parse( localStorage.getItem( 'nav' ))
+        if ( localStorage.getItem( 'nav' ) != undefined ) {
+            this.makeIconAsActive( nav)
+        }
     }
     
     hide = false
@@ -43,7 +47,8 @@ export class SidebarComponent implements OnInit {
     makeIconAsActive(nav:any) {
         this.icons = {}
         this.icons[ nav.name ] = true
-        this.SidebarService.setSidebar(nav)
+        this.SidebarService.setSidebar( nav )
+        localStorage.setItem('nav',JSON.stringify(nav))
     }
 
     processSize( size: number ) {
@@ -77,6 +82,4 @@ export class SidebarComponent implements OnInit {
 		let sideBarColor =   "var(--" + color +")"		
 		return  sideBarColor
 	}
-	
-
 }
