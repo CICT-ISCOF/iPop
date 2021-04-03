@@ -1,20 +1,22 @@
-
 <div class="btn-group dropdown">
-    <button class="btn btn-sm btn-dark dropdown-toggle"  data-toggle="dropdown" style="border-radius: 5px;" >
+    <button class="btn btn-sm btn-dark dropdown-toggle" data-toggle="dropdown" style="border-radius: 5px;">
+        <i class="bi bi-geo-alt-fill"></i>
         {{ selectedMunicipalityName == '' ? 'Choose Municipality' : selectedMunicipalityName }}
     </button>
     <ul class="dropdown-menu" style="max-height: 50vh;overflow: auto;background: var(--bg);">
-        <div  *ngFor="let municipality of [1,2,3,4,5,6,7,8,8]">
+        <div *ngFor="let municipality of [1,2,3,4,5,6,7,8,8]">
             <li *ngIf="municipalities.length == 0">
                 <a class="dropdown-item">
                     ....
                 </a>
             </li>
         </div>
-       <li *ngFor="let municipality of municipalities">
+        <li *ngFor="let municipality of municipalities">
             <a (click)="selectedMunicipality(municipality)" class="dropdown-item">
-                {{municipality.name}}
+                <i class="bi bi-geo-alt-fill"></i>
+                <p>{{municipality.name}}</p>
+                <i class="bi bi-chevron-right"></i>
             </a>
-       </li>
+        </li>
     </ul>
 </div>

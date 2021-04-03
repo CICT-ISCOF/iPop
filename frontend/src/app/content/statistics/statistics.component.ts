@@ -5,8 +5,7 @@ import { StatisticsService } from  './services/statistics.service'
 import { FiltersService } from 'src/app/filters/filters.service';
 import { Modal } from 'src/app/modal/modal.service';
 import {DataService} from './services/data.service'
-import { drawChart } from './draw-chart'
-import * as pyramid from './pyramid'
+
 
 @Component({
 	selector: 'app-statistics',
@@ -43,8 +42,8 @@ export class StatisticsComponent implements OnInit {
             barangay: this.barangay,
             year: this.year,
         }
-        this.getPopulationPyramid( data )
-        this.getProfileData(data)
+        this.getProfileData( data )
+        this.FiltersService.setTrigger()
     }
     
     getProfileData(data:any) {
@@ -57,33 +56,7 @@ export class StatisticsComponent implements OnInit {
         } )
     }
     
-    getPopulationPyramid( data: any ) {
-       let ageDistribution:any = [
-            [ 'Age', 'Female', 'Male' ],
-        ]
-        this.PopulationPyramidService.retrieve( data ).subscribe( (data:any) => {
-            if ( data.length == 0 ) {
-                ageDistribution = pyramid.data
-            } else {
-                for ( let key in data[ 0 ][ 'data' ][ 'female' ] ) {
-                    let newText = ""
-                    if ( key == 'below_1_year_old' ) {
-                        newText = "Below 1 Year Old"
-                    }
-                    if ( key == 'eighty_and_above' ) {
-                        newText = "80 and Above"
-                    }
-                    ageDistribution.push( [
-                        key == 'below_1_year_old' || key == 'eighty_and_above' ? newText : key,
-                        -Math.abs( parseInt( data[ 0 ][ 'data' ][ 'female' ][ key ] ) ),
-                        parseInt( data[ 0 ][ 'data' ][ 'male' ][ key ] ),
-                    ] )
-                }
-            }
-            drawChart( 'chart', ageDistribution )
-        } )
-    }
-    
+  
     addPopData() {
         this.Modal.show( 'AddPopulationData', 'Add Population Profile' )
     }

@@ -15,12 +15,30 @@
         </div>
         <div class="card-body">
             <div class="container">
+                <div *ngIf="topPopulateds.length == 0" class="row">
+                    <div *ngFor="let item of [1,2,3,4,5,6,7,8];let i = index " class="col-md-6">
+                        <div>
+                            <div style="width: 90%;height: 10px;">
+                                <ShimmerPlaceholder></ShimmerPlaceholder>
+                            </div>
+                            <br>
+                            <div style="width: 40%;height: 10px;">
+                                <ShimmerPlaceholder></ShimmerPlaceholder>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
                 <div class="row">
                     <div *ngFor="let municipality of topPopulateds" class="col-6 d-flex list">
-                        <i style="color: #FD582C;transform: translateY(-10px);" class="bi bi-shop-window"></i>
+                        <i style="color: #FD582C;transform: translateY(-5px);font-size: 35px;" class="bi bi-shop-window"></i>
                         <div style="flex: 5">
                             <p s>{{municipality.data.name || 0}}</p>
-                            <p style="font-weight: 400;" class="text-danger">{{municipality.data.percent || 0}}%</p>
+                            <p style="font-weight: 400;" class="text-warning">{{municipality.data.percent || 0}}%</p>
                         </div>
                         <div style="flex: 1;display: flex;">
                             <h3 style="font-weight: 200;" class="text-success">{{municipality.data.total || 0}}</h3>
@@ -38,6 +56,6 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
-</div>
