@@ -1,1 +1,14 @@
-<p>edit works!</p>
+<div class="row">
+    <div *ngFor="let item of [1,2,3,4,5,6,7,8,9]">
+        <div *ngIf="slides.length == 0" style="width: 250px;height: 250px;margin:10px">
+            <ShimmerPlaceholder></ShimmerPlaceholder>
+        </div>
+    </div>
+    
+    <p style="margin-top: 50px;" class="col-md-12" *ngIf="slides.length != 0" for="">Your Images</p>
+    <div (click)="deletePhoto(image.id)" *ngFor="let image of slides" class="container col-md-3">
+        <img style="width: 100%;height: 100%;border-radius: 4px;" [src]="image.photo.uri" alt="">
+    </div>
+    
+    
+</div>
