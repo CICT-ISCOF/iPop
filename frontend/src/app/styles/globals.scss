@@ -226,8 +226,11 @@ div:focus {
     top: 0px;
     border-bottom: 1px solid rgba(150, 150, 150, .1);
     padding: 7px;
-    z-index: 9;
     background-color: var(--bg);
+}
+
+hr {
+    display: none;
 }
 
 .card {

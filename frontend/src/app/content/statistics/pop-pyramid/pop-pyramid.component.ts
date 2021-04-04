@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FiltersService } from 'src/app/filters/filters.service';
 import { Modal } from 'src/app/modal/modal.service';
+import { UserService } from 'src/app/others/user.service';
 import { PopulationPyramidService } from '../services/population-pyramid.service';
 import { drawChart } from './../draw-chart'
 import * as pyramid from './../pyramid'
@@ -15,35 +16,29 @@ export class PopPyramidComponent implements OnInit {
     constructor(
         private PopulationPyramidService: PopulationPyramidService,
         private FiltersService: FiltersService,
-        private Modal: Modal
-
+        private Modal: Modal,
+        private UserService: UserService,
     ) {
         this.FiltersService.getYear().subscribe( value => this.year = value )
         this.FiltersService.getMunicipality().subscribe( ( value: any ) => { this.municipality = value.name } )
         this.FiltersService.getBarangay().subscribe( ( value: any ) => { this.barangay = value.name } )
-        this.FiltersService.getTrigger().subscribe(() => {
-            let data = {
-                municipality: localStorage.getItem( 'muncipality' ),
-                barangay: localStorage.getItem( 'barangay' ),
-                year: localStorage.getItem( 'year' ),
-            }
+        this.FiltersService.getTrigger().subscribe((data:any) => {
             if ( localStorage.getItem( 'muncipality' ) == 'Province' ) {
                     data.barangay ='1'
             }
             this.getPopulationPyramid(data)
         })
     }
+    
+    isUser = !this.UserService.isUser()
+
      
     year: any = 0
     municipality = ""
     barangay = ""
 
     ngOnInit(): void {  
-        this.getPopulationPyramid( {
-            municipality:1,
-            barangay: 1,
-            year: this.year,
-        } )
+      
     }
     
     isLoading = false

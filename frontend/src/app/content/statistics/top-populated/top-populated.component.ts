@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TopPopulatedMunicipalityService } from '../services/top-populated-municipality.service';
 import Swal from 'sweetalert2'
 import { LocationService } from 'src/app/others/location.service';
+import { UserService } from 'src/app/others/user.service';
 
 @Component({
   selector: 'TopPopulated',
@@ -12,8 +13,11 @@ export class TopPopulatedComponent implements OnInit {
 
     constructor (
         private TopPopulatedMunicipalityService: TopPopulatedMunicipalityService,
-        private LocationService: LocationService
-  ) { }
+        private LocationService: LocationService,
+        private UserService: UserService,
+    ) { }
+    
+    isUser = !this.UserService.isUser()
 
     ngOnInit(): void {
         this.retrievetopPopulateds()
@@ -46,14 +50,17 @@ export class TopPopulatedComponent implements OnInit {
     }
     deletetopPopulateds( municipality ) {
         Swal.fire( {
-            title: `Are you sure you want to remove this  ${ municipality[ 'name' ] }?`,
+            title: `Are you sure you want to remove this  ${ municipality.data[ 'name' ] }?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Remove',
             cancelButtonText: 'Nope'
         } ).then( ( result ) => {
             if ( result.value ) {
-
+                this.TopPopulatedMunicipalityService.deleteData( municipality[ 'id' ] ).subscribe( () => {
+                    Swal.fire( ` ${ municipality.data[ 'name' ] } has been deleted from list`, '', 'success' )
+                    this.ngOnInit()
+                })
             }
         } )
     }

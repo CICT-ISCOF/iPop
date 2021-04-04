@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { OfficialsService } from '../../provincial-officials/officials.service';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { BaseAPIService } from '../../../others/base-api.service'
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,14 @@ export class PopulationPyramidService {
 		return this.http.delete(url, {headers:this.getHeaders()})
 	}
 
-
+    private trigger = new Subject
+    
+    setTrigger() {
+        this.trigger.next('')
+    }
+    
+    getTrigger() {
+        return this.trigger.asObservable()
+    }
 	
 }

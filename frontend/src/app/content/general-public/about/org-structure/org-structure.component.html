@@ -2,7 +2,7 @@
 </app-home>
 <div class="wrapper">
     <br><br>
-    <button *ngIf="isAdmin" (click)="triggerInputTypeFile()" class="button">Change Image</button>
+    <button *ngIf="isAdmin" (click)="triggerInputTypeFile()" class="btn btn-primary">Change Image</button>
     <input type="file" (change)="readUrl($event.target.files, $event) " accept="image/*" style="display: none;" id="input-type-file">
     <br><br>
     <img *ngIf="img != null" [src]="img" alt="" style="width: 100%;min-height: 100vh;">

@@ -17,33 +17,16 @@ export class BarangayOfficialsComponent implements OnInit {
 		private UserService : UserService
 	) { 
 		this.OfficialsService.listen().subscribe(()=>{
-			this.CheckBarangaysAndMunicipalities()
-			this.official.barangay = localStorage.getItem('barangay-ref')
-			if(this.hasBarangaysAndMunicipalities == true){
+			
 				this.retieve()
-			}
 		})
 	}
 	isUser =  !this.UserService.isUser()
 	hasBarangaysAndMunicipalities = false
 
 	ngOnInit(): void {
-
+        this.retieve()
 	}
-
-	CheckBarangaysAndMunicipalities(){
-		if(localStorage.getItem('municipality-ref') == undefined){
-			this.hasBarangaysAndMunicipalities = false
-			return
-		}
-		if(localStorage.getItem('barangay-ref') == undefined){
-			this.hasBarangaysAndMunicipalities = false
-			return
-		}
-		this.hasBarangaysAndMunicipalities =  true
-		return
-	}
-
 
 	official = {
 		barangay:localStorage.getItem('barangay-ref')
@@ -56,11 +39,12 @@ export class BarangayOfficialsComponent implements OnInit {
 			this.retieve()
 		})
 	} 
-
-	retieve(){
-		this.OfficialsService.retieveBarangayOfficials(localStorage.getItem('barangay-ref')).subscribe(data => {
+    isLoading = true
+    retieve() {
+        this.isLoading = true
+		this.OfficialsService.retieveBarangayOfficials(localStorage.getItem('barangay')).subscribe(data => {
 			this.officials = data
-			
+            this.isLoading = false
 		})
 	} 
 
@@ -92,5 +76,4 @@ export class BarangayOfficialsComponent implements OnInit {
 	editOfficial(official_id){
 		this.activeOfficials[official_id] == true ?  this.activeOfficials[official_id] = false : this.activeOfficials[official_id] = true	
 	}
-
 }
