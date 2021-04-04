@@ -1,5 +1,6 @@
 import { FeaturedArticlesService } from './featured-articles.service';
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-featured-articles',
@@ -20,27 +21,33 @@ export class FeaturedArticlesComponent implements OnInit {
 		})
 	}
     
-    makeActive(nav:any) {
-        this.active = nav
-        if ( nav == 'Today' ) {
-            this.FeaturedArticlesService.today().subscribe(data => {
-                this.articles = data
-            })
-            return
-        }
-        if ( nav == 'This Week' ) {
-            this.FeaturedArticlesService.week().subscribe(data => {
-                this.articles = data
-            })
-            return
-        }
-        if ( nav == 'This Month' ) {
-            this.FeaturedArticlesService.month().subscribe(data => {
-                this.articles = data
-            })
-            return
-        }
-        this.ngOnInit()
+    makeActive( nav: any ) {
+        this.isLoading = true
+       setTimeout(() => {
+           this.active = nav
+           if ( nav == 'Today' ) {
+               this.FeaturedArticlesService.today().subscribe( data => {
+                   this.articles = data
+                   this.isLoading = false
+               } )
+               return
+           }
+           if ( nav == 'This Week' ) {
+               this.FeaturedArticlesService.week().subscribe( data => {
+                   this.articles = data
+                   this.isLoading = false
+               } )
+               return
+           }
+           if ( nav == 'This Month' ) {
+               this.FeaturedArticlesService.month().subscribe( data => {
+                   this.articles = data
+                   this.isLoading = false
+               } )
+               return
+           }
+           this.ngOnInit()
+       }, 1000);
     }
     
 
@@ -50,10 +57,15 @@ export class FeaturedArticlesComponent implements OnInit {
 
 	articles :any = []
 
+    isLoading = true
 	getFeautredArticles(){
-		this.FeaturedArticlesService.getFeautredArticles().subscribe(data => {
-			this.articles = data
-		})
+        this.isLoading = true
+	setTimeout(() => {
+        this.FeaturedArticlesService.getFeautredArticles().subscribe( data => {
+            this.articles = data
+            this.isLoading = false
+        } )
+    }, 1000);
 	}
 
 	show = false
@@ -70,9 +82,22 @@ export class FeaturedArticlesComponent implements OnInit {
     }
     
     deleteArticle( id) {
-        this.FeaturedArticlesService.deleteArticle( id ).subscribe( data => {
-            this.ngOnInit()
-        } )
+        Swal.fire( {
+            title: 'Are you sure you want to delete this article?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Remove',
+            cancelButtonText: 'Nope'
+        } ).then( ( result ) => {
+            if ( result.value ) {
+                this.FeaturedArticlesService.deleteArticle( id ).subscribe( data => {
+                    this.ngOnInit()
+                } )
+            }
+        })
+        
+        
+    
     }
 	
 
