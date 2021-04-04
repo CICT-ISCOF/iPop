@@ -39,11 +39,12 @@ export class BarangayOfficialsComponent implements OnInit {
 			this.retieve()
 		})
 	} 
-
-	retieve(){
+    isLoading = true
+    retieve() {
+        this.isLoading = true
 		this.OfficialsService.retieveBarangayOfficials(localStorage.getItem('barangay')).subscribe(data => {
 			this.officials = data
-			
+            this.isLoading = false
 		})
 	} 
 

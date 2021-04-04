@@ -33,9 +33,12 @@ export class ProvincialOfficialsComponent implements OnInit {
 
 	activeOfficials = {	}
 	
-	getOfficials(){
+    isLoading = true
+    getOfficials() {
+        this.isLoading = true
 		this.OfficialsService.getOfficials().subscribe(data => {
-			this.officials = data.data
+            this.officials = data.data
+            this.isLoading = false
 		})	
 	}
 	

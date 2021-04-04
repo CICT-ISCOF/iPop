@@ -11,9 +11,24 @@
         </h5>
     </div>
     <div class="card-body">
+        <div *ngIf="isLoading" class="row">
+            <div *ngFor="let item of [1,2,3,4];let i = index " class="col-md-12">
+                <div>
+                    <div style="width: 90%;height: 10px;">
+                        <ShimmerPlaceholder></ShimmerPlaceholder>
+                    </div>
+                    <br>
+                    <div style="width: 40%;height: 10px;">
+                        <ShimmerPlaceholder></ShimmerPlaceholder>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+        </div>
         <div class="flex container list" [class.selected]="activeOfficials[provincialOfficial.id]" *ngFor="let provincialOfficial of officials;let i = index">
             <div class="flex">
-                <div *ngIf="!activeOfficials[provincialOfficial.id]">
+                <div *ngIf="!activeOfficials[provincialOfficial.id]  && !isLoading">
                     <h5 style="font-weight: 900; display: flex;">
                         {{provincialOfficial.name}}
                         <span *ngIf="!isUser" class="close ml-auto mr-2">        

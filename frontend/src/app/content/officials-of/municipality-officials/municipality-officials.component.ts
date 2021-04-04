@@ -41,11 +41,13 @@ export class MunicipalityOfficialsComponent implements OnInit {
 			this.retieve()
 		})
 	} 
-
-	retieve(){
+    isLoading = true
+    retieve() {
+        this.isLoading = true
         this.OfficialsService.retieveMuncipalOfficials( localStorage.getItem('muncipality')).subscribe(data => {
-			this.officials = data
-		})
+            this.officials = data
+            this.isLoading = false
+		})            
 	} 
 
 	update(official){

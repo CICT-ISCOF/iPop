@@ -23,12 +23,15 @@ export class SbMembersComponent implements OnInit {
 
 	
 	sbMembers = []
-	activeSB = {	}
-
-	getSBMembers(){
+    activeSB = {}
+    
+    isLoading = true
+    getSBMembers() {
+        this.isLoading = true
 		this.OfficialsService.retrieve().subscribe(data => {
-			this.sbMembers = data.data
-		})
+            this.sbMembers = data.data
+            this.isLoading = false
+        } )
 	}
 
 	sbMember = {

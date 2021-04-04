@@ -12,9 +12,24 @@
         </h5>
     </div>
     <div class="card-body">
+        <div *ngIf="isLoading" class="row">
+            <div *ngFor="let item of [1,2,3,4];let i = index " class="col-md-12">
+                <div>
+                    <div style="width: 90%;height: 10px;">
+                        <ShimmerPlaceholder></ShimmerPlaceholder>
+                    </div>
+                    <br>
+                    <div style="width: 40%;height: 10px;">
+                        <ShimmerPlaceholder></ShimmerPlaceholder>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+        </div>
         <div class="sb-member" *ngFor="let member of sbMembers;let i = index">
             <div class="flex container" style="margin-bottom: -27px;">
-                <h5 style="font-weight: 900; display: flex;" *ngIf="!activeSB[i]">
+                <h5 style="font-weight: 900; display: flex;" *ngIf="!activeSB[i]" && !isLoading>
                     <p style="align-self: flex-start;">
                         <span class="text-primary">  HON.   </span>
                         <span>&nbsp; {{member.name}} </span>
