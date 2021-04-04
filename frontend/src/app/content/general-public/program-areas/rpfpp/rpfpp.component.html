@@ -4,59 +4,50 @@
     <div class="animated fadeInLeftBig">
 
         <br><br><br><br>
-        <button (click)="wantsToAddanAwardFunction(true)" *ngIf="!wantsToAddanAward && isAdmin" class="button add-an-award"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
-            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z"/>
-          </svg></button>
-        <div *ngIf="!wantsToAddanAward">
-            <h2 class="pop2">{{programArea.title }}</h2>
-            <hr>
 
-            <div>
-                <div class="flex absolute" *ngIf="isAdmin">
-                    <div tooltip="Edit Description" placement="bottom" show-delay="100" [theme]="theme" *ngIf="!wantsToEditDescription" (click)="wantsToEditDescriptionFunction()" class="edit">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                    <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                  </svg>
-                    </div>
-
-                </div>
-                <br> <br>
-                <p *ngIf="!wantsToEditDescription">{{programArea.description }}</p>
+        <div class="card" *ngIf="!wantsToAddanAward">
+            <div class="card-header">
+                <h2 class="card-title d-flex" style="align-items: center;">
+                    {{programArea.title }}
+                    <button (click)="wantsToAddanAwardFunction(true)" *ngIf="!wantsToAddanAward && isAdmin" class="btn btn-primary ml-auto">
+                    New
+                </button>
+                </h2>
             </div>
-
+            <div class="card-body">
+                <p *ngIf="!wantsToEditDescription" class="d-flex">
+                    {{programArea.description }}
+                    <span class="ml-auto" *ngIf="isAdmin">
+                        <span tooltip="Edit Description" placement="bottom" show-delay="100" [theme]="theme" *ngIf="!wantsToEditDescription" (click)="wantsToEditDescriptionFunction()" class="edit">
+                            <i style="font-size: 20px;color: #0D6EFD;" class="bi bi-pencil-square"></i>
+                        </span>
+                    </span>
+                </p>
+            </div>
             <div *ngIf="wantsToEditDescription">
                 <div class="form-group">
                     <label for="form7">New RPFP Description</label>
                     <textarea autosize #textarea [(ngModel)]="programArea.description" placeholder="Aa" class="md-textarea form-control"></textarea>
-
                 </div>
-                <button (click)="wantsToEditDescription = false" class="clickable">Cancel</button>
-                <button (click)="updateProgramArea(programArea)" class="button">Save</button>
+                <button (click)="wantsToEditDescription = false" class="btn btn-dark">Cancel</button>
+                <button (click)="updateProgramArea(programArea)" class="btn btn-primary">Save</button>
             </div>
-
-
-            <br> <br>
             <ul>
                 <li *ngFor="let program of programArea.activities; let i = index">
-                    <div class="flex absolute" *ngIf="isAdmin">
-                        <div tooltip="Edit" placement="bottom" show-delay="100" [theme]="theme" *ngIf="!acitveProgram[i]" (click)="toggleProgram(i)" class="edit">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                                <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                            </svg>
+                    <h5 *ngIf="!acitveProgram[i]" class="card-title d-flex">
+                        {{program.title}}
+                        <div class="ml-auto d-flex" *ngIf="isAdmin">
+                            <div tooltip="Edit" placement="bottom" show-delay="100" [theme]="theme" *ngIf="!acitveProgram[i]" (click)="toggleProgram(i)" class="edit mr-2">
+                                <i style="font-size: 20px;" class="bi bi-pencil-square"></i>
+                            </div>
+                            <div tooltip="Remove" placement="bottom" show-delay="100" [theme]="theme" *ngIf="!acitveProgram[i]" (click)="deleteRPFP(program.id)" class="edit">
+                                <i style="font-size: 20px;" class="bi bi-dash-square"></i>
+                            </div>
                         </div>
-                        <div tooltip="Remove" placement="bottom" show-delay="100" [theme]="theme" *ngIf="!acitveProgram[i]" (click)="deleteRPFP(program.id)" class="edit">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p *ngIf="!acitveProgram[i]" class="title">{{program.title}}</p>
+                    </h5>
                     <p *ngIf="!acitveProgram[i]" class="description">
                         {{program.description}}
                     </p>
-
                     <div *ngIf="program.files.length != 0 && !acitveProgram[i]">
                         <p *ngIf="acitveProgram[i]">Previous Images</p>
                         <owl-carousel-o [options]=" customOptions">
@@ -64,10 +55,7 @@
                                 <img alt="" title="slide.title " [src]="image.file.uri">
                             </ng-template>
                         </owl-carousel-o>
-
                     </div>
-
-
                     <div *ngIf="acitveProgram[i]">
                         <hr>
                         <div class="form-group col-md-12">
@@ -79,8 +67,6 @@
                             <label for="link">New Actiivty Description</label>
                             <textarea autosize #textarea [(ngModel)]="program.description" id="link" class="form-control"></textarea>
                         </div>
-
-
                         <div *ngIf="program.files.length != 0 && acitveProgram[i]">
                             <p *ngIf="acitveProgram[i]">Previous Images</p>
                             <div class="image-container" *ngIf="acitveProgram[i]">
@@ -88,23 +74,16 @@
                                     <div (click)="deletePhoto(image.id)" class="col-md-2 image" *ngFor="let image of program.files">
                                         <div style="position: relative;">
                                             <div class="flex absolute">
-                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="gray" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-                                            </svg>
+                                                <i style="font-size: 20px;" class="bi bi-dash-square"></i>
                                             </div>
                                         </div>
                                         <img [src]="image.file.uri" alt="" style="width: 100%;height: 100%;">
                                     </div>
                                 </div>
                             </div>
-                            <br> <br>
                         </div>
-
-
-
                         <div class="form-group col-md-12">
-                            <button (click)="triggerMediaInput('slider','i')" class="clickable">Add an Image</button>
-                            <!-- <button (click)="triggerMediaInput('videoslider','i')" class="clickable ">Add a Video</button> -->
+                            <button (click)="triggerMediaInput('slider','i')" class="btn btn-warning">Add an Image</button>
                             <button *ngIf="files.images.length != 0 || files.videos.length != 0" (click)="clearSlider()" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Clear Slider</button>
                             <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]=" 'slider' + 'i' ">
                             <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'video' )" accept="video/*" style="display:none " [id]=" 'videoslider' + 'i' ">
@@ -119,53 +98,47 @@
                             </ng-template>
                         </owl-carousel-o>
                         <div style="margin-left: 70px; margin-top: 30px;">
-                            <button (click)="updateRPFP(program.id, program,i)" class="button ">Save</button> &nbsp;
-                            <button (click)="toggleProgram(i)" class="clickable ">Cancel</button>
+                            <button (click)="updateRPFP(program.id, program,i)" class="btn btn-primary ">Save</button> &nbsp;
+                            <button (click)="toggleProgram(i)" class="btn btn-dark ">Cancel</button>
                         </div>
-                        <br> <br> <br> <br>
                     </div>
-                    <br><br>
                 </li>
             </ul>
         </div>
-
-        <div class="row" *ngIf="wantsToAddanAward" style="padding: 0 20vw;">
-            <div class="col-md-12">
-                <div class="form-group col-md-12">
-                    <label for="title">Actiivty Title</label>
-                    <textarea [(ngModel)]="activity.title" autosize #textarea tid="title" class="form-control"></textarea>
-                </div>
-                <div class="form-group col-md-12">
-                    <label for="link">Actiivty Description</label>
-                    <textarea [(ngModel)]="activity.description" autosize #textarea id="link" class="form-control"></textarea>
-                </div>
+        <div class="card" *ngIf="wantsToAddanAward">
+            <div class="card-header">
+                <h2 class="card-title">New Activity</h2>
             </div>
-            <br><br>
-            <owl-carousel-o *ngIf="files.images.length != 0 || files.videos.length != 0" [options]=" customOptions">
-                <ng-template carouselSlide *ngFor="let image of files.images">
-                    <img alt="" title="slide.title " [src]="image">
-                </ng-template>
-                <ng-template carouselSlide *ngFor="let video of files.videos">
-                    <video autoplay [src]="video"></video>
-                </ng-template>
-            </owl-carousel-o>
+            <div class="card-body">
+                <div class="row" style="padding: 0 20vw;">
+                    <div class="form-group col-md-6">
+                        <label for="title">Actiivty Title</label>
+                        <textarea [(ngModel)]="activity.title" autosize #textarea tid="title" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="link">Actiivty Description</label>
+                        <textarea [(ngModel)]="activity.description" autosize #textarea id="link" class="form-control"></textarea>
+                    </div>
+                    <owl-carousel-o *ngIf="files.images.length != 0 || files.videos.length != 0" [options]=" customOptions">
+                        <ng-template carouselSlide *ngFor="let image of files.images">
+                            <img alt="" title="slide.title " [src]="image">
+                        </ng-template>
+                        <ng-template carouselSlide *ngFor="let video of files.videos">
+                            <video autoplay [src]="video"></video>
+                        </ng-template>
+                    </owl-carousel-o>
+                    <div class="form-group col-md-12">
+                        <button (click)="triggerMediaInput('slider','i')" class="btn btn-warning">Add an Image</button>
+                        <button (click)="createRPFP()" class="btn btn-primary ">Save</button> &nbsp;
+                        <button (click)="wantsToAddanAwardFunction(false)" class="btn btn-dark ">Cancel</button>
+                        <button *ngIf="files.images.length != 0 || files.videos.length != 0" (click)="clearSlider()" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Clear Slider</button>
+                        <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]=" 'slider' + 'i' ">
+                        <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'video' )" accept="video/*" style="display:none " [id]=" 'videoslider' + 'i' ">
+                    </div>
 
-
-            <div class="form-group col-md-12">
-                <button (click)="triggerMediaInput('slider','i')" class="clickable">Add an Image</button>
-                <!-- <button (click)="triggerMediaInput('videoslider','i')" class="clickable ">Add a Video</button> -->
-                <button *ngIf="files.images.length != 0 || files.videos.length != 0" (click)="clearSlider()" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Clear Slider</button>
-                <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]=" 'slider' + 'i' ">
-                <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'video' )" accept="video/*" style="display:none " [id]=" 'videoslider' + 'i' ">
-            </div>
-            <div style="margin-left: 70px;">
-                <button (click)="createRPFP()" class="button ">Save</button> &nbsp;
-                <button (click)="wantsToAddanAwardFunction(false)" class="clickable ">Cancel</button>
+                </div>
             </div>
         </div>
-
-
     </div>
 </div>
-
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
