@@ -22,19 +22,15 @@ export class PopPyramidComponent implements OnInit {
         this.FiltersService.getMunicipality().subscribe( ( value: any ) => { this.municipality = value.name } )
         this.FiltersService.getBarangay().subscribe( ( value: any ) => { this.barangay = value.name } )
         this.FiltersService.getTrigger().subscribe(() => {
-            if ( this.municipality == ""  ) {
-                this.getPopulationPyramid( {
-                    municipality: 1,
-                    barangay: 1,
-                    year: this.year,
-                } )
-                return
+            let data = {
+                municipality: localStorage.getItem( 'muncipality' ),
+                barangay: localStorage.getItem( 'barangay' ),
+                year: localStorage.getItem( 'year' ),
             }
-            this.getPopulationPyramid( {
-                municipality: this.municipality,
-                barangay: this.barangay,
-                year: this.year,
-            } )
+            if ( localStorage.getItem( 'muncipality' ) == 'Province' ) {
+                    data.barangay ='1'
+            }
+            this.getPopulationPyramid(data)
         })
     }
      

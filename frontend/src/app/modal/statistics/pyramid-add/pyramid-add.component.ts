@@ -67,15 +67,18 @@ export class PyramidAddComponent implements OnInit {
     
     
     createpopulationPyramid() {
-        this.populationPyramid[ 'municipality' ] =  localStorage.getItem( 'municipality' )
-        this.populationPyramid[ 'barangay' ] =localStorage.getItem('barangay')
+        this.populationPyramid[ 'municipality' ] = localStorage.getItem( 'muncipality' )
+        this.populationPyramid[ 'barangay' ] = localStorage.getItem( 'barangay' )
+        if ( localStorage.getItem( 'muncipality' ) == 'Province' ) {
+            this.populationPyramid[ 'barangay' ] = "1"
+        }
         this.populationPyramid[ 'year' ] = localStorage.getItem('year')
         if ( this.populationPyramid[ 'year' ] == undefined ) {
             return Swal.fire( 'Provincial Data: Year only', 'Barangay Data: All Filters', 'error' )
         }
         this.PopulationPyramidService.create( this.populationPyramid ).subscribe( data => {
             this.ngOnInit()
-            Swal.fire( 'Creation of Population Successful', '', 'success' )
+            Swal.fire( 'Population Pyramid Successfully Updated', '', 'success' )
         } )
     }
 
