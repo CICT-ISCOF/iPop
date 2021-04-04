@@ -24,7 +24,7 @@ export const headers = [
     {
         name: 'Services',
         children: [
-            { name: 'Responsible Parenthood and Family Planning Program', route: 'ERVICES-OFFERED/Responsible-Parenthood-and-Family-Planning-Program' },
+            { name: 'Responsible Parenthood and Family Planning Program', route: 'SERVICES-OFFERED/Responsible-Parenthood-and-Family-Planning-Program' },
             { name: 'Adolscent Health & Youth Development Program', route: 'SERVICES-OFFERED/Adolscent-Health-&-Youth-Development-Program' },
             { name: 'Population and Development Integration', route: 'SERVICES-OFFERED/Population-and-Development-Integration' },
             { name: 'Population Data Managment', route: 'SERVICES-OFFERED/Population Data Managment' },
