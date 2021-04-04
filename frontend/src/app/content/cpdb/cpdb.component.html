@@ -731,10 +731,10 @@
         <br><br> <br><br>
 
         <div class="button-container">
-            <button *ngIf="!isLoading" (click)="submit()" class="button">
+            <button *ngIf="!isLoading" (click)="submit()" class="btn btn-primary">
                 Submit Record                
             </button>
-            <button *ngIf="isLoading" class="btn button" type="button" disabled>
+            <button *ngIf="isLoading" class="btn button" type="btn btn-primary" disabled>
                 <span class="spinner-border spinner-border-sm text-light fast" role="status" aria-hidden="true"></span>
                 Loading...
             </button>
@@ -744,6 +744,6 @@
 
 
     </div>
-    <div *ngIf="isLoading" class="loader"></div>
+
 
 </div>
