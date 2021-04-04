@@ -2,7 +2,7 @@
 <div class="wrapper" style="padding: 0;">
     <div class="content" *ngIf="!wantsToadAnImage ">
         <div *ngIf="!isUser && showModal" class=" carousel-holder overlay1 animated fadeIn fast">
-            <button (click)="showModal = false" class="btn close">
+            <button (click)="showModal = false" class="btn close1">
                 <i class="bi bi-x"></i>
             </button>
             <button (click)="addImageModal()" class="btn btn-primary">Add Image(s)</button>
@@ -24,14 +24,14 @@
         </div>
         <div class="quick-links card">
             <p class="pop2">Quick Links</p>
-                <a *ngFor="let link of links" class="links" target="_blank" [href]="link.url">
-                    <div class="icon">
-                        <i class="bi bi-folder-symlink-fill"></i>
-                    </div>
-                    <div class="link-text">
-                        <p>{{link.title}}</p>
-                    </div>
-                </a>
+            <a *ngFor="let link of links" class="links" target="_blank" [href]="link.url">
+                <div class="icon">
+                    <i class="bi bi-folder-symlink-fill"></i>
+                </div>
+                <div class="link-text">
+                    <p>{{link.title}}</p>
+                </div>
+            </a>
         </div>
     </div>
 </div>

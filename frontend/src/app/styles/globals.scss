@@ -158,8 +158,6 @@ label {
     border-color: #149ef8 !important;
 }
 
-
-
 .clickable {
     padding: 7px 12px;
     background: none;
@@ -247,11 +245,12 @@ div:focus {
     visibility: hidden;
     pointer-events: none;
 }
-.btn{
-    margin:.5rem
+
+.btn {
+    margin: .5rem
 }
 
-.close {
+.close1 {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -268,13 +267,12 @@ div:focus {
         color: var(--colorPrimary);
         transform: translate(0px, -2px);
     }
-    
-    .card-header{
+    .card-header {
         background: var(--bg) !important;
         background-color: var(--bg) !important;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-bottom: 1px solid rgba(150,150,150,.1);
+        border-bottom: 1px solid rgba(150, 150, 150, .1);
     }
 }

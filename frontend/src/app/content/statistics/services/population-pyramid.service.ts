@@ -36,7 +36,10 @@ export class PopulationPyramidService {
 	} 
 
 	retrieve(filters){
-		const url  = this.baseURL + `?year=${filters.year}&barangay=${filters.barangay}`
+        let url = this.baseURL + `?year=${ filters.year }&barangay=${ filters.barangay }`
+        if ( filters.barangay == undefined ) {
+            url = this.baseURL + `?year=${ filters.year }`
+        }
 		return this.http.get(url)
 	} 
 
