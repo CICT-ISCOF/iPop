@@ -185,6 +185,8 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::get('/articles/week', [ArticleController::class, 'week']);
     Route::get('/articles/month', [ArticleController::class, 'month']);
 
+    Route::get('/approvals/count', [ApprovalController::class, 'count']);
+
     Route::apiResources([
         'articles' => ArticleController::class,
         'sbmptcs' => SBMPTCController::class,
