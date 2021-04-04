@@ -5,6 +5,7 @@ import { StatisticsService } from  './services/statistics.service'
 import { FiltersService } from 'src/app/filters/filters.service';
 import { Modal } from 'src/app/modal/modal.service';
 import {DataService} from './services/data.service'
+import { OfficialsService1 } from '../officials-of/officials.service';
 
 
 @Component({
@@ -21,6 +22,9 @@ export class StatisticsComponent implements OnInit {
         private Modal: Modal,
         private DataService: DataService,
         private FiltersService: FiltersService,
+        private OfficialsService1: OfficialsService1,
+
+        
 	) { 
         this.FiltersService.getYear().subscribe( value => this.year = value)
         this.FiltersService.getMunicipality().subscribe( (value:any) => {this.municipality = value.name} )
@@ -32,11 +36,15 @@ export class StatisticsComponent implements OnInit {
     municipality = "Province"
     barangay = "1"
 	isUser =  !this.UserService.isUser()
-	ngOnInit(): void {	
+    ngOnInit(): void {
+        localStorage.removeItem( 'muncipality' )
+        localStorage.removeItem( 'barangay' )
         this.setFilter()
 	}
 
 	data:any = {}
+    
+    hasBarangaysAndMunicipalities = false
 	
     setFilter() {
         let data = {
@@ -48,8 +56,12 @@ export class StatisticsComponent implements OnInit {
         if ( localStorage.getItem( 'muncipality' ) != undefined) {
             data.municipality = localStorage.getItem( 'muncipality' )
         }
+        if ( data.municipality != "Province" && data.barangay != "1") {
+            this.hasBarangaysAndMunicipalities = true
+        }
         this.getProfileData( data )
-        this.FiltersService.setTrigger(data)
+        this.FiltersService.setTrigger( data )
+        this.OfficialsService1.setTrigger()
     }
     
     getProfileData(data:any) {
