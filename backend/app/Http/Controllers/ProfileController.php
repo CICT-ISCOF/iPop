@@ -82,7 +82,7 @@ class ProfileController extends Controller
         $queries = $request->all();
         $builder = Profile::getApproved();
         foreach ($queries as $key => $query) {
-            $builder = $builder->orWhere($key, $query);
+            $builder = $builder->where($key, $query);
         }
         return $builder->get();
     }
