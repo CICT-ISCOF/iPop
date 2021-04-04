@@ -4,7 +4,7 @@
             <h5 class="pop2 d-flex" style="align-items: center;">
                 <span>Top Populated Municipalties </span>
                 <span class="ml-auto">
-                    <button (click)="addTopPopulated = true;" *ngIf="!addTopPopulated" class="ml-auto btn btn-sm btn-primary">
+                    <button (click)="addTopPopulated = true;" *ngIf="!addTopPopulated && !isUser" class="ml-auto btn btn-sm btn-primary">
                        <i style="color:white" class="bi bi-plus"></i>
                     </button>
                     <button (click)="addTopPopulated = false" *ngIf="addTopPopulated" class="ml-auto btn btn-sm btn-primary">

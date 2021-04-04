@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TopPopulatedMunicipalityService } from '../services/top-populated-municipality.service';
 import Swal from 'sweetalert2'
 import { LocationService } from 'src/app/others/location.service';
+import { UserService } from 'src/app/others/user.service';
 
 @Component({
   selector: 'TopPopulated',
@@ -12,8 +13,11 @@ export class TopPopulatedComponent implements OnInit {
 
     constructor (
         private TopPopulatedMunicipalityService: TopPopulatedMunicipalityService,
-        private LocationService: LocationService
-  ) { }
+        private LocationService: LocationService,
+        private UserService: UserService,
+    ) { }
+    
+    isUser = !this.UserService.isUser()
 
     ngOnInit(): void {
         this.retrievetopPopulateds()

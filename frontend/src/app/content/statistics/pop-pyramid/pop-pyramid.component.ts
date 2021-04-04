@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FiltersService } from 'src/app/filters/filters.service';
 import { Modal } from 'src/app/modal/modal.service';
+import { UserService } from 'src/app/others/user.service';
 import { PopulationPyramidService } from '../services/population-pyramid.service';
 import { drawChart } from './../draw-chart'
 import * as pyramid from './../pyramid'
@@ -15,8 +16,8 @@ export class PopPyramidComponent implements OnInit {
     constructor(
         private PopulationPyramidService: PopulationPyramidService,
         private FiltersService: FiltersService,
-        private Modal: Modal
-
+        private Modal: Modal,
+        private UserService: UserService,
     ) {
         this.FiltersService.getYear().subscribe( value => this.year = value )
         this.FiltersService.getMunicipality().subscribe( ( value: any ) => { this.municipality = value.name } )
@@ -28,6 +29,9 @@ export class PopPyramidComponent implements OnInit {
             this.getPopulationPyramid(data)
         })
     }
+    
+    isUser = !this.UserService.isUser()
+
      
     year: any = 0
     municipality = ""
