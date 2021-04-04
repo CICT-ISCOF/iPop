@@ -6,6 +6,9 @@ import { LocationService } from '../../../others/location.service';
 import { Component, OnInit } from '@angular/core';
 import  Swal  from 'sweetalert2';
 import { OfficialsService1 } from '../../officials-of/officials.service';
+import * as death from './death'
+import { FiltersService } from 'src/app/filters/filters.service';
+
 
 @Component({
   selector: 'app-deaths-stat',
@@ -19,12 +22,14 @@ export class DeathsStatComponent implements OnInit {
 		private UtilityService: UtilityService,
 		private OfficialsService1 : OfficialsService1,
 		private UserService : UserService,
-		private BirthStatService : BirthStatService
+        private BirthStatService: BirthStatService,
+        private FiltersService: FiltersService,
 	) { 
-		this.OfficialsService1.listen().subscribe(()=>{
-			this.CheckBarangaysAndMunicipalities()
-		})
-	}
+        this.OfficialsService1.listen().subscribe( () => this.CheckBarangaysAndMunicipalities() )
+        this.FiltersService.getYear().subscribe( ( value: any ) => this.getDataParams.year = value )
+        this.FiltersService.getMunicipality().subscribe( ( value: any ) => { this.getDataParams.municipality = value.name } )
+        this.FiltersService.getBarangay().subscribe( ( value: any ) => { this.getDataParams.barangay = value.name } )
+    }
 
 	ngOnInit(): void {
 		for (let i = 2015; i <= 2050; i++) {
@@ -63,60 +68,7 @@ export class DeathsStatComponent implements OnInit {
 	barangays: any = []
 	hasData = true;
 
-	data = {
-		municipality: 'Select Municipality',
-		barangay: '',
-		year: '',
-		gender: 'Male',
-		total_live_births: '',
-		crude_death_rate: '',
-		general_fertility_rate: '',
-		monthsFemale: {
-			January: 0,
-			February: 0,
-			March: 0,
-			April: 0,
-			May: 0,
-			June: 0,
-			July: 0,
-			August: 0,
-			September: 0,
-			October: 0,
-			November: 0,
-			December: 0,
-		},
-		monthsMale: {
-			January: 0,
-			February: 0,
-			March: 0,
-			April: 0,
-			May: 0,
-	 		June: 0,
-			July: 0,
-			August: 0,
-			September: 0,
-			October: 0,
-			November: 0,
-			December: 0,
-			
-		},
-		monthsTotal: {
-			January: 0,
-			February: 0,
-			March: 0,
-			April: 0,
-			May: 0,
-			June: 0,
-			July: 0,
-			August: 0,
-			September: 0,
-			October: 0,
-			November: 0,
-			December: 0,
-			
-		},
-		type: 'Death',
-	}
+    data = death.data
 	
 	checked = {
 		male: true,
@@ -131,8 +83,6 @@ export class DeathsStatComponent implements OnInit {
 		scaleShowVerticalLines: false,
 		responsive: true,
 	}
-
-	
 
 	DEATHRATEbarChartLabels = [];
 	DEATHRATEbarChartData = [{ data: [], label: 'Crude Death Rate' }];
