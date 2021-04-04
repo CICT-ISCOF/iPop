@@ -78,4 +78,9 @@ class ApprovalController extends Controller
         Log::record("Admin deleted an approval.");
         return response('', 204);
     }
+
+    public function count()
+    {
+        return Approval::where('approved', false)->count();
+    }
 }
