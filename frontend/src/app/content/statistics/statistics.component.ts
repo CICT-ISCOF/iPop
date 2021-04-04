@@ -39,7 +39,7 @@ export class StatisticsComponent implements OnInit {
 	
     setFilter() {
         const data = {
-            municipality: this.municipality,
+            municipality: localStorage.getItem( 'muncipality' ),
             barangay: this.barangay,
             year: this.year,
         }
