@@ -78,24 +78,10 @@ class ProfileController extends Controller
      */
     public function index(Request $request)
     {
-        $queries = $request->validate([
-            'municipality' => [
-                Rule::requiredIf(function () use ($request) {
-                    return $request->has('barangay');
-                }),
-                Rule::exists('municipalities', 'name')
-            ],
-            'barangay' => [
-                Rule::requiredIf(function () use ($request) {
-                    return $request->has('year');
-                }),
-                Rule::exists('barangays', 'name')
-            ],
-            'year' => ['nullable', 'date_format:Y'],
-        ]);
+        $queries = $request->all();
         $builder = Profile::getApproved();
         foreach ($queries as $key => $query) {
-            $builder->where($key, $query);
+            $builder = $builder->orWhere($key, $query);
         }
         return $builder->get();
     }
