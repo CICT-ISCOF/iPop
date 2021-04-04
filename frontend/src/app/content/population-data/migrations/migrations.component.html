@@ -2,235 +2,196 @@
 
 
 <div class="birth-stat-component">
-
     <div class="front col-md-8">
-        <div *ngIf="!isUser" class="row">
-            <div class="col-md-11">
-                <button (click)="back()" style="margin-left: -18px;" class="clickable">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
-                      </svg>
-                      Back
-                  </button>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title d-flex" style="align-items: center;">
+                    <p> Province of Iloilo(MIGRATION)</p>
+                </h5>
             </div>
-            <div class="col-md-1">
-                <button *ngIf="hasData" (click)="hasData = false; hasSelectedData = false" class="button rounded"><i class="fa fa-plus"></i></button>
-                <button *ngIf="!hasData" (click)="hasData = true" class="button rounded"><i class="fa fa-times"></i></button>
-            </div>
-        </div>
-        <h3 class="tl-center pop2">PROVINCE OF ILOILO (MIGRATION)</h3>
-        <div class="container row " style="margin-left: 0px;">
-            <div class="col-md-12">
-                <h5>Provincial Summary</h5>
-                <hr>
-            </div>
-            <div class="col-md-12 d-flex">
-                <div style="flex: 1;text-align: center;">
-                    <p>Total In Migrations</p>
-                    <br>
-                    <h1 class="text-primary">{{summary.total_in_migrations || 0}}</h1>
+            <div class="card-body">
+                <div class="container row " style="margin-left: 0px;">
+                    <div class="col-md-12 d-flex">
+                        <div style="flex: 1;text-align: center;">
+                            <p>Total In Migrations</p>
+                            <br>
+                            <h1 class="text-primary">{{summary.total_in_migrations || 0}}</h1>
+                        </div>
+                        <div style="flex: 1;text-align: center;">
+                            <p>Total Out Migrations</p>
+                            <br>
+                            <h1 class="text-primary">{{summary.total_out_migrations || 0}}</h1>
+                        </div>
+                        <div style="flex: 1;text-align: center;">
+                            <p>Net Migrations</p>
+                            <br>
+                            <h1 class="text-primary">{{summary.net_migrations || 0}}</h1>
+                        </div>
+                    </div>
                 </div>
-                <div style="flex: 1;text-align: center;">
-                    <p>Total Out Migrations</p>
-                    <br>
-                    <h1 class="text-primary">{{summary.total_out_migrations || 0}}</h1>
-                </div>
-                <div style="flex: 1;text-align: center;">
-                    <p>Net Migrations</p>
-                    <br>
-                    <h1 class="text-primary">{{summary.net_migrations || 0}}</h1>
+            </div>
+            <div class="d-flex">
+                <div class="nav1 ">
+                    <Municipality></Municipality>
+                    <Barangay></Barangay>
+                    <Years></Years>
+                    <button (click)="fetchData()" class="btn btn-sm btn-primary rounded">Show Data</button>
+                    <a (click)="addData = true" class="btn btn-sm btn-primary rounded" style="opacity: .9;" [href]="'https://www.google.com/maps/place/' + getDataParams.municipality + '+' + getDataParams.barangay + ',+Iloilo'" target="_blank">Show Map</a>
+                    <button (click)="hasData = false; hasSelectedData = false" *ngIf="hasData && !isUser" class="btn btn-sm btn-primary rounded" style="opacity: .8;">  Add Migration Statistics Data</button>
                 </div>
             </div>
         </div>
 
-        <div *ngIf="!hasData" class="!hasData container">
-            <h2 class="pop2">Add Migration Statistics Data</h2>
-            <hr>
-            <div class="filters">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="municipality">
+        <div class="card" *ngIf="!hasData">
+            <div class="card-header">
+                <h5 class="card-title">Add Birth Statistics Data</h5>
+            </div>
+            <div class="card-body">
+                <div class="filters">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="municipality">
                             <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
                             Municipality
                         </label>
-                        <select (load)="getBarangays($event)" (change)="getBarangays($event)" type="text" class="form-control">                       
+                            <select (load)="getBarangays($event)" (change)="getBarangays($event)" type="text" class="form-control">                       
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="barangay">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="barangay">
                             <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
                             Barangay</label>
-                        <select [(ngModel)]="data.barangay" type="text" class="form-control">                       
+                            <select [(ngModel)]="data.barangay" type="text" class="form-control">                       
                             <option *ngFor="let barangay of barangays" [value]="barangay.name">{{ barangay.name }}</option>
                         </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">Select Year</label>
-                        <select [(ngModel)]="data.year" type="text" class="form-control">                       
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Select Year</label>
+                            <select [(ngModel)]="data.year" type="text" class="form-control">                       
                             <option *ngFor="let year of years">{{year}}</option>
                         </select>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="">Total In Migration</label>
-                        <input [(ngModel)]="data.total_in_migrations" type="text" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">Total Out Migration</label>
-                        <input [(ngModel)]="data.total_out_migrations" type="text" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">Total Net Migration</label>
-                        <input [(ngModel)]="data.net_migrations" type="text" class="form-control">
-                    </div>
-                </div><br><br>
-                <div style="display:flex;align-items: center;justify-content: center;">
-                    <button (click)="save()" class="button">Save</button>
-                </div>
-            </div><br>
-        </div>
-        <div *ngIf="hasData" class="hasData">
-            <div class="row container" style="margin-left: 0px;">
-                <div class="col-md-4">
-                    <label for="municipality">
-                        <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
-                            <span class="sr-only">Loading...</span>
                         </div>
-                        Municipality
-                    </label>
-                    <select (change)="getBarangaysandGet($event)" type="text" class="form-control">                       
-                            <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
-                        </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="barangay">
-                        <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
-                            <span class="sr-only">Loading...</span>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="">Total In Migration</label>
+                            <input [(ngModel)]="data.total_in_migrations" type="text" class="form-control">
                         </div>
-                        Barangay</label>
-                    <select [(ngModel)]="getDataParams.barangay" type="text" class="form-control">                       
-                            <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
-                        </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="">Select Year</label>
-                    <select [(ngModel)]="getDataParams.year" type="text" class="form-control">                       
-                            <option *ngFor="let year of years">{{year}}</option>
-                        </select>
-                </div>
-                <div class="col-md-1 mt-3 d-flex">
-                    <button (click)="fetchData()" class="button rounded" style="height: 40px;">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    <!-- <button (click)="fetchData()" class="button rounded" style="height: 40px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-wide" viewBox="0 0 16 16">
-                                <path d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434L8.932.727zM8 12.997a4.998 4.998 0 1 1 0-9.995 4.998 4.998 0 0 1 0 9.996z"/>
-                            </svg>
-                        </button> -->
-                </div>
+                        <div class="col-md-4">
+                            <label for="">Total Out Migration</label>
+                            <input [(ngModel)]="data.total_out_migrations" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Total Net Migration</label>
+                            <input [(ngModel)]="data.net_migrations" type="text" class="form-control">
+                        </div>
+                    </div><br><br>
+                    <div style="display:flex;align-items: center;justify-content: center;">
+                        <button (click)="save()" class="btn btn-primary">Save</button>
+                        <button (click)="hasData = true; hasSelectedData = true" class="btn btn-dark">Cancel</button>
+
+                    </div>
+                </div><br>
             </div>
+        </div>
+
+        <div *ngIf="hasData" class="hasData">
 
             <p *ngIf="migrationStatistics == null" style="text-align: center;">No data to show....</p>
             <div *ngIf="hasSelectedData && migrationStatistics != null" class="showAfterFilter container">
-                <button (click)="showMap = true" *ngIf="!showMap" class="button rounded"><i class="fa fa-map-marker-alt"></i></button>
-                <button (click)="showMap = false" *ngIf="showMap" class="button">Hide Map</button>
-                <app-dynamic-mapping *ngIf="showMap"></app-dynamic-mapping>
-                <br><br><br>
-                <div *ngIf="editChartData" class="flex-container" style="align-items: center;justify-content: center;">
-                    <div class="custom-control custom-checkbox custom-control-inline">
-                        <input (change)="check('male')" [checked]="checked.male" type="checkbox" class="custom-control-input" id="defaultInline1">
-                        <label class="custom-control-label" for="defaultInline1">Male</label>
-                    </div>
-
-                    <!-- Default inline 2-->
-                    <div class="custom-control custom-checkbox custom-control-inline">
-                        <input (change)="check('female')" [checked]="checked.female" type="checkbox" class="custom-control-input" id="defaultInline2">
-                        <label class="custom-control-label" for="defaultInline2">Female</label>
-                    </div>
-                </div>
-                <br><br>
                 <div class="chart" *ngIf="!editChartData">
                     <canvas baseChart [datasets]="MONTHbarChartData" [labels]="MONTHbarChartLabels" [options]="MONTHbarChartOptions" [legend]="MONTHbarChartLegend" [chartType]="MONTHbarChartType">
                     </canvas>
                 </div>
                 <div style="display: flex;align-items: center;justify-content: center;">
-                    <button (click)="editChartData = true" *ngIf="!editChartData && !isUser" class="button">Edit Chart Data</button>
+                    <button (click)="editChartData = true" *ngIf="!editChartData && !isUser" class="btn btn-primary">Edit Chart Data</button>
                 </div>
-
-                <div *ngIf="editChartData" class="row" style="padding-top: 30px;">
-                    <br>
-                    <div class="form-group col-md-3">
-                        <label for="January">January</label>
-                        <input [(ngModel)]="data[getChecked()].January" type="text" class="form-control" id="January">
+                <div *ngIf="editChartData" class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Edit Chart Data</h5>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="February">February</label>
-                        <input [(ngModel)]="data[getChecked()].February" type="text" class="form-control" id="February">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="March">March</label>
-                        <input [(ngModel)]="data[getChecked()].March" type="text" class="form-control" id="March">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="April">April</label>
-                        <input [(ngModel)]="data[getChecked()].April" type="text" class="form-control" id="April">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="May">May</label>
-                        <input [(ngModel)]="data[getChecked()].May" type="text" class="form-control" id="May">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="June">June</label>
-                        <input [(ngModel)]="data[getChecked()].June" type="text" class="form-control" id="June">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="July">July</label>
-                        <input [(ngModel)]="data[getChecked()].July" type="text" class="form-control" id="July">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="August">August</label>
-                        <input [(ngModel)]="data[getChecked()].August" type="text" class="form-control" id="August">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="September">September</label>
-                        <input [(ngModel)]="data[getChecked()].September" type="text" class="form-control" id="September">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="October">October</label>
-                        <input [(ngModel)]="data[getChecked()].October" type="text" class="form-control" id="October">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="November">November</label>
-                        <input [(ngModel)]="data[getChecked()].November" type="text" class="form-control" id="November">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="December">December</label>
-                        <input [(ngModel)]="data[getChecked()].December" type="text" class="form-control" id="December">
-                    </div>
-                    <div class="col-md-12">
-                        <div style="display: flex;align-items: center;justify-content: center;padding-left: 20px;">
-                            <button (click)="updateChart()" class="button">Save</button> &nbsp;
-                            <button (click)="editChartData = false" *ngIf="editChartData" class="clickable">Cancel</button>
+                    <div class="card-body row">
+                        <div *ngIf="editChartData" class="flex-container d-flex col-md-12" style="align-items: center;justify-content: center;">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input (change)="check('female')" [checked]="checked.female" type="checkbox" class="custom-control-input" id="defaultInline2">
+                                <label class="custom-control-label" for="defaultInline2">Female</label>
+                            </div>
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input (change)="check('male')" [checked]="checked.male" type="checkbox" class="custom-control-input" id="defaultInline1">
+                                <label class="custom-control-label" for="defaultInline1">Male</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="January">January</label>
+                            <input [(ngModel)]="data[getChecked()].January" type="text" class="form-control" id="January">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="February">February</label>
+                            <input [(ngModel)]="data[getChecked()].February" type="text" class="form-control" id="February">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="March">March</label>
+                            <input [(ngModel)]="data[getChecked()].March" type="text" class="form-control" id="March">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="April">April</label>
+                            <input [(ngModel)]="data[getChecked()].April" type="text" class="form-control" id="April">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="May">May</label>
+                            <input [(ngModel)]="data[getChecked()].May" type="text" class="form-control" id="May">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="June">June</label>
+                            <input [(ngModel)]="data[getChecked()].June" type="text" class="form-control" id="June">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="July">July</label>
+                            <input [(ngModel)]="data[getChecked()].July" type="text" class="form-control" id="July">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="August">August</label>
+                            <input [(ngModel)]="data[getChecked()].August" type="text" class="form-control" id="August">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="September">Sep[getChecked()]mber</label>
+                            <input [(ngModel)]="data[getChecked()].September" type="text" class="form-control" id="September">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="October">October</label>
+                            <input [(ngModel)]="data[getChecked()].October" type="text" class="form-control" id="October">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="November">November</label>
+                            <input [(ngModel)]="data[getChecked()].November" type="text" class="form-control" id="November">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="December">December</label>
+                            <input [(ngModel)]="data[getChecked()].December" type="text" class="form-control" id="December">
+                        </div>
+                        <div class="col-md-12">
+                            <div style="display: flex;align-items: center;justify-content: center;padding-left: 20px;">
+                                <button (click)="updateChart()" class="btn btn-primary">Save</button> &nbsp;
+                                <button (click)="editChartData = false" *ngIf="editChartData" class="btn btn-dark">Cancel</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
+                <br>
+                <br>
                 <div style="padding-left: 20px;">
                     <br><br>
                     <div>
                         <p style="display: flex;" class="center"><span style="margin-left: auto;font-weight: 900;text-align: center;">TOTAL POPULATION</span>
                             <span [class.unclicable]="isUser" style="margin-left: auto;opacity: 0;pointer-events: none;" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                </svg>
+                                                                  <i class="bi bi-pencil"></i>
+
                             </span>
                         </p>
                         <h1 class="center text-primary">{{popTtotal || 0}}</h1>
@@ -240,10 +201,8 @@
                     <div *ngIf="!inMigrations">
                         <p style="display: flex;" class="center"><span style="margin-left: auto;font-weight: 900;text-align: center;">IN MIGRATIONS</span>
                             <span style="margin-left: auto;cursor: pointer;" *ngIf="!inMigrations" [class.unclicable]="isUser" (click)="inMigrations = true" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                </svg>
+                                                                <i class="bi bi-pencil"></i>
+
                             </span>
                         </p>
                         <h1 class="center text-primary">{{migrationStatistics.total_in_migrations || 0}}</h1>
@@ -268,10 +227,7 @@
                     <div *ngIf="!outMigration">
                         <p style="display: flex;" class="center"><span style="margin-left: auto;font-weight: 900;text-align: center;">OUT MIGRATIONS</span>
                             <span style="margin-left: auto;cursor: pointer;" *ngIf="!outMigration" [class.unclicable]="isUser" (click)="outMigration = true" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                </svg>
+                                <i class="bi bi-pencil"></i>
                          </span>
                         </p>
                         <h1 class="center text-primary">{{migrationStatistics.total_out_migrations || 0}}</h1>
@@ -296,10 +252,7 @@
                     <div *ngIf="!netMigration">
                         <p style="display: flex;" class="center"><span style="margin-left: auto;font-weight: 900;text-align: center;">NET MIGRATIONS</span>
                             <span [class.unclicable]="!isUser" style="margin-left: auto;cursor: pointer;" *ngIf="!netMigration" [class.unclicable]="isUser" (click)="netMigration = true" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                </svg>
+                                <i class="bi bi-pencil"></i>
                             </span>
                         </p>
                         <h1 class="center text-primary">{{migrationStatistics.net_migrations || 0}}</h1>
@@ -332,18 +285,22 @@
     <div class="front col-md-4">
         <app-provincial-officials *ngIf="!hasBarangaysAndMunicipalities"></app-provincial-officials>
         <app-sb-members *ngIf="!hasBarangaysAndMunicipalities"></app-sb-members>
-        <municipality-officials></municipality-officials>
+        <municipality-officials *ngIf="hasBarangaysAndMunicipalities"></municipality-officials>
         <br>
-        <h3 class="pop2">TECHNICAL NOTES</h3>
-        <hr>
-        <p><span class="fw-bold ">Migration</span> - tmovement of people form one place to another with the purpose of establishing a new residence</p>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">TECHNICAL NOTES</h5>
+            </div>
+            <div class="card-body">
+                <p><span class="fw-bold ">Migration</span> - tmovement of people form one place to another with the purpose of establishing a new residence</p>
 
-        <p><span class="fw-bold ">In-migration Rate</span> - the number of migrants arriving at a destination per 1000 population at that destination in a given year</p>
+                <p><span class="fw-bold ">In-migration Rate</span> - the number of migrants arriving at a destination per 1000 population at that destination in a given year</p>
 
-        <p><span class="fw-bold ">Out-migration Rate</span> - the number of migrants departing from an area of origin per 1000 population at that area of origin in a given year</p>
+                <p><span class="fw-bold ">Out-migration Rate</span> - the number of migrants departing from an area of origin per 1000 population at that area of origin in a given year</p>
 
-        <p><span class="fw-bold ">Net Migration Rate</span> -the net effect of in-migration and out-migration on an area’s population, expressed as increase or decrease per 1000 population of the area in a given year</p>
-
+                <p><span class="fw-bold ">Net Migration Rate</span> -the net effect of in-migration and out-migration on an area’s population, expressed as increase or decrease per 1000 population of the area in a given year</p>
+            </div>
+        </div>
 
     </div>
 </div>

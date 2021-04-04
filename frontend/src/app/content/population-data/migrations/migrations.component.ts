@@ -6,7 +6,8 @@ import { LocationService } from '../../../others/location.service';
 import { Component, OnInit } from '@angular/core';
 import  Swal  from 'sweetalert2';
 import { OfficialsService1 } from '../../officials-of/officials.service';
-
+import { FiltersService } from 'src/app/filters/filters.service';
+import * as migration from './migration'
 
 @Component({
   selector: 'app-migrations',
@@ -21,12 +22,15 @@ export class MigrationsComponent implements OnInit {
 		private UtilityService : UtilityService,
 		private OfficialsService1 : OfficialsService1,
 		private UserService : UserService,
-		private BirthStatService : BirthStatService
+        private BirthStatService: BirthStatService,
+        private FiltersService: FiltersService,
 	) { 
-		this.OfficialsService1.listen().subscribe(()=>{
-			this.CheckBarangaysAndMunicipalities()
-		})
-	}
+        this.OfficialsService1.listen().subscribe( () => this.CheckBarangaysAndMunicipalities() )
+        this.FiltersService.getYear().subscribe( ( value: any ) => this.getDataParams.year = value )
+        this.FiltersService.getMunicipality().subscribe( ( value: any ) => { this.getDataParams.municipality = value.name } )
+        this.FiltersService.getBarangay().subscribe( ( value: any ) => { this.getDataParams.barangay = value.name } )
+    }
+
 	isUser =  !this.UserService.isUser()
 	ngOnInit(): void {
 		for (let i = 2015; i <= 2050; i++) {
@@ -63,60 +67,7 @@ export class MigrationsComponent implements OnInit {
 	municipalities:any = [] 
 	barangays:any = [] 
 	hasData = true
-	data = {
-		municipality:'Select Municipality',
-		barangay: '',
-		year:'',
-		gender: 'Male',
-		total_in_migrations:'',
-		total_out_migrations: '',
-		net_migrations:'',
-		monthsFemale: {
-			January: 0,
-			February: 0,
-			March: 0,
-			April: 0,
-			May: 0,
-			June: 0,
-			July: 0,
-			August: 0,
-			September: 0,
-			October: 0,
-			November: 0,
-			December: 0,
-		},
-		monthsMale: {
-			January: 0,
-			February: 0,
-			March: 0,
-			April: 0,
-			May: 0,
-	 		June: 0,
-			July: 0,
-			August: 0,
-			September: 0,
-			October: 0,
-			November: 0,
-			December: 0,
-			
-		},
-		monthsTotal: {
-			January: 0,
-			February: 0,
-			March: 0,
-			April: 0,
-			May: 0,
-			June: 0,
-			July: 0,
-			August: 0,
-			September: 0,
-			October: 0,
-			November: 0,
-			December: 0,
-			
-		},
-		type:'Migration'
-	}
+	data = migration.data
 	years = []		
 	checked = {
 		male: true,
@@ -140,7 +91,7 @@ export class MigrationsComponent implements OnInit {
 	MIGRATIONbarChartType = 'bar';
 	MIGRATIONbarChartLegend = true;
 	
-
+ 
 	summary = {}
 	getSummary(){
 		this.MigrationStatService.getSummary().subscribe(data => {

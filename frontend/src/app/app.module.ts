@@ -130,14 +130,9 @@ import { PDMServicesComponent } from './content/general-public/services-offered/
 import { DynamicHomeComponent } from './content/sliders-and-quiclinks/dynamic-home.component';
 import { ProvincialOfficialsComponent } from './content/provincial-officials/provincial-officials.component';
 import { AhydTeamComponent } from './content/ahyd-team/ahyd-team.component';
-import { GeneralComponent } from './content/population-data/general/general.component';
 import { MigrationsComponent } from './content/population-data/migrations/migrations.component';
 import { DeathsStatComponent } from './content/population-data/deaths-stat/deaths-stat.component';
 import { BirthsStatComponent } from './content/population-data/births-stat/births-stat.component';
-import { PMOCStatComponent } from './content/population-data/pmoc-stat/pmoc-stat.component';
-import { SBMTCStatComponent } from './content/population-data/sbmtc-stat/sbmtc-stat.component';
-import { SBMTCInfoComponent } from './content/population-data/sbmtc-info/sbmtc-info.component';
-import { MPCAndFDCComponent } from './content/population-data/mpc-and-fdc/mpc-and-fdc.component';
 import { ShowMpcFdcComponent } from './content/mpc-fdc/show-mpc-fdc/show-mpc-fdc.component';
 import { ShowTeenCentersComponent } from './content/teen-centers/show-teen-centers/show-teen-centers.component';
 import { FeaturedArticlesComponent } from './content/featured-articles/featured-articles.component';
@@ -348,14 +343,9 @@ const routes: Routes = [
         DynamicHomeComponent,
         ProvincialOfficialsComponent,
         AhydTeamComponent,
-        GeneralComponent,
         MigrationsComponent,
         DeathsStatComponent,
         BirthsStatComponent,
-        PMOCStatComponent,
-        SBMTCStatComponent,
-        SBMTCInfoComponent,
-        MPCAndFDCComponent,
         ShowMpcFdcComponent,
         ShowTeenCentersComponent,
         FeaturedArticlesComponent,
