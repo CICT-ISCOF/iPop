@@ -21,11 +21,7 @@ class CPDBController extends Controller
     {
         $builder = CPDB::with('record.user.profilePicture')
             ->with('comments.user.profilePicture');
-        if ($request->user()->hasRole(Role::PPO_ONE)) {
-            $user = $request->user();
-            $builder = $builder->where('municipality', $user->municipality)
-                ->where('barangay', $user->barangay);
-        }
+
         return $builder->paginate(10);
     }
 
@@ -59,11 +55,7 @@ class CPDBController extends Controller
     {
         $builder = CPDB::with('record.user.profilePicture')
             ->with('comments.user.profilePicture');
-        if ($request->user()->hasRole(Role::PPO_ONE)) {
-            $user = $request->user();
-            $builder = $builder->where('municipality', $user->municipality)
-                ->where('barangay', $user->barangay);
-        }
+
         return $builder->findOrFail($id);
     }
 
