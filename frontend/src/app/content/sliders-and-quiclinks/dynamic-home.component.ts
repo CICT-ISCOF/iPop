@@ -11,7 +11,7 @@ import { Modal } from 'src/app/modal/modal.service';
   styleUrls: ['../header/home.component.scss','../header/home.component.inherit.cms.responsive.scss','../header/home.tablet.scss','../general-public/general-public.style.scss','./dynamic-home.component.scss']
 })
 export class DynamicHomeComponent implements OnInit {
-
+wantsToadAnImage = false
     theme = localStorage.getItem( 'data-theme' )
     
     customOptions: OwlOptions = {

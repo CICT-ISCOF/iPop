@@ -38,7 +38,7 @@ export class PyramidAddComponent implements OnInit {
     year: any = 0
     municipality = "1"
     barangay = "1"
-    populationPyramid = {
+    populationPyramid:any = {
         data: {
             male: {},
             female: {}

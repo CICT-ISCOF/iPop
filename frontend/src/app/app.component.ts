@@ -1,6 +1,6 @@
 import { UserService } from './others/user.service';
 import { ScrollEventService } from './others/scroll-event.service';
-import { Component, OnInit, Directive, HostListener } from '@angular/core';
+import { Component,  HostListener } from '@angular/core';
 import { UtilityService } from './others/utility.service';
 import { Subscription } from 'rxjs';
 import { NetworkStatusAngularService } from 'network-status-angular';
@@ -12,10 +12,8 @@ import { DeviceService } from './others/device.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-@Directive({
-  selector: '[scrollToTop]',
-})
-export class AppComponent implements OnInit {
+
+export class AppComponent  {
     title = 'ipo-web';
     userRole: Subscription;
     role: string = '';
@@ -45,7 +43,14 @@ export class AppComponent implements OnInit {
             }
         } )
 
-        this.userRole = this.MediaQueryService.getSize().subscribe((media) =>  this.media = media)
+        this.userRole = this.MediaQueryService.getSize().subscribe( ( media ) => this.media = media )
+        this.validateRole( function () {
+            let url = document.createElement( 'a' );
+            url.href = window.location.href;
+            const path = url.pathname;
+            return path;
+        } );
+        this.checkLocalStorage();
     }
 
     onWindowScroll(event:Event) {
@@ -58,16 +63,6 @@ export class AppComponent implements OnInit {
             }
         }
     }
-
-    ngOnInit(): void {
-        this.validateRole(function () {
-            let url = document.createElement('a');
-            url.href = window.location.href;
-            const path = url.pathname;
-            return path;
-        });
-        this.checkLocalStorage();
-    } 
 
     checkLocalStorage() {
         this.role = localStorage.getItem('role');

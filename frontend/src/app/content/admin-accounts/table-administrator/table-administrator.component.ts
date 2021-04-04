@@ -106,7 +106,6 @@ export class TableAdministratorComponent implements OnInit {
 		  headerCheckboxSelection: true,
 		  width: 300,
 		},					
-		rowSelection: 'multiple',
     }   
 
     

@@ -31,7 +31,7 @@ export class PDIServicesComponent implements OnInit {
 		title:''
 	}
 
-	services = {}
+    services: any = {}
 
 	create(){
 		this.ServicesOfferedService.create(this.data).subscribe(data => {			

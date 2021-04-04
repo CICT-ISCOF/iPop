@@ -3,9 +3,9 @@
     <p (click)="hideDropdown('Help Center')" [routerLink]="['/user-manual']" routerLinkActive="router-link-active">
         <i class="bi bi-patch-question-fill"></i> Help Center
     </p>
- 
+
     <p (click)="hideDropdown('Account Settings')" [routerLink]="['/account']" routerLinkActive="router-link-active">
-    <i class="bi bi-gear"></i>Account
+        <i class="bi bi-gear"></i>Account
     </p>
 
     <p (click)="hideDropdown('Back-Up and Restore')" [routerLink]="['/backup-adn-restore']" routerLinkActive="router-link-active">
@@ -75,7 +75,7 @@
 
 
         <span class="ml-auto">
-            <material-slide-toggle [name]="sidebarMini.name" [id]="sidebarMini.id" [checked]="sidebarMini.checked" [disabled]="sidebarMini.disabled" [aria-label]="sidebarMini.label" [aria-labelledby]="sidebarMini.labelledby" (change)="changeSidebar($event)">
+            <material-slide-toggle [name]="sidebarMini.name" [id]="sidebarMini.id" [checked]="sidebarMini.checked" [disabled]="sidebarMini.disabled" [aria-label]="sidebarMini.label" [aria-labelledby]="sidebarMini.labelledby" >
             </material-slide-toggle>
        </span>
     </div>

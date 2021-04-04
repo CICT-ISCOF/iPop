@@ -10,7 +10,7 @@ import { UserService } from 'src/app/others/user.service';
   styleUrls: ['./top-populated.component.scss']
 })
 export class TopPopulatedComponent implements OnInit {
-
+    addTopPopulated =false
     constructor (
         private TopPopulatedMunicipalityService: TopPopulatedMunicipalityService,
         private LocationService: LocationService,

@@ -15,7 +15,7 @@ import { Injectable } from '@angular/core';
   styleUrls: ['./mpc-fdc.component.scss']
 })
 export class MPCFDCComponent implements OnInit {
-
+addMPCFDC = false
 	constructor(
 		private MpcService : MpcService,
 		private LocationService : LocationService,

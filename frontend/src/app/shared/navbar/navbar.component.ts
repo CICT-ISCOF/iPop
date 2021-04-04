@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
     ) {
         this.SidebarService.getSidebarActiveNav().subscribe(value=>this.nav=value)
     }
-    nav = {}
+    nav:any = {}
     theme = localStorage.getItem('data-theme');
     subscription: Subscription;
     dropdown = false;

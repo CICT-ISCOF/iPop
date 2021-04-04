@@ -31,7 +31,7 @@ export class StatisticsComponent implements OnInit {
         this.FiltersService.getBarangay().subscribe( ( value: any ) => { this.barangay = value.name } )
         this.PopulationPyramidService.getTrigger().subscribe( () => this.setFilter())
 	}  
-
+addData = false
     year: any = new Date().getFullYear();
     municipality = "Province"
     barangay = "1"

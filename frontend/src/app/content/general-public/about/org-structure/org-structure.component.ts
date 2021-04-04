@@ -33,7 +33,7 @@ export class OrgStructureComponent implements OnInit {
 		document.getElementById('input-type-file').click()
 	}
 
-	readUrl(files: FileList,event,index,type){	
+	readUrl(files: FileList,event){	
 		if (event.target.files && event.target.files[0]) {				
 			const reader = new FileReader()	
 			reader.readAsDataURL(event.target.files[0]);   		

@@ -16,7 +16,7 @@ export class ShowArticleComponent implements OnInit {
 		
 	}
 
-	nl2br (str, is_xhtml) {
+	nl2br (str, is_xhtml = false) {
 		if (typeof str === 'undefined' || str === null) {
 			return '';
 		}

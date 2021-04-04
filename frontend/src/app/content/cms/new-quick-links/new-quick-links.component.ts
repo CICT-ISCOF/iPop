@@ -39,7 +39,7 @@ export class NewQuickLinksComponent implements OnInit {
 
 	imagesToRender = []
 
-	readURL(files: FileList,event,index,type){	
+	readURL(files: FileList,event){	
 		this.article.files = []
 		if (event.target.files && event.target.files[0]) {	
 			Object.keys(files).forEach(i => {				

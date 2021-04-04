@@ -42,6 +42,7 @@ export class MigrationsComponent implements OnInit {
 		localStorage.removeItem('barangay-ref') 
 		this.getPopulationTotal()
 	}
+    addData = false
 
 	popTtotal = {}
 	getPopulationTotal(){
@@ -92,7 +93,7 @@ export class MigrationsComponent implements OnInit {
 	MIGRATIONbarChartLegend = true;
 	
  
-	summary = {}
+	summary:any = {}
 	getSummary(){
 		this.MigrationStatService.getSummary().subscribe(data => {
 			this.summary = data

@@ -37,7 +37,7 @@
                     <Barangay></Barangay>
                     <Years></Years>
                     <button (click)="fetchData()" class="btn btn-sm btn-primary rounded">Show Data</button>
-                    <a (click)="addData = true" class="btn btn-sm btn-primary rounded" style="opacity: .9;" [href]="'https://www.google.com/maps/place/' + municipality + '+' + barangay + ',+Iloilo'" target="_blank">Show Map</a>
+                    <a (click)="addData = true" class="btn btn-sm btn-primary rounded" style="opacity: .9;" [href]="'https://www.google.com/maps/place/' + getDataParams.municipality + '+' + getDataParams.barangay + ',+Iloilo'" target="_blank">Show Map</a>
                     <button (click)="hasData = false; hasSelectedData = false" *ngIf="hasData && !isUser" class="btn btn-sm btn-primary rounded" style="opacity: .8;">  Add Death Statistics Data</button>
                 </div>
             </div>

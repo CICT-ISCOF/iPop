@@ -404,7 +404,7 @@ export class PmcComponent implements OnInit {
 			} 
 		})	
 	}
-
+    wantsToAdd =false
 
 	// -------------bottom charts-----------------
 

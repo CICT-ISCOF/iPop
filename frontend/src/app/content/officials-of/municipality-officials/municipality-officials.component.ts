@@ -10,6 +10,7 @@ import Swal from 'sweetalert2'
   styleUrls: ['./municipality-officials.component.scss']
 })
 export class MunicipalityOfficialsComponent implements OnInit {
+    addOfficial = false
 
 	constructor(
 		private OfficialsService : OfficialsService1,

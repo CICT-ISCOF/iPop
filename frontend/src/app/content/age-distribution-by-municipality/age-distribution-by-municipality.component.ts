@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'
   styleUrls: ['./age-distribution-by-municipality.component.scss']
 })
 export class AgeDistributionByMunicipalityComponent implements OnInit {
-
+addData= false
 	constructor(
 		private AgeDistributionServince : AgeDistributionServince,
 		private UserService : UserService

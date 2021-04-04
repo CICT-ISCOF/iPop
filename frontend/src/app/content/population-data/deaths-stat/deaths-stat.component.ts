@@ -113,12 +113,14 @@ export class DeathsStatComponent implements OnInit {
 	}
 
 
-	summary = {}
+    summary: any = {}
+
 	getSummary(){
 		this.DeathStatService.getSummary().subscribe(data => {
 			this.summary = data
 		})
 	}
+    addData = false
 
 	municipalityIsLoading = false
 	getMuncipalities(){		

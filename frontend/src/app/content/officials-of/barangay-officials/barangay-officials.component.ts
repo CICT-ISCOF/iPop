@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'
   styleUrls: ['./barangay-officials.component.scss']
 })
 export class BarangayOfficialsComponent implements OnInit {
-
+addOfficial = false
 	constructor(
 		private OfficialsService : OfficialsService1,
 		private UtilityService : UtilityService,

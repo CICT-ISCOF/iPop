@@ -129,13 +129,13 @@ export class BirthsStatComponent implements OnInit {
 	}
  
 	
-	sumamry = {}
+	sumamry:any = {}
 	getSummary(){
 		this.BirthStatService.getSUmmary().subscribe(data => {
 			this.sumamry = data
 		})
 	}
-
+addData =false
 	municipalityIsLoading = false
 	getMuncipalities(){		
 		this.municipalityIsLoading = true
