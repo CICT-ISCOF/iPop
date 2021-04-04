@@ -19,6 +19,7 @@ import { ResponsiveModule } from 'ngx-responsive'
 import 'ag-grid-enterprise';
 import { ShimmerModule } from '@sreyaj/ng-shimmer';
 import { SlideToggleModule } from 'ngx-slide-toggle';
+import { ChartsModule } from 'ng2-charts';
 
 // components------------
 import { AppComponent } from './app.component';
@@ -56,7 +57,6 @@ import { SearchComponent } from './content/search/search.component';
 import { ShowProfileComponent } from './content/show-profile/show-profile.component';
 import { ShowAdminStatusComponent } from './content/admin-accounts/show-admin-status/show-admin-status.component';
 // import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 import { LogsComponent } from './content/logs/logs.component';
 import { CpdbTableComponent } from './content/profiling/cpdb-table/cpdb-table.component';
 import { RoleComponent } from './content/admin-accounts/role/role.component';
@@ -389,6 +389,7 @@ const routes: Routes = [
         ProfileAddComponent,
     ],
     imports: [
+        ChartsModule,
         SlideToggleModule,
         ShimmerModule,
         NgxPaginationModule,

@@ -2,244 +2,194 @@
 
 <div class="birth-stat-component">
     <div class="front col-md-8">
-        <div *ngIf="!isUser" class="row">
-            <div class="col-md-11">
-                <button (click)="back()" style="margin-left: -18px;" class="clickable">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
-                      </svg>
-                      Back
-                  </button>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title d-flex" style="align-items: center;">
+                    <p> Province of Iloilo(BIRTHS)</p>
+
+                </h5>
             </div>
-            <div class="col-md-1">
-                <button (click)="hasData = false; hasSelectedData = false" *ngIf="hasData" class="button rounded"><i class="fa fa-plus"></i></button>
-                <button (click)="hasData = true" *ngIf="!hasData" class="button rounded"><i class="fa fa-times"></i></button>
+            <div class="card-body">
+                <div class="container row " style="margin-left: 0px;">
+                    <div class="col-md-12 d-flex">
+                        <div style="flex: 1;text-align: center;">
+                            <p>Crude Birth Rate</p>
+                            <br>
+                            <h1 class="text-primary">{{sumamry.crude_birth_rate}}</h1>
+                        </div>
+                        <div style="flex: 1;text-align: center;">
+                            <p>General Fertility Rate</p>
+                            <br>
+                            <h1 class="text-primary">{{sumamry.general_fertility_rate}}</h1>
+                        </div>
+                        <div style="flex: 1;text-align: center;">
+                            <p>Total Live Births</p>
+                            <br>
+                            <h1 class="text-primary">{{sumamry.total_live_births}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="nav1 ">
+                    <Municipality></Municipality>
+                    <Barangay></Barangay>
+                    <Years></Years>
+                    <button (click)="fetchData()" class="btn btn-sm btn-primary rounded">Show Data</button>
+                    <a (click)="addData = true" class="btn btn-sm btn-primary rounded" style="opacity: .9;" [href]="'https://www.google.com/maps/place/' + municipality + '+' + barangay + ',+Iloilo'" target="_blank">Show Map</a>
+                    <button (click)="hasData = false; hasSelectedData = false" *ngIf="hasData && !isUser" class="btn btn-sm btn-primary rounded" style="opacity: .8;">  Add Birth Statistics Data</button>
+                </div>
             </div>
         </div>
-        <h3 class="tl-center pop2">PROVINCE OF ILOILO(BIRTHS)</h3>
-        <div *ngIf="!hasData" class="!hasData container ">
-            <h2 class="pop2">Add Birth Statistics Data</h2>
-            <div class="filters">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="municipality">
+
+        <div class="card" *ngIf="!hasData">
+            <div class="card-header">
+                <h5 class="card-title">Add Birth Statistics Data</h5>
+            </div>
+            <div class="card-body">
+                <div class="filters">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="municipality">
                             <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
                             Municipality
                         </label>
-                        <select (load)="getBarangays($event)" (change)="getBarangays($event)" type="text" class="form-control">                       
+                            <select (load)="getBarangays($event)" (change)="getBarangays($event)" type="text" class="form-control">                       
                             <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
                         </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="barangay">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="barangay">
                             <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
                             Barangay</label>
-                        <select [(ngModel)]="data.barangay" type="text" class="form-control">                       
+                            <select [(ngModel)]="data.barangay" type="text" class="form-control">                       
                             <option *ngFor="let barangay of barangays" [value]="barangay.name">{{ barangay.name }}</option>
                         </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">Select Year</label>
-                        <select [(ngModel)]="data.year" type="text" class="form-control">                       
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Select Year</label>
+                            <select [(ngModel)]="data.year" type="text" class="form-control">                       
                             <option *ngFor="let year of years">{{year}}</option>
                         </select>
+                        </div>
                     </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="">Total Live Births</label>
-                        <input [(ngModel)]="data.total_live_births" type="text" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">Crud Births Rate</label>
-                        <input [(ngModel)]="data.crude_birth_rate" type="text" class="form-control">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">General Fertility Rate</label>
-                        <input [(ngModel)]="data.general_fertility_rate" type="text" class="form-control">
-                    </div>
-                </div><br><br>
-                <div style="display:flex;align-items: center;justify-content: center;">
-                    <button (click)="hasData = false; hasSelectedData = false;save()" class="button">Save</button>
-                </div>
-            </div><br>
-        </div>
-
-        <div class="container row " style="margin-left: 0px;">
-            <div class="col-md-12">
-                <h5>Provincial Summary</h5>
-                <hr>
-            </div>
-            <div class="col-md-12 d-flex">
-                <div style="flex: 1;text-align: center;">
-                    <p>Crude Birth Rate</p>
                     <br>
-                    <h1 class="text-primary">{{sumamry.crude_birth_rate}}</h1>
-                </div>
-                <div style="flex: 1;text-align: center;">
-                    <p>General Fertility Rate</p>
-                    <br>
-                    <h1 class="text-primary">{{sumamry.general_fertility_rate}}</h1>
-                </div>
-                <div style="flex: 1;text-align: center;">
-                    <p>Total Live Births</p>
-                    <br>
-                    <h1 class="text-primary">{{sumamry.total_live_births}}</h1>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="">Total Live Births</label>
+                            <input [(ngModel)]="data.total_live_births" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Crud Births Rate</label>
+                            <input [(ngModel)]="data.crude_birth_rate" type="text" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">General Fertility Rate</label>
+                            <input [(ngModel)]="data.general_fertility_rate" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items: center;justify-content: center;">
+                        <button (click)="hasData = false; hasSelectedData = false;save()" class="btn btn-primary">Save</button>
+                        <button (click)="hasData = true; hasSelectedData = true" class="btn btn-dark">cancel</button>
+                    </div>
                 </div>
             </div>
         </div>
-
+        <br>
         <div *ngIf="hasData" class="hasData ">
-            <div class="row container" style="margin-left: 0px;">
-                <div class="col-md-4">
-                    <label for="municipality">
-                        <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        Municipality
-                    </label>
-                    <select (change)="getBarangaysandGet($event)" type="text" class="form-control">                       
-                            <option  *ngFor="let municipality of municipalities" [value]="municipality.code" >{{ municipality.name }}</option>
-                        </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="barangay">
-                        <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        Barangay</label>
-                    <select [(ngModel)]="getDataParams.barangay" type="text" class="form-control">                       
-                            <option *ngFor="let barangay of barangays">{{ barangay.name }}</option>
-                        </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="">Select Year</label>
-                    <select [(ngModel)]="getDataParams.year" type="text" class="form-control">
-                            <option *ngFor="let year of years">{{year}}</option>
-                             </select>
-                </div>
-                <div class="col-md-1 mt-3 d-flex">
-                    <button (click)="fetchData()" class="button rounded" style="height: 40px;">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    <!-- <button (click)="getSummary()" class="button rounded" style="height: 40px;">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-wide" viewBox="0 0 16 16">
-                                <path d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434L8.932.727zM8 12.997a4.998 4.998 0 1 1 0-9.995 4.998 4.998 0 0 1 0 9.996z"/>
-                            </svg>
-                        </button> -->
-                </div>
-            </div>
-
             <p *ngIf="birthSatistics == null" style="text-align: center;">No data to show....</p>
-
             <div class="showAfterFilter container" *ngIf="hasSelectedData && birthSatistics != null">
-                <button (click)="showMap = true" *ngIf="!showMap" class="button rounded"><i class="fa fa-map-marker-alt"></i></button>
-                <button (click)="showMap = false" *ngIf="showMap" class="button">Hide Map</button>
-                <app-dynamic-mapping *ngIf="showMap"></app-dynamic-mapping>
-                <br>
-                <div *ngIf="editChartData" class="flex-container d-flex" style="align-items: center;justify-content: center;">
-
-                    <!-- Default inline 2-->
-                    <div class="custom-control custom-checkbox custom-control-inline">
-                        <input (change)="check('female')" [checked]="checked.female" type="checkbox" class="custom-control-input" id="defaultInline2">
-                        <label class="custom-control-label" for="defaultInline2">Female</label>
-                    </div>
-
-
-                    <div class="custom-control custom-checkbox custom-control-inline">
-                        <input (change)="check('male')" [checked]="checked.male" type="checkbox" class="custom-control-input" id="defaultInline1">
-                        <label class="custom-control-label" for="defaultInline1">Male</label>
-                    </div>
-
-
-
-                    <!-- Default inline 3-->
-                    <!-- <div class="custom-control custom-checkbox custom-control-inline">
-                        <input (change)="check('all')" [checked]="checked.all" type="checkbox" class="custom-control-input" id="defaultInline3">
-                        <label class="custom-control-label" for="defaultInline3">Total</label>
-                    </div> -->
-                </div>
 
                 <div class="chart" *ngIf="!editChartData">
                     <canvas baseChart [datasets]="MONTHbarChartData" [labels]="MONTHbarChartLabels" [options]="MONTHbarChartOptions" [legend]="MONTHbarChartLegend" [chartType]="MONTHbarChartType">
                     </canvas>
                 </div>
-
                 <div style="display: flex;align-items: center;justify-content: center;">
-                    <button (click)="editChartData = true" *ngIf="!editChartData && !isUser" class="button">Edit Chart Data</button>
+                    <button (click)="editChartData = true" *ngIf="!editChartData && !isUser" class="btn btn-primary">Edit Chart Data</button>
                 </div>
-                <div *ngIf="editChartData" class="row" style="padding-top: 30px;">
-                    <br>
-                    <div class="form-group col-md-3">
-                        <label for="January">January</label>
-                        <input [(ngModel)]="data[getChecked()].January" type="text" class="form-control" id="January">
+                <div *ngIf="editChartData" class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Edit Chart Data</h5>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="February">February</label>
-                        <input [(ngModel)]="data[getChecked()].February" type="text" class="form-control" id="February">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="March">March</label>
-                        <input [(ngModel)]="data[getChecked()].March" type="text" class="form-control" id="March">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="April">April</label>
-                        <input [(ngModel)]="data[getChecked()].April" type="text" class="form-control" id="April">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="May">May</label>
-                        <input [(ngModel)]="data[getChecked()].May" type="text" class="form-control" id="May">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="June">June</label>
-                        <input [(ngModel)]="data[getChecked()].June" type="text" class="form-control" id="June">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="July">July</label>
-                        <input [(ngModel)]="data[getChecked()].July" type="text" class="form-control" id="July">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="August">August</label>
-                        <input [(ngModel)]="data[getChecked()].August" type="text" class="form-control" id="August">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="September">Sep[getChecked()]mber</label>
-                        <input [(ngModel)]="data[getChecked()].September" type="text" class="form-control" id="September">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="October">October</label>
-                        <input [(ngModel)]="data[getChecked()].October" type="text" class="form-control" id="October">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="November">November</label>
-                        <input [(ngModel)]="data[getChecked()].November" type="text" class="form-control" id="November">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="December">December</label>
-                        <input [(ngModel)]="data[getChecked()].December" type="text" class="form-control" id="December">
-                    </div>
-                    <div class="col-md-12">
-                        <div style="display: flex;align-items: center;justify-content: center;padding-left: 20px;">
-                            <button (click)="updateChart()" class="button">Save</button> &nbsp;
-                            <button (click)="editChartData = false" *ngIf="editChartData" class="clickable">Cancel</button>
+                    <div class="card-body row">
+                        <div *ngIf="editChartData" class="flex-container d-flex col-md-12" style="align-items: center;justify-content: center;">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input (change)="check('female')" [checked]="checked.female" type="checkbox" class="custom-control-input" id="defaultInline2">
+                                <label class="custom-control-label" for="defaultInline2">Female</label>
+                            </div>
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input (change)="check('male')" [checked]="checked.male" type="checkbox" class="custom-control-input" id="defaultInline1">
+                                <label class="custom-control-label" for="defaultInline1">Male</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="January">January</label>
+                            <input [(ngModel)]="data[getChecked()].January" type="text" class="form-control" id="January">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="February">February</label>
+                            <input [(ngModel)]="data[getChecked()].February" type="text" class="form-control" id="February">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="March">March</label>
+                            <input [(ngModel)]="data[getChecked()].March" type="text" class="form-control" id="March">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="April">April</label>
+                            <input [(ngModel)]="data[getChecked()].April" type="text" class="form-control" id="April">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="May">May</label>
+                            <input [(ngModel)]="data[getChecked()].May" type="text" class="form-control" id="May">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="June">June</label>
+                            <input [(ngModel)]="data[getChecked()].June" type="text" class="form-control" id="June">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="July">July</label>
+                            <input [(ngModel)]="data[getChecked()].July" type="text" class="form-control" id="July">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="August">August</label>
+                            <input [(ngModel)]="data[getChecked()].August" type="text" class="form-control" id="August">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="September">Sep[getChecked()]mber</label>
+                            <input [(ngModel)]="data[getChecked()].September" type="text" class="form-control" id="September">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="October">October</label>
+                            <input [(ngModel)]="data[getChecked()].October" type="text" class="form-control" id="October">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="November">November</label>
+                            <input [(ngModel)]="data[getChecked()].November" type="text" class="form-control" id="November">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="December">December</label>
+                            <input [(ngModel)]="data[getChecked()].December" type="text" class="form-control" id="December">
+                        </div>
+                        <div class="col-md-12">
+                            <div style="display: flex;align-items: center;justify-content: center;padding-left: 20px;">
+                                <button (click)="updateChart()" class="btn btn-primary">Save</button> &nbsp;
+                                <button (click)="editChartData = false" *ngIf="editChartData" class="btn btn-dark">Cancel</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
+                <br>
+                <br>
                 <div style="padding-left: 20px;">
-                    <br><br> <br><br> <br><br>
                     <div>
                         <p style="display: flex;" class="center "><span style="margin-left: auto;font-weight: 900;">TOTAL POPULATION</span>
                             <span style="margin-left: auto;opacity: 0;pointer-events: none;" *ngIf="!totalLiveBirths" (click)="totalLiveBirths = true" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                </svg>
+                                <i class="bi bi-pencil"></i>
                             </span>
                         </p>
                         <h1 class="center text-primary">{{popTtotal || 0}}</h1>
@@ -248,14 +198,9 @@
                     <div *ngIf="!totalLiveBirths">
                         <p style="display: flex;" class=" center"><span style="margin-left: auto;font-weight: 900;">TOTAL LIVE BIRTHS</span>
                             <span style="margin-left: auto;cursor: pointer;" *ngIf="!totalLiveBirths" [class.unclicable]="isUser" (click)="totalLiveBirths = true" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                </svg>
+                                <i class="bi bi-pencil"></i>
                         </span>
-                        </p>
-
-                        <h1 class="center text-primary">{{birthSatistics.total_live_births}}</h1>
+                            <h1 class="center text-primary">{{birthSatistics.total_live_births}}</h1>
                     </div>
                     <div *ngIf="totalLiveBirths" class="row flex-container">
                         <div class="form-group col-md-6">
@@ -277,10 +222,7 @@
                     <div *ngIf="!birthRates">
                         <p style="display: flex;" class="center"><span style="margin-left: auto;;font-weight: 900;">CRUD BIRTH RATE</span>
                             <span style="margin-left: auto;cursor: pointer;" *ngIf="!birthRates" [class.unclicable]="isUser" (click)="birthRates = true" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="cuurentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                </svg>
+                                <i class="bi bi-pencil"></i>
                             </span>
                         </p>
                         <h1 class="center text-primary">{{birthSatistics.crude_birth_rate || 0}}</h1>
@@ -305,10 +247,7 @@
                     <div *ngIf="!generaLFirtilityRate">
                         <p style="display: flex;" class="center"><span style="margin-left: auto;font-weight: 900;">GENERAL FERTILITY RATE</span>
                             <span style="margin-left: auto;cursor: pointer;" *ngIf="!generaLFirtilityRate" [class.unclicable]="isUser" (click)="generaLFirtilityRate = true" class=" btn-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="cuurentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                </svg>
+                                    <i class="bi bi-pencil"></i>
                             </span>
                         </p>
                         <h1 class="center text-primary">{{birthSatistics.general_fertility_rate}}</h1>
@@ -336,7 +275,7 @@
                     </canvas>
                     </div>
                     <div class="flex-container">
-                        <button (click)="teenagBirth = true" *ngIf="!teenagBirth && !isUser" class="button">Edit Incidence of Teenage Birth Data</button>
+                        <button (click)="teenagBirth = true" *ngIf="!teenagBirth && !isUser" class="btn btn-primary">Edit Incidence of Teenage Birth Data</button>
                     </div>
                     <div class="row" style="padding-top: 40px;" *ngIf="teenagBirth">
 
@@ -352,8 +291,8 @@
                         </div>
 
                         <div class="flex-container  col-md-12">
-                            <button (click)="saveBottomCharts('INCIDENCE OF TEENAGE BIRTHS');teenagBirth = false" class="button">Save</button> &nbsp;
-                            <button (click)="teenagBirth = false" class="clickable">Cancel</button>
+                            <button (click)="saveBottomCharts('INCIDENCE OF TEENAGE BIRTHS');teenagBirth = false" class="btn btn-primary">Save</button> &nbsp;
+                            <button (click)="teenagBirth = false" class="btn btn-dark">Cancel</button>
                         </div>
 
 
@@ -364,11 +303,8 @@
                     </canvas>
                     </div>
 
-
-
-
                     <div class="flex-container">
-                        <button (click)="IllegitimateBirth = true" *ngIf="!IllegitimateBirth  && !isUser" class="button">Edit Incidence of Illegitimate Birth Data</button>
+                        <button (click)="IllegitimateBirth = true" *ngIf="!IllegitimateBirth  && !isUser" class="btn btn-primary">Edit Incidence of Illegitimate Birth Data</button>
                     </div>
                     <div class="row" style="padding-top: 40px;" *ngIf="IllegitimateBirth">
                         <div class="form-group col-md-6">
@@ -382,26 +318,31 @@
                             <input [(ngModel)]="bottomChartData.value" type="number" class="form-control" id="Second">
                         </div>
                         <div class="flex-container col-md-12">
-                            <button (click)="saveBottomCharts('INCIDENCE OF ILLEGITIMATE BIRTHS');IllegitimateBirth = false" class="button">Save</button> &nbsp;
-                            <button (click)="IllegitimateBirth = false" class="clickable">Cancel</button>
+                            <button (click)="saveBottomCharts('INCIDENCE OF ILLEGITIMATE BIRTHS');IllegitimateBirth = false" class="btn btn-primary">Save</button> &nbsp;
+                            <button (click)="IllegitimateBirth = false" class="btn btn-dark">Cancel</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
     <div class="side col-md-4">
         <app-provincial-officials *ngIf="!hasBarangaysAndMunicipalities"></app-provincial-officials>
         <app-sb-members *ngIf="!hasBarangaysAndMunicipalities"></app-sb-members>
-        <municipality-officials></municipality-officials>
+        <municipality-officials *ngIf="hasBarangaysAndMunicipalities"></municipality-officials>
         <br>
-        <h3 class="pop2">TECHNICAL NOTES</h3>
-        <hr>
-        <p><span class="fw-bold">Crude Birth Rate</span> - the number of live births per 1,000 population in a given year Teenage Births – the number of live births to women ages 19 and below per 100 live births in a given year Illegitimate Births – the
-            number of births to unmarried women per 100 live births in a given year</p>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">TECHNICAL NOTES</h5>
+            </div>
+            <div class="card-body">
+                <p><span class="fw-bold">Crude Birth Rate</span> - the number of live births per 1,000 population in a given year Teenage Births – the number of live births to women ages 19 and below per 100 live births in a given year Illegitimate Births
+                    – the number of births to unmarried women per 100 live births in a given year</p>
 
-        <p><span class="fw-bold">General Fertility Rate</span> - the number of live births per 1,000 women ages 15-49 in a given year</p>
-
-
+                <p><span class="fw-bold">General Fertility Rate</span> - the number of live births per 1,000 women ages 15-49 in a given year</p>
+            </div>
+        </div>
     </div>
 </div>

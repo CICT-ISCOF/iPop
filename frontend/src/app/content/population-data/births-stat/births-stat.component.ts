@@ -6,6 +6,8 @@ import { LocationService } from '../../../others/location.service';
 import { Component, OnInit } from '@angular/core';
 import { groupBy, where } from '../../../helpers';
 import { OfficialsService1 } from '../../officials-of/officials.service';
+import * as birth from './birth-data'
+import { FiltersService } from 'src/app/filters/filters.service';
 
 @Component({
   selector: 'app-births-stat',
@@ -18,15 +20,17 @@ export class BirthsStatComponent implements OnInit {
 		private BirthStatService: BirthStatService,
 		private UtilityService: UtilityService,
 		private OfficialsService1 : OfficialsService1,
-		private UserService : UserService
+        private UserService: UserService,
+        private FiltersService: FiltersService,
 	) { 
-		this.OfficialsService1.listen().subscribe(()=>{
-			this.CheckBarangaysAndMunicipalities()
-		})
-	}
+		this.OfficialsService1.listen().subscribe(()=>this.CheckBarangaysAndMunicipalities())
+        this.FiltersService.getYear().subscribe( (value:any) => this.getDataParams.year = value )
+        this.FiltersService.getMunicipality().subscribe( ( value: any ) => { this.getDataParams.municipality = value.name } )
+        this.FiltersService.getBarangay().subscribe( ( value: any ) => { this.getDataParams.barangay = value.name } )
+    }
+
 
 	isUser =  !this.UserService.isUser()
-
 	ngOnInit(): void {
 		for (let i = 2015; i <= 2050; i++) {
 			this.years.push(i);
@@ -34,8 +38,8 @@ export class BirthsStatComponent implements OnInit {
 		this.getMuncipalities();
 		this.getSummary()
 		this.getPopulationTotal()
-		localStorage.removeItem('municipality-ref') 
-		localStorage.removeItem('barangay-ref') 
+		localStorage.removeItem('municipality') 
+		localStorage.removeItem('barangay') 
 	}
 
 	popTtotal = {}
@@ -48,19 +52,17 @@ export class BirthsStatComponent implements OnInit {
 	hasBarangaysAndMunicipalities = false
 
 	CheckBarangaysAndMunicipalities(){
-		if(localStorage.getItem('municipality-ref') == undefined){
+		if(localStorage.getItem('municipality') == undefined){
 			this.hasBarangaysAndMunicipalities = false
 			return
 		}
-		if(localStorage.getItem('barangay-ref') == undefined){
+		if(localStorage.getItem('barangay') == undefined){
 			this.hasBarangaysAndMunicipalities = false
 			return
 		}
 		this.hasBarangaysAndMunicipalities =  true
 		return
 	}
-
-
 	
 	back(){
 		window.history.back()
@@ -70,61 +72,7 @@ export class BirthsStatComponent implements OnInit {
 	barangays: any = [];
 	hasData = true;
 
-	data = {
-		municipality: 'Select Municipality',
-		barangay: '',
-		year: '',
-		gender: 'Male',
-		total_live_births: '',
-		crude_birth_rate: '',
-		general_fertility_rate: '',
-		monthsFemale: {
-			January: 0,
-			February: 0,
-			March: 0,
-			April: 0,
-			May: 0,
-			June: 0,
-			July: 0,
-			August: 0,
-			September: 0,
-			October: 0,
-			November: 0,
-			December: 0,
-		},
-		monthsMale: {
-			January: 0,
-			February: 0,
-			March: 0,
-			April: 0,
-			May: 0,
-	 		June: 0,
-			July: 0,
-			August: 0,
-			September: 0,
-			October: 0,
-			November: 0,
-			December: 0,
-			
-		},
-		monthsTotal: {
-			January: 0,
-			February: 0,
-			March: 0,
-			April: 0,
-			May: 0,
-			June: 0,
-			July: 0,
-			August: 0,
-			September: 0,
-			October: 0,
-			November: 0,
-			December: 0,
-			
-		},
-
-		type: 'Birth',
-	};
+    data = birth.data
 
 	MONTHbarChartOptions = {
 		scaleShowVerticalLines: false,
@@ -318,8 +266,8 @@ export class BirthsStatComponent implements OnInit {
 		this.MONTHbarChartData[1].data = []
 		this.MONTHbarChartData[2].data = []
 
-		localStorage.setItem('municipality-ref',this.getDataParams.municipality) 
-		localStorage.setItem('barangay-ref',this.getDataParams.barangay) 
+		localStorage.setItem('municipality',this.getDataParams.municipality) 
+		localStorage.setItem('barangay',this.getDataParams.barangay) 
 		this.OfficialsService1.setTrigger()
 
 		this.BirthStatService.showData(
