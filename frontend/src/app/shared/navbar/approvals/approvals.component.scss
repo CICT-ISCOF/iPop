@@ -1,7 +1,7 @@
 .dropdown-component {
     width: 360px;
     height: auto;
-    background: var(--bg);
+    background: var(--bg1);
     position: absolute;
     top: 10px;
     right: 20px;
@@ -65,7 +65,7 @@
 .approval {
     width: 100%;
     padding: 10px;
-    background: var(--inputBg);
+    background: var(--bg);
     border-radius: 7px;
     margin-bottom: 20px;
     border-left: 5px solid transparent;

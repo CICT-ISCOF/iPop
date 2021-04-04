@@ -29,7 +29,7 @@
         </div>
         <div class="sb-member" *ngFor="let member of sbMembers;let i = index">
             <div class="flex container" style="margin-bottom: -27px;">
-                <h5 style="font-weight: 900; display: flex;" *ngIf="!activeSB[i]" && !isLoading>
+                <h5 style="font-weight: 900; display: flex;" *ngIf="!activeSB[i] && !isLoading">
                     <p style="align-self: flex-start;">
                         <span class="text-primary">  HON.   </span>
                         <span>&nbsp; {{member.name}} </span>
@@ -52,16 +52,16 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="addMember " class="row container " style="margin-left: 0px; ">
-                <div class="form-group col-md-10 flex-container " style="transform: translate(-20px,10px); ">
-                    <label for="name " class="mr-2 ">Honorable </label>
-                    <input (keyup.enter)="saveMember() " [(ngModel)]="sbMember.name " type="text " id="name " class="form-control ">
-                </div>
-                <div class="flex-container col-md-1 " style="transform: translateX(10px); ">
-                    <div (click)="saveMember() " *ngIf="addMember " class="clickable center ">
-                        <br>
-                        <div class="btn btn-primary ">Add</div>
-                    </div>
+        </div>
+        <div *ngIf="addMember" class="row container " style="margin-left: 0px; ">
+            <div class="form-group col-md-10 flex-container " style="transform: translate(-20px,10px); ">
+                <label for="name " class="mr-2 ">Honorable </label>
+                <input (keyup.enter)="saveMember() " [(ngModel)]="sbMember.name " type="text " id="name " class="form-control ">
+            </div>
+            <div class="flex-container col-md-1 " style="transform: translateX(10px); ">
+                <div (click)="saveMember() " *ngIf="addMember " class="clickable center ">
+                    <br>
+                    <div class="btn btn-primary ">Add</div>
                 </div>
             </div>
         </div>

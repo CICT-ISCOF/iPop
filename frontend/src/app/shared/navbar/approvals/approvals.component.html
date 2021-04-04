@@ -1,5 +1,5 @@
 <div class="dropdown-component container">
-    <div class="title">Approval Requests</div>
+    <div class="title pop2" style="top: -20px !important;">Approval Requests</div>
 
     <div class="approval new " *ngFor="let approval of approvals">
         <div class="approval-container">
@@ -13,10 +13,10 @@
 
         <div class="approval-actions" *ngIf="!approval.approved">
             <div class="approve">
-                <button class="button btn-primary">Approve</button>
+                <button (click)="approve(approval.id)" class="btn btn-sm btn-primary">Approve</button>
             </div>
             <div class="reject">
-                <button class="clickable btn-danger">Reject</button>
+                <button (click)="reject(approval.id)" class="btn btn-sm btn-danger">Reject</button>
             </div>
         </div>
     </div>

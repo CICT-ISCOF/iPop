@@ -48,6 +48,17 @@ export class ApprovalsService {
 		const url = this.baseURL + '?page=' + page
 		return this.http.get<any>(url, {headers:this.getHeaders()} )
 	}
+    
+    approve( id:any ) {
+        const url = this.baseURL + '/' + id
+        return this.http.patch<any>( url, { approved: true },{ headers: this.getHeaders() } )
+        
+    }
+    reject( id:any ) {
+        const url = this.baseURL + '/' + id
+        return this.http.delete<any>( url, { headers: this.getHeaders() } )
+    }
+
 
 
 }

@@ -31,5 +31,17 @@ export class ApprovalsComponent implements OnInit {
 			this.approvals.push(data.data)
 		})
 	}
+    
+    approve(id) {
+        this.ApprovalsService.approve( id ).subscribe( data => {
+            this.ngOnInit()
+        })
+    }
+    
+    reject(id) {
+        this.ApprovalsService.reject( id ).subscribe( data => {
+this.ngOnInit()
+        } )
+    }
 
 }

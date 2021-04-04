@@ -4,7 +4,7 @@
     <div class="animated fadeInLeftBig">
         <br><br><br><br>
         <div *ngIf="!wantsToAddanAward">
-            <button style="display: flex;" (click)="wantsToAddanAwardFunction(true)" *ngIf="!wantsToAddanAward && !isUser" class="button add-an-award ">
+            <button style="display: flex;" (click)="wantsToAddanAwardFunction(true)" *ngIf="!wantsToAddanAward && !isUser" class="btn btn-primary add-an-award ">
               Add an Award
               <svg style="margin-right: 0;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="white" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -75,7 +75,7 @@
 
                             <div class="ml-auto ">
                                 <button (click)="toggleAward(i) " class="clickable">Cancel</button>
-                                <button (click)="updateAward(award.id, award)" class="button">Save Changes</button>
+                                <button (click)="updateAward(award.id, award)" class="btn btn-primary">Save Changes</button>
                             </div>
 
                         </div>
@@ -143,7 +143,7 @@
             </div>
         </div>
         <div *ngIf="wantsToAddanAward" class="flex" style="justify-content: center;align-items: center;">
-            <button (click)="createAward()" class="button ">Save</button> &nbsp;
+            <button (click)="createAward()" class="btn btn-primary ">Save</button> &nbsp;
             <button (click)="wantsToAddanAwardFunction(false)" class="clickable ">Cancel</button>
         </div>
 
