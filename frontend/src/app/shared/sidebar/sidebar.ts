@@ -22,13 +22,13 @@ const navs = [
     {
         name: 'Admin Accounts',
         route: 'admin-accounts',
-        icon: 'bi-lock-fill',
+        icon: ' bi-shield-lock-fill',
         type: 'admin'
     },
     {
-        name: 'New Administrator',
+        name: 'New Admin',
         route: 'new-admin',
-        icon: 'bi-unlock-fill',
+        icon: 'bi-shield-fill-plus',
         type: 'admin'
     },
     {

@@ -10,7 +10,7 @@
         <div class="col-md-4 mb-3" style="position: relative;">
             <img [src]="image" alt="">
             <div (click)="triggerInput()" class="icon-container">
-                <i style="font-size: 25px;" class="fas fa-camera"></i>
+                <i style="font-size: 25px;" class="bi bi-camera-fill"></i>
                 <input (change)="readURL($event.target.files,$event)" accept="image/*" type="file" class="hidden" id="profile-picture">
             </div>
             <br><br>
@@ -130,7 +130,7 @@
         <hr>
 
         <div class="row">
-            <div class="col-md-7 mb-3">
+            <div class="col-md-7 mt-3">
                 <label for="municipality">Municipality
                     <span>
                         <svg width="9px" height="9px" viewBox="0 0 16 16" class="bi bi-asterisk" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -147,7 +147,7 @@
                 </div>
             </div>
 
-            <div class="col-md-5 mb-3">
+            <div class="col-md-5 mt-3">
                 <label for="barangay">
                     <div *ngIf="barangayIsLoading" class="spinner-border text-light  spinner-border-sm fast" role="status">
                         <span class="sr-only">Loading...</span>
@@ -172,8 +172,8 @@
         <br> <br>
 
         <div class="button-container">
-            <button *ngIf="!isSubmitting" (click)="register()" class="button">Create Admin</button>
-            <button *ngIf="isSubmitting" class="btn button" type="button" disabled>
+            <button *ngIf="!isSubmitting" (click)="register()" class="btn btn-primary">Create Admin</button>
+            <button *ngIf="isSubmitting" class="btn button" type="btn btn-primary" disabled>
                 <span class="spinner-border spinner-border-sm text-light fast" role="status" aria-hidden="true"></span>
                 Loading...
             </button>

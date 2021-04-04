@@ -1,4 +1,4 @@
-<div (click)="showMap()" class="coords" tooltip="Click to View Map" placement="top" show-delay="100" [theme]="theme">
+<a target="_blank" [href]="'https://www.google.com/maps/place/' + params.info.lat + '+' + params.info.lon + ',+Iloilo'" class="coords" tooltip="Click to View Map" placement="top" show-delay="100" [theme]="theme">
     <p style="margin-top:5px;margin-bottom:-0px;">Latitude <span style="margin-left: 15px;">{{params.info.lat}}</span></p>
     <p>Longitude <span>{{params.info.lon}}</span></p>
-</div>
+</a>
