@@ -1,0 +1,27 @@
+a {
+    text-transform: lowercase;
+    display: flex;
+    * {
+        margin-right: 5px;
+        flex: 1;
+    }
+    p {
+        color: var(--colorPrimary);
+        align-self: flex-start;
+        flex: 4;
+    }
+    a:active {
+        color: white !important;
+    }
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
+    i {
+        color: white;
+        margin-right: 10px;
+    }
+}

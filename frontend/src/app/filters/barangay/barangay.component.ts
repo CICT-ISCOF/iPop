@@ -37,6 +37,7 @@ export class BarangayComponent implements OnInit {
     setBarangay(barangay) {
         this.selectedBarangayName = barangay.name
         this.FiltersService.setBarangay( barangay )
+        localStorage.setItem( 'barangay', barangay.name )
     }
 
 }

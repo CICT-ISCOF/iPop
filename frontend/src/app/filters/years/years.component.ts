@@ -25,6 +25,7 @@ export class YearsComponent implements OnInit {
     setYear(year:any) {
         this.selectedYear = year
         this.FiltersService.setYear( year )
+        localStorage.setItem( 'year', year)
     }
 
 }

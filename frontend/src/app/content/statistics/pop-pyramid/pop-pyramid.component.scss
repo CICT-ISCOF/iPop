@@ -1,0 +1,14 @@
+.card-header {
+    background: var(--bg) !important;
+    background-color: var(--bg) !important;
+    border-bottom: 1px solid rgba(150, 150, 150, .1);
+}
+
+button {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

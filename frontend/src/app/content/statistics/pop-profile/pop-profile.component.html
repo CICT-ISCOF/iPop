@@ -1,20 +1,43 @@
 <div class="card row" style="position: relative;">
     <div class="card-header">
         <h5 class="d-flex">
-            <p class="card-title" style="margin-top: 10px;">Population Profile</p>
+            <div>
+                <p class="card-title" style="margin-top: 10px;">Population Profile</p>
+            </div>
+            <button *ngIf="!isUser" (click)="editPopProfile()" class="ml-auto btn btn-sm btn-primary">
+                <i style="color: white;" class="bi bi-pencil"></i>
+            </button>
         </h5>
     </div>
     <div class="card-body ">
         <div class="container">
+            <div *ngIf="data.length == 0" class="row">
+                <div *ngFor="let item of [1,2,3,4,5,6,7,8];let i = index " class="col-md-6">
+                    <div>
+                        <div style="width: 90%;height: 10px;">
+                            <ShimmerPlaceholder></ShimmerPlaceholder>
+                        </div>
+                        <br>
+                        <div style="width: 40%;height: 10px;">
+                            <ShimmerPlaceholder></ShimmerPlaceholder>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
             <div class="row">
                 <div *ngFor="let item of data;let i = index " class="col-6 d-flex align-items-start">
-                <div class="icon">
-                    <i class="bi bi-geo-alt-fill"></i>
-                </div>
-                <div class="ms-2 me-auto list">
-                    <div class="fw-bold">{{name[i]}}</div>
-                    <h5 style="color:#FD582C">{{filteredData[item] || 'N/A'}}</h5>
-                </div>
+                    <div class="icon">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                    <div class="ms-2 me-auto list">
+                        <div class="fw-bold">{{name[i]}}</div>
+                        <h5 style="color:#FD582C">{{filteredData[item] || 'N/A'}}</h5>
+                    </div>
                 </div>
             </div>
         </div>

@@ -16,11 +16,12 @@ export class PyramidAddComponent implements OnInit {
     ) {
         this.FiltersService.getYear().subscribe( value => this.year = value )
         this.FiltersService.getMunicipality().subscribe( ( value: any ) => { this.municipality = value.name } )
+        this.FiltersService.getMunicipality().subscribe( ( value: any ) => { this.barangay = value.name } )
     }
     
     year: any = 0
-    municipality = ""
-    barangay = ""
+    municipality = "1"
+    barangay = "1"
     
     populationPyramid = {
         data: {
@@ -35,8 +36,8 @@ export class PyramidAddComponent implements OnInit {
     createpopulationPyramid() {
         this.populationPyramid[ 'municipality' ] = this.municipality
         this.populationPyramid[ 'barangay' ] = this.barangay
-        this.populationPyramid[ 'year' ] = this.year
-        if ( this.populationPyramid[ 'year' ] == '' ) {
+        this.populationPyramid[ 'year' ] = localStorage.getItem('year')
+        if ( this.populationPyramid[ 'year' ] == undefined ) {
             return Swal.fire( 'Please set Filters to add municipality', '', 'error' )
         }
         this.PopulationPyramidService.create( this.populationPyramid ).subscribe( data => {

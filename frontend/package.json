@@ -38,6 +38,7 @@
         "angular-particle": "^1.0.4",
         "angular-placeholder-shimmer": "^1.2.1",
         "aos": "^2.3.4",
+        "bootstrap": "^5.0.0-beta3",
         "bower": "^1.8.12",
         "chart.js": "^2.9.4",
         "network-status-angular": "^1.0.4",

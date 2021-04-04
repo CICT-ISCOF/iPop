@@ -1,8 +1,5 @@
 
 
-
-
-
 export const options = {
     pyramidChartOptions: {
         backgroundColor: {
@@ -18,22 +15,19 @@ export const options = {
             format: ';',
             title: '',
             textStyle: {
-                color: formatChatColor()
+                color: 'gray'
             },
         },
         vAxis: {
             direction: 1,
             title: '',
             textStyle: {
-                color: formatChatColor()
+                color: 'gray'
             },
         },
-        legend: { textStyle: { color: formatChatColor() } }
+        legend: { textStyle: { color: 'gray' } }
 
     },
 
 }
 
-function formatChatColor(){
-    return localStorage.getItem( 'data-theme' ) == 'dark' ? 'white' : 'black'
-}

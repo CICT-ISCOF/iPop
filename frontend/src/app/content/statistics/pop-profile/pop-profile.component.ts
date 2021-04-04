@@ -17,8 +17,10 @@ export class PopProfileComponent implements OnInit {
         } )
         
         structure.getData().then( response => {
-            this.data = response.data
-            this.name = response.name
+         setTimeout(() => {
+             this.data = response.data
+             this.name = response.name
+         }, 500);
         } )
         
     }

@@ -32,4 +32,14 @@ export class FiltersService {
     getYear() {
         return this.year.asObservable()
     }
+    
+    
+    private trigger = new Subject()
+    setTrigger( ) {
+        this.trigger.next(  )
+    }
+
+    getTrigger() {
+        return this.trigger.asObservable()
+    }
 }
