@@ -30,6 +30,8 @@ export class MunicipalityComponent implements OnInit {
     
     selectedMunicipality( muncipality: any ) {
         this.selectedMunicipalityName = muncipality.name
-        this.FiltersService.setMunicipality(muncipality)
+        this.FiltersService.setMunicipality( muncipality )
+        localStorage.setItem( 'muncipality', muncipality.name )
+
     }
 }

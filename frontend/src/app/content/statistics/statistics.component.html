@@ -7,10 +7,9 @@
                     <Municipality></Municipality>
                     <Barangay></Barangay>
                     <Years></Years>
-                    <button *ngIf="this.municipality.name != '' &&  this.barangay.name != '' && this.year != 0 " (click)="setFilter()" class="btn btn-sm btn-primary rounded">Show Data</button>
-                    <a *ngIf="this.municipality.name != '' &&  this.barangay.name != '' && this.year != 0 " (click)="addData = true" class="btn btn-sm btn-primary rounded" style="opacity: .9;" [href]="'https://www.google.com/maps/place/' + municipality + '+' + barangay + ',+Iloilo'"
-                        target="_blank">Show Map</a>
-                    <button (click)="addPopData()" class="btn btn-sm btn-primary rounded" style="opacity: .8;">Add Population Data</button>
+                    <button (click)="setFilter()" class="btn btn-sm btn-primary rounded">Show Data</button>
+                    <a (click)="addData = true" class="btn btn-sm btn-primary rounded" style="opacity: .9;" [href]="'https://www.google.com/maps/place/' + municipality + '+' + barangay + ',+Iloilo'" target="_blank">Show Map</a>
+                    <button (click)="addPopData()" class="btn btn-sm btn-primary rounded" style="opacity: .8;">Add Population Profile</button>
                 </div>
             </div>
             <br>

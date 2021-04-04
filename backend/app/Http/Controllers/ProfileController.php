@@ -109,7 +109,7 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'municipality' => ['required', Rule::exists('municipalities', 'name')],
+            'municipality' => ['nullable', Rule::exists('municipalities', 'name')],
             'barangay' => ['required', Rule::exists('barangays', 'name')],
             'year' => ['required', 'date_format:Y'],
             'coverage' => ['required', 'string', 'max:255'],

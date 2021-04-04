@@ -28,10 +28,11 @@ export class StatisticsComponent implements OnInit {
 	}  
 
     year:any = 0
-    municipality = ""
-    barangay = ""
+    municipality = "1"
+    barangay = "1"
 	isUser =  !this.UserService.isUser()
 	ngOnInit(): void {	
+         localStorage.removeItem( 'year')
 	}
 
 	data:any = {}
@@ -56,12 +57,9 @@ export class StatisticsComponent implements OnInit {
         } )
     }
     
-  
     addPopData() {
         this.Modal.show( 'AddPopulationData', 'Add Population Profile' )
     }
     
-    AddPyramidData() {
-        this.Modal.show( 'AddPyramidData', 'Add Population Pyramid Data' )
-    }
+   
 }

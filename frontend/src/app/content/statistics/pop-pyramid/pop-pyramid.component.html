@@ -1,9 +1,12 @@
 <div class="row card">
     <div class="card-header">
         <h5 class="d-flex">
-            <p class="card-title" style="margin-top: 10px;">Population Pyramid</p>
+            <div>
+                <p class="card-title" style="margin-top: 10px;">Population Pyramid</p>
+                <p style="color:gray;font-weight: 200;">{{ municipality == ""?'Province of Iloilo': municipality}}</p>
+            </div>
             <button *ngIf="!isUser" (click)="AddPyramidData()" class="ml-auto btn btn-sm btn-primary">
-                <i style="color:white" class="fa fa-plus"></i>
+                <i style="color: white;" class="bi bi-pencil"></i>
             </button>
         </h5>
     </div>
