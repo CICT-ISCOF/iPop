@@ -9,7 +9,7 @@
                     <Years></Years>
                     <button (click)="setFilter()" class="btn btn-sm btn-primary rounded">Show Data</button>
                     <a (click)="addData = true" class="btn btn-sm btn-primary rounded" style="opacity: .9;" [href]="'https://www.google.com/maps/place/' + municipality + '+' + barangay + ',+Iloilo'" target="_blank">Show Map</a>
-                    <button (click)="addPopData()" class="btn btn-sm btn-primary rounded" style="opacity: .8;">Add Population Profile</button>
+                    <button (click)="addPopData()" *ngIf="!isUser" class="btn btn-sm btn-primary rounded" style="opacity: .8;">Population Profile</button>
                 </div>
             </div>
             <br>
@@ -26,3 +26,6 @@
         </div>
     </div>
 </div>
+<br>
+<br>
+<br>

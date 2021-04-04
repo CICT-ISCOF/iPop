@@ -21,12 +21,7 @@ export class PopPyramidComponent implements OnInit {
         this.FiltersService.getYear().subscribe( value => this.year = value )
         this.FiltersService.getMunicipality().subscribe( ( value: any ) => { this.municipality = value.name } )
         this.FiltersService.getBarangay().subscribe( ( value: any ) => { this.barangay = value.name } )
-        this.FiltersService.getTrigger().subscribe(() => {
-            let data = {
-                municipality: localStorage.getItem( 'muncipality' ),
-                barangay: localStorage.getItem( 'barangay' ),
-                year: localStorage.getItem( 'year' ),
-            }
+        this.FiltersService.getTrigger().subscribe((data:any) => {
             if ( localStorage.getItem( 'muncipality' ) == 'Province' ) {
                     data.barangay ='1'
             }
@@ -39,11 +34,7 @@ export class PopPyramidComponent implements OnInit {
     barangay = ""
 
     ngOnInit(): void {  
-        this.getPopulationPyramid( {
-            municipality:1,
-            barangay: 1,
-            year: this.year,
-        } )
+      
     }
     
     isLoading = false

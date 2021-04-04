@@ -4,12 +4,13 @@
             <h5 class="pop2 d-flex" style="align-items: center;">
                 <span>Top Populated Municipalties </span>
                 <span class="ml-auto">
-                    <button (click)="addTopPopulated = true;" *ngIf="!addTopPopulated" class="btn dark">
-                        <i class="fa fa-plus"></i>
+                    <button (click)="addTopPopulated = true;" *ngIf="!addTopPopulated" class="ml-auto btn btn-sm btn-primary">
+                       <i style="color:white" class="bi bi-plus"></i>
                     </button>
-                    <button (click)="addTopPopulated = false" *ngIf="addTopPopulated" class="btn dark">
-                        <i class="fa fa-times"></i>
+                    <button (click)="addTopPopulated = false" *ngIf="addTopPopulated" class="ml-auto btn btn-sm btn-primary">
+                        <i  style="color:white" class="bi bi-x"></i>
                     </button>
+                      
                 </span>
             </h5>
         </div>
@@ -34,7 +35,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div *ngFor="let municipality of topPopulateds" class="col-6 d-flex list">
+                    <div (click)="deletetopPopulateds( municipality )" *ngFor="let municipality of topPopulateds" class="col-6 d-flex list" style="cursor: pointer;">
                         <i style="color: #FD582C;transform: translateY(-5px);font-size: 35px;" class="bi bi-shop-window"></i>
                         <div style="flex: 5">
                             <p s>{{municipality.data.name || 0}}</p>
@@ -51,8 +52,8 @@
                         </select>
                         <input [(ngModel)]="topPulated.data.total" type="number" placeholder="Total Population" class="form-control" id="Total Population">
                         <input [(ngModel)]="topPulated.data.percent" type="number" placeholder="Percent" class="form-control" id="Percentage">
-                        <div style="transform: translate(20px,10px);">
-                            <i (click)="createtopPopulateds() " class="fa fa-check text-success "></i>
+                        <div (click)="createtopPopulateds()" style="transform: translate(20px,-5px);">
+                            <i style="cursor: pointer;" class="bi bi-save2 text-primary"></i>
                         </div>
                     </div>
                 </div>

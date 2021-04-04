@@ -46,14 +46,17 @@ export class TopPopulatedComponent implements OnInit {
     }
     deletetopPopulateds( municipality ) {
         Swal.fire( {
-            title: `Are you sure you want to remove this  ${ municipality[ 'name' ] }?`,
+            title: `Are you sure you want to remove this  ${ municipality.data[ 'name' ] }?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Remove',
             cancelButtonText: 'Nope'
         } ).then( ( result ) => {
             if ( result.value ) {
-
+                this.TopPopulatedMunicipalityService.deleteData( municipality[ 'id' ] ).subscribe( () => {
+                    Swal.fire( ` ${ municipality.data[ 'name' ] } has been deleted from list`, '', 'success' )
+                    this.ngOnInit()
+                })
             }
         } )
     }

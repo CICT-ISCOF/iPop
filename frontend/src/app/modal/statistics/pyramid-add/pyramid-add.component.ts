@@ -14,18 +14,25 @@ export class PyramidAddComponent implements OnInit {
     constructor (
         private PopulationPyramidService: PopulationPyramidService,
         private FiltersService: FiltersService,
-        private StatisticsService: StatisticsService,
-
     ) {
         this.FiltersService.getYear().subscribe( value => this.year = value )
         this.FiltersService.getMunicipality().subscribe( ( value: any ) => { this.municipality = value.name } )
         this.FiltersService.getMunicipality().subscribe( ( value: any ) => { this.barangay = value.name } )
-        this.FiltersService.getTrigger().subscribe( () => {
-            this.ngOnInit()
-        } )
-        
-        
-        
+         this.FiltersService.getTrigger().subscribe((data:any) => {
+            if ( localStorage.getItem( 'muncipality' ) == 'Province' ) {
+                    data.barangay ='1'
+            }
+            this.PopulationPyramidService.retrieve( {
+                municipality: localStorage.getItem( 'muncipality' ),
+                barangay: localStorage.getItem( 'barangay' ),
+                year: localStorage.getItem( 'year' ),
+            }
+            ).subscribe( ( data: any ) => {
+                if ( data.length != 0 ) {
+                    this.populationPyramid = data[ 0 ]
+                }
+            } )
+        })
     }
     
     year: any = 0
@@ -51,20 +58,21 @@ export class PyramidAddComponent implements OnInit {
             } )
             return
         }        
-        this.PopulationPyramidService.retrieve( {
-            municipality: localStorage.getItem( 'muncipality' ),
-            barangay: localStorage.getItem( 'barangay' ),
-            year: localStorage.getItem( 'year' ),
-        }
-        ).subscribe( ( data: any ) => {
-            if ( data.length != 0 ) {
-                this.populationPyramid = data[ 0 ]
+        if ( localStorage.getItem( 'muncipality' ) != undefined || localStorage.getItem( 'year' ) || localStorage.getItem( 'barangay' )  ) {
+            this.PopulationPyramidService.retrieve( {
+                municipality: localStorage.getItem( 'muncipality' ),
+                barangay: localStorage.getItem( 'barangay' ),
+                year: localStorage.getItem( 'year' ),
             }
-        } )
+            ).subscribe( ( data: any ) => {
+                if ( data.length != 0 ) {
+                    this.populationPyramid = data[ 0 ]
+                }
+            } )
+            return
+        }
         
     }
-    
-    
     
     createpopulationPyramid() {
         this.populationPyramid[ 'municipality' ] = localStorage.getItem( 'muncipality' )
@@ -79,6 +87,7 @@ export class PyramidAddComponent implements OnInit {
         this.PopulationPyramidService.create( this.populationPyramid ).subscribe( data => {
             this.ngOnInit()
             Swal.fire( 'Population Pyramid Successfully Updated', '', 'success' )
+            this.PopulationPyramidService.setTrigger()
         } )
     }
 

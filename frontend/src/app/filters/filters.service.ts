@@ -35,8 +35,8 @@ export class FiltersService {
     
     
     private trigger = new Subject()
-    setTrigger( ) {
-        this.trigger.next(  )
+    setTrigger( data ) {
+        this.trigger.next( data )
     }
 
     getTrigger() {

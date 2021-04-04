@@ -24,27 +24,32 @@ export class StatisticsComponent implements OnInit {
 	) { 
         this.FiltersService.getYear().subscribe( value => this.year = value)
         this.FiltersService.getMunicipality().subscribe( (value:any) => {this.municipality = value.name} )
-        this.FiltersService.getBarangay().subscribe( ( value: any ) => { this.barangay = value.name} )
+        this.FiltersService.getBarangay().subscribe( ( value: any ) => { this.barangay = value.name } )
+        this.PopulationPyramidService.getTrigger().subscribe( () => this.setFilter())
 	}  
 
-    year:any = 0
-    municipality = "1"
+    year: any = new Date().getFullYear();
+    municipality = "Province"
     barangay = "1"
 	isUser =  !this.UserService.isUser()
 	ngOnInit(): void {	
-         localStorage.removeItem( 'year')
+        this.setFilter()
 	}
 
 	data:any = {}
 	
     setFilter() {
-        const data = {
-            municipality: localStorage.getItem( 'muncipality' ),
+        let data = {
+            municipality: this.municipality,
             barangay: this.barangay,
             year: this.year,
         }
+        data.municipality = "Province"
+        if ( localStorage.getItem( 'muncipality' ) != undefined) {
+            data.municipality = localStorage.getItem( 'muncipality' )
+        }
         this.getProfileData( data )
-        this.FiltersService.setTrigger()
+        this.FiltersService.setTrigger(data)
     }
     
     getProfileData(data:any) {
