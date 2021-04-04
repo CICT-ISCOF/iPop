@@ -24,6 +24,7 @@ class ProfileController extends Controller
         foreach ($profiles as $profile) {
             if (!in_array($profile->municipality, array_keys($data))) {
                 $data[$profile->municipality] = [
+                    'municipality' => $profile->municipality,
                     'barangays' => 0,
                     'land_area' => 0,
                     'population_density' => 0,
