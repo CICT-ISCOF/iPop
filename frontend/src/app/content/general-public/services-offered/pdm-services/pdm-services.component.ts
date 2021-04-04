@@ -81,15 +81,12 @@ export class PDMServicesComponent implements OnInit {
 		})
 	}
 
-
-
 	acitveServices = {}
 
 	wantsToAdd = false
 
 	toggleServices(service_id){		
 		this.acitveServices[service_id] == true ?  this.acitveServices[service_id] = false : this.acitveServices[service_id] = true	
-		console.log(this.acitveServices[service_id])		
 	}
 
 }

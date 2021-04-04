@@ -16,14 +16,12 @@ export class ActionButtonsLogsComponent implements OnInit {
 
 		}
 
-
 	log
 	params
 
 	agInit(params:any){ 		
 		this.log = params.value
 		this.params  = params.data    
-		console.log(this.params)
 	}
 
 	refresh(params:any):boolean{

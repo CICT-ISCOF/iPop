@@ -122,7 +122,6 @@ export class CpdbTableComponent implements OnInit {
 			totalPages:[],
 		}
 		this.CpdbService.search(this.keyword).subscribe(response => {
-			console.log('search', response)
 			this.CpdbService.setData(response.data)
 			this.pagination.currentPage = response.current_page
 			this.pagination.lastPage = response.last_page

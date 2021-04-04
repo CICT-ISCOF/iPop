@@ -42,13 +42,11 @@ export class AHYDPComponent implements OnInit {
 	getProramArea(){
 		this.ProgramAreasService.getProgramArea().subscribe(data => {
 			this.programArea = data[1]
-			console.log(this.programArea )
 		})
 	}
 
 	updateProgramArea(){
 		this.ProgramAreasService.updateProgramArea(this.activity, 2).subscribe(data => {
-			console.log('update', data)
 			this.activity = {		
 				program_area_id:2,
 				title:'',
@@ -151,7 +149,6 @@ export class AHYDPComponent implements OnInit {
 
 	toggleProgram(program_id){		
 		this.acitveProgram[program_id] == true ?  this.acitveProgram[program_id] = false : this.acitveProgram[program_id] = true	
-		console.log(this.acitveProgram[program_id])
 		this.clearSlider()
 	}
 	

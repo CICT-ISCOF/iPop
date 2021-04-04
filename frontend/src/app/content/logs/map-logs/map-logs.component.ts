@@ -18,11 +18,9 @@ export class MapLogsComponent implements OnInit {
   
 	log
 	params
-
 	
 	agInit(params:any){
 		this.log = params.value
-		this.params  = params.data;console.log(params.data)
 	}
 
 	refresh(params:any):boolean{

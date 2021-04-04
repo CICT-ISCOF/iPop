@@ -32,7 +32,6 @@ export class ContentsListComponent implements OnInit {
 
 		this.CmsService.getLinks().subscribe(data => {
 			this.list = data
-			console.log(data)
 		})
 	}
 

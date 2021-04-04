@@ -91,29 +91,15 @@ export class CmsComponent implements OnInit {
 
 	
 	submit(){	
-		// for(let key in this.categories){
-		// 	if(this.categories[key]== ''){
-		// 		this.UtilityService.setAlert('Categories should not be left empty','error')
-		// 		return
-		// 	}
-		// }	
-		
-
 		if(this.existingCategory == false){	
 			this.items.push(this.categories)						
 			this.CmsService.save(this.items).subscribe(data => {
-				console.log(data)
 			})
 		}
 		else{			
 			this.CmsService.setChild(this.childParams).subscribe(data=>{
-				console.log(data)
 			})
 		}
-
-
-
-
 	}
 
 	// ----------------- content options --------------------------
@@ -171,7 +157,6 @@ export class CmsComponent implements OnInit {
 	getParentLinks(){
 		this.CmsService.getLinks().subscribe(data => {			
 			this.titles = data
-			console.log(data)
 		})
 	}
 	

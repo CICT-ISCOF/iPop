@@ -72,7 +72,6 @@ export class TeenCentersComponent implements OnInit {
 
 	getTeenCenters(){
 		this.TeenCentersService.getTeenCenters().subscribe(data =>{
-			console.log('teen center', data)
 			this.districts = data		
 		})
 	}

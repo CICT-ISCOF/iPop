@@ -43,13 +43,11 @@ export class CPDBMPComponent implements OnInit {
 	getProramArea(){
 		this.ProgramAreasService.getProgramArea().subscribe(data => {
 			this.programArea = data[2]
-			console.log(this.programArea )
 		})
 	}
 
 	updateProgramArea(){
 		this.ProgramAreasService.updateProgramArea(this.activity,3).subscribe(data => {
-			console.log('update', data)
 			this.activity = {		
 				program_area_id:3,
 				title:'',
@@ -156,7 +154,6 @@ export class CPDBMPComponent implements OnInit {
 
 	toggleProgram(program_id){		
 		this.acitveProgram[program_id] == true ?  this.acitveProgram[program_id] = false : this.acitveProgram[program_id] = true	
-		console.log(this.acitveProgram[program_id])
 		this.clearSlider()
 	}
 	

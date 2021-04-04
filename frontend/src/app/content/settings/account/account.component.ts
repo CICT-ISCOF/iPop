@@ -111,15 +111,12 @@ export class AccountComponent implements OnInit {
 			this.setUpSeucrityQuestion.old_question = null
 			
 			this.AccountService.setUpSecurityQuestionAndPin(credentials,this.myInformation.user.id).subscribe(data => {						
-				console.log(data)
-
 				this.UtilityService.setAlert( 'Your security question and answer has been set up', 'success')		
 				this.UtilityService.setAlert( 'Setting up pin', 'info')	
 
 				let credentials = this.setUpPin
 
 				this.AccountService.setUpSecurityQuestionAndPin(credentials,this.myInformation.user.id).subscribe(data => {	
-					console.log(data)
 					this.UtilityService.setAlert( 'Pin successfully set up', 'success')		
 					this.ngOnInit()
 				})		
@@ -179,7 +176,6 @@ export class AccountComponent implements OnInit {
 		if(!hasError){			
 			this.changeSecurityQuestion.old_question = this.mySecurityQuestion
 			this.AccountService.changeSecurityQuestion(this.changeSecurityQuestion, this.myInformation.user.id).subscribe(data => {
-				console.log(data)
 				this.isLoading = false
 				this.UtilityService.setAlert('Your Security Question and answer has been successfully changed','success')
 				this.ngOnInit()				
@@ -236,7 +232,6 @@ export class AccountComponent implements OnInit {
 		}
 		if(!hasError){
 			this.AccountService.changePin(this.changePin, this.myInformation.user.id).subscribe(data => {
-				console.log(data)
 				this.isLoading = false
 				this.UtilityService.setAlert('Pin Successfully Changed','success')
 			},

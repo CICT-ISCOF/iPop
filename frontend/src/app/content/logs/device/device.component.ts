@@ -13,28 +13,22 @@ export class DeviceComponent implements OnInit {
       
 	}
 
-
-
-
 	log
 	params
 
 	agInit(params:any){
 		this.log = params.value
-		this.params  = params.data;console.log(params.data)
 	}
 
 	refresh(params:any):boolean{
 		this.log = params.value
 		this.params = params.data
-		
 		return true
 	}
 	
 	
 	formatUserAgent(agent){
 		let array = agent.split('/')
-		// return  array[array.length - 2].replace(/[0-9,.]/g, '')		
 		return agent
 	}
 
@@ -43,7 +37,6 @@ export class DeviceComponent implements OnInit {
 			return false
 		}
 		return true
-		// return params
 	}
 
 }

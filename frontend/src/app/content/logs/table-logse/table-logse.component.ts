@@ -90,7 +90,7 @@ export class TableLogseComponent implements OnInit {
 		},
 		columnDefs: this.columnDefs,
 		rowData: null,
-		showToolPanel: true,
+		rowGroupPanelShow: true,
 		autoGroupColumnDef: {
 		  headerName: 'Fullname',
 		  field: 'fullname',

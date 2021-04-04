@@ -18,7 +18,6 @@ export class PopulationProfileByMunicipalityComponent implements OnInit {
 
     ngOnInit(): void {
 		this.PopByMunicipalityService.getSummary().subscribe(data => {
-			console.log(data)
 			this.data = data
 		})
 	}

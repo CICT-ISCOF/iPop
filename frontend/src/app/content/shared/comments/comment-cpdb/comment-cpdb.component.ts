@@ -356,7 +356,6 @@ export class CommentCpdbComponent implements OnInit {
 		 this.LocationService.getMunicipalities().subscribe(data => {
 			this.municipalities = data	
 			this.isLoading = false		
-			console.log('municipalities',data)	
 		})
 	}
 
@@ -405,7 +404,6 @@ export class CommentCpdbComponent implements OnInit {
 			this.comments = data.comments
 			this.isLoading = false	
 			this.forps_beneficiary_household = data['4ps_beneficiary_household']			
-			console.log('data',data)
 		})
 	}
 

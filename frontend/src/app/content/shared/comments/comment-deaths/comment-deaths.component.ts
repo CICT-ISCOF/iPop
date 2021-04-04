@@ -40,7 +40,6 @@ export class CommentDeathsComponent implements OnInit {
 		 this.LocationService.getMunicipalities().subscribe(data => {
 			this.municipalities = data	
 			this.isLoading = false		
-			console.log('municipalities',data)	
 		})
 	}
 

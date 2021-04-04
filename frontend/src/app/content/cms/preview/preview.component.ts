@@ -61,7 +61,6 @@ export class PreviewComponent implements OnInit  {
 
 		this. categorySubscription = this.CmsService.getCategory().subscribe(data=>{
 			this.categories = data
-			console.log(data)
 			this.isLoading = false		
 			this.categorySubscription.unsubscribe()
 		})

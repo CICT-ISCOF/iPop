@@ -81,7 +81,6 @@ export class FileUploadComponent implements OnInit {
 	readInputTypeFile(event){
 		const files = event.target.files
 		this.files = files;
-		console.log(files)
 		for (const droppedFile of files) {	 
 			this.tableFiles.push(droppedFile)	
 		}
@@ -96,7 +95,6 @@ export class FileUploadComponent implements OnInit {
 	}
 	 
 	public fileLeave(event){
-		// console.log(event);
 	}
 
 	clearFiles(){

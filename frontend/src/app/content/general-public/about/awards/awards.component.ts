@@ -83,7 +83,6 @@ export class AwardsComponent implements OnInit {
 	retrieveAwards(){
 		this.AwardsService.retrieveAwards().subscribe(data => {
 			this.awards = data
-			console.log(data)
 		})
 		let count = 0
 		for(let award of this.awards){
@@ -156,17 +155,12 @@ export class AwardsComponent implements OnInit {
 				})		
 			} 
 		})	
-		
 	}
-
-
 
 	
 	toggleAward(award_id){		
 		this.activeAward[award_id] == true ?  this.activeAward[award_id] = false : this.activeAward[award_id] = true	
-		console.log(this.activeAward[award_id])
 		this.clearSlider()
-		
 	}
 
 	clearSlider(){

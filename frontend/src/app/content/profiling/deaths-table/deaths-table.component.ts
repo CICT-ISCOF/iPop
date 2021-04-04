@@ -121,7 +121,6 @@ export class DeathsTableComponent implements OnInit {
 			totalPages:[],
 		}
 		this.DeathsService.search(this.keyword).subscribe(response => {
-			console.log('search', response)
 			this.DeathsService.setData(response.data)
 			this.pagination.currentPage = response.current_page
 			this.pagination.lastPage = response.last_page

@@ -91,7 +91,7 @@ export class TableAdministratorComponent implements OnInit {
 		},
 		columnDefs: this.columnDefs,
 		rowData: null,
-		showToolPanel: true,
+		rowGroupPanelShow: true,
 		autoGroupColumnDef: {
 		  headerName: 'Fullname',
 		  field: 'fullname',

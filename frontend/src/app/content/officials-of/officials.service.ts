@@ -40,7 +40,6 @@ export class OfficialsService1 {
 	getHeaders(){
 		this.user = JSON.parse(localStorage.getItem('user-data'))
 		this.token = this.user['token']
-		console.log(this.user)
 		return new HttpHeaders({
 			'Accept':'application/json',
 			'Authorization' : 'Bearer '+ this.token,

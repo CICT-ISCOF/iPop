@@ -28,9 +28,6 @@ export class ShowArticleComponent implements OnInit {
 	
 	ngOnInit(): void {
 		this.article = JSON.parse(localStorage.getItem('article'))
-		console.log(this.article)
-		
-		// console.log(JSON.parse(localStorage.getItem('article-photos')))
 	}
 
 	

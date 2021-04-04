@@ -38,7 +38,6 @@ export class MpcService {
 
 
 	setMPC(mpc){
-		console.log(mpc)
 		this.mpc.next(mpc)
 	}
 

@@ -103,25 +103,20 @@ export class ProfilingComponent implements OnInit {
 
 	getSocketsAll(){
 		this.SocketsService.getAll().subscribe(data => {
-			console.log('getAll',data)
 		})
 	}
 
 	getSocketsComments(){
 		this.SocketsService.getComments().subscribe(data => {
-			console.log('getComments',data)
 			this.commentSubscriptions = data
 		})
 
 		this.commentSubscriptions.forEach(element => {
-			//socket io element
 		});
 	}
 
-
 	getSocketRecords(){
 		this.SocketsService.getRecord().subscribe(data => {
-			console.log('getRecord',data)
 		})
 	}
 

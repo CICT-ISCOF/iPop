@@ -69,7 +69,6 @@ export class AuthenticateComponent implements OnInit {
         this.isLoading = false;
         localStorage.setItem('user-data', JSON.stringify(data));
         this.user = data;
-        console.log(data);
         this.UtilityService.setAlert(
           'Welcome ' + this.user.user.fullname,
           'success'

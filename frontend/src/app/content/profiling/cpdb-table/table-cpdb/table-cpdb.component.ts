@@ -133,7 +133,7 @@ export class TableCpdbComponent implements OnInit {
 		},
 		columnDefs: this.columnDefs,
 		rowData: null,
-		showToolPanel: true,
+		rowGroupPanelShow: true,
 		autoGroupColumnDef: {
 		  headerName: 'Fullname',
 		  field: 'fullname',
@@ -159,10 +159,8 @@ export class TableCpdbComponent implements OnInit {
 		event.api.closeToolPanel();
 		this.CpdbService.getCPDBLists().subscribe(data => {
 			 event.api.setRowData(data.data)		
-			 console.log(data)
 		 })
 	}
-
 	
 	getSelectedRows() {				
 		const selectedNodes:any = this.agGrid.api.getSelectedNodes();	

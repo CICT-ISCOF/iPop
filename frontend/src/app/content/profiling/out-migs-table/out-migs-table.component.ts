@@ -105,8 +105,6 @@ export class OutMigsTableComponent implements OnInit {
 		})	
 	}
 
-	
-
 	searchResults = []
 	keyword = ''
 	searched = false
@@ -118,7 +116,6 @@ export class OutMigsTableComponent implements OnInit {
 			totalPages:[],
 		}
 		this.OutMigService.search(this.keyword).subscribe(response => {
-			console.log('search', response)
 			this.OutMigService.setData(response.data)
 			this.pagination.currentPage = response.current_page
 			this.pagination.lastPage = response.last_page

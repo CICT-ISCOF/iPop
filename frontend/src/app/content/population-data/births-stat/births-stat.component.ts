@@ -331,16 +331,9 @@ export class BirthsStatComponent implements OnInit {
 		(data) => {
 			this.hasSelectedData = true;
 			this.birthSatistics = data.data;
-			console.log(data.data)
 			const incidences = groupBy(data.incidence, 'title');
-			// if (incidences[0][0].title == 'INCIDENCE OF TEENAGE BIRTHS') {
 				this.teenageBirth = incidences[0];
 				this.legitimateBirth = incidences[1];
-			// }
-			// else{
-				// this.teenageBirth = incidences[1];
-				// this.legitimateBirth = incidences[1];
-			// }
 			for(let index in this.teenageBirth){		
 				if(!this.TEENAGEBIRTHRATEbarChartLabels.includes(this.teenageBirth[index].year)){
 					this.TEENAGEBIRTHRATEbarChartLabels.push(this.teenageBirth[index].year)

@@ -88,7 +88,5 @@ export class RPFPPServicesComponent implements OnInit {
 
 	toggleServices(service_id){		
 		this.acitveServices[service_id] == true ?  this.acitveServices[service_id] = false : this.acitveServices[service_id] = true	
-		console.log(this.acitveServices[service_id])		
 	}
-
 }

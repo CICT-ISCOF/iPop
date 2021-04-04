@@ -21,7 +21,6 @@ export class ShowTeenCentersComponent implements OnInit {
 	addPersnalInCharge = false
 	isUser =  !this.UserService.isUser()
 	ngOnInit(): void {
-		console.log('teenCenter',this.teenCenter)
 		this.retrievePersonnel()
 	}
 
@@ -46,7 +45,6 @@ export class ShowTeenCentersComponent implements OnInit {
 				})
 			}	
 		})
-		console.log(this.teenCenter)
 	}
 
 	triggerFile(){
@@ -87,7 +85,6 @@ export class ShowTeenCentersComponent implements OnInit {
 	retrievePersonnel(){
 		this.TeenCentersService.retrivePersonnel(this.teenCenter.id).subscribe(data => {
 			this.personnels = data
-			console.log('personnels',data)
 		})
 	}
 

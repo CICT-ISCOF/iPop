@@ -106,9 +106,7 @@ export class BirthsTableComponent implements OnInit {
 			this.BirthsService.setData(response.data)
 		})	
 	}
-
 	
-
 	searchResults = []
 	keyword = ''
 	searched = false
@@ -120,7 +118,6 @@ export class BirthsTableComponent implements OnInit {
 			totalPages:[],
 		}
 		this.BirthsService.search(this.keyword).subscribe(response => {
-			console.log('search', response)
 			this.BirthsService.setData(response.data)
 			this.pagination.currentPage = response.current_page
 			this.pagination.lastPage = response.last_page

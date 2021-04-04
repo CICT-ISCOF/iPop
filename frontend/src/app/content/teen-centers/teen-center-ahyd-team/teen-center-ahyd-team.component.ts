@@ -141,7 +141,6 @@ export class TeenCenterAhydTeamComponent implements OnInit {
 
 	toggleFocalPersons(focalPersonID){		
 		this.acitveFocalPersons[focalPersonID] == true ?  this.acitveFocalPersons[focalPersonID] = false : this.acitveFocalPersons[focalPersonID] = true	
-		console.log(this.acitveFocalPersons[focalPersonID])		
 	}
 
 
@@ -149,7 +148,6 @@ export class TeenCenterAhydTeamComponent implements OnInit {
 
 	toggleTeams(id){		
 		this.activeTeams[id] == true ?  this.activeTeams[id] = false : this.activeTeams[id] = true	
-		console.log(this.activeTeams[id])		
 	}
 
 }

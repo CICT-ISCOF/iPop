@@ -167,7 +167,6 @@ export class DeathsStatComponent implements OnInit {
 	getSummary(){
 		this.DeathStatService.getSummary().subscribe(data => {
 			this.summary = data
-			console.log(data)
 		})
 	}
 

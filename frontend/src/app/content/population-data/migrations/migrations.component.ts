@@ -145,7 +145,6 @@ export class MigrationsComponent implements OnInit {
 	getSummary(){
 		this.MigrationStatService.getSummary().subscribe(data => {
 			this.summary = data
-			console.log(data)
 		})
 	}
 	

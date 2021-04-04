@@ -568,11 +568,9 @@ export class PmcComponent implements OnInit {
 			this.data.year		
 		).subscribe(data => {
 			this.PMCData = data.data[0] 
-			console.log(data)
 			for(let index in data.month){
 				this.months[data.month[index].month] = data.month[index].total
 			}
-			console.log('bago na months',this.months)
 			if( data.data[0] == null || data.data.length == 0){
 				this.hasData = false	
 				return Swal.fire('No data on this filters','','info')
