@@ -120,7 +120,7 @@
         </div>
 
         <div class="col-md-12 mb-3 d-flex align-items-center" style="align-items: center;justify-content: center;">
-            <button style="min-width: 150px;" class="btn btn-primary" (click)="saveData()">Save</button>
+            <button style="min-width: 150px;" class="btn btn-primary" (click)="saveData()">Save Provincial Data</button>
         </div>
     </div>
 
@@ -146,7 +146,7 @@
                 </div>
                 Barangay
             </label>
-            <select (change)="setBarangay($event)" class="form-control" id="barangay">
+            <select [(ngModel)]="data.barangay" class="form-control" id="barangay">
                 <option selected disabled>Choose Barangay</option>
                 <option *ngFor="let barangay of barangays">{{barangay.name}}</option>
             </select>
@@ -266,7 +266,7 @@
         </div>
 
         <div class="col-md-12 mb-3 d-flex align-items-center" style="align-items: center;justify-content: center;">
-            <button style="min-width: 150px;" class="btn btn-primary" (click)="saveData()">Save</button>
+            <button style="min-width: 150px;" class="btn btn-primary" (click)="saveData()">Save Barangay Data</button>
         </div>
     </div>
 </div>
