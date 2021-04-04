@@ -16,13 +16,21 @@ export class BarangayComponent implements OnInit {
         this.FiltersService.getMunicipality().subscribe( data => {
             this.municipality = data
             this.getBarangays()
-        })
+        } )
+        
+        setInterval( () => {
+            if ( localStorage.getItem( 'muncipality' ) == "Province" ) {
+                this.show = false
+            } else {
+                this.show = true
+            }
+        },100)
     }
 
     barangays = []
     municipality:any = {}
     selectedBarangayName = ""
-    
+    show = true
     
     ngOnInit(): void {
         this.getBarangays()
@@ -32,6 +40,7 @@ export class BarangayComponent implements OnInit {
         if ( this.municipality.code != undefined ) {
             this.LocationService.getBarangays( this.municipality.code ).subscribe( data => this.barangays = data )
         }
+        
     }
     
     setBarangay(barangay) {

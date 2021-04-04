@@ -1,11 +1,7 @@
 <div class="row">
-    <div *ngFor="let item of [1,2,3,4,5,6,7,8,9]">
-        <div *ngIf="slides.length == 0" style="width: 250px;height: 250px;margin:10px">
-            <ShimmerPlaceholder></ShimmerPlaceholder>
-        </div>
-    </div>
-    <button class="col-md-12" *ngIf="slides.length != 0" (click)="triggerImage()" class="btn btn-warning">Add an Image</button>
-    <button [disabled]="isLoading" class="col-md-12" *ngIf="newImages != 0" (click)="save()" class="btn btn-primary">
+
+    <button (click)="triggerImage()" class="btn btn-warning col-md-3">Add an Image</button>
+    <button [disabled]="isLoading" class="col-md-12" *ngIf="newImages != 0" (click)="save()" class="btn btn-primary col-md-2">
          {{  isLoading ? "Saving..." : "     Save Images "}}
     </button>
 

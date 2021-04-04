@@ -1,5 +1,131 @@
-    <div class=" row">
-        <div class="form-group col-md-4 mt-5">
+<div class="container">
+    <div class="row">
+        <div (click)=" makeActive('provincial')" class="col-md-3 btn " [ngClass]="{'btn-primary': tab.provincial}">Provincial</div>
+        <div (click)=" makeActive('barangay')" class="col-md-3 btn " [ngClass]="{'btn-primary': tab.barangay}">Barangay</div>
+    </div>
+
+    <div *ngIf="tab.provincial" class=" row">
+        <div class="form-group col-md-12 mt-5 mb-5">
+            <label for="year">Year</label>
+            <select [(ngModel)]="data.year" class="form-control " id="year">
+                <option selected disabled>Choose Year</option>
+                <option *ngFor="let year of years">{{year}}</option>
+            </select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Coverage</label>
+            <input [(ngModel)]="data.coverage" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Coverage is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Number of Barangays</label>
+            <input [(ngModel)]="data.barangays" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Number of Barangays is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Land Area</label>
+            <input [(ngModel)]="data.land_area" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Land Area is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Household Population</label>
+            <input [(ngModel)]="data.household_population" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Household Population is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Males</label>
+            <input [(ngModel)]="data.males" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Males is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Females</label>
+            <input [(ngModel)]="data.females" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Females is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Sex Ratio</label>
+            <input [(ngModel)]="data.sex_ratio" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Sex Ratio is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Median Age</label>
+            <input [(ngModel)]="data.median_age" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Median Age is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Doubling Time/Year</label>
+            <input [(ngModel)]="data.doubling" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Doubling Time/Year is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Growth Rate</label>
+            <input [(ngModel)]="data.growth_rate" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Growth Rate is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Households</label>
+            <input [(ngModel)]="data.households" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Households is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Average Household Size</label>
+            <input [(ngModel)]="data.average_household_size" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Average Household Size is required
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Density</label>
+            <input [(ngModel)]="data.density" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Density is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Child Age Dependency Ratio</label>
+            <input [(ngModel)]="data.child_dependency_ratio" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Child Age Dependency Ratio is required
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="municipality">Old Age Dependency Ratio</label>
+            <input [(ngModel)]="data.old_age_dependency_ratio" type="text" class="form-control" id="municipality" required>
+            <div class="invalid-feedback">
+                Old Age Dependency Ratio is required
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-3 d-flex align-items-center" style="align-items: center;justify-content: center;">
+            <button style="min-width: 150px;" class="btn btn-primary" (click)="saveData()">Save</button>
+        </div>
+    </div>
+
+    <div *ngIf="tab.barangay" class=" row">
+        <div class="form-group col-md-4 mt-5 mb-5">
             <label for="municipality">
                 <div *ngIf="municipalityIsLoading" class="spinner-border text-light  spinner-border-sm fast"
                     role="status">
@@ -25,7 +151,6 @@
                 <option *ngFor="let barangay of barangays">{{barangay.name}}</option>
             </select>
         </div>
-        <hr>
         <div class="form-group col-md-4 mt-5">
             <label for="year">Year</label>
             <select [(ngModel)]="data.year" class="form-control " id="year">
@@ -112,8 +237,7 @@
         </div>
         <div class="col-md-4 mb-3">
             <label for="municipality">Average Household Size</label>
-            <input [(ngModel)]="data.average_household_size" type="text" class="form-control" id="municipality"
-                required>
+            <input [(ngModel)]="data.average_household_size" type="text" class="form-control" id="municipality" required>
             <div class="invalid-feedback">
                 Average Household Size is required
             </div>
@@ -128,16 +252,14 @@
         </div>
         <div class="col-md-4 mb-3">
             <label for="municipality">Child Age Dependency Ratio</label>
-            <input [(ngModel)]="data.child_dependency_ratio" type="text" class="form-control" id="municipality"
-                required>
+            <input [(ngModel)]="data.child_dependency_ratio" type="text" class="form-control" id="municipality" required>
             <div class="invalid-feedback">
                 Child Age Dependency Ratio is required
             </div>
         </div>
         <div class="col-md-4 mb-3">
             <label for="municipality">Old Age Dependency Ratio</label>
-            <input [(ngModel)]="data.old_age_dependency_ratio" type="text" class="form-control" id="municipality"
-                required>
+            <input [(ngModel)]="data.old_age_dependency_ratio" type="text" class="form-control" id="municipality" required>
             <div class="invalid-feedback">
                 Old Age Dependency Ratio is required
             </div>
@@ -147,3 +269,4 @@
             <button style="min-width: 150px;" class="btn btn-primary" (click)="saveData()">Save</button>
         </div>
     </div>
+</div>

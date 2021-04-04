@@ -1,7 +1,7 @@
 <div class="btn-group dropdown">
     <button class="btn btn-sm btn-dark dropdown-toggle" data-toggle="dropdown" style="border-radius: 5px;">
         <i class="bi bi-geo-alt-fill"></i>
-        {{ selectedMunicipalityName == '' ? 'Choose Municipality' : selectedMunicipalityName }}
+        {{ selectedMunicipalityName == '' ? 'Choose Location' : selectedMunicipalityName }}
     </button>
     <ul class="dropdown-menu" style="max-height: 50vh;overflow: auto;background: var(--bg);">
         <div *ngFor="let municipality of [1,2,3,4,5,6,7,8,8]">
@@ -11,6 +11,13 @@
                 </a>
             </li>
         </div>
+        <li *ngIf="municipalities.length != 0">
+            <a (click)="selectedMunicipality1('Province')" class="dropdown-item">
+                <i class="bi bi-geo-alt-fill"></i>
+                <p>Province</p>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
         <li *ngFor="let municipality of municipalities">
             <a (click)="selectedMunicipality(municipality)" class="dropdown-item">
                 <i class="bi bi-geo-alt-fill"></i>
