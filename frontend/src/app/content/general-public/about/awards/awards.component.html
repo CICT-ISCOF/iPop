@@ -3,84 +3,124 @@
 <div class="wrapper">
     <div class="animated fadeInLeftBig">
         <br><br><br><br>
-        <div *ngIf="!wantsToAddanAward">
-            <button style="display: flex;" (click)="wantsToAddanAwardFunction(true)" *ngIf="!wantsToAddanAward && !isUser" class="btn btn-primary add-an-award ">
-              Add an Award
-              <svg style="margin-right: 0;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="white" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-              </svg></button>
-            <h2>AWARDS
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-award" fill="orange" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M9.669.864L8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193l-1.51-.229L8 1.126l-1.355.702-1.51.229-.684 1.365-1.086 1.072L3.614 6l-.25 1.506 1.087 1.072.684 1.365 1.51.229L8 10.874l1.356-.702 1.509-.229.684-1.365 1.086-1.072L12.387 6l.248-1.506-1.086-1.072-.684-1.365z"/>
-                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
-            </svg>
-            </h2>
-            <hr>
+        <div *ngIf="!wantsToAddanAward" class="card">
+            <div class="card-header">
+                <div style="display: flex;align-items: center;">
+                    <h5>Awards</h5>
+                    <button (click)="wantsToAddanAwardFunction(true)" *ngIf="!wantsToAddanAward && !isUser" class="btn btn-primary ml-auto"> Add an Award</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <ol type="I" class="list-group">
+                            <div *ngFor="let award of awards;let i = index container">
+                                <li class="list-group-item " *ngIf="!activeAward[i]">
+                                    <div>
+                                        <h5 class="card-title"> {{ award.title }}</h5>
+                                        <a style="margin-left: -25px;color: gray;" *ngIf="award.url != null" target="_blank" [href]="award.url">{{award.url}}</a>
+                                    </div>
+                                    <div tooltip="Edit this Award" placement="bottom" show-delay="100" [theme]="theme" *ngIf="!isUser" (click)="toggleAward(i)" class="change ml-auto mr-2">
+                                        <i style="font-size: 20px;" class="bi bi-pencil-square"></i>
+                                    </div>
+                                    <div tooltip="Delete this Awards" placement="bottom" show-delay="100" [theme]="theme" *ngIf="!isUser" (click)="deleteAward(award.id)" class="close">
+                                        <i style="font-size: 20px;" class="bi bi-dash-square"></i>
+                                    </div>
+                                </li>
+                                <div *ngIf="award.medias.length != 0 && !activeAward[i]">
+                                    <owl-carousel-o [options]=" customOptions">
+                                        <ng-template [class.hide]="media.file.type.includes('video')" carouselSlide *ngFor="let media of award.medias">
+                                            <img alt="" title="slide.title " [src]="media.file.uri">
+                                        </ng-template>
+                                        <ng-template [class.hide]="media.file.type.includes('image')" carouselSlide *ngFor="let video of files.videos">
+                                            <video autoplay [src]="media.file.uri"></video>
+                                        </ng-template>
+                                    </owl-carousel-o> <br> <br> <br>
+                                </div>
 
-            <ol type="I" class="list-group">
-                <div *ngFor="let award of awards;let i = index container">
+                                <div *ngIf="activeAward[i]" [class.selected]="activeAward[i]" class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="title">New Award Title</label>
+                                        <input [(ngModel)]="award.title" type="text" id="title" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="link">New Award Link</label>
+                                        <input [(ngModel)]="award.url" type="text" id="link" class="form-control">
+                                    </div>
+                                    <div class="flex">
 
-                    <li class="list-group-item " *ngIf="!activeAward[i]">
-                        <div>
-                            <h5>
-                                {{ award.title }}
-                            </h5>
-                            <a *ngIf="award.url != null" target="_blank" [href]="award.url">{{award.url}}</a>
-                        </div>
-                        <div tooltip="Edit this Award" placement="bottom" show-delay="100" [theme]="theme" *ngIf="!isUser" (click)="toggleAward(i)" class="change ml-auto">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-vector-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908l-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
-                                <path fill-rule="evenodd" d="M2.832 13.228L8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
-                            </svg>
-                        </div>
-                        <div tooltip="Delete this Awards" placement="bottom" show-delay="100" [theme]="theme" *ngIf="!isUser" (click)="deleteAward(award.id)" class="close">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                            </svg>
-                        </div>
+                                        <button (click)="readSliderURL" (click)="triggerMediaInput('slider',i)" class="clickable">Add an Image</button>
 
-                    </li>
-                    <br>
-
-                    <div *ngIf="award.medias.length != 0 && !activeAward[i]">
-                        <owl-carousel-o [options]=" customOptions">
-                            <ng-template [class.hide]="media.file.type.includes('video')" carouselSlide *ngFor="let media of award.medias">
-                                <img alt="" title="slide.title " [src]="media.file.uri">
-                            </ng-template>
-                            <ng-template [class.hide]="media.file.type.includes('image')" carouselSlide *ngFor="let video of files.videos">
-                                <video autoplay [src]="media.file.uri"></video>
-                            </ng-template>
-                        </owl-carousel-o> <br> <br> <br>
-                    </div>
-
-                    <div *ngIf="activeAward[i]" [class.selected]="activeAward[i]" class="row">
-                        <div class="form-group col-md-6">
-                            <label for="title">New Award Title</label>
-                            <input [(ngModel)]="award.title" type="text" id="title" class="form-control">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="link">New Award Link</label>
-                            <input [(ngModel)]="award.url" type="text" id="link" class="form-control">
-                        </div>
+                                        <button *ngIf="files.images.length != 0 || files.videos.length != 0" (click)="clearSlider()" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Clear Slider</button>
 
 
+                                        <div class="ml-auto ">
+                                            <button (click)="toggleAward(i) " class="clickable">Cancel</button>
+                                            <button (click)="updateAward(award.id, award)" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <p *ngIf="files.images.length != 0 || files.videos.length != 0">This File will be added to this award</p>
+                                    <owl-carousel-o *ngIf="files.images.length != 0 || files.videos.length != 0" [options]=" customOptions">
+                                        <ng-template carouselSlide *ngFor="let image of files.images">
+                                            <img alt="" title="slide.title " [src]="image">
+                                        </ng-template>
+                                        <ng-template carouselSlide *ngFor="let video of files.videos">
+                                            <video autoplay [src]="video"></video>
+                                        </ng-template>
+                                    </owl-carousel-o>
 
-
-                        <div class="flex">
-
-                            <button (click)="readSliderURL" (click)="triggerMediaInput('slider',i)" class="clickable">Add an Image</button>
-                            <!-- <button (click)="readSliderURL" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Add a Video</button> -->
-                            <button *ngIf="files.images.length != 0 || files.videos.length != 0" (click)="clearSlider()" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Clear Slider</button>
-
-
-                            <div class="ml-auto ">
-                                <button (click)="toggleAward(i) " class="clickable">Cancel</button>
-                                <button (click)="updateAward(award.id, award)" class="btn btn-primary">Save Changes</button>
+                                    <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]=" 'slider' + i ">
+                                    <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'video' )" accept="video/*" style="display:none " [id]=" 'videoslider' + i ">
+                                </div>
+                                <div class="image-container" *ngIf="activeAward[i]">
+                                    <p>Your Previous Images</p>
+                                    <div>
+                                        <div class="image" *ngFor="let media of award.medias">
+                                            <div style="position: relative;">
+                                                <div class="flex absolute">
+                                                    <svg (click)="deletePhoto(media.id)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="gray" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                        </svg>
+                                                </div>
+                                            </div>
+                                            <img [src]="media.file.uri" alt="" style="width: 100%;height: 100%;">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        </ol>
+                    </div>
+                </div>
+                <br>
+            </div>
 
+        </div>
+        <div class="card" *ngIf="wantsToAddanAward">
+            <div class="card-header">
+                <h5 class="card-title">Add an Award</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group col-md-12">
+                                    <label for="title">New Award Title</label>
+                                    <input [(ngModel)]="award.title" type="text" id="title" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group col-md-12">
+                                    <label for="link">New Award Link</label>
+                                    <input [(ngModel)]="award.url" type="text" id="link" class="form-control">
+                                </div>
+                            </div>
                         </div>
-                        <br>
-                        <p *ngIf="files.images.length != 0 || files.videos.length != 0">This File will be added to this award</p>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button (click)="readSliderURL" (click)="triggerMediaInput('slider','i')" class="btn btn-warning">Add an Image</button>
+                        <button *ngIf="files.images.length != 0 || files.videos.length != 0" (click)="clearSlider()" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Clear Slider</button>
                         <owl-carousel-o *ngIf="files.images.length != 0 || files.videos.length != 0" [options]=" customOptions">
                             <ng-template carouselSlide *ngFor="let image of files.images">
                                 <img alt="" title="slide.title " [src]="image">
@@ -90,65 +130,16 @@
                             </ng-template>
                         </owl-carousel-o>
 
-                        <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]=" 'slider' + i ">
-                        <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'video' )" accept="video/*" style="display:none " [id]=" 'videoslider' + i ">
+                        <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]=" 'slider' + 'i' ">
+                        <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'video' )" accept="video/*" style="display:none " [id]=" 'videoslider' + 'i' ">
                     </div>
-
-
-                    <div class="image-container" *ngIf="activeAward[i]">
-                        <p>Your Previous Images</p>
-                        <div>
-                            <div class="image" *ngFor="let media of award.medias">
-                                <div style="position: relative;">
-                                    <div class="flex absolute">
-                                        <svg (click)="deletePhoto(media.id)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="gray" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <img [src]="media.file.uri" alt="" style="width: 100%;height: 100%;">
-                            </div>
-                        </div>
-
-                    </div>
-
                 </div>
-            </ol>
-            <br>
-        </div>
-        <div *ngIf="wantsToAddanAward" class="row">
-            <div class="form-group col-md-12">
-                <label for="title">New Award Title</label>
-                <input [(ngModel)]="award.title" type="text" id="title" class="form-control">
-            </div>
-            <div class="form-group col-md-12">
-                <label for="link">New Award Link</label>
-                <input [(ngModel)]="award.url" type="text" id="link" class="form-control">
-            </div>
-            <div class="form-group col-md-12">
-                <button (click)="readSliderURL" (click)="triggerMediaInput('slider','i')" class="clickable">Add an Image</button>
-                <button (click)="readSliderURL" (click)="triggerMediaInput('videoslider','i')" class="clickable ">Add a Video</button>
-                <button *ngIf="files.images.length != 0 || files.videos.length != 0" (click)="clearSlider()" (click)="triggerMediaInput('videoslider',i)" class="clickable ">Clear Slider</button>
-                <owl-carousel-o *ngIf="files.images.length != 0 || files.videos.length != 0" [options]=" customOptions">
-                    <ng-template carouselSlide *ngFor="let image of files.images">
-                        <img alt="" title="slide.title " [src]="image">
-                    </ng-template>
-                    <ng-template carouselSlide *ngFor="let video of files.videos">
-                        <video autoplay [src]="video"></video>
-                    </ng-template>
-                </owl-carousel-o>
-
-                <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'image' )" accept="image/*" style="display: none ; " [id]=" 'slider' + 'i' ">
-                <input multiple type="file" (change)="readSliderURL( $event.target.files, $event, 'video' )" accept="video/*" style="display:none " [id]=" 'videoslider' + 'i' ">
+                <div *ngIf="wantsToAddanAward" class="flex" style="justify-content: center;align-items: center;">
+                    <button (click)="createAward()" class="btn btn-primary ">Save</button> &nbsp;
+                    <button (click)="wantsToAddanAwardFunction(false)" class="btn btn-dark ">Cancel</button>
+                </div>
             </div>
         </div>
-        <div *ngIf="wantsToAddanAward" class="flex" style="justify-content: center;align-items: center;">
-            <button (click)="createAward()" class="btn btn-primary ">Save</button> &nbsp;
-            <button (click)="wantsToAddanAwardFunction(false)" class="clickable ">Cancel</button>
-        </div>
-
     </div>
-
 </div>
-
 <br><br><br><br><br><br><br><br><br><br><br><br>
