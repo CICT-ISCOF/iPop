@@ -1,35 +1,10 @@
 <th scope="row">
-
-
-
-
-    <i (click)="approve()" tooltip="Approve this data" placement="top" show-delay="100" [theme]="theme" style="color:#00C34F" class="im im-thumb-up"></i>
-
-    <i [routerLink]="['/comments/marriages/' + params.id]" routerLinkActive="router-link-active" tooltip="Comment, View or Edit Data" placement="top" show-delay="100" [theme]="theme" style="color:palevioletred" class="far fa-comment-alt"></i>
-
-    <i (click)="disapprove()" tooltip="Disapprove this data" placement="top" show-delay="100" [theme]="theme" style="color:black" class="im im-thumb-down"></i>
-
-
-    <svg (click)="needsEditing()" tooltip="Needs editing" placement="top" show-delay="100" [theme]="theme" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-diamond-fill" fill="orange" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-      </svg>
-
-
-
-
-
-    <svg (click)="noted()" tooltip="Mark as noted" placement="top" show-delay="100" [theme]="theme" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check2-square" fill="#4285F4" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-        <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 0 0 3 14.5h10a1.5 1.5 0 0 0 1.5-1.5V8a.5.5 0 0 0-1 0v5a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5h8a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 3v10z"/>
-      </svg>
-    <span tooltip="Encoded by {{params.record.user.fullname}}" placement="top" show-delay="100" [theme]="theme" style="position: relative;">
+    <i (click)="approve()" tooltip="Approve this data" placement="top" show-delay="100" [theme]="theme" style="color:#00C34F" class="bi bi-hand-thumbs-up"></i>
+    <i (click)="disapprove()" tooltip="Disapprove this data" placement="top" show-delay="100" [theme]="theme" style="color:black" class="bi bi-hand-thumbs-down"></i>
+    <i [routerLink]="['/comments/marriages/' + params.id]" routerLinkActive="router-link-active" tooltip="Comment, View or Edit Data" placement="top" show-delay="100" [theme]="theme" style="color:palevioletred" class="bi bi-card-list"></i>
+    <i (click)="needsEditing()" tooltip="Needs editing" placement="top" show-delay="100" [theme]="theme" class="bi bi-pen"></i>
+    <i (click)="noted()" tooltip="Mark as noted" placement="top" show-delay="100" [theme]="theme" class="bi bi-patch-check"></i>
+    <span tooltip="Encoded by {{params.record.user.fullname}}" placement="top" show-delay="100" [theme]="theme" style="transform: translateY(6px);">
         <img  [src]="params.record.user.profile_picture != null ? params.record.user.profile_picture.uri : '../../../../../assets/avatars/boy-blue.png'" alt="">
     </span>
-
-    <!-- 
-    <svg tooltip="View Comments" placement="top" show-delay="100" [theme]="theme" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chat-left-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v11.586l2-2A2 2 0 0 1 4.414 11H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-        <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-    </svg> -->
-
 </th>
