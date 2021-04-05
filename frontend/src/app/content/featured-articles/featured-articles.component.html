@@ -46,7 +46,7 @@
                 <button (click)="deleteArticle(article.id) " class="btn btn-danger mr-auto ">Delete</button>
             </div>
             <div>
-                <p class="text-center" style="margin:200px 0;">No Articles found...</p>
+                <p class="text-center" *ngIf="articles.length == 0" style="margin:200px 0;">No Articles found...</p>
             </div>
         </div>
     </div>
