@@ -1,5 +1,5 @@
 export default {
-    apiURL:'http://192.168.1.103:8000/api/',
+    apiURL:'http://ipop-api.tk/api/',
     register:'auth/register/viewer',
     login:'auth/login',
     carousel:'sliders',

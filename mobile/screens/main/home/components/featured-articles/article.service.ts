@@ -17,7 +17,6 @@ export const week = async () => {
 export const month = async () => {
     const url = base.apiURL + `articles/month`
     const response = await axios.get( url )
-    alert( JSON.stringify( await response.data ) )
     return response.data
 }
 

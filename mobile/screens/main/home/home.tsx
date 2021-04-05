@@ -70,7 +70,13 @@ export default function Home() {
             setFeautredArticlesData( await articles.week() || [] )
             return
         }
-        setFeautredArticlesData( await articles.month() || [] )
+        if ( menu == 'This Month' ) {
+            setFeautredArticlesData( await articles.month() || [] )
+            return
+        }
+        axios.get( base.apiURL + base.featureArticles ).then( ( response ) => {
+            setFeautredArticlesData( response.data );
+        } );
     }
 
     const [ showSearch, setShowSearch ] = useState( false )
