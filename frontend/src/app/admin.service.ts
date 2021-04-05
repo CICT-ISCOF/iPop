@@ -63,7 +63,7 @@ export class AdminService {
 
 
 	getAdminLists(){	
-		const url = this.baseURL + '/'
+		const url = this.baseURL
 		return this.http.get<any>(url,{headers:this.headers})
 	}
 
