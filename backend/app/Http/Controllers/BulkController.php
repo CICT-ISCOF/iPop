@@ -11,11 +11,21 @@ use App\Models\OutMigration;
 use App\Models\Record;
 use App\Models\Log;
 use App\Http\Controllers\Controller;
+use App\Models\BulkImportRequest;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BulkController extends Controller
 {
     protected $_rows = array();
+
+    public function requests()
+    {
+        return BulkImportRequest::with('user')->get();
+    }
 
     public function insert(Request $request)
     {
@@ -68,13 +78,32 @@ class BulkController extends Controller
             $this->_iterateSave($sheet);
         }
 
-        foreach ($this->_rows as $row) {
-            $model::create($row)
-                ->record()
-                ->save(new Record(array(
-                    'user_id' => $request->user()->id,
-                    'status' => 'Imported, Pending Approval'
-                )));
+        /**
+         * @var User
+         */
+        $user = $request->user();
+
+        if ($user->hasRole(Role::ADMIN)) {
+            foreach ($this->_rows as $row) {
+                /**
+                 * @var Birth
+                 */
+                $instance = $model::create($row);
+
+                $instance->record()
+                    ->save(new Record(array(
+                        'user_id' => $user->id,
+                        'status' => 'Imported'
+                    )));
+            }
+        } else {
+            $path = sprintf('%s - %s.bulk', date('Y-m-d'), $user->username);
+            Storage::put($path, json_encode(['data' => $this->_rows, 'model' => $model]));
+            BulkImportRequest::create([
+                'path' => $path,
+                'user_id' => $user->id,
+                'approved' => false,
+            ]);
         }
 
         Log::record('User imported bulk data of type: ' . $type);

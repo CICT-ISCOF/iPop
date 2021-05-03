@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 export class BaseAPIService {
 	constructor() {}
 
-    public baseURL = 'https://ipop-api.tk/api'
+	public baseURL = 'http://localhost:8000/api'
 
 	user = ''
 	token = ''

@@ -12,6 +12,7 @@ use App\Models\OutMigration;
 use App\Events\CommentSaved;
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
+use App\Models\BulkImportRequest;
 
 class CommentController extends Controller
 {
@@ -32,6 +33,7 @@ class CommentController extends Controller
             'InMigration' => InMigration::class,
             'OutMigration' => OutMigration::class,
             'Marriage' => Marriage::class,
+            'BulkImportRequest' => BulkImportRequest::class,
         ];
         $model = $models[$data['type']];
         $model = $model::find($data['commentable_id']);

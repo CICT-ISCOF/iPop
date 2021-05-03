@@ -125,9 +125,9 @@ Route::middleware('throttle:60,1')->group(function () {
         Route::apiResource('comments', CommentController::class)->except(['index']);
 
         // Bulk data
+        Route::get('/bulk', [BulkController::class, 'requests']);
         Route::post('/bulk', [BulkController::class, 'insert',]);
         Route::post('/bulk/one', [BulkController::class, 'insertOne',]);
-
 
         // Sockets
         Route::get('/sockets/all', [ChannelController::class, 'index']);
