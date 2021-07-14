@@ -22,9 +22,15 @@ class BulkController extends Controller
 {
     protected $_rows = array();
 
-    public function requests()
+    public function requests(Request $request)
     {
-        return BulkImportRequest::with('user')->get();
+        $builder = BulkImportRequest::with('user');
+        if ($request->has('municipality')) {
+            $builder = $builder->whereHas('user', function (Builder $builder) use ($request) {
+                return $builder->where('municipality', $request->get('municipality'));
+            });
+        }
+        return $builder->get();
     }
 
     public function insert(Request $request)
