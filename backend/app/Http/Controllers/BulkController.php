@@ -26,7 +26,7 @@ class BulkController extends Controller
     {
         $builder = BulkImportRequest::with('user');
         if ($request->has('municipality')) {
-            $builder = $builder->whereHas('user', function (Builder $builder) use ($request) {
+            $builder = $builder->whereHas('user', function ($builder) use ($request) {
                 return $builder->where('municipality', $request->get('municipality'));
             });
         }
