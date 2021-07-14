@@ -35,6 +35,8 @@ class User extends Authenticatable
         'answer',
         'district',
         'iterations',
+        'assigned_municipality',
+        'assigned_barangay',
     ];
 
     /**
@@ -169,6 +171,11 @@ class User extends Authenticatable
             ],
             401
         );
+    }
+
+    public function bulkRequests()
+    {
+        return $this->hasMany(BulkImportRequest::class);
     }
 
     /**

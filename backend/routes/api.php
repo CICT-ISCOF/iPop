@@ -126,6 +126,7 @@ Route::middleware('throttle:60,1')->group(function () {
 
         // Bulk data
         Route::get('/bulk', [BulkController::class, 'requests']);
+        Route::get('/bulk/self', [BulkController::class, 'self',]);
         Route::post('/bulk', [BulkController::class, 'insert',]);
         Route::post('/bulk/one', [BulkController::class, 'insertOne',]);
         Route::post('/bulk/{bulkImportRequest}/approve', [BulkController::class, 'approve']);

@@ -87,6 +87,8 @@ class UserUpdateRequest extends FormRequest
                             is_string(request()->input('profile_picture')));
                 }),
             ],
+            'assigned_municipality' => ['nullable', 'string'],
+            'assigned_barangay' => ['nullable', 'string'],
         ];
     }
 }

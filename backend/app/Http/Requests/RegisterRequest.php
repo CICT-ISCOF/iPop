@@ -58,6 +58,8 @@ class RegisterRequest extends FormRequest
                 Rule::in(Role::DEFAULTS)
             ],
             'profile_picture' => 'nullable',
+            'assigned_municipality' => ['nullable', 'string'],
+            'assigned_barangay' => ['nullable', 'string'],
         ];
     }
 }

@@ -34,6 +34,8 @@ class CreateUsersTable extends Migration
                 ->nullable();
             $table->unsignedTinyInteger('iterations')->default(0);
             $table->foreignId('profile_picture_id')->nullable();
+            $table->string('assigned_municipality')->nullable();
+            $table->string('assigned_barangay')->nullable();
             $table->timestamps();
         });
     }

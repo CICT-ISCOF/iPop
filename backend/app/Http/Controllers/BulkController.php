@@ -33,6 +33,11 @@ class BulkController extends Controller
         return $builder->get();
     }
 
+    public function self(Request $request)
+    {
+        return $request->user()->bulkRequests;
+    }
+
     public function insert(Request $request)
     {
         set_time_limit(0);
