@@ -128,6 +128,7 @@ Route::middleware('throttle:60,1')->group(function () {
         Route::get('/bulk', [BulkController::class, 'requests']);
         Route::post('/bulk', [BulkController::class, 'insert',]);
         Route::post('/bulk/one', [BulkController::class, 'insertOne',]);
+        Route::post('/bulk/{bulkImportRequest}/approve', [BulkController::class, 'approve']);
 
         // Sockets
         Route::get('/sockets/all', [ChannelController::class, 'index']);

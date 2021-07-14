@@ -116,6 +116,12 @@ class BulkController extends Controller
         return response('', 204);
     }
 
+    public function approve(BulkImportRequest $bulkImportRequest)
+    {
+        $bulkImportRequest->approve();
+        return response('', 204);
+    }
+
     private function _iterateSave($rows)
     {
         foreach ($rows as $row) {
