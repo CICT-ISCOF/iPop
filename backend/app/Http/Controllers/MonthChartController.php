@@ -46,11 +46,18 @@ class MonthChartController extends Controller
         foreach ($data['months'] as $month => $value) {
             $temp = $data;
             $temp['month'] = $month;
-            if (strtolower($data['gender']) === 'male') {
-                $temp['males'] = $value;
-            } else {
-                $temp['females'] = $value;
-            }
+            /**
+            * Changed Code
+            */
+            $temp['males'] = $data['males'][$month];
+            $temp['females'] = $data['females'][$month];
+            /**
+            * Old Code
+                if (strtolower($data['gender']) === 'male') {
+                    $temp['males'] = $value;
+                } else {
+                    $temp['females'] = $value;
+            */
             $monthChart = MonthChart::where('year', $temp['year'])
                 ->where('municipality', $temp['municipality'])
                 ->where('barangay', $temp['barangay'])
