@@ -49,14 +49,14 @@ class DeathStatisticController extends Controller
         $data = $request->all();
         $builder = DeathStatistic::getApproved();
         $monthChart = MonthChart::where('year', $data['year'])
-            ->where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
+            ->where('municipality', $data['municipality'] === 'null' ? null : $data['municipality'])
+            ->where('barangay', $data['barangay'] === 'null' ? null : $data['barangay'])
             ->where('type', 'Death')
             ->with('approval')
             ->get();
 
-        $incidence = Incidence::where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
+        $incidence = Incidence::where('municipality', $data['municipality'] === 'null' ? null : $data['municipality'])
+            ->where('barangay', $data['barangay'] === 'null' ? null : $data['barangay'])
             ->where('type', 'Death')
             ->orderBy('year', 'ASC')
             ->with('approval')
@@ -83,8 +83,8 @@ class DeathStatisticController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'municipality' => ['required', 'string', 'max:255'],
-            'barangay' => ['required', 'string', 'max:255'],
+            'municipality' => ['nullable', 'string', 'max:255'],
+            'barangay' => ['nullable', 'string', 'max:255'],
             'year' => ['required', 'date_format:Y'],
             'male' => ['nullable', 'numeric'],
             'female' => ['nullable', 'numeric'],

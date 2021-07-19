@@ -15,8 +15,8 @@ class CreateIncidencesTable extends Migration
     {
         Schema::create('incidences', function (Blueprint $table) {
             $table->id();
-            $table->string('municipality');
-            $table->string('barangay');
+            $table->string('municipality')->nullable();
+            $table->string('barangay')->nullable();
             $table->year('year');
             $table->string('type');
             $table->string('title');

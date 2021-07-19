@@ -24,7 +24,11 @@ class AgeDistributionController extends Controller
         $builder = AgeDistribution::getApproved();
 
         foreach ($request->all() as $key => $value) {
-            $builder->where($key, $value);
+            if ($value === 'null') {
+                $builder = $builder->where($key, null);
+            } else {
+                $builder = $builder->where($key, $value);
+            }
         }
 
         return $builder->first();

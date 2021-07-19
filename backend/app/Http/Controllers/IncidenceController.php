@@ -25,7 +25,11 @@ class IncidenceController extends Controller
         $builder = Incidence::getApproved();
         $builder = tap($builder, function ($builder) use ($request) {
             foreach ($request->all() as $parameter => $value) {
-                $builder = $builder->where($parameter, $value);
+                if ($value === 'null') {
+                    $builder = $builder->where($parameter, null);
+                } else {
+                    $builder = $builder->where($parameter, $value);
+                }
             }
             return $builder;
         });

@@ -15,8 +15,8 @@ class CreateMigrationStatisticsTable extends Migration
     {
         Schema::create('migration_statistics', function (Blueprint $table) {
             $table->id();
-            $table->string('municipality');
-            $table->string('barangay');
+            $table->string('municipality')->nullable();
+            $table->string('barangay')->nullable();
             $table->year('year');
             $table->unsignedBigInteger('total_in_migrations')->default(0);
             $table->unsignedBigInteger('total_out_migrations')->default(0);

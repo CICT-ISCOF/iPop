@@ -15,8 +15,8 @@ class CreateDeathStatisticsTable extends Migration
     {
         Schema::create('death_statistics', function (Blueprint $table) {
             $table->id();
-            $table->string('municipality');
-            $table->string('barangay');
+            $table->string('municipality')->nullable();
+            $table->string('barangay')->nullable();
             $table->year('year');
             $table->unsignedBigInteger('male');
             $table->unsignedBigInteger('female');
