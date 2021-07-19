@@ -15,8 +15,8 @@ class CreateBirthStatisticsTable extends Migration
     {
         Schema::create('birth_statistics', function (Blueprint $table) {
             $table->id();
-            $table->string('municipality');
-            $table->string('barangay');
+            $table->string('municipality')->nullable();
+            $table->string('barangay')->nullable();
             $table->year('year');
             $table->string('gender');
             $table->unsignedBigInteger('total_live_births');

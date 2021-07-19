@@ -60,6 +60,7 @@ class BirthStatisticController extends Controller
             ->orderBy('year', 'ASC')
             ->with('approval')
             ->get();
+
         $result = tap($builder, function ($builder) use ($request) {
             foreach ($request->all() as $parameter => $value) {
                 $builder = $builder->where($parameter, $value);
@@ -83,8 +84,8 @@ class BirthStatisticController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'municipality' => ['required', 'string', 'max:255'],
-            'barangay' => ['required', 'string', 'max:255'],
+            'municipality' => ['nullable', 'string', 'max:255'],
+            'barangay' => ['nullable', 'string', 'max:255'],
             'year' => ['required', 'date_format:Y'],
             'gender' => ['required', 'string'],
             'total_live_births' => ['nullable', 'numeric'],
