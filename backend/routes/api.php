@@ -74,6 +74,7 @@ use App\Http\Controllers\TopPopulationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\UserRoleController;
+use App\Models\File;
 
 Route::middleware('throttle:60,1')->group(function () {
     Route::prefix('/auth')->group(function () {
@@ -245,6 +246,9 @@ Route::middleware('throttle:60,1')->group(function () {
 
     // Delete 1 award media
     Route::delete('/awards/medias/{media}', [AwardController::class, 'deleteAwardMedia']);
+    
+    // Delete 1 file
+    Route::delete('/file/{id}', [FileController::class, 'destroy']);
 
     // Delete 1 program area file
     Route::delete('/program-areas/activity-files/{file}', [ActivityController::class, 'deleteActivityFile']);

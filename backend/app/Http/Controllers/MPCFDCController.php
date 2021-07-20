@@ -32,11 +32,8 @@ class MPCFDCController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'location' => ['required', 'string', 'max:255'],
             'municipality' => ['required', 'string', 'max:255'],
             'district' => ['required', 'string', 'max:255'],
-            'tc_coordinator_count' => ['nullable', 'numeric'],
-            'population' => ['nullable', 'numeric'],
             'services' => ['nullable', 'string'],
             'files' => ['nullable', 'array'],
             'files.*' => ['required', 'isFile'],
@@ -77,11 +74,8 @@ class MPCFDCController extends Controller
         $mPCFDC = MPCFDC::findOrFail($id);
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
-            'location' => ['nullable', 'string', 'max:255'],
             'municipality' => ['nullable', 'string', 'max:255'],
             'district' => ['nullable', 'string', 'max:255'],
-            'tc_coordinator_count' => ['nullable', 'numeric'],
-            'population' => ['nullable', 'numeric'],
             'services' => ['nullable', 'string'],
             'files' => ['nullable', 'array'],
             'files.*' => ['required', 'isFile'],
