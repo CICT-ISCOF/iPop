@@ -71,7 +71,7 @@ class DeathStatisticController extends Controller
                 }
             }
         }
-        $incidence =  $builder->where('year',$data['year']) ->where('type', 'Birth')->orderBy('year', 'ASC')->with('approval')->get();
+        $incidence =  $builder->where('year',$data['year']) ->where('type', 'Death')->orderBy('year', 'ASC')->with('approval')->get();
         return [
             'data' => $result,
             'month' => $monthChart,

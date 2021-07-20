@@ -12,13 +12,9 @@ class PMOC extends Model
 
     protected $fillable = [
         'municipality',
+        'barangay',
+        'year',
         'sessions',
         'oriented_couples',
-        'individuals_interviewed',
-        'applicants_by_age_group',
-        'applicants_by_employment_status',
-        'applicants_by_income_class',
-        'applicants_by_knowledge_on_fp',
-        'year',
     ];
 }

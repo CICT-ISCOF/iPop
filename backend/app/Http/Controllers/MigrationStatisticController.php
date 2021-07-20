@@ -20,7 +20,6 @@ class MigrationStatisticController extends Controller
     public function summary()
     {
         $stats = MigrationStatistic::getApproved()->get();
-
         $data = [
             'total_in_migrations' => 0,
             'total_out_migrations' => 0,
@@ -28,7 +27,6 @@ class MigrationStatisticController extends Controller
             'incidences' => Incidence::where('type', 'Migration')->get(),
             'total' => $stats->count(),
         ];
-
         foreach ($stats as $stat) {
             $data['total_in_migrations'] += (int)$stat->total_in_migrations;
             $data['total_out_migrations'] += (int)$stat->total_out_migrations;
@@ -37,49 +35,46 @@ class MigrationStatisticController extends Controller
 
         return $data;
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index(Request $request)
     {
         $data = $request->all();
         $builder = MigrationStatistic::getApproved();
-        $monthChart = MonthChart::where('year', $data['year'])
-            ->where('municipality', $data['municipality'] === 'null' ? null : $data['municipality'])
-            ->where('barangay', $data['barangay'] === 'null' ? null : $data['barangay'])
-            ->where('type', 'Migration')
-            ->with('approval')
-            ->get();
-
-        $incidence = Incidence::where('municipality', $data['municipality'] === 'null' ? null : $data['municipality'])
-            ->where('barangay', $data['barangay'] === 'null' ? null : $data['barangay'])
-            ->where('type', 'Migration')
-            ->orderBy('year', 'ASC')
-            ->with('approval')
-            ->get();
-
-        $result = tap($builder, function ($builder) use ($request) {
-            foreach ($request->all() as $parameter => $value) {
-                $builder = $builder->where($parameter, $value);
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                     $builder = $builder->whereNull( $key ); 
+                }else{
+                     $builder = $builder->where( $key, $value );
+                }
             }
-            return $builder;
-        })->first();
-        return [
-            'data' => $result,
-            'month' => $monthChart,
-            'incidence' => $incidence
-        ];
+        }
+        $result =  $builder->where('year',$data['year'])->first();
+        $builder = new MonthChart();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                     $builder = $builder->whereNull( $key ); 
+                }else{
+                     $builder = $builder->where( $key, $value );
+                }
+            }
+        }
+        $monthChart = $builder->where('year',$data['year']) ->where('type', 'Migration')->with('approval')->get();;
+        $builder = new Incidence();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                     $builder = $builder->whereNull( $key ); 
+                }else{
+                     $builder = $builder->where( $key, $value );
+                }
+            }
+        }
+        $incidence =  $builder->where('year',$data['year']) ->where('type', 'Migration')->orderBy('year', 'ASC')->with('approval')->get();
+        return [ 'data' => $result,  'month' => $monthChart,  'incidence' => $incidence  ];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -90,12 +85,17 @@ class MigrationStatisticController extends Controller
             'total_out_migrations' => ['nullable', 'numeric'],
             'net_migrations' => ['nullable', 'numeric'],
         ]);
-
-        $migrationStatistic = MigrationStatistic::where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
-            ->where('year', $data['year'])
-            ->first();
-
+        $builder = new MigrationStatistic();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                    $builder = $builder->whereNull( $key ); 
+                }else{
+                    $builder = $builder->where( $key, $value );
+                }
+            }
+        }
+        $migrationStatistic =  $builder->where('year',$data['year'])->first();
         if ($migrationStatistic) {
             $migrationStatistic->update($data);
         } else {
@@ -105,33 +105,17 @@ class MigrationStatisticController extends Controller
                 'message' => $request->user()->makeMessage('wants to add migration statistic.'),
             ]));
         }
-
         $migrationStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
-
         Log::record("Created a migration statistic.");
-
         return $migrationStatistic;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Statistics\MigrationStatistic  $migrationStatistic
-     * @return \Illuminate\Http\Response
-     */
     public function show(MigrationStatistic $migrationStatistic)
     {
         return MigrationStatistic::findApproved($migrationStatistic->id)->first()
             ?: response('', 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Statistics\MigrationStatistic  $migrationStatistic
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, MigrationStatistic $migrationStatistic)
     {
         $data = $request->validate([
@@ -142,28 +126,17 @@ class MigrationStatisticController extends Controller
             'total_out_migrations' => ['nullable', 'numeric'],
             'net_migrations' => ['nullable', 'numeric'],
         ]);
-
         $migrationStatistic->update($data);
         $migrationStatistic->setApproved($request->user()->hasRole(Role::ADMIN))
             ->setApprovalMessage($request->user()->makeMessage('wants to update a migration statistic.'));
-
         Log::record("Updated a migration statistic.");
-
         return $migrationStatistic;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Statistics\MigrationStatistic  $migrationStatistic
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(MigrationStatistic $migrationStatistic)
     {
         $migrationStatistic->makeDeleteRequest();
-
         Log::record("Deleted a migration statistic.");
-
         return response('', 204);
     }
 }
