@@ -94,8 +94,9 @@ class PersonnelDirectoryController extends Controller
         return $quickLink;
     }
 
-    public function destroy(PersonnelDirectory $personnelDirectory)
+    public function destroy($id)
     {
+        $personnelDirectory = PersonnelDirectory::findOrFail($id);
         $personnelDirectory->makeDeleteRequest();
         Log::record("User removed a personnel in the personnel directory.");
         return response('', 204);

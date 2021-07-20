@@ -38,8 +38,9 @@ class TechnicalNotesController extends Controller
         return $technicalNote;
     }
 
-    public function destroy(TechnicalNotes $technicalNotes)
+    public function destroy($id)
     {
+        $technicalNotes = TechnicalNotes::findOrFail($id);
         $technicalNotes->makeDeleteRequest();
         Log::record("User removed a technical note.");
         return response('', 204);
