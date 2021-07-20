@@ -33,6 +33,11 @@ class BulkController extends Controller
         return $builder->get();
     }
 
+    public function view($id)
+    {
+        return json_decode(Storage::get(BulkImportRequest::findOrFail($id)->path));
+    }
+
     public function self(Request $request)
     {
         return $request->user()->bulkRequests;
