@@ -16,11 +16,6 @@ class MPCFDCPersonnelController extends Controller
         $this->middleware('auth:sanctum')->except(['index', 'show']);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $builder = MPCFDCPersonnel::getApproved();
@@ -33,12 +28,6 @@ class MPCFDCPersonnelController extends Controller
         return $builder->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -66,12 +55,6 @@ class MPCFDCPersonnelController extends Controller
         return $mPCFDCPersonnel;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\MPCFDCPersonnel  $mPCFDCPersonnel
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $mPCFDCPersonnel = MPCFDCPersonnel::findOrFail($id);
@@ -79,13 +62,6 @@ class MPCFDCPersonnelController extends Controller
             ->first() ?: response('', 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MPCFDCPersonnel  $mPCFDCPersonnel
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $mPCFDCPersonnel = MPCFDCPersonnel::findOrFail($id);
@@ -116,12 +92,6 @@ class MPCFDCPersonnelController extends Controller
         return $mPCFDCPersonnel;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\MPCFDCPersonnel  $mPCFDCPersonnel
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $mPCFDCPersonnel = MPCFDCPersonnel::findOrFail($id);
