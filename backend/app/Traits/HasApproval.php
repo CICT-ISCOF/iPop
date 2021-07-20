@@ -25,26 +25,10 @@ trait HasApproval
      */
     public static function findApproved($id, $mode = true)
     {
-        $approval = Approval::where('approvable_type', static::class)
-            ->where('approvable_id', $id)
-            ->where('approved', $mode)
-            ->first();
-
-        if (!$approval) {
-            return static::where('id', 0)
-                ->with('approval');
-        }
-
-        // $request = DeleteRequest::where('deleteable_type', static::class)
-        //     ->where('deletable_id', $id)
-        //     ->where('approved', $mode)
-        //     ->first();
-
-        // if ($request) {
-        //     return null;
-        // }
-
-        return static::where('id', $approval->approvable->id)
+        return static::where('id', $id)
+            ->whereHas('approval', function ($builder) use ($mode) {
+                return $builder->where('approved', $mode);
+            })
             ->with('approval');
     }
 

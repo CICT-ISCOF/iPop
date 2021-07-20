@@ -15,8 +15,8 @@ class CreateAgeDistributionsTable extends Migration
     {
         Schema::create('age_distributions', function (Blueprint $table) {
             $table->id();
-            $table->string('municipality');
-            $table->string('barangay');
+            $table->string('municipality')->nullable();
+            $table->string('barangay')->nullable();
             $table->year('year');
             $table->text('data');
             $table->timestamps();
