@@ -13,7 +13,7 @@ class CreateTechnicalNotesTable extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('body');
-            $table->type('type');
+            $table->string('type');
         });
     }
 
