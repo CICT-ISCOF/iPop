@@ -30,7 +30,7 @@ class PMCKFPController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = PMCKFP::getApproved();
+        $builder = new PMCKFP();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){

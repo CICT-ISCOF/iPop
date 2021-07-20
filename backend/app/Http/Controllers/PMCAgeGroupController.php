@@ -30,7 +30,7 @@ class PMCAgeGroupController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = PMCAgeGroup::getApproved();
+        $builder = new PMCAgeGroup;
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){

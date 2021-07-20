@@ -30,7 +30,7 @@ class PMCCSController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = PMCCS::getApproved();
+        $builder = new PMCCS();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){

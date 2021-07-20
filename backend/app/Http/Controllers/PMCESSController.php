@@ -30,7 +30,7 @@ class PMCESSController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = PMCESS::getApproved();
+        $builder = new PMCESS();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){

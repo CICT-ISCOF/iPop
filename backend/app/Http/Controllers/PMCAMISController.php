@@ -30,7 +30,7 @@ class PMCAMISController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = PMCAMIS::getApproved();
+        $builder = new PMCAMIS();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
