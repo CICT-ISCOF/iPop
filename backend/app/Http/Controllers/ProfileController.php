@@ -72,18 +72,13 @@ class ProfileController extends Controller
         return $data;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $queries = $request->all();
         $builder = Profile::getApproved();
         foreach ($queries as $key => $query) {
-            if ($query === 'null') {
-                $builder = $builder->where($key, null);
+            if ($query === 'null' || $query === null) {
+                $builder = $builder->whereNull($key);
             } else {
                 $builder = $builder->where($key, $query);
             }
@@ -91,20 +86,25 @@ class ProfileController extends Controller
         return $builder->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->all();
-
-        $profile = Profile::where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
-            ->where('year', $data['year'])
-            ->first();
+      
+        if($data['municipality'] === null || $data['municipality'] === 'null'){
+            $profile = Profile::where('year', $data['year'])
+                ->first();
+        }
+        if($data['barangay'] === null || $data['barangay'] === 'null'){
+            $profile = Profile::where('year', $data['year'])
+                ->where('municipality', $data['municipality'])
+                ->first();
+        }
+        if($data['municipality'] === null || $data['municipality'] !== 'null' && $data['barangay'] !== null || $data['barangay'] === 'null'){
+            $profile = Profile::where('municipality', $data['municipality'])
+                ->where('barangay', $data['barangay'])
+                ->where('year', $data['year'])
+                ->first();
+        }     
         if (!$profile) {
             $profile = Profile::create($data);
             $profile->approval()->create([
@@ -115,60 +115,32 @@ class ProfileController extends Controller
             $profile->update($data);
         }
         $profile->setApproved($request->user()->hasRole(Role::ADMIN));
-
-
         Log::record("Created a Statistics Profile.");
-
         return $profile;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Statistics\Profile  $profile
-     * @return \Illuminate\Http\Response
-     */
     public function show(Profile $profile)
     {
         return Profile::findApproved($profile->id)->first()
             ?: response('', 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Statistics\Profile  $profile
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $profile = Profile::findOrFail($id);
-
         $data = $request->all();
-
         $profile->update($data);
         $profile->setApproved($request->user()->hasRole(Role::ADMIN))
             ->setApprovalMessage($request->user()->makeMessage('wants to update a statistic profile.'));
-
         Log::record("Updated a Statistics Profile.");
-
         return $profile;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Statistics\Profile  $profile
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $profile = Profile::findOrFail($id);
         $profile->makeDeleteRequest();
-
         Log::record("Deleted a Statistics Profile.");
-
         return response('', 204);
     }
 }

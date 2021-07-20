@@ -18,14 +18,14 @@ class PopulationPyramidController extends Controller
 
         foreach ($request->all() as $key => $value) {
             if($value === null || $value === 'null' ){
-                $builder->whereNull( $key); 
+                $builder->whereNull( $key ); 
             }else{
                 $builder = $builder->where($key, $value);
             }
         }
 
         return $builder->get();
-    }
+    } 
  
     public function store(Request $request)
     {
@@ -34,19 +34,18 @@ class PopulationPyramidController extends Controller
          
         if($data['municipality'] === null || $data['municipality'] === 'null'){
             $model = PopulationPyramid::where('year', $data['year'])
-                    ->first();
+                ->first();
         }
-        
         if($data['barangay'] === null || $data['barangay'] === 'null'){
             $model = PopulationPyramid::where('year', $data['year'])
-                    ->where('municipality', $data['municipality'])
-                    ->first();
+                ->where('municipality', $data['municipality'])
+                ->first();
         }
         if($data['municipality'] === null || $data['municipality'] !== 'null' && $data['barangay'] !== null || $data['barangay'] === 'null'){
             $model = PopulationPyramid::where('municipality', $data['municipality'])
-                    ->where('barangay', $data['barangay'])
-                    ->where('year', $data['year'])
-                    ->first();
+                ->where('barangay', $data['barangay'])
+                ->where('year', $data['year'])
+                ->first();
         }
      
         if ($model) {
