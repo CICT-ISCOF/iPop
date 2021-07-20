@@ -15,8 +15,8 @@ class CreatePMCESSTable extends Migration
     {
         Schema::create('p_m_c_e_s_s', function (Blueprint $table) {
             $table->id();
-            $table->string('municipality');
-            $table->string('barangay');
+            $table->string('municipality')->nullable();
+            $table->string('barangay')->nullable();
             $table->year('year');
             $table->string('student_male');
             $table->string('student_female');

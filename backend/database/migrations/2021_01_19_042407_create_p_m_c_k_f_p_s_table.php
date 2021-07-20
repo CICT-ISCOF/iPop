@@ -15,8 +15,8 @@ class CreatePMCKFPSTable extends Migration
     {
         Schema::create('p_m_c_k_f_p_s', function (Blueprint $table) {
             $table->id();
-            $table->string('municipality');
-            $table->string('barangay');
+            $table->string('municipality')->nullable();
+            $table->string('barangay')->nullable();
             $table->year('year');
             $table->unsignedBigInteger('males');
             $table->unsignedBigInteger('females');

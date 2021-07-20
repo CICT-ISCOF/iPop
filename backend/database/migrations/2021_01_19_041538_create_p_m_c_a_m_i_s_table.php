@@ -15,8 +15,8 @@ class CreatePMCAMISTable extends Migration
     {
         Schema::create('p_m_c_a_m_i_s', function (Blueprint $table) {
             $table->id();
-            $table->string('municipality');
-            $table->string('barangay');
+            $table->string('municipality')->nullable();
+            $table->string('barangay')->nullable();
             $table->year('year');
             $table->string('no_income_male');
             $table->string('no_income_female');

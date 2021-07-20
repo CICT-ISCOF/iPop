@@ -15,8 +15,8 @@ class CreatePMCAgeGroupsTable extends Migration
     {
         Schema::create('p_m_c_age_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('municipality');
-            $table->string('barangay');
+            $table->string('municipality')->nullable();
+            $table->string('barangay')->nullable();
             $table->year('year');
             $table->string('15_to_19_male');
             $table->string('15_to_19_female');

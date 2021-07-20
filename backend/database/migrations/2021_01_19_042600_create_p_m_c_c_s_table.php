@@ -15,8 +15,8 @@ class CreatePMCCSTable extends Migration
     {
         Schema::create('p_m_c_c_s', function (Blueprint $table) {
             $table->id();
-            $table->string('municipality');
-            $table->string('barangay');
+            $table->string('municipality')->nullable();
+            $table->string('barangay')->nullable();
             $table->year('year');
             $table->string('single_male');
             $table->string('single_female');
