@@ -15,29 +15,37 @@ class PMCAgeGroupController extends Controller
     public function index(Request $request)
     {
         $builder = new PMCAgeGroup();
-
         foreach ($request->all() as $key => $value) {
-            $builder = $builder->where($key, $value);
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                     $builder = $builder->whereNull( $key ); 
+                }else{
+                     $builder = $builder->where( $key, $value );
+                }
+            }
         }
-
         return $builder->get();
     }
-
+ 
     public function store(Request $request)
     {
         $data = $request->all();
-
-        $model = PMCAgeGroup::where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
-            ->where('year', $data['year'])
-            ->first();
-
+        $builder = PMCAgeGroup::getApproved();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                     $builder = $builder->whereNull( $key ); 
+                }else{
+                     $builder = $builder->where( $key, $value );
+                }
+            }
+        }
+        $model = $builder->first();
         if ($model) {
             $model->update($data);
         } else {
             $model = PMCAgeGroup::create($data);
         }
-
         return $model;
     }
 

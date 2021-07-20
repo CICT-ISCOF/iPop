@@ -15,29 +15,37 @@ class PMCKFPController extends Controller
     public function index(Request $request)
     {
         $builder = new PMCKFP();
-
         foreach ($request->all() as $key => $value) {
-            $builder = $builder->where($key, $value);
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                     $builder = $builder->whereNull( $key ); 
+                }else{
+                     $builder = $builder->where( $key, $value );
+                }
+            }
         }
-
         return $builder->get();
     }
 
     public function store(Request $request)
     {
         $data = $request->all();
-
-        $model = PMCKFP::where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
-            ->where('year', $data['year'])
-            ->first();
-
+        $builder = PMCKFP::getApproved();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                     $builder = $builder->whereNull( $key ); 
+                }else{
+                     $builder = $builder->where( $key, $value );
+                }
+            }
+        }
+        $model = $builder->first();
         if ($model) {
             $model->update($data);
         } else {
             $model = PMCKFP::create($data);
         }
-
         return $model;
     }
 
@@ -49,18 +57,14 @@ class PMCKFPController extends Controller
     public function update(Request $request, $id)
     {
         $model = PMCKFP::findOrFail($id);
-
         $model->update($request->all());
-
         return $model;
     }
 
     public function destroy($id)
     {
         $model = PMCKFP::findOrFail($id);
-
         $model->delete();
-
         return response('', 204);
     }
 }
