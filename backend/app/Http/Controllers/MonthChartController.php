@@ -21,7 +21,7 @@ class MonthChartController extends Controller
         $builder = tap($builder, function ($builder) use ($request) {
             foreach ($request->all() as $key => $value) {
                 if( $value === 'null' ){
-                    $builder->whereNull( $key ); 
+                     $builder = $builder->whereNull( $key ); 
                 }else{
                     $builder = $builder->where( $key, $value );
                 }
@@ -45,11 +45,10 @@ class MonthChartController extends Controller
             $builder = new MonthChart();
             foreach ($request->all() as $key => $value) {
                 if( $key === 'barangay' || $key === 'municipality'){
-                    if( $value === 'null' ){
-                        $builder->whereNull( $key ); 
-                    }else{
-                        $builder = $builder->where( $key, $value );
-                    }
+                    $builder = $builder->where( $key, $value );
+                if( $value === 'null' ){
+                     $builder = $builder->whereNull( $key ); 
+                }
                 }
             }
             $monthChart =  $builder->where('year',$data['year'])->where('month', $month)->first();

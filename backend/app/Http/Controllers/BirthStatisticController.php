@@ -45,9 +45,9 @@ class BirthStatisticController extends Controller
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
-                    $builder->whereNull( $key ); 
+                     $builder = $builder->whereNull( $key ); 
                 }else{
-                    $builder = $builder->where( $key, $value );
+                     $builder = $builder->where( $key, $value );
                 }
             }
         }
@@ -56,9 +56,9 @@ class BirthStatisticController extends Controller
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
-                    $builder->whereNull( $key ); 
+                     $builder = $builder->whereNull( $key ); 
                 }else{
-                    $builder = $builder->where( $key, $value );
+                     $builder = $builder->where( $key, $value );
                 }
             }
         }
@@ -67,9 +67,9 @@ class BirthStatisticController extends Controller
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
-                    $builder->whereNull( $key ); 
+                     $builder = $builder->whereNull( $key ); 
                 }else{
-                    $builder = $builder->where( $key, $value );
+                     $builder = $builder->where( $key, $value );
                 }
             }
         }
@@ -92,7 +92,7 @@ class BirthStatisticController extends Controller
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
-                    $builder->whereNull( $key ); 
+                    $builder = $builder->whereNull( $key ); 
                 }else{
                     $builder = $builder->where( $key, $value );
                 }
