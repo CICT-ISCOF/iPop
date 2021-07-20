@@ -41,37 +41,37 @@ class DeathStatisticController extends Controller
         $data = $request->all();
         $builder = DeathStatistic::getApproved();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
-        $result =  $builder->where('year',$data['year'])->first();
+        $result =  $builder->where('year', $data['year'])->first();
         $builder = new MonthChart();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
-        $monthChart = $builder->where('year',$data['year']) ->where('type', 'Death')->with('approval')->get();;
+        $monthChart = $builder->where('year', $data['year'])->where('type', 'Death')->with('approval')->get();;
         $builder = new Incidence();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
-        $incidence =  $builder->where('year',$data['year']) ->where('type', 'Death')->orderBy('year', 'ASC')->with('approval')->get();
+        $incidence =  $builder->where('year', $data['year'])->where('type', 'Death')->orderBy('year', 'ASC')->with('approval')->get();
         return [
             'data' => $result,
             'month' => $monthChart,
@@ -92,15 +92,15 @@ class DeathStatisticController extends Controller
         ]);
         $builder = new DeathStatistic();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                    $builder = $builder->whereNull( $key ); 
-                }else{
-                    $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
-        $deathStatistic =  $builder->where('year',$data['year'])->first();
+        $deathStatistic =  $builder->where('year', $data['year'])->first();
         if ($deathStatistic) {
             $deathStatistic->update($data);
         } else {

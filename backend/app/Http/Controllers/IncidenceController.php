@@ -23,16 +23,14 @@ class IncidenceController extends Controller
     public function index(Request $request)
     {
         $builder = Incidence::getApproved();
-        $builder = tap($builder, function ($builder) use ($request) {
-            foreach ($request->all() as $parameter => $value) {
-                if ($value === 'null') {
-                    $builder = $builder->where($parameter, null);
-                } else {
-                    $builder = $builder->where($parameter, $value);
-                }
+        foreach ($request->all() as $parameter => $value) {
+            if ($value === 'null') {
+                $builder = $builder->whereNull($parameter);
+            } else {
+                $builder = $builder->where($parameter, $value);
             }
-            return $builder;
-        });
+        }
+        return $builder;
         return $builder->get();
     }
 

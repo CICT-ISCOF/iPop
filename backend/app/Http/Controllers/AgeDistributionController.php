@@ -25,7 +25,7 @@ class AgeDistributionController extends Controller
 
         foreach ($request->all() as $key => $value) {
             if ($value === 'null') {
-                $builder = $builder->where($key, null);
+                $builder = $builder->whereNull($key);
             } else {
                 $builder = $builder->where($key, $value);
             }

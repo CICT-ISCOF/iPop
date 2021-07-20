@@ -20,10 +20,10 @@ class MonthChartController extends Controller
         $builder = MonthChart::getApproved();
         $builder = tap($builder, function ($builder) use ($request) {
             foreach ($request->all() as $key => $value) {
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                    $builder = $builder->where( $key, $value );
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
             return $builder;
@@ -44,14 +44,14 @@ class MonthChartController extends Controller
             $monthChart = [];
             $builder = new MonthChart();
             foreach ($request->all() as $key => $value) {
-                if( $key === 'barangay' || $key === 'municipality'){
-                    $builder = $builder->where( $key, $value );
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }
+                if ($key === 'barangay' || $key === 'municipality') {
+                    $builder = $builder->where($key, $value);
+                    if ($value === 'null') {
+                        $builder = $builder->whereNull($key);
+                    }
                 }
             }
-            $monthChart =  $builder->where('year',$data['year'])->where('month', $month)->first();
+            $monthChart =  $builder->where('year', $data['year'])->where('month', $month)->first();
             if ($monthChart) {
                 $monthChart->update($temp);
             } else {

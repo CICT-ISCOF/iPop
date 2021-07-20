@@ -43,38 +43,38 @@ class BirthStatisticController extends Controller
         $data = $request->all();
         $builder = BirthStatistic::getApproved();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
-        $result =  $builder->where('year',$data['year'])->first();
+        $result =  $builder->where('year', $data['year'])->first();
         $builder = new MonthChart();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
-        $monthChart = $builder->where('year',$data['year']) ->where('type', 'Birth')->with('approval')->get();;
+        $monthChart = $builder->where('year', $data['year'])->where('type', 'Birth')->with('approval')->get();;
         $builder = new Incidence();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
-        $incidence =  $builder->where('year',$data['year']) ->where('type', 'Birth')->orderBy('year', 'ASC')->with('approval')->get();
-        return [ 'data' => $result,  'month' => $monthChart,  'incidence' => $incidence  ];
+        $incidence =  $builder->where('year', $data['year'])->where('type', 'Birth')->orderBy('year', 'ASC')->with('approval')->get();
+        return ['data' => $result,  'month' => $monthChart,  'incidence' => $incidence];
     }
 
     public function store(Request $request)
@@ -89,15 +89,15 @@ class BirthStatisticController extends Controller
         ]);
         $builder = new BirthStatistic();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                    $builder = $builder->whereNull( $key ); 
-                }else{
-                    $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
-        $birthStatistic =  $builder->where('year',$data['year'])->first();
+        $birthStatistic =  $builder->where('year', $data['year'])->first();
         if ($birthStatistic) {
             $birthStatistic->update($data);
             $birthStatistic->setApprovalMessage($request->user()->makeMessage('wants to update a birth statistic.'));
