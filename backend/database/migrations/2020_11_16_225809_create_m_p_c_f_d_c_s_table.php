@@ -16,11 +16,8 @@ class CreateMPCFDCSTable extends Migration
         Schema::create('m_p_c_f_d_c_s', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('location');
-            $table->string('municipality');
             $table->string('district');
-            $table->unsignedSmallInteger('tc_coordinator_count')->nullable();
-            $table->unsignedBigInteger('population')->nullable();
+            $table->string('municipality');
             $table->text('services')->nullable();
             $table->timestamps();
         });
