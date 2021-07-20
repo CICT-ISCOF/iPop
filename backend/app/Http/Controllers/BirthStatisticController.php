@@ -87,7 +87,6 @@ class BirthStatisticController extends Controller
             'crude_birth_rate' => ['required', 'string', 'max:255'],
             'general_fertility_rate' => ['required', 'string', 'max:255'],
         ]);
-        $birthStatistic = [];
         $builder = new BirthStatistic();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){

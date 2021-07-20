@@ -20,7 +20,6 @@ class DeathStatisticController extends Controller
     public function summary()
     {
         $stats = DeathStatistic::getApproved()->get();
-
         $data = [
             'male' => 0,
             'female' => 0,
@@ -28,45 +27,51 @@ class DeathStatisticController extends Controller
             'total' => 0,
             'incidences' => Incidence::where('type', 'Death')->get(),
         ];
-
         foreach ($stats as $stat) {
             $data['male'] += (int)$stat->male;
             $data['female'] += (int)$stat->female;
             $data['crude_death_rate'] += (int)$stat->crude_death_rate;
             $data['total'] += (int)$stat->total;
         }
-
         return $data;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $data = $request->all();
         $builder = DeathStatistic::getApproved();
-        $monthChart = MonthChart::where('year', $data['year'])
-            ->where('municipality', $data['municipality'] === 'null' ? null : $data['municipality'])
-            ->where('barangay', $data['barangay'] === 'null' ? null : $data['barangay'])
-            ->where('type', 'Death')
-            ->with('approval')
-            ->get();
-
-        $incidence = Incidence::where('municipality', $data['municipality'] === 'null' ? null : $data['municipality'])
-            ->where('barangay', $data['barangay'] === 'null' ? null : $data['barangay'])
-            ->where('type', 'Death')
-            ->orderBy('year', 'ASC')
-            ->with('approval')
-            ->get();
-        $result = tap($builder, function ($builder) use ($request) {
-            foreach ($request->all() as $parameter => $value) {
-                $builder = $builder->where($parameter, $value);
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                     $builder = $builder->whereNull( $key ); 
+                }else{
+                     $builder = $builder->where( $key, $value );
+                }
             }
-            return $builder;
-        })->first();
+        }
+        $result =  $builder->where('year',$data['year'])->first();
+        $builder = new MonthChart();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                     $builder = $builder->whereNull( $key ); 
+                }else{
+                     $builder = $builder->where( $key, $value );
+                }
+            }
+        }
+        $monthChart = $builder->where('year',$data['year']) ->where('type', 'Death')->with('approval')->get();;
+        $builder = new Incidence();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                     $builder = $builder->whereNull( $key ); 
+                }else{
+                     $builder = $builder->where( $key, $value );
+                }
+            }
+        }
+        $incidence =  $builder->where('year',$data['year']) ->where('type', 'Birth')->orderBy('year', 'ASC')->with('approval')->get();
         return [
             'data' => $result,
             'month' => $monthChart,
@@ -74,12 +79,6 @@ class DeathStatisticController extends Controller
         ];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -91,12 +90,17 @@ class DeathStatisticController extends Controller
             'crude_death_rate' => ['required', 'string', 'max:255'],
             'total' => ['required', 'string', 'max:255'],
         ]);
-
-        $deathStatistic = DeathStatistic::where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
-            ->where('year', $data['year'])
-            ->first();
-
+        $builder = new DeathStatistic();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                    $builder = $builder->whereNull( $key ); 
+                }else{
+                    $builder = $builder->where( $key, $value );
+                }
+            }
+        }
+        $deathStatistic =  $builder->where('year',$data['year'])->first();
         if ($deathStatistic) {
             $deathStatistic->update($data);
         } else {
@@ -108,31 +112,16 @@ class DeathStatisticController extends Controller
         }
 
         $deathStatistic->setApproved($request->user()->hasRole(Role::ADMIN));
-
         Log::record("Created a death statistic.");
-
         return $deathStatistic;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Statistics\DeathStatistic  $deathStatistic
-     * @return \Illuminate\Http\Response
-     */
     public function show(DeathStatistic $deathStatistic)
     {
         return DeathStatistic::findApproved($deathStatistic->id)->first()
             ?: response('', 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Statistics\DeathStatistic  $deathStatistic
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, DeathStatistic $deathStatistic)
     {
         $data = $request->validate([
@@ -148,24 +137,14 @@ class DeathStatisticController extends Controller
         $deathStatistic->update($data);
         $deathStatistic->setApproved($request->user()->hasRole(Role::ADMIN))
             ->setApprovalMessage($request->user()->makeMessage('wants to update a death statistic.'));
-
         Log::record("Updated a death statistic.");
-
         return $deathStatistic;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Statistics\DeathStatistic  $deathStatistic
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(DeathStatistic $deathStatistic)
     {
         $deathStatistic->makeDeleteRequest();
-
         Log::record("Deleted a death statistic.");
-
         return response('', 204);
     }
 }
