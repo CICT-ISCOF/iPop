@@ -12,22 +12,66 @@ class PersonnelDirectoryController extends Controller
 {
     public function index()
     {
+        $data = PersonnelDirectory::all();
+        $ppo = []; $ad = [];  $trd = [];
+        $fod1 = []; $fod2 = [];$fod3 = []; $fod4 = []; $fod5 = [];
+        $apvw = []; $bod = [];
+        $bspo1 = []; $bspo2 = []; $bspo3 = []; $bspo4 = []; $bspo5 = []; 
+    
+        foreach($data as $personnel){
+            if($personnel->type === 'PROVINCIAL POPULATION OFFICE'){
+                array_push($ppo, $personnel->type );
+            }
+            if($personnel->type === 'ADMINISTRATIVE DIVISION'){
+                array_push($ad, $personnel->type );
+            }
+            if($personnel->type === 'TRAINING AND RESEARCH DIVISION'){
+                array_push($trd, $personnel->type );
+            }
+            if($personnel->type === 'FIELD OPERATIONS DIVISION District I'){
+                array_push($fod1, $personnel->type );
+            }
+            if($personnel->type === 'FIELD OPERATIONS DIVISION District II'){
+                array_push($fod2, $personnel->type );
+            }
+            if($personnel->type === 'FIELD OPERATIONS DIVISION District III'){
+                array_push($fod3, $personnel->type );
+            }
+            if($personnel->type === 'FIELD OPERATIONS DIVISION District IV'){
+                array_push($fod4, $personnel->type );
+            }
+            if($personnel->type === 'FIELD OPERATIONS DIVISION District V'){
+                array_push($fod5, $personnel->type );
+            }
+            if($personnel->type === 'Association of Population Volunteer Workers-Iloilo, Inc'){
+            array_push($apvw, $personnel->type );
+            }
+            if($personnel->type === 'Board of Directors'){
+                array_push($bod, $personnel->type );
+            }
+            if($personnel->type === 'BARANGAY SERVICE POINT OFFICERS (BSPOs) District I'){
+                array_push($bspo1, $personnel->type );
+            }
+             if($personnel->type === 'BARANGAY SERVICE POINT OFFICERS (BSPOs) District II'){
+                array_push($bspo2, $personnel->type );
+            }
+             if($personnel->type === 'BARANGAY SERVICE POINT OFFICERS (BSPOs) District III'){
+                array_push($bspo3, $personnel->type );
+            }
+             if($personnel->type === 'BARANGAY SERVICE POINT OFFICERS (BSPOs) District IV'){
+                array_push($bspo4, $personnel->type );
+            }
+             if($personnel->type === 'BARANGAY SERVICE POINT OFFICERS (BSPOs) District V'){
+                array_push($bspo5, $personnel->type );
+            }
+        }
+        
         return [
-            'ppo' => PersonnelDirectory::where('type','PROVINCIAL POPULATION OFFICE')->get(),
-            'ad' => PersonnelDirectory::where('type','ADMINISTRATIVE DIVISION')->get(),
-            'trd' => PersonnelDirectory::where('type','TRAINING AND RESEARCH DIVISION')->get(),
-            'fod1' => PersonnelDirectory::where('type','FIELD OPERATIONS DIVISION District I')->get(),
-            'fod2' => PersonnelDirectory::where('type','FIELD OPERATIONS DIVISION District II')->get(),
-            'fod3' => PersonnelDirectory::where('type','FIELD OPERATIONS DIVISION District III')->get(),
-            'fod4' => PersonnelDirectory::where('type','FIELD OPERATIONS DIVISION District IV')->get(),
-            'fod5' => PersonnelDirectory::where('type','FIELD OPERATIONS DIVISION District V')->get(),
-            'apvw' => PersonnelDirectory::where('type','Association of Population Volunteer Workers-Iloilo, Inc')->get(),
-            'bod' => PersonnelDirectory::where('type','Board of Directors')->get(),
-            'bspo1' => PersonnelDirectory::where('type','BARANGAY SERVICE POINT OFFICERS (BSPOs) District I')->get(),
-            'bspo2' => PersonnelDirectory::where('type','BARANGAY SERVICE POINT OFFICERS (BSPOs) District II')->get(),
-            'bspo3' => PersonnelDirectory::where('type','BARANGAY SERVICE POINT OFFICERS (BSPOs) District III')->get(),
-            'bspo4' => PersonnelDirectory::where('type','BARANGAY SERVICE POINT OFFICERS (BSPOs) District IV')->get(),
-            'bspo5' => PersonnelDirectory::where('type','BARANGAY SERVICE POINT OFFICERS (BSPOs) District V')->get(),
+            'ppo' => $ppo,'ad' => $ad,'trd' => $trd,
+            'fod1' => $fod1,'fod2' => $fod2,'fod3' => $fod3,'fod4' => $fod4,'fod5' => $fod5,
+            'apvw' => $apvw,'bod' => $bod,
+            'bspo1' => $bspo1,'bspo2' => $bspo2,'bspo3' => $bspo3,
+            'bspo4' => $bspo4,'bspo5' => $bspo5,
         ];
     }
 
