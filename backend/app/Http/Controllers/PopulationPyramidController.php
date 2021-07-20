@@ -31,29 +31,22 @@ class PopulationPyramidController extends Controller
     {
         $data = $request->all();
         $model = [];
-         
-        if($data['municipality'] === null || $data['municipality'] === 'null'){
-            $model = PopulationPyramid::where('year', $data['year'])
-                ->first();
+        $builder = new PopulationPyramid();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                    $builder->whereNull( $key ); 
+                }else{
+                    $builder = $builder->where( $key, $value );
+                }
+            }
         }
-        if($data['barangay'] === null || $data['barangay'] === 'null'){
-            $model = PopulationPyramid::where('year', $data['year'])
-                ->where('municipality', $data['municipality'])
-                ->first();
-        }
-        if($data['municipality'] === null || $data['municipality'] !== 'null' && $data['barangay'] !== null || $data['barangay'] === 'null'){
-            $model = PopulationPyramid::where('municipality', $data['municipality'])
-                ->where('barangay', $data['barangay'])
-                ->where('year', $data['year'])
-                ->first();
-        }
-     
+        $model =  $builder->where('year',$data['year'])->first();
         if ($model) {
             $model->update($data);
         } else {
             $model = PopulationPyramid::create($data);
         }
-
         return $model;
     }
 

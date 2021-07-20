@@ -89,22 +89,18 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-      
-        if($data['municipality'] === null || $data['municipality'] === 'null'){
-            $profile = Profile::where('year', $data['year'])
-                ->first();
+        $profile = [];
+        $builder = new Profile();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                    $builder->whereNull( $key ); 
+                }else{
+                    $builder = $builder->where( $key, $value );
+                }
+            }
         }
-        if($data['barangay'] === null || $data['barangay'] === 'null'){
-            $profile = Profile::where('year', $data['year'])
-                ->where('municipality', $data['municipality'])
-                ->first();
-        }
-        if($data['municipality'] === null || $data['municipality'] !== 'null' && $data['barangay'] !== null || $data['barangay'] === 'null'){
-            $profile = Profile::where('municipality', $data['municipality'])
-                ->where('barangay', $data['barangay'])
-                ->where('year', $data['year'])
-                ->first();
-        }     
+        $profile =  $builder->where('year',$data['year'])->first();
         if (!$profile) {
             $profile = Profile::create($data);
             $profile->approval()->create([

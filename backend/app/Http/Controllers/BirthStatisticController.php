@@ -38,66 +38,67 @@ class BirthStatisticController extends Controller
         return $data;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $data = $request->all();
         $builder = BirthStatistic::getApproved();
-        $monthChart = MonthChart::where('year', $data['year'])
-            ->where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
-            ->where('type', 'Birth')
-            ->with('approval')
-            ->get();
-
-        $incidence = Incidence::where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
-            ->where('type', 'Birth')
-            ->orderBy('year', 'ASC')
-            ->with('approval')
-            ->get();
-
-        $result = tap($builder, function ($builder) use ($request) {
-            foreach ($request->all() as $parameter => $value) {
-                $builder = $builder->where($parameter, $value);
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                    $builder->whereNull( $key ); 
+                }else{
+                    $builder = $builder->where( $key, $value );
+                }
             }
-            return $builder;
-        })->first();
-
-        return [
-            'data' => $result,
-            'month' => $monthChart,
-            'incidence' => $incidence
-        ];
+        }
+        $result =  $builder->where('year',$data['year'])->first();
+        $builder = new MonthChart();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                    $builder->whereNull( $key ); 
+                }else{
+                    $builder = $builder->where( $key, $value );
+                }
+            }
+        }
+        $monthChart = $builder->where('year',$data['year']) ->where('type', 'Birth')->with('approval')->get();;
+        $builder = new Incidence();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                    $builder->whereNull( $key ); 
+                }else{
+                    $builder = $builder->where( $key, $value );
+                }
+            }
+        }
+        $incidence =  $builder->where('year',$data['year']) ->where('type', 'Birth')->orderBy('year', 'ASC')->with('approval')->get();
+        return [ 'data' => $result,  'month' => $monthChart,  'incidence' => $incidence  ];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
             'municipality' => ['nullable', 'string', 'max:255'],
             'barangay' => ['nullable', 'string', 'max:255'],
             'year' => ['required', 'date_format:Y'],
-            'gender' => ['required', 'string'],
             'total_live_births' => ['nullable', 'numeric'],
             'crude_birth_rate' => ['required', 'string', 'max:255'],
             'general_fertility_rate' => ['required', 'string', 'max:255'],
         ]);
-
-        $birthStatistic = BirthStatistic::where('municipality', $data['municipality'])
-            ->where('barangay', $data['barangay'])
-            ->where('year', $data['year'])
-            ->first();
-
+        $birthStatistic = [];
+        $builder = new BirthStatistic();
+        foreach ($request->all() as $key => $value) {
+            if( $key === 'barangay' || $key === 'municipality'){
+                if( $value === 'null' ){
+                    $builder->whereNull( $key ); 
+                }else{
+                    $builder = $builder->where( $key, $value );
+                }
+            }
+        }
+        $birthStatistic =  $builder->where('year',$data['year'])->first();
         if ($birthStatistic) {
             $birthStatistic->update($data);
             $birthStatistic->setApprovalMessage($request->user()->makeMessage('wants to update a birth statistic.'));
@@ -114,12 +115,6 @@ class BirthStatisticController extends Controller
         return $birthStatistic;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Statistics\BirthStatistic  $birthStatistic
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request, $id)
     {
         $birthStatistic = BirthStatistic::findOrFail($id);
@@ -131,13 +126,6 @@ class BirthStatisticController extends Controller
         return $builder->first() ?: response('', 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Statistics\BirthStatistic  $birthStatistic
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $birthStatistic = BirthStatistic::findOrFail($id);
@@ -160,12 +148,6 @@ class BirthStatisticController extends Controller
         return $birthStatistic;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Statistics\BirthStatistic  $birthStatistic
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $birthStatistic = BirthStatistic::findOrFail($id);

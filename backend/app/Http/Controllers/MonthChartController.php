@@ -15,29 +15,22 @@ class MonthChartController extends Controller
         $this->middleware('auth:sanctum');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $builder = MonthChart::getApproved();
         $builder = tap($builder, function ($builder) use ($request) {
-            foreach ($request->all() as $parameter => $value) {
-                $builder = $builder->where($parameter, $value);
+            foreach ($request->all() as $key => $value) {
+                if( $value === 'null' ){
+                    $builder->whereNull( $key ); 
+                }else{
+                    $builder = $builder->where( $key, $value );
+                }
             }
             return $builder;
         });
         return $builder->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->all();
@@ -46,25 +39,20 @@ class MonthChartController extends Controller
         foreach ($data['months'] as $month => $value) {
             $temp = $data;
             $temp['month'] = $month;
-            /**
-            * Changed Code
-            */
             $temp['males'] = $data['males'][$month];
             $temp['females'] = $data['females'][$month];
-            /**
-            * Old Code
-                if (strtolower($data['gender']) === 'male') {
-                    $temp['males'] = $value;
-                } else {
-                    $temp['females'] = $value;
-            */
-            $monthChart = MonthChart::where('year', $temp['year'])
-                ->where('municipality', $temp['municipality'])
-                ->where('barangay', $temp['barangay'])
-                ->where('month', $month)
-                ->with('approval')
-                ->first();
-
+            $monthChart = [];
+            $builder = new MonthChart();
+            foreach ($request->all() as $key => $value) {
+                if( $key === 'barangay' || $key === 'municipality'){
+                    if( $value === 'null' ){
+                        $builder->whereNull( $key ); 
+                    }else{
+                        $builder = $builder->where( $key, $value );
+                    }
+                }
+            }
+            $monthChart =  $builder->where('year',$data['year'])->where('month', $month)->first();
             if ($monthChart) {
                 $monthChart->update($temp);
             } else {
@@ -74,7 +62,6 @@ class MonthChartController extends Controller
                     'message' => $request->user()->makeMessage('wants to add a month chart.'),
                 ]);
             }
-
             $monthChart->setApproved($request->user()->hasRole(Role::ADMIN));
             $results[] = $monthChart;
             Log::record("Created a month chart.");
@@ -83,24 +70,11 @@ class MonthChartController extends Controller
         return $results;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\MonthChart  $monthChart
-     * @return \Illuminate\Http\Response
-     */
     public function show(MonthChart $monthChart)
     {
         return MonthChart::findApproved($monthChart->id) ?: response('', 204);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MonthChart  $monthChart
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, MonthChart $monthChart)
     {
         $monthChart->update($request->all());
@@ -112,12 +86,6 @@ class MonthChartController extends Controller
         return $monthChart;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\MonthChart  $monthChart
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(MonthChart $monthChart)
     {
         $monthChart->makeDeleteRequest();

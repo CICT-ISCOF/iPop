@@ -15,8 +15,8 @@ class CreateMonthChartsTable extends Migration
     {
         Schema::create('month_charts', function (Blueprint $table) {
             $table->id();
-            $table->string('municipality');
-            $table->string('barangay');
+            $table->string('municipality')->nullable();
+            $table->string('barangay')->nullable();
             $table->year('year');
             $table->string('type');
             $table->enum('month', [
