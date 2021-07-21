@@ -15,23 +15,12 @@ class SBMPTCTeamController extends Controller
         $this->middleware('auth:sanctum')->except('index', 'show');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return SBMPTCTeam::getApproved()
-            ->paginate(10);
+            ->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -51,12 +40,6 @@ class SBMPTCTeamController extends Controller
         return $team;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\SBMPTCTeam $team
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $team = SBMPTCTeam::findOrFail($id);
@@ -64,13 +47,6 @@ class SBMPTCTeamController extends Controller
             ?: response('', 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SBMPTCTeam $team
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $team = SBMPTCTeam::findOrFail($id);
@@ -88,12 +64,6 @@ class SBMPTCTeamController extends Controller
         return $team;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\SBMPTCTeam $team
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $team = SBMPTCTeam::findOrFail($id);

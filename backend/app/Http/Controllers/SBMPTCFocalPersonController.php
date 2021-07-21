@@ -16,22 +16,11 @@ class SBMPTCFocalPersonController extends Controller
         $this->middleware('auth:sanctum')->except('index', 'show');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return SBMPTCFocalPerson::getApproved()->paginate(10);
+        return SBMPTCFocalPerson::getApproved()->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -50,12 +39,7 @@ class SBMPTCFocalPersonController extends Controller
         return $sBMPTCFocalPerson;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\SBMPTCFocalPerson  $sBMPTCFocalPerson
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
         $sBMPTCFocalPerson = SBMPTCFocalPerson::findOrFail($id);
@@ -63,13 +47,6 @@ class SBMPTCFocalPersonController extends Controller
             ?: response('', 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SBMPTCFocalPerson  $sBMPTCFocalPerson
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $sBMPTCFocalPerson = SBMPTCFocalPerson::findOrFail($id);
@@ -86,12 +63,7 @@ class SBMPTCFocalPersonController extends Controller
         return $sBMPTCFocalPerson;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\SBMPTCFocalPerson  $sBMPTCFocalPerson
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy($id)
     {
         $sBMPTCFocalPerson = SBMPTCFocalPerson::findOrFail($id);
