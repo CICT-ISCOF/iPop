@@ -17,53 +17,12 @@ class SBMPTCController extends Controller
         $this->middleware('auth:sanctum')->except('index', 'show');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $data = [];
-        $rows = SBMPTC::getApproved()
-            ->with('members')
-            ->with('photos')
-            ->orderBy('updated_at', 'DESC')
-            ->get();
-
-        foreach ($rows as $row) {
-            if (!in_array($row->district, array_keys($data))) {
-                $data[$row->district] = [
-                    'data' => [],
-                    'municipalities' => [],
-                ];
-            }
-            $data[$row->district]['data'][] = $row;
-            if (!in_array($row->municipality, array_keys($data[$row->district]['municipalities']))) {
-                $data[$row->district]['municipalities'][$row->municipality] = [
-                    'name' => $row->municipality,
-                    'teen_center_count' => SBMPTC::getApproved()
-                        ->where('municipality', $row->municipality)
-                        ->count(),
-                ];
-            }
-        }
-
-        return collect($data)->map(function ($row, $key) {
-            return [
-                'district' => $key,
-                'data' => $row['data'],
-                'municipalities' => $row['municipalities'],
-            ];
-        });
+        $data = $request->all();
+        return SBMPTC::getApproved()->where('district',$data['district'])->get();
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -101,12 +60,6 @@ class SBMPTCController extends Controller
         return $sbmptc;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         return SBMPTC::findApproved($id)
@@ -116,13 +69,6 @@ class SBMPTCController extends Controller
             ?: response('', 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SBMPTC  $sBMPTC
-     * @return \Illuminate\Http\sbmptc
-     */
     public function update(Request $request, $id)
     {
         $sbmptc = SBMPTC::findOrFail($id);
@@ -161,12 +107,6 @@ class SBMPTCController extends Controller
         return $sbmptc;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\SBMPTC  $sbmptc
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $sbmptc = SBMPTC::findOrFail($id);
