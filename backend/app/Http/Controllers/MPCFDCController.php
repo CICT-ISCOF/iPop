@@ -84,7 +84,7 @@ class MPCFDCController extends Controller
         $mPCFDC->setApproved($request->user()->hasRole(Role::ADMIN))
             ->setApprovalMessage($request->user()->makeMessage('wants to update a MPCFDC.'));
 
-        if (isset($data['files'])) {
+        if (isset($data['files']) && count($data['files']) > 0) {
             $mPCFDC->files->each(function (MPCFDCFile $file) {
                 $file->delete();
             });
