@@ -74,7 +74,14 @@ class UploadController extends Controller
      */
     public function update(Request $request, Upload $upload)
     {
-        return response('', 400);
+        $data = $request->validate([
+            'approved' => ['nullable', 'boolean'],
+        ]);
+
+        $upload->update($data);
+        $upload->load(['user', 'file']);
+
+        return $upload;
     }
 
     /**
