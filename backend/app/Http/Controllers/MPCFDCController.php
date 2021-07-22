@@ -24,12 +24,11 @@ class MPCFDCController extends Controller
     public function index(Request $request)
     {
         $builder = MPCFDC::getApproved();
-        $builder = tap($builder, function ($builder) use ($request) {
-            foreach ($request->all() as $parameter => $value) {
-                $builder = $builder->where($parameter, $value);
-            }
-            return $builder;
-        });
+
+        foreach ($request->all() as $parameter => $value) {
+            $builder = $builder->where($parameter, $value);
+        }
+
         return $builder->get();
     }
 

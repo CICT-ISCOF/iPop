@@ -142,7 +142,7 @@ class SBMPTCController extends Controller
         $sbmptc->setApproved($request->user()->hasRole(Role::ADMIN))
             ->setApprovalMessage($request->user()->makeMessage('wants to update a SBMPTC.'));
 
-        if (isset($data['photos'])) {
+        if (isset($data['photos']) && count($data['photos']) > 0) {
             $sbmptc->photos->each(function ($photo) {
                 $photo->delete();
             });

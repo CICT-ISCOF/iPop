@@ -44,7 +44,7 @@ class File extends Model
     public static function process($file, $user = null)
     {
         if (!$user) {
-            $user = request()->user();
+            $user = request()->user('sanctum');
         }
         if ($file instanceof UploadedFile) {
             return self::processFile($file, $user);

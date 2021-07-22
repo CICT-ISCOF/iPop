@@ -68,6 +68,7 @@ use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TeenageBirthIncidenceGraphController;
 use App\Http\Controllers\TomtomController;
 use App\Http\Controllers\TopPopulationController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\UserRoleController;
@@ -120,6 +121,7 @@ Route::middleware('throttle:60,1')->group(function () {
             'store',
             'destroy',
         ]);
+        Route::apiResource('uploads', UploadController::class);
 
         // Comments
         Route::apiResource('comments', CommentController::class)->except(['index']);
