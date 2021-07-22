@@ -163,6 +163,12 @@ class UserController extends Controller
                 $token->delete();
             });
         }
+
+        if (isset($data['role'])) {
+            $role = Role::findByName($data['role']);
+            $user->roles()->sync($role);
+        }
+
         return $user;
     }
 
