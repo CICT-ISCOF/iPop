@@ -39,6 +39,7 @@ use App\Http\Controllers\MTCMMembersController;
 use App\Http\Controllers\MunicipalityADController;
 use App\Http\Controllers\MunicipalOfficialController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OtherController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PersonnelDirectoryController;
 use App\Http\Controllers\PMCAgeGroupController;
@@ -126,6 +127,7 @@ Route::middleware('throttle:60,1')->group(function () {
             'destroy',
         ]);
         Route::apiResource('uploads', UploadController::class);
+        Route::apiResource('others', OtherController::class);
 
         // Comments
         Route::apiResource('comments', CommentController::class)->except(['index']);
@@ -238,7 +240,7 @@ Route::middleware('throttle:60,1')->group(function () {
         'population-pyramid' => PopulationPyramidController::class,
         'age-profile' => AgeProfileController::class,
         'profile-summary' => ProfileSummaryController::class,
-        // Extras 
+        // Extras
         'quick-links' => QuickLinksController::class,
         'technical-notes' => TechnicalNotesController::class,
         'personnel-directory' => PersonnelDirectoryController::class,
@@ -248,7 +250,7 @@ Route::middleware('throttle:60,1')->group(function () {
 
     // Delete 1 award media
     Route::delete('/awards/medias/{media}', [AwardController::class, 'deleteAwardMedia']);
-    
+
     // Delete 1 file
     Route::delete('/file/{id}', [FileController::class, 'destroy']);
 
