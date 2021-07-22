@@ -25,8 +25,8 @@ class ApprovalController extends Controller
         return Approval::with(['approvable', 'comments'])
             ->where('requester_id', '!=', $user->id)
             ->where('approved', false)
-            ->orderBy('approved', 'ASC')
-            ->paginate(10);
+            ->latest()
+            ->get();
     }
 
     /**
