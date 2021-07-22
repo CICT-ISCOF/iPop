@@ -40,6 +40,7 @@ use App\Http\Controllers\MunicipalityADController;
 use App\Http\Controllers\MunicipalOfficialController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PersonnelDirectoryController;
 use App\Http\Controllers\PMCAgeGroupController;
 use App\Http\Controllers\PMCAMISController;
 use App\Http\Controllers\PMCCSController;
@@ -53,6 +54,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileSummaryController;
 use App\Http\Controllers\ProgramAreaController;
 use App\Http\Controllers\ProvincialOfficialController;
+use App\Http\Controllers\QuickLinksController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SBMemberController;
@@ -65,6 +67,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceOfferController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StatisticsController;
+use App\Http\Controllers\TechnicalNotesController;
 use App\Http\Controllers\TeenageBirthIncidenceGraphController;
 use App\Http\Controllers\TomtomController;
 use App\Http\Controllers\TopPopulationController;
@@ -72,6 +75,7 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\UserRoleController;
+use App\Models\File;
 
 Route::middleware('throttle:60,1')->group(function () {
     Route::prefix('/auth')->group(function () {
@@ -234,12 +238,19 @@ Route::middleware('throttle:60,1')->group(function () {
         'population-pyramid' => PopulationPyramidController::class,
         'age-profile' => AgeProfileController::class,
         'profile-summary' => ProfileSummaryController::class,
+        // Extras 
+        'quick-links' => QuickLinksController::class,
+        'technical-notes' => TechnicalNotesController::class,
+        'personnel-directory' => PersonnelDirectoryController::class,
     ]);
 
     Route::get('/statistic-profile/total', [ProfileController::class, 'total']);
 
     // Delete 1 award media
     Route::delete('/awards/medias/{media}', [AwardController::class, 'deleteAwardMedia']);
+    
+    // Delete 1 file
+    Route::delete('/file/{id}', [FileController::class, 'destroy']);
 
     // Delete 1 program area file
     Route::delete('/program-areas/activity-files/{file}', [ActivityController::class, 'deleteActivityFile']);

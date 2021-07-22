@@ -12,11 +12,8 @@ class MPCFDC extends Model
 
     protected $fillable = [
         'name',
-        'location',
-        'municipality',
         'district',
-        'tc_coordinator_count',
-        'population',
+        'municipality',
         'services',
     ];
 

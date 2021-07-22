@@ -13,7 +13,7 @@ class QuickLinksController extends Controller
     public function __construct()
     {
         $this->middleware('auth:sanctum')->except('index');
-    }
+    } 
     
     public function index()
     {
@@ -36,9 +36,10 @@ class QuickLinksController extends Controller
         return $quickLink;
     }
 
-    public function destroy(QuickLinks $quickLinks)
+    public function destroy($id)
     {
-        $quickLinks->makeDeleteRequest();
+        $quickLink = QuickLinks::findOrFail($id);
+        $quickLink->makeDeleteRequest();
         Log::record("User removed a quick link.");
         return response('', 204);
     }
