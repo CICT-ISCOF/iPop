@@ -44,7 +44,7 @@ class AwardController extends Controller
 
         $award = Award::create($data);
 
-        if (isset($data['files'])) {
+        if (isset($data['files']) && count($data['files']) > 0) {
             collect($data['files'])
                 ->map(function ($file) {
                     $file = File::process($file);
