@@ -30,7 +30,6 @@ class ServiceOfferController extends Controller
         ]);
 
         $offer = new ServiceOffer($data);
-
         $service = Service::find($data['service_id']);
         $service->offers()->save($offer);
         $offer->approval()->save(new Approval([
@@ -38,9 +37,7 @@ class ServiceOfferController extends Controller
             'message' => $request->user()->makeMessage('wants to add a service offer.')
         ]));
         $offer->setApproved($request->user()->hasRole(Role::ADMIN));
-
-        Log::record("Created a Service Entry.");
-
+        Log::record("Created a Service Offered Entry.");
         return $offer;
     }
 

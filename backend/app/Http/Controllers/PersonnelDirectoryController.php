@@ -17,7 +17,7 @@ class PersonnelDirectoryController extends Controller
     
     public function index()
     {
-        $data = PersonnelDirectory::all();
+        $data = PersonnelDirectory::getApproved()->get();
         $ppo = []; $ad = [];  $trd = [];
         $fod1 = []; $fod2 = [];$fod3 = []; $fod4 = []; $fod5 = [];
         $apvw = []; $bod = [];
