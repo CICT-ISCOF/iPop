@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\PMCKFP;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class PMCKFPController extends Controller
@@ -14,7 +16,7 @@ class PMCKFPController extends Controller
 
     public function index(Request $request)
     {
-        $builder = new PMCKFP();
+        $builder = PMCKFP::getApproved();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
@@ -30,7 +32,7 @@ class PMCKFPController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = new PMCKFP();
+        $builder = PMCKFP::getApproved();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
@@ -46,8 +48,10 @@ class PMCKFPController extends Controller
         } else {
             $model = PMCKFP::create($data);
         }
+        $model->setApproved($request->user()->hasRole(Role::ADMIN));
+        Log::record('Hey! I would like to add change Knowledge on Family Planning among PMC Applicants Chart in my location');
         return $model;
-    }
+    } 
 
     public function show($id)
     {

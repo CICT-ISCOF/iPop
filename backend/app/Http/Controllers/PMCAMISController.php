@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\PMCAMIS;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class PMCAMISController extends Controller
@@ -14,7 +16,7 @@ class PMCAMISController extends Controller
 
     public function index(Request $request)
     {
-        $builder = new PMCAMIS();
+        $builder = PMCAMIS::getApproved();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
@@ -30,7 +32,7 @@ class PMCAMISController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = new PMCAMIS();
+        $builder = PMCAMIS::getApproved();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
@@ -46,6 +48,8 @@ class PMCAMISController extends Controller
         } else {
             $model = PMCAMIS::create($data);
         }
+        $model->setApproved($request->user()->hasRole(Role::ADMIN));
+        Log::record('Hey! I would like to add change PMC Applicants by Average Monthly Income and Sex Chart in my location');
         return $model;
     }
 

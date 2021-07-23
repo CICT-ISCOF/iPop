@@ -17,22 +17,11 @@ class ServiceOfferController extends Controller
         $this->middleware('auth:sanctum')->except('index', 'show');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return ServiceOffer::getApproved()->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -55,25 +44,12 @@ class ServiceOfferController extends Controller
         return $offer;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ServiceOffer  $serviceOffer
-     * @return \Illuminate\Http\Response
-     */
     public function show(ServiceOffer $serviceOffer)
     {
         return ServiceOffer::findApproved($serviceOffer->id)->first()
             ?: response('', 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ServiceOffer  $serviceOffer
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, ServiceOffer $serviceOffer)
     {
         $data = $request->validate([
@@ -89,12 +65,6 @@ class ServiceOfferController extends Controller
         return $serviceOffer;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ServiceOffer  $serviceOffer
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(ServiceOffer $serviceOffer)
     {
         $serviceOffer->makeDeleteRequest();

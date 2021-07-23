@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\PMCESS;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class PMCESSController extends Controller
@@ -14,7 +16,7 @@ class PMCESSController extends Controller
 
     public function index(Request $request)
     {
-        $builder = new PMCESS();
+        $builder = PMCESS::getApproved();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
@@ -30,7 +32,7 @@ class PMCESSController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = new PMCESS();
+        $builder = PMCESS::getApproved();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
@@ -46,9 +48,10 @@ class PMCESSController extends Controller
         } else {
             $model = PMCESS::create($data);
         }
-
+        $model->setApproved($request->user()->hasRole(Role::ADMIN));
+        Log::record('Hey! I would like to add change PMC Applicants by Employment Status and Sex Chart in my location');
         return $model;
-    }
+    } 
 
     public function show($id)
     {

@@ -31,10 +31,10 @@ class TechnicalNotesController extends Controller
         $technicalNote = TechnicalNotes::create($data);
         $technicalNote->approval()->save(new Approval([
             'requester_id' => $request->user()->id,
-            'message' => $request->user()->makeMessage('wants to add a technical note for type'.$data['type'].'.')
+            'message' => $request->user()->makeMessage('wants to add a technical note for type '.$data['type'].'.')
         ]));
         $technicalNote->setApproved($request->user()->hasRole(Role::ADMIN));
-        Log::record("User created a technical note for type".$data['type'].'.');
+        Log::record("User created a technical note for type ".$data['type'].'.');
         return $technicalNote;
     }
 

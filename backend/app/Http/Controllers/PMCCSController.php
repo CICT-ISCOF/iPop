@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\PMCCS;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class PMCCSController extends Controller
@@ -14,7 +16,7 @@ class PMCCSController extends Controller
 
     public function index(Request $request)
     {
-        $builder = new PMCCS();
+        $builder = PMCCS::getApproved();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
@@ -30,7 +32,7 @@ class PMCCSController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = new PMCCS();
+        $builder = PMCCS::getApproved();
         foreach ($request->all() as $key => $value) {
             if( $key === 'barangay' || $key === 'municipality'){
                 if( $value === 'null' ){
@@ -46,9 +48,10 @@ class PMCCSController extends Controller
         } else {
             $model = PMCCS::create($data);
         }
-
+        $model->setApproved($request->user()->hasRole(Role::ADMIN));
+        Log::record('Hey! I would like to add change Percentage Distribution of PMC Applicants by Civil Status Chart in my location');
         return $model;
-    }
+    } 
 
     public function show($id)
     {

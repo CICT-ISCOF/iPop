@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasApproval;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PMCAgeGroup extends Model
 {
-    use HasFactory;
+    use HasFactory, HasApproval;
 
     protected $fillable = [
         'municipality',
