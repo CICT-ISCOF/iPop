@@ -127,7 +127,10 @@ Route::middleware('throttle:60,1')->group(function () {
             'destroy',
         ]);
         Route::apiResource('uploads', UploadController::class);
+        Route::get('for-approvals', [UploadController::class,'approvals']);
         Route::apiResource('others', OtherController::class);
+        
+       
 
         // Comments
         Route::apiResource('comments', CommentController::class)->except(['index']);

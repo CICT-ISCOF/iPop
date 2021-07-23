@@ -8,17 +8,19 @@ use Illuminate\Http\Request;
 
 class UploadController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+    
+    
     public function index(Request $request)
     {
         $builder = Upload::with([
             'file',
             'user'
-        ])->where('approved', true);
+        ]);
 
         if ($request->has('type')) {
             $builder = $builder->where('type', $request->get('type'));
@@ -26,13 +28,25 @@ class UploadController extends Controller
 
         return $builder->get();
     }
+    
+    public function approvals(Request $request)
+    {
+        /**
+            4.Super Admin (Province)
+            4.TRD (Province)
+            3.FOD (District)
+            2.PPOII (Municipality)
+        	1.PPOI (Barangay)
+        */
+        /**
+         * Get Role of Current User
+         * GET all Uploads with a particular type
+         * Filter Uploads e return ya mga uploads ka role nga 1 heirarchy mas nubo sa iya
+         */
+        return $request->user();
+        
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -45,33 +59,19 @@ class UploadController extends Controller
         $file->save();
 
         $user = $request->user();
-
         return Upload::create([
             'user_id' => $user->id,
             'file_id' => $file->id,
+            'type' => $data['type']
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Upload  $upload
-     * @return \Illuminate\Http\Response
-     */
     public function show(Upload $upload)
     {
         $upload->load(['user', 'file']);
-
         return $upload;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Upload  $upload
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Upload $upload)
     {
         $data = $request->validate([
@@ -80,20 +80,13 @@ class UploadController extends Controller
 
         $upload->update($data);
         $upload->load(['user', 'file']);
-
         return $upload;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Upload  $upload
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Upload $upload)
     {
         $upload->delete();
-
         return response('', 204);
     }
 }
