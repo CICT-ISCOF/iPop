@@ -49,7 +49,7 @@ class PMCCSController extends Controller
             $model = PMCCS::create($data);
         }
         $model->setApproved($request->user()->hasRole(Role::ADMIN));
-        Log::record('Hey! I would like to add change Percentage Distribution of PMC Applicants by Civil Status Chart in my location');
+        Log::record('Customized a Percentage Distribution of PMC Applicants by Civil Status Chart');
         return $model;
     } 
 

@@ -49,7 +49,7 @@ class PMCESSController extends Controller
             $model = PMCESS::create($data);
         }
         $model->setApproved($request->user()->hasRole(Role::ADMIN));
-        Log::record('Hey! I would like to add change PMC Applicants by Employment Status and Sex Chart in my location');
+        Log::record('Customized a PMC Applicants by Employment Status and Sex Chart');
         return $model;
     } 
 

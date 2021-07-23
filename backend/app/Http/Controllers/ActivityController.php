@@ -19,22 +19,11 @@ class ActivityController extends Controller
         $this->middleware('auth:sanctum')->only('store', 'update', 'destroy');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return Activity::getApproved()->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -69,31 +58,17 @@ class ActivityController extends Controller
         }
 
         $activity->load('files');
-
         Log::record("User created a new activity for {$programArea->title}");
-
         return $activity;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\CMS\Activity  $activity
-     * @return \Illuminate\Http\Response
-     */
     public function show(Activity $activity)
     {
         return Activity::findApproved($activity->id)->first()
             ?: response('', 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CMS\Activity  $activity
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, Activity $activity)
     {
         $data = $request->validate([
@@ -128,31 +103,20 @@ class ActivityController extends Controller
             ->setApprovalMessage($request->user()->makeMessage('wants to update a program area activity.'));
 
         $activity->update($data);
-
         Log::record("User updated an activity.");
-
         return $activity;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\CMS\Activity  $activity
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Activity $activity)
     {
         $activity->makeDeleteRequest();
-
         Log::record("Deleted an activity.");
-
         return response('', 204);
     }
 
     public function deleteActivityFile(ActivityFile $file)
     {
         $file->delete();
-
         return response('', 204);
     }
 }

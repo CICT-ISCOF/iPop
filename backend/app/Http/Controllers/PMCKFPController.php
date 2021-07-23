@@ -49,7 +49,7 @@ class PMCKFPController extends Controller
             $model = PMCKFP::create($data);
         }
         $model->setApproved($request->user()->hasRole(Role::ADMIN));
-        Log::record('Hey! I would like to add change Knowledge on Family Planning among PMC Applicants Chart in my location');
+        Log::record('Customized a Knowledge on Family Planning among PMC Applicants Chart');
         return $model;
     } 
 

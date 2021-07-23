@@ -51,7 +51,7 @@ class PMOCController extends Controller
             'message' => $request->user()->makeMessage('wants to add a PMOC.')
         ]);
         $pMOC->setApproved($request->user()->hasRole(Role::ADMIN));
-        Log::record("Created a PMOC.");
+        Log::record("Created a new PMOC.");
         return $pMOC;
     }
 

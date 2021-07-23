@@ -49,7 +49,7 @@ class PMCAMISController extends Controller
             $model = PMCAMIS::create($data);
         }
         $model->setApproved($request->user()->hasRole(Role::ADMIN));
-        Log::record('Hey! I would like to add change PMC Applicants by Average Monthly Income and Sex Chart in my location');
+        Log::record('Customized a PMC Applicants by Average Monthly Income and Sex Chart');
         return $model;
     }
 

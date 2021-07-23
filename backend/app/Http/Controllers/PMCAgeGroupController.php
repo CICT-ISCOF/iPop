@@ -49,7 +49,7 @@ class PMCAgeGroupController extends Controller
             $model = PMCAgeGroup::create($data);
         }
         $model->setApproved($request->user()->hasRole(Role::ADMIN));
-        Log::record('Hey! I would like to add change PMC Couple Applicants by Age Group Chart in my location');
+        Log::record('Customized a PMC Couple Applicants by Age Group Chart');
         return $model;
     } 
 
