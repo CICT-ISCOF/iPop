@@ -23,7 +23,6 @@ class ApprovalController extends Controller
     {
         $user = $request->user();
         return Approval::with(['approvable', 'comments'])
-            ->where('requester_id', '!=', $user->id)
             ->where('approved', false)
             ->latest()
             ->get();
