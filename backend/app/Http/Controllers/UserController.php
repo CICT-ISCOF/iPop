@@ -13,11 +13,6 @@ use App\Models\Role;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return User::with('profilePicture')
@@ -26,12 +21,6 @@ class UserController extends Controller
             ->paginate(10);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  App\Http\Requests\RegisterRequest $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(RegisterRequest $request)
     {
         $data = $request->validated();
@@ -51,12 +40,7 @@ class UserController extends Controller
         return $user;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show($id)
     {
         return User::with('profilePicture')
@@ -65,13 +49,6 @@ class UserController extends Controller
             ->findOrFail($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UserUpdateRequest $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(UserUpdateRequest $request, User $user)
     {
         $data = $request->validated();
@@ -169,15 +146,12 @@ class UserController extends Controller
             $user->roles()->sync($role);
         }
 
-        return $user;
+        return User::with('profilePicture')
+            ->with('roles.permissions')
+            ->with('permissions')
+            ->findOrFail($user->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, User $user)
     {
         if ($request->user()->id === $user->id) {
