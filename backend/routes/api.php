@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AgeDependencyRatioController;
+use App\Http\Controllers\AgeDistributionAgeDependencyRatioController;
 use App\Http\Controllers\AgeDistributionController;
 use App\Http\Controllers\AgeDistributionRatioController;
 use App\Http\Controllers\AgeProfileController;
@@ -200,8 +201,9 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::get('/articles/today', [ArticleController::class, 'today']);
     Route::get('/articles/week', [ArticleController::class, 'week']);
     Route::get('/articles/month', [ArticleController::class, 'month']);
-
     Route::get('/approvals/count', [ApprovalController::class, 'count']);
+    
+    
 
     Route::apiResources([
         'articles' => ArticleController::class,
@@ -251,7 +253,16 @@ Route::middleware('throttle:60,1')->group(function () {
         'personnel-directory' => PersonnelDirectoryController::class,
         'age-distribution-ratio' => AgeDistributionRatioController::class,
         'age-dependency-ratio' => AgeDependencyRatioController::class,
+        // New ( Book Reference )
+        'adaadr' => AgeDistributionAgeDependencyRatioController::class,
+        
     ]);
+    
+    // New ( Book Reference )
+    Route::get('adaadr/by-municipality', [AgeDistributionAgeDependencyRatioController::class,'byMunicipality']);
+    
+        
+        
 
     Route::get('/statistic-profile/total', [ProfileController::class, 'total']);
 
