@@ -30,7 +30,7 @@ class AgeDistributionAgeDependencyRatioController extends Controller
         return  $builder->where('year', $data['year'])->get();
     }
     
-    public function byMunicipality(Request $request)
+    public function show(Request $request)
     {
         $data = $request->all();
         return AgeDistribution_AgeDependencyRatio::getApproved()
@@ -82,9 +82,9 @@ class AgeDistributionAgeDependencyRatioController extends Controller
     }
 
    
-    public function destroy(AgeDistribution_AgeDependencyRatio $ageDistribution_AgeDependencyRatio)
+    public function destroy($id)
     {
-        $ageDistribution_AgeDependencyRatio->makeDeleteRequest();
+        AgeDistribution_AgeDependencyRatio::find($id)->delete();
         return response('', 204);
     }
 }

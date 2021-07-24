@@ -258,8 +258,7 @@ Route::middleware('throttle:60,1')->group(function () {
         
     ]);
     
-    // New ( Book Reference )
-    Route::get('adaadr/by-municipality', [AgeDistributionAgeDependencyRatioController::class,'byMunicipality']);
+    
     
         
         
