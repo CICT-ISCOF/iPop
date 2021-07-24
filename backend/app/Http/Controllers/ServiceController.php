@@ -15,7 +15,11 @@ class ServiceController extends Controller
     public function index()
     {
         return Service::getApproved()
-            ->with('offers')
+            ->with('offers', function ($builder) {
+                return $builder->whereHas('approval', function ($builder) {
+                    return $builder->where('approved', true);
+                });
+            })
             ->get();
     }
 
@@ -26,7 +30,12 @@ class ServiceController extends Controller
 
     public function show(Service $service)
     {
-        return Service::findApproved($service->id)->first()
+        return Service::findApproved($service->id)
+            ->with('offers', function ($builder) {
+                return $builder->whereHas('approval', function ($builder) {
+                    return $builder->where('approved', true);
+                });
+            })->first()
             ?: response('', 404);
     }
 
