@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AgeDependencyRatioController;
 use App\Http\Controllers\AgeDistributionController;
+use App\Http\Controllers\AgeDistributionRatioController;
 use App\Http\Controllers\AgeProfileController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\ArticleController;
@@ -127,10 +129,10 @@ Route::middleware('throttle:60,1')->group(function () {
             'destroy',
         ]);
         Route::apiResource('uploads', UploadController::class);
-        Route::get('for-approvals', [UploadController::class,'approvals']);
+        Route::get('for-approvals', [UploadController::class, 'approvals']);
         Route::apiResource('others', OtherController::class);
-        
-       
+
+
 
         // Comments
         Route::apiResource('comments', CommentController::class)->except(['index']);
@@ -247,6 +249,8 @@ Route::middleware('throttle:60,1')->group(function () {
         'quick-links' => QuickLinksController::class,
         'technical-notes' => TechnicalNotesController::class,
         'personnel-directory' => PersonnelDirectoryController::class,
+        'age-distribution-ratio' => AgeDistributionRatioController::class,
+        'age-dependency-ratio' => AgeDependencyRatioController::class,
     ]);
 
     Route::get('/statistic-profile/total', [ProfileController::class, 'total']);
