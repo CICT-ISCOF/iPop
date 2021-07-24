@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\Role;
 use App\Models\Upload;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class UploadController extends Controller
 {
-    
+
     public function __construct()
     {
         $this->middleware('auth:sanctum');
     }
-    
-    
+
+
     public function index(Request $request)
     {
         $builder = Upload::with([
@@ -28,23 +30,44 @@ class UploadController extends Controller
 
         return $builder->get();
     }
-    
+
     public function approvals(Request $request)
     {
+        /**
+         * @var \App\Models\User
+         */
+        $user = $request->user();
+        $builder = Upload::where('approved', false);
+
         /**
             4.Super Admin (Province)
             4.TRD (Province)
             3.FOD (District)
             2.PPOII (Municipality)
         	1.PPOI (Barangay)
-        */
-        /**
-         * Get Role of Current User
-         * GET all Uploads with a particular type
-         * Filter Uploads e return ya mga uploads ka role nga 1 heirarchy mas nubo sa iya
          */
-        return $request->user();
-        
+        if ($user->hasRole(Role::ADMIN)) {
+            return $builder->get();
+        } else if ($user->hasRole(Role::TRD)) {
+            return $builder->whereHas('user.roles', function (Builder $builder) {
+                return $builder->whereNotIn('name', [Role::ADMIN, Role::TRD]);
+            });
+        } else if ($user->hasRole(Role::FOD)) {
+            return $builder->whereHas('user.roles', function (Builder $builder) {
+                return $builder->whereNotIn('name', [Role::ADMIN, Role::TRD, Role::FOD]);
+            });
+        } else if ($user->hasRole(Role::PPO_TWO)) {
+            return $builder->whereHas('user', function (Builder $builder) use ($user) {
+                return $builder->where('assigned_municipality', $user->assigned_municipality)
+                    ->whereHas('roles', function (Builder $builder) {
+                        return $builder->whereNotIn('name', [Role::ADMIN, Role::TRD, Role::FOD, Role::PPO_TWO]);
+                    });
+            });
+        } else if ($user->hasRole(Role::PPO_ONE)) {
+            return $builder->where('user_id', $user->id);
+        }
+
+        return;
     }
 
     public function store(Request $request)
@@ -83,7 +106,7 @@ class UploadController extends Controller
         return $upload;
     }
 
-    
+
     public function destroy(Upload $upload)
     {
         $upload->delete();
