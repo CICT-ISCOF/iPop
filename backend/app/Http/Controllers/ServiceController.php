@@ -14,7 +14,9 @@ class ServiceController extends Controller
 
     public function index()
     {
-        return Service::getApproved()->get();
+        return Service::getApproved()
+            ->with('offers')
+            ->get();
     }
 
     public function store(Request $request)
