@@ -17,23 +17,41 @@ class DeathStatisticController extends Controller
         $this->middleware('auth:sanctum')->except('index', 'show', 'summary');
     }
 
-    public function summary()
+    public function summary(Request $request)
     {
-        $stats = DeathStatistic::getApproved()->get();
-        $data = [
-            'male' => 0,
-            'female' => 0,
-            'crude_death_rate' => 0,
-            'total' => 0,
-            'incidences' => Incidence::where('type', 'Death')->get(),
-        ];
-        foreach ($stats as $stat) {
-            $data['male'] += (int)$stat->male;
-            $data['female'] += (int)$stat->female;
-            $data['crude_death_rate'] += (int)$stat->crude_death_rate;
-            $data['total'] += (int)$stat->total;
-        }
-        return $data;
+        $data = $request->all();
+        return json_encode([
+            'summary' => DeathStatistic::getApproved()
+                ->whereNull('barangay')
+                ->whereNull('municipality')
+                ->where('year',$data['year'])
+                ->first(),
+            'teenage' => Incidence::getApproved()
+                ->whereNull('barangay')
+                ->whereNull('municipality')
+                ->where('year',$data['year'])
+                ->where('type', 'Death')
+                ->where('title','Incidence of Teenage Birth')
+                ->first(),
+            'illegitimate' => Incidence::getApproved()
+                ->whereNull('barangay')
+                ->whereNull('municipality')
+                ->where('year',$data['year'])
+                ->where('type', 'Death')
+                ->where('title','Incidence of Illegitimate Birth')
+                ->first(),
+        ]);
+    }
+    
+    public function byMunicipality(Request $request)
+    {
+        $data = $request->all();
+        return DeathStatistic::getApproved()
+            ->where('year',$data['year'])
+            ->whereNotNull('municipality')
+            ->whereNull('barangay')
+            ->orderBy('municipality','asc')
+            ->get();
     }
 
     public function index(Request $request)
@@ -85,10 +103,9 @@ class DeathStatisticController extends Controller
             'municipality' => ['nullable', 'string', 'max:255'],
             'barangay' => ['nullable', 'string', 'max:255'],
             'year' => ['required', 'date_format:Y'],
-            'male' => ['nullable', 'numeric'],
-            'female' => ['nullable', 'numeric'],
-            'crude_death_rate' => ['required', 'string', 'max:255'],
-            'total' => ['required', 'string', 'max:255'],
+            'population' => ['required', 'numeric'],
+            'crude_death_rate' => ['required', 'numeric'],
+            'total' => ['required', 'numeric'],
         ]);
         $builder = new DeathStatistic();
         foreach ($request->all() as $key => $value) {

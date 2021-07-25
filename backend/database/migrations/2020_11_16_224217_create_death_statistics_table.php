@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateDeathStatisticsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('death_statistics', function (Blueprint $table) {
@@ -18,19 +13,13 @@ class CreateDeathStatisticsTable extends Migration
             $table->string('municipality')->nullable();
             $table->string('barangay')->nullable();
             $table->year('year');
-            $table->unsignedBigInteger('male');
-            $table->unsignedBigInteger('female');
-            $table->string('crude_death_rate');
-            $table->string('total');
+            $table->unsignedDouble('population');
+            $table->unsignedDouble('crude_death_rate');
+            $table->unsignedDouble('total');
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    
     public function down()
     {
         Schema::dropIfExists('death_statistics');
