@@ -14,9 +14,11 @@ class BirthStatistic extends Model
         'municipality',
         'barangay',
         'year',
-        'gender',
+        'total_population',
         'total_live_births',
         'crude_birth_rate',
+        'teenage_births',
+        'illegitimate_births',
         'general_fertility_rate',
     ];
 

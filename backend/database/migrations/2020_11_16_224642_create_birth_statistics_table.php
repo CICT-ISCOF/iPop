@@ -18,10 +18,12 @@ class CreateBirthStatisticsTable extends Migration
             $table->string('municipality')->nullable();
             $table->string('barangay')->nullable();
             $table->year('year');
-            $table->string('gender');
-            $table->unsignedBigInteger('total_live_births');
-            $table->string('crude_birth_rate');
-            $table->string('general_fertility_rate');
+            $table->unsignedDouble('total_population');
+            $table->unsignedDouble('total_live_births');
+            $table->unsignedDouble('crude_birth_rate');
+            $table->unsignedDouble('teenage_births');
+            $table->unsignedDouble('illegitimate_births');
+            $table->unsignedDouble('general_fertility_rate');
             $table->timestamps();
         });
     }

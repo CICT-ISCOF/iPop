@@ -38,6 +38,11 @@ class BirthStatisticController extends Controller
         return $data;
     }
 
+    public function byMunicipality()
+    {
+        
+    }
+    
     public function index(Request $request)
     {
         $data = $request->all();
@@ -83,9 +88,12 @@ class BirthStatisticController extends Controller
             'municipality' => ['nullable', 'string', 'max:255'],
             'barangay' => ['nullable', 'string', 'max:255'],
             'year' => ['required', 'date_format:Y'],
+            'total_population' => ['nullable', 'numeric'],
             'total_live_births' => ['nullable', 'numeric'],
-            'crude_birth_rate' => ['required', 'string', 'max:255'],
-            'general_fertility_rate' => ['required', 'string', 'max:255'],
+            'crude_birth_rate' => ['required', 'numeric'],
+            'teenage_births' => ['nullable', 'numeric'],
+            'illegitimate_births' => ['nullable', 'numeric'],
+            'general_fertility_rate' => ['nullable','numeric'],
         ]);
         $builder = new BirthStatistic();
         foreach ($request->all() as $key => $value) {
