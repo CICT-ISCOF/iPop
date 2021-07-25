@@ -11,7 +11,7 @@ class Activity extends Model
 {
     use HasFactory, HasApproval;
 
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['title', 'description','RA_links','MC_links'];
     protected $with = ['files', 'approval'];
 
     public static function booted()

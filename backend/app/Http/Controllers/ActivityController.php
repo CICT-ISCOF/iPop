@@ -30,6 +30,8 @@ class ActivityController extends Controller
             'program_area_id' => ['required', Rule::exists('program_areas', 'id')],
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'MC_links' => ['nullable', 'string'],
+            'RA_links' => ['nullable', 'string'],
             'files' => ['nullable', 'array'],
             'files.*' => ['required', 'isFile'],
         ]);

@@ -19,6 +19,8 @@ class CreateActivitiesTable extends Migration
             $table->string('slug');
             $table->string('title');
             $table->text('description');
+            $table->text('RA_links')->nullable();
+            $table->text('MC_links')->nullable();
             $table->foreignIdFor(new ProgramArea());
             $table->timestamps();
         });
