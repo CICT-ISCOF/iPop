@@ -14,15 +14,16 @@ class PopulationPyramidController extends Controller
 
     public function index(Request $request)
     {
+        $data = $request->all();
         $builder = new PopulationPyramid();
-        foreach ($request->all() as $key => $value) {
+        foreach ($data as $key => $value) {
             if( $value === 'null' ){
                 $builder = $builder->whereNull( $key ); 
             }else{
                 $builder = $builder->where($key, $value);
             }
         }
-        return $builder->where('type','Population')->get();
+        return $builder->where('type',$data['type'])->get();
     } 
  
     public function store(Request $request)
@@ -39,7 +40,7 @@ class PopulationPyramidController extends Controller
                 }
             }
         }
-        $model =  $builder->where('year',$data['year'])->first();
+        $model = $builder->where('year',$data['year'])->where('type',$data['type'])->first();
         if ($model) {
             $model->update($data);
         } else {
