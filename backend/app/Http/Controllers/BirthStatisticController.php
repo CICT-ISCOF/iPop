@@ -17,25 +17,30 @@ class BirthStatisticController extends Controller
         $this->middleware('auth:sanctum')->only('store', 'update', 'destroy');
     }
 
-    public function summary()
+    public function summary(Request $request)
     {
-        $stats = BirthStatistic::getApproved()->get();
-
-        $data = [
-            'total_live_births' => 0,
-            'crude_birth_rate' => 0,
-            'general_fertility_rate' => 0,
-            'incidences' => Incidence::where('type', 'Birth')->get(),
-            'total' => $stats->count(),
-        ];
-
-        foreach ($stats as $stat) {
-            $data['total_live_births'] += (int)$stat->total_live_births;
-            $data['crude_birth_rate'] += (int)$stat->crude_birth_rate;
-            $data['general_fertility_rate'] += (int)$stat->general_fertility_rate;
-        }
-
-        return $data;
+        $data = $request->all();
+        return json_encode([
+            'summary' => BirthStatistic::getApproved()
+                ->whereNull('barangay')
+                ->whereNull('municipality')
+                ->where('year',$data['year'])
+                ->first(),
+            'teenage' => Incidence::getApproved()
+                ->whereNull('barangay')
+                ->whereNull('municipality')
+                ->where('year',$data['year'])
+                ->where('type', 'Birth')
+                ->where('title','Incidence of Teenage Birth')
+                ->first(),
+            'illegitimate' => Incidence::getApproved()
+                ->whereNull('barangay')
+                ->whereNull('municipality')
+                ->where('year',$data['year'])
+                ->where('type', 'Birth')
+                ->where('title','Incidence of Illegitimate Birth')
+                ->first(),
+        ]);
     }
 
     public function byMunicipality()
