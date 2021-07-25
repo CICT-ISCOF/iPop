@@ -34,6 +34,7 @@ class CreateProfilesTable extends Migration
             $table->string('age_dependency_ratio')->nullable();
             $table->string('child_dependency_ratio')->nullable();
             $table->string('old_age_dependency_ratio')->nullable();
+            $table->string('dowloadable_link')->nullable();
             $table->timestamps();
         });
     }

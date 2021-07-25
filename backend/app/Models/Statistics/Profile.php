@@ -30,5 +30,6 @@ class Profile extends Model
         'age_dependency_ratio',
         'child_dependency_ratio',
         'old_age_dependency_ratio',
+        'dowloadable_link'
     ];
 }
