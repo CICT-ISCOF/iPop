@@ -257,9 +257,7 @@ Route::middleware('throttle:60,1')->group(function () {
         'adaadr' => AgeDistributionAgeDependencyRatioController::class,
         
     ]);
-    
-    
-    
+    Route::get('birth-statistics-by-municipality',[BirthStatisticController::class,'byMunicipality']);
         
         
 

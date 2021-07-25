@@ -43,9 +43,15 @@ class BirthStatisticController extends Controller
         ]);
     }
 
-    public function byMunicipality()
+    public function byMunicipality(Request $request)
     {
-        
+        $data = $request->all();
+        return BirthStatistic::getApproved()
+            ->where('year',$data['year'])
+            ->whereNotNull('municipality')
+            ->whereNull('barangay')
+            ->orderBy('municipality','asc')
+            ->get();
     }
     
     public function index(Request $request)
@@ -62,7 +68,7 @@ class BirthStatisticController extends Controller
             }
         }
         $result =  $builder->where('year', $data['year'])->first();
-        $builder = new MonthChart();
+        $builder = MonthChart::getApproved();
         foreach ($request->all() as $key => $value) {
             if ($key === 'barangay' || $key === 'municipality') {
                 if ($value === 'null') {
@@ -72,18 +78,15 @@ class BirthStatisticController extends Controller
                 }
             }
         }
-        $monthChart = $builder->where('year', $data['year'])->where('type', 'Birth')->with('approval')->get();;
-        $builder = new Incidence();
-        foreach ($request->all() as $key => $value) {
-            if ($key === 'barangay' || $key === 'municipality') {
-                if ($value === 'null') {
-                    $builder = $builder->whereNull($key);
-                } else {
-                    $builder = $builder->where($key, $value);
-                }
-            }
-        }
-        $incidence =  $builder->where('year', $data['year'])->where('type', 'Birth')->orderBy('year', 'ASC')->with('approval')->get();
+        $monthChart = $builder
+            ->where('year', $data['year'])
+            ->where('type', 'Birth')
+            ->get();
+        $incidence =  Incidence::getApproved()
+            ->where('year', $data['year'])
+            ->where('type', 'Birth')
+            ->orderBy('year', 'ASC')
+            ->get();
         return ['data' => $result,  'month' => $monthChart,  'incidence' => $incidence];
     }
 
