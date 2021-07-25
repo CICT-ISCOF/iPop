@@ -18,6 +18,7 @@ class CreatePopulationPyramidsTable extends Migration
             $table->string('municipality')->nullable();
             $table->string('barangay')->nullable();
             $table->year('year');
+            $table->string('type');
             $table->json('data');
             $table->timestamps();
         });

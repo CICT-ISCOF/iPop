@@ -31,7 +31,7 @@ class AgeDistributionAgeDependencyRatioController extends Controller
         return  $builder->where('year', $data['year'])->get();
     }
 
-    public function show(Request $request, $id)
+    public function show(Request $request)
     {
         $data = $request->all();
         return AgeDistribution_AgeDependencyRatio::getApproved()
@@ -39,7 +39,7 @@ class AgeDistributionAgeDependencyRatioController extends Controller
             ->whereNotNull('municipality')
             ->whereNull('barangay')
             ->orderBy('municipality', 'asc')
-            ->findOrFail($id);
+            ->get();
     }
 
     public function store(Request $request)
