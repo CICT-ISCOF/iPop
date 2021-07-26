@@ -95,7 +95,7 @@ class MigrationStatisticController extends Controller
             'municipality' => ['nullable', 'string', 'max:255'],
             'barangay' => ['nullable', 'string', 'max:255'],
             'year' => ['required', 'date_format:Y'],
-            'total_population' => ['required', 'numeric'],
+            'total_population' => ['nullable', 'numeric'],
             'total_in_migrations' => ['required', 'numeric'],
             'total_out_migrations' => ['required', 'numeric'],
             'net_migrations' => ['required', 'numeric'],
