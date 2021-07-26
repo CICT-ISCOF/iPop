@@ -18,9 +18,10 @@ class CreateMigrationStatisticsTable extends Migration
             $table->string('municipality')->nullable();
             $table->string('barangay')->nullable();
             $table->year('year');
-            $table->unsignedBigInteger('total_in_migrations')->default(0);
-            $table->unsignedBigInteger('total_out_migrations')->default(0);
-            $table->unsignedBigInteger('net_migrations')->default(0);
+            $table->unsignedDouble('total_population')->default(0);
+            $table->unsignedDouble('total_in_migrations')->default(0);
+            $table->unsignedDouble('total_out_migrations')->default(0);
+            $table->unsignedDouble('net_migrations')->default(0);
             $table->timestamps();
         });
     }

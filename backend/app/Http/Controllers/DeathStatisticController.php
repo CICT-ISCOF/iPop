@@ -14,7 +14,7 @@ class DeathStatisticController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index', 'show', 'summary');
+        $this->middleware('auth:sanctum')->except('index', 'show', 'summary','byMunicipality');
     }
 
     public function summary(Request $request)
@@ -31,14 +31,7 @@ class DeathStatisticController extends Controller
                 ->whereNull('municipality')
                 ->where('year',$data['year'])
                 ->where('type', 'Death')
-                ->where('title','Incidence of Teenage Birth')
-                ->first(),
-            'illegitimate' => Incidence::getApproved()
-                ->whereNull('barangay')
-                ->whereNull('municipality')
-                ->where('year',$data['year'])
-                ->where('type', 'Death')
-                ->where('title','Incidence of Illegitimate Birth')
+                ->where('title','Crude Death Rate')
                 ->first(),
         ]);
     }

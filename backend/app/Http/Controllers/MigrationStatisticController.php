@@ -14,28 +14,42 @@ class MigrationStatisticController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index', 'show', 'summary');
-    }
-
-    public function summary()
-    {
-        $stats = MigrationStatistic::getApproved()->get();
-        $data = [
-            'total_in_migrations' => 0,
-            'total_out_migrations' => 0,
-            'net_migrations' => 0,
-            'incidences' => Incidence::where('type', 'Migration')->get(),
-            'total' => $stats->count(),
-        ];
-        foreach ($stats as $stat) {
-            $data['total_in_migrations'] += (int)$stat->total_in_migrations;
-            $data['total_out_migrations'] += (int)$stat->total_out_migrations;
-            $data['net_migrations'] += (int)$stat->net_migrations;
-        }
-
-        return $data;
+        $this->middleware('auth:sanctum')->except('index', 'show', 'summary','byMunicipality','migrationChart');
     }
     
+    public function migrationChart()
+    {
+        return json_encode([
+            'summary' => MigrationStatistic::getApproved()
+                ->whereNull('barangay')
+                ->whereNull('municipality')
+                ->get(),
+        ]);
+    }
+    
+    public function summary(Request $request)
+    {
+        $data = $request->all();
+        return json_encode([
+            'summary' => MigrationStatistic::getApproved()
+                ->whereNull('barangay')
+                ->whereNull('municipality')
+                ->where('year',$data['year'])
+                ->first(),
+        ]);
+    }
+    
+    public function byMunicipality(Request $request)
+    {
+        $data = $request->all();
+        return MigrationStatistic::getApproved()
+            ->where('year',$data['year'])
+            ->whereNotNull('municipality')
+            ->whereNull('barangay')
+            ->orderBy('municipality','asc')
+            ->get();
+    }
+
     public function index(Request $request)
     {
         $data = $request->all();
@@ -81,9 +95,10 @@ class MigrationStatisticController extends Controller
             'municipality' => ['nullable', 'string', 'max:255'],
             'barangay' => ['nullable', 'string', 'max:255'],
             'year' => ['required', 'date_format:Y'],
-            'total_in_migrations' => ['nullable', 'numeric'],
-            'total_out_migrations' => ['nullable', 'numeric'],
-            'net_migrations' => ['nullable', 'numeric'],
+            'total_population' => ['required', 'numeric'],
+            'total_in_migrations' => ['required', 'numeric'],
+            'total_out_migrations' => ['required', 'numeric'],
+            'net_migrations' => ['required', 'numeric'],
         ]);
         $builder = new MigrationStatistic();
         foreach ($request->all() as $key => $value) {
@@ -121,10 +136,11 @@ class MigrationStatisticController extends Controller
         $data = $request->validate([
             'municipality' => ['nullable', 'string', 'max:255'],
             'barangay' => ['nullable', 'string', 'max:255'],
-            'year' => ['nullable', 'date_format:Y'],
-            'total_in_migrations' => ['nullable', 'numeric'],
-            'total_out_migrations' => ['nullable', 'numeric'],
-            'net_migrations' => ['nullable', 'numeric'],
+            'year' => ['required', 'date_format:Y'],
+            'total_population' => ['required', 'numeric'],
+            'total_in_migrations' => ['required', 'numeric'],
+            'total_out_migrations' => ['required', 'numeric'],
+            'net_migrations' => ['required', 'numeric'],
         ]);
         $migrationStatistic->update($data);
         $migrationStatistic->setApproved($request->user()->hasRole(Role::ADMIN))
