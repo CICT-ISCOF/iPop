@@ -14,8 +14,7 @@ class DeathStatistic extends Model
         'municipality',
         'barangay',
         'year',
-        'male',
-        'female',
+        'population',
         'crude_death_rate',
         'total',
     ];

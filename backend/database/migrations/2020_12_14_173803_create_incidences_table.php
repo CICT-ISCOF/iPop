@@ -20,7 +20,7 @@ class CreateIncidencesTable extends Migration
             $table->year('year');
             $table->string('type');
             $table->string('title');
-            $table->unsignedBigInteger('value')->default(0);
+            $table->unsignedDouble('value')->default(0);
             $table->timestamps();
         });
     }

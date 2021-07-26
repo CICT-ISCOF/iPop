@@ -258,6 +258,8 @@ Route::middleware('throttle:60,1')->group(function () {
         
     ]);
     Route::get('birth-statistics-by-municipality',[BirthStatisticController::class,'byMunicipality']);
+    Route::get('death-statistics-by-municipality',[DeathStatisticController::class,'byMunicipality']);
+    Route::get('migration-statistics-by-municipality',[MigrationRateController::class,'byMunicipality']);
         
         
 

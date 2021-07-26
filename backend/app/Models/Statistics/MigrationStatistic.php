@@ -17,6 +17,7 @@ class MigrationStatistic extends Model
         'total_in_migrations',
         'total_out_migrations',
         'net_migrations',
+        'total_population',
     ];
 
     protected $appends = ['profile'];
