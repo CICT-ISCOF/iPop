@@ -15,6 +15,7 @@ class OtherController extends Controller
 
     public function store(Request $request)
     {
+        
         $data = $request->validate([
             'file' => ['required', 'file'],
         ]);
