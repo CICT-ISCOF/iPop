@@ -19,6 +19,7 @@ class OtherController extends Controller
 
     public function store(Request $request)
     {
+        
         $data = $request->validate([
             'thumbnail' => ['required', 'file'],
             'files' => ['required', 'array'],

@@ -31,6 +31,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\IncidenceController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\MarraigeStatisticsController;
 use App\Http\Controllers\MigrationRateController;
 use App\Http\Controllers\MigrationStatisticController;
 use App\Http\Controllers\ModelPermissionController;
@@ -194,6 +195,7 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::get('/birth-statistics/summary', [BirthStatisticController::class, 'summary']);
     Route::get('/death-statistics/summary', [DeathStatisticController::class, 'summary']);
     Route::get('/migration-statistics/summary', [MigrationStatisticController::class, 'summary']);
+    Route::get('/marriage-statistics/summary', [MarraigeStatisticsController::class, 'summary']);
 
     Route::get('/articles/today', [ArticleController::class, 'today']);
     Route::get('/articles/week', [ArticleController::class, 'week']);
@@ -212,6 +214,7 @@ Route::middleware('throttle:60,1')->group(function () {
         'death-statistics' => DeathStatisticController::class,
         'migration-rates' => MigrationRateController::class,
         'migration-statistics' => MigrationStatisticController::class,
+        'marriage-statistics' => MarraigeStatisticsController::class,
         'mpcfdcs' => MPCFDCController::class,
         'mpcfdc-teams' => MPCFDCTeamController::class,
         'pmoccs' => PMOCController::class,
@@ -254,7 +257,8 @@ Route::middleware('throttle:60,1')->group(function () {
 
     Route::get('birth-statistics-by-municipality', [BirthStatisticController::class, 'byMunicipality']);
     Route::get('death-statistics-by-municipality', [DeathStatisticController::class, 'byMunicipality']);
-    Route::get('migration-statistics-by-municipality', [MigrationRateController::class, 'byMunicipality']);
+    Route::get('migration-statistics-by-municipality', [MigrationStatisticController::class, 'byMunicipality']);
+    Route::get('marriage-statistics-by-municipality', [MarraigeStatisticsController::class, 'byMunicipality']);
 
     Route::get('/statistic-profile/total', [ProfileController::class, 'total']);
 
