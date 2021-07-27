@@ -12,22 +12,21 @@ class MonthChartController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index','show');
+        $this->middleware('auth:sanctum')->except('index', 'show');
     }
 
     public function index(Request $request)
     {
         $builder = MonthChart::getApproved();
-        $builder = tap($builder, function ($builder) use ($request) {
-            foreach ($request->all() as $key => $value) {
-                if ($value === 'null') {
-                    $builder = $builder->whereNull($key);
-                } else {
-                    $builder = $builder->where($key, $value);
-                }
+
+        foreach ($request->all() as $key => $value) {
+            if ($value === 'null') {
+                $builder = $builder->whereNull($key);
+            } else {
+                $builder = $builder->where($key, $value);
             }
-            return $builder;
-        });
+        }
+
         return $builder->get();
     }
 
@@ -54,6 +53,7 @@ class MonthChartController extends Controller
             $monthChart =  $builder->where('year', $data['year'])->where('month', $month)->first();
             if ($monthChart) {
                 $monthChart->update($temp);
+                $monthChart->setApprovalMessage($request->user()->makeMessage('wants to updatec a month chart.'));
             } else {
                 $monthChart = MonthChart::create($temp);
                 $monthChart->approval()->create([
