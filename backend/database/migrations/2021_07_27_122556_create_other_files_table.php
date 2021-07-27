@@ -1,11 +1,13 @@
 <?php
 
 use App\Models\File;
+use App\Models\Other;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOthersTable extends Migration
+class CreateOtherFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +16,11 @@ class CreateOthersTable extends Migration
      */
     public function up()
     {
-        Schema::create('others', function (Blueprint $table) {
+        Schema::create('other_files', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $file = new File();
-            $table->foreignIdFor($file, 'thumbnail_id')->constrained($file->getTable());
+            $table->foreignIdFor(new Other())->constrained();
+            $table->foreignIdFor(new File())->constrained();
+            $table->foreignIdFor(new User())->constrained();
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateOthersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('others');
+        Schema::dropIfExists('other_files');
     }
 }

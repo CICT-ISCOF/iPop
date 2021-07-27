@@ -79,7 +79,6 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\UserRoleController;
-use App\Models\File;
 
 Route::middleware('throttle:60,1')->group(function () {
     Route::prefix('/auth')->group(function () {
@@ -132,8 +131,6 @@ Route::middleware('throttle:60,1')->group(function () {
         Route::apiResource('uploads', UploadController::class);
         Route::get('for-approvals', [UploadController::class, 'approvals']);
         Route::apiResource('others', OtherController::class);
-
-
 
         // Comments
         Route::apiResource('comments', CommentController::class)->except(['index']);
@@ -202,8 +199,6 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::get('/articles/week', [ArticleController::class, 'week']);
     Route::get('/articles/month', [ArticleController::class, 'month']);
     Route::get('/approvals/count', [ApprovalController::class, 'count']);
-    
-    
 
     Route::apiResources([
         'articles' => ArticleController::class,
@@ -255,13 +250,11 @@ Route::middleware('throttle:60,1')->group(function () {
         'age-dependency-ratio' => AgeDependencyRatioController::class,
         // New ( Book Reference )
         'adaadr' => AgeDistributionAgeDependencyRatioController::class,
-        
     ]);
-    Route::get('birth-statistics-by-municipality',[BirthStatisticController::class,'byMunicipality']);
-    Route::get('death-statistics-by-municipality',[DeathStatisticController::class,'byMunicipality']);
-    Route::get('migration-statistics-by-municipality',[MigrationRateController::class,'byMunicipality']);
-        
-        
+
+    Route::get('birth-statistics-by-municipality', [BirthStatisticController::class, 'byMunicipality']);
+    Route::get('death-statistics-by-municipality', [DeathStatisticController::class, 'byMunicipality']);
+    Route::get('migration-statistics-by-municipality', [MigrationRateController::class, 'byMunicipality']);
 
     Route::get('/statistic-profile/total', [ProfileController::class, 'total']);
 

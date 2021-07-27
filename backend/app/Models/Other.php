@@ -9,17 +9,33 @@ class Other extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['file_id'];
+    protected $fillable = ['thumbnail_id', 'name', 'user_id'];
 
     protected static function booted()
     {
+        static::deleting(function (self $other) {
+            $other->files->each(function (OtherFile $otherFile) {
+                return $otherFile->delete();
+            });
+        });
+
         static::deleted(function (self $other) {
-            $other->file->delete();
+            $other->thumbnail->delete();
         });
     }
 
-    public function file()
+    public function thumbnail()
     {
-        return $this->belongsTo(File::class);
+        return $this->belongsTo(File::class, 'thumbnail_id');
+    }
+
+    public function files()
+    {
+        return $this->hasMany(OtherFile::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
