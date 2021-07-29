@@ -17,7 +17,7 @@ class QuickLinksController extends Controller
     
     public function index()
     {
-        return QuickLinks::all();
+        return QuickLinks::getApproved()->get();
     }
 
     public function store(Request $request)
