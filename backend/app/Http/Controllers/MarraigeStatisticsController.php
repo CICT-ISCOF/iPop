@@ -63,7 +63,7 @@ class MarraigeStatisticsController extends Controller
                 }
             }
         }
-        $monthChart = $builder->where('year', $data['year'])->where('type', 'Marriagees')->with('approval')->get();;
+        $monthChart = $builder->where('year', $data['year'])->where('type', 'Marriage')->with('approval')->get();;
         return [
             'data' => $result,
             'month' => $monthChart,
@@ -92,7 +92,7 @@ class MarraigeStatisticsController extends Controller
                 }
             }
         }
-        $deathStatistic =  $builder->where('year', $data['year'])->first();
+        $deathStatistic =  $builder->where('year', $data['year'])->where('type', 'Marriage')->first();
         if ($deathStatistic) {
             $deathStatistic->update($data);
         } else {

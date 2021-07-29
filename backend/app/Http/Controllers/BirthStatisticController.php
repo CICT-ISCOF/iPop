@@ -112,7 +112,7 @@ class BirthStatisticController extends Controller
                 }
             }
         }
-        $birthStatistic =  $builder->where('year', $data['year'])->first();
+        $birthStatistic =  $builder->where('year', $data['year'])->where('type', 'Birth')->first();
         if ($birthStatistic) {
             $birthStatistic->update($data);
             $birthStatistic->setApprovalMessage($request->user()->makeMessage('wants to update a birth statistic.'));

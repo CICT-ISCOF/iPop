@@ -84,8 +84,15 @@ class MigrationStatisticController extends Controller
                 }
             }
         }
-        $incidence =  $builder->where('year',$data['year']) ->where('type', 'Migration')->orderBy('year', 'ASC')->with('approval')->get();
-        return [ 'data' => $result,  'month' => $monthChart,  'incidence' => $incidence  ];
+        return [ 
+            'data' => $result,
+            'month' => $monthChart,
+            'incidence' => $builder
+                ->where('year',$data['year']) 
+                ->where('type', 'Migration')
+                ->orderBy('year', 'ASC')
+                ->get()  
+        ];
     }
 
     public function store(Request $request)
@@ -109,7 +116,7 @@ class MigrationStatisticController extends Controller
                 }
             }
         }
-        $migrationStatistic =  $builder->where('year',$data['year'])->first();
+        $migrationStatistic =  $builder->where('year',$data['year'])->where('type', 'Migration')->first();
         if ($migrationStatistic) {
             $migrationStatistic->update($data);
         } else {
