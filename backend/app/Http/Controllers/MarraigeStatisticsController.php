@@ -115,9 +115,9 @@ class MarraigeStatisticsController extends Controller
     }
 
    
-    public function destroy(MarraigeStatistics $marraigeStatistics)
+    public function destroy($id)
     {
-        $marraigeStatistics->makeDeleteRequest();
+        MarraigeStatistics::find($id)->delete();
         Log::record("Deleted a Marriage Profile.");
         return response('', 204);
     }
