@@ -110,7 +110,7 @@ class DeathStatisticController extends Controller
                 }
             }
         }
-        $deathStatistic =  $builder->where('year', $data['year'])->where('type', 'Death')->first();
+        $deathStatistic =  $builder->where('year', $data['year'])->first();
         if ($deathStatistic) {
             $deathStatistic->update($data);
         } else {

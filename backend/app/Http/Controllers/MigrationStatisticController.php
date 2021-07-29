@@ -116,7 +116,7 @@ class MigrationStatisticController extends Controller
                 }
             }
         }
-        $migrationStatistic =  $builder->where('year',$data['year'])->where('type', 'Migration')->first();
+        $migrationStatistic =  $builder->where('year',$data['year'])->first();
         if ($migrationStatistic) {
             $migrationStatistic->update($data);
         } else {

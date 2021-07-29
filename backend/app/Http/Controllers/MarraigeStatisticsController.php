@@ -25,6 +25,12 @@ class MarraigeStatisticsController extends Controller
                 ->whereNull('municipality')
                 ->where('year',$data['year'])
                 ->first(),
+            'month' =>   MarraigeStatistics::getApproved()
+                ->whereNull('barangay')
+                ->whereNull('municipality')
+                ->whereNotNull('year')
+                ->orderBy('year','asc')
+                ->get()
         ]);
     }
     
@@ -92,7 +98,7 @@ class MarraigeStatisticsController extends Controller
                 }
             }
         }
-        $deathStatistic =  $builder->where('year', $data['year'])->where('type', 'Marriage')->first();
+        $deathStatistic =  $builder->where('year', $data['year'])->first();
         if ($deathStatistic) {
             $deathStatistic->update($data);
         } else {
