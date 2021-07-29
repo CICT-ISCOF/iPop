@@ -19,12 +19,11 @@ class MigrationStatisticController extends Controller
     
     public function migrationChart()
     {
-        return json_encode([
-            'summary' => MigrationStatistic::getApproved()
-                ->whereNull('barangay')
-                ->whereNull('municipality')
-                ->get(),
-        ]);
+        return  MigrationStatistic::whereNull('barangay')
+            ->whereNull('municipality')
+            ->whereNotNull('year')
+            ->orderBy('year','asc')
+            ->get();
     }
     
     public function summary(Request $request)

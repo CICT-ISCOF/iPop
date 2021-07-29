@@ -50,7 +50,7 @@ class MonthChartController extends Controller
                     }
                 }
             }
-            $monthChart =  $builder->where('year', $data['year'])->where('month', $month)->first();
+            $monthChart =  $builder->where('year', $data['year'])->where('month', $month)->where('type',$data['type'])->first();
             if ($monthChart) {
                 $monthChart->update($temp);
                 $monthChart->setApprovalMessage($request->user()->makeMessage('wants to updatec a month chart.'));
