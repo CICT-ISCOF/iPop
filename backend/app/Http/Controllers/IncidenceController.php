@@ -15,11 +15,6 @@ class IncidenceController extends Controller
         $this->middleware('auth:sanctum');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $builder = Incidence::getApproved();
@@ -30,16 +25,9 @@ class IncidenceController extends Controller
                 $builder = $builder->where($parameter, $value);
             }
         }
-        return $builder;
         return $builder->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->all();
@@ -73,24 +61,11 @@ class IncidenceController extends Controller
         return $results;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Incidence  $incidence
-     * @return \Illuminate\Http\Response
-     */
     public function show(Incidence $incidence)
     {
         return Incidence::findApproved($incidence->id)->first() ?: response('', 404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Incidence  $incidence
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Incidence $incidence)
     {
         $incidence->update($request->all());
@@ -102,12 +77,6 @@ class IncidenceController extends Controller
         return $incidence;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Incidence  $incidence
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Incidence $incidence)
     {
         $incidence->makeDeleteRequest();

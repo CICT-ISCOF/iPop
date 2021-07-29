@@ -26,7 +26,7 @@ class DeathStatisticController extends Controller
                 ->whereNull('municipality')
                 ->where('year',$data['year'])
                 ->first(),
-            'teenage' => Incidence::getApproved()
+            'crude_death_rate' => Incidence::getApproved()
                 ->whereNull('barangay')
                 ->whereNull('municipality')
                 ->where('year',$data['year'])
@@ -82,7 +82,7 @@ class DeathStatisticController extends Controller
                 }
             }
         }
-        $incidence =  $builder->where('year', $data['year'])->where('type', 'Death')->orderBy('year', 'ASC')->with('approval')->get();
+        $incidence =  $builder->where('type', 'Death')->orderBy('year', 'ASC')->with('approval')->get();
         return [
             'data' => $result,
             'month' => $monthChart,

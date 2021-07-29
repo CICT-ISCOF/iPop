@@ -83,7 +83,6 @@ class BirthStatisticController extends Controller
             ->where('type', 'Birth')
             ->get();
         $incidence =  Incidence::getApproved()
-            ->where('year', $data['year'])
             ->where('type', 'Birth')
             ->orderBy('year', 'ASC')
             ->get();
