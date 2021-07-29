@@ -82,7 +82,8 @@ class PersonnelDirectoryController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $request->validate([
             'type' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
             'position' => ['required', 'string', 'max:255'],

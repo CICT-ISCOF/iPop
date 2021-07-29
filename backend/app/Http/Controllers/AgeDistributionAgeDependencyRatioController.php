@@ -18,17 +18,11 @@ class AgeDistributionAgeDependencyRatioController extends Controller
     public function index(Request $request)
     {
         $data = $request->all();
-        $builder = AgeDistribution_AgeDependencyRatio::getApproved();
-        foreach ($data as $key => $value) {
-            if ($key === 'barangay' || $key === 'municipality') {
-                if ($value === 'null') {
-                    $builder = $builder->whereNull($key);
-                } else {
-                    $builder = $builder->where($key, $value);
-                }
-            }
-        }
-        return  $builder->where('year', $data['year'])->get();
+        return AgeDistribution_AgeDependencyRatio::getApproved()
+        ->where('year', $data['year'])
+        ->whereNull('barangay')
+        ->whereNull('municipality')
+        ->get();
     }
 
     public function show(Request $request)
