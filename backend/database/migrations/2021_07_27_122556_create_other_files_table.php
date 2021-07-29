@@ -18,9 +18,9 @@ class CreateOtherFilesTable extends Migration
     {
         Schema::create('other_files', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(new Other())->constrained();
-            $table->foreignIdFor(new File())->constrained();
-            $table->foreignIdFor(new User())->constrained();
+            $table->integer('file_id');
+            $table->integer('other_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

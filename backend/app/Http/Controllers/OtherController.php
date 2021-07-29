@@ -19,31 +19,38 @@ class OtherController extends Controller
 
     public function store(Request $request)
     {
-        
-        $data = $request->validate([
+        $data = $request->all();
+        $request->validate([
             'thumbnail' => ['required', 'file'],
-            'files' => ['required', 'array'],
-            'files.*' => ['required', 'file'],
+            'name' => ['required', 'string'],
         ]);
 
         $file = File::process($data['thumbnail']);
         $file->public = true;
         $file->save();
 
-        /**
-         * @var \App\Models\Other
-         */
         $other = Other::create([
             'thumbnail_id' => $file->id,
-            'user_id' => $request->user()->id,
+            'name' => $data['name'],
         ]);
 
-        foreach (collect($data['files']) as $raw) {
+        for($i = 0;$i < 99;$i++){
+            if( $i > 99){
+                break;
+                return response([
+                    'message' => 'Maximum of 99 files could be uploaded.'
+                ]);
+            }
+            if(!isset( $data['files'.$i])){
+                break;
+            }
+            $raw = $data['files'.$i];
             $file = File::process($raw);
             $file->public = true;
             $file->save();
-
             $other->files()->create([
+                'user_id' => $request->user()->id,
+                'other_id' => $other->id,
                 'file_id' => $file->id,
             ]);
         }
@@ -66,11 +73,6 @@ class OtherController extends Controller
         ]);
 
         return $other;
-    }
-
-    public function update(Request $request, Other $other)
-    {
-        return response('', 400);
     }
 
     public function destroy(Other $other)

@@ -37,7 +37,7 @@ class UploadController extends Controller
          * @var \App\Models\User
          */
         $user = $request->user();
-        $builder = Upload::where('approved', false);
+        $builder = Upload::where('type', $request->get('type'));
 
         /**
             4.Super Admin (Province)
@@ -46,28 +46,29 @@ class UploadController extends Controller
             2.PPOII (Municipality)
         	1.PPOI (Barangay)
          */
-        if ($user->hasRole(Role::ADMIN)) {
-            return $builder->get();
-        } else if ($user->hasRole(Role::TRD)) {
-            return $builder->whereHas('user.roles', function (Builder $builder) {
+        if ($user->hasRole(Role::TRD)) {
+            $builder = $builder->whereHas('user.roles', function (Builder $builder) {
                 return $builder->whereNotIn('name', [Role::ADMIN, Role::TRD]);
             });
         } else if ($user->hasRole(Role::FOD)) {
-            return $builder->whereHas('user.roles', function (Builder $builder) {
+            $builder = $builder->whereHas('user.roles', function (Builder $builder) {
                 return $builder->whereNotIn('name', [Role::ADMIN, Role::TRD, Role::FOD]);
             });
         } else if ($user->hasRole(Role::PPO_TWO)) {
-            return $builder->whereHas('user', function (Builder $builder) use ($user) {
+            $builder = $builder->whereHas('user', function (Builder $builder) use ($user) {
                 return $builder->where('assigned_municipality', $user->assigned_municipality)
                     ->whereHas('roles', function (Builder $builder) {
                         return $builder->whereNotIn('name', [Role::ADMIN, Role::TRD, Role::FOD, Role::PPO_TWO]);
                     });
             });
         } else if ($user->hasRole(Role::PPO_ONE)) {
-            return $builder->where('user_id', $user->id);
+            $builder = $builder->where('user_id', $user->id);
         }
 
-        return;
+        return $builder->with([
+                'file',
+                'user'
+            ])->get();
     }
 
     public function store(Request $request)
