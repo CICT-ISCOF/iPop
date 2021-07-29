@@ -6,11 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePMOCSTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+  
     public function up()
     {
         Schema::create('p_m_o_c_s', function (Blueprint $table) {
@@ -18,18 +14,13 @@ class CreatePMOCSTable extends Migration
             $table->string('municipality')->nullable();
             $table->string('barangay')->nullable();
             $table->year('year');
-            $table->string('sessions')->default(0);
-            $table->string('oriented_couples')->default(0);
-            $table->string('individuals_interviewed')->default(0);
+            $table->unsignedDouble('sessions')->default(0);
+            $table->unsignedDouble('oriented_couples')->default(0);
+            $table->unsignedDouble('individuals_interviewed')->default(0);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('p_m_o_c_s');

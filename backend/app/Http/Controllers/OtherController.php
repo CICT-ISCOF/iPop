@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class OtherController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
+    
     public function index()
     {
         return Other::with([
@@ -54,13 +60,6 @@ class OtherController extends Controller
                 'file_id' => $file->id,
             ]);
         }
-
-        $other->load([
-            'thumbnail',
-            'files.file',
-            'user.profilePicture',
-        ]);
-
         return $other;
     }
 
