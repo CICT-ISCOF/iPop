@@ -18,11 +18,11 @@ class PMCCSController extends Controller
     {
         $builder = PMCCS::getApproved();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
@@ -32,13 +32,13 @@ class PMCCSController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = PMCCS::getApproved();
+        $builder = new PMCCS();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
@@ -51,7 +51,7 @@ class PMCCSController extends Controller
         $model->setApproved($request->user()->hasRole(Role::ADMIN));
         Log::record('Customized a Percentage Distribution of PMC Applicants by Civil Status Chart');
         return $model;
-    } 
+    }
 
     public function show($id)
     {

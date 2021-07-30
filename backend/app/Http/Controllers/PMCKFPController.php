@@ -18,11 +18,11 @@ class PMCKFPController extends Controller
     {
         $builder = PMCKFP::getApproved();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
@@ -32,13 +32,13 @@ class PMCKFPController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = PMCKFP::getApproved();
+        $builder = new PMCKFP();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
@@ -51,7 +51,7 @@ class PMCKFPController extends Controller
         $model->setApproved($request->user()->hasRole(Role::ADMIN));
         Log::record('Customized a Knowledge on Family Planning among PMC Applicants Chart');
         return $model;
-    } 
+    }
 
     public function show($id)
     {
