@@ -131,7 +131,6 @@ Route::middleware('throttle:60,1')->group(function () {
         ]);
         Route::apiResource('uploads', UploadController::class);
         Route::get('for-approvals', [UploadController::class, 'approvals']);
-        Route::apiResource('others', OtherController::class);
 
         // Comments
         Route::apiResource('comments', CommentController::class)->except(['index']);
@@ -253,6 +252,7 @@ Route::middleware('throttle:60,1')->group(function () {
         'age-dependency-ratio' => AgeDependencyRatioController::class,
         // New ( Book Reference )
         'adaadr' => AgeDistributionAgeDependencyRatioController::class,
+        'others' => OtherController::class,
     ]);
 
     Route::get('migration-chart', [MigrationStatisticController::class, 'migrationChart']);

@@ -50,7 +50,7 @@ class ChartController extends Controller
             Log::record("Created a chart organization photo.");
         } else {
             $oldChart = Chart::with('approval')->first();
-            $oldChart->delete();
+
             $file = File::process($data['photo']);
             $file->public = true;
             $file->save();
@@ -60,6 +60,9 @@ class ChartController extends Controller
                 'message' => $request->user()->makeMessage('wants to update the chart organization photo.'),
             ]);
             $chart->setApproved($request->user()->hasRole(Role::ADMIN));
+
+            $oldChart->delete();
+
             Log::record("Update the chart organization photo.");
         }
 

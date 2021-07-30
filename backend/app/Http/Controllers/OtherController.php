@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 
 class OtherController extends Controller
 {
-    
+
     public function __construct()
     {
         $this->middleware('auth:sanctum')->except('index', 'show');
     }
-    
+
     public function index()
     {
         return Other::with([
@@ -40,17 +40,17 @@ class OtherController extends Controller
             'name' => $data['name'],
         ]);
 
-        for($i = 0;$i < 99;$i++){
-            if( $i > 99){
+        for ($i = 0; $i < 99; $i++) {
+            if ($i > 99) {
                 break;
                 return response([
                     'message' => 'Maximum of 99 files could be uploaded.'
                 ]);
             }
-            if(!isset( $data['files'.$i])){
+            if (!isset($data['files' . $i])) {
                 break;
             }
-            $raw = $data['files'.$i];
+            $raw = $data['files' . $i];
             $file = File::process($raw);
             $file->public = true;
             $file->save();

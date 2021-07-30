@@ -19,22 +19,22 @@ class PMOCController extends Controller
     {
         $builder = PMOC::getApproved();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                    $builder = $builder->whereNull( $key ); 
-                }else{
-                    $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
         $result = $builder->first();
         $builder = new MonthChart();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                    $builder = $builder->whereNull( $key ); 
-                }else{
-                    $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
@@ -62,11 +62,16 @@ class PMOCController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->all();
         $pMOC = PMOC::findOrFail($id);
+
+        $data = $request->all();
+
         $pMOC->update($data);
-        $pMOC->setApproved($request->user()->hasRole(Role::ADMIN))->setApprovalMessage($request->user()->makeMessage('wants to update a PMOC'));
+        $pMOC->setApproved($request->user()->hasRole(Role::ADMIN))
+            ->setApprovalMessage($request->user()->makeMessage('wants to update a PMOC'));
+
         Log::record("Updated a PMOC.");
+
         return $pMOC;
     }
 
