@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approval;
 use App\Models\Log;
 use App\Models\PMCKFP;
 use App\Models\Role;
@@ -47,6 +48,10 @@ class PMCKFPController extends Controller
             $model->update($data);
         } else {
             $model = PMCKFP::create($data);
+            $model->approval()->save(new Approval([
+                'requester_id' => $request->user()->id,
+                'message' => $request->user()->makeMessage('wants to add a pmc age group.')
+            ]));
         }
         $model->setApproved($request->user()->hasRole(Role::ADMIN));
         Log::record('Customized a Knowledge on Family Planning among PMC Applicants Chart');
