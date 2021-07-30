@@ -18,27 +18,27 @@ class PMCAgeGroupController extends Controller
     {
         $builder =  PMCAgeGroup::getApproved();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
         return $builder->get();
     }
- 
+
     public function store(Request $request)
     {
         $data = $request->all();
-        $builder = PMCAgeGroup::getApproved();
+        $builder = new PMCAgeGroup();
         foreach ($request->all() as $key => $value) {
-            if( $key === 'barangay' || $key === 'municipality'){
-                if( $value === 'null' ){
-                     $builder = $builder->whereNull( $key ); 
-                }else{
-                     $builder = $builder->where( $key, $value );
+            if ($key === 'barangay' || $key === 'municipality') {
+                if ($value === 'null') {
+                    $builder = $builder->whereNull($key);
+                } else {
+                    $builder = $builder->where($key, $value);
                 }
             }
         }
@@ -51,7 +51,7 @@ class PMCAgeGroupController extends Controller
         $model->setApproved($request->user()->hasRole(Role::ADMIN));
         Log::record('Customized a PMC Couple Applicants by Age Group Chart');
         return $model;
-    } 
+    }
 
     public function show($id)
     {
