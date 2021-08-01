@@ -26,7 +26,7 @@ class File extends Model
         $property = $this->attributes['public'];
         $scope = $property === 1 || $property === true ? "public" : "private";
         $id = $this->attributes['id'];
-        return url("/api/file/{$scope}/{$id}");
+        return url("/file/{$scope}/{$id}");
     }
 
     protected static function booted()
