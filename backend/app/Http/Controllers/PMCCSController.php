@@ -46,11 +46,12 @@ class PMCCSController extends Controller
         $model = $builder->first();
         if ($model) {
             $model->update($data);
+            $model->setApprovalMessage($request->user()->makeMessage('wants to update a Percentage Distribution of PMC Applicants by Civil Status Chart.'));
         } else {
             $model = PMCCS::create($data);
             $model->approval()->save(new Approval([
                 'requester_id' => $request->user()->id,
-                'message' => $request->user()->makeMessage('wants to add a pmc age group.')
+                'message' => $request->user()->makeMessage('wants to add a Percentage Distribution of PMC Applicants by Civil Status Chart')
             ]));
         }
         $model->setApproved($request->user()->hasRole(Role::ADMIN));

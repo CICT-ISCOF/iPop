@@ -46,6 +46,7 @@ class PMCAgeGroupController extends Controller
         $model = $builder->first();
         if ($model) {
             $model->update($data);
+            $model->setApprovalMessage($request->user()->makeMessage('wants to update a pmc age group.'));
         } else {
             $model = PMCAgeGroup::create($data);
             $model->approval()->save(new Approval([

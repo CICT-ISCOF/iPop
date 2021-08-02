@@ -46,11 +46,12 @@ class PMCESSController extends Controller
         $model = $builder->first();
         if ($model) {
             $model->update($data);
+            $model->setApprovalMessage($request->user()->makeMessage('wants to update a PMC Applicants by Employment Status and Sex Chart.'));
         } else {
             $model = PMCESS::create($data);
             $model->approval()->save(new Approval([
                 'requester_id' => $request->user()->id,
-                'message' => $request->user()->makeMessage('wants to add a pmc age group.')
+                'message' => $request->user()->makeMessage('wants to add a PMC Applicants by Employment Status and Sex Chart.')
             ]));
         }
         $model->setApproved($request->user()->hasRole(Role::ADMIN));

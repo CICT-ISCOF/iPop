@@ -58,7 +58,9 @@ trait HasApproval
     public function setApprovalMessage($message)
     {
         if ($this->approval !== null) {
-            $this->approval->update(['message' => $message]);
+            $this->approval->update([
+                'message' => $message,
+            ]);
         }
         return $this;
     }

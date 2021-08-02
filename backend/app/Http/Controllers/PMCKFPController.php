@@ -46,11 +46,12 @@ class PMCKFPController extends Controller
         $model = $builder->first();
         if ($model) {
             $model->update($data);
+            $model->setApprovalMessage($request->user()->makeMessage('wants to update a Knowledge on Family Planning among PMC Applicants Chart.'));
         } else {
             $model = PMCKFP::create($data);
             $model->approval()->save(new Approval([
                 'requester_id' => $request->user()->id,
-                'message' => $request->user()->makeMessage('wants to add a pmc age group.')
+                'message' => $request->user()->makeMessage('wants to add a Knowledge on Family Planning among PMC Applicants Chart.')
             ]));
         }
         $model->setApproved($request->user()->hasRole(Role::ADMIN));
