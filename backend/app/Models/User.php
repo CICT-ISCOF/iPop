@@ -50,6 +50,12 @@ class User extends Authenticatable
 
     protected static function booted()
     {
+        static::updated(function (self $user) {
+            if ($user->isBlocked()) {
+                $user->tokens()->delete();
+            }
+        });
+
         static::deleting(function ($user) {
             if ($user->profilePicture instanceof File) {
                 $user->files()->delete();
@@ -138,7 +144,9 @@ class User extends Authenticatable
         $mode = strtolower($mode);
         if ($mode === 'pin') {
             if ($data['answer'] !== $this->answer) {
+
                 Log::record('User failed to login.', $this->id);
+
                 return $this->_interate(
                     [
                         'errors' => [
@@ -155,6 +163,7 @@ class User extends Authenticatable
                 ]);
             }
         }
+
         if (Hash::check($data[$mode], $this->{$mode})) {
             $token = $this->createToken();
             return response([
@@ -162,7 +171,9 @@ class User extends Authenticatable
                 'token' => $token->plainTextToken,
             ]);
         }
+
         Log::record('User failed to login.', $this->id);
+
         return $this->_iterate(
             [
                 'errors' => [
@@ -190,10 +201,13 @@ class User extends Authenticatable
         $collection = self::where('username', 'LIKE', "%{$query}%")
             ->orWhere('fullname', 'LIKE', "%{$query}%")
             ->orderBy('role')
-            ->with('profilePicture')
-            ->with('roles')
-            ->with('permissions')
+            ->with([
+                'profilePicture',
+                'roles',
+                'permissions'
+            ])
             ->get();
+
         if ($collection->isEmpty()) {
             return response(
                 [
@@ -204,6 +218,7 @@ class User extends Authenticatable
                 404
             );
         }
+
         return response($collection);
     }
 

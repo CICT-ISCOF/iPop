@@ -87,26 +87,22 @@ class LoginController extends Controller
 
     protected function checkPassword(Request $request)
     {
-        $errors = [];
-        foreach (['username', 'password'] as $key) {
-            if (!$request->has($key)) {
-                $errors[$key] = [ucfirst($key) . ' is required.'];
-            }
-        }
-        if (!empty($errors)) {
-            return response(
-                [
-                    'errors' => $errors,
-                ],
-                422
-            );
-        }
-        $data = $request->all();
-        $user = User::with('profilePicture')
-            ->with('roles.permissions')
-            ->with('permissions')
+        $data = $request->validate([
+            'username' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ]);
+
+        /**
+         * @var \App\Models\User
+         */
+        $user = User::with([
+            'profilePicture',
+            'roles.permissions',
+            'permissions'
+        ])
             ->where('username', $data['username'])
             ->first();
+
         if (!$user) {
             Log::record(
                 'Visitor attempted to login using Username and Password.'

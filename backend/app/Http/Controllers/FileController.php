@@ -63,8 +63,9 @@ class FileController extends Controller
     {
         return Storage::download($file->url);
     }
-    
-    public function destroy($id){
-        return File::find($id)->destroy();
+
+    public function destroy($id)
+    {
+        return File::findOrFail($id)->delete();
     }
 }

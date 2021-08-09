@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.3 | 8.0.3",
+        "php": "^7.3 | ^8.0.3",
         "beyondcode/laravel-websockets": "^1.8",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
@@ -60,7 +60,7 @@
     "scripts": {
         "recharge": [
             "Composer\\Config::disableProcessTimeout",
-            "@php artisan migrate:fresh && php artisan db:seed"
+            "@php artisan migrate:fresh --seed"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
