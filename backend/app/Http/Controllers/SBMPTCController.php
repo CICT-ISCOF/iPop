@@ -20,9 +20,11 @@ class SBMPTCController extends Controller
     public function index(Request $request)
     {
         $data = $request->all();
-        return SBMPTC::getApproved()->where('district',$data['district'])->get();
+        return SBMPTC::getApproved()
+            ->with('photos')
+            ->where('district', $data['district'])->get();
     }
-    
+
     public function store(Request $request)
     {
         $data = $request->validate([

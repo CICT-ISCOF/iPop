@@ -661,7 +661,7 @@ class SBMPTCSeeder extends Seeder
                 'district' => 'III',
             ],
             [
-                'name' => 'Calinog Nation Comprehensive High School',
+                'name' => 'Calinog National Comprehensive High School',
                 'location' => 'Calinog',
                 'tc_coordinator_count' => 0,
                 'population' => 0,
@@ -677,15 +677,6 @@ class SBMPTCSeeder extends Seeder
                 'services' => '',
                 'municipality' => 'Calinog',
                 'district' => 'III',
-            ],
-            [
-                'name' => '',
-                'location' => '',
-                'tc_coordinator_count' => 0,
-                'population' => 0,
-                'services' => '',
-                'municipality' => '',
-                'district' => '',
             ],
         ];
     }
