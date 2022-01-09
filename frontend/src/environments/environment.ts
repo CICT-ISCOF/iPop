@@ -6,7 +6,7 @@
 export const environment = {
     production: false,
     hmr: false,
-    apiUrl:'http://localhost/IPOp/iPop/backend/public/'
+    apiUrl:'http://localhost:8000'
  };
 
 /*

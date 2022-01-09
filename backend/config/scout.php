@@ -106,5 +106,10 @@ return [
         'min_fulltext_search_length' => 4,
         'min_fulltext_search_fallback' => 'LIKE',
         'query_expansion' => false
-    ]
+    ],
+
+    'meilisearch' => [
+        'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
+        'key' => env('MEILISEARCH_KEY', null),
+    ],
 ];
