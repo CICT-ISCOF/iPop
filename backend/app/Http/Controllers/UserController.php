@@ -40,7 +40,7 @@ class UserController extends Controller
         return $user;
     }
 
-   
+
     public function show($id)
     {
         return User::with('profilePicture')
@@ -169,5 +169,12 @@ class UserController extends Controller
         Log::record('Deleted a user.');
         $user->delete();
         return response('', 201);
+    }
+
+    public function reset(User $user)
+    {
+        $user->update(['password' => Hash::make('ipop1234')]);
+
+        return response('', 204);
     }
 }

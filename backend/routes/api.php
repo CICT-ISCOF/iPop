@@ -147,6 +147,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/logout', [LoginController::class, 'logout']);
     });
 
+    Route::post('/users/{user}/reset', [UserController::class, 'reset']);
     Route::apiResource('users', UserController::class);
     Route::get('/search/users', [SearchController::class, 'users']);
     Route::get('/search/records', [SearchController::class, 'records']);

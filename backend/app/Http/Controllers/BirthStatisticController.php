@@ -24,21 +24,21 @@ class BirthStatisticController extends Controller
             'summary' => BirthStatistic::getApproved()
                 ->whereNull('barangay')
                 ->whereNull('municipality')
-                ->where('year',$data['year'])
+                ->where('year', $data['year'])
                 ->first(),
             'teenage' => Incidence::getApproved()
                 ->whereNull('barangay')
                 ->whereNull('municipality')
-                ->where('year',$data['year'])
+                ->where('year', $data['year'])
                 ->where('type', 'Birth')
-                ->where('title','Incidence of Teenage Birth')
+                ->where('title', 'Incidence of Teenage Birth')
                 ->first(),
             'illegitimate' => Incidence::getApproved()
                 ->whereNull('barangay')
                 ->whereNull('municipality')
-                ->where('year',$data['year'])
+                ->where('year', $data['year'])
                 ->where('type', 'Birth')
-                ->where('title','Incidence of Illegitimate Birth')
+                ->where('title', 'Incidence of Illegitimate Birth')
                 ->first(),
         ]);
     }
@@ -47,13 +47,13 @@ class BirthStatisticController extends Controller
     {
         $data = $request->all();
         return BirthStatistic::getApproved()
-            ->where('year',$data['year'])
+            ->where('year', $data['year'])
             ->whereNotNull('municipality')
             ->whereNull('barangay')
-            ->orderBy('municipality','asc')
+            ->orderBy('municipality', 'asc')
             ->get();
     }
-    
+
     public function index(Request $request)
     {
         $data = $request->all();
@@ -100,7 +100,7 @@ class BirthStatisticController extends Controller
             'crude_birth_rate' => ['required', 'numeric'],
             'teenage_births' => ['nullable', 'numeric'],
             'illegitimate_births' => ['nullable', 'numeric'],
-            'general_fertility_rate' => ['nullable','numeric'],
+            'general_fertility_rate' => ['nullable', 'numeric'],
         ]);
         $builder = new BirthStatistic();
         foreach ($request->all() as $key => $value) {
